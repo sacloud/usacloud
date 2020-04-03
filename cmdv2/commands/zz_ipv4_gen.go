@@ -84,7 +84,7 @@ func ipv4ListCmd() *cobra.Command {
 	fs.StringVarP(&ipv4ListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv4ListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv4ListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(ipv4ListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, ipv4ListFlagOrder(cmd))
 	return cmd
 }
 
@@ -142,7 +142,7 @@ func ipv4PtrAddCmd() *cobra.Command {
 	fs.StringVarP(&ipv4PtrAddParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv4PtrAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv4PtrAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(ipv4PtrAddFlagOrder(cmd)))
+	buildFlagsUsage(cmd, ipv4PtrAddFlagOrder(cmd))
 	return cmd
 }
 
@@ -187,7 +187,7 @@ func ipv4PtrReadCmd() *cobra.Command {
 	fs.StringVarP(&ipv4PtrReadParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv4PtrReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv4PtrReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(ipv4PtrReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, ipv4PtrReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -245,7 +245,7 @@ func ipv4PtrUpdateCmd() *cobra.Command {
 	fs.StringVarP(&ipv4PtrUpdateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv4PtrUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv4PtrUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(ipv4PtrUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, ipv4PtrUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -302,7 +302,7 @@ func ipv4PtrDeleteCmd() *cobra.Command {
 	fs.StringVarP(&ipv4PtrDeleteParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&ipv4PtrDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&ipv4PtrDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(ipv4PtrDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, ipv4PtrDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -313,5 +313,6 @@ func init() {
 	parent.AddCommand(ipv4PtrReadCmd())
 	parent.AddCommand(ipv4PtrUpdateCmd())
 	parent.AddCommand(ipv4PtrDeleteCmd())
+	buildCommandsUsage(parent, ipv4CommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

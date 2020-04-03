@@ -81,12 +81,13 @@ func priceListCmd() *cobra.Command {
 	fs.StringVarP(&priceListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&priceListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&priceListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(priceListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, priceListFlagOrder(cmd))
 	return cmd
 }
 
 func init() {
 	parent := priceCmd()
 	parent.AddCommand(priceListCmd())
+	buildCommandsUsage(parent, priceCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

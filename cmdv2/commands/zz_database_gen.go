@@ -87,7 +87,7 @@ func databaseListCmd() *cobra.Command {
 	fs.StringVarP(&databaseListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&databaseListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseListFlagOrder(cmd))
 	return cmd
 }
 
@@ -163,7 +163,7 @@ func databaseCreateCmd() *cobra.Command {
 	fs.StringVarP(&databaseCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&databaseCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -230,7 +230,7 @@ func databaseReadCmd() *cobra.Command {
 	fs.StringVarP(&databaseReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseReadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -322,7 +322,7 @@ func databaseUpdateCmd() *cobra.Command {
 	fs.StringVarP(&databaseUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -402,7 +402,7 @@ func databaseDeleteCmd() *cobra.Command {
 	fs.StringVarP(&databaseDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.BoolVarP(&databaseDeleteParam.Force, "force", "f", false, "forced-shutdown flag if database is running")
 	fs.VarP(newIDValue(0, &databaseDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -474,7 +474,7 @@ func databaseBootCmd() *cobra.Command {
 	fs.StringVarP(&databaseBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseBootParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseBootFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseBootFlagOrder(cmd))
 	return cmd
 }
 
@@ -546,7 +546,7 @@ func databaseShutdownCmd() *cobra.Command {
 	fs.StringVarP(&databaseShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseShutdownParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseShutdownFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseShutdownFlagOrder(cmd))
 	return cmd
 }
 
@@ -618,7 +618,7 @@ func databaseShutdownForceCmd() *cobra.Command {
 	fs.StringVarP(&databaseShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseShutdownForceParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseShutdownForceFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseShutdownForceFlagOrder(cmd))
 	return cmd
 }
 
@@ -690,7 +690,7 @@ func databaseResetCmd() *cobra.Command {
 	fs.StringVarP(&databaseResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseResetParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseResetFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseResetFlagOrder(cmd))
 	return cmd
 }
 
@@ -750,7 +750,7 @@ func databaseWaitForBootCmd() *cobra.Command {
 	fs.StringVarP(&databaseWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseWaitForBootParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseWaitForBootFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseWaitForBootFlagOrder(cmd))
 	return cmd
 }
 
@@ -810,7 +810,7 @@ func databaseWaitForDownCmd() *cobra.Command {
 	fs.StringVarP(&databaseWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseWaitForDownParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseWaitForDownFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseWaitForDownFlagOrder(cmd))
 	return cmd
 }
 
@@ -877,7 +877,7 @@ func databaseBackupInfoCmd() *cobra.Command {
 	fs.StringVarP(&databaseBackupInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseBackupInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseBackupInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseBackupInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseBackupInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -955,7 +955,7 @@ func databaseBackupCreateCmd() *cobra.Command {
 	fs.StringVarP(&databaseBackupCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseBackupCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseBackupCreateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseBackupCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseBackupCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -1034,7 +1034,7 @@ func databaseBackupRestoreCmd() *cobra.Command {
 	fs.StringVarP(&databaseBackupRestoreParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseBackupRestoreParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseBackupRestoreParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseBackupRestoreFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseBackupRestoreFlagOrder(cmd))
 	return cmd
 }
 
@@ -1113,7 +1113,7 @@ func databaseBackupLockCmd() *cobra.Command {
 	fs.StringVarP(&databaseBackupLockParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseBackupLockParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseBackupLockParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseBackupLockFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseBackupLockFlagOrder(cmd))
 	return cmd
 }
 
@@ -1192,7 +1192,7 @@ func databaseBackupUnlockCmd() *cobra.Command {
 	fs.StringVarP(&databaseBackupUnlockParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseBackupUnlockParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseBackupUnlockParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseBackupUnlockFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseBackupUnlockFlagOrder(cmd))
 	return cmd
 }
 
@@ -1271,7 +1271,7 @@ func databaseBackupRemoveCmd() *cobra.Command {
 	fs.StringVarP(&databaseBackupRemoveParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseBackupRemoveParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseBackupRemoveParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseBackupRemoveFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseBackupRemoveFlagOrder(cmd))
 	return cmd
 }
 
@@ -1365,7 +1365,7 @@ func databaseCloneCmd() *cobra.Command {
 	fs.StringVarP(&databaseCloneParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseCloneParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseCloneParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseCloneFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseCloneFlagOrder(cmd))
 	return cmd
 }
 
@@ -1451,7 +1451,7 @@ func databaseReplicaCreateCmd() *cobra.Command {
 	fs.StringVarP(&databaseReplicaCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseReplicaCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseReplicaCreateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseReplicaCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseReplicaCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -1521,7 +1521,7 @@ func databaseMonitorCPUCmd() *cobra.Command {
 	fs.StringVarP(&databaseMonitorCPUParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseMonitorCPUParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseMonitorCPUParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseMonitorCPUFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseMonitorCPUFlagOrder(cmd))
 	return cmd
 }
 
@@ -1591,7 +1591,7 @@ func databaseMonitorMemoryCmd() *cobra.Command {
 	fs.StringVarP(&databaseMonitorMemoryParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseMonitorMemoryParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseMonitorMemoryParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseMonitorMemoryFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseMonitorMemoryFlagOrder(cmd))
 	return cmd
 }
 
@@ -1661,7 +1661,7 @@ func databaseMonitorNicCmd() *cobra.Command {
 	fs.StringVarP(&databaseMonitorNicParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseMonitorNicParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseMonitorNicParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseMonitorNicFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseMonitorNicFlagOrder(cmd))
 	return cmd
 }
 
@@ -1731,7 +1731,7 @@ func databaseMonitorSystemDiskCmd() *cobra.Command {
 	fs.StringVarP(&databaseMonitorSystemDiskParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseMonitorSystemDiskParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseMonitorSystemDiskParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseMonitorSystemDiskFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseMonitorSystemDiskFlagOrder(cmd))
 	return cmd
 }
 
@@ -1801,7 +1801,7 @@ func databaseMonitorBackupDiskCmd() *cobra.Command {
 	fs.StringVarP(&databaseMonitorBackupDiskParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseMonitorBackupDiskParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseMonitorBackupDiskParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseMonitorBackupDiskFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseMonitorBackupDiskFlagOrder(cmd))
 	return cmd
 }
 
@@ -1871,7 +1871,7 @@ func databaseMonitorSystemDiskSizeCmd() *cobra.Command {
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseMonitorSystemDiskSizeParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseMonitorSystemDiskSizeFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseMonitorSystemDiskSizeFlagOrder(cmd))
 	return cmd
 }
 
@@ -1941,7 +1941,7 @@ func databaseMonitorBackupDiskSizeCmd() *cobra.Command {
 	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &databaseMonitorBackupDiskSizeParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseMonitorBackupDiskSizeFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseMonitorBackupDiskSizeFlagOrder(cmd))
 	return cmd
 }
 
@@ -2005,7 +2005,7 @@ func databaseLogsCmd() *cobra.Command {
 	fs.StringVarP(&databaseLogsParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseLogsParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseLogsParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(databaseLogsFlagOrder(cmd)))
+	buildFlagsUsage(cmd, databaseLogsFlagOrder(cmd))
 	return cmd
 }
 
@@ -2038,5 +2038,6 @@ func init() {
 	parent.AddCommand(databaseMonitorSystemDiskSizeCmd())
 	parent.AddCommand(databaseMonitorBackupDiskSizeCmd())
 	parent.AddCommand(databaseLogsCmd())
+	buildCommandsUsage(parent, databaseCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

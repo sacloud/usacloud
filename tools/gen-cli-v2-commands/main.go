@@ -165,7 +165,7 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 {{ range .Params -}}
 	fs.{{ .FlagDefinitionStatement }}
 {{ end -}}
-	setFlagsUsage(cmd, buildFlagsUsage({{.FlagOrderFunc}}(cmd)))
+	buildFlagsUsage(cmd, {{.FlagOrderFunc}}(cmd))
 {{ end -}}
 
 	return cmd
@@ -177,6 +177,7 @@ func init() {
 {{ range .Commands -}}
 	parent.AddCommand({{ .CLIVariableFuncName }}())
 {{ end -}}
+	buildCommandsUsage(parent, {{ .CommandOrderFunc }}(parent))
 	rootCmd.AddCommand(parent)
 }
 `

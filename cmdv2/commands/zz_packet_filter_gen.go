@@ -86,7 +86,7 @@ func packetFilterListCmd() *cobra.Command {
 	fs.StringVarP(&packetFilterListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&packetFilterListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(packetFilterListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, packetFilterListFlagOrder(cmd))
 	return cmd
 }
 
@@ -145,7 +145,7 @@ func packetFilterCreateCmd() *cobra.Command {
 	fs.StringVarP(&packetFilterCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&packetFilterCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(packetFilterCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, packetFilterCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -211,7 +211,7 @@ func packetFilterReadCmd() *cobra.Command {
 	fs.StringVarP(&packetFilterReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &packetFilterReadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(packetFilterReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, packetFilterReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -291,7 +291,7 @@ func packetFilterUpdateCmd() *cobra.Command {
 	fs.StringVarP(&packetFilterUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &packetFilterUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(packetFilterUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, packetFilterUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -369,7 +369,7 @@ func packetFilterDeleteCmd() *cobra.Command {
 	fs.StringVarP(&packetFilterDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &packetFilterDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(packetFilterDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, packetFilterDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -435,7 +435,7 @@ func packetFilterRuleInfoCmd() *cobra.Command {
 	fs.StringVarP(&packetFilterRuleInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterRuleInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &packetFilterRuleInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(packetFilterRuleInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, packetFilterRuleInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -520,7 +520,7 @@ func packetFilterRuleAddCmd() *cobra.Command {
 	fs.StringVarP(&packetFilterRuleAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterRuleAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &packetFilterRuleAddParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(packetFilterRuleAddFlagOrder(cmd)))
+	buildFlagsUsage(cmd, packetFilterRuleAddFlagOrder(cmd))
 	return cmd
 }
 
@@ -605,7 +605,7 @@ func packetFilterRuleUpdateCmd() *cobra.Command {
 	fs.StringVarP(&packetFilterRuleUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterRuleUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &packetFilterRuleUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(packetFilterRuleUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, packetFilterRuleUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -684,7 +684,7 @@ func packetFilterRuleDeleteCmd() *cobra.Command {
 	fs.StringVarP(&packetFilterRuleDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&packetFilterRuleDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &packetFilterRuleDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(packetFilterRuleDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, packetFilterRuleDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -756,7 +756,7 @@ func packetFilterInterfaceConnectCmd() *cobra.Command {
 	fs.StringVarP(&packetFilterInterfaceConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&packetFilterInterfaceConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &packetFilterInterfaceConnectParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(packetFilterInterfaceConnectFlagOrder(cmd)))
+	buildFlagsUsage(cmd, packetFilterInterfaceConnectFlagOrder(cmd))
 	return cmd
 }
 
@@ -828,7 +828,7 @@ func packetFilterInterfaceDisconnectCmd() *cobra.Command {
 	fs.StringVarP(&packetFilterInterfaceDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&packetFilterInterfaceDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &packetFilterInterfaceDisconnectParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(packetFilterInterfaceDisconnectFlagOrder(cmd)))
+	buildFlagsUsage(cmd, packetFilterInterfaceDisconnectFlagOrder(cmd))
 	return cmd
 }
 
@@ -845,5 +845,6 @@ func init() {
 	parent.AddCommand(packetFilterRuleDeleteCmd())
 	parent.AddCommand(packetFilterInterfaceConnectCmd())
 	parent.AddCommand(packetFilterInterfaceDisconnectCmd())
+	buildCommandsUsage(parent, packetFilterCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

@@ -87,7 +87,7 @@ func privateHostListCmd() *cobra.Command {
 	fs.StringVarP(&privateHostListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&privateHostListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(privateHostListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, privateHostListFlagOrder(cmd))
 	return cmd
 }
 
@@ -148,7 +148,7 @@ func privateHostCreateCmd() *cobra.Command {
 	fs.StringVarP(&privateHostCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&privateHostCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(privateHostCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, privateHostCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -215,7 +215,7 @@ func privateHostReadCmd() *cobra.Command {
 	fs.StringVarP(&privateHostReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &privateHostReadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(privateHostReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, privateHostReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -298,7 +298,7 @@ func privateHostUpdateCmd() *cobra.Command {
 	fs.StringVarP(&privateHostUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &privateHostUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(privateHostUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, privateHostUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -377,7 +377,7 @@ func privateHostDeleteCmd() *cobra.Command {
 	fs.StringVarP(&privateHostDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &privateHostDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(privateHostDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, privateHostDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -444,7 +444,7 @@ func privateHostServerInfoCmd() *cobra.Command {
 	fs.StringVarP(&privateHostServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &privateHostServerInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(privateHostServerInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, privateHostServerInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -524,7 +524,7 @@ func privateHostServerAddCmd() *cobra.Command {
 	fs.StringVarP(&privateHostServerAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostServerAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &privateHostServerAddParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(privateHostServerAddFlagOrder(cmd)))
+	buildFlagsUsage(cmd, privateHostServerAddFlagOrder(cmd))
 	return cmd
 }
 
@@ -604,7 +604,7 @@ func privateHostServerDeleteCmd() *cobra.Command {
 	fs.StringVarP(&privateHostServerDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&privateHostServerDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &privateHostServerDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(privateHostServerDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, privateHostServerDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -618,5 +618,6 @@ func init() {
 	parent.AddCommand(privateHostServerInfoCmd())
 	parent.AddCommand(privateHostServerAddCmd())
 	parent.AddCommand(privateHostServerDeleteCmd())
+	buildCommandsUsage(parent, privateHostCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

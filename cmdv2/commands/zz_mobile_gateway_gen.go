@@ -87,7 +87,7 @@ func mobileGatewayListCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&mobileGatewayListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayListFlagOrder(cmd))
 	return cmd
 }
 
@@ -149,7 +149,7 @@ func mobileGatewayCreateCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&mobileGatewayCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -216,7 +216,7 @@ func mobileGatewayReadCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewayReadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -300,7 +300,7 @@ func mobileGatewayUpdateCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewayUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -380,7 +380,7 @@ func mobileGatewayDeleteCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewayDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -452,7 +452,7 @@ func mobileGatewayBootCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayBootParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayBootFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayBootFlagOrder(cmd))
 	return cmd
 }
 
@@ -524,7 +524,7 @@ func mobileGatewayShutdownCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayShutdownParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayShutdownFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayShutdownFlagOrder(cmd))
 	return cmd
 }
 
@@ -596,7 +596,7 @@ func mobileGatewayShutdownForceCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayShutdownForceParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayShutdownForceFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayShutdownForceFlagOrder(cmd))
 	return cmd
 }
 
@@ -668,7 +668,7 @@ func mobileGatewayResetCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayResetParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayResetFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayResetFlagOrder(cmd))
 	return cmd
 }
 
@@ -728,7 +728,7 @@ func mobileGatewayWaitForBootCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayWaitForBootParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayWaitForBootFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayWaitForBootFlagOrder(cmd))
 	return cmd
 }
 
@@ -788,7 +788,7 @@ func mobileGatewayWaitForDownCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayWaitForDownParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayWaitForDownFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayWaitForDownFlagOrder(cmd))
 	return cmd
 }
 
@@ -855,7 +855,7 @@ func mobileGatewayInterfaceInfoCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayInterfaceInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayInterfaceInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewayInterfaceInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayInterfaceInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayInterfaceInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -930,7 +930,7 @@ func mobileGatewayInterfaceConnectCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayInterfaceConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayInterfaceConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayInterfaceConnectParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayInterfaceConnectFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayInterfaceConnectFlagOrder(cmd))
 	return cmd
 }
 
@@ -1004,7 +1004,7 @@ func mobileGatewayInterfaceUpdateCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayInterfaceUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayInterfaceUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayInterfaceUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayInterfaceUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayInterfaceUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -1076,7 +1076,7 @@ func mobileGatewayInterfaceDisconnectCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayInterfaceDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayInterfaceDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayInterfaceDisconnectParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayInterfaceDisconnectFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayInterfaceDisconnectFlagOrder(cmd))
 	return cmd
 }
 
@@ -1143,7 +1143,7 @@ func mobileGatewayTrafficControlInfoCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayTrafficControlInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewayTrafficControlInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayTrafficControlInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayTrafficControlInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -1220,7 +1220,7 @@ func mobileGatewayTrafficControlEnableCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayTrafficControlEnableParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayTrafficControlEnableParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayTrafficControlEnableParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayTrafficControlEnableFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayTrafficControlEnableFlagOrder(cmd))
 	return cmd
 }
 
@@ -1297,7 +1297,7 @@ func mobileGatewayTrafficControlUpdateCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayTrafficControlUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayTrafficControlUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayTrafficControlUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayTrafficControlUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayTrafficControlUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -1369,7 +1369,7 @@ func mobileGatewayTrafficControlDisableCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayTrafficControlDisableParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayTrafficControlDisableParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayTrafficControlDisableParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayTrafficControlDisableFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayTrafficControlDisableFlagOrder(cmd))
 	return cmd
 }
 
@@ -1436,7 +1436,7 @@ func mobileGatewayStaticRouteInfoCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewayStaticRouteInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewayStaticRouteInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayStaticRouteInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayStaticRouteInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -1510,7 +1510,7 @@ func mobileGatewayStaticRouteAddCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayStaticRouteAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayStaticRouteAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayStaticRouteAddParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayStaticRouteAddFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayStaticRouteAddFlagOrder(cmd))
 	return cmd
 }
 
@@ -1585,7 +1585,7 @@ func mobileGatewayStaticRouteUpdateCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayStaticRouteUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayStaticRouteUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayStaticRouteUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayStaticRouteUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayStaticRouteUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -1658,7 +1658,7 @@ func mobileGatewayStaticRouteDeleteCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayStaticRouteDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayStaticRouteDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayStaticRouteDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayStaticRouteDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayStaticRouteDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -1725,7 +1725,7 @@ func mobileGatewaySIMInfoCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewaySIMInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewaySIMInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewaySIMInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewaySIMInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -1799,7 +1799,7 @@ func mobileGatewaySIMAddCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewaySIMAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewaySIMAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMAddParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewaySIMAddFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewaySIMAddFlagOrder(cmd))
 	return cmd
 }
 
@@ -1873,7 +1873,7 @@ func mobileGatewaySIMUpdateCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewaySIMUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewaySIMUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewaySIMUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewaySIMUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -1946,7 +1946,7 @@ func mobileGatewaySIMDeleteCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewaySIMDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewaySIMDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewaySIMDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewaySIMDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -2013,7 +2013,7 @@ func mobileGatewaySIMRouteInfoCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&mobileGatewaySIMRouteInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewaySIMRouteInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewaySIMRouteInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -2087,7 +2087,7 @@ func mobileGatewaySIMRouteAddCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewaySIMRouteAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewaySIMRouteAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteAddParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewaySIMRouteAddFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewaySIMRouteAddFlagOrder(cmd))
 	return cmd
 }
 
@@ -2162,7 +2162,7 @@ func mobileGatewaySIMRouteUpdateCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewaySIMRouteUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewaySIMRouteUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewaySIMRouteUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewaySIMRouteUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -2235,7 +2235,7 @@ func mobileGatewaySIMRouteDeleteCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewaySIMRouteDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewaySIMRouteDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewaySIMRouteDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewaySIMRouteDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewaySIMRouteDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -2309,7 +2309,7 @@ func mobileGatewayDNSUpdateCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayDNSUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayDNSUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayDNSUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayDNSUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayDNSUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -2371,7 +2371,7 @@ func mobileGatewayLogsCmd() *cobra.Command {
 	fs.StringVarP(&mobileGatewayLogsParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&mobileGatewayLogsParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &mobileGatewayLogsParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(mobileGatewayLogsFlagOrder(cmd)))
+	buildFlagsUsage(cmd, mobileGatewayLogsFlagOrder(cmd))
 	return cmd
 }
 
@@ -2410,5 +2410,6 @@ func init() {
 	parent.AddCommand(mobileGatewaySIMRouteDeleteCmd())
 	parent.AddCommand(mobileGatewayDNSUpdateCmd())
 	parent.AddCommand(mobileGatewayLogsCmd())
+	buildCommandsUsage(parent, mobileGatewayCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

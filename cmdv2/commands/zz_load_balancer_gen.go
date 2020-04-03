@@ -87,7 +87,7 @@ func loadBalancerListCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&loadBalancerListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&loadBalancerListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerListFlagOrder(cmd))
 	return cmd
 }
 
@@ -156,7 +156,7 @@ func loadBalancerCreateCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&loadBalancerCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&loadBalancerCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -223,7 +223,7 @@ func loadBalancerReadCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&loadBalancerReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &loadBalancerReadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -306,7 +306,7 @@ func loadBalancerUpdateCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&loadBalancerUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &loadBalancerUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -386,7 +386,7 @@ func loadBalancerDeleteCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&loadBalancerDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &loadBalancerDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -458,7 +458,7 @@ func loadBalancerBootCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&loadBalancerBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &loadBalancerBootParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerBootFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerBootFlagOrder(cmd))
 	return cmd
 }
 
@@ -530,7 +530,7 @@ func loadBalancerShutdownCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&loadBalancerShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &loadBalancerShutdownParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerShutdownFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerShutdownFlagOrder(cmd))
 	return cmd
 }
 
@@ -602,7 +602,7 @@ func loadBalancerShutdownForceCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&loadBalancerShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &loadBalancerShutdownForceParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerShutdownForceFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerShutdownForceFlagOrder(cmd))
 	return cmd
 }
 
@@ -674,7 +674,7 @@ func loadBalancerResetCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&loadBalancerResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &loadBalancerResetParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerResetFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerResetFlagOrder(cmd))
 	return cmd
 }
 
@@ -734,7 +734,7 @@ func loadBalancerWaitForBootCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&loadBalancerWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &loadBalancerWaitForBootParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerWaitForBootFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerWaitForBootFlagOrder(cmd))
 	return cmd
 }
 
@@ -794,7 +794,7 @@ func loadBalancerWaitForDownCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&loadBalancerWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &loadBalancerWaitForDownParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerWaitForDownFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerWaitForDownFlagOrder(cmd))
 	return cmd
 }
 
@@ -861,7 +861,7 @@ func loadBalancerVipInfoCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerVipInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&loadBalancerVipInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &loadBalancerVipInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerVipInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerVipInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -938,7 +938,7 @@ func loadBalancerVipAddCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerVipAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&loadBalancerVipAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &loadBalancerVipAddParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerVipAddFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerVipAddFlagOrder(cmd))
 	return cmd
 }
 
@@ -1016,7 +1016,7 @@ func loadBalancerVipUpdateCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerVipUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&loadBalancerVipUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &loadBalancerVipUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerVipUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerVipUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -1089,7 +1089,7 @@ func loadBalancerVipDeleteCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerVipDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&loadBalancerVipDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &loadBalancerVipDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerVipDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerVipDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -1159,7 +1159,7 @@ func loadBalancerServerInfoCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&loadBalancerServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &loadBalancerServerInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerServerInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerServerInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -1239,7 +1239,7 @@ func loadBalancerServerAddCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerServerAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&loadBalancerServerAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &loadBalancerServerAddParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerServerAddFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerServerAddFlagOrder(cmd))
 	return cmd
 }
 
@@ -1319,7 +1319,7 @@ func loadBalancerServerUpdateCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerServerUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&loadBalancerServerUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &loadBalancerServerUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerServerUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerServerUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -1395,7 +1395,7 @@ func loadBalancerServerDeleteCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerServerDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&loadBalancerServerDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &loadBalancerServerDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerServerDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerServerDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -1465,7 +1465,7 @@ func loadBalancerMonitorCmd() *cobra.Command {
 	fs.StringVarP(&loadBalancerMonitorParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&loadBalancerMonitorParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &loadBalancerMonitorParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(loadBalancerMonitorFlagOrder(cmd)))
+	buildFlagsUsage(cmd, loadBalancerMonitorFlagOrder(cmd))
 	return cmd
 }
 
@@ -1491,5 +1491,6 @@ func init() {
 	parent.AddCommand(loadBalancerServerUpdateCmd())
 	parent.AddCommand(loadBalancerServerDeleteCmd())
 	parent.AddCommand(loadBalancerMonitorCmd())
+	buildCommandsUsage(parent, loadBalancerCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

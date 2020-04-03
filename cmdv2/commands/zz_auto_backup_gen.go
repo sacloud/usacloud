@@ -87,7 +87,7 @@ func autoBackupListCmd() *cobra.Command {
 	fs.StringVarP(&autoBackupListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&autoBackupListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&autoBackupListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(autoBackupListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, autoBackupListFlagOrder(cmd))
 	return cmd
 }
 
@@ -151,7 +151,7 @@ func autoBackupCreateCmd() *cobra.Command {
 	fs.StringVarP(&autoBackupCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&autoBackupCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&autoBackupCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(autoBackupCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, autoBackupCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -218,7 +218,7 @@ func autoBackupReadCmd() *cobra.Command {
 	fs.StringVarP(&autoBackupReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&autoBackupReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &autoBackupReadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(autoBackupReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, autoBackupReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -303,7 +303,7 @@ func autoBackupUpdateCmd() *cobra.Command {
 	fs.StringVarP(&autoBackupUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&autoBackupUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &autoBackupUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(autoBackupUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, autoBackupUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -382,7 +382,7 @@ func autoBackupDeleteCmd() *cobra.Command {
 	fs.StringVarP(&autoBackupDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&autoBackupDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &autoBackupDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(autoBackupDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, autoBackupDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -393,5 +393,6 @@ func init() {
 	parent.AddCommand(autoBackupReadCmd())
 	parent.AddCommand(autoBackupUpdateCmd())
 	parent.AddCommand(autoBackupDeleteCmd())
+	buildCommandsUsage(parent, autoBackupCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

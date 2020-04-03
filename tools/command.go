@@ -17,7 +17,6 @@ package tools
 import (
 	"fmt"
 	"sort"
-	"strings"
 
 	"github.com/sacloud/usacloud/pkg/utils"
 
@@ -33,6 +32,11 @@ type Command struct {
 	Category          *schema.Category
 	Params            []*Parameter
 	CategorizedParams []*CategorizedParameters
+}
+
+type CategorizedParameters struct {
+	*schema.Category
+	Params []*Parameter
 }
 
 func NewCommand(name string, command *schema.Command, category *schema.Category, resource *Resource) *Command {
@@ -166,14 +170,6 @@ func (c *Command) ArgToIdFunc() string {
 
 func (c *Command) FlagOrderFunc() string {
 	return fmt.Sprintf("%s%sFlagOrder", ToCamelWithFirstLower(c.Resource.Name), ToCamelCaseName(c.Name))
-}
-
-func (c *Command) CategoryNames() string {
-	var names []string
-	for _, cat := range c.CategorizedParams {
-		names = append(names, cat.DisplayName)
-	}
-	return fmt.Sprintf(`[]string{"%s"}`, strings.Join(names, `", "`))
 }
 
 func (c *Command) TargetAPIName() string {

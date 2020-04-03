@@ -88,7 +88,7 @@ func simpleMonitorListCmd() *cobra.Command {
 	fs.StringVarP(&simpleMonitorListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&simpleMonitorListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simpleMonitorListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(simpleMonitorListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, simpleMonitorListFlagOrder(cmd))
 	return cmd
 }
 
@@ -166,7 +166,7 @@ func simpleMonitorCreateCmd() *cobra.Command {
 	fs.StringVarP(&simpleMonitorCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&simpleMonitorCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simpleMonitorCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(simpleMonitorCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, simpleMonitorCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -233,7 +233,7 @@ func simpleMonitorReadCmd() *cobra.Command {
 	fs.StringVarP(&simpleMonitorReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simpleMonitorReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simpleMonitorReadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(simpleMonitorReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, simpleMonitorReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -332,7 +332,7 @@ func simpleMonitorUpdateCmd() *cobra.Command {
 	fs.StringVarP(&simpleMonitorUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simpleMonitorUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simpleMonitorUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(simpleMonitorUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, simpleMonitorUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -411,7 +411,7 @@ func simpleMonitorDeleteCmd() *cobra.Command {
 	fs.StringVarP(&simpleMonitorDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simpleMonitorDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simpleMonitorDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(simpleMonitorDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, simpleMonitorDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -478,7 +478,7 @@ func simpleMonitorHealthCmd() *cobra.Command {
 	fs.StringVarP(&simpleMonitorHealthParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simpleMonitorHealthParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simpleMonitorHealthParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(simpleMonitorHealthFlagOrder(cmd)))
+	buildFlagsUsage(cmd, simpleMonitorHealthFlagOrder(cmd))
 	return cmd
 }
 
@@ -490,5 +490,6 @@ func init() {
 	parent.AddCommand(simpleMonitorUpdateCmd())
 	parent.AddCommand(simpleMonitorDeleteCmd())
 	parent.AddCommand(simpleMonitorHealthCmd())
+	buildCommandsUsage(parent, simpleMonitorCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

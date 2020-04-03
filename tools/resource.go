@@ -16,6 +16,7 @@ package tools
 
 import (
 	"fmt"
+	"sort"
 
 	"github.com/sacloud/usacloud/schema"
 )
@@ -24,7 +25,13 @@ import (
 type Resource struct {
 	*schema.Resource
 
-	Name     string
+	Name                string
+	Commands            []*Command
+	CategorizedCommands []*CategorizedCommands
+}
+
+type CategorizedCommands struct {
+	*schema.Category
 	Commands []*Command
 }
 
@@ -39,8 +46,30 @@ func NewResource(name string, resource *schema.Resource) *Resource {
 		commands = append(commands, NewCommand(c.CommandKey, c.Command, c.Category, r))
 	}
 	r.Commands = commands
-
+	r.buildCategorizedCommands()
 	return r
+}
+
+func (r *Resource) buildCategorizedCommands() {
+	m := map[string]*CategorizedCommands{}
+	for _, c := range r.Commands {
+		cat := c.Category
+		cc, ok := m[cat.Key]
+		if !ok {
+			cc = &CategorizedCommands{
+				Category: cat,
+			}
+		}
+		cc.Commands = append(cc.Commands, c)
+		m[cat.Key] = cc
+	}
+	r.CategorizedCommands = []*CategorizedCommands{}
+	for _, cat := range m {
+		r.CategorizedCommands = append(r.CategorizedCommands, cat)
+	}
+	sort.Slice(r.CategorizedCommands, func(i, j int) bool {
+		return r.CategorizedCommands[i].Order < r.CategorizedCommands[j].Order
+	})
 }
 
 func (r *Resource) CLIName() string {
@@ -71,10 +100,14 @@ func (r *Resource) CLIResourceFinderSourceFileName() string {
 	return fmt.Sprintf("zz_%s_finder_gen.go", ToSnakeCaseName(r.Name))
 }
 
-func (r *Resource) CLIFlagOrderSourceFileName() string {
-	return fmt.Sprintf("zz_%s_flag_order_gen.go", ToSnakeCaseName(r.Name))
+func (r *Resource) CLIUsageFileName() string {
+	return fmt.Sprintf("zz_%s_usage_gen.go", ToSnakeCaseName(r.Name))
 }
 
 func (r *Resource) ParameterSourceFileName() string {
 	return fmt.Sprintf("zz_%s_gen.go", ToSnakeCaseName(r.Name))
+}
+
+func (r *Resource) CommandOrderFunc() string {
+	return fmt.Sprintf("%sCommandOrder", ToCamelWithFirstLower(r.Name))
 }

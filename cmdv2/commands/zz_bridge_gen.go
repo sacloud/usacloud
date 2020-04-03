@@ -86,7 +86,7 @@ func bridgeListCmd() *cobra.Command {
 	fs.StringVarP(&bridgeListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&bridgeListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&bridgeListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(bridgeListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, bridgeListFlagOrder(cmd))
 	return cmd
 }
 
@@ -145,7 +145,7 @@ func bridgeCreateCmd() *cobra.Command {
 	fs.StringVarP(&bridgeCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&bridgeCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&bridgeCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(bridgeCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, bridgeCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -211,7 +211,7 @@ func bridgeReadCmd() *cobra.Command {
 	fs.StringVarP(&bridgeReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&bridgeReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &bridgeReadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(bridgeReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, bridgeReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -291,7 +291,7 @@ func bridgeUpdateCmd() *cobra.Command {
 	fs.StringVarP(&bridgeUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&bridgeUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &bridgeUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(bridgeUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, bridgeUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -369,7 +369,7 @@ func bridgeDeleteCmd() *cobra.Command {
 	fs.StringVarP(&bridgeDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&bridgeDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &bridgeDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(bridgeDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, bridgeDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -380,5 +380,6 @@ func init() {
 	parent.AddCommand(bridgeReadCmd())
 	parent.AddCommand(bridgeUpdateCmd())
 	parent.AddCommand(bridgeDeleteCmd())
+	buildCommandsUsage(parent, bridgeCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

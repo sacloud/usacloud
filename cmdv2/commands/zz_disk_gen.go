@@ -91,7 +91,7 @@ func diskListCmd() *cobra.Command {
 	fs.StringVarP(&diskListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&diskListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&diskListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(diskListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, diskListFlagOrder(cmd))
 	return cmd
 }
 
@@ -158,7 +158,7 @@ func diskCreateCmd() *cobra.Command {
 	fs.StringVarP(&diskCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&diskCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&diskCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(diskCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, diskCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -225,7 +225,7 @@ func diskReadCmd() *cobra.Command {
 	fs.StringVarP(&diskReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&diskReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &diskReadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(diskReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, diskReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -309,7 +309,7 @@ func diskUpdateCmd() *cobra.Command {
 	fs.StringVarP(&diskUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&diskUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &diskUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(diskUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, diskUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -388,7 +388,7 @@ func diskDeleteCmd() *cobra.Command {
 	fs.StringVarP(&diskDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&diskDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &diskDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(diskDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, diskDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -475,7 +475,7 @@ func diskEditCmd() *cobra.Command {
 	fs.StringVarP(&diskEditParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&diskEditParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &diskEditParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(diskEditFlagOrder(cmd)))
+	buildFlagsUsage(cmd, diskEditFlagOrder(cmd))
 	return cmd
 }
 
@@ -554,7 +554,7 @@ func diskResizePartitionCmd() *cobra.Command {
 	fs.StringVarP(&diskResizePartitionParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&diskResizePartitionParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &diskResizePartitionParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(diskResizePartitionFlagOrder(cmd)))
+	buildFlagsUsage(cmd, diskResizePartitionFlagOrder(cmd))
 	return cmd
 }
 
@@ -628,7 +628,7 @@ func diskReinstallFromArchiveCmd() *cobra.Command {
 	fs.StringVarP(&diskReinstallFromArchiveParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskReinstallFromArchiveParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskReinstallFromArchiveParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(diskReinstallFromArchiveFlagOrder(cmd)))
+	buildFlagsUsage(cmd, diskReinstallFromArchiveFlagOrder(cmd))
 	return cmd
 }
 
@@ -702,7 +702,7 @@ func diskReinstallFromDiskCmd() *cobra.Command {
 	fs.StringVarP(&diskReinstallFromDiskParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskReinstallFromDiskParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskReinstallFromDiskParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(diskReinstallFromDiskFlagOrder(cmd)))
+	buildFlagsUsage(cmd, diskReinstallFromDiskFlagOrder(cmd))
 	return cmd
 }
 
@@ -775,7 +775,7 @@ func diskReinstallToBlankCmd() *cobra.Command {
 	fs.StringVarP(&diskReinstallToBlankParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskReinstallToBlankParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskReinstallToBlankParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(diskReinstallToBlankFlagOrder(cmd)))
+	buildFlagsUsage(cmd, diskReinstallToBlankFlagOrder(cmd))
 	return cmd
 }
 
@@ -848,7 +848,7 @@ func diskServerConnectCmd() *cobra.Command {
 	fs.StringVarP(&diskServerConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskServerConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskServerConnectParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(diskServerConnectFlagOrder(cmd)))
+	buildFlagsUsage(cmd, diskServerConnectFlagOrder(cmd))
 	return cmd
 }
 
@@ -920,7 +920,7 @@ func diskServerDisconnectCmd() *cobra.Command {
 	fs.StringVarP(&diskServerDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskServerDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskServerDisconnectParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(diskServerDisconnectFlagOrder(cmd)))
+	buildFlagsUsage(cmd, diskServerDisconnectFlagOrder(cmd))
 	return cmd
 }
 
@@ -990,7 +990,7 @@ func diskMonitorCmd() *cobra.Command {
 	fs.VarP(newIDValue(0, &diskMonitorParam.Id), "id", "", "Set target ID")
 	fs.StringVarP(&diskMonitorParam.KeyFormat, "key-format", "", "sakuracloud.disk.{{.ID}}.disk", "set monitoring value key-format")
 	fs.StringVarP(&diskMonitorParam.Start, "start", "", "", "set start-time")
-	setFlagsUsage(cmd, buildFlagsUsage(diskMonitorFlagOrder(cmd)))
+	buildFlagsUsage(cmd, diskMonitorFlagOrder(cmd))
 	return cmd
 }
 
@@ -1050,7 +1050,7 @@ func diskWaitForCopyCmd() *cobra.Command {
 	fs.StringVarP(&diskWaitForCopyParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskWaitForCopyParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskWaitForCopyParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(diskWaitForCopyFlagOrder(cmd)))
+	buildFlagsUsage(cmd, diskWaitForCopyFlagOrder(cmd))
 	return cmd
 }
 
@@ -1070,5 +1070,6 @@ func init() {
 	parent.AddCommand(diskServerDisconnectCmd())
 	parent.AddCommand(diskMonitorCmd())
 	parent.AddCommand(diskWaitForCopyCmd())
+	buildCommandsUsage(parent, diskCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

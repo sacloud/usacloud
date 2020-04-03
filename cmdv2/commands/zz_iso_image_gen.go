@@ -88,7 +88,7 @@ func isoImageListCmd() *cobra.Command {
 	fs.StringVarP(&isoImageListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&isoImageListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&isoImageListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(isoImageListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, isoImageListFlagOrder(cmd))
 	return cmd
 }
 
@@ -151,7 +151,7 @@ func isoImageCreateCmd() *cobra.Command {
 	fs.StringVarP(&isoImageCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&isoImageCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&isoImageCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(isoImageCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, isoImageCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -218,7 +218,7 @@ func isoImageReadCmd() *cobra.Command {
 	fs.StringVarP(&isoImageReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&isoImageReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &isoImageReadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(isoImageReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, isoImageReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -301,7 +301,7 @@ func isoImageUpdateCmd() *cobra.Command {
 	fs.StringVarP(&isoImageUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&isoImageUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &isoImageUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(isoImageUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, isoImageUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -380,7 +380,7 @@ func isoImageDeleteCmd() *cobra.Command {
 	fs.StringVarP(&isoImageDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&isoImageDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &isoImageDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(isoImageDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, isoImageDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -460,7 +460,7 @@ func isoImageUploadCmd() *cobra.Command {
 	fs.StringVarP(&isoImageUploadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&isoImageUploadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &isoImageUploadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(isoImageUploadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, isoImageUploadFlagOrder(cmd))
 	return cmd
 }
 
@@ -533,7 +533,7 @@ func isoImageDownloadCmd() *cobra.Command {
 	fs.StringVarP(&isoImageDownloadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&isoImageDownloadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &isoImageDownloadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(isoImageDownloadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, isoImageDownloadFlagOrder(cmd))
 	return cmd
 }
 
@@ -612,7 +612,7 @@ func isoImageFTPOpenCmd() *cobra.Command {
 	fs.StringVarP(&isoImageFTPOpenParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&isoImageFTPOpenParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &isoImageFTPOpenParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(isoImageFTPOpenFlagOrder(cmd)))
+	buildFlagsUsage(cmd, isoImageFTPOpenFlagOrder(cmd))
 	return cmd
 }
 
@@ -684,7 +684,7 @@ func isoImageFTPCloseCmd() *cobra.Command {
 	fs.StringVarP(&isoImageFTPCloseParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&isoImageFTPCloseParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &isoImageFTPCloseParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(isoImageFTPCloseFlagOrder(cmd)))
+	buildFlagsUsage(cmd, isoImageFTPCloseFlagOrder(cmd))
 	return cmd
 }
 
@@ -699,5 +699,6 @@ func init() {
 	parent.AddCommand(isoImageDownloadCmd())
 	parent.AddCommand(isoImageFTPOpenCmd())
 	parent.AddCommand(isoImageFTPCloseCmd())
+	buildCommandsUsage(parent, isoImageCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

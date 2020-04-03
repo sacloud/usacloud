@@ -86,7 +86,7 @@ func interfaceListCmd() *cobra.Command {
 	fs.StringVarP(&interfaceListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&interfaceListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&interfaceListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(interfaceListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, interfaceListFlagOrder(cmd))
 	return cmd
 }
 
@@ -158,7 +158,7 @@ func interfacePacketFilterConnectCmd() *cobra.Command {
 	fs.StringVarP(&interfacePacketFilterConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&interfacePacketFilterConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &interfacePacketFilterConnectParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(interfacePacketFilterConnectFlagOrder(cmd)))
+	buildFlagsUsage(cmd, interfacePacketFilterConnectFlagOrder(cmd))
 	return cmd
 }
 
@@ -216,7 +216,7 @@ func interfaceCreateCmd() *cobra.Command {
 	fs.StringVarP(&interfaceCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&interfaceCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&interfaceCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(interfaceCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, interfaceCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -288,7 +288,7 @@ func interfacePacketFilterDisconnectCmd() *cobra.Command {
 	fs.StringVarP(&interfacePacketFilterDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&interfacePacketFilterDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &interfacePacketFilterDisconnectParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(interfacePacketFilterDisconnectFlagOrder(cmd)))
+	buildFlagsUsage(cmd, interfacePacketFilterDisconnectFlagOrder(cmd))
 	return cmd
 }
 
@@ -354,7 +354,7 @@ func interfaceReadCmd() *cobra.Command {
 	fs.StringVarP(&interfaceReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&interfaceReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &interfaceReadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(interfaceReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, interfaceReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -433,7 +433,7 @@ func interfaceUpdateCmd() *cobra.Command {
 	fs.StringVarP(&interfaceUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&interfaceUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &interfaceUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(interfaceUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, interfaceUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -511,7 +511,7 @@ func interfaceDeleteCmd() *cobra.Command {
 	fs.StringVarP(&interfaceDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&interfaceDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &interfaceDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(interfaceDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, interfaceDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -524,5 +524,6 @@ func init() {
 	parent.AddCommand(interfaceReadCmd())
 	parent.AddCommand(interfaceUpdateCmd())
 	parent.AddCommand(interfaceDeleteCmd())
+	buildCommandsUsage(parent, interfaceCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

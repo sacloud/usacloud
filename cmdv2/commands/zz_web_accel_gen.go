@@ -80,7 +80,7 @@ func webAccelListCmd() *cobra.Command {
 	fs.StringVarP(&webAccelListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&webAccelListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&webAccelListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(webAccelListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, webAccelListFlagOrder(cmd))
 	return cmd
 }
 
@@ -147,7 +147,7 @@ func webAccelReadCmd() *cobra.Command {
 	fs.StringVarP(&webAccelReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&webAccelReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &webAccelReadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(webAccelReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, webAccelReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -214,7 +214,7 @@ func webAccelCertificateInfoCmd() *cobra.Command {
 	fs.StringVarP(&webAccelCertificateInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&webAccelCertificateInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &webAccelCertificateInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(webAccelCertificateInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, webAccelCertificateInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -297,7 +297,7 @@ func webAccelCertificateNewCmd() *cobra.Command {
 	fs.StringVarP(&webAccelCertificateNewParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&webAccelCertificateNewParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &webAccelCertificateNewParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(webAccelCertificateNewFlagOrder(cmd)))
+	buildFlagsUsage(cmd, webAccelCertificateNewFlagOrder(cmd))
 	return cmd
 }
 
@@ -380,7 +380,7 @@ func webAccelCertificateUpdateCmd() *cobra.Command {
 	fs.StringVarP(&webAccelCertificateUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&webAccelCertificateUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &webAccelCertificateUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(webAccelCertificateUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, webAccelCertificateUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -437,7 +437,7 @@ func webAccelDeleteCacheCmd() *cobra.Command {
 	fs.StringVarP(&webAccelDeleteCacheParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&webAccelDeleteCacheParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&webAccelDeleteCacheParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(webAccelDeleteCacheFlagOrder(cmd)))
+	buildFlagsUsage(cmd, webAccelDeleteCacheFlagOrder(cmd))
 	return cmd
 }
 
@@ -449,5 +449,6 @@ func init() {
 	parent.AddCommand(webAccelCertificateNewCmd())
 	parent.AddCommand(webAccelCertificateUpdateCmd())
 	parent.AddCommand(webAccelDeleteCacheCmd())
+	buildCommandsUsage(parent, webAccelCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

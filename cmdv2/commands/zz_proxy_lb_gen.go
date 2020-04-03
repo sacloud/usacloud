@@ -87,7 +87,7 @@ func proxyLBListCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&proxyLBListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBListFlagOrder(cmd))
 	return cmd
 }
 
@@ -157,7 +157,7 @@ func proxyLBCreateCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&proxyLBCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -224,7 +224,7 @@ func proxyLBReadCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBReadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -315,7 +315,7 @@ func proxyLBUpdateCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -394,7 +394,7 @@ func proxyLBDeleteCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -474,7 +474,7 @@ func proxyLBPlanChangeCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBPlanChangeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBPlanChangeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBPlanChangeParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBPlanChangeFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBPlanChangeFlagOrder(cmd))
 	return cmd
 }
 
@@ -541,7 +541,7 @@ func proxyLBBindPortInfoCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBBindPortInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBBindPortInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBBindPortInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBBindPortInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBBindPortInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -624,7 +624,7 @@ func proxyLBBindPortAddCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBBindPortAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBBindPortAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBBindPortAddParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBBindPortAddFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBBindPortAddFlagOrder(cmd))
 	return cmd
 }
 
@@ -708,7 +708,7 @@ func proxyLBBindPortUpdateCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBBindPortUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBBindPortUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBBindPortUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBBindPortUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBBindPortUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -788,7 +788,7 @@ func proxyLBBindPortDeleteCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBBindPortDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBBindPortDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBBindPortDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBBindPortDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBBindPortDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -856,7 +856,7 @@ func proxyLBResponseHeaderInfoCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBResponseHeaderInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBResponseHeaderInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBResponseHeaderInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBResponseHeaderInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBResponseHeaderInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -938,7 +938,7 @@ func proxyLBResponseHeaderAddCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBResponseHeaderAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBResponseHeaderAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBResponseHeaderAddParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBResponseHeaderAddFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBResponseHeaderAddFlagOrder(cmd))
 	return cmd
 }
 
@@ -1021,7 +1021,7 @@ func proxyLBResponseHeaderUpdateCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBResponseHeaderUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBResponseHeaderUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBResponseHeaderUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBResponseHeaderUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -1102,7 +1102,7 @@ func proxyLBResponseHeaderDeleteCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBResponseHeaderDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBResponseHeaderDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBResponseHeaderDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBResponseHeaderDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBResponseHeaderDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -1169,7 +1169,7 @@ func proxyLBACMEInfoCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBACMEInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBACMEInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBACMEInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBACMEInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBACMEInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -1251,7 +1251,7 @@ func proxyLBACMESettingCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBACMESettingParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBACMESettingParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBACMESettingParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBACMESettingFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBACMESettingFlagOrder(cmd))
 	return cmd
 }
 
@@ -1323,7 +1323,7 @@ func proxyLBACMERenewCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBACMERenewParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&proxyLBACMERenewParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &proxyLBACMERenewParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBACMERenewFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBACMERenewFlagOrder(cmd))
 	return cmd
 }
 
@@ -1390,7 +1390,7 @@ func proxyLBServerInfoCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBServerInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBServerInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBServerInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -1472,7 +1472,7 @@ func proxyLBServerAddCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBServerAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBServerAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBServerAddParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBServerAddFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBServerAddFlagOrder(cmd))
 	return cmd
 }
 
@@ -1555,7 +1555,7 @@ func proxyLBServerUpdateCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBServerUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBServerUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBServerUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBServerUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBServerUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -1635,7 +1635,7 @@ func proxyLBServerDeleteCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBServerDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBServerDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBServerDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBServerDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBServerDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -1702,7 +1702,7 @@ func proxyLBCertificateInfoCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBCertificateInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBCertificateInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBCertificateInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBCertificateInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBCertificateInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -1784,7 +1784,7 @@ func proxyLBCertificateAddCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBCertificateAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBCertificateAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBCertificateAddParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBCertificateAddFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBCertificateAddFlagOrder(cmd))
 	return cmd
 }
 
@@ -1866,7 +1866,7 @@ func proxyLBCertificateUpdateCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBCertificateUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBCertificateUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBCertificateUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBCertificateUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBCertificateUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -1945,7 +1945,7 @@ func proxyLBCertificateDeleteCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBCertificateDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBCertificateDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBCertificateDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBCertificateDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBCertificateDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -2015,7 +2015,7 @@ func proxyLBMonitorCmd() *cobra.Command {
 	fs.StringVarP(&proxyLBMonitorParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&proxyLBMonitorParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &proxyLBMonitorParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(proxyLBMonitorFlagOrder(cmd)))
+	buildFlagsUsage(cmd, proxyLBMonitorFlagOrder(cmd))
 	return cmd
 }
 
@@ -2047,5 +2047,6 @@ func init() {
 	parent.AddCommand(proxyLBCertificateUpdateCmd())
 	parent.AddCommand(proxyLBCertificateDeleteCmd())
 	parent.AddCommand(proxyLBMonitorCmd())
+	buildCommandsUsage(parent, proxyLBCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

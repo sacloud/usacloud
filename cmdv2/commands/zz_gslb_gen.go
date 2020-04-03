@@ -87,7 +87,7 @@ func gslbListCmd() *cobra.Command {
 	fs.StringVarP(&gslbListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&gslbListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(gslbListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, gslbListFlagOrder(cmd))
 	return cmd
 }
 
@@ -154,7 +154,7 @@ func gslbServerInfoCmd() *cobra.Command {
 	fs.StringVarP(&gslbServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &gslbServerInfoParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(gslbServerInfoFlagOrder(cmd)))
+	buildFlagsUsage(cmd, gslbServerInfoFlagOrder(cmd))
 	return cmd
 }
 
@@ -223,7 +223,7 @@ func gslbCreateCmd() *cobra.Command {
 	fs.StringVarP(&gslbCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&gslbCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(gslbCreateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, gslbCreateFlagOrder(cmd))
 	return cmd
 }
 
@@ -305,7 +305,7 @@ func gslbServerAddCmd() *cobra.Command {
 	fs.StringVarP(&gslbServerAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbServerAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &gslbServerAddParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(gslbServerAddFlagOrder(cmd)))
+	buildFlagsUsage(cmd, gslbServerAddFlagOrder(cmd))
 	return cmd
 }
 
@@ -372,7 +372,7 @@ func gslbReadCmd() *cobra.Command {
 	fs.StringVarP(&gslbReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &gslbReadParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(gslbReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, gslbReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -455,7 +455,7 @@ func gslbServerUpdateCmd() *cobra.Command {
 	fs.StringVarP(&gslbServerUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbServerUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &gslbServerUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(gslbServerUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, gslbServerUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -535,7 +535,7 @@ func gslbServerDeleteCmd() *cobra.Command {
 	fs.StringVarP(&gslbServerDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbServerDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &gslbServerDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(gslbServerDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, gslbServerDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -626,7 +626,7 @@ func gslbUpdateCmd() *cobra.Command {
 	fs.StringVarP(&gslbUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &gslbUpdateParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(gslbUpdateFlagOrder(cmd)))
+	buildFlagsUsage(cmd, gslbUpdateFlagOrder(cmd))
 	return cmd
 }
 
@@ -705,7 +705,7 @@ func gslbDeleteCmd() *cobra.Command {
 	fs.StringVarP(&gslbDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&gslbDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &gslbDeleteParam.Id), "id", "", "Set target ID")
-	setFlagsUsage(cmd, buildFlagsUsage(gslbDeleteFlagOrder(cmd)))
+	buildFlagsUsage(cmd, gslbDeleteFlagOrder(cmd))
 	return cmd
 }
 
@@ -720,5 +720,6 @@ func init() {
 	parent.AddCommand(gslbServerDeleteCmd())
 	parent.AddCommand(gslbUpdateCmd())
 	parent.AddCommand(gslbDeleteCmd())
+	buildCommandsUsage(parent, gslbCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

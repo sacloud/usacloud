@@ -76,12 +76,13 @@ func couponListCmd() *cobra.Command {
 	fs.StringVarP(&couponListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&couponListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&couponListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(couponListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, couponListFlagOrder(cmd))
 	return cmd
 }
 
 func init() {
 	parent := couponCmd()
 	parent.AddCommand(couponListCmd())
+	buildCommandsUsage(parent, couponCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

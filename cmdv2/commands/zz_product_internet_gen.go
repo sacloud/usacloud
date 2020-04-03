@@ -84,7 +84,7 @@ func productInternetListCmd() *cobra.Command {
 	fs.StringVarP(&productInternetListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&productInternetListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&productInternetListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(productInternetListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, productInternetListFlagOrder(cmd))
 	return cmd
 }
 
@@ -142,7 +142,7 @@ func productInternetReadCmd() *cobra.Command {
 	fs.StringVarP(&productInternetReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&productInternetReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &productInternetReadParam.Id), "id", "", "set resource ID")
-	setFlagsUsage(cmd, buildFlagsUsage(productInternetReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, productInternetReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -150,5 +150,6 @@ func init() {
 	parent := productInternetCmd()
 	parent.AddCommand(productInternetListCmd())
 	parent.AddCommand(productInternetReadCmd())
+	buildCommandsUsage(parent, productInternetCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }

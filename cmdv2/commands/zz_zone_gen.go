@@ -84,7 +84,7 @@ func zoneListCmd() *cobra.Command {
 	fs.StringVarP(&zoneListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&zoneListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&zoneListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
-	setFlagsUsage(cmd, buildFlagsUsage(zoneListFlagOrder(cmd)))
+	buildFlagsUsage(cmd, zoneListFlagOrder(cmd))
 	return cmd
 }
 
@@ -142,7 +142,7 @@ func zoneReadCmd() *cobra.Command {
 	fs.StringVarP(&zoneReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&zoneReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &zoneReadParam.Id), "id", "", "set resource ID")
-	setFlagsUsage(cmd, buildFlagsUsage(zoneReadFlagOrder(cmd)))
+	buildFlagsUsage(cmd, zoneReadFlagOrder(cmd))
 	return cmd
 }
 
@@ -150,5 +150,6 @@ func init() {
 	parent := zoneCmd()
 	parent.AddCommand(zoneListCmd())
 	parent.AddCommand(zoneReadCmd())
+	buildCommandsUsage(parent, zoneCommandOrder(parent))
 	rootCmd.AddCommand(parent)
 }
