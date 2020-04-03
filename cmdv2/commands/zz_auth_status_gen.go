@@ -78,10 +78,3 @@ func authStatusShowCmd() *cobra.Command {
 	buildFlagsUsage(cmd, authStatusShowFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := authStatusCmd()
-	parent.AddCommand(authStatusShowCmd())
-	buildCommandsUsage(parent, authStatusCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

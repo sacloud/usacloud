@@ -388,14 +388,3 @@ func autoBackupDeleteCmd() *cobra.Command {
 	buildFlagsUsage(cmd, autoBackupDeleteFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := autoBackupCmd()
-	parent.AddCommand(autoBackupListCmd())
-	parent.AddCommand(autoBackupCreateCmd())
-	parent.AddCommand(autoBackupReadCmd())
-	parent.AddCommand(autoBackupUpdateCmd())
-	parent.AddCommand(autoBackupDeleteCmd())
-	buildCommandsUsage(parent, autoBackupCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

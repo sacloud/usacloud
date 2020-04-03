@@ -307,14 +307,3 @@ func ipv6PtrDeleteCmd() *cobra.Command {
 	buildFlagsUsage(cmd, ipv6PtrDeleteFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := ipv6Cmd()
-	parent.AddCommand(ipv6ListCmd())
-	parent.AddCommand(ipv6PtrAddCmd())
-	parent.AddCommand(ipv6PtrReadCmd())
-	parent.AddCommand(ipv6PtrUpdateCmd())
-	parent.AddCommand(ipv6PtrDeleteCmd())
-	buildCommandsUsage(parent, ipv6CommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

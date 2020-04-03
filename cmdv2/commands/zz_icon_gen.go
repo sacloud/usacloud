@@ -381,14 +381,3 @@ func iconDeleteCmd() *cobra.Command {
 	buildFlagsUsage(cmd, iconDeleteFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := iconCmd()
-	parent.AddCommand(iconListCmd())
-	parent.AddCommand(iconCreateCmd())
-	parent.AddCommand(iconReadCmd())
-	parent.AddCommand(iconUpdateCmd())
-	parent.AddCommand(iconDeleteCmd())
-	buildCommandsUsage(parent, iconCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

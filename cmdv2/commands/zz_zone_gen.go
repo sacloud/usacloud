@@ -145,11 +145,3 @@ func zoneReadCmd() *cobra.Command {
 	buildFlagsUsage(cmd, zoneReadFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := zoneCmd()
-	parent.AddCommand(zoneListCmd())
-	parent.AddCommand(zoneReadCmd())
-	buildCommandsUsage(parent, zoneCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

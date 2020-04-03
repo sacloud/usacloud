@@ -84,10 +84,3 @@ func priceListCmd() *cobra.Command {
 	buildFlagsUsage(cmd, priceListFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := priceCmd()
-	parent.AddCommand(priceListCmd())
-	buildCommandsUsage(parent, priceCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

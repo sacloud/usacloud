@@ -318,16 +318,3 @@ func configUseCmd() *cobra.Command {
 	buildFlagsUsage(cmd, configUseFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := configCmd()
-	parent.AddCommand(configCurrentCmd())
-	parent.AddCommand(configDeleteCmd())
-	parent.AddCommand(configEditCmd())
-	parent.AddCommand(configListCmd())
-	parent.AddCommand(configMigrateCmd())
-	parent.AddCommand(configShowCmd())
-	parent.AddCommand(configUseCmd())
-	buildCommandsUsage(parent, configCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

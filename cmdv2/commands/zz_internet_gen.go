@@ -1065,23 +1065,3 @@ func internetMonitorCmd() *cobra.Command {
 	buildFlagsUsage(cmd, internetMonitorFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := internetCmd()
-	parent.AddCommand(internetListCmd())
-	parent.AddCommand(internetCreateCmd())
-	parent.AddCommand(internetReadCmd())
-	parent.AddCommand(internetUpdateCmd())
-	parent.AddCommand(internetDeleteCmd())
-	parent.AddCommand(internetUpdateBandwidthCmd())
-	parent.AddCommand(internetSubnetInfoCmd())
-	parent.AddCommand(internetSubnetAddCmd())
-	parent.AddCommand(internetSubnetDeleteCmd())
-	parent.AddCommand(internetSubnetUpdateCmd())
-	parent.AddCommand(internetIPv6InfoCmd())
-	parent.AddCommand(internetIPv6EnableCmd())
-	parent.AddCommand(internetIPv6DisableCmd())
-	parent.AddCommand(internetMonitorCmd())
-	buildCommandsUsage(parent, internetCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

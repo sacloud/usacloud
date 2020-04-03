@@ -1065,23 +1065,3 @@ func diskWaitForCopyCmd() *cobra.Command {
 	buildFlagsUsage(cmd, diskWaitForCopyFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := diskCmd()
-	parent.AddCommand(diskListCmd())
-	parent.AddCommand(diskCreateCmd())
-	parent.AddCommand(diskReadCmd())
-	parent.AddCommand(diskUpdateCmd())
-	parent.AddCommand(diskDeleteCmd())
-	parent.AddCommand(diskEditCmd())
-	parent.AddCommand(diskResizePartitionCmd())
-	parent.AddCommand(diskReinstallFromArchiveCmd())
-	parent.AddCommand(diskReinstallFromDiskCmd())
-	parent.AddCommand(diskReinstallToBlankCmd())
-	parent.AddCommand(diskServerConnectCmd())
-	parent.AddCommand(diskServerDisconnectCmd())
-	parent.AddCommand(diskMonitorCmd())
-	parent.AddCommand(diskWaitForCopyCmd())
-	buildCommandsUsage(parent, diskCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

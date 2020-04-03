@@ -1486,29 +1486,3 @@ func loadBalancerMonitorCmd() *cobra.Command {
 	buildFlagsUsage(cmd, loadBalancerMonitorFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := loadBalancerCmd()
-	parent.AddCommand(loadBalancerListCmd())
-	parent.AddCommand(loadBalancerCreateCmd())
-	parent.AddCommand(loadBalancerReadCmd())
-	parent.AddCommand(loadBalancerUpdateCmd())
-	parent.AddCommand(loadBalancerDeleteCmd())
-	parent.AddCommand(loadBalancerBootCmd())
-	parent.AddCommand(loadBalancerShutdownCmd())
-	parent.AddCommand(loadBalancerShutdownForceCmd())
-	parent.AddCommand(loadBalancerResetCmd())
-	parent.AddCommand(loadBalancerWaitForBootCmd())
-	parent.AddCommand(loadBalancerWaitForDownCmd())
-	parent.AddCommand(loadBalancerVipInfoCmd())
-	parent.AddCommand(loadBalancerVipAddCmd())
-	parent.AddCommand(loadBalancerVipUpdateCmd())
-	parent.AddCommand(loadBalancerVipDeleteCmd())
-	parent.AddCommand(loadBalancerServerInfoCmd())
-	parent.AddCommand(loadBalancerServerAddCmd())
-	parent.AddCommand(loadBalancerServerUpdateCmd())
-	parent.AddCommand(loadBalancerServerDeleteCmd())
-	parent.AddCommand(loadBalancerMonitorCmd())
-	buildCommandsUsage(parent, loadBalancerCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

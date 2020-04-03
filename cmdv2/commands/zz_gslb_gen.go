@@ -715,18 +715,3 @@ func gslbDeleteCmd() *cobra.Command {
 	buildFlagsUsage(cmd, gslbDeleteFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := gslbCmd()
-	parent.AddCommand(gslbListCmd())
-	parent.AddCommand(gslbServerInfoCmd())
-	parent.AddCommand(gslbCreateCmd())
-	parent.AddCommand(gslbServerAddCmd())
-	parent.AddCommand(gslbReadCmd())
-	parent.AddCommand(gslbServerUpdateCmd())
-	parent.AddCommand(gslbServerDeleteCmd())
-	parent.AddCommand(gslbUpdateCmd())
-	parent.AddCommand(gslbDeleteCmd())
-	buildCommandsUsage(parent, gslbCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

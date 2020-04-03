@@ -613,17 +613,3 @@ func privateHostServerDeleteCmd() *cobra.Command {
 	buildFlagsUsage(cmd, privateHostServerDeleteFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := privateHostCmd()
-	parent.AddCommand(privateHostListCmd())
-	parent.AddCommand(privateHostCreateCmd())
-	parent.AddCommand(privateHostReadCmd())
-	parent.AddCommand(privateHostUpdateCmd())
-	parent.AddCommand(privateHostDeleteCmd())
-	parent.AddCommand(privateHostServerInfoCmd())
-	parent.AddCommand(privateHostServerAddCmd())
-	parent.AddCommand(privateHostServerDeleteCmd())
-	buildCommandsUsage(parent, privateHostCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

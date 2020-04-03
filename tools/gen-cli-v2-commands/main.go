@@ -172,13 +172,4 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 	return cmd
 }
 {{ end }}
-
-func init() {
-	parent := {{ .CLIVariableFuncName }}()
-{{ range .Commands -}}
-	parent.AddCommand({{ .CLIVariableFuncName }}())
-{{ end -}}
-	buildCommandsUsage(parent, {{ .CommandOrderFunc }}(parent))
-	rootCmd.AddCommand(parent)
-}
 `

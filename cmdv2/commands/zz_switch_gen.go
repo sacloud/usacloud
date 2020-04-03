@@ -530,16 +530,3 @@ func switchBridgeDisconnectCmd() *cobra.Command {
 	buildFlagsUsage(cmd, switchBridgeDisconnectFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := switchCmd()
-	parent.AddCommand(switchListCmd())
-	parent.AddCommand(switchCreateCmd())
-	parent.AddCommand(switchReadCmd())
-	parent.AddCommand(switchUpdateCmd())
-	parent.AddCommand(switchDeleteCmd())
-	parent.AddCommand(switchBridgeConnectCmd())
-	parent.AddCommand(switchBridgeDisconnectCmd())
-	buildCommandsUsage(parent, switchCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

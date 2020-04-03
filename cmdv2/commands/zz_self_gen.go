@@ -71,10 +71,3 @@ func selfInfoCmd() *cobra.Command {
 	buildFlagsUsage(cmd, selfInfoFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := selfCmd()
-	parent.AddCommand(selfInfoCmd())
-	buildCommandsUsage(parent, selfCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

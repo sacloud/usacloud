@@ -946,22 +946,3 @@ func nfsMonitorFreeDiskSizeCmd() *cobra.Command {
 	buildFlagsUsage(cmd, nfsMonitorFreeDiskSizeFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := nfsCmd()
-	parent.AddCommand(nfsListCmd())
-	parent.AddCommand(nfsCreateCmd())
-	parent.AddCommand(nfsReadCmd())
-	parent.AddCommand(nfsUpdateCmd())
-	parent.AddCommand(nfsDeleteCmd())
-	parent.AddCommand(nfsBootCmd())
-	parent.AddCommand(nfsShutdownCmd())
-	parent.AddCommand(nfsShutdownForceCmd())
-	parent.AddCommand(nfsResetCmd())
-	parent.AddCommand(nfsWaitForBootCmd())
-	parent.AddCommand(nfsWaitForDownCmd())
-	parent.AddCommand(nfsMonitorNicCmd())
-	parent.AddCommand(nfsMonitorFreeDiskSizeCmd())
-	buildCommandsUsage(parent, nfsCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

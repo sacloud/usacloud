@@ -235,13 +235,3 @@ func objectStorageDeleteCmd() *cobra.Command {
 	buildFlagsUsage(cmd, objectStorageDeleteFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := objectStorageCmd()
-	parent.AddCommand(objectStorageListCmd())
-	parent.AddCommand(objectStoragePutCmd())
-	parent.AddCommand(objectStorageGetCmd())
-	parent.AddCommand(objectStorageDeleteCmd())
-	buildCommandsUsage(parent, objectStorageCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

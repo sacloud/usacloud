@@ -374,14 +374,3 @@ func licenseDeleteCmd() *cobra.Command {
 	buildFlagsUsage(cmd, licenseDeleteFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := licenseCmd()
-	parent.AddCommand(licenseListCmd())
-	parent.AddCommand(licenseCreateCmd())
-	parent.AddCommand(licenseReadCmd())
-	parent.AddCommand(licenseUpdateCmd())
-	parent.AddCommand(licenseDeleteCmd())
-	buildCommandsUsage(parent, licenseCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

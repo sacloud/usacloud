@@ -444,15 +444,3 @@ func webAccelDeleteCacheCmd() *cobra.Command {
 	buildFlagsUsage(cmd, webAccelDeleteCacheFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := webAccelCmd()
-	parent.AddCommand(webAccelListCmd())
-	parent.AddCommand(webAccelReadCmd())
-	parent.AddCommand(webAccelCertificateInfoCmd())
-	parent.AddCommand(webAccelCertificateNewCmd())
-	parent.AddCommand(webAccelCertificateUpdateCmd())
-	parent.AddCommand(webAccelDeleteCacheCmd())
-	buildCommandsUsage(parent, webAccelCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

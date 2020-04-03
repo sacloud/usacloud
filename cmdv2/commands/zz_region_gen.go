@@ -145,11 +145,3 @@ func regionReadCmd() *cobra.Command {
 	buildFlagsUsage(cmd, regionReadFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := regionCmd()
-	parent.AddCommand(regionListCmd())
-	parent.AddCommand(regionReadCmd())
-	buildCommandsUsage(parent, regionCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

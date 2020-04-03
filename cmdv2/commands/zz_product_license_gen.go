@@ -145,11 +145,3 @@ func productLicenseReadCmd() *cobra.Command {
 	buildFlagsUsage(cmd, productLicenseReadFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := productLicenseCmd()
-	parent.AddCommand(productLicenseListCmd())
-	parent.AddCommand(productLicenseReadCmd())
-	buildCommandsUsage(parent, productLicenseCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

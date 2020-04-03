@@ -438,15 +438,3 @@ func sshKeyGenerateCmd() *cobra.Command {
 	buildFlagsUsage(cmd, sshKeyGenerateFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := sshKeyCmd()
-	parent.AddCommand(sshKeyListCmd())
-	parent.AddCommand(sshKeyCreateCmd())
-	parent.AddCommand(sshKeyReadCmd())
-	parent.AddCommand(sshKeyUpdateCmd())
-	parent.AddCommand(sshKeyDeleteCmd())
-	parent.AddCommand(sshKeyGenerateCmd())
-	buildCommandsUsage(parent, sshKeyCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

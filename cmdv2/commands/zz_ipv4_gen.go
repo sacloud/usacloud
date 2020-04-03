@@ -305,14 +305,3 @@ func ipv4PtrDeleteCmd() *cobra.Command {
 	buildFlagsUsage(cmd, ipv4PtrDeleteFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := ipv4Cmd()
-	parent.AddCommand(ipv4ListCmd())
-	parent.AddCommand(ipv4PtrAddCmd())
-	parent.AddCommand(ipv4PtrReadCmd())
-	parent.AddCommand(ipv4PtrUpdateCmd())
-	parent.AddCommand(ipv4PtrDeleteCmd())
-	buildCommandsUsage(parent, ipv4CommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

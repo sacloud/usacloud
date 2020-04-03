@@ -145,11 +145,3 @@ func productInternetReadCmd() *cobra.Command {
 	buildFlagsUsage(cmd, productInternetReadFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := productInternetCmd()
-	parent.AddCommand(productInternetListCmd())
-	parent.AddCommand(productInternetReadCmd())
-	buildCommandsUsage(parent, productInternetCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

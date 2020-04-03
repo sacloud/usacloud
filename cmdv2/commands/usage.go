@@ -25,9 +25,12 @@ import (
 const originalCommandsUsage = `Available Commands:{{range .Commands}}{{if (or .IsAvailableCommand (eq .Name "help"))}}
   {{rpad .Name .NamePadding }} {{.Short}}{{end}}{{end}}`
 
-const commandUsageTemplate = `%s Commands:
+const commandUsageTemplate = `  <%s>
 %s
 `
+
+const commandUsageWrapperTemplate = `Available Commands:
+%s`
 
 type commandSet struct {
 	title    string
@@ -35,7 +38,7 @@ type commandSet struct {
 }
 
 func (c *commandSet) CommandUsages() string {
-	line := "  %s %s"
+	line := "    %s %s"
 	var usages []string
 	for _, co := range c.commands {
 		if co.IsAvailableCommand() {
@@ -48,11 +51,12 @@ func (c *commandSet) CommandUsages() string {
 }
 
 func buildCommandsUsage(cmd *cobra.Command, commands []*commandSet) {
+	cmd.SetUsageTemplate("")
 	var usages []string
 	for _, c := range commands {
 		usages = append(usages, fmt.Sprintf(commandUsageTemplate, c.title, c.CommandUsages()))
 	}
-	usage := strings.TrimRight(strings.Join(usages, "\n"), "\n")
+	usage := fmt.Sprintf(commandUsageWrapperTemplate, strings.TrimRight(strings.Join(usages, "\n"), "\n"))
 	cmd.SetUsageTemplate(strings.Replace(cmd.UsageTemplate(), originalCommandsUsage, usage, 1))
 }
 
@@ -68,7 +72,10 @@ func lookupCmd(cmd *cobra.Command, name string) *cobra.Command {
 const originalFlagsUsage = `Flags:
 {{.LocalFlags.FlagUsages | trimTrailingWhitespaces}}`
 
-const flagsUsageTemplate = `%s:
+const flagsUsageTemplate = `  <%s>
+%s`
+
+const flagsUsageWrapperTemplate = `Flags:
 %s`
 
 type flagSet struct {
@@ -81,6 +88,6 @@ func buildFlagsUsage(cmd *cobra.Command, sets []*flagSet) {
 	for _, fs := range sets {
 		usages = append(usages, fmt.Sprintf(flagsUsageTemplate, fs.title, fs.flags.FlagUsages()))
 	}
-	usage := strings.TrimRight(strings.Join(usages, "\n"), "\n")
+	usage := fmt.Sprintf(flagsUsageWrapperTemplate, strings.TrimRight(strings.Join(usages, "\n"), "\n"))
 	cmd.SetUsageTemplate(strings.Replace(cmd.UsageTemplate(), originalFlagsUsage, usage, 1))
 }

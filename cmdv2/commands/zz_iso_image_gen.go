@@ -694,18 +694,3 @@ func isoImageFTPCloseCmd() *cobra.Command {
 	buildFlagsUsage(cmd, isoImageFTPCloseFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := isoImageCmd()
-	parent.AddCommand(isoImageListCmd())
-	parent.AddCommand(isoImageCreateCmd())
-	parent.AddCommand(isoImageReadCmd())
-	parent.AddCommand(isoImageUpdateCmd())
-	parent.AddCommand(isoImageDeleteCmd())
-	parent.AddCommand(isoImageUploadCmd())
-	parent.AddCommand(isoImageDownloadCmd())
-	parent.AddCommand(isoImageFTPOpenCmd())
-	parent.AddCommand(isoImageFTPCloseCmd())
-	buildCommandsUsage(parent, isoImageCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

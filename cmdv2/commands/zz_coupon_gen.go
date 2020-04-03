@@ -79,10 +79,3 @@ func couponListCmd() *cobra.Command {
 	buildFlagsUsage(cmd, couponListFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := couponCmd()
-	parent.AddCommand(couponListCmd())
-	buildCommandsUsage(parent, couponCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

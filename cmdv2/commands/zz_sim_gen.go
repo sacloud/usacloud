@@ -1105,24 +1105,3 @@ func simMonitorCmd() *cobra.Command {
 	buildFlagsUsage(cmd, simMonitorFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := simCmd()
-	parent.AddCommand(simListCmd())
-	parent.AddCommand(simCreateCmd())
-	parent.AddCommand(simReadCmd())
-	parent.AddCommand(simUpdateCmd())
-	parent.AddCommand(simDeleteCmd())
-	parent.AddCommand(simCarrierInfoCmd())
-	parent.AddCommand(simCarrierUpdateCmd())
-	parent.AddCommand(simActivateCmd())
-	parent.AddCommand(simDeactivateCmd())
-	parent.AddCommand(simImeiLockCmd())
-	parent.AddCommand(simIpAddCmd())
-	parent.AddCommand(simImeiUnlockCmd())
-	parent.AddCommand(simIpDeleteCmd())
-	parent.AddCommand(simLogsCmd())
-	parent.AddCommand(simMonitorCmd())
-	buildCommandsUsage(parent, simCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

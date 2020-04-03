@@ -794,19 +794,3 @@ func dnsDeleteCmd() *cobra.Command {
 	buildFlagsUsage(cmd, dnsDeleteFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := dnsCmd()
-	parent.AddCommand(dnsListCmd())
-	parent.AddCommand(dnsRecordInfoCmd())
-	parent.AddCommand(dnsRecordBulkUpdateCmd())
-	parent.AddCommand(dnsCreateCmd())
-	parent.AddCommand(dnsRecordAddCmd())
-	parent.AddCommand(dnsReadCmd())
-	parent.AddCommand(dnsRecordUpdateCmd())
-	parent.AddCommand(dnsRecordDeleteCmd())
-	parent.AddCommand(dnsUpdateCmd())
-	parent.AddCommand(dnsDeleteCmd())
-	buildCommandsUsage(parent, dnsCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

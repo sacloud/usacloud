@@ -389,14 +389,3 @@ func startupScriptDeleteCmd() *cobra.Command {
 	buildFlagsUsage(cmd, startupScriptDeleteFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := startupScriptCmd()
-	parent.AddCommand(startupScriptListCmd())
-	parent.AddCommand(startupScriptCreateCmd())
-	parent.AddCommand(startupScriptReadCmd())
-	parent.AddCommand(startupScriptUpdateCmd())
-	parent.AddCommand(startupScriptDeleteCmd())
-	buildCommandsUsage(parent, startupScriptCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

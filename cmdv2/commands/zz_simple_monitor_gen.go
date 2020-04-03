@@ -485,15 +485,3 @@ func simpleMonitorHealthCmd() *cobra.Command {
 	buildFlagsUsage(cmd, simpleMonitorHealthFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := simpleMonitorCmd()
-	parent.AddCommand(simpleMonitorListCmd())
-	parent.AddCommand(simpleMonitorCreateCmd())
-	parent.AddCommand(simpleMonitorReadCmd())
-	parent.AddCommand(simpleMonitorUpdateCmd())
-	parent.AddCommand(simpleMonitorDeleteCmd())
-	parent.AddCommand(simpleMonitorHealthCmd())
-	buildCommandsUsage(parent, simpleMonitorCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

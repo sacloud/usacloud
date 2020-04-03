@@ -840,20 +840,3 @@ func packetFilterInterfaceDisconnectCmd() *cobra.Command {
 	buildFlagsUsage(cmd, packetFilterInterfaceDisconnectFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := packetFilterCmd()
-	parent.AddCommand(packetFilterListCmd())
-	parent.AddCommand(packetFilterCreateCmd())
-	parent.AddCommand(packetFilterReadCmd())
-	parent.AddCommand(packetFilterUpdateCmd())
-	parent.AddCommand(packetFilterDeleteCmd())
-	parent.AddCommand(packetFilterRuleInfoCmd())
-	parent.AddCommand(packetFilterRuleAddCmd())
-	parent.AddCommand(packetFilterRuleUpdateCmd())
-	parent.AddCommand(packetFilterRuleDeleteCmd())
-	parent.AddCommand(packetFilterInterfaceConnectCmd())
-	parent.AddCommand(packetFilterInterfaceDisconnectCmd())
-	buildCommandsUsage(parent, packetFilterCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

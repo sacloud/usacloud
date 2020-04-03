@@ -375,14 +375,3 @@ func bridgeDeleteCmd() *cobra.Command {
 	buildFlagsUsage(cmd, bridgeDeleteFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := bridgeCmd()
-	parent.AddCommand(bridgeListCmd())
-	parent.AddCommand(bridgeCreateCmd())
-	parent.AddCommand(bridgeReadCmd())
-	parent.AddCommand(bridgeUpdateCmd())
-	parent.AddCommand(bridgeDeleteCmd())
-	buildCommandsUsage(parent, bridgeCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

@@ -759,19 +759,3 @@ func archiveWaitForCopyCmd() *cobra.Command {
 	buildFlagsUsage(cmd, archiveWaitForCopyFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := archiveCmd()
-	parent.AddCommand(archiveListCmd())
-	parent.AddCommand(archiveCreateCmd())
-	parent.AddCommand(archiveReadCmd())
-	parent.AddCommand(archiveUpdateCmd())
-	parent.AddCommand(archiveDeleteCmd())
-	parent.AddCommand(archiveUploadCmd())
-	parent.AddCommand(archiveDownloadCmd())
-	parent.AddCommand(archiveFTPOpenCmd())
-	parent.AddCommand(archiveFTPCloseCmd())
-	parent.AddCommand(archiveWaitForCopyCmd())
-	buildCommandsUsage(parent, archiveCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

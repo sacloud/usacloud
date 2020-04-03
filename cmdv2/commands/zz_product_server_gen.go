@@ -145,11 +145,3 @@ func productServerReadCmd() *cobra.Command {
 	buildFlagsUsage(cmd, productServerReadFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := productServerCmd()
-	parent.AddCommand(productServerListCmd())
-	parent.AddCommand(productServerReadCmd())
-	buildCommandsUsage(parent, productServerCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

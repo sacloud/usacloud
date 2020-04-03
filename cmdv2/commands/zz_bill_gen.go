@@ -121,11 +121,3 @@ func billListCmd() *cobra.Command {
 	buildFlagsUsage(cmd, billListFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := billCmd()
-	parent.AddCommand(billCsvCmd())
-	parent.AddCommand(billListCmd())
-	buildCommandsUsage(parent, billCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

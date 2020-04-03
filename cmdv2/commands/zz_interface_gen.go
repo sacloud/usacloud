@@ -519,16 +519,3 @@ func interfaceDeleteCmd() *cobra.Command {
 	buildFlagsUsage(cmd, interfaceDeleteFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := interfaceCmd()
-	parent.AddCommand(interfaceListCmd())
-	parent.AddCommand(interfacePacketFilterConnectCmd())
-	parent.AddCommand(interfaceCreateCmd())
-	parent.AddCommand(interfacePacketFilterDisconnectCmd())
-	parent.AddCommand(interfaceReadCmd())
-	parent.AddCommand(interfaceUpdateCmd())
-	parent.AddCommand(interfaceDeleteCmd())
-	buildCommandsUsage(parent, interfaceCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

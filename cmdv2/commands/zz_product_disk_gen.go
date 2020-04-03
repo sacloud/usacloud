@@ -145,11 +145,3 @@ func productDiskReadCmd() *cobra.Command {
 	buildFlagsUsage(cmd, productDiskReadFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := productDiskCmd()
-	parent.AddCommand(productDiskListCmd())
-	parent.AddCommand(productDiskReadCmd())
-	buildCommandsUsage(parent, productDiskCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}

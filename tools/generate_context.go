@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"go/build"
 	"path/filepath"
+	"sort"
 
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/schema"
@@ -30,6 +31,12 @@ type GenerateContext struct {
 	P           string
 	ResourceDef map[string]*schema.Resource
 	// for v1
+	Resources            []*Resource
+	CategorizedResources []*CategorizedResources
+}
+
+type CategorizedResources struct {
+	*schema.Category
 	Resources []*Resource
 }
 
@@ -40,7 +47,30 @@ func NewGenerateContext() *GenerateContext {
 	for rn, r := range define.Resources {
 		ctx.Resources = append(ctx.Resources, NewResource(rn, r))
 	}
+	ctx.buildCategorizedResources()
 	return ctx
+}
+
+func (c *GenerateContext) buildCategorizedResources() {
+	m := map[string]*CategorizedResources{}
+	for _, r := range c.Resources {
+		c := &r.ResourceCategory
+		cr, ok := m[c.Key]
+		if !ok {
+			cr = &CategorizedResources{
+				Category: c,
+			}
+		}
+		cr.Resources = append(cr.Resources, r)
+		m[c.Key] = cr
+	}
+	c.CategorizedResources = []*CategorizedResources{}
+	for _, cat := range m {
+		c.CategorizedResources = append(c.CategorizedResources, cat)
+	}
+	sort.Slice(c.CategorizedResources, func(i, j int) bool {
+		return c.CategorizedResources[i].Order < c.CategorizedResources[j].Order
+	})
 }
 
 func (c *GenerateContext) SetCurrentR(k string) {

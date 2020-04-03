@@ -79,10 +79,3 @@ func summaryShowCmd() *cobra.Command {
 	buildFlagsUsage(cmd, summaryShowFlagOrder(cmd))
 	return cmd
 }
-
-func init() {
-	parent := summaryCmd()
-	parent.AddCommand(summaryShowCmd())
-	buildCommandsUsage(parent, summaryCommandOrder(parent))
-	rootCmd.AddCommand(parent)
-}
