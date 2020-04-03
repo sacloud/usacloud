@@ -67,35 +67,3 @@ func (v *idSliceValue) Set(ids string) error {
 func (v *idSliceValue) Type() string {
 	return "sacloud.IDSlice"
 }
-
-//type int64SliceValue []int64
-//
-//func newInt64SliceValue(val []int64, p *[]int64) *int64SliceValue {
-//	*p = val
-//	return (*int64SliceValue)(p)
-//}
-//
-//func (v *int64SliceValue) String() string {
-//	var ids []string
-//	for _, id := range []int64(*v) {
-//		ids = append(ids, fmt.Sprintf("%d", id))
-//	}
-//	return strings.Join(ids, ",")
-//}
-//
-//func (v *int64SliceValue) Set(ids string) error {
-//	values := strings.Split(ids, ",")
-//	*v = []int64{}
-//	for _, val := range values {
-//		id, err := strconv.ParseInt(val, 10, 64)
-//		if err != nil {
-//			return err
-//		}
-//		*v = append(*v, id)
-//	}
-//	return nil
-//}
-//
-//func (v *int64SliceValue) Type() string {
-//	return "sacloud.IDSlice"
-//}

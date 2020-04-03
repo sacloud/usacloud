@@ -853,21 +853,21 @@ func proxyLBResponseHeaderUpdateFlagOrder(cmd *cobra.Command) []*flagSet {
 	var sets []*flagSet
 	{
 		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("server", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("index"))
+		sets = append(sets, &flagSet{
+			title: "Server options",
+			flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("response-header", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("port-index"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("header"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("value"))
 		sets = append(sets, &flagSet{
 			title: "Response-Header options",
-			flags: fs,
-		})
-	}
-	{
-		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("server", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("index"))
-		sets = append(sets, &flagSet{
-			title: "Server options",
 			flags: fs,
 		})
 	}

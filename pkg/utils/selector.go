@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package commands
+package utils
 
-func hasTags(target interface{}, tags []string) bool {
+func HasTags(target interface{}, tags []string) bool {
 	type tagHandler interface {
 		HasTag(target string) bool
 	}
