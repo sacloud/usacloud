@@ -187,6 +187,7 @@ func nfsReadCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -265,6 +266,7 @@ func nfsUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -348,6 +350,7 @@ func nfsDeleteCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -428,6 +431,7 @@ func nfsBootCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -500,6 +504,7 @@ func nfsShutdownCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -572,6 +577,7 @@ func nfsShutdownForceCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -644,6 +650,7 @@ func nfsResetCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -705,6 +712,7 @@ func nfsWaitForBootCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -765,6 +773,7 @@ func nfsWaitForDownCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -825,6 +834,7 @@ func nfsMonitorNicCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -895,6 +905,7 @@ func nfsMonitorFreeDiskSizeCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {

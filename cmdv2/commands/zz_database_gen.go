@@ -196,6 +196,7 @@ func databaseReadCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -274,6 +275,7 @@ func databaseUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -366,6 +368,7 @@ func databaseDeleteCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -446,6 +449,7 @@ func databaseBootCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -518,6 +522,7 @@ func databaseShutdownCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -590,6 +595,7 @@ func databaseShutdownForceCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -662,6 +668,7 @@ func databaseResetCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -723,6 +730,7 @@ func databaseWaitForBootCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -783,6 +791,7 @@ func databaseWaitForDownCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -843,6 +852,7 @@ func databaseBackupInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -921,6 +931,7 @@ func databaseBackupCreateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -999,6 +1010,7 @@ func databaseBackupRestoreCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1078,6 +1090,7 @@ func databaseBackupLockCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1157,6 +1170,7 @@ func databaseBackupUnlockCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1236,6 +1250,7 @@ func databaseBackupRemoveCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1315,6 +1330,7 @@ func databaseCloneCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1409,6 +1425,7 @@ func databaseReplicaCreateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1484,6 +1501,7 @@ func databaseMonitorCPUCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1554,6 +1572,7 @@ func databaseMonitorMemoryCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1624,6 +1643,7 @@ func databaseMonitorNicCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1694,6 +1714,7 @@ func databaseMonitorSystemDiskCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1764,6 +1785,7 @@ func databaseMonitorBackupDiskCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1834,6 +1856,7 @@ func databaseMonitorSystemDiskSizeCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1904,6 +1927,7 @@ func databaseMonitorBackupDiskSizeCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1974,6 +1998,7 @@ func databaseLogsCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {

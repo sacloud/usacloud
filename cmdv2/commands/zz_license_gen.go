@@ -178,6 +178,7 @@ func licenseReadCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -255,6 +256,7 @@ func licenseUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -334,6 +336,7 @@ func licenseDeleteCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {

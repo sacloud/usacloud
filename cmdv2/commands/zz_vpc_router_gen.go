@@ -189,6 +189,7 @@ func vpcRouterReadCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -267,6 +268,7 @@ func vpcRouterUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -352,6 +354,7 @@ func vpcRouterDeleteCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -432,6 +435,7 @@ func vpcRouterBootCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -504,6 +508,7 @@ func vpcRouterShutdownCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -576,6 +581,7 @@ func vpcRouterShutdownForceCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -648,6 +654,7 @@ func vpcRouterResetCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -709,6 +716,7 @@ func vpcRouterWaitForBootCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -769,6 +777,7 @@ func vpcRouterWaitForDownCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -840,6 +849,7 @@ func vpcRouterEnableInternetConnectionCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -912,6 +922,7 @@ func vpcRouterDisableInternetConnectionCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -973,6 +984,7 @@ func vpcRouterInterfaceInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1051,6 +1063,7 @@ func vpcRouterInterfaceConnectCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1130,6 +1143,7 @@ func vpcRouterInterfaceUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1210,6 +1224,7 @@ func vpcRouterInterfaceDisconnectCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1273,6 +1288,7 @@ func vpcRouterStaticNatInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1351,6 +1367,7 @@ func vpcRouterStaticNatAddCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1426,6 +1443,7 @@ func vpcRouterStaticNatUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1502,6 +1520,7 @@ func vpcRouterStaticNatDeleteCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1564,6 +1583,7 @@ func vpcRouterPortForwardingInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1642,6 +1662,7 @@ func vpcRouterPortForwardingAddCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1719,6 +1740,7 @@ func vpcRouterPortForwardingUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1797,6 +1819,7 @@ func vpcRouterPortForwardingDeleteCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1859,6 +1882,7 @@ func vpcRouterFirewallInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -1939,6 +1963,7 @@ func vpcRouterFirewallAddCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -2021,6 +2046,7 @@ func vpcRouterFirewallUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -2104,6 +2130,7 @@ func vpcRouterFirewallDeleteCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -2168,6 +2195,7 @@ func vpcRouterDhcpServerInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -2246,6 +2274,7 @@ func vpcRouterDhcpServerAddCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -2322,6 +2351,7 @@ func vpcRouterDhcpServerUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -2398,6 +2428,7 @@ func vpcRouterDhcpServerDeleteCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -2460,6 +2491,7 @@ func vpcRouterDhcpStaticMappingInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -2538,6 +2570,7 @@ func vpcRouterDhcpStaticMappingAddCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -2612,6 +2645,7 @@ func vpcRouterDhcpStaticMappingUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -2687,6 +2721,7 @@ func vpcRouterDhcpStaticMappingDeleteCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -2749,6 +2784,7 @@ func vpcRouterPptpServerInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -2827,6 +2863,7 @@ func vpcRouterPptpServerUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -2891,6 +2928,7 @@ func vpcRouterL2TPServerInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -2969,6 +3007,7 @@ func vpcRouterL2TPServerUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -3034,6 +3073,7 @@ func vpcRouterUserInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -3112,6 +3152,7 @@ func vpcRouterUserAddCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -3186,6 +3227,7 @@ func vpcRouterUserUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -3261,6 +3303,7 @@ func vpcRouterUserDeleteCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -3323,6 +3366,7 @@ func vpcRouterSiteToSiteVPNInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -3401,6 +3445,7 @@ func vpcRouterSiteToSiteVPNAddCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -3478,6 +3523,7 @@ func vpcRouterSiteToSiteVPNUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -3556,6 +3602,7 @@ func vpcRouterSiteToSiteVPNDeleteCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -3618,6 +3665,7 @@ func vpcRouterSiteToSiteVPNPeersCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -3685,6 +3733,7 @@ func vpcRouterStaticRouteInfoCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -3763,6 +3812,7 @@ func vpcRouterStaticRouteAddCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -3837,6 +3887,7 @@ func vpcRouterStaticRouteUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -3912,6 +3963,7 @@ func vpcRouterStaticRouteDeleteCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -3974,6 +4026,7 @@ func vpcRouterMonitorCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -4045,6 +4098,7 @@ func vpcRouterLogsCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {

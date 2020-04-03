@@ -181,6 +181,7 @@ func iconReadCmd() *cobra.Command {
 				return err
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -259,6 +260,7 @@ func iconUpdateCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {
@@ -340,6 +342,7 @@ func iconDeleteCmd() *cobra.Command {
 				}
 			}
 
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _, id := range ids {

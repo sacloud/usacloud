@@ -914,6 +914,19 @@ func vpcRouterInterfaceUpdateFlagOrder(cmd *cobra.Command) []*flagSet {
 	var sets []*flagSet
 	{
 		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("ipaddress"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("ipaddress-1"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("ipaddress-2"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("alias"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("nw-masklen"))
+		sets = append(sets, &flagSet{
+			title: "Network options",
+			flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("operation", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("with-reboot"))
 		sets = append(sets, &flagSet{
@@ -928,19 +941,6 @@ func vpcRouterInterfaceUpdateFlagOrder(cmd *cobra.Command) []*flagSet {
 		fs.AddFlag(cmd.LocalFlags().Lookup("switch-id"))
 		sets = append(sets, &flagSet{
 			title: "Interface options",
-			flags: fs,
-		})
-	}
-	{
-		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("ipaddress"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("ipaddress-1"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("ipaddress-2"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("alias"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("nw-masklen"))
-		sets = append(sets, &flagSet{
-			title: "Network options",
 			flags: fs,
 		})
 	}

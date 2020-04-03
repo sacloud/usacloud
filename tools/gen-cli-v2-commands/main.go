@@ -139,6 +139,7 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 			{{ end }}
 
 			{{ if .MultipleArgToIdParams -}}
+			// TODO v1で置き換えるまでの暫定実装
 			var wg sync.WaitGroup
 			var errs []error
 			for _ , id := range ids {
