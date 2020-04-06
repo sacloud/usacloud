@@ -74,6 +74,9 @@ func (c *Command) buildCategorizedParams() {
 		c.CategorizedParams = append(c.CategorizedParams, cat)
 	}
 	sort.Slice(c.CategorizedParams, func(i, j int) bool {
+		if c.CategorizedParams[i].Order == c.CategorizedParams[j].Order {
+			return c.CategorizedParams[i].Key < c.CategorizedParams[j].Key
+		}
 		return c.CategorizedParams[i].Order < c.CategorizedParams[j].Order
 	})
 }

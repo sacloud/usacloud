@@ -117,19 +117,19 @@ func startupScriptCreateFlagOrder(cmd *cobra.Command) []*flagSet {
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("script-upload", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("script"))
+		fs = pflag.NewFlagSet("script-input", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("script-content"))
 		sets = append(sets, &flagSet{
-			title: "Script-Upload options",
+			title: "Script-Input options",
 			flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("script-input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("script-content"))
+		fs = pflag.NewFlagSet("script-upload", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("script"))
 		sets = append(sets, &flagSet{
-			title: "Script-Input options",
+			title: "Script-Upload options",
 			flags: fs,
 		})
 	}
@@ -242,19 +242,19 @@ func startupScriptUpdateFlagOrder(cmd *cobra.Command) []*flagSet {
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("script-upload", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("script"))
+		fs = pflag.NewFlagSet("script-input", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("script-content"))
 		sets = append(sets, &flagSet{
-			title: "Script-Upload options",
+			title: "Script-Input options",
 			flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("script-input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("script-content"))
+		fs = pflag.NewFlagSet("script-upload", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("script"))
 		sets = append(sets, &flagSet{
-			title: "Script-Input options",
+			title: "Script-Upload options",
 			flags: fs,
 		})
 	}

@@ -68,6 +68,9 @@ func (r *Resource) buildCategorizedCommands() {
 		r.CategorizedCommands = append(r.CategorizedCommands, cat)
 	}
 	sort.Slice(r.CategorizedCommands, func(i, j int) bool {
+		if r.CategorizedCommands[i].Order == r.CategorizedCommands[j].Order {
+			return r.CategorizedCommands[i].Key < r.CategorizedCommands[j].Key
+		}
 		return r.CategorizedCommands[i].Order < r.CategorizedCommands[j].Order
 	})
 }

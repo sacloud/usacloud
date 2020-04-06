@@ -1287,19 +1287,19 @@ func mobileGatewaySIMAddFlagOrder(cmd *cobra.Command) []*flagSet {
 	var sets []*flagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("ipaddress"))
+		fs = pflag.NewFlagSet("interface", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("sim-id"))
 		sets = append(sets, &flagSet{
-			title: "Network options",
+			title: "Interface options",
 			flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("interface", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("sim-id"))
+		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("ipaddress"))
 		sets = append(sets, &flagSet{
-			title: "Interface options",
+			title: "Network options",
 			flags: fs,
 		})
 	}
@@ -1343,19 +1343,19 @@ func mobileGatewaySIMUpdateFlagOrder(cmd *cobra.Command) []*flagSet {
 	var sets []*flagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("ipaddress"))
+		fs = pflag.NewFlagSet("interface", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("sim-id"))
 		sets = append(sets, &flagSet{
-			title: "Network options",
+			title: "Interface options",
 			flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("interface", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("sim-id"))
+		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("ipaddress"))
 		sets = append(sets, &flagSet{
-			title: "Interface options",
+			title: "Network options",
 			flags: fs,
 		})
 	}

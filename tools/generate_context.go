@@ -47,6 +47,16 @@ func NewGenerateContext() *GenerateContext {
 	for rn, r := range define.Resources {
 		ctx.Resources = append(ctx.Resources, NewResource(rn, r))
 	}
+	sort.Slice(ctx.Resources, func(i, j int) bool {
+		if ctx.Resources[i].ResourceCategory.Order == ctx.Resources[j].ResourceCategory.Order {
+			if ctx.Resources[i].ResourceCategory.Key == ctx.Resources[j].ResourceCategory.Key {
+				return ctx.Resources[i].Name < ctx.Resources[j].Name
+			}
+			return ctx.Resources[i].ResourceCategory.Key < ctx.Resources[j].ResourceCategory.Key
+		}
+		return ctx.Resources[i].ResourceCategory.Order < ctx.Resources[j].ResourceCategory.Order
+	})
+
 	ctx.buildCategorizedResources()
 	return ctx
 }
@@ -69,6 +79,9 @@ func (c *GenerateContext) buildCategorizedResources() {
 		c.CategorizedResources = append(c.CategorizedResources, cat)
 	}
 	sort.Slice(c.CategorizedResources, func(i, j int) bool {
+		if c.CategorizedResources[i].Order == c.CategorizedResources[j].Order {
+			return c.CategorizedResources[i].Key < c.CategorizedResources[j].Key
+		}
 		return c.CategorizedResources[i].Order < c.CategorizedResources[j].Order
 	})
 }

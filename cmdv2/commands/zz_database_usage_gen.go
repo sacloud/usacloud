@@ -958,18 +958,6 @@ func databaseCloneFlagOrder(cmd *cobra.Command) []*flagSet {
 	var sets []*flagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("port"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("ipaddress-1"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("nw-mask-len"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
-		sets = append(sets, &flagSet{
-			title: "Network options",
-			flags: fs,
-		})
-	}
-	{
-		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("database", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("switch-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
@@ -981,6 +969,18 @@ func databaseCloneFlagOrder(cmd *cobra.Command) []*flagSet {
 		fs.AddFlag(cmd.LocalFlags().Lookup("backup-time"))
 		sets = append(sets, &flagSet{
 			title: "Database options",
+			flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("port"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("ipaddress-1"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("nw-mask-len"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
+		sets = append(sets, &flagSet{
+			title: "Network options",
 			flags: fs,
 		})
 	}

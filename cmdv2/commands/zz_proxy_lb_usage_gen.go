@@ -592,15 +592,6 @@ func proxyLBBindPortUpdateFlagOrder(cmd *cobra.Command) []*flagSet {
 	var sets []*flagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("server", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("index"))
-		sets = append(sets, &flagSet{
-			title: "Server options",
-			flags: fs,
-		})
-	}
-	{
-		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("bind-port", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("mode"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("port"))
@@ -608,6 +599,15 @@ func proxyLBBindPortUpdateFlagOrder(cmd *cobra.Command) []*flagSet {
 		fs.AddFlag(cmd.LocalFlags().Lookup("support-http-2"))
 		sets = append(sets, &flagSet{
 			title: "Bind-Port options",
+			flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("server", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("index"))
+		sets = append(sets, &flagSet{
+			title: "Server options",
 			flags: fs,
 		})
 	}
