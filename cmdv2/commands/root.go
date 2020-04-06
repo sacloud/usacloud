@@ -15,7 +15,6 @@
 package commands
 
 import (
-	"log"
 	"os"
 
 	"github.com/spf13/pflag"
@@ -27,7 +26,6 @@ import (
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		log.Println(err)
 		os.Exit(1)
 	}
 }
