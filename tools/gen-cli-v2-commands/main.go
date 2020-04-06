@@ -101,6 +101,7 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 		{{ if .Aliases }}Aliases: []string{ {{ .AliasesLiteral }} },{{ end }}
 		Short: "{{ .Usage }}",
 		Long: ` + "`{{ .Usage }}`" + `,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return {{ .InputParameterVariable }}.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

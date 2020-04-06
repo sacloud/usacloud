@@ -43,10 +43,11 @@ func archiveCmd() *cobra.Command {
 func archiveListCmd() *cobra.Command {
 	archiveListParam := params.NewListArchiveParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List Archive",
-		Long:    `List Archive`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List Archive",
+		Long:         `List Archive`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return archiveListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -99,8 +100,9 @@ func archiveCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create Archive",
-		Long:  `Create Archive`,
+		Short:        "Create Archive",
+		Long:         `Create Archive`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return archiveCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -164,8 +166,9 @@ func archiveReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read Archive",
-		Long:  `Read Archive`,
+		Short:        "Read Archive",
+		Long:         `Read Archive`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return archiveReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -232,8 +235,9 @@ func archiveUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update Archive",
-		Long:  `Update Archive`,
+		Short:        "Update Archive",
+		Long:         `Update Archive`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return archiveUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -314,10 +318,11 @@ func archiveUpdateCmd() *cobra.Command {
 func archiveDeleteCmd() *cobra.Command {
 	archiveDeleteParam := params.NewDeleteArchiveParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete Archive",
-		Long:    `Delete Archive`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete Archive",
+		Long:         `Delete Archive`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return archiveDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -396,8 +401,9 @@ func archiveUploadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "upload",
 
-		Short: "Upload Archive",
-		Long:  `Upload Archive`,
+		Short:        "Upload Archive",
+		Long:         `Upload Archive`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return archiveUploadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -477,8 +483,9 @@ func archiveDownloadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "download",
 
-		Short: "Download Archive",
-		Long:  `Download Archive`,
+		Short:        "Download Archive",
+		Long:         `Download Archive`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return archiveDownloadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -551,8 +558,9 @@ func archiveFTPOpenCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ftp-open",
 
-		Short: "FTPOpen Archive",
-		Long:  `FTPOpen Archive`,
+		Short:        "FTPOpen Archive",
+		Long:         `FTPOpen Archive`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return archiveFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -631,8 +639,9 @@ func archiveFTPCloseCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ftp-close",
 
-		Short: "FTPClose Archive",
-		Long:  `FTPClose Archive`,
+		Short:        "FTPClose Archive",
+		Long:         `FTPClose Archive`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return archiveFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -704,8 +713,9 @@ func archiveWaitForCopyCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "wait-for-copy",
 
-		Short: "WaitForCopy Archive",
-		Long:  `WaitForCopy Archive`,
+		Short:        "WaitForCopy Archive",
+		Long:         `WaitForCopy Archive`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return archiveWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

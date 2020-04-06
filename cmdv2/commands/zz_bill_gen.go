@@ -39,8 +39,9 @@ func billCsvCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "csv",
 
-		Short: "Csv Bill",
-		Long:  `Csv Bill`,
+		Short:        "Csv Bill",
+		Long:         `Csv Bill`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return billCsvParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -78,10 +79,11 @@ func billCsvCmd() *cobra.Command {
 func billListCmd() *cobra.Command {
 	billListParam := params.NewListBillParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List Bill (default)",
-		Long:    `List Bill (default)`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List Bill (default)",
+		Long:         `List Bill (default)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return billListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

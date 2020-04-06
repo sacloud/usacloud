@@ -37,10 +37,11 @@ func couponCmd() *cobra.Command {
 func couponListCmd() *cobra.Command {
 	couponListParam := params.NewListCouponParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List Coupon (default)",
-		Long:    `List Coupon (default)`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List Coupon (default)",
+		Long:         `List Coupon (default)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return couponListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

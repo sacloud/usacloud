@@ -43,10 +43,11 @@ func nfsCmd() *cobra.Command {
 func nfsListCmd() *cobra.Command {
 	nfsListParam := params.NewListNFSParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List NFS",
-		Long:    `List NFS`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List NFS",
+		Long:         `List NFS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return nfsListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -96,8 +97,9 @@ func nfsCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create NFS",
-		Long:  `Create NFS`,
+		Short:        "Create NFS",
+		Long:         `Create NFS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return nfsCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -163,8 +165,9 @@ func nfsReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read NFS",
-		Long:  `Read NFS`,
+		Short:        "Read NFS",
+		Long:         `Read NFS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return nfsReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -231,8 +234,9 @@ func nfsUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update NFS",
-		Long:  `Update NFS`,
+		Short:        "Update NFS",
+		Long:         `Update NFS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return nfsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -313,10 +317,11 @@ func nfsUpdateCmd() *cobra.Command {
 func nfsDeleteCmd() *cobra.Command {
 	nfsDeleteParam := params.NewDeleteNFSParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete NFS",
-		Long:    `Delete NFS`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete NFS",
+		Long:         `Delete NFS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return nfsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -394,10 +399,11 @@ func nfsDeleteCmd() *cobra.Command {
 func nfsBootCmd() *cobra.Command {
 	nfsBootParam := params.NewBootNFSParam()
 	cmd := &cobra.Command{
-		Use:     "boot",
-		Aliases: []string{"power-on"},
-		Short:   "Boot NFS",
-		Long:    `Boot NFS`,
+		Use:          "boot",
+		Aliases:      []string{"power-on"},
+		Short:        "Boot NFS",
+		Long:         `Boot NFS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return nfsBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -467,10 +473,11 @@ func nfsBootCmd() *cobra.Command {
 func nfsShutdownCmd() *cobra.Command {
 	nfsShutdownParam := params.NewShutdownNFSParam()
 	cmd := &cobra.Command{
-		Use:     "shutdown",
-		Aliases: []string{"power-off"},
-		Short:   "Shutdown NFS",
-		Long:    `Shutdown NFS`,
+		Use:          "shutdown",
+		Aliases:      []string{"power-off"},
+		Short:        "Shutdown NFS",
+		Long:         `Shutdown NFS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return nfsShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -540,10 +547,11 @@ func nfsShutdownCmd() *cobra.Command {
 func nfsShutdownForceCmd() *cobra.Command {
 	nfsShutdownForceParam := params.NewShutdownForceNFSParam()
 	cmd := &cobra.Command{
-		Use:     "shutdown-force",
-		Aliases: []string{"stop"},
-		Short:   "ShutdownForce NFS",
-		Long:    `ShutdownForce NFS`,
+		Use:          "shutdown-force",
+		Aliases:      []string{"stop"},
+		Short:        "ShutdownForce NFS",
+		Long:         `ShutdownForce NFS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return nfsShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -615,8 +623,9 @@ func nfsResetCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "reset",
 
-		Short: "Reset NFS",
-		Long:  `Reset NFS`,
+		Short:        "Reset NFS",
+		Long:         `Reset NFS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return nfsResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -688,8 +697,9 @@ func nfsWaitForBootCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "wait-for-boot",
 
-		Short: "Wait until boot is completed",
-		Long:  `Wait until boot is completed`,
+		Short:        "Wait until boot is completed",
+		Long:         `Wait until boot is completed`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return nfsWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -749,8 +759,9 @@ func nfsWaitForDownCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "wait-for-down",
 
-		Short: "Wait until shutdown is completed",
-		Long:  `Wait until shutdown is completed`,
+		Short:        "Wait until shutdown is completed",
+		Long:         `Wait until shutdown is completed`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return nfsWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -810,8 +821,9 @@ func nfsMonitorNicCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "monitor-nic",
 
-		Short: "Collect NIC(s) monitor values",
-		Long:  `Collect NIC(s) monitor values`,
+		Short:        "Collect NIC(s) monitor values",
+		Long:         `Collect NIC(s) monitor values`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return nfsMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -881,8 +893,9 @@ func nfsMonitorFreeDiskSizeCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "monitor-free-disk-size",
 
-		Short: "Collect system-disk monitor values(IO)",
-		Long:  `Collect system-disk monitor values(IO)`,
+		Short:        "Collect system-disk monitor values(IO)",
+		Long:         `Collect system-disk monitor values(IO)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return nfsMonitorFreeDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

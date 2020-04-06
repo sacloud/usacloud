@@ -41,10 +41,11 @@ func productDiskCmd() *cobra.Command {
 func productDiskListCmd() *cobra.Command {
 	productDiskListParam := params.NewListProductDiskParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List ProductDisk (default)",
-		Long:    `List ProductDisk (default)`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List ProductDisk (default)",
+		Long:         `List ProductDisk (default)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return productDiskListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -93,8 +94,9 @@ func productDiskReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read ProductDisk",
-		Long:  `Read ProductDisk`,
+		Short:        "Read ProductDisk",
+		Long:         `Read ProductDisk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return productDiskReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

@@ -43,10 +43,11 @@ func bridgeCmd() *cobra.Command {
 func bridgeListCmd() *cobra.Command {
 	bridgeListParam := params.NewListBridgeParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List Bridge",
-		Long:    `List Bridge`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List Bridge",
+		Long:         `List Bridge`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return bridgeListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -95,8 +96,9 @@ func bridgeCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create Bridge",
-		Long:  `Create Bridge`,
+		Short:        "Create Bridge",
+		Long:         `Create Bridge`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return bridgeCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -154,8 +156,9 @@ func bridgeReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read Bridge",
-		Long:  `Read Bridge`,
+		Short:        "Read Bridge",
+		Long:         `Read Bridge`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return bridgeReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -221,8 +224,9 @@ func bridgeUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update Bridge",
-		Long:  `Update Bridge`,
+		Short:        "Update Bridge",
+		Long:         `Update Bridge`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return bridgeUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -300,10 +304,11 @@ func bridgeUpdateCmd() *cobra.Command {
 func bridgeDeleteCmd() *cobra.Command {
 	bridgeDeleteParam := params.NewDeleteBridgeParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete Bridge",
-		Long:    `Delete Bridge`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete Bridge",
+		Long:         `Delete Bridge`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return bridgeDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

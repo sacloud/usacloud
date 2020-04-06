@@ -38,10 +38,11 @@ func priceCmd() *cobra.Command {
 func priceListCmd() *cobra.Command {
 	priceListParam := params.NewListPriceParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List Price (default)",
-		Long:    `List Price (default)`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List Price (default)",
+		Long:         `List Price (default)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return priceListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

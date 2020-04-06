@@ -43,10 +43,11 @@ func interfaceCmd() *cobra.Command {
 func interfaceListCmd() *cobra.Command {
 	interfaceListParam := params.NewListInterfaceParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List Interface",
-		Long:    `List Interface`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List Interface",
+		Long:         `List Interface`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return interfaceListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -95,8 +96,9 @@ func interfacePacketFilterConnectCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "packet-filter-connect",
 
-		Short: "PacketFilterConnect Interface",
-		Long:  `PacketFilterConnect Interface`,
+		Short:        "PacketFilterConnect Interface",
+		Long:         `PacketFilterConnect Interface`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return interfacePacketFilterConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -168,8 +170,9 @@ func interfaceCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create Interface",
-		Long:  `Create Interface`,
+		Short:        "Create Interface",
+		Long:         `Create Interface`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return interfaceCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -226,8 +229,9 @@ func interfacePacketFilterDisconnectCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "packet-filter-disconnect",
 
-		Short: "PacketFilterDisconnect Interface",
-		Long:  `PacketFilterDisconnect Interface`,
+		Short:        "PacketFilterDisconnect Interface",
+		Long:         `PacketFilterDisconnect Interface`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return interfacePacketFilterDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -299,8 +303,9 @@ func interfaceReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read Interface",
-		Long:  `Read Interface`,
+		Short:        "Read Interface",
+		Long:         `Read Interface`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return interfaceReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -366,8 +371,9 @@ func interfaceUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update Interface",
-		Long:  `Update Interface`,
+		Short:        "Update Interface",
+		Long:         `Update Interface`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return interfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -444,10 +450,11 @@ func interfaceUpdateCmd() *cobra.Command {
 func interfaceDeleteCmd() *cobra.Command {
 	interfaceDeleteParam := params.NewDeleteInterfaceParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete Interface",
-		Long:    `Delete Interface`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete Interface",
+		Long:         `Delete Interface`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return interfaceDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

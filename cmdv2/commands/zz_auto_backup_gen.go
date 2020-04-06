@@ -43,10 +43,11 @@ func autoBackupCmd() *cobra.Command {
 func autoBackupListCmd() *cobra.Command {
 	autoBackupListParam := params.NewListAutoBackupParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List AutoBackup",
-		Long:    `List AutoBackup`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List AutoBackup",
+		Long:         `List AutoBackup`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return autoBackupListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -96,8 +97,9 @@ func autoBackupCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create AutoBackup",
-		Long:  `Create AutoBackup`,
+		Short:        "Create AutoBackup",
+		Long:         `Create AutoBackup`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return autoBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -160,8 +162,9 @@ func autoBackupReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read AutoBackup",
-		Long:  `Read AutoBackup`,
+		Short:        "Read AutoBackup",
+		Long:         `Read AutoBackup`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return autoBackupReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -228,8 +231,9 @@ func autoBackupUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update AutoBackup",
-		Long:  `Update AutoBackup`,
+		Short:        "Update AutoBackup",
+		Long:         `Update AutoBackup`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return autoBackupUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -312,10 +316,11 @@ func autoBackupUpdateCmd() *cobra.Command {
 func autoBackupDeleteCmd() *cobra.Command {
 	autoBackupDeleteParam := params.NewDeleteAutoBackupParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete AutoBackup",
-		Long:    `Delete AutoBackup`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete AutoBackup",
+		Long:         `Delete AutoBackup`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return autoBackupDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

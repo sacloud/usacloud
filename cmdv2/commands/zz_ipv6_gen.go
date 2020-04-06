@@ -41,10 +41,11 @@ func ipv6Cmd() *cobra.Command {
 func ipv6ListCmd() *cobra.Command {
 	ipv6ListParam := params.NewListIPv6Param()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List IPv6",
-		Long:    `List IPv6`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List IPv6",
+		Long:         `List IPv6`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return ipv6ListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -95,8 +96,9 @@ func ipv6PtrAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ptr-add",
 
-		Short: "PtrAdd IPv6",
-		Long:  `PtrAdd IPv6`,
+		Short:        "PtrAdd IPv6",
+		Long:         `PtrAdd IPv6`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return ipv6PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -153,8 +155,9 @@ func ipv6PtrReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ptr-read",
 
-		Short: "PtrRead IPv6",
-		Long:  `PtrRead IPv6`,
+		Short:        "PtrRead IPv6",
+		Long:         `PtrRead IPv6`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return ipv6PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -198,8 +201,9 @@ func ipv6PtrUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ptr-update",
 
-		Short: "PtrUpdate IPv6",
-		Long:  `PtrUpdate IPv6`,
+		Short:        "PtrUpdate IPv6",
+		Long:         `PtrUpdate IPv6`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return ipv6PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -256,8 +260,9 @@ func ipv6PtrDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ptr-delete",
 
-		Short: "PtrDelete IPv6",
-		Long:  `PtrDelete IPv6`,
+		Short:        "PtrDelete IPv6",
+		Long:         `PtrDelete IPv6`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return ipv6PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

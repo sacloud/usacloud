@@ -43,10 +43,11 @@ func isoImageCmd() *cobra.Command {
 func isoImageListCmd() *cobra.Command {
 	isoImageListParam := params.NewListISOImageParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List ISOImage",
-		Long:    `List ISOImage`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List ISOImage",
+		Long:         `List ISOImage`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return isoImageListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -97,8 +98,9 @@ func isoImageCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create ISOImage",
-		Long:  `Create ISOImage`,
+		Short:        "Create ISOImage",
+		Long:         `Create ISOImage`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return isoImageCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -160,8 +162,9 @@ func isoImageReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read ISOImage",
-		Long:  `Read ISOImage`,
+		Short:        "Read ISOImage",
+		Long:         `Read ISOImage`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return isoImageReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -228,8 +231,9 @@ func isoImageUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update ISOImage",
-		Long:  `Update ISOImage`,
+		Short:        "Update ISOImage",
+		Long:         `Update ISOImage`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return isoImageUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -310,10 +314,11 @@ func isoImageUpdateCmd() *cobra.Command {
 func isoImageDeleteCmd() *cobra.Command {
 	isoImageDeleteParam := params.NewDeleteISOImageParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete ISOImage",
-		Long:    `Delete ISOImage`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete ISOImage",
+		Long:         `Delete ISOImage`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return isoImageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -392,8 +397,9 @@ func isoImageUploadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "upload",
 
-		Short: "Upload ISOImage",
-		Long:  `Upload ISOImage`,
+		Short:        "Upload ISOImage",
+		Long:         `Upload ISOImage`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return isoImageUploadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -473,8 +479,9 @@ func isoImageDownloadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "download",
 
-		Short: "Download ISOImage",
-		Long:  `Download ISOImage`,
+		Short:        "Download ISOImage",
+		Long:         `Download ISOImage`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return isoImageDownloadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -547,8 +554,9 @@ func isoImageFTPOpenCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ftp-open",
 
-		Short: "FTPOpen ISOImage",
-		Long:  `FTPOpen ISOImage`,
+		Short:        "FTPOpen ISOImage",
+		Long:         `FTPOpen ISOImage`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return isoImageFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -627,8 +635,9 @@ func isoImageFTPCloseCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ftp-close",
 
-		Short: "FTPClose ISOImage",
-		Long:  `FTPClose ISOImage`,
+		Short:        "FTPClose ISOImage",
+		Long:         `FTPClose ISOImage`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return isoImageFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

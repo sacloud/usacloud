@@ -43,10 +43,11 @@ func vpcRouterCmd() *cobra.Command {
 func vpcRouterListCmd() *cobra.Command {
 	vpcRouterListParam := params.NewListVPCRouterParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List VPCRouter",
-		Long:    `List VPCRouter`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List VPCRouter",
+		Long:         `List VPCRouter`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -96,8 +97,9 @@ func vpcRouterCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create VPCRouter",
-		Long:  `Create VPCRouter`,
+		Short:        "Create VPCRouter",
+		Long:         `Create VPCRouter`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -165,8 +167,9 @@ func vpcRouterReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read VPCRouter",
-		Long:  `Read VPCRouter`,
+		Short:        "Read VPCRouter",
+		Long:         `Read VPCRouter`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -233,8 +236,9 @@ func vpcRouterUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update VPCRouter",
-		Long:  `Update VPCRouter`,
+		Short:        "Update VPCRouter",
+		Long:         `Update VPCRouter`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -317,10 +321,11 @@ func vpcRouterUpdateCmd() *cobra.Command {
 func vpcRouterDeleteCmd() *cobra.Command {
 	vpcRouterDeleteParam := params.NewDeleteVPCRouterParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete VPCRouter",
-		Long:    `Delete VPCRouter`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete VPCRouter",
+		Long:         `Delete VPCRouter`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -398,10 +403,11 @@ func vpcRouterDeleteCmd() *cobra.Command {
 func vpcRouterBootCmd() *cobra.Command {
 	vpcRouterBootParam := params.NewBootVPCRouterParam()
 	cmd := &cobra.Command{
-		Use:     "boot",
-		Aliases: []string{"power-on"},
-		Short:   "Boot VPCRouter",
-		Long:    `Boot VPCRouter`,
+		Use:          "boot",
+		Aliases:      []string{"power-on"},
+		Short:        "Boot VPCRouter",
+		Long:         `Boot VPCRouter`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -471,10 +477,11 @@ func vpcRouterBootCmd() *cobra.Command {
 func vpcRouterShutdownCmd() *cobra.Command {
 	vpcRouterShutdownParam := params.NewShutdownVPCRouterParam()
 	cmd := &cobra.Command{
-		Use:     "shutdown",
-		Aliases: []string{"power-off"},
-		Short:   "Shutdown VPCRouter",
-		Long:    `Shutdown VPCRouter`,
+		Use:          "shutdown",
+		Aliases:      []string{"power-off"},
+		Short:        "Shutdown VPCRouter",
+		Long:         `Shutdown VPCRouter`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -544,10 +551,11 @@ func vpcRouterShutdownCmd() *cobra.Command {
 func vpcRouterShutdownForceCmd() *cobra.Command {
 	vpcRouterShutdownForceParam := params.NewShutdownForceVPCRouterParam()
 	cmd := &cobra.Command{
-		Use:     "shutdown-force",
-		Aliases: []string{"stop"},
-		Short:   "ShutdownForce VPCRouter",
-		Long:    `ShutdownForce VPCRouter`,
+		Use:          "shutdown-force",
+		Aliases:      []string{"stop"},
+		Short:        "ShutdownForce VPCRouter",
+		Long:         `ShutdownForce VPCRouter`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -619,8 +627,9 @@ func vpcRouterResetCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "reset",
 
-		Short: "Reset VPCRouter",
-		Long:  `Reset VPCRouter`,
+		Short:        "Reset VPCRouter",
+		Long:         `Reset VPCRouter`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -692,8 +701,9 @@ func vpcRouterWaitForBootCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "wait-for-boot",
 
-		Short: "Wait until boot is completed",
-		Long:  `Wait until boot is completed`,
+		Short:        "Wait until boot is completed",
+		Long:         `Wait until boot is completed`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -753,8 +763,9 @@ func vpcRouterWaitForDownCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "wait-for-down",
 
-		Short: "Wait until shutdown is completed",
-		Long:  `Wait until shutdown is completed`,
+		Short:        "Wait until shutdown is completed",
+		Long:         `Wait until shutdown is completed`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -814,8 +825,9 @@ func vpcRouterEnableInternetConnectionCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "enable-internet-connection",
 
-		Short: "Enable internet connection from VPCRouter",
-		Long:  `Enable internet connection from VPCRouter`,
+		Short:        "Enable internet connection from VPCRouter",
+		Long:         `Enable internet connection from VPCRouter`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterEnableInternetConnectionParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -887,8 +899,9 @@ func vpcRouterDisableInternetConnectionCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "disable-internet-connection",
 
-		Short: "Enable internet connection from VPCRouter",
-		Long:  `Enable internet connection from VPCRouter`,
+		Short:        "Enable internet connection from VPCRouter",
+		Long:         `Enable internet connection from VPCRouter`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterDisableInternetConnectionParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -958,10 +971,11 @@ func vpcRouterDisableInternetConnectionCmd() *cobra.Command {
 func vpcRouterInterfaceInfoCmd() *cobra.Command {
 	vpcRouterInterfaceInfoParam := params.NewInterfaceInfoVPCRouterParam()
 	cmd := &cobra.Command{
-		Use:     "interface-info",
-		Aliases: []string{"interface-list"},
-		Short:   "Show information of NIC(s) connected to vpc-router",
-		Long:    `Show information of NIC(s) connected to vpc-router`,
+		Use:          "interface-info",
+		Aliases:      []string{"interface-list"},
+		Short:        "Show information of NIC(s) connected to vpc-router",
+		Long:         `Show information of NIC(s) connected to vpc-router`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1028,8 +1042,9 @@ func vpcRouterInterfaceConnectCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "interface-connect",
 
-		Short: "Connected to switch",
-		Long:  `Connected to switch`,
+		Short:        "Connected to switch",
+		Long:         `Connected to switch`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1108,8 +1123,9 @@ func vpcRouterInterfaceUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "interface-update",
 
-		Short: "Update interface",
-		Long:  `Update interface`,
+		Short:        "Update interface",
+		Long:         `Update interface`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1189,8 +1205,9 @@ func vpcRouterInterfaceDisconnectCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "interface-disconnect",
 
-		Short: "Disconnected to switch",
-		Long:  `Disconnected to switch`,
+		Short:        "Disconnected to switch",
+		Long:         `Disconnected to switch`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1262,10 +1279,11 @@ func vpcRouterInterfaceDisconnectCmd() *cobra.Command {
 func vpcRouterStaticNatInfoCmd() *cobra.Command {
 	vpcRouterStaticNatInfoParam := params.NewStaticNatInfoVPCRouterParam()
 	cmd := &cobra.Command{
-		Use:     "static-nat-info",
-		Aliases: []string{"static-nat-list"},
-		Short:   "Show information of static NAT settings",
-		Long:    `Show information of static NAT settings`,
+		Use:          "static-nat-info",
+		Aliases:      []string{"static-nat-list"},
+		Short:        "Show information of static NAT settings",
+		Long:         `Show information of static NAT settings`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterStaticNatInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1332,8 +1350,9 @@ func vpcRouterStaticNatAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "static-nat-add",
 
-		Short: "Add static NAT",
-		Long:  `Add static NAT`,
+		Short:        "Add static NAT",
+		Long:         `Add static NAT`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterStaticNatAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1408,8 +1427,9 @@ func vpcRouterStaticNatUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "static-nat-update",
 
-		Short: "Update static NAT",
-		Long:  `Update static NAT`,
+		Short:        "Update static NAT",
+		Long:         `Update static NAT`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterStaticNatUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1485,8 +1505,9 @@ func vpcRouterStaticNatDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "static-nat-delete",
 
-		Short: "Delete static NAT",
-		Long:  `Delete static NAT`,
+		Short:        "Delete static NAT",
+		Long:         `Delete static NAT`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterStaticNatDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1557,10 +1578,11 @@ func vpcRouterStaticNatDeleteCmd() *cobra.Command {
 func vpcRouterPortForwardingInfoCmd() *cobra.Command {
 	vpcRouterPortForwardingInfoParam := params.NewPortForwardingInfoVPCRouterParam()
 	cmd := &cobra.Command{
-		Use:     "port-forwarding-info",
-		Aliases: []string{"port-forwarding-list"},
-		Short:   "Show information of port-forwarding settings",
-		Long:    `Show information of port-forwarding settings`,
+		Use:          "port-forwarding-info",
+		Aliases:      []string{"port-forwarding-list"},
+		Short:        "Show information of port-forwarding settings",
+		Long:         `Show information of port-forwarding settings`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterPortForwardingInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1627,8 +1649,9 @@ func vpcRouterPortForwardingAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "port-forwarding-add",
 
-		Short: "Add port forwarding",
-		Long:  `Add port forwarding`,
+		Short:        "Add port forwarding",
+		Long:         `Add port forwarding`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterPortForwardingAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1705,8 +1728,9 @@ func vpcRouterPortForwardingUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "port-forwarding-update",
 
-		Short: "Update port forwarding",
-		Long:  `Update port forwarding`,
+		Short:        "Update port forwarding",
+		Long:         `Update port forwarding`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterPortForwardingUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1784,8 +1808,9 @@ func vpcRouterPortForwardingDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "port-forwarding-delete",
 
-		Short: "Delete port forwarding",
-		Long:  `Delete port forwarding`,
+		Short:        "Delete port forwarding",
+		Long:         `Delete port forwarding`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterPortForwardingDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1856,10 +1881,11 @@ func vpcRouterPortForwardingDeleteCmd() *cobra.Command {
 func vpcRouterFirewallInfoCmd() *cobra.Command {
 	vpcRouterFirewallInfoParam := params.NewFirewallInfoVPCRouterParam()
 	cmd := &cobra.Command{
-		Use:     "firewall-info",
-		Aliases: []string{"firewall-list"},
-		Short:   "Show information of firewall rules",
-		Long:    `Show information of firewall rules`,
+		Use:          "firewall-info",
+		Aliases:      []string{"firewall-list"},
+		Short:        "Show information of firewall rules",
+		Long:         `Show information of firewall rules`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterFirewallInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1928,8 +1954,9 @@ func vpcRouterFirewallAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "firewall-add",
 
-		Short: "Add firewall rule",
-		Long:  `Add firewall rule`,
+		Short:        "Add firewall rule",
+		Long:         `Add firewall rule`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterFirewallAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2011,8 +2038,9 @@ func vpcRouterFirewallUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "firewall-update",
 
-		Short: "Update firewall rule",
-		Long:  `Update firewall rule`,
+		Short:        "Update firewall rule",
+		Long:         `Update firewall rule`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterFirewallUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2095,8 +2123,9 @@ func vpcRouterFirewallDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "firewall-delete",
 
-		Short: "Delete firewall rule",
-		Long:  `Delete firewall rule`,
+		Short:        "Delete firewall rule",
+		Long:         `Delete firewall rule`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterFirewallDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2169,10 +2198,11 @@ func vpcRouterFirewallDeleteCmd() *cobra.Command {
 func vpcRouterDhcpServerInfoCmd() *cobra.Command {
 	vpcRouterDhcpServerInfoParam := params.NewDhcpServerInfoVPCRouterParam()
 	cmd := &cobra.Command{
-		Use:     "dhcp-server-info",
-		Aliases: []string{"dhcp-server-list"},
-		Short:   "Show information of DHCP servers",
-		Long:    `Show information of DHCP servers`,
+		Use:          "dhcp-server-info",
+		Aliases:      []string{"dhcp-server-list"},
+		Short:        "Show information of DHCP servers",
+		Long:         `Show information of DHCP servers`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterDhcpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2239,8 +2269,9 @@ func vpcRouterDhcpServerAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "dhcp-server-add",
 
-		Short: "Add DHCP server",
-		Long:  `Add DHCP server`,
+		Short:        "Add DHCP server",
+		Long:         `Add DHCP server`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterDhcpServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2316,8 +2347,9 @@ func vpcRouterDhcpServerUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "dhcp-server-update",
 
-		Short: "Update DHCP server",
-		Long:  `Update DHCP server`,
+		Short:        "Update DHCP server",
+		Long:         `Update DHCP server`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterDhcpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2393,8 +2425,9 @@ func vpcRouterDhcpServerDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "dhcp-server-delete",
 
-		Short: "Delete DHCP server",
-		Long:  `Delete DHCP server`,
+		Short:        "Delete DHCP server",
+		Long:         `Delete DHCP server`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterDhcpServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2465,10 +2498,11 @@ func vpcRouterDhcpServerDeleteCmd() *cobra.Command {
 func vpcRouterDhcpStaticMappingInfoCmd() *cobra.Command {
 	vpcRouterDhcpStaticMappingInfoParam := params.NewDhcpStaticMappingInfoVPCRouterParam()
 	cmd := &cobra.Command{
-		Use:     "dhcp-static-mapping-info",
-		Aliases: []string{"dhcp-static-mapping-list"},
-		Short:   "Show information of DHCP static mapping",
-		Long:    `Show information of DHCP static mapping`,
+		Use:          "dhcp-static-mapping-info",
+		Aliases:      []string{"dhcp-static-mapping-list"},
+		Short:        "Show information of DHCP static mapping",
+		Long:         `Show information of DHCP static mapping`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterDhcpStaticMappingInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2535,8 +2569,9 @@ func vpcRouterDhcpStaticMappingAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "dhcp-static-mapping-add",
 
-		Short: "Add DHCP static mapping",
-		Long:  `Add DHCP static mapping`,
+		Short:        "Add DHCP static mapping",
+		Long:         `Add DHCP static mapping`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterDhcpStaticMappingAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2610,8 +2645,9 @@ func vpcRouterDhcpStaticMappingUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "dhcp-static-mapping-update",
 
-		Short: "Update DHCP static mapping",
-		Long:  `Update DHCP static mapping`,
+		Short:        "Update DHCP static mapping",
+		Long:         `Update DHCP static mapping`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterDhcpStaticMappingUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2686,8 +2722,9 @@ func vpcRouterDhcpStaticMappingDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "dhcp-static-mapping-delete",
 
-		Short: "Delete DHCP static mapping",
-		Long:  `Delete DHCP static mapping`,
+		Short:        "Delete DHCP static mapping",
+		Long:         `Delete DHCP static mapping`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterDhcpStaticMappingDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2760,8 +2797,9 @@ func vpcRouterPptpServerInfoCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "pptp-server-info",
 
-		Short: "Show information of PPTP server",
-		Long:  `Show information of PPTP server`,
+		Short:        "Show information of PPTP server",
+		Long:         `Show information of PPTP server`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterPptpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2828,8 +2866,9 @@ func vpcRouterPptpServerUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "pptp-server-update",
 
-		Short: "Update PPTP server setting",
-		Long:  `Update PPTP server setting`,
+		Short:        "Update PPTP server setting",
+		Long:         `Update PPTP server setting`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterPptpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2904,8 +2943,9 @@ func vpcRouterL2TPServerInfoCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "l2tp-server-info",
 
-		Short: "Show information of L2TP/IPSec server",
-		Long:  `Show information of L2TP/IPSec server`,
+		Short:        "Show information of L2TP/IPSec server",
+		Long:         `Show information of L2TP/IPSec server`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterL2TPServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2972,8 +3012,9 @@ func vpcRouterL2TPServerUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "l2tp-server-update",
 
-		Short: "Update L2TP/IPSec server setting",
-		Long:  `Update L2TP/IPSec server setting`,
+		Short:        "Update L2TP/IPSec server setting",
+		Long:         `Update L2TP/IPSec server setting`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterL2TPServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -3047,10 +3088,11 @@ func vpcRouterL2TPServerUpdateCmd() *cobra.Command {
 func vpcRouterUserInfoCmd() *cobra.Command {
 	vpcRouterUserInfoParam := params.NewUserInfoVPCRouterParam()
 	cmd := &cobra.Command{
-		Use:     "user-info",
-		Aliases: []string{"user-list"},
-		Short:   "Show information of remote-access users",
-		Long:    `Show information of remote-access users`,
+		Use:          "user-info",
+		Aliases:      []string{"user-list"},
+		Short:        "Show information of remote-access users",
+		Long:         `Show information of remote-access users`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterUserInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -3117,8 +3159,9 @@ func vpcRouterUserAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "user-add",
 
-		Short: "Add remote-access user",
-		Long:  `Add remote-access user`,
+		Short:        "Add remote-access user",
+		Long:         `Add remote-access user`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterUserAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -3192,8 +3235,9 @@ func vpcRouterUserUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "user-update",
 
-		Short: "Update remote-access user",
-		Long:  `Update remote-access user`,
+		Short:        "Update remote-access user",
+		Long:         `Update remote-access user`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterUserUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -3268,8 +3312,9 @@ func vpcRouterUserDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "user-delete",
 
-		Short: "Delete remote-access user",
-		Long:  `Delete remote-access user`,
+		Short:        "Delete remote-access user",
+		Long:         `Delete remote-access user`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterUserDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -3340,10 +3385,11 @@ func vpcRouterUserDeleteCmd() *cobra.Command {
 func vpcRouterSiteToSiteVPNInfoCmd() *cobra.Command {
 	vpcRouterSiteToSiteVPNInfoParam := params.NewSiteToSiteVPNInfoVPCRouterParam()
 	cmd := &cobra.Command{
-		Use:     "site-to-site-vpn-info",
-		Aliases: []string{"site-to-site-vpn-list"},
-		Short:   "Show information of site-to-site IPSec VPN settings",
-		Long:    `Show information of site-to-site IPSec VPN settings`,
+		Use:          "site-to-site-vpn-info",
+		Aliases:      []string{"site-to-site-vpn-list"},
+		Short:        "Show information of site-to-site IPSec VPN settings",
+		Long:         `Show information of site-to-site IPSec VPN settings`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterSiteToSiteVPNInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -3410,8 +3456,9 @@ func vpcRouterSiteToSiteVPNAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "site-to-site-vpn-add",
 
-		Short: "Add site-to-site IPSec VPN setting",
-		Long:  `Add site-to-site IPSec VPN setting`,
+		Short:        "Add site-to-site IPSec VPN setting",
+		Long:         `Add site-to-site IPSec VPN setting`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterSiteToSiteVPNAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -3488,8 +3535,9 @@ func vpcRouterSiteToSiteVPNUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "site-to-site-vpn-update",
 
-		Short: "Update site-to-site IPSec VPN setting",
-		Long:  `Update site-to-site IPSec VPN setting`,
+		Short:        "Update site-to-site IPSec VPN setting",
+		Long:         `Update site-to-site IPSec VPN setting`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterSiteToSiteVPNUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -3567,8 +3615,9 @@ func vpcRouterSiteToSiteVPNDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "site-to-site-vpn-delete",
 
-		Short: "Delete site-to-site IPSec VPN setting",
-		Long:  `Delete site-to-site IPSec VPN setting`,
+		Short:        "Delete site-to-site IPSec VPN setting",
+		Long:         `Delete site-to-site IPSec VPN setting`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterSiteToSiteVPNDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -3641,8 +3690,9 @@ func vpcRouterSiteToSiteVPNPeersCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "site-to-site-vpn-peers",
 
-		Short: "Show status of site-to-site IPSec VPN peers",
-		Long:  `Show status of site-to-site IPSec VPN peers`,
+		Short:        "Show status of site-to-site IPSec VPN peers",
+		Long:         `Show status of site-to-site IPSec VPN peers`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterSiteToSiteVPNPeersParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -3707,10 +3757,11 @@ func vpcRouterSiteToSiteVPNPeersCmd() *cobra.Command {
 func vpcRouterStaticRouteInfoCmd() *cobra.Command {
 	vpcRouterStaticRouteInfoParam := params.NewStaticRouteInfoVPCRouterParam()
 	cmd := &cobra.Command{
-		Use:     "static-route-info",
-		Aliases: []string{"static-route-list"},
-		Short:   "Show information of static-routes",
-		Long:    `Show information of static-routes`,
+		Use:          "static-route-info",
+		Aliases:      []string{"static-route-list"},
+		Short:        "Show information of static-routes",
+		Long:         `Show information of static-routes`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -3777,8 +3828,9 @@ func vpcRouterStaticRouteAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "static-route-add",
 
-		Short: "Add static-route",
-		Long:  `Add static-route`,
+		Short:        "Add static-route",
+		Long:         `Add static-route`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -3852,8 +3904,9 @@ func vpcRouterStaticRouteUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "static-route-update",
 
-		Short: "Update static-route",
-		Long:  `Update static-route`,
+		Short:        "Update static-route",
+		Long:         `Update static-route`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -3928,8 +3981,9 @@ func vpcRouterStaticRouteDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "static-route-delete",
 
-		Short: "Delete static-route",
-		Long:  `Delete static-route`,
+		Short:        "Delete static-route",
+		Long:         `Delete static-route`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -4002,8 +4056,9 @@ func vpcRouterMonitorCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "monitor",
 
-		Short: "Monitor VPCRouter",
-		Long:  `Monitor VPCRouter`,
+		Short:        "Monitor VPCRouter",
+		Long:         `Monitor VPCRouter`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -4074,8 +4129,9 @@ func vpcRouterLogsCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "logs",
 
-		Short: "Logs VPCRouter",
-		Long:  `Logs VPCRouter`,
+		Short:        "Logs VPCRouter",
+		Long:         `Logs VPCRouter`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return vpcRouterLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

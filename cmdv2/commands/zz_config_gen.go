@@ -42,8 +42,9 @@ func configCurrentCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "current",
 
-		Short: "Current Config",
-		Long:  `Current Config`,
+		Short:        "Current Config",
+		Long:         `Current Config`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return configCurrentParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -78,10 +79,11 @@ func configCurrentCmd() *cobra.Command {
 func configDeleteCmd() *cobra.Command {
 	configDeleteParam := params.NewDeleteConfigParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete Config",
-		Long:    `Delete Config`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete Config",
+		Long:         `Delete Config`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return configDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -130,8 +132,9 @@ func configEditCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "edit",
 
-		Short: "Edit Config (default)",
-		Long:  `Edit Config (default)`,
+		Short:        "Edit Config (default)",
+		Long:         `Edit Config (default)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return configEditParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -170,10 +173,11 @@ func configEditCmd() *cobra.Command {
 func configListCmd() *cobra.Command {
 	configListParam := params.NewListConfigParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls"},
-		Short:   "List Config",
-		Long:    `List Config`,
+		Use:          "list",
+		Aliases:      []string{"ls"},
+		Short:        "List Config",
+		Long:         `List Config`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return configListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -210,8 +214,9 @@ func configMigrateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "migrate",
 
-		Short: "Migrate Config",
-		Long:  `Migrate Config`,
+		Short:        "Migrate Config",
+		Long:         `Migrate Config`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return configMigrateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -248,8 +253,9 @@ func configShowCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "show",
 
-		Short: "Show Config",
-		Long:  `Show Config`,
+		Short:        "Show Config",
+		Long:         `Show Config`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return configShowParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -286,8 +292,9 @@ func configUseCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "use",
 
-		Short: "Use Config",
-		Long:  `Use Config`,
+		Short:        "Use Config",
+		Long:         `Use Config`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return configUseParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

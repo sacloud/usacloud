@@ -43,10 +43,11 @@ func gslbCmd() *cobra.Command {
 func gslbListCmd() *cobra.Command {
 	gslbListParam := params.NewListGSLBParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List GSLB",
-		Long:    `List GSLB`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List GSLB",
+		Long:         `List GSLB`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return gslbListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -94,10 +95,11 @@ func gslbListCmd() *cobra.Command {
 func gslbServerInfoCmd() *cobra.Command {
 	gslbServerInfoParam := params.NewServerInfoGSLBParam()
 	cmd := &cobra.Command{
-		Use:     "server-info",
-		Aliases: []string{"server-list"},
-		Short:   "ServerInfo GSLB",
-		Long:    `ServerInfo GSLB`,
+		Use:          "server-info",
+		Aliases:      []string{"server-list"},
+		Short:        "ServerInfo GSLB",
+		Long:         `ServerInfo GSLB`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return gslbServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -164,8 +166,9 @@ func gslbCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create GSLB",
-		Long:  `Create GSLB`,
+		Short:        "Create GSLB",
+		Long:         `Create GSLB`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return gslbCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -233,8 +236,9 @@ func gslbServerAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "server-add",
 
-		Short: "ServerAdd GSLB",
-		Long:  `ServerAdd GSLB`,
+		Short:        "ServerAdd GSLB",
+		Long:         `ServerAdd GSLB`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return gslbServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -316,8 +320,9 @@ func gslbReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read GSLB",
-		Long:  `Read GSLB`,
+		Short:        "Read GSLB",
+		Long:         `Read GSLB`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return gslbReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -384,8 +389,9 @@ func gslbServerUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "server-update",
 
-		Short: "ServerUpdate GSLB",
-		Long:  `ServerUpdate GSLB`,
+		Short:        "ServerUpdate GSLB",
+		Long:         `ServerUpdate GSLB`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return gslbServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -468,8 +474,9 @@ func gslbServerDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "server-delete",
 
-		Short: "ServerDelete GSLB",
-		Long:  `ServerDelete GSLB`,
+		Short:        "ServerDelete GSLB",
+		Long:         `ServerDelete GSLB`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return gslbServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -549,8 +556,9 @@ func gslbUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update GSLB",
-		Long:  `Update GSLB`,
+		Short:        "Update GSLB",
+		Long:         `Update GSLB`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return gslbUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -639,10 +647,11 @@ func gslbUpdateCmd() *cobra.Command {
 func gslbDeleteCmd() *cobra.Command {
 	gslbDeleteParam := params.NewDeleteGSLBParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete GSLB",
-		Long:    `Delete GSLB`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete GSLB",
+		Long:         `Delete GSLB`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return gslbDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

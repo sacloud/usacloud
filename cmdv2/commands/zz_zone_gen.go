@@ -41,10 +41,11 @@ func zoneCmd() *cobra.Command {
 func zoneListCmd() *cobra.Command {
 	zoneListParam := params.NewListZoneParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List Zone (default)",
-		Long:    `List Zone (default)`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List Zone (default)",
+		Long:         `List Zone (default)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return zoneListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -93,8 +94,9 @@ func zoneReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read Zone",
-		Long:  `Read Zone`,
+		Short:        "Read Zone",
+		Long:         `Read Zone`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return zoneReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

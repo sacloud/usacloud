@@ -42,10 +42,11 @@ func webAccelCmd() *cobra.Command {
 func webAccelListCmd() *cobra.Command {
 	webAccelListParam := params.NewListWebAccelParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List WebAccel",
-		Long:    `List WebAccel`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List WebAccel",
+		Long:         `List WebAccel`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return webAccelListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -89,8 +90,9 @@ func webAccelReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read WebAccel",
-		Long:  `Read WebAccel`,
+		Short:        "Read WebAccel",
+		Long:         `Read WebAccel`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return webAccelReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -155,10 +157,11 @@ func webAccelReadCmd() *cobra.Command {
 func webAccelCertificateInfoCmd() *cobra.Command {
 	webAccelCertificateInfoParam := params.NewCertificateInfoWebAccelParam()
 	cmd := &cobra.Command{
-		Use:     "certificate-info",
-		Aliases: []string{"cert-info"},
-		Short:   "CertificateInfo WebAccel",
-		Long:    `CertificateInfo WebAccel`,
+		Use:          "certificate-info",
+		Aliases:      []string{"cert-info"},
+		Short:        "CertificateInfo WebAccel",
+		Long:         `CertificateInfo WebAccel`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return webAccelCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -223,10 +226,11 @@ func webAccelCertificateInfoCmd() *cobra.Command {
 func webAccelCertificateNewCmd() *cobra.Command {
 	webAccelCertificateNewParam := params.NewCertificateNewWebAccelParam()
 	cmd := &cobra.Command{
-		Use:     "certificate-new",
-		Aliases: []string{"cert-new", "cert-create", "certificate-create"},
-		Short:   "CertificateNew WebAccel",
-		Long:    `CertificateNew WebAccel`,
+		Use:          "certificate-new",
+		Aliases:      []string{"cert-new", "cert-create", "certificate-create"},
+		Short:        "CertificateNew WebAccel",
+		Long:         `CertificateNew WebAccel`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return webAccelCertificateNewParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -307,10 +311,11 @@ func webAccelCertificateNewCmd() *cobra.Command {
 func webAccelCertificateUpdateCmd() *cobra.Command {
 	webAccelCertificateUpdateParam := params.NewCertificateUpdateWebAccelParam()
 	cmd := &cobra.Command{
-		Use:     "certificate-update",
-		Aliases: []string{"cert-update"},
-		Short:   "CertificateUpdate WebAccel",
-		Long:    `CertificateUpdate WebAccel`,
+		Use:          "certificate-update",
+		Aliases:      []string{"cert-update"},
+		Short:        "CertificateUpdate WebAccel",
+		Long:         `CertificateUpdate WebAccel`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return webAccelCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -391,10 +396,11 @@ func webAccelCertificateUpdateCmd() *cobra.Command {
 func webAccelDeleteCacheCmd() *cobra.Command {
 	webAccelDeleteCacheParam := params.NewDeleteCacheWebAccelParam()
 	cmd := &cobra.Command{
-		Use:     "delete-cache",
-		Aliases: []string{"purge"},
-		Short:   "DeleteCache WebAccel",
-		Long:    `DeleteCache WebAccel`,
+		Use:          "delete-cache",
+		Aliases:      []string{"purge"},
+		Short:        "DeleteCache WebAccel",
+		Long:         `DeleteCache WebAccel`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return webAccelDeleteCacheParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

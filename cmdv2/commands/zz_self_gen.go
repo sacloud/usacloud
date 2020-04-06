@@ -39,8 +39,9 @@ func selfInfoCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "info",
 
-		Short: "Info Self (default)",
-		Long:  `Info Self (default)`,
+		Short:        "Info Self (default)",
+		Long:         `Info Self (default)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return selfInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

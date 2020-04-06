@@ -43,10 +43,11 @@ func internetCmd() *cobra.Command {
 func internetListCmd() *cobra.Command {
 	internetListParam := params.NewListInternetParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List Internet",
-		Long:    `List Internet`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List Internet",
+		Long:         `List Internet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return internetListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -96,8 +97,9 @@ func internetCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create Internet",
-		Long:  `Create Internet`,
+		Short:        "Create Internet",
+		Long:         `Create Internet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return internetCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -159,8 +161,9 @@ func internetReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read Internet",
-		Long:  `Read Internet`,
+		Short:        "Read Internet",
+		Long:         `Read Internet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return internetReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -227,8 +230,9 @@ func internetUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update Internet",
-		Long:  `Update Internet`,
+		Short:        "Update Internet",
+		Long:         `Update Internet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return internetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -310,10 +314,11 @@ func internetUpdateCmd() *cobra.Command {
 func internetDeleteCmd() *cobra.Command {
 	internetDeleteParam := params.NewDeleteInternetParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete Internet",
-		Long:    `Delete Internet`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete Internet",
+		Long:         `Delete Internet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return internetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -392,8 +397,9 @@ func internetUpdateBandwidthCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update-bandwidth",
 
-		Short: "UpdateBandwidth Internet",
-		Long:  `UpdateBandwidth Internet`,
+		Short:        "UpdateBandwidth Internet",
+		Long:         `UpdateBandwidth Internet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return internetUpdateBandwidthParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -473,8 +479,9 @@ func internetSubnetInfoCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "subnet-info",
 
-		Short: "SubnetInfo Internet",
-		Long:  `SubnetInfo Internet`,
+		Short:        "SubnetInfo Internet",
+		Long:         `SubnetInfo Internet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return internetSubnetInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -541,8 +548,9 @@ func internetSubnetAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "subnet-add",
 
-		Short: "SubnetAdd Internet",
-		Long:  `SubnetAdd Internet`,
+		Short:        "SubnetAdd Internet",
+		Long:         `SubnetAdd Internet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return internetSubnetAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -623,8 +631,9 @@ func internetSubnetDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "subnet-delete",
 
-		Short: "SubnetDelete Internet",
-		Long:  `SubnetDelete Internet`,
+		Short:        "SubnetDelete Internet",
+		Long:         `SubnetDelete Internet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return internetSubnetDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -697,8 +706,9 @@ func internetSubnetUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "subnet-update",
 
-		Short: "SubnetUpdate Internet",
-		Long:  `SubnetUpdate Internet`,
+		Short:        "SubnetUpdate Internet",
+		Long:         `SubnetUpdate Internet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return internetSubnetUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -779,8 +789,9 @@ func internetIPv6InfoCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ipv6-info",
 
-		Short: "IPv6Info Internet",
-		Long:  `IPv6Info Internet`,
+		Short:        "IPv6Info Internet",
+		Long:         `IPv6Info Internet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return internetIPv6InfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -847,8 +858,9 @@ func internetIPv6EnableCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ipv6-enable",
 
-		Short: "IPv6Enable Internet",
-		Long:  `IPv6Enable Internet`,
+		Short:        "IPv6Enable Internet",
+		Long:         `IPv6Enable Internet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return internetIPv6EnableParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -927,8 +939,9 @@ func internetIPv6DisableCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ipv6-disable",
 
-		Short: "IPv6Disable Internet",
-		Long:  `IPv6Disable Internet`,
+		Short:        "IPv6Disable Internet",
+		Long:         `IPv6Disable Internet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return internetIPv6DisableParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1000,8 +1013,9 @@ func internetMonitorCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "monitor",
 
-		Short: "Monitor Internet",
-		Long:  `Monitor Internet`,
+		Short:        "Monitor Internet",
+		Long:         `Monitor Internet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return internetMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

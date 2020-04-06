@@ -43,10 +43,11 @@ func diskCmd() *cobra.Command {
 func diskListCmd() *cobra.Command {
 	diskListParam := params.NewListDiskParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List Disk",
-		Long:    `List Disk`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List Disk",
+		Long:         `List Disk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return diskListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -100,8 +101,9 @@ func diskCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create Disk",
-		Long:  `Create Disk`,
+		Short:        "Create Disk",
+		Long:         `Create Disk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return diskCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -167,8 +169,9 @@ func diskReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read Disk",
-		Long:  `Read Disk`,
+		Short:        "Read Disk",
+		Long:         `Read Disk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return diskReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -235,8 +238,9 @@ func diskUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update Disk",
-		Long:  `Update Disk`,
+		Short:        "Update Disk",
+		Long:         `Update Disk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return diskUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -318,10 +322,11 @@ func diskUpdateCmd() *cobra.Command {
 func diskDeleteCmd() *cobra.Command {
 	diskDeleteParam := params.NewDeleteDiskParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete Disk",
-		Long:    `Delete Disk`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete Disk",
+		Long:         `Delete Disk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return diskDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -398,10 +403,11 @@ func diskDeleteCmd() *cobra.Command {
 func diskEditCmd() *cobra.Command {
 	diskEditParam := params.NewEditDiskParam()
 	cmd := &cobra.Command{
-		Use:     "edit",
-		Aliases: []string{"config"},
-		Short:   "Edit Disk",
-		Long:    `Edit Disk`,
+		Use:          "edit",
+		Aliases:      []string{"config"},
+		Short:        "Edit Disk",
+		Long:         `Edit Disk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return diskEditParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -488,8 +494,9 @@ func diskResizePartitionCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "resize-partition",
 
-		Short: "ResizePartition Disk",
-		Long:  `ResizePartition Disk`,
+		Short:        "ResizePartition Disk",
+		Long:         `ResizePartition Disk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return diskResizePartitionParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -568,8 +575,9 @@ func diskReinstallFromArchiveCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "reinstall-from-archive",
 
-		Short: "ReinstallFromArchive Disk",
-		Long:  `ReinstallFromArchive Disk`,
+		Short:        "ReinstallFromArchive Disk",
+		Long:         `ReinstallFromArchive Disk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return diskReinstallFromArchiveParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -643,8 +651,9 @@ func diskReinstallFromDiskCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "reinstall-from-disk",
 
-		Short: "ReinstallFromDisk Disk",
-		Long:  `ReinstallFromDisk Disk`,
+		Short:        "ReinstallFromDisk Disk",
+		Long:         `ReinstallFromDisk Disk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return diskReinstallFromDiskParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -718,8 +727,9 @@ func diskReinstallToBlankCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "reinstall-to-blank",
 
-		Short: "ReinstallToBlank Disk",
-		Long:  `ReinstallToBlank Disk`,
+		Short:        "ReinstallToBlank Disk",
+		Long:         `ReinstallToBlank Disk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return diskReinstallToBlankParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -792,8 +802,9 @@ func diskServerConnectCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "server-connect",
 
-		Short: "ServerConnect Disk",
-		Long:  `ServerConnect Disk`,
+		Short:        "ServerConnect Disk",
+		Long:         `ServerConnect Disk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return diskServerConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -866,8 +877,9 @@ func diskServerDisconnectCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "server-disconnect",
 
-		Short: "ServerDisconnect Disk",
-		Long:  `ServerDisconnect Disk`,
+		Short:        "ServerDisconnect Disk",
+		Long:         `ServerDisconnect Disk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return diskServerDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -939,8 +951,9 @@ func diskMonitorCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "monitor",
 
-		Short: "Monitor Disk",
-		Long:  `Monitor Disk`,
+		Short:        "Monitor Disk",
+		Long:         `Monitor Disk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return diskMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1008,10 +1021,11 @@ func diskMonitorCmd() *cobra.Command {
 func diskWaitForCopyCmd() *cobra.Command {
 	diskWaitForCopyParam := params.NewWaitForCopyDiskParam()
 	cmd := &cobra.Command{
-		Use:     "wait-for-copy",
-		Aliases: []string{"wait"},
-		Short:   "WaitForCopy Disk",
-		Long:    `WaitForCopy Disk`,
+		Use:          "wait-for-copy",
+		Aliases:      []string{"wait"},
+		Short:        "WaitForCopy Disk",
+		Long:         `WaitForCopy Disk`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return diskWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

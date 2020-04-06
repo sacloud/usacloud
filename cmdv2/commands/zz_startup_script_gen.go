@@ -43,10 +43,11 @@ func startupScriptCmd() *cobra.Command {
 func startupScriptListCmd() *cobra.Command {
 	startupScriptListParam := params.NewListStartupScriptParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List StartupScript",
-		Long:    `List StartupScript`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List StartupScript",
+		Long:         `List StartupScript`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return startupScriptListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -98,8 +99,9 @@ func startupScriptCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create StartupScript",
-		Long:  `Create StartupScript`,
+		Short:        "Create StartupScript",
+		Long:         `Create StartupScript`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return startupScriptCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -161,8 +163,9 @@ func startupScriptReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read StartupScript",
-		Long:  `Read StartupScript`,
+		Short:        "Read StartupScript",
+		Long:         `Read StartupScript`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return startupScriptReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -229,8 +232,9 @@ func startupScriptUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update StartupScript",
-		Long:  `Update StartupScript`,
+		Short:        "Update StartupScript",
+		Long:         `Update StartupScript`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return startupScriptUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -313,10 +317,11 @@ func startupScriptUpdateCmd() *cobra.Command {
 func startupScriptDeleteCmd() *cobra.Command {
 	startupScriptDeleteParam := params.NewDeleteStartupScriptParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete StartupScript",
-		Long:    `Delete StartupScript`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete StartupScript",
+		Long:         `Delete StartupScript`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return startupScriptDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

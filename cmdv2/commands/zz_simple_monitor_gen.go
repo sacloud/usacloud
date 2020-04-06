@@ -43,10 +43,11 @@ func simpleMonitorCmd() *cobra.Command {
 func simpleMonitorListCmd() *cobra.Command {
 	simpleMonitorListParam := params.NewListSimpleMonitorParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List SimpleMonitor",
-		Long:    `List SimpleMonitor`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List SimpleMonitor",
+		Long:         `List SimpleMonitor`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simpleMonitorListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -97,8 +98,9 @@ func simpleMonitorCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create SimpleMonitor",
-		Long:  `Create SimpleMonitor`,
+		Short:        "Create SimpleMonitor",
+		Long:         `Create SimpleMonitor`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simpleMonitorCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -175,8 +177,9 @@ func simpleMonitorReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read SimpleMonitor",
-		Long:  `Read SimpleMonitor`,
+		Short:        "Read SimpleMonitor",
+		Long:         `Read SimpleMonitor`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simpleMonitorReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -243,8 +246,9 @@ func simpleMonitorUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update SimpleMonitor",
-		Long:  `Update SimpleMonitor`,
+		Short:        "Update SimpleMonitor",
+		Long:         `Update SimpleMonitor`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simpleMonitorUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -341,10 +345,11 @@ func simpleMonitorUpdateCmd() *cobra.Command {
 func simpleMonitorDeleteCmd() *cobra.Command {
 	simpleMonitorDeleteParam := params.NewDeleteSimpleMonitorParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete SimpleMonitor",
-		Long:    `Delete SimpleMonitor`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete SimpleMonitor",
+		Long:         `Delete SimpleMonitor`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simpleMonitorDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -423,8 +428,9 @@ func simpleMonitorHealthCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "health",
 
-		Short: "Health SimpleMonitor",
-		Long:  `Health SimpleMonitor`,
+		Short:        "Health SimpleMonitor",
+		Long:         `Health SimpleMonitor`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simpleMonitorHealthParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

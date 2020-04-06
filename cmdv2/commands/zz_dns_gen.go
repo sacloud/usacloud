@@ -43,10 +43,11 @@ func dnsCmd() *cobra.Command {
 func dnsListCmd() *cobra.Command {
 	dnsListParam := params.NewListDNSParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List DNS",
-		Long:    `List DNS`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List DNS",
+		Long:         `List DNS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return dnsListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -94,10 +95,11 @@ func dnsListCmd() *cobra.Command {
 func dnsRecordInfoCmd() *cobra.Command {
 	dnsRecordInfoParam := params.NewRecordInfoDNSParam()
 	cmd := &cobra.Command{
-		Use:     "record-info",
-		Aliases: []string{"record-list"},
-		Short:   "RecordInfo DNS",
-		Long:    `RecordInfo DNS`,
+		Use:          "record-info",
+		Aliases:      []string{"record-list"},
+		Short:        "RecordInfo DNS",
+		Long:         `RecordInfo DNS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return dnsRecordInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -166,8 +168,9 @@ func dnsRecordBulkUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "record-bulk-update",
 
-		Short: "RecordBulkUpdate DNS",
-		Long:  `RecordBulkUpdate DNS`,
+		Short:        "RecordBulkUpdate DNS",
+		Long:         `RecordBulkUpdate DNS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return dnsRecordBulkUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -248,8 +251,9 @@ func dnsCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create DNS",
-		Long:  `Create DNS`,
+		Short:        "Create DNS",
+		Long:         `Create DNS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return dnsCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -309,8 +313,9 @@ func dnsRecordAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "record-add",
 
-		Short: "RecordAdd DNS",
-		Long:  `RecordAdd DNS`,
+		Short:        "RecordAdd DNS",
+		Long:         `RecordAdd DNS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return dnsRecordAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -398,8 +403,9 @@ func dnsReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read DNS",
-		Long:  `Read DNS`,
+		Short:        "Read DNS",
+		Long:         `Read DNS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return dnsReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -466,8 +472,9 @@ func dnsRecordUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "record-update",
 
-		Short: "RecordUpdate DNS",
-		Long:  `RecordUpdate DNS`,
+		Short:        "RecordUpdate DNS",
+		Long:         `RecordUpdate DNS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return dnsRecordUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -556,8 +563,9 @@ func dnsRecordDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "record-delete",
 
-		Short: "RecordDelete DNS",
-		Long:  `RecordDelete DNS`,
+		Short:        "RecordDelete DNS",
+		Long:         `RecordDelete DNS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return dnsRecordDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -637,8 +645,9 @@ func dnsUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update DNS",
-		Long:  `Update DNS`,
+		Short:        "Update DNS",
+		Long:         `Update DNS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return dnsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -718,10 +727,11 @@ func dnsUpdateCmd() *cobra.Command {
 func dnsDeleteCmd() *cobra.Command {
 	dnsDeleteParam := params.NewDeleteDNSParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete DNS",
-		Long:    `Delete DNS`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete DNS",
+		Long:         `Delete DNS`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return dnsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

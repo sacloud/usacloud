@@ -41,10 +41,11 @@ func productLicenseCmd() *cobra.Command {
 func productLicenseListCmd() *cobra.Command {
 	productLicenseListParam := params.NewListProductLicenseParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List ProductLicense (default)",
-		Long:    `List ProductLicense (default)`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List ProductLicense (default)",
+		Long:         `List ProductLicense (default)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return productLicenseListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -93,8 +94,9 @@ func productLicenseReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read ProductLicense",
-		Long:  `Read ProductLicense`,
+		Short:        "Read ProductLicense",
+		Long:         `Read ProductLicense`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return productLicenseReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

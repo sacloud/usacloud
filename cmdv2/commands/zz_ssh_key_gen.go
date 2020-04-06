@@ -43,10 +43,11 @@ func sshKeyCmd() *cobra.Command {
 func sshKeyListCmd() *cobra.Command {
 	sshKeyListParam := params.NewListSSHKeyParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List SSHKey",
-		Long:    `List SSHKey`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List SSHKey",
+		Long:         `List SSHKey`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return sshKeyListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -95,8 +96,9 @@ func sshKeyCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create SSHKey",
-		Long:  `Create SSHKey`,
+		Short:        "Create SSHKey",
+		Long:         `Create SSHKey`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return sshKeyCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -156,8 +158,9 @@ func sshKeyReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read SSHKey",
-		Long:  `Read SSHKey`,
+		Short:        "Read SSHKey",
+		Long:         `Read SSHKey`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return sshKeyReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -223,8 +226,9 @@ func sshKeyUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update SSHKey",
-		Long:  `Update SSHKey`,
+		Short:        "Update SSHKey",
+		Long:         `Update SSHKey`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return sshKeyUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -302,10 +306,11 @@ func sshKeyUpdateCmd() *cobra.Command {
 func sshKeyDeleteCmd() *cobra.Command {
 	sshKeyDeleteParam := params.NewDeleteSSHKeyParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete SSHKey",
-		Long:    `Delete SSHKey`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete SSHKey",
+		Long:         `Delete SSHKey`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return sshKeyDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -381,10 +386,11 @@ func sshKeyDeleteCmd() *cobra.Command {
 func sshKeyGenerateCmd() *cobra.Command {
 	sshKeyGenerateParam := params.NewGenerateSSHKeyParam()
 	cmd := &cobra.Command{
-		Use:     "generate",
-		Aliases: []string{"gen"},
-		Short:   "Generate SSHKey",
-		Long:    `Generate SSHKey`,
+		Use:          "generate",
+		Aliases:      []string{"gen"},
+		Short:        "Generate SSHKey",
+		Long:         `Generate SSHKey`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return sshKeyGenerateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

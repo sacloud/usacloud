@@ -43,10 +43,11 @@ func iconCmd() *cobra.Command {
 func iconListCmd() *cobra.Command {
 	iconListParam := params.NewListIconParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List Icon",
-		Long:    `List Icon`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List Icon",
+		Long:         `List Icon`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return iconListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -97,8 +98,9 @@ func iconCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create Icon",
-		Long:  `Create Icon`,
+		Short:        "Create Icon",
+		Long:         `Create Icon`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return iconCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -157,8 +159,9 @@ func iconReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read Icon",
-		Long:  `Read Icon`,
+		Short:        "Read Icon",
+		Long:         `Read Icon`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return iconReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -225,8 +228,9 @@ func iconUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update Icon",
-		Long:  `Update Icon`,
+		Short:        "Update Icon",
+		Long:         `Update Icon`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return iconUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -305,10 +309,11 @@ func iconUpdateCmd() *cobra.Command {
 func iconDeleteCmd() *cobra.Command {
 	iconDeleteParam := params.NewDeleteIconParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete Icon",
-		Long:    `Delete Icon`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete Icon",
+		Long:         `Delete Icon`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return iconDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

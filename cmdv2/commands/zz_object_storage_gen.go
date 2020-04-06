@@ -40,10 +40,11 @@ func objectStorageCmd() *cobra.Command {
 func objectStorageListCmd() *cobra.Command {
 	objectStorageListParam := params.NewListObjectStorageParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls"},
-		Short:   "List ObjectStorage",
-		Long:    `List ObjectStorage`,
+		Use:          "list",
+		Aliases:      []string{"ls"},
+		Short:        "List ObjectStorage",
+		Long:         `List ObjectStorage`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return objectStorageListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -90,8 +91,9 @@ func objectStoragePutCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "put",
 
-		Short: "Put ObjectStorage",
-		Long:  `Put ObjectStorage`,
+		Short:        "Put ObjectStorage",
+		Long:         `Put ObjectStorage`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return objectStoragePutParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -145,8 +147,9 @@ func objectStorageGetCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "get",
 
-		Short: "Get ObjectStorage",
-		Long:  `Get ObjectStorage`,
+		Short:        "Get ObjectStorage",
+		Long:         `Get ObjectStorage`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return objectStorageGetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -185,10 +188,11 @@ func objectStorageGetCmd() *cobra.Command {
 func objectStorageDeleteCmd() *cobra.Command {
 	objectStorageDeleteParam := params.NewDeleteObjectStorageParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm", "del"},
-		Short:   "Delete ObjectStorage",
-		Long:    `Delete ObjectStorage`,
+		Use:          "delete",
+		Aliases:      []string{"rm", "del"},
+		Short:        "Delete ObjectStorage",
+		Long:         `Delete ObjectStorage`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return objectStorageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

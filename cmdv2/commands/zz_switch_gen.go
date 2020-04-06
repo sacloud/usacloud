@@ -43,10 +43,11 @@ func switchCmd() *cobra.Command {
 func switchListCmd() *cobra.Command {
 	switchListParam := params.NewListSwitchParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List Switch",
-		Long:    `List Switch`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List Switch",
+		Long:         `List Switch`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return switchListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -96,8 +97,9 @@ func switchCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create Switch",
-		Long:  `Create Switch`,
+		Short:        "Create Switch",
+		Long:         `Create Switch`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return switchCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -157,8 +159,9 @@ func switchReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read Switch",
-		Long:  `Read Switch`,
+		Short:        "Read Switch",
+		Long:         `Read Switch`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return switchReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -225,8 +228,9 @@ func switchUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update Switch",
-		Long:  `Update Switch`,
+		Short:        "Update Switch",
+		Long:         `Update Switch`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return switchUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -307,10 +311,11 @@ func switchUpdateCmd() *cobra.Command {
 func switchDeleteCmd() *cobra.Command {
 	switchDeleteParam := params.NewDeleteSwitchParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete Switch",
-		Long:    `Delete Switch`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete Switch",
+		Long:         `Delete Switch`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return switchDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -389,8 +394,9 @@ func switchBridgeConnectCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "bridge-connect",
 
-		Short: "BridgeConnect Switch",
-		Long:  `BridgeConnect Switch`,
+		Short:        "BridgeConnect Switch",
+		Long:         `BridgeConnect Switch`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return switchBridgeConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -463,8 +469,9 @@ func switchBridgeDisconnectCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "bridge-disconnect",
 
-		Short: "BridgeDisconnect Switch",
-		Long:  `BridgeDisconnect Switch`,
+		Short:        "BridgeDisconnect Switch",
+		Long:         `BridgeDisconnect Switch`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return switchBridgeDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

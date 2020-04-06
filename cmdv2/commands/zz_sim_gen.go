@@ -43,10 +43,11 @@ func simCmd() *cobra.Command {
 func simListCmd() *cobra.Command {
 	simListParam := params.NewListSIMParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List SIM",
-		Long:    `List SIM`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List SIM",
+		Long:         `List SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -96,8 +97,9 @@ func simCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create SIM",
-		Long:  `Create SIM`,
+		Short:        "Create SIM",
+		Long:         `Create SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -162,8 +164,9 @@ func simReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read SIM",
-		Long:  `Read SIM`,
+		Short:        "Read SIM",
+		Long:         `Read SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -230,8 +233,9 @@ func simUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update SIM",
-		Long:  `Update SIM`,
+		Short:        "Update SIM",
+		Long:         `Update SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -312,10 +316,11 @@ func simUpdateCmd() *cobra.Command {
 func simDeleteCmd() *cobra.Command {
 	simDeleteParam := params.NewDeleteSIMParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete SIM",
-		Long:    `Delete SIM`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete SIM",
+		Long:         `Delete SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -386,10 +391,11 @@ func simDeleteCmd() *cobra.Command {
 func simCarrierInfoCmd() *cobra.Command {
 	simCarrierInfoParam := params.NewCarrierInfoSIMParam()
 	cmd := &cobra.Command{
-		Use:     "carrier-info",
-		Aliases: []string{"carrier-list"},
-		Short:   "CarrierInfo SIM",
-		Long:    `CarrierInfo SIM`,
+		Use:          "carrier-info",
+		Aliases:      []string{"carrier-list"},
+		Short:        "CarrierInfo SIM",
+		Long:         `CarrierInfo SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simCarrierInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -456,8 +462,9 @@ func simCarrierUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "carrier-update",
 
-		Short: "CarrierUpdate SIM",
-		Long:  `CarrierUpdate SIM`,
+		Short:        "CarrierUpdate SIM",
+		Long:         `CarrierUpdate SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simCarrierUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -530,8 +537,9 @@ func simActivateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "activate",
 
-		Short: "Activate SIM",
-		Long:  `Activate SIM`,
+		Short:        "Activate SIM",
+		Long:         `Activate SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simActivateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -603,8 +611,9 @@ func simDeactivateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "deactivate",
 
-		Short: "Deactivate SIM",
-		Long:  `Deactivate SIM`,
+		Short:        "Deactivate SIM",
+		Long:         `Deactivate SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simDeactivateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -676,8 +685,9 @@ func simImeiLockCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "imei-lock",
 
-		Short: "ImeiLock SIM",
-		Long:  `ImeiLock SIM`,
+		Short:        "ImeiLock SIM",
+		Long:         `ImeiLock SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simImeiLockParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -750,8 +760,9 @@ func simIpAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ip-add",
 
-		Short: "IpAdd SIM",
-		Long:  `IpAdd SIM`,
+		Short:        "IpAdd SIM",
+		Long:         `IpAdd SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simIpAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -824,8 +835,9 @@ func simImeiUnlockCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "imei-unlock",
 
-		Short: "ImeiUnlock SIM",
-		Long:  `ImeiUnlock SIM`,
+		Short:        "ImeiUnlock SIM",
+		Long:         `ImeiUnlock SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simImeiUnlockParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -895,10 +907,11 @@ func simImeiUnlockCmd() *cobra.Command {
 func simIpDeleteCmd() *cobra.Command {
 	simIpDeleteParam := params.NewIpDeleteSIMParam()
 	cmd := &cobra.Command{
-		Use:     "ip-delete",
-		Aliases: []string{"ip-del"},
-		Short:   "IpDelete SIM",
-		Long:    `IpDelete SIM`,
+		Use:          "ip-delete",
+		Aliases:      []string{"ip-del"},
+		Short:        "IpDelete SIM",
+		Long:         `IpDelete SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simIpDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -970,8 +983,9 @@ func simLogsCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "logs",
 
-		Short: "Logs SIM",
-		Long:  `Logs SIM`,
+		Short:        "Logs SIM",
+		Long:         `Logs SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1040,8 +1054,9 @@ func simMonitorCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "monitor",
 
-		Short: "Monitor SIM",
-		Long:  `Monitor SIM`,
+		Short:        "Monitor SIM",
+		Long:         `Monitor SIM`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return simMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

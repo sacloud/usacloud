@@ -41,10 +41,11 @@ func productServerCmd() *cobra.Command {
 func productServerListCmd() *cobra.Command {
 	productServerListParam := params.NewListProductServerParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List ProductServer (default)",
-		Long:    `List ProductServer (default)`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List ProductServer (default)",
+		Long:         `List ProductServer (default)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return productServerListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -93,8 +94,9 @@ func productServerReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read ProductServer",
-		Long:  `Read ProductServer`,
+		Short:        "Read ProductServer",
+		Long:         `Read ProductServer`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return productServerReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

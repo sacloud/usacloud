@@ -43,10 +43,11 @@ func loadBalancerCmd() *cobra.Command {
 func loadBalancerListCmd() *cobra.Command {
 	loadBalancerListParam := params.NewListLoadBalancerParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List LoadBalancer",
-		Long:    `List LoadBalancer`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List LoadBalancer",
+		Long:         `List LoadBalancer`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -96,8 +97,9 @@ func loadBalancerCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create LoadBalancer",
-		Long:  `Create LoadBalancer`,
+		Short:        "Create LoadBalancer",
+		Long:         `Create LoadBalancer`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -165,8 +167,9 @@ func loadBalancerReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read LoadBalancer",
-		Long:  `Read LoadBalancer`,
+		Short:        "Read LoadBalancer",
+		Long:         `Read LoadBalancer`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -233,8 +236,9 @@ func loadBalancerUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update LoadBalancer",
-		Long:  `Update LoadBalancer`,
+		Short:        "Update LoadBalancer",
+		Long:         `Update LoadBalancer`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -315,10 +319,11 @@ func loadBalancerUpdateCmd() *cobra.Command {
 func loadBalancerDeleteCmd() *cobra.Command {
 	loadBalancerDeleteParam := params.NewDeleteLoadBalancerParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete LoadBalancer",
-		Long:    `Delete LoadBalancer`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete LoadBalancer",
+		Long:         `Delete LoadBalancer`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -396,10 +401,11 @@ func loadBalancerDeleteCmd() *cobra.Command {
 func loadBalancerBootCmd() *cobra.Command {
 	loadBalancerBootParam := params.NewBootLoadBalancerParam()
 	cmd := &cobra.Command{
-		Use:     "boot",
-		Aliases: []string{"power-on"},
-		Short:   "Boot LoadBalancer",
-		Long:    `Boot LoadBalancer`,
+		Use:          "boot",
+		Aliases:      []string{"power-on"},
+		Short:        "Boot LoadBalancer",
+		Long:         `Boot LoadBalancer`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -469,10 +475,11 @@ func loadBalancerBootCmd() *cobra.Command {
 func loadBalancerShutdownCmd() *cobra.Command {
 	loadBalancerShutdownParam := params.NewShutdownLoadBalancerParam()
 	cmd := &cobra.Command{
-		Use:     "shutdown",
-		Aliases: []string{"power-off"},
-		Short:   "Shutdown LoadBalancer",
-		Long:    `Shutdown LoadBalancer`,
+		Use:          "shutdown",
+		Aliases:      []string{"power-off"},
+		Short:        "Shutdown LoadBalancer",
+		Long:         `Shutdown LoadBalancer`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -542,10 +549,11 @@ func loadBalancerShutdownCmd() *cobra.Command {
 func loadBalancerShutdownForceCmd() *cobra.Command {
 	loadBalancerShutdownForceParam := params.NewShutdownForceLoadBalancerParam()
 	cmd := &cobra.Command{
-		Use:     "shutdown-force",
-		Aliases: []string{"stop"},
-		Short:   "ShutdownForce LoadBalancer",
-		Long:    `ShutdownForce LoadBalancer`,
+		Use:          "shutdown-force",
+		Aliases:      []string{"stop"},
+		Short:        "ShutdownForce LoadBalancer",
+		Long:         `ShutdownForce LoadBalancer`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -617,8 +625,9 @@ func loadBalancerResetCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "reset",
 
-		Short: "Reset LoadBalancer",
-		Long:  `Reset LoadBalancer`,
+		Short:        "Reset LoadBalancer",
+		Long:         `Reset LoadBalancer`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -690,8 +699,9 @@ func loadBalancerWaitForBootCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "wait-for-boot",
 
-		Short: "Wait until boot is completed",
-		Long:  `Wait until boot is completed`,
+		Short:        "Wait until boot is completed",
+		Long:         `Wait until boot is completed`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -751,8 +761,9 @@ func loadBalancerWaitForDownCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "wait-for-down",
 
-		Short: "Wait until shutdown is completed",
-		Long:  `Wait until shutdown is completed`,
+		Short:        "Wait until shutdown is completed",
+		Long:         `Wait until shutdown is completed`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -812,8 +823,9 @@ func loadBalancerVipInfoCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "vip-info",
 
-		Short: "Show information of VIP(s)",
-		Long:  `Show information of VIP(s)`,
+		Short:        "Show information of VIP(s)",
+		Long:         `Show information of VIP(s)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerVipInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -880,8 +892,9 @@ func loadBalancerVipAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "vip-add",
 
-		Short: "Add VIP to LoadBalancer",
-		Long:  `Add VIP to LoadBalancer`,
+		Short:        "Add VIP to LoadBalancer",
+		Long:         `Add VIP to LoadBalancer`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerVipAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -958,8 +971,9 @@ func loadBalancerVipUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "vip-update",
 
-		Short: "Update VIP",
-		Long:  `Update VIP`,
+		Short:        "Update VIP",
+		Long:         `Update VIP`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerVipUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1037,8 +1051,9 @@ func loadBalancerVipDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "vip-delete",
 
-		Short: "Delete VIP from LoadBalancer",
-		Long:  `Delete VIP from LoadBalancer`,
+		Short:        "Delete VIP from LoadBalancer",
+		Long:         `Delete VIP from LoadBalancer`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerVipDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1111,8 +1126,9 @@ func loadBalancerServerInfoCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "server-info",
 
-		Short: "Show servers under VIP(s)",
-		Long:  `Show servers under VIP(s)`,
+		Short:        "Show servers under VIP(s)",
+		Long:         `Show servers under VIP(s)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1182,8 +1198,9 @@ func loadBalancerServerAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "server-add",
 
-		Short: "Add server under VIP(s)",
-		Long:  `Add server under VIP(s)`,
+		Short:        "Add server under VIP(s)",
+		Long:         `Add server under VIP(s)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1263,8 +1280,9 @@ func loadBalancerServerUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "server-update",
 
-		Short: "Update server under VIP(s)",
-		Long:  `Update server under VIP(s)`,
+		Short:        "Update server under VIP(s)",
+		Long:         `Update server under VIP(s)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1344,8 +1362,9 @@ func loadBalancerServerDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "server-delete",
 
-		Short: "Delete server under VIP(s)",
-		Long:  `Delete server under VIP(s)`,
+		Short:        "Delete server under VIP(s)",
+		Long:         `Delete server under VIP(s)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1421,8 +1440,9 @@ func loadBalancerMonitorCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "monitor",
 
-		Short: "Monitor LoadBalancer",
-		Long:  `Monitor LoadBalancer`,
+		Short:        "Monitor LoadBalancer",
+		Long:         `Monitor LoadBalancer`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return loadBalancerMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

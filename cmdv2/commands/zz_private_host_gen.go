@@ -43,10 +43,11 @@ func privateHostCmd() *cobra.Command {
 func privateHostListCmd() *cobra.Command {
 	privateHostListParam := params.NewListPrivateHostParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List PrivateHost",
-		Long:    `List PrivateHost`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List PrivateHost",
+		Long:         `List PrivateHost`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return privateHostListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -96,8 +97,9 @@ func privateHostCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create PrivateHost",
-		Long:  `Create PrivateHost`,
+		Short:        "Create PrivateHost",
+		Long:         `Create PrivateHost`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return privateHostCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -157,8 +159,9 @@ func privateHostReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read PrivateHost",
-		Long:  `Read PrivateHost`,
+		Short:        "Read PrivateHost",
+		Long:         `Read PrivateHost`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return privateHostReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -225,8 +228,9 @@ func privateHostUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update PrivateHost",
-		Long:  `Update PrivateHost`,
+		Short:        "Update PrivateHost",
+		Long:         `Update PrivateHost`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return privateHostUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -307,10 +311,11 @@ func privateHostUpdateCmd() *cobra.Command {
 func privateHostDeleteCmd() *cobra.Command {
 	privateHostDeleteParam := params.NewDeletePrivateHostParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete PrivateHost",
-		Long:    `Delete PrivateHost`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete PrivateHost",
+		Long:         `Delete PrivateHost`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return privateHostDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -387,10 +392,11 @@ func privateHostDeleteCmd() *cobra.Command {
 func privateHostServerInfoCmd() *cobra.Command {
 	privateHostServerInfoParam := params.NewServerInfoPrivateHostParam()
 	cmd := &cobra.Command{
-		Use:     "server-info",
-		Aliases: []string{"server-list"},
-		Short:   "ServerInfo PrivateHost",
-		Long:    `ServerInfo PrivateHost`,
+		Use:          "server-info",
+		Aliases:      []string{"server-list"},
+		Short:        "ServerInfo PrivateHost",
+		Long:         `ServerInfo PrivateHost`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return privateHostServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -457,8 +463,9 @@ func privateHostServerAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "server-add",
 
-		Short: "ServerAdd PrivateHost",
-		Long:  `ServerAdd PrivateHost`,
+		Short:        "ServerAdd PrivateHost",
+		Long:         `ServerAdd PrivateHost`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return privateHostServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -538,8 +545,9 @@ func privateHostServerDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "server-delete",
 
-		Short: "ServerDelete PrivateHost",
-		Long:  `ServerDelete PrivateHost`,
+		Short:        "ServerDelete PrivateHost",
+		Long:         `ServerDelete PrivateHost`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return privateHostServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

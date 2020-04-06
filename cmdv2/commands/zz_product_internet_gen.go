@@ -41,10 +41,11 @@ func productInternetCmd() *cobra.Command {
 func productInternetListCmd() *cobra.Command {
 	productInternetListParam := params.NewListProductInternetParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List ProductInternet (default)",
-		Long:    `List ProductInternet (default)`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List ProductInternet (default)",
+		Long:         `List ProductInternet (default)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return productInternetListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -93,8 +94,9 @@ func productInternetReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read ProductInternet",
-		Long:  `Read ProductInternet`,
+		Short:        "Read ProductInternet",
+		Long:         `Read ProductInternet`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return productInternetReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

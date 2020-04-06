@@ -39,8 +39,9 @@ func summaryShowCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "show",
 
-		Short: "Show Summary (default)",
-		Long:  `Show Summary (default)`,
+		Short:        "Show Summary (default)",
+		Long:         `Show Summary (default)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return summaryShowParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

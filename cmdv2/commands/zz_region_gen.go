@@ -41,10 +41,11 @@ func regionCmd() *cobra.Command {
 func regionListCmd() *cobra.Command {
 	regionListParam := params.NewListRegionParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List Region (default)",
-		Long:    `List Region (default)`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List Region (default)",
+		Long:         `List Region (default)`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return regionListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -93,8 +94,9 @@ func regionReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read Region",
-		Long:  `Read Region`,
+		Short:        "Read Region",
+		Long:         `Read Region`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return regionReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

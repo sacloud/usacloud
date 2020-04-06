@@ -43,10 +43,11 @@ func mobileGatewayCmd() *cobra.Command {
 func mobileGatewayListCmd() *cobra.Command {
 	mobileGatewayListParam := params.NewListMobileGatewayParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find", "selector"},
-		Short:   "List MobileGateway",
-		Long:    `List MobileGateway`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find", "selector"},
+		Short:        "List MobileGateway",
+		Long:         `List MobileGateway`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -96,8 +97,9 @@ func mobileGatewayCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create MobileGateway",
-		Long:  `Create MobileGateway`,
+		Short:        "Create MobileGateway",
+		Long:         `Create MobileGateway`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -158,8 +160,9 @@ func mobileGatewayReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read MobileGateway",
-		Long:  `Read MobileGateway`,
+		Short:        "Read MobileGateway",
+		Long:         `Read MobileGateway`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -226,8 +229,9 @@ func mobileGatewayUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update MobileGateway",
-		Long:  `Update MobileGateway`,
+		Short:        "Update MobileGateway",
+		Long:         `Update MobileGateway`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -309,10 +313,11 @@ func mobileGatewayUpdateCmd() *cobra.Command {
 func mobileGatewayDeleteCmd() *cobra.Command {
 	mobileGatewayDeleteParam := params.NewDeleteMobileGatewayParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete MobileGateway",
-		Long:    `Delete MobileGateway`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete MobileGateway",
+		Long:         `Delete MobileGateway`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -390,10 +395,11 @@ func mobileGatewayDeleteCmd() *cobra.Command {
 func mobileGatewayBootCmd() *cobra.Command {
 	mobileGatewayBootParam := params.NewBootMobileGatewayParam()
 	cmd := &cobra.Command{
-		Use:     "boot",
-		Aliases: []string{"power-on"},
-		Short:   "Boot MobileGateway",
-		Long:    `Boot MobileGateway`,
+		Use:          "boot",
+		Aliases:      []string{"power-on"},
+		Short:        "Boot MobileGateway",
+		Long:         `Boot MobileGateway`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -463,10 +469,11 @@ func mobileGatewayBootCmd() *cobra.Command {
 func mobileGatewayShutdownCmd() *cobra.Command {
 	mobileGatewayShutdownParam := params.NewShutdownMobileGatewayParam()
 	cmd := &cobra.Command{
-		Use:     "shutdown",
-		Aliases: []string{"power-off"},
-		Short:   "Shutdown MobileGateway",
-		Long:    `Shutdown MobileGateway`,
+		Use:          "shutdown",
+		Aliases:      []string{"power-off"},
+		Short:        "Shutdown MobileGateway",
+		Long:         `Shutdown MobileGateway`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -536,10 +543,11 @@ func mobileGatewayShutdownCmd() *cobra.Command {
 func mobileGatewayShutdownForceCmd() *cobra.Command {
 	mobileGatewayShutdownForceParam := params.NewShutdownForceMobileGatewayParam()
 	cmd := &cobra.Command{
-		Use:     "shutdown-force",
-		Aliases: []string{"stop"},
-		Short:   "ShutdownForce MobileGateway",
-		Long:    `ShutdownForce MobileGateway`,
+		Use:          "shutdown-force",
+		Aliases:      []string{"stop"},
+		Short:        "ShutdownForce MobileGateway",
+		Long:         `ShutdownForce MobileGateway`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -611,8 +619,9 @@ func mobileGatewayResetCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "reset",
 
-		Short: "Reset MobileGateway",
-		Long:  `Reset MobileGateway`,
+		Short:        "Reset MobileGateway",
+		Long:         `Reset MobileGateway`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -684,8 +693,9 @@ func mobileGatewayWaitForBootCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "wait-for-boot",
 
-		Short: "Wait until boot is completed",
-		Long:  `Wait until boot is completed`,
+		Short:        "Wait until boot is completed",
+		Long:         `Wait until boot is completed`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -745,8 +755,9 @@ func mobileGatewayWaitForDownCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "wait-for-down",
 
-		Short: "Wait until shutdown is completed",
-		Long:  `Wait until shutdown is completed`,
+		Short:        "Wait until shutdown is completed",
+		Long:         `Wait until shutdown is completed`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -804,10 +815,11 @@ func mobileGatewayWaitForDownCmd() *cobra.Command {
 func mobileGatewayInterfaceInfoCmd() *cobra.Command {
 	mobileGatewayInterfaceInfoParam := params.NewInterfaceInfoMobileGatewayParam()
 	cmd := &cobra.Command{
-		Use:     "interface-info",
-		Aliases: []string{"interface-list"},
-		Short:   "Show information of NIC(s) connected to mobile-gateway",
-		Long:    `Show information of NIC(s) connected to mobile-gateway`,
+		Use:          "interface-info",
+		Aliases:      []string{"interface-list"},
+		Short:        "Show information of NIC(s) connected to mobile-gateway",
+		Long:         `Show information of NIC(s) connected to mobile-gateway`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -874,8 +886,9 @@ func mobileGatewayInterfaceConnectCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "interface-connect",
 
-		Short: "Connected to switch",
-		Long:  `Connected to switch`,
+		Short:        "Connected to switch",
+		Long:         `Connected to switch`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -950,8 +963,9 @@ func mobileGatewayInterfaceUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "interface-update",
 
-		Short: "Update interface",
-		Long:  `Update interface`,
+		Short:        "Update interface",
+		Long:         `Update interface`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1025,8 +1039,9 @@ func mobileGatewayInterfaceDisconnectCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "interface-disconnect",
 
-		Short: "Disconnected to switch",
-		Long:  `Disconnected to switch`,
+		Short:        "Disconnected to switch",
+		Long:         `Disconnected to switch`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1098,8 +1113,9 @@ func mobileGatewayTrafficControlInfoCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "traffic-control-info",
 
-		Short: "Show information of traffic-control",
-		Long:  `Show information of traffic-control`,
+		Short:        "Show information of traffic-control",
+		Long:         `Show information of traffic-control`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayTrafficControlInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1166,8 +1182,9 @@ func mobileGatewayTrafficControlEnableCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "traffic-control-enable",
 
-		Short: "Enable traffic-control",
-		Long:  `Enable traffic-control`,
+		Short:        "Enable traffic-control",
+		Long:         `Enable traffic-control`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayTrafficControlEnableParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1244,8 +1261,9 @@ func mobileGatewayTrafficControlUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "traffic-control-update",
 
-		Short: "Update traffic-control config",
-		Long:  `Update traffic-control config`,
+		Short:        "Update traffic-control config",
+		Long:         `Update traffic-control config`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayTrafficControlUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1320,10 +1338,11 @@ func mobileGatewayTrafficControlUpdateCmd() *cobra.Command {
 func mobileGatewayTrafficControlDisableCmd() *cobra.Command {
 	mobileGatewayTrafficControlDisableParam := params.NewTrafficControlDisableMobileGatewayParam()
 	cmd := &cobra.Command{
-		Use:     "traffic-control-disable",
-		Aliases: []string{"traffic-control-delete"},
-		Short:   "Disable traffic-control config",
-		Long:    `Disable traffic-control config`,
+		Use:          "traffic-control-disable",
+		Aliases:      []string{"traffic-control-delete"},
+		Short:        "Disable traffic-control config",
+		Long:         `Disable traffic-control config`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayTrafficControlDisableParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1393,10 +1412,11 @@ func mobileGatewayTrafficControlDisableCmd() *cobra.Command {
 func mobileGatewayStaticRouteInfoCmd() *cobra.Command {
 	mobileGatewayStaticRouteInfoParam := params.NewStaticRouteInfoMobileGatewayParam()
 	cmd := &cobra.Command{
-		Use:     "static-route-info",
-		Aliases: []string{"static-route-list"},
-		Short:   "Show information of static-routes",
-		Long:    `Show information of static-routes`,
+		Use:          "static-route-info",
+		Aliases:      []string{"static-route-list"},
+		Short:        "Show information of static-routes",
+		Long:         `Show information of static-routes`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1463,8 +1483,9 @@ func mobileGatewayStaticRouteAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "static-route-add",
 
-		Short: "Add static-route",
-		Long:  `Add static-route`,
+		Short:        "Add static-route",
+		Long:         `Add static-route`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1538,8 +1559,9 @@ func mobileGatewayStaticRouteUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "static-route-update",
 
-		Short: "Update static-route",
-		Long:  `Update static-route`,
+		Short:        "Update static-route",
+		Long:         `Update static-route`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1614,8 +1636,9 @@ func mobileGatewayStaticRouteDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "static-route-delete",
 
-		Short: "Delete static-route",
-		Long:  `Delete static-route`,
+		Short:        "Delete static-route",
+		Long:         `Delete static-route`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1686,10 +1709,11 @@ func mobileGatewayStaticRouteDeleteCmd() *cobra.Command {
 func mobileGatewaySIMInfoCmd() *cobra.Command {
 	mobileGatewaySIMInfoParam := params.NewSIMInfoMobileGatewayParam()
 	cmd := &cobra.Command{
-		Use:     "sim-info",
-		Aliases: []string{"interface-list"},
-		Short:   "Show information of NIC(s) connected to mobile-gateway",
-		Long:    `Show information of NIC(s) connected to mobile-gateway`,
+		Use:          "sim-info",
+		Aliases:      []string{"interface-list"},
+		Short:        "Show information of NIC(s) connected to mobile-gateway",
+		Long:         `Show information of NIC(s) connected to mobile-gateway`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewaySIMInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1756,8 +1780,9 @@ func mobileGatewaySIMAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "sim-add",
 
-		Short: "Connected to switch",
-		Long:  `Connected to switch`,
+		Short:        "Connected to switch",
+		Long:         `Connected to switch`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewaySIMAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1831,8 +1856,9 @@ func mobileGatewaySIMUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "sim-update",
 
-		Short: "Connected to switch",
-		Long:  `Connected to switch`,
+		Short:        "Connected to switch",
+		Long:         `Connected to switch`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewaySIMUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1906,8 +1932,9 @@ func mobileGatewaySIMDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "sim-delete",
 
-		Short: "Disconnected to switch",
-		Long:  `Disconnected to switch`,
+		Short:        "Disconnected to switch",
+		Long:         `Disconnected to switch`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewaySIMDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -1978,10 +2005,11 @@ func mobileGatewaySIMDeleteCmd() *cobra.Command {
 func mobileGatewaySIMRouteInfoCmd() *cobra.Command {
 	mobileGatewaySIMRouteInfoParam := params.NewSIMRouteInfoMobileGatewayParam()
 	cmd := &cobra.Command{
-		Use:     "sim-route-info",
-		Aliases: []string{"sim-route-list"},
-		Short:   "Show information of sim-routes",
-		Long:    `Show information of sim-routes`,
+		Use:          "sim-route-info",
+		Aliases:      []string{"sim-route-list"},
+		Short:        "Show information of sim-routes",
+		Long:         `Show information of sim-routes`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewaySIMRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2048,8 +2076,9 @@ func mobileGatewaySIMRouteAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "sim-route-add",
 
-		Short: "Add sim-route",
-		Long:  `Add sim-route`,
+		Short:        "Add sim-route",
+		Long:         `Add sim-route`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewaySIMRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2123,8 +2152,9 @@ func mobileGatewaySIMRouteUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "sim-route-update",
 
-		Short: "Update sim-route",
-		Long:  `Update sim-route`,
+		Short:        "Update sim-route",
+		Long:         `Update sim-route`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewaySIMRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2199,8 +2229,9 @@ func mobileGatewaySIMRouteDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "sim-route-delete",
 
-		Short: "Delete sim-route",
-		Long:  `Delete sim-route`,
+		Short:        "Delete sim-route",
+		Long:         `Delete sim-route`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewaySIMRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2273,8 +2304,9 @@ func mobileGatewayDNSUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "dns-update",
 
-		Short: "Update interface",
-		Long:  `Update interface`,
+		Short:        "Update interface",
+		Long:         `Update interface`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayDNSUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -2348,8 +2380,9 @@ func mobileGatewayLogsCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "logs",
 
-		Short: "Logs MobileGateway",
-		Long:  `Logs MobileGateway`,
+		Short:        "Logs MobileGateway",
+		Long:         `Logs MobileGateway`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return mobileGatewayLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

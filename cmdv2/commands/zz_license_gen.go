@@ -43,10 +43,11 @@ func licenseCmd() *cobra.Command {
 func licenseListCmd() *cobra.Command {
 	licenseListParam := params.NewListLicenseParam()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List License",
-		Long:    `List License`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List License",
+		Long:         `List License`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return licenseListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -95,8 +96,9 @@ func licenseCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "create",
 
-		Short: "Create License",
-		Long:  `Create License`,
+		Short:        "Create License",
+		Long:         `Create License`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return licenseCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -154,8 +156,9 @@ func licenseReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "read",
 
-		Short: "Read License",
-		Long:  `Read License`,
+		Short:        "Read License",
+		Long:         `Read License`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return licenseReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -221,8 +224,9 @@ func licenseUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "update",
 
-		Short: "Update License",
-		Long:  `Update License`,
+		Short:        "Update License",
+		Long:         `Update License`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return licenseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -299,10 +303,11 @@ func licenseUpdateCmd() *cobra.Command {
 func licenseDeleteCmd() *cobra.Command {
 	licenseDeleteParam := params.NewDeleteLicenseParam()
 	cmd := &cobra.Command{
-		Use:     "delete",
-		Aliases: []string{"rm"},
-		Short:   "Delete License",
-		Long:    `Delete License`,
+		Use:          "delete",
+		Aliases:      []string{"rm"},
+		Short:        "Delete License",
+		Long:         `Delete License`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return licenseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},

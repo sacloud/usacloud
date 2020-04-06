@@ -41,10 +41,11 @@ func ipv4Cmd() *cobra.Command {
 func ipv4ListCmd() *cobra.Command {
 	ipv4ListParam := params.NewListIPv4Param()
 	cmd := &cobra.Command{
-		Use:     "list",
-		Aliases: []string{"ls", "find"},
-		Short:   "List IPv4",
-		Long:    `List IPv4`,
+		Use:          "list",
+		Aliases:      []string{"ls", "find"},
+		Short:        "List IPv4",
+		Long:         `List IPv4`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return ipv4ListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -93,8 +94,9 @@ func ipv4PtrAddCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ptr-add",
 
-		Short: "PtrAdd IPv4",
-		Long:  `PtrAdd IPv4`,
+		Short:        "PtrAdd IPv4",
+		Long:         `PtrAdd IPv4`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return ipv4PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -151,8 +153,9 @@ func ipv4PtrReadCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ptr-read",
 
-		Short: "PtrRead IPv4",
-		Long:  `PtrRead IPv4`,
+		Short:        "PtrRead IPv4",
+		Long:         `PtrRead IPv4`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return ipv4PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -196,8 +199,9 @@ func ipv4PtrUpdateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ptr-update",
 
-		Short: "PtrUpdate IPv4",
-		Long:  `PtrUpdate IPv4`,
+		Short:        "PtrUpdate IPv4",
+		Long:         `PtrUpdate IPv4`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return ipv4PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
@@ -254,8 +258,9 @@ func ipv4PtrDeleteCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "ptr-delete",
 
-		Short: "PtrDelete IPv4",
-		Long:  `PtrDelete IPv4`,
+		Short:        "PtrDelete IPv4",
+		Long:         `PtrDelete IPv4`,
+		SilenceUsage: true,
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return ipv4PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
