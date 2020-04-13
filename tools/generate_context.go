@@ -20,6 +20,8 @@ import (
 	"path/filepath"
 	"sort"
 
+	"github.com/sacloud/usacloud/version"
+
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/schema"
 )
@@ -84,6 +86,10 @@ func (c *GenerateContext) buildCategorizedResources() {
 		}
 		return c.CategorizedResources[i].Order < c.CategorizedResources[j].Order
 	})
+}
+
+func (c *GenerateContext) Copyright() string {
+	return fmt.Sprintf("Copyright %s The Usacloud Authors", version.CopyrightYear)
 }
 
 func (c *GenerateContext) SetCurrentR(k string) {
