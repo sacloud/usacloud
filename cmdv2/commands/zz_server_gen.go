@@ -88,6 +88,7 @@ func serverListCmd() *cobra.Command {
 	fs.StringVarP(&serverListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&serverListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(serverListNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverListFlagOrder(cmd))
 	return cmd
 }
@@ -188,6 +189,7 @@ func serverBuildCmd() *cobra.Command {
 	fs.StringVarP(&serverBuildParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.BoolVarP(&serverBuildParam.UsKeyboard, "us-keyboard", "", false, "use us-keyboard")
 	fs.BoolVarP(&serverBuildParam.DisableBootAfterCreate, "disable-boot-after-create", "", false, "boot after create")
+	fs.SetNormalizeFunc(serverBuildNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverBuildFlagOrder(cmd))
 	return cmd
 }
@@ -257,6 +259,7 @@ func serverReadCmd() *cobra.Command {
 	fs.StringVarP(&serverReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverReadParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverReadFlagOrder(cmd))
 	return cmd
 }
@@ -343,6 +346,7 @@ func serverUpdateCmd() *cobra.Command {
 	fs.StringVarP(&serverUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -426,6 +430,7 @@ func serverDeleteCmd() *cobra.Command {
 	fs.StringVarP(&serverDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -510,6 +515,7 @@ func serverPlanChangeCmd() *cobra.Command {
 	fs.StringVarP(&serverPlanChangeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverPlanChangeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverPlanChangeParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverPlanChangeNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverPlanChangeFlagOrder(cmd))
 	return cmd
 }
@@ -584,6 +590,7 @@ func serverBootCmd() *cobra.Command {
 	fs.StringVarP(&serverBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverBootParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverBootNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverBootFlagOrder(cmd))
 	return cmd
 }
@@ -658,6 +665,7 @@ func serverShutdownCmd() *cobra.Command {
 	fs.StringVarP(&serverShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverShutdownParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverShutdownNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverShutdownFlagOrder(cmd))
 	return cmd
 }
@@ -732,6 +740,7 @@ func serverShutdownForceCmd() *cobra.Command {
 	fs.StringVarP(&serverShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverShutdownForceParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverShutdownForceNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverShutdownForceFlagOrder(cmd))
 	return cmd
 }
@@ -806,6 +815,7 @@ func serverResetCmd() *cobra.Command {
 	fs.StringVarP(&serverResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverResetParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverResetNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverResetFlagOrder(cmd))
 	return cmd
 }
@@ -868,6 +878,7 @@ func serverWaitForBootCmd() *cobra.Command {
 	fs.StringVarP(&serverWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverWaitForBootParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverWaitForBootNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverWaitForBootFlagOrder(cmd))
 	return cmd
 }
@@ -930,6 +941,7 @@ func serverWaitForDownCmd() *cobra.Command {
 	fs.StringVarP(&serverWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverWaitForDownParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverWaitForDownNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverWaitForDownFlagOrder(cmd))
 	return cmd
 }
@@ -997,6 +1009,7 @@ func serverSSHCmd() *cobra.Command {
 	fs.BoolVarP(&serverSSHParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.BoolVarP(&serverSSHParam.Quiet, "quiet", "q", false, "disable information messages")
 	fs.VarP(newIDValue(0, &serverSSHParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverSSHNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverSSHFlagOrder(cmd))
 	return cmd
 }
@@ -1063,6 +1076,7 @@ func serverSSHExecCmd() *cobra.Command {
 	fs.BoolVarP(&serverSSHExecParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.BoolVarP(&serverSSHExecParam.Quiet, "quiet", "q", false, "disable information messages")
 	fs.VarP(newIDValue(0, &serverSSHExecParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverSSHExecNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverSSHExecFlagOrder(cmd))
 	return cmd
 }
@@ -1120,6 +1134,7 @@ func serverScpCmd() *cobra.Command {
 	fs.StringVarP(&serverScpParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverScpParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.BoolVarP(&serverScpParam.Quiet, "quiet", "q", false, "disable information messages")
+	fs.SetNormalizeFunc(serverScpNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverScpFlagOrder(cmd))
 	return cmd
 }
@@ -1183,6 +1198,7 @@ func serverVncCmd() *cobra.Command {
 	fs.StringVarP(&serverVncParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverVncParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverVncParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverVncNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverVncFlagOrder(cmd))
 	return cmd
 }
@@ -1253,6 +1269,7 @@ func serverVncInfoCmd() *cobra.Command {
 	fs.StringVarP(&serverVncInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverVncInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverVncInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverVncInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverVncInfoFlagOrder(cmd))
 	return cmd
 }
@@ -1339,6 +1356,7 @@ func serverVncSendCmd() *cobra.Command {
 	fs.StringVarP(&serverVncSendParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverVncSendParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverVncSendParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverVncSendNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverVncSendFlagOrder(cmd))
 	return cmd
 }
@@ -1422,6 +1440,7 @@ func serverVncSnapshotCmd() *cobra.Command {
 	fs.StringVarP(&serverVncSnapshotParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverVncSnapshotParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverVncSnapshotParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverVncSnapshotNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverVncSnapshotFlagOrder(cmd))
 	return cmd
 }
@@ -1486,6 +1505,7 @@ func serverRemoteDesktopCmd() *cobra.Command {
 	fs.StringVarP(&serverRemoteDesktopParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverRemoteDesktopParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverRemoteDesktopParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverRemoteDesktopNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverRemoteDesktopFlagOrder(cmd))
 	return cmd
 }
@@ -1557,6 +1577,7 @@ func serverRemoteDesktopInfoCmd() *cobra.Command {
 	fs.StringVarP(&serverRemoteDesktopInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverRemoteDesktopInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverRemoteDesktopInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverRemoteDesktopInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverRemoteDesktopInfoFlagOrder(cmd))
 	return cmd
 }
@@ -1626,6 +1647,7 @@ func serverDiskInfoCmd() *cobra.Command {
 	fs.StringVarP(&serverDiskInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverDiskInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverDiskInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverDiskInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverDiskInfoFlagOrder(cmd))
 	return cmd
 }
@@ -1701,6 +1723,7 @@ func serverDiskConnectCmd() *cobra.Command {
 	fs.StringVarP(&serverDiskConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverDiskConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverDiskConnectParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverDiskConnectNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverDiskConnectFlagOrder(cmd))
 	return cmd
 }
@@ -1776,6 +1799,7 @@ func serverDiskDisconnectCmd() *cobra.Command {
 	fs.StringVarP(&serverDiskDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverDiskDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverDiskDisconnectParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverDiskDisconnectNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverDiskDisconnectFlagOrder(cmd))
 	return cmd
 }
@@ -1845,6 +1869,7 @@ func serverInterfaceInfoCmd() *cobra.Command {
 	fs.StringVarP(&serverInterfaceInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverInterfaceInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverInterfaceInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverInterfaceInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverInterfaceInfoFlagOrder(cmd))
 	return cmd
 }
@@ -1920,6 +1945,7 @@ func serverInterfaceAddForInternetCmd() *cobra.Command {
 	fs.StringVarP(&serverInterfaceAddForInternetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverInterfaceAddForInternetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverInterfaceAddForInternetParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverInterfaceAddForInternetNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverInterfaceAddForInternetFlagOrder(cmd))
 	return cmd
 }
@@ -1999,6 +2025,7 @@ func serverInterfaceAddForRouterCmd() *cobra.Command {
 	fs.StringVarP(&serverInterfaceAddForRouterParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverInterfaceAddForRouterParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverInterfaceAddForRouterParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverInterfaceAddForRouterNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverInterfaceAddForRouterFlagOrder(cmd))
 	return cmd
 }
@@ -2078,6 +2105,7 @@ func serverInterfaceAddForSwitchCmd() *cobra.Command {
 	fs.StringVarP(&serverInterfaceAddForSwitchParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverInterfaceAddForSwitchParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverInterfaceAddForSwitchParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverInterfaceAddForSwitchNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverInterfaceAddForSwitchFlagOrder(cmd))
 	return cmd
 }
@@ -2152,6 +2180,7 @@ func serverInterfaceAddDisconnectedCmd() *cobra.Command {
 	fs.StringVarP(&serverInterfaceAddDisconnectedParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverInterfaceAddDisconnectedParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverInterfaceAddDisconnectedParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverInterfaceAddDisconnectedNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverInterfaceAddDisconnectedFlagOrder(cmd))
 	return cmd
 }
@@ -2221,6 +2250,7 @@ func serverISOInfoCmd() *cobra.Command {
 	fs.StringVarP(&serverISOInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverISOInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverISOInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverISOInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverISOInfoFlagOrder(cmd))
 	return cmd
 }
@@ -2302,6 +2332,7 @@ func serverISOInsertCmd() *cobra.Command {
 	fs.StringVarP(&serverISOInsertParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverISOInsertParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverISOInsertParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverISOInsertNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverISOInsertFlagOrder(cmd))
 	return cmd
 }
@@ -2376,6 +2407,7 @@ func serverISOEjectCmd() *cobra.Command {
 	fs.StringVarP(&serverISOEjectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&serverISOEjectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &serverISOEjectParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverISOEjectNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverISOEjectFlagOrder(cmd))
 	return cmd
 }
@@ -2448,6 +2480,7 @@ func serverMonitorCPUCmd() *cobra.Command {
 	fs.StringVarP(&serverMonitorCPUParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverMonitorCPUParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverMonitorCPUParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverMonitorCPUNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverMonitorCPUFlagOrder(cmd))
 	return cmd
 }
@@ -2521,6 +2554,7 @@ func serverMonitorNicCmd() *cobra.Command {
 	fs.StringVarP(&serverMonitorNicParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverMonitorNicParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverMonitorNicParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverMonitorNicNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverMonitorNicFlagOrder(cmd))
 	return cmd
 }
@@ -2594,6 +2628,7 @@ func serverMonitorDiskCmd() *cobra.Command {
 	fs.StringVarP(&serverMonitorDiskParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverMonitorDiskParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &serverMonitorDiskParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(serverMonitorDiskNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverMonitorDiskFlagOrder(cmd))
 	return cmd
 }
@@ -2640,6 +2675,7 @@ func serverMaintenanceInfoCmd() *cobra.Command {
 	fs.StringVarP(&serverMaintenanceInfoParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&serverMaintenanceInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&serverMaintenanceInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(serverMaintenanceInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, serverMaintenanceInfoFlagOrder(cmd))
 	return cmd
 }

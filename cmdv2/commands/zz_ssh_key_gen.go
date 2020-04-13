@@ -87,6 +87,7 @@ func sshKeyListCmd() *cobra.Command {
 	fs.StringVarP(&sshKeyListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&sshKeyListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&sshKeyListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(sshKeyListNormalizeFlagNames)
 	buildFlagsUsage(cmd, sshKeyListFlagOrder(cmd))
 	return cmd
 }
@@ -149,6 +150,7 @@ func sshKeyCreateCmd() *cobra.Command {
 	fs.StringVarP(&sshKeyCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&sshKeyCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&sshKeyCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(sshKeyCreateNormalizeFlagNames)
 	buildFlagsUsage(cmd, sshKeyCreateFlagOrder(cmd))
 	return cmd
 }
@@ -217,6 +219,7 @@ func sshKeyReadCmd() *cobra.Command {
 	fs.StringVarP(&sshKeyReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&sshKeyReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &sshKeyReadParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(sshKeyReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, sshKeyReadFlagOrder(cmd))
 	return cmd
 }
@@ -299,6 +302,7 @@ func sshKeyUpdateCmd() *cobra.Command {
 	fs.StringVarP(&sshKeyUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&sshKeyUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &sshKeyUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(sshKeyUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, sshKeyUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -379,6 +383,7 @@ func sshKeyDeleteCmd() *cobra.Command {
 	fs.StringVarP(&sshKeyDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&sshKeyDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &sshKeyDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(sshKeyDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, sshKeyDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -441,6 +446,7 @@ func sshKeyGenerateCmd() *cobra.Command {
 	fs.StringVarP(&sshKeyGenerateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&sshKeyGenerateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&sshKeyGenerateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(sshKeyGenerateNormalizeFlagNames)
 	buildFlagsUsage(cmd, sshKeyGenerateFlagOrder(cmd))
 	return cmd
 }

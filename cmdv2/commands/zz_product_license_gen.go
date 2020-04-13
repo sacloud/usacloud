@@ -85,6 +85,7 @@ func productLicenseListCmd() *cobra.Command {
 	fs.StringVarP(&productLicenseListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&productLicenseListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&productLicenseListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(productLicenseListNormalizeFlagNames)
 	buildFlagsUsage(cmd, productLicenseListFlagOrder(cmd))
 	return cmd
 }
@@ -144,6 +145,7 @@ func productLicenseReadCmd() *cobra.Command {
 	fs.StringVarP(&productLicenseReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&productLicenseReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &productLicenseReadParam.Id), "id", "", "set resource ID")
+	fs.SetNormalizeFunc(productLicenseReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, productLicenseReadFlagOrder(cmd))
 	return cmd
 }

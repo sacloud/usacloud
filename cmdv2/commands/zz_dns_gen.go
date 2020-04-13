@@ -88,6 +88,7 @@ func dnsListCmd() *cobra.Command {
 	fs.StringVarP(&dnsListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&dnsListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(dnsListNormalizeFlagNames)
 	buildFlagsUsage(cmd, dnsListFlagOrder(cmd))
 	return cmd
 }
@@ -159,6 +160,7 @@ func dnsRecordInfoCmd() *cobra.Command {
 	fs.StringVarP(&dnsRecordInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsRecordInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsRecordInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(dnsRecordInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, dnsRecordInfoFlagOrder(cmd))
 	return cmd
 }
@@ -242,6 +244,7 @@ func dnsRecordBulkUpdateCmd() *cobra.Command {
 	fs.StringVarP(&dnsRecordBulkUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsRecordBulkUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsRecordBulkUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(dnsRecordBulkUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, dnsRecordBulkUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -304,6 +307,7 @@ func dnsCreateCmd() *cobra.Command {
 	fs.StringVarP(&dnsCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&dnsCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(dnsCreateNormalizeFlagNames)
 	buildFlagsUsage(cmd, dnsCreateFlagOrder(cmd))
 	return cmd
 }
@@ -394,6 +398,7 @@ func dnsRecordAddCmd() *cobra.Command {
 	fs.StringVarP(&dnsRecordAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsRecordAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsRecordAddParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(dnsRecordAddNormalizeFlagNames)
 	buildFlagsUsage(cmd, dnsRecordAddFlagOrder(cmd))
 	return cmd
 }
@@ -463,6 +468,7 @@ func dnsReadCmd() *cobra.Command {
 	fs.StringVarP(&dnsReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsReadParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(dnsReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, dnsReadFlagOrder(cmd))
 	return cmd
 }
@@ -554,6 +560,7 @@ func dnsRecordUpdateCmd() *cobra.Command {
 	fs.StringVarP(&dnsRecordUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsRecordUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsRecordUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(dnsRecordUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, dnsRecordUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -636,6 +643,7 @@ func dnsRecordDeleteCmd() *cobra.Command {
 	fs.StringVarP(&dnsRecordDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsRecordDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsRecordDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(dnsRecordDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, dnsRecordDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -720,6 +728,7 @@ func dnsUpdateCmd() *cobra.Command {
 	fs.StringVarP(&dnsUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(dnsUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, dnsUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -801,6 +810,7 @@ func dnsDeleteCmd() *cobra.Command {
 	fs.StringVarP(&dnsDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&dnsDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &dnsDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(dnsDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, dnsDeleteFlagOrder(cmd))
 	return cmd
 }

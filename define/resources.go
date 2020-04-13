@@ -20,6 +20,7 @@
 //go:generate go run ../tools/gen-cli-v2-commands/main.go
 //go:generate go run ../tools/gen-cli-v2-resource-finder/main.go
 //go:generate go run ../tools/gen-cli-v2-usage/main.go
+//go:generate go run ../tools/gen-cli-v2-normalize-flag-name/main.go
 //go:generate go run ../tools/gen-cli-v2-root-command/main.go
 package define
 

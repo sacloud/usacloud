@@ -91,6 +91,7 @@ func archiveListCmd() *cobra.Command {
 	fs.StringVarP(&archiveListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&archiveListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&archiveListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(archiveListNormalizeFlagNames)
 	buildFlagsUsage(cmd, archiveListFlagOrder(cmd))
 	return cmd
 }
@@ -157,6 +158,7 @@ func archiveCreateCmd() *cobra.Command {
 	fs.StringVarP(&archiveCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&archiveCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&archiveCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(archiveCreateNormalizeFlagNames)
 	buildFlagsUsage(cmd, archiveCreateFlagOrder(cmd))
 	return cmd
 }
@@ -226,6 +228,7 @@ func archiveReadCmd() *cobra.Command {
 	fs.StringVarP(&archiveReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&archiveReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &archiveReadParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(archiveReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, archiveReadFlagOrder(cmd))
 	return cmd
 }
@@ -311,6 +314,7 @@ func archiveUpdateCmd() *cobra.Command {
 	fs.StringVarP(&archiveUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&archiveUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &archiveUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(archiveUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, archiveUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -392,6 +396,7 @@ func archiveDeleteCmd() *cobra.Command {
 	fs.StringVarP(&archiveDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&archiveDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &archiveDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(archiveDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, archiveDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -474,6 +479,7 @@ func archiveUploadCmd() *cobra.Command {
 	fs.StringVarP(&archiveUploadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&archiveUploadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &archiveUploadParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(archiveUploadNormalizeFlagNames)
 	buildFlagsUsage(cmd, archiveUploadFlagOrder(cmd))
 	return cmd
 }
@@ -549,6 +555,7 @@ func archiveDownloadCmd() *cobra.Command {
 	fs.StringVarP(&archiveDownloadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveDownloadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &archiveDownloadParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(archiveDownloadNormalizeFlagNames)
 	buildFlagsUsage(cmd, archiveDownloadFlagOrder(cmd))
 	return cmd
 }
@@ -630,6 +637,7 @@ func archiveFTPOpenCmd() *cobra.Command {
 	fs.StringVarP(&archiveFTPOpenParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&archiveFTPOpenParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &archiveFTPOpenParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(archiveFTPOpenNormalizeFlagNames)
 	buildFlagsUsage(cmd, archiveFTPOpenFlagOrder(cmd))
 	return cmd
 }
@@ -704,6 +712,7 @@ func archiveFTPCloseCmd() *cobra.Command {
 	fs.StringVarP(&archiveFTPCloseParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveFTPCloseParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &archiveFTPCloseParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(archiveFTPCloseNormalizeFlagNames)
 	buildFlagsUsage(cmd, archiveFTPCloseFlagOrder(cmd))
 	return cmd
 }
@@ -766,6 +775,7 @@ func archiveWaitForCopyCmd() *cobra.Command {
 	fs.StringVarP(&archiveWaitForCopyParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveWaitForCopyParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &archiveWaitForCopyParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(archiveWaitForCopyNormalizeFlagNames)
 	buildFlagsUsage(cmd, archiveWaitForCopyFlagOrder(cmd))
 	return cmd
 }

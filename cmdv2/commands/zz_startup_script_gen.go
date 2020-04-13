@@ -90,6 +90,7 @@ func startupScriptListCmd() *cobra.Command {
 	fs.StringVarP(&startupScriptListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&startupScriptListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&startupScriptListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(startupScriptListNormalizeFlagNames)
 	buildFlagsUsage(cmd, startupScriptListFlagOrder(cmd))
 	return cmd
 }
@@ -154,6 +155,7 @@ func startupScriptCreateCmd() *cobra.Command {
 	fs.StringVarP(&startupScriptCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&startupScriptCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&startupScriptCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(startupScriptCreateNormalizeFlagNames)
 	buildFlagsUsage(cmd, startupScriptCreateFlagOrder(cmd))
 	return cmd
 }
@@ -223,6 +225,7 @@ func startupScriptReadCmd() *cobra.Command {
 	fs.StringVarP(&startupScriptReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&startupScriptReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &startupScriptReadParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(startupScriptReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, startupScriptReadFlagOrder(cmd))
 	return cmd
 }
@@ -310,6 +313,7 @@ func startupScriptUpdateCmd() *cobra.Command {
 	fs.StringVarP(&startupScriptUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&startupScriptUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &startupScriptUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(startupScriptUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, startupScriptUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -391,6 +395,7 @@ func startupScriptDeleteCmd() *cobra.Command {
 	fs.StringVarP(&startupScriptDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&startupScriptDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &startupScriptDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(startupScriptDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, startupScriptDeleteFlagOrder(cmd))
 	return cmd
 }

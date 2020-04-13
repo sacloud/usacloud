@@ -87,6 +87,7 @@ func licenseListCmd() *cobra.Command {
 	fs.StringVarP(&licenseListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&licenseListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&licenseListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(licenseListNormalizeFlagNames)
 	buildFlagsUsage(cmd, licenseListFlagOrder(cmd))
 	return cmd
 }
@@ -147,6 +148,7 @@ func licenseCreateCmd() *cobra.Command {
 	fs.StringVarP(&licenseCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&licenseCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&licenseCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(licenseCreateNormalizeFlagNames)
 	buildFlagsUsage(cmd, licenseCreateFlagOrder(cmd))
 	return cmd
 }
@@ -215,6 +217,7 @@ func licenseReadCmd() *cobra.Command {
 	fs.StringVarP(&licenseReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&licenseReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &licenseReadParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(licenseReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, licenseReadFlagOrder(cmd))
 	return cmd
 }
@@ -296,6 +299,7 @@ func licenseUpdateCmd() *cobra.Command {
 	fs.StringVarP(&licenseUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&licenseUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &licenseUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(licenseUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, licenseUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -376,6 +380,7 @@ func licenseDeleteCmd() *cobra.Command {
 	fs.StringVarP(&licenseDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&licenseDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &licenseDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(licenseDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, licenseDeleteFlagOrder(cmd))
 	return cmd
 }

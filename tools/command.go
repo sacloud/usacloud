@@ -132,6 +132,10 @@ func (c *Command) CLIv2CommandsFileName() string {
 	return fmt.Sprintf("%s_gen.go", ToSnakeCaseName(c.Resource.Name))
 }
 
+func (c *Command) CLINormalizeFlagsFuncName() string {
+	return fmt.Sprintf("%s%sNormalizeFlagNames", ToCamelWithFirstLower(c.Resource.Name), ToCamelCaseName(c.Name))
+}
+
 func (c *Command) InputParameterVariable() string {
 	return fmt.Sprintf("%s%sParam", ToCamelWithFirstLower(c.Resource.Name), ToCamelCaseName(c.Name))
 }
@@ -185,4 +189,14 @@ func (c *Command) FindResultFieldName() string {
 
 func (c *Command) RequireSingleID() bool {
 	return c.Type.IsNeedSingleIDType()
+}
+
+func (c *Command) HasLongAliases() bool {
+	for _, p := range c.Params {
+		aliases := p.LongAliases()
+		if len(aliases) > 0 {
+			return true
+		}
+	}
+	return false
 }

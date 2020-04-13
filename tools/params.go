@@ -43,6 +43,16 @@ func NewParameter(name string, param *schema.Schema, category *schema.Category, 
 	}
 }
 
+func (p *Parameter) LongAliases() []string {
+	var ret []string
+	for _, a := range p.Schema.Aliases {
+		if len(a) > 1 {
+			ret = append(ret, a)
+		}
+	}
+	return ret
+}
+
 func (p *Parameter) FlagName() string {
 	return ToDashedName(p.Name)
 }
@@ -53,7 +63,7 @@ func (p *Parameter) FlagNameWithDash() string {
 
 func (p *Parameter) FlagNameShorthands() string {
 	var res []string
-	for _, a := range p.Aliases {
+	for _, a := range p.Schema.Aliases {
 		if len(a) == 1 {
 			res = append(res, a)
 		}

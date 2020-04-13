@@ -85,6 +85,7 @@ func productServerListCmd() *cobra.Command {
 	fs.StringVarP(&productServerListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&productServerListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&productServerListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(productServerListNormalizeFlagNames)
 	buildFlagsUsage(cmd, productServerListFlagOrder(cmd))
 	return cmd
 }
@@ -144,6 +145,7 @@ func productServerReadCmd() *cobra.Command {
 	fs.StringVarP(&productServerReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&productServerReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &productServerReadParam.Id), "id", "", "set resource ID")
+	fs.SetNormalizeFunc(productServerReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, productServerReadFlagOrder(cmd))
 	return cmd
 }

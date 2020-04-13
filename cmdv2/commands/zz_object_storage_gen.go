@@ -82,6 +82,7 @@ func objectStorageListCmd() *cobra.Command {
 	fs.StringVarP(&objectStorageListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&objectStorageListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&objectStorageListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(objectStorageListNormalizeFlagNames)
 	buildFlagsUsage(cmd, objectStorageListFlagOrder(cmd))
 	return cmd
 }
@@ -138,6 +139,7 @@ func objectStoragePutCmd() *cobra.Command {
 	fs.StringVarP(&objectStoragePutParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&objectStoragePutParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&objectStoragePutParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.SetNormalizeFunc(objectStoragePutNormalizeFlagNames)
 	buildFlagsUsage(cmd, objectStoragePutFlagOrder(cmd))
 	return cmd
 }
@@ -181,6 +183,7 @@ func objectStorageGetCmd() *cobra.Command {
 	fs.StringVarP(&objectStorageGetParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&objectStorageGetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&objectStorageGetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.SetNormalizeFunc(objectStorageGetNormalizeFlagNames)
 	buildFlagsUsage(cmd, objectStorageGetFlagOrder(cmd))
 	return cmd
 }
@@ -236,6 +239,7 @@ func objectStorageDeleteCmd() *cobra.Command {
 	fs.StringVarP(&objectStorageDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&objectStorageDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&objectStorageDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.SetNormalizeFunc(objectStorageDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, objectStorageDeleteFlagOrder(cmd))
 	return cmd
 }

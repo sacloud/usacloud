@@ -107,6 +107,10 @@ func (r *Resource) CLIUsageFileName() string {
 	return fmt.Sprintf("zz_%s_usage_gen.go", ToSnakeCaseName(r.Name))
 }
 
+func (r *Resource) CLINormalizeFlagsFileName() string {
+	return fmt.Sprintf("zz_%s_normalize_flag_names_gen.go", ToSnakeCaseName(r.Name))
+}
+
 func (r *Resource) ParameterSourceFileName() string {
 	return fmt.Sprintf("zz_%s_gen.go", ToSnakeCaseName(r.Name))
 }
