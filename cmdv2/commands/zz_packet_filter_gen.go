@@ -34,8 +34,9 @@ func packetFilterCmd() *cobra.Command {
 		Use:   "packet-filter",
 		Short: "A manage commands of PacketFilter",
 		Long:  `A manage commands of PacketFilter`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

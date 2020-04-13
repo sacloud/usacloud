@@ -32,8 +32,8 @@ func productInternetCmd() *cobra.Command {
 		Use:   "product-internet",
 		Short: "A manage commands of ProductInternet",
 		Long:  `A manage commands of ProductInternet`,
-		Run: func(cmd *cobra.Command, args []string) {
-			// TODO not implements: call list func as default
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return runDefaultCmd(cmd, args, "list")
 		},
 	}
 }

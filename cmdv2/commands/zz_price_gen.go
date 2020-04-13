@@ -29,8 +29,8 @@ func priceCmd() *cobra.Command {
 		Use:   "price",
 		Short: "A manage commands of Price",
 		Long:  `A manage commands of Price`,
-		Run: func(cmd *cobra.Command, args []string) {
-			// TODO not implements: call list func as default
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return runDefaultCmd(cmd, args, "list")
 		},
 	}
 }

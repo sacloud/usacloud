@@ -31,8 +31,8 @@ func configCmd() *cobra.Command {
 		Use:   "config",
 		Short: "A manage command of APIKey settings",
 		Long:  `A manage command of APIKey settings`,
-		Run: func(cmd *cobra.Command, args []string) {
-			// TODO not implements: call edit func as default
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return runDefaultCmd(cmd, args, "edit")
 		},
 	}
 }

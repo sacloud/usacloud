@@ -28,8 +28,8 @@ func billCmd() *cobra.Command {
 		Use:   "bill",
 		Short: "A manage commands of Bill",
 		Long:  `A manage commands of Bill`,
-		Run: func(cmd *cobra.Command, args []string) {
-			// TODO not implements: call list func as default
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return runDefaultCmd(cmd, args, "list")
 		},
 	}
 }

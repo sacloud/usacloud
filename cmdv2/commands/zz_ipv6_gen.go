@@ -32,8 +32,9 @@ func ipv6Cmd() *cobra.Command {
 		Use:   "ipv6",
 		Short: "A manage commands of IPv6",
 		Long:  `A manage commands of IPv6`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

@@ -34,8 +34,9 @@ func autoBackupCmd() *cobra.Command {
 		Use:   "auto-backup",
 		Short: "A manage commands of AutoBackup",
 		Long:  `A manage commands of AutoBackup`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

@@ -33,8 +33,9 @@ func webAccelCmd() *cobra.Command {
 		Use:   "web-accel",
 		Short: "A manage commands of WebAccel",
 		Long:  `A manage commands of WebAccel`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

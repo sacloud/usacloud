@@ -34,8 +34,9 @@ func licenseCmd() *cobra.Command {
 		Use:   "license",
 		Short: "A manage commands of License",
 		Long:  `A manage commands of License`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

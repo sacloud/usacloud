@@ -32,8 +32,8 @@ func productServerCmd() *cobra.Command {
 		Use:   "product-server",
 		Short: "A manage commands of ProductServer",
 		Long:  `A manage commands of ProductServer`,
-		Run: func(cmd *cobra.Command, args []string) {
-			// TODO not implements: call list func as default
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return runDefaultCmd(cmd, args, "list")
 		},
 	}
 }

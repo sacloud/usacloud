@@ -32,8 +32,9 @@ func ipv4Cmd() *cobra.Command {
 		Use:   "ipv4",
 		Short: "A manage commands of IPv4",
 		Long:  `A manage commands of IPv4`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

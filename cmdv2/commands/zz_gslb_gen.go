@@ -34,8 +34,9 @@ func gslbCmd() *cobra.Command {
 		Use:   "gslb",
 		Short: "A manage commands of GSLB",
 		Long:  `A manage commands of GSLB`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

@@ -28,8 +28,8 @@ func summaryCmd() *cobra.Command {
 		Use:   "summary",
 		Short: "Show summary of resource usage",
 		Long:  `Show summary of resource usage`,
-		Run: func(cmd *cobra.Command, args []string) {
-			// TODO not implements: call show func as default
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return runDefaultCmd(cmd, args, "show")
 		},
 	}
 }

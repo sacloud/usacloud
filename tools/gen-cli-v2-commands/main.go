@@ -87,8 +87,13 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 		Use:   "{{ .CLIName }}",
 		Short: "{{ .Usage }}",
 		Long: ` + "`{{.Usage}}`" + `,
-		Run: func(cmd *cobra.Command, args []string) {
-			{{ if .DefaultCommand }}// TODO not implements: call {{.DefaultCommand}} func as default{{ else }}cmd.HelpFunc()(cmd,args){{ end }}
+		RunE: func(cmd *cobra.Command, args []string) error {
+		{{ if .DefaultCommand -}}
+			return runDefaultCmd(cmd, args, "{{.DefaultCommand}}")
+		{{ else -}}
+			cmd.HelpFunc()(cmd,args)
+			return nil
+		{{ end -}}
 		},
 	}
 }

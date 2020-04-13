@@ -34,8 +34,9 @@ func diskCmd() *cobra.Command {
 		Use:   "disk",
 		Short: "A manage commands of Disk",
 		Long:  `A manage commands of Disk`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

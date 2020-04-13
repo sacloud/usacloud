@@ -34,8 +34,9 @@ func isoImageCmd() *cobra.Command {
 		Use:   "iso-image",
 		Short: "A manage commands of ISOImage",
 		Long:  `A manage commands of ISOImage`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

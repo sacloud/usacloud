@@ -34,8 +34,9 @@ func privateHostCmd() *cobra.Command {
 		Use:   "private-host",
 		Short: "A manage commands of PrivateHost",
 		Long:  `A manage commands of PrivateHost`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

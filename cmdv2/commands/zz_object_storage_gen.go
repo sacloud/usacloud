@@ -31,8 +31,9 @@ func objectStorageCmd() *cobra.Command {
 		Use:   "object-storage",
 		Short: "A manage commands of ObjectStorage",
 		Long:  `A manage commands of ObjectStorage`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

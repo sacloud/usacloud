@@ -28,8 +28,8 @@ func authStatusCmd() *cobra.Command {
 		Use:   "auth-status",
 		Short: "A manage commands of AuthStatus",
 		Long:  `A manage commands of AuthStatus`,
-		Run: func(cmd *cobra.Command, args []string) {
-			// TODO not implements: call show func as default
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return runDefaultCmd(cmd, args, "show")
 		},
 	}
 }

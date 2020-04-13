@@ -34,8 +34,9 @@ func simpleMonitorCmd() *cobra.Command {
 		Use:   "simple-monitor",
 		Short: "A manage commands of SimpleMonitor",
 		Long:  `A manage commands of SimpleMonitor`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

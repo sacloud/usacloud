@@ -34,8 +34,9 @@ func proxyLBCmd() *cobra.Command {
 		Use:   "proxy-lb",
 		Short: "A manage commands of ProxyLB",
 		Long:  `A manage commands of ProxyLB`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }
