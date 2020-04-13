@@ -25,7 +25,7 @@ func AutoBackupResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find", "selector"},
+			Aliases:            []string{"ls", "find", "select"},
 			Params:             autoBackupListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: autoBackupListColumns(),

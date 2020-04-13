@@ -44,7 +44,7 @@ func switchListCmd() *cobra.Command {
 	switchListParam := params.NewListSwitchParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List Switch",
 		Long:         `List Switch`,
 		SilenceUsage: true,

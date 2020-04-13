@@ -44,7 +44,7 @@ func archiveListCmd() *cobra.Command {
 	archiveListParam := params.NewListArchiveParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List Archive",
 		Long:         `List Archive`,
 		SilenceUsage: true,

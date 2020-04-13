@@ -44,7 +44,7 @@ func mobileGatewayListCmd() *cobra.Command {
 	mobileGatewayListParam := params.NewListMobileGatewayParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List MobileGateway",
 		Long:         `List MobileGateway`,
 		SilenceUsage: true,

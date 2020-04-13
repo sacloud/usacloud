@@ -44,7 +44,7 @@ func internetListCmd() *cobra.Command {
 	internetListParam := params.NewListInternetParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List Internet",
 		Long:         `List Internet`,
 		SilenceUsage: true,

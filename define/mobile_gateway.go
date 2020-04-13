@@ -27,7 +27,7 @@ func MobileGatewayResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find", "selector"},
+			Aliases:            []string{"ls", "find", "select"},
 			Params:             mobileGatewayListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: mobileGatewayListColumns(),

@@ -44,7 +44,7 @@ func loadBalancerListCmd() *cobra.Command {
 	loadBalancerListParam := params.NewListLoadBalancerParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List LoadBalancer",
 		Long:         `List LoadBalancer`,
 		SilenceUsage: true,

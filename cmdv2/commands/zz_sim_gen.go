@@ -44,7 +44,7 @@ func simListCmd() *cobra.Command {
 	simListParam := params.NewListSIMParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List SIM",
 		Long:         `List SIM`,
 		SilenceUsage: true,

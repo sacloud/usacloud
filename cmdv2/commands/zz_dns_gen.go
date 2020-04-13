@@ -44,7 +44,7 @@ func dnsListCmd() *cobra.Command {
 	dnsListParam := params.NewListDNSParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List DNS",
 		Long:         `List DNS`,
 		SilenceUsage: true,
