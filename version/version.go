@@ -24,6 +24,9 @@ var (
 	Version = "0.0.0" // set on build time
 	// Revision git commit short commithash
 	Revision = "xxxxxx" // set on build time
+
+	// CopyrightYear .
+	CopyrightYear = "2017-2020"
 )
 
 // FullVersion return sackerel full version text

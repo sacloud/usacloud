@@ -767,4 +767,5 @@ func init() {
 	}
 
 	buildCommandsUsage(rootCmd, rootCommandOrder(rootCmd))
+	rootCmd.SetUsageTemplate(rootCmd.UsageTemplate() + "\nCopyright 2017-2020 The Usacloud Authors\n")
 }

@@ -100,5 +100,6 @@ func init() {
 	}
 	{{ end }}
 	buildCommandsUsage(rootCmd, rootCommandOrder(rootCmd))
+	rootCmd.SetUsageTemplate(rootCmd.UsageTemplate() + "\n{{.Copyright}}\n")
 }
 `
