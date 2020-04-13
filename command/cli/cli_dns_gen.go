@@ -32,16 +32,16 @@ import (
 )
 
 func init() {
-	listParam := params.NewListDNSParam()
-	recordInfoParam := params.NewRecordInfoDNSParam()
-	recordBulkUpdateParam := params.NewRecordBulkUpdateDNSParam()
-	createParam := params.NewCreateDNSParam()
-	recordAddParam := params.NewRecordAddDNSParam()
-	readParam := params.NewReadDNSParam()
-	recordUpdateParam := params.NewRecordUpdateDNSParam()
-	recordDeleteParam := params.NewRecordDeleteDNSParam()
-	updateParam := params.NewUpdateDNSParam()
-	deleteParam := params.NewDeleteDNSParam()
+	dnsListParam := params.NewListDNSParam()
+	dnsRecordInfoParam := params.NewRecordInfoDNSParam()
+	dnsRecordBulkUpdateParam := params.NewRecordBulkUpdateDNSParam()
+	dnsCreateParam := params.NewCreateDNSParam()
+	dnsRecordAddParam := params.NewRecordAddDNSParam()
+	dnsReadParam := params.NewReadDNSParam()
+	dnsRecordUpdateParam := params.NewRecordUpdateDNSParam()
+	dnsRecordDeleteParam := params.NewRecordDeleteDNSParam()
+	dnsUpdateParam := params.NewUpdateDNSParam()
+	dnsDeleteParam := params.NewDeleteDNSParam()
 
 	cliCommand := &cli.Command{
 		Name:  "dns",
@@ -84,8 +84,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -133,9 +141,9 @@ func init() {
 						return err
 					}
 
-					listParam.ParamTemplate = c.String("param-template")
-					listParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(listParam)
+					dnsListParam.ParamTemplate = c.String("param-template")
+					dnsListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(dnsListParam)
 					if err != nil {
 						return err
 					}
@@ -145,57 +153,63 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(listParam, p, mergo.WithOverride)
+						mergo.Merge(dnsListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						listParam.Name = c.StringSlice("name")
+						dnsListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						dnsListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						listParam.Tags = c.StringSlice("tags")
+						dnsListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						listParam.From = c.Int("from")
+						dnsListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						listParam.Max = c.Int("max")
+						dnsListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						listParam.Sort = c.StringSlice("sort")
+						dnsListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						listParam.ParamTemplate = c.String("param-template")
+						dnsListParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						dnsListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						listParam.ParamTemplateFile = c.String("param-template-file")
+						dnsListParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						dnsListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						dnsListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						listParam.OutputType = c.String("output-type")
+						dnsListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						listParam.Column = c.StringSlice("column")
+						dnsListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						listParam.Quiet = c.Bool("quiet")
+						dnsListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						listParam.Format = c.String("format")
+						dnsListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						listParam.FormatFile = c.String("format-file")
+						dnsListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						listParam.Query = c.String("query")
+						dnsListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						listParam.QueryFile = c.String("query-file")
+						dnsListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -203,7 +217,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = listParam
+					var outputTypeHolder interface{} = dnsListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -214,10 +228,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if listParam.GenerateSkeleton {
-						listParam.GenerateSkeleton = false
-						listParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(listParam, "", "\t")
+					if dnsListParam.GenerateSkeleton {
+						dnsListParam.GenerateSkeleton = false
+						dnsListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dnsListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -226,15 +240,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := dnsListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), listParam)
+					ctx := command.NewContext(c, c.Args().Slice(), dnsListParam)
 
 					// Run command with params
-					return funcs.DNSList(ctx, listParam)
+					return funcs.DNSList(ctx, dnsListParam)
 
 				},
 			},
@@ -261,8 +275,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -315,9 +337,9 @@ func init() {
 						return err
 					}
 
-					recordInfoParam.ParamTemplate = c.String("param-template")
-					recordInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(recordInfoParam)
+					dnsRecordInfoParam.ParamTemplate = c.String("param-template")
+					dnsRecordInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(dnsRecordInfoParam)
 					if err != nil {
 						return err
 					}
@@ -327,51 +349,57 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(recordInfoParam, p, mergo.WithOverride)
+						mergo.Merge(dnsRecordInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						recordInfoParam.Name = c.String("name")
+						dnsRecordInfoParam.Name = c.String("name")
 					}
 					if c.IsSet("type") {
-						recordInfoParam.Type = c.String("type")
+						dnsRecordInfoParam.Type = c.String("type")
 					}
 					if c.IsSet("selector") {
-						recordInfoParam.Selector = c.StringSlice("selector")
+						dnsRecordInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						recordInfoParam.ParamTemplate = c.String("param-template")
+						dnsRecordInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						dnsRecordInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						recordInfoParam.ParamTemplateFile = c.String("param-template-file")
+						dnsRecordInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						dnsRecordInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						recordInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						dnsRecordInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						recordInfoParam.OutputType = c.String("output-type")
+						dnsRecordInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						recordInfoParam.Column = c.StringSlice("column")
+						dnsRecordInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						recordInfoParam.Quiet = c.Bool("quiet")
+						dnsRecordInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						recordInfoParam.Format = c.String("format")
+						dnsRecordInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						recordInfoParam.FormatFile = c.String("format-file")
+						dnsRecordInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						recordInfoParam.Query = c.String("query")
+						dnsRecordInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						recordInfoParam.QueryFile = c.String("query-file")
+						dnsRecordInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						recordInfoParam.Id = sacloud.ID(c.Int64("id"))
+						dnsRecordInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -379,7 +407,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = recordInfoParam
+					var outputTypeHolder interface{} = dnsRecordInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -390,10 +418,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if recordInfoParam.GenerateSkeleton {
-						recordInfoParam.GenerateSkeleton = false
-						recordInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(recordInfoParam, "", "\t")
+					if dnsRecordInfoParam.GenerateSkeleton {
+						dnsRecordInfoParam.GenerateSkeleton = false
+						dnsRecordInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dnsRecordInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -402,19 +430,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := recordInfoParam.Validate(); len(errors) > 0 {
+					if errors := dnsRecordInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), recordInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), dnsRecordInfoParam)
 
 					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(recordInfoParam.Selector) == 0 {
+						if len(dnsRecordInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -423,12 +451,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceDNSItems {
-							if hasTags(&v, recordInfoParam.Selector) {
+							if hasTags(&v, dnsRecordInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", recordInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dnsRecordInfoParam.Selector)
 						}
 
 					} else {
@@ -450,7 +478,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceDNSItems {
-										if len(recordInfoParam.Selector) == 0 || hasTags(&v, recordInfoParam.Selector) {
+										if len(dnsRecordInfoParam.Selector) == 0 || hasTags(&v, dnsRecordInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -475,11 +503,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						recordInfoParam.SetId(id)
-						p := *recordInfoParam // copy struct value
-						recordInfoParam := &p
+						dnsRecordInfoParam.SetId(id)
+						p := *dnsRecordInfoParam // copy struct value
+						dnsRecordInfoParam := &p
 						go func() {
-							err := funcs.DNSRecordInfo(ctx, recordInfoParam)
+							err := funcs.DNSRecordInfo(ctx, dnsRecordInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -519,8 +547,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -573,9 +609,9 @@ func init() {
 						return err
 					}
 
-					recordBulkUpdateParam.ParamTemplate = c.String("param-template")
-					recordBulkUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(recordBulkUpdateParam)
+					dnsRecordBulkUpdateParam.ParamTemplate = c.String("param-template")
+					dnsRecordBulkUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(dnsRecordBulkUpdateParam)
 					if err != nil {
 						return err
 					}
@@ -585,54 +621,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(recordBulkUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(dnsRecordBulkUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("file") {
-						recordBulkUpdateParam.File = c.String("file")
+						dnsRecordBulkUpdateParam.File = c.String("file")
 					}
 					if c.IsSet("mode") {
-						recordBulkUpdateParam.Mode = c.String("mode")
+						dnsRecordBulkUpdateParam.Mode = c.String("mode")
 					}
 					if c.IsSet("selector") {
-						recordBulkUpdateParam.Selector = c.StringSlice("selector")
+						dnsRecordBulkUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						recordBulkUpdateParam.Assumeyes = c.Bool("assumeyes")
+						dnsRecordBulkUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						recordBulkUpdateParam.ParamTemplate = c.String("param-template")
+						dnsRecordBulkUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						dnsRecordBulkUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						recordBulkUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						dnsRecordBulkUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						dnsRecordBulkUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						recordBulkUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						dnsRecordBulkUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						recordBulkUpdateParam.OutputType = c.String("output-type")
+						dnsRecordBulkUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						recordBulkUpdateParam.Column = c.StringSlice("column")
+						dnsRecordBulkUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						recordBulkUpdateParam.Quiet = c.Bool("quiet")
+						dnsRecordBulkUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						recordBulkUpdateParam.Format = c.String("format")
+						dnsRecordBulkUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						recordBulkUpdateParam.FormatFile = c.String("format-file")
+						dnsRecordBulkUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						recordBulkUpdateParam.Query = c.String("query")
+						dnsRecordBulkUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						recordBulkUpdateParam.QueryFile = c.String("query-file")
+						dnsRecordBulkUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						recordBulkUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						dnsRecordBulkUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -640,7 +682,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = recordBulkUpdateParam
+					var outputTypeHolder interface{} = dnsRecordBulkUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -651,10 +693,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if recordBulkUpdateParam.GenerateSkeleton {
-						recordBulkUpdateParam.GenerateSkeleton = false
-						recordBulkUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(recordBulkUpdateParam, "", "\t")
+					if dnsRecordBulkUpdateParam.GenerateSkeleton {
+						dnsRecordBulkUpdateParam.GenerateSkeleton = false
+						dnsRecordBulkUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dnsRecordBulkUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -663,19 +705,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := recordBulkUpdateParam.Validate(); len(errors) > 0 {
+					if errors := dnsRecordBulkUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), recordBulkUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), dnsRecordBulkUpdateParam)
 
 					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(recordBulkUpdateParam.Selector) == 0 {
+						if len(dnsRecordBulkUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -684,12 +726,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceDNSItems {
-							if hasTags(&v, recordBulkUpdateParam.Selector) {
+							if hasTags(&v, dnsRecordBulkUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", recordBulkUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dnsRecordBulkUpdateParam.Selector)
 						}
 
 					} else {
@@ -711,7 +753,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceDNSItems {
-										if len(recordBulkUpdateParam.Selector) == 0 || hasTags(&v, recordBulkUpdateParam.Selector) {
+										if len(dnsRecordBulkUpdateParam.Selector) == 0 || hasTags(&v, dnsRecordBulkUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -732,7 +774,7 @@ func init() {
 					}
 
 					// confirm
-					if !recordBulkUpdateParam.Assumeyes {
+					if !dnsRecordBulkUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -746,11 +788,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						recordBulkUpdateParam.SetId(id)
-						p := *recordBulkUpdateParam // copy struct value
-						recordBulkUpdateParam := &p
+						dnsRecordBulkUpdateParam.SetId(id)
+						p := *dnsRecordBulkUpdateParam // copy struct value
+						dnsRecordBulkUpdateParam := &p
 						go func() {
-							err := funcs.DNSRecordBulkUpdate(ctx, recordBulkUpdateParam)
+							err := funcs.DNSRecordBulkUpdate(ctx, dnsRecordBulkUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -793,8 +835,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -842,9 +892,9 @@ func init() {
 						return err
 					}
 
-					createParam.ParamTemplate = c.String("param-template")
-					createParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(createParam)
+					dnsCreateParam.ParamTemplate = c.String("param-template")
+					dnsCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(dnsCreateParam)
 					if err != nil {
 						return err
 					}
@@ -854,54 +904,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(createParam, p, mergo.WithOverride)
+						mergo.Merge(dnsCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						createParam.Name = c.String("name")
+						dnsCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						createParam.Description = c.String("description")
+						dnsCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						createParam.Tags = c.StringSlice("tags")
+						dnsCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						dnsCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						createParam.Assumeyes = c.Bool("assumeyes")
+						dnsCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						createParam.ParamTemplate = c.String("param-template")
+						dnsCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						dnsCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						createParam.ParamTemplateFile = c.String("param-template-file")
+						dnsCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						dnsCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						createParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						dnsCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						createParam.OutputType = c.String("output-type")
+						dnsCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						createParam.Column = c.StringSlice("column")
+						dnsCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						createParam.Quiet = c.Bool("quiet")
+						dnsCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						createParam.Format = c.String("format")
+						dnsCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						createParam.FormatFile = c.String("format-file")
+						dnsCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						createParam.Query = c.String("query")
+						dnsCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						createParam.QueryFile = c.String("query-file")
+						dnsCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -909,7 +965,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = createParam
+					var outputTypeHolder interface{} = dnsCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -920,10 +976,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if createParam.GenerateSkeleton {
-						createParam.GenerateSkeleton = false
-						createParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(createParam, "", "\t")
+					if dnsCreateParam.GenerateSkeleton {
+						dnsCreateParam.GenerateSkeleton = false
+						dnsCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dnsCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -932,15 +988,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
+					if errors := dnsCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), createParam)
+					ctx := command.NewContext(c, c.Args().Slice(), dnsCreateParam)
 
 					// confirm
-					if !createParam.Assumeyes {
+					if !dnsCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -950,7 +1006,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.DNSCreate(ctx, createParam)
+					return funcs.DNSCreate(ctx, dnsCreateParam)
 
 				},
 			},
@@ -1014,8 +1070,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1068,9 +1132,9 @@ func init() {
 						return err
 					}
 
-					recordAddParam.ParamTemplate = c.String("param-template")
-					recordAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(recordAddParam)
+					dnsRecordAddParam.ParamTemplate = c.String("param-template")
+					dnsRecordAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(dnsRecordAddParam)
 					if err != nil {
 						return err
 					}
@@ -1080,75 +1144,81 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(recordAddParam, p, mergo.WithOverride)
+						mergo.Merge(dnsRecordAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						recordAddParam.Name = c.String("name")
+						dnsRecordAddParam.Name = c.String("name")
 					}
 					if c.IsSet("type") {
-						recordAddParam.Type = c.String("type")
+						dnsRecordAddParam.Type = c.String("type")
 					}
 					if c.IsSet("value") {
-						recordAddParam.Value = c.String("value")
+						dnsRecordAddParam.Value = c.String("value")
 					}
 					if c.IsSet("ttl") {
-						recordAddParam.Ttl = c.Int("ttl")
+						dnsRecordAddParam.Ttl = c.Int("ttl")
 					}
 					if c.IsSet("mx-priority") {
-						recordAddParam.MxPriority = c.Int("mx-priority")
+						dnsRecordAddParam.MxPriority = c.Int("mx-priority")
 					}
 					if c.IsSet("srv-priority") {
-						recordAddParam.SrvPriority = c.Int("srv-priority")
+						dnsRecordAddParam.SrvPriority = c.Int("srv-priority")
 					}
 					if c.IsSet("srv-weight") {
-						recordAddParam.SrvWeight = c.Int("srv-weight")
+						dnsRecordAddParam.SrvWeight = c.Int("srv-weight")
 					}
 					if c.IsSet("srv-port") {
-						recordAddParam.SrvPort = c.Int("srv-port")
+						dnsRecordAddParam.SrvPort = c.Int("srv-port")
 					}
 					if c.IsSet("srv-target") {
-						recordAddParam.SrvTarget = c.String("srv-target")
+						dnsRecordAddParam.SrvTarget = c.String("srv-target")
 					}
 					if c.IsSet("selector") {
-						recordAddParam.Selector = c.StringSlice("selector")
+						dnsRecordAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						recordAddParam.Assumeyes = c.Bool("assumeyes")
+						dnsRecordAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						recordAddParam.ParamTemplate = c.String("param-template")
+						dnsRecordAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						dnsRecordAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						recordAddParam.ParamTemplateFile = c.String("param-template-file")
+						dnsRecordAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						dnsRecordAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						recordAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						dnsRecordAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						recordAddParam.OutputType = c.String("output-type")
+						dnsRecordAddParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						recordAddParam.Column = c.StringSlice("column")
+						dnsRecordAddParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						recordAddParam.Quiet = c.Bool("quiet")
+						dnsRecordAddParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						recordAddParam.Format = c.String("format")
+						dnsRecordAddParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						recordAddParam.FormatFile = c.String("format-file")
+						dnsRecordAddParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						recordAddParam.Query = c.String("query")
+						dnsRecordAddParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						recordAddParam.QueryFile = c.String("query-file")
+						dnsRecordAddParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						recordAddParam.Id = sacloud.ID(c.Int64("id"))
+						dnsRecordAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1156,7 +1226,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = recordAddParam
+					var outputTypeHolder interface{} = dnsRecordAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1167,10 +1237,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if recordAddParam.GenerateSkeleton {
-						recordAddParam.GenerateSkeleton = false
-						recordAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(recordAddParam, "", "\t")
+					if dnsRecordAddParam.GenerateSkeleton {
+						dnsRecordAddParam.GenerateSkeleton = false
+						dnsRecordAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dnsRecordAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1179,19 +1249,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := recordAddParam.Validate(); len(errors) > 0 {
+					if errors := dnsRecordAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), recordAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), dnsRecordAddParam)
 
 					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(recordAddParam.Selector) == 0 {
+						if len(dnsRecordAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1200,12 +1270,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceDNSItems {
-							if hasTags(&v, recordAddParam.Selector) {
+							if hasTags(&v, dnsRecordAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", recordAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dnsRecordAddParam.Selector)
 						}
 
 					} else {
@@ -1227,7 +1297,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceDNSItems {
-										if len(recordAddParam.Selector) == 0 || hasTags(&v, recordAddParam.Selector) {
+										if len(dnsRecordAddParam.Selector) == 0 || hasTags(&v, dnsRecordAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1248,7 +1318,7 @@ func init() {
 					}
 
 					// confirm
-					if !recordAddParam.Assumeyes {
+					if !dnsRecordAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1262,11 +1332,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						recordAddParam.SetId(id)
-						p := *recordAddParam // copy struct value
-						recordAddParam := &p
+						dnsRecordAddParam.SetId(id)
+						p := *dnsRecordAddParam // copy struct value
+						dnsRecordAddParam := &p
 						go func() {
-							err := funcs.DNSRecordAdd(ctx, recordAddParam)
+							err := funcs.DNSRecordAdd(ctx, dnsRecordAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1292,8 +1362,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1346,9 +1424,9 @@ func init() {
 						return err
 					}
 
-					readParam.ParamTemplate = c.String("param-template")
-					readParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(readParam)
+					dnsReadParam.ParamTemplate = c.String("param-template")
+					dnsReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(dnsReadParam)
 					if err != nil {
 						return err
 					}
@@ -1358,45 +1436,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(readParam, p, mergo.WithOverride)
+						mergo.Merge(dnsReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						readParam.Selector = c.StringSlice("selector")
+						dnsReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						readParam.ParamTemplate = c.String("param-template")
+						dnsReadParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						dnsReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						readParam.ParamTemplateFile = c.String("param-template-file")
+						dnsReadParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						dnsReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						readParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						dnsReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						readParam.OutputType = c.String("output-type")
+						dnsReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						readParam.Column = c.StringSlice("column")
+						dnsReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						readParam.Quiet = c.Bool("quiet")
+						dnsReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						readParam.Format = c.String("format")
+						dnsReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						readParam.FormatFile = c.String("format-file")
+						dnsReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						readParam.Query = c.String("query")
+						dnsReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						readParam.QueryFile = c.String("query-file")
+						dnsReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = sacloud.ID(c.Int64("id"))
+						dnsReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1404,7 +1488,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = readParam
+					var outputTypeHolder interface{} = dnsReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1415,10 +1499,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if readParam.GenerateSkeleton {
-						readParam.GenerateSkeleton = false
-						readParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(readParam, "", "\t")
+					if dnsReadParam.GenerateSkeleton {
+						dnsReadParam.GenerateSkeleton = false
+						dnsReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dnsReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1427,19 +1511,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
+					if errors := dnsReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), readParam)
+					ctx := command.NewContext(c, c.Args().Slice(), dnsReadParam)
 
 					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(readParam.Selector) == 0 {
+						if len(dnsReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1448,12 +1532,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceDNSItems {
-							if hasTags(&v, readParam.Selector) {
+							if hasTags(&v, dnsReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dnsReadParam.Selector)
 						}
 
 					} else {
@@ -1475,7 +1559,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceDNSItems {
-										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+										if len(dnsReadParam.Selector) == 0 || hasTags(&v, dnsReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1500,11 +1584,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						readParam.SetId(id)
-						p := *readParam // copy struct value
-						readParam := &p
+						dnsReadParam.SetId(id)
+						p := *dnsReadParam // copy struct value
+						dnsReadParam := &p
 						go func() {
-							err := funcs.DNSRead(ctx, readParam)
+							err := funcs.DNSRead(ctx, dnsReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1575,8 +1659,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1629,9 +1721,9 @@ func init() {
 						return err
 					}
 
-					recordUpdateParam.ParamTemplate = c.String("param-template")
-					recordUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(recordUpdateParam)
+					dnsRecordUpdateParam.ParamTemplate = c.String("param-template")
+					dnsRecordUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(dnsRecordUpdateParam)
 					if err != nil {
 						return err
 					}
@@ -1641,78 +1733,84 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(recordUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(dnsRecordUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						recordUpdateParam.Index = c.Int("index")
+						dnsRecordUpdateParam.Index = c.Int("index")
 					}
 					if c.IsSet("name") {
-						recordUpdateParam.Name = c.String("name")
+						dnsRecordUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("type") {
-						recordUpdateParam.Type = c.String("type")
+						dnsRecordUpdateParam.Type = c.String("type")
 					}
 					if c.IsSet("value") {
-						recordUpdateParam.Value = c.String("value")
+						dnsRecordUpdateParam.Value = c.String("value")
 					}
 					if c.IsSet("ttl") {
-						recordUpdateParam.Ttl = c.Int("ttl")
+						dnsRecordUpdateParam.Ttl = c.Int("ttl")
 					}
 					if c.IsSet("mx-priority") {
-						recordUpdateParam.MxPriority = c.Int("mx-priority")
+						dnsRecordUpdateParam.MxPriority = c.Int("mx-priority")
 					}
 					if c.IsSet("srv-priority") {
-						recordUpdateParam.SrvPriority = c.Int("srv-priority")
+						dnsRecordUpdateParam.SrvPriority = c.Int("srv-priority")
 					}
 					if c.IsSet("srv-weight") {
-						recordUpdateParam.SrvWeight = c.Int("srv-weight")
+						dnsRecordUpdateParam.SrvWeight = c.Int("srv-weight")
 					}
 					if c.IsSet("srv-port") {
-						recordUpdateParam.SrvPort = c.Int("srv-port")
+						dnsRecordUpdateParam.SrvPort = c.Int("srv-port")
 					}
 					if c.IsSet("srv-target") {
-						recordUpdateParam.SrvTarget = c.String("srv-target")
+						dnsRecordUpdateParam.SrvTarget = c.String("srv-target")
 					}
 					if c.IsSet("selector") {
-						recordUpdateParam.Selector = c.StringSlice("selector")
+						dnsRecordUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						recordUpdateParam.Assumeyes = c.Bool("assumeyes")
+						dnsRecordUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						recordUpdateParam.ParamTemplate = c.String("param-template")
+						dnsRecordUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						dnsRecordUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						recordUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						dnsRecordUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						dnsRecordUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						recordUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						dnsRecordUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						recordUpdateParam.OutputType = c.String("output-type")
+						dnsRecordUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						recordUpdateParam.Column = c.StringSlice("column")
+						dnsRecordUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						recordUpdateParam.Quiet = c.Bool("quiet")
+						dnsRecordUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						recordUpdateParam.Format = c.String("format")
+						dnsRecordUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						recordUpdateParam.FormatFile = c.String("format-file")
+						dnsRecordUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						recordUpdateParam.Query = c.String("query")
+						dnsRecordUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						recordUpdateParam.QueryFile = c.String("query-file")
+						dnsRecordUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						recordUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						dnsRecordUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1720,7 +1818,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = recordUpdateParam
+					var outputTypeHolder interface{} = dnsRecordUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1731,10 +1829,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if recordUpdateParam.GenerateSkeleton {
-						recordUpdateParam.GenerateSkeleton = false
-						recordUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(recordUpdateParam, "", "\t")
+					if dnsRecordUpdateParam.GenerateSkeleton {
+						dnsRecordUpdateParam.GenerateSkeleton = false
+						dnsRecordUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dnsRecordUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1743,19 +1841,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := recordUpdateParam.Validate(); len(errors) > 0 {
+					if errors := dnsRecordUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), recordUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), dnsRecordUpdateParam)
 
 					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(recordUpdateParam.Selector) == 0 {
+						if len(dnsRecordUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1764,12 +1862,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceDNSItems {
-							if hasTags(&v, recordUpdateParam.Selector) {
+							if hasTags(&v, dnsRecordUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", recordUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dnsRecordUpdateParam.Selector)
 						}
 
 					} else {
@@ -1791,7 +1889,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceDNSItems {
-										if len(recordUpdateParam.Selector) == 0 || hasTags(&v, recordUpdateParam.Selector) {
+										if len(dnsRecordUpdateParam.Selector) == 0 || hasTags(&v, dnsRecordUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1812,7 +1910,7 @@ func init() {
 					}
 
 					// confirm
-					if !recordUpdateParam.Assumeyes {
+					if !dnsRecordUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1826,11 +1924,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						recordUpdateParam.SetId(id)
-						p := *recordUpdateParam // copy struct value
-						recordUpdateParam := &p
+						dnsRecordUpdateParam.SetId(id)
+						p := *dnsRecordUpdateParam // copy struct value
+						dnsRecordUpdateParam := &p
 						go func() {
-							err := funcs.DNSRecordUpdate(ctx, recordUpdateParam)
+							err := funcs.DNSRecordUpdate(ctx, dnsRecordUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1865,8 +1963,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1919,9 +2025,9 @@ func init() {
 						return err
 					}
 
-					recordDeleteParam.ParamTemplate = c.String("param-template")
-					recordDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(recordDeleteParam)
+					dnsRecordDeleteParam.ParamTemplate = c.String("param-template")
+					dnsRecordDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(dnsRecordDeleteParam)
 					if err != nil {
 						return err
 					}
@@ -1931,51 +2037,57 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(recordDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(dnsRecordDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						recordDeleteParam.Index = c.Int("index")
+						dnsRecordDeleteParam.Index = c.Int("index")
 					}
 					if c.IsSet("selector") {
-						recordDeleteParam.Selector = c.StringSlice("selector")
+						dnsRecordDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						recordDeleteParam.Assumeyes = c.Bool("assumeyes")
+						dnsRecordDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						recordDeleteParam.ParamTemplate = c.String("param-template")
+						dnsRecordDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						dnsRecordDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						recordDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						dnsRecordDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						dnsRecordDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						recordDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						dnsRecordDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						recordDeleteParam.OutputType = c.String("output-type")
+						dnsRecordDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						recordDeleteParam.Column = c.StringSlice("column")
+						dnsRecordDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						recordDeleteParam.Quiet = c.Bool("quiet")
+						dnsRecordDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						recordDeleteParam.Format = c.String("format")
+						dnsRecordDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						recordDeleteParam.FormatFile = c.String("format-file")
+						dnsRecordDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						recordDeleteParam.Query = c.String("query")
+						dnsRecordDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						recordDeleteParam.QueryFile = c.String("query-file")
+						dnsRecordDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						recordDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						dnsRecordDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1983,7 +2095,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = recordDeleteParam
+					var outputTypeHolder interface{} = dnsRecordDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1994,10 +2106,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if recordDeleteParam.GenerateSkeleton {
-						recordDeleteParam.GenerateSkeleton = false
-						recordDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(recordDeleteParam, "", "\t")
+					if dnsRecordDeleteParam.GenerateSkeleton {
+						dnsRecordDeleteParam.GenerateSkeleton = false
+						dnsRecordDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dnsRecordDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2006,19 +2118,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := recordDeleteParam.Validate(); len(errors) > 0 {
+					if errors := dnsRecordDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), recordDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), dnsRecordDeleteParam)
 
 					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(recordDeleteParam.Selector) == 0 {
+						if len(dnsRecordDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2027,12 +2139,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceDNSItems {
-							if hasTags(&v, recordDeleteParam.Selector) {
+							if hasTags(&v, dnsRecordDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", recordDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dnsRecordDeleteParam.Selector)
 						}
 
 					} else {
@@ -2054,7 +2166,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceDNSItems {
-										if len(recordDeleteParam.Selector) == 0 || hasTags(&v, recordDeleteParam.Selector) {
+										if len(dnsRecordDeleteParam.Selector) == 0 || hasTags(&v, dnsRecordDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2075,7 +2187,7 @@ func init() {
 					}
 
 					// confirm
-					if !recordDeleteParam.Assumeyes {
+					if !dnsRecordDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2089,11 +2201,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						recordDeleteParam.SetId(id)
-						p := *recordDeleteParam // copy struct value
-						recordDeleteParam := &p
+						dnsRecordDeleteParam.SetId(id)
+						p := *dnsRecordDeleteParam // copy struct value
+						dnsRecordDeleteParam := &p
 						go func() {
-							err := funcs.DNSRecordDelete(ctx, recordDeleteParam)
+							err := funcs.DNSRecordDelete(ctx, dnsRecordDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2137,8 +2249,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2191,9 +2311,9 @@ func init() {
 						return err
 					}
 
-					updateParam.ParamTemplate = c.String("param-template")
-					updateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(updateParam)
+					dnsUpdateParam.ParamTemplate = c.String("param-template")
+					dnsUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(dnsUpdateParam)
 					if err != nil {
 						return err
 					}
@@ -2203,57 +2323,63 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(updateParam, p, mergo.WithOverride)
+						mergo.Merge(dnsUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						updateParam.Selector = c.StringSlice("selector")
+						dnsUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("description") {
-						updateParam.Description = c.String("description")
+						dnsUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						updateParam.Tags = c.StringSlice("tags")
+						dnsUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						dnsUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						updateParam.Assumeyes = c.Bool("assumeyes")
+						dnsUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						updateParam.ParamTemplate = c.String("param-template")
+						dnsUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						dnsUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						updateParam.ParamTemplateFile = c.String("param-template-file")
+						dnsUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						dnsUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						updateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						dnsUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						updateParam.OutputType = c.String("output-type")
+						dnsUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						updateParam.Column = c.StringSlice("column")
+						dnsUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						updateParam.Quiet = c.Bool("quiet")
+						dnsUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						updateParam.Format = c.String("format")
+						dnsUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						updateParam.FormatFile = c.String("format-file")
+						dnsUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						updateParam.Query = c.String("query")
+						dnsUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						updateParam.QueryFile = c.String("query-file")
+						dnsUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = sacloud.ID(c.Int64("id"))
+						dnsUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2261,7 +2387,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = updateParam
+					var outputTypeHolder interface{} = dnsUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2272,10 +2398,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if updateParam.GenerateSkeleton {
-						updateParam.GenerateSkeleton = false
-						updateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(updateParam, "", "\t")
+					if dnsUpdateParam.GenerateSkeleton {
+						dnsUpdateParam.GenerateSkeleton = false
+						dnsUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dnsUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2284,19 +2410,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
+					if errors := dnsUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), dnsUpdateParam)
 
 					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(updateParam.Selector) == 0 {
+						if len(dnsUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2305,12 +2431,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceDNSItems {
-							if hasTags(&v, updateParam.Selector) {
+							if hasTags(&v, dnsUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dnsUpdateParam.Selector)
 						}
 
 					} else {
@@ -2332,7 +2458,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceDNSItems {
-										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+										if len(dnsUpdateParam.Selector) == 0 || hasTags(&v, dnsUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2349,7 +2475,7 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes {
+					if !dnsUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2363,11 +2489,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						updateParam.SetId(id)
-						p := *updateParam // copy struct value
-						updateParam := &p
+						dnsUpdateParam.SetId(id)
+						p := *dnsUpdateParam // copy struct value
+						dnsUpdateParam := &p
 						go func() {
-							err := funcs.DNSUpdate(ctx, updateParam)
+							err := funcs.DNSUpdate(ctx, dnsUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2399,8 +2525,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2453,9 +2587,9 @@ func init() {
 						return err
 					}
 
-					deleteParam.ParamTemplate = c.String("param-template")
-					deleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(deleteParam)
+					dnsDeleteParam.ParamTemplate = c.String("param-template")
+					dnsDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(dnsDeleteParam)
 					if err != nil {
 						return err
 					}
@@ -2465,48 +2599,54 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(deleteParam, p, mergo.WithOverride)
+						mergo.Merge(dnsDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						deleteParam.Selector = c.StringSlice("selector")
+						dnsDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						deleteParam.Assumeyes = c.Bool("assumeyes")
+						dnsDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						deleteParam.ParamTemplate = c.String("param-template")
+						dnsDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						dnsDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						deleteParam.ParamTemplateFile = c.String("param-template-file")
+						dnsDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						dnsDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						dnsDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						deleteParam.OutputType = c.String("output-type")
+						dnsDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						deleteParam.Column = c.StringSlice("column")
+						dnsDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						deleteParam.Quiet = c.Bool("quiet")
+						dnsDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						deleteParam.Format = c.String("format")
+						dnsDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						deleteParam.FormatFile = c.String("format-file")
+						dnsDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						deleteParam.Query = c.String("query")
+						dnsDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						deleteParam.QueryFile = c.String("query-file")
+						dnsDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = sacloud.ID(c.Int64("id"))
+						dnsDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2514,7 +2654,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = deleteParam
+					var outputTypeHolder interface{} = dnsDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2525,10 +2665,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if deleteParam.GenerateSkeleton {
-						deleteParam.GenerateSkeleton = false
-						deleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(deleteParam, "", "\t")
+					if dnsDeleteParam.GenerateSkeleton {
+						dnsDeleteParam.GenerateSkeleton = false
+						dnsDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dnsDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2537,19 +2677,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := dnsDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), dnsDeleteParam)
 
 					apiClient := ctx.GetAPIClient().DNS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(deleteParam.Selector) == 0 {
+						if len(dnsDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2558,12 +2698,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceDNSItems {
-							if hasTags(&v, deleteParam.Selector) {
+							if hasTags(&v, dnsDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dnsDeleteParam.Selector)
 						}
 
 					} else {
@@ -2585,7 +2725,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceDNSItems {
-										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+										if len(dnsDeleteParam.Selector) == 0 || hasTags(&v, dnsDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2602,7 +2742,7 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes {
+					if !dnsDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2616,11 +2756,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						deleteParam.SetId(id)
-						p := *deleteParam // copy struct value
-						deleteParam := &p
+						dnsDeleteParam.SetId(id)
+						p := *dnsDeleteParam // copy struct value
+						dnsDeleteParam := &p
 						go func() {
-							err := funcs.DNSDelete(ctx, deleteParam)
+							err := funcs.DNSDelete(ctx, dnsDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2752,6 +2892,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("dns", "create", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "create", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("dns", "create", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2813,6 +2963,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("dns", "delete", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "delete", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -2892,6 +3052,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("dns", "list", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "list", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("dns", "list", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2953,6 +3123,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("dns", "read", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "read", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "read", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3028,6 +3208,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("dns", "record-add", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "record-add", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "record-add", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3142,6 +3332,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("dns", "record-bulk-update", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3212,6 +3412,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("dns", "record-delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "record-delete", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("dns", "record-delete", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3273,6 +3483,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("dns", "record-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "record-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "record-info", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3358,6 +3578,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("dns", "record-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "record-update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "record-update", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3468,6 +3698,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("dns", "update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "update", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

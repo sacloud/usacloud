@@ -31,7 +31,9 @@ type ListSSHKeyParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -67,8 +69,14 @@ func (p *ListSSHKeyParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -215,12 +223,26 @@ func (p *ListSSHKeyParam) SetParamTemplate(v string) {
 func (p *ListSSHKeyParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListSSHKeyParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListSSHKeyParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListSSHKeyParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListSSHKeyParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListSSHKeyParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListSSHKeyParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListSSHKeyParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -287,7 +309,9 @@ type CreateSSHKeyParam struct {
 	Assumeyes         bool     `json:"assumeyes"`
 	PublicKeyContent  string   `json:"public-key-content"`
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -323,8 +347,14 @@ func (p *CreateSSHKeyParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -483,12 +513,26 @@ func (p *CreateSSHKeyParam) SetParamTemplate(v string) {
 func (p *CreateSSHKeyParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateSSHKeyParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateSSHKeyParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateSSHKeyParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateSSHKeyParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateSSHKeyParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateSSHKeyParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateSSHKeyParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -550,7 +594,9 @@ func (p *CreateSSHKeyParam) GetQueryFile() string {
 // ReadSSHKeyParam is input parameters for the sacloud API
 type ReadSSHKeyParam struct {
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -572,8 +618,14 @@ func (p *ReadSSHKeyParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -670,12 +722,26 @@ func (p *ReadSSHKeyParam) SetParamTemplate(v string) {
 func (p *ReadSSHKeyParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadSSHKeyParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadSSHKeyParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadSSHKeyParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadSSHKeyParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadSSHKeyParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadSSHKeyParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadSSHKeyParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -747,7 +813,9 @@ type UpdateSSHKeyParam struct {
 	Description       string     `json:"description"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -778,8 +846,14 @@ func (p *UpdateSSHKeyParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -911,12 +985,26 @@ func (p *UpdateSSHKeyParam) SetParamTemplate(v string) {
 func (p *UpdateSSHKeyParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateSSHKeyParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateSSHKeyParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateSSHKeyParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateSSHKeyParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateSSHKeyParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateSSHKeyParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateSSHKeyParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -986,7 +1074,9 @@ func (p *UpdateSSHKeyParam) GetId() sacloud.ID {
 type DeleteSSHKeyParam struct {
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1011,8 +1101,14 @@ func (p *DeleteSSHKeyParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1116,12 +1212,26 @@ func (p *DeleteSSHKeyParam) SetParamTemplate(v string) {
 func (p *DeleteSSHKeyParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteSSHKeyParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteSSHKeyParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteSSHKeyParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteSSHKeyParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteSSHKeyParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteSSHKeyParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteSSHKeyParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1194,7 +1304,9 @@ type GenerateSSHKeyParam struct {
 	Description       string   `json:"description"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	PrivateKeyOutput  string   `json:"private-key-output"`
@@ -1228,8 +1340,14 @@ func (p *GenerateSSHKeyParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1375,12 +1493,26 @@ func (p *GenerateSSHKeyParam) SetParamTemplate(v string) {
 func (p *GenerateSSHKeyParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *GenerateSSHKeyParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *GenerateSSHKeyParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *GenerateSSHKeyParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *GenerateSSHKeyParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *GenerateSSHKeyParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *GenerateSSHKeyParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *GenerateSSHKeyParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

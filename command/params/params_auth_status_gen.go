@@ -25,7 +25,9 @@ import (
 // ShowAuthStatusParam is input parameters for the sacloud API
 type ShowAuthStatusParam struct {
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -46,8 +48,14 @@ func (p *ShowAuthStatusParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -134,12 +142,26 @@ func (p *ShowAuthStatusParam) SetParamTemplate(v string) {
 func (p *ShowAuthStatusParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ShowAuthStatusParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShowAuthStatusParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ShowAuthStatusParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ShowAuthStatusParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ShowAuthStatusParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShowAuthStatusParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ShowAuthStatusParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

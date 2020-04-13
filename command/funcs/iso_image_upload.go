@@ -46,7 +46,7 @@ func ISOImageUpload(ctx command.Context, params *params.UploadISOImageParam) err
 		command.GlobalOption.Progress,
 		func(compChan chan bool, errChan chan error) {
 
-			file, df, err := fileOrStdin(params.GetIsoFile())
+			file, df, err := fileOrStdin(params.GetISOFile())
 			if err != nil {
 				errChan <- err
 				return

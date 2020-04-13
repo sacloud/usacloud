@@ -21,25 +21,25 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func MobileGatewaySimDelete(ctx command.Context, params *params.SimDeleteMobileGatewayParam) error {
+func MobileGatewaySIMDelete(ctx command.Context, params *params.SIMDeleteMobileGatewayParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetMobileGatewayAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("MobileGatewaySimDelete is failed: %s", e)
+		return fmt.Errorf("MobileGatewaySIMDelete is failed: %s", e)
 	}
 
 	// clear IPAddress
 	simAPI := client.GetSIMAPI()
-	_, err := simAPI.ClearIP(params.SimId)
+	_, err := simAPI.ClearIP(params.SIMId)
 	if err != nil {
-		return fmt.Errorf("MobileGatewaySimDelete is failed: %s", err)
+		return fmt.Errorf("MobileGatewaySIMDelete is failed: %s", err)
 	}
 
-	_, err = api.DeleteSIM(p.ID, params.SimId)
+	_, err = api.DeleteSIM(p.ID, params.SIMId)
 	if err != nil {
-		return fmt.Errorf("MobileGatewaySimDelete is failed: %s", err)
+		return fmt.Errorf("MobileGatewaySIMDelete is failed: %s", err)
 	}
 
 	return nil

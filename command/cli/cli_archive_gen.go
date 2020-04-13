@@ -32,16 +32,16 @@ import (
 )
 
 func init() {
-	listParam := params.NewListArchiveParam()
-	createParam := params.NewCreateArchiveParam()
-	readParam := params.NewReadArchiveParam()
-	updateParam := params.NewUpdateArchiveParam()
-	deleteParam := params.NewDeleteArchiveParam()
-	uploadParam := params.NewUploadArchiveParam()
-	downloadParam := params.NewDownloadArchiveParam()
-	ftpOpenParam := params.NewFtpOpenArchiveParam()
-	ftpCloseParam := params.NewFtpCloseArchiveParam()
-	waitForCopyParam := params.NewWaitForCopyArchiveParam()
+	archiveListParam := params.NewListArchiveParam()
+	archiveCreateParam := params.NewCreateArchiveParam()
+	archiveReadParam := params.NewReadArchiveParam()
+	archiveUpdateParam := params.NewUpdateArchiveParam()
+	archiveDeleteParam := params.NewDeleteArchiveParam()
+	archiveUploadParam := params.NewUploadArchiveParam()
+	archiveDownloadParam := params.NewDownloadArchiveParam()
+	archiveFTPOpenParam := params.NewFTPOpenArchiveParam()
+	archiveFTPCloseParam := params.NewFTPCloseArchiveParam()
+	archiveWaitForCopyParam := params.NewWaitForCopyArchiveParam()
 
 	cliCommand := &cli.Command{
 		Name:  "archive",
@@ -96,8 +96,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -145,9 +153,9 @@ func init() {
 						return err
 					}
 
-					listParam.ParamTemplate = c.String("param-template")
-					listParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(listParam)
+					archiveListParam.ParamTemplate = c.String("param-template")
+					archiveListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(archiveListParam)
 					if err != nil {
 						return err
 					}
@@ -157,66 +165,72 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(listParam, p, mergo.WithOverride)
+						mergo.Merge(archiveListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						listParam.Name = c.StringSlice("name")
+						archiveListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						archiveListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("scope") {
-						listParam.Scope = c.String("scope")
+						archiveListParam.Scope = c.String("scope")
 					}
 					if c.IsSet("tags") {
-						listParam.Tags = c.StringSlice("tags")
+						archiveListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("source-archive-id") {
-						listParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
+						archiveListParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
 					}
 					if c.IsSet("source-disk-id") {
-						listParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
+						archiveListParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
 					}
 					if c.IsSet("from") {
-						listParam.From = c.Int("from")
+						archiveListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						listParam.Max = c.Int("max")
+						archiveListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						listParam.Sort = c.StringSlice("sort")
+						archiveListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						listParam.ParamTemplate = c.String("param-template")
+						archiveListParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						archiveListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						listParam.ParamTemplateFile = c.String("param-template-file")
+						archiveListParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						archiveListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						archiveListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						listParam.OutputType = c.String("output-type")
+						archiveListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						listParam.Column = c.StringSlice("column")
+						archiveListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						listParam.Quiet = c.Bool("quiet")
+						archiveListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						listParam.Format = c.String("format")
+						archiveListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						listParam.FormatFile = c.String("format-file")
+						archiveListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						listParam.Query = c.String("query")
+						archiveListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						listParam.QueryFile = c.String("query-file")
+						archiveListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -224,7 +238,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = listParam
+					var outputTypeHolder interface{} = archiveListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -235,10 +249,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if listParam.GenerateSkeleton {
-						listParam.GenerateSkeleton = false
-						listParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(listParam, "", "\t")
+					if archiveListParam.GenerateSkeleton {
+						archiveListParam.GenerateSkeleton = false
+						archiveListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(archiveListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -247,15 +261,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := archiveListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), listParam)
+					ctx := command.NewContext(c, c.Args().Slice(), archiveListParam)
 
 					// Run command with params
-					return funcs.ArchiveList(ctx, listParam)
+					return funcs.ArchiveList(ctx, archiveListParam)
 
 				},
 			},
@@ -306,8 +320,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -355,9 +377,9 @@ func init() {
 						return err
 					}
 
-					createParam.ParamTemplate = c.String("param-template")
-					createParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(createParam)
+					archiveCreateParam.ParamTemplate = c.String("param-template")
+					archiveCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(archiveCreateParam)
 					if err != nil {
 						return err
 					}
@@ -367,66 +389,72 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(createParam, p, mergo.WithOverride)
+						mergo.Merge(archiveCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("source-disk-id") {
-						createParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
+						archiveCreateParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
 					}
 					if c.IsSet("source-archive-id") {
-						createParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
+						archiveCreateParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
 					}
 					if c.IsSet("size") {
-						createParam.Size = c.Int("size")
+						archiveCreateParam.Size = c.Int("size")
 					}
 					if c.IsSet("archive-file") {
-						createParam.ArchiveFile = c.String("archive-file")
+						archiveCreateParam.ArchiveFile = c.String("archive-file")
 					}
 					if c.IsSet("name") {
-						createParam.Name = c.String("name")
+						archiveCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						createParam.Description = c.String("description")
+						archiveCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						createParam.Tags = c.StringSlice("tags")
+						archiveCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						archiveCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						createParam.Assumeyes = c.Bool("assumeyes")
+						archiveCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						createParam.ParamTemplate = c.String("param-template")
+						archiveCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						archiveCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						createParam.ParamTemplateFile = c.String("param-template-file")
+						archiveCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						archiveCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						createParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						archiveCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						createParam.OutputType = c.String("output-type")
+						archiveCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						createParam.Column = c.StringSlice("column")
+						archiveCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						createParam.Quiet = c.Bool("quiet")
+						archiveCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						createParam.Format = c.String("format")
+						archiveCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						createParam.FormatFile = c.String("format-file")
+						archiveCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						createParam.Query = c.String("query")
+						archiveCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						createParam.QueryFile = c.String("query-file")
+						archiveCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -434,7 +462,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = createParam
+					var outputTypeHolder interface{} = archiveCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -445,10 +473,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if createParam.GenerateSkeleton {
-						createParam.GenerateSkeleton = false
-						createParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(createParam, "", "\t")
+					if archiveCreateParam.GenerateSkeleton {
+						archiveCreateParam.GenerateSkeleton = false
+						archiveCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(archiveCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -457,15 +485,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
+					if errors := archiveCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), createParam)
+					ctx := command.NewContext(c, c.Args().Slice(), archiveCreateParam)
 
 					// confirm
-					if !createParam.Assumeyes {
+					if !archiveCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -475,7 +503,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.ArchiveCreate(ctx, createParam)
+					return funcs.ArchiveCreate(ctx, archiveCreateParam)
 
 				},
 			},
@@ -493,8 +521,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -547,9 +583,9 @@ func init() {
 						return err
 					}
 
-					readParam.ParamTemplate = c.String("param-template")
-					readParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(readParam)
+					archiveReadParam.ParamTemplate = c.String("param-template")
+					archiveReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(archiveReadParam)
 					if err != nil {
 						return err
 					}
@@ -559,45 +595,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(readParam, p, mergo.WithOverride)
+						mergo.Merge(archiveReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						readParam.Selector = c.StringSlice("selector")
+						archiveReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						readParam.ParamTemplate = c.String("param-template")
+						archiveReadParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						archiveReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						readParam.ParamTemplateFile = c.String("param-template-file")
+						archiveReadParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						archiveReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						readParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						archiveReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						readParam.OutputType = c.String("output-type")
+						archiveReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						readParam.Column = c.StringSlice("column")
+						archiveReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						readParam.Quiet = c.Bool("quiet")
+						archiveReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						readParam.Format = c.String("format")
+						archiveReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						readParam.FormatFile = c.String("format-file")
+						archiveReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						readParam.Query = c.String("query")
+						archiveReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						readParam.QueryFile = c.String("query-file")
+						archiveReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = sacloud.ID(c.Int64("id"))
+						archiveReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -605,7 +647,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = readParam
+					var outputTypeHolder interface{} = archiveReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -616,10 +658,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if readParam.GenerateSkeleton {
-						readParam.GenerateSkeleton = false
-						readParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(readParam, "", "\t")
+					if archiveReadParam.GenerateSkeleton {
+						archiveReadParam.GenerateSkeleton = false
+						archiveReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(archiveReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -628,19 +670,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
+					if errors := archiveReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), readParam)
+					ctx := command.NewContext(c, c.Args().Slice(), archiveReadParam)
 
 					apiClient := ctx.GetAPIClient().Archive
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(readParam.Selector) == 0 {
+						if len(archiveReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -649,12 +691,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Archives {
-							if hasTags(&v, readParam.Selector) {
+							if hasTags(&v, archiveReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", archiveReadParam.Selector)
 						}
 
 					} else {
@@ -676,7 +718,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Archives {
-										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+										if len(archiveReadParam.Selector) == 0 || hasTags(&v, archiveReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -701,11 +743,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						readParam.SetId(id)
-						p := *readParam // copy struct value
-						readParam := &p
+						archiveReadParam.SetId(id)
+						p := *archiveReadParam // copy struct value
+						archiveReadParam := &p
 						go func() {
-							err := funcs.ArchiveRead(ctx, readParam)
+							err := funcs.ArchiveRead(ctx, archiveReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -753,8 +795,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -807,9 +857,9 @@ func init() {
 						return err
 					}
 
-					updateParam.ParamTemplate = c.String("param-template")
-					updateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(updateParam)
+					archiveUpdateParam.ParamTemplate = c.String("param-template")
+					archiveUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(archiveUpdateParam)
 					if err != nil {
 						return err
 					}
@@ -819,60 +869,66 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(updateParam, p, mergo.WithOverride)
+						mergo.Merge(archiveUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						updateParam.Selector = c.StringSlice("selector")
+						archiveUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						updateParam.Name = c.String("name")
+						archiveUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						updateParam.Description = c.String("description")
+						archiveUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						updateParam.Tags = c.StringSlice("tags")
+						archiveUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						archiveUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						updateParam.Assumeyes = c.Bool("assumeyes")
+						archiveUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						updateParam.ParamTemplate = c.String("param-template")
+						archiveUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						archiveUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						updateParam.ParamTemplateFile = c.String("param-template-file")
+						archiveUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						archiveUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						updateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						archiveUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						updateParam.OutputType = c.String("output-type")
+						archiveUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						updateParam.Column = c.StringSlice("column")
+						archiveUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						updateParam.Quiet = c.Bool("quiet")
+						archiveUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						updateParam.Format = c.String("format")
+						archiveUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						updateParam.FormatFile = c.String("format-file")
+						archiveUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						updateParam.Query = c.String("query")
+						archiveUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						updateParam.QueryFile = c.String("query-file")
+						archiveUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = sacloud.ID(c.Int64("id"))
+						archiveUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -880,7 +936,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = updateParam
+					var outputTypeHolder interface{} = archiveUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -891,10 +947,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if updateParam.GenerateSkeleton {
-						updateParam.GenerateSkeleton = false
-						updateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(updateParam, "", "\t")
+					if archiveUpdateParam.GenerateSkeleton {
+						archiveUpdateParam.GenerateSkeleton = false
+						archiveUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(archiveUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -903,19 +959,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
+					if errors := archiveUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), archiveUpdateParam)
 
 					apiClient := ctx.GetAPIClient().Archive
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(updateParam.Selector) == 0 {
+						if len(archiveUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -924,12 +980,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Archives {
-							if hasTags(&v, updateParam.Selector) {
+							if hasTags(&v, archiveUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", archiveUpdateParam.Selector)
 						}
 
 					} else {
@@ -951,7 +1007,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Archives {
-										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+										if len(archiveUpdateParam.Selector) == 0 || hasTags(&v, archiveUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -968,7 +1024,7 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes {
+					if !archiveUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -982,11 +1038,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						updateParam.SetId(id)
-						p := *updateParam // copy struct value
-						updateParam := &p
+						archiveUpdateParam.SetId(id)
+						p := *archiveUpdateParam // copy struct value
+						archiveUpdateParam := &p
 						go func() {
-							err := funcs.ArchiveUpdate(ctx, updateParam)
+							err := funcs.ArchiveUpdate(ctx, archiveUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1018,8 +1074,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1072,9 +1136,9 @@ func init() {
 						return err
 					}
 
-					deleteParam.ParamTemplate = c.String("param-template")
-					deleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(deleteParam)
+					archiveDeleteParam.ParamTemplate = c.String("param-template")
+					archiveDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(archiveDeleteParam)
 					if err != nil {
 						return err
 					}
@@ -1084,48 +1148,54 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(deleteParam, p, mergo.WithOverride)
+						mergo.Merge(archiveDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						deleteParam.Selector = c.StringSlice("selector")
+						archiveDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						deleteParam.Assumeyes = c.Bool("assumeyes")
+						archiveDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						deleteParam.ParamTemplate = c.String("param-template")
+						archiveDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						archiveDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						deleteParam.ParamTemplateFile = c.String("param-template-file")
+						archiveDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						archiveDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						archiveDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						deleteParam.OutputType = c.String("output-type")
+						archiveDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						deleteParam.Column = c.StringSlice("column")
+						archiveDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						deleteParam.Quiet = c.Bool("quiet")
+						archiveDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						deleteParam.Format = c.String("format")
+						archiveDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						deleteParam.FormatFile = c.String("format-file")
+						archiveDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						deleteParam.Query = c.String("query")
+						archiveDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						deleteParam.QueryFile = c.String("query-file")
+						archiveDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = sacloud.ID(c.Int64("id"))
+						archiveDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1133,7 +1203,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = deleteParam
+					var outputTypeHolder interface{} = archiveDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1144,10 +1214,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if deleteParam.GenerateSkeleton {
-						deleteParam.GenerateSkeleton = false
-						deleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(deleteParam, "", "\t")
+					if archiveDeleteParam.GenerateSkeleton {
+						archiveDeleteParam.GenerateSkeleton = false
+						archiveDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(archiveDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1156,19 +1226,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := archiveDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), archiveDeleteParam)
 
 					apiClient := ctx.GetAPIClient().Archive
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(deleteParam.Selector) == 0 {
+						if len(archiveDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1177,12 +1247,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Archives {
-							if hasTags(&v, deleteParam.Selector) {
+							if hasTags(&v, archiveDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", archiveDeleteParam.Selector)
 						}
 
 					} else {
@@ -1204,7 +1274,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Archives {
-										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+										if len(archiveDeleteParam.Selector) == 0 || hasTags(&v, archiveDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1221,7 +1291,7 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes {
+					if !archiveDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1235,11 +1305,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						deleteParam.SetId(id)
-						p := *deleteParam // copy struct value
-						deleteParam := &p
+						archiveDeleteParam.SetId(id)
+						p := *archiveDeleteParam // copy struct value
+						archiveDeleteParam := &p
 						go func() {
-							err := funcs.ArchiveDelete(ctx, deleteParam)
+							err := funcs.ArchiveDelete(ctx, archiveDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1274,8 +1344,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1328,9 +1406,9 @@ func init() {
 						return err
 					}
 
-					uploadParam.ParamTemplate = c.String("param-template")
-					uploadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(uploadParam)
+					archiveUploadParam.ParamTemplate = c.String("param-template")
+					archiveUploadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(archiveUploadParam)
 					if err != nil {
 						return err
 					}
@@ -1340,51 +1418,57 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(uploadParam, p, mergo.WithOverride)
+						mergo.Merge(archiveUploadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("archive-file") {
-						uploadParam.ArchiveFile = c.String("archive-file")
+						archiveUploadParam.ArchiveFile = c.String("archive-file")
 					}
 					if c.IsSet("selector") {
-						uploadParam.Selector = c.StringSlice("selector")
+						archiveUploadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						uploadParam.Assumeyes = c.Bool("assumeyes")
+						archiveUploadParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						uploadParam.ParamTemplate = c.String("param-template")
+						archiveUploadParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						archiveUploadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						uploadParam.ParamTemplateFile = c.String("param-template-file")
+						archiveUploadParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						archiveUploadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						uploadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						archiveUploadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						uploadParam.OutputType = c.String("output-type")
+						archiveUploadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						uploadParam.Column = c.StringSlice("column")
+						archiveUploadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						uploadParam.Quiet = c.Bool("quiet")
+						archiveUploadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						uploadParam.Format = c.String("format")
+						archiveUploadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						uploadParam.FormatFile = c.String("format-file")
+						archiveUploadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						uploadParam.Query = c.String("query")
+						archiveUploadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						uploadParam.QueryFile = c.String("query-file")
+						archiveUploadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						uploadParam.Id = sacloud.ID(c.Int64("id"))
+						archiveUploadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1392,7 +1476,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = uploadParam
+					var outputTypeHolder interface{} = archiveUploadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1403,10 +1487,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if uploadParam.GenerateSkeleton {
-						uploadParam.GenerateSkeleton = false
-						uploadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(uploadParam, "", "\t")
+					if archiveUploadParam.GenerateSkeleton {
+						archiveUploadParam.GenerateSkeleton = false
+						archiveUploadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(archiveUploadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1415,19 +1499,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := uploadParam.Validate(); len(errors) > 0 {
+					if errors := archiveUploadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), uploadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), archiveUploadParam)
 
 					apiClient := ctx.GetAPIClient().Archive
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(uploadParam.Selector) == 0 {
+						if len(archiveUploadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1436,12 +1520,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Archives {
-							if hasTags(&v, uploadParam.Selector) {
+							if hasTags(&v, archiveUploadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", uploadParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", archiveUploadParam.Selector)
 						}
 
 					} else {
@@ -1463,7 +1547,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Archives {
-										if len(uploadParam.Selector) == 0 || hasTags(&v, uploadParam.Selector) {
+										if len(archiveUploadParam.Selector) == 0 || hasTags(&v, archiveUploadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1484,7 +1568,7 @@ func init() {
 					}
 
 					// confirm
-					if !uploadParam.Assumeyes {
+					if !archiveUploadParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1498,11 +1582,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						uploadParam.SetId(id)
-						p := *uploadParam // copy struct value
-						uploadParam := &p
+						archiveUploadParam.SetId(id)
+						p := *archiveUploadParam // copy struct value
+						archiveUploadParam := &p
 						go func() {
-							err := funcs.ArchiveUpload(ctx, uploadParam)
+							err := funcs.ArchiveUpload(ctx, archiveUploadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1537,8 +1621,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1559,9 +1651,9 @@ func init() {
 						return err
 					}
 
-					downloadParam.ParamTemplate = c.String("param-template")
-					downloadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(downloadParam)
+					archiveDownloadParam.ParamTemplate = c.String("param-template")
+					archiveDownloadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(archiveDownloadParam)
 					if err != nil {
 						return err
 					}
@@ -1571,30 +1663,36 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(downloadParam, p, mergo.WithOverride)
+						mergo.Merge(archiveDownloadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("file-destination") {
-						downloadParam.FileDestination = c.String("file-destination")
+						archiveDownloadParam.FileDestination = c.String("file-destination")
 					}
 					if c.IsSet("selector") {
-						downloadParam.Selector = c.StringSlice("selector")
+						archiveDownloadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						downloadParam.Assumeyes = c.Bool("assumeyes")
+						archiveDownloadParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						downloadParam.ParamTemplate = c.String("param-template")
+						archiveDownloadParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						archiveDownloadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						downloadParam.ParamTemplateFile = c.String("param-template-file")
+						archiveDownloadParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						archiveDownloadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						downloadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						archiveDownloadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						downloadParam.Id = sacloud.ID(c.Int64("id"))
+						archiveDownloadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1602,7 +1700,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = downloadParam
+					var outputTypeHolder interface{} = archiveDownloadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1613,10 +1711,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if downloadParam.GenerateSkeleton {
-						downloadParam.GenerateSkeleton = false
-						downloadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(downloadParam, "", "\t")
+					if archiveDownloadParam.GenerateSkeleton {
+						archiveDownloadParam.GenerateSkeleton = false
+						archiveDownloadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(archiveDownloadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1625,19 +1723,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := downloadParam.Validate(); len(errors) > 0 {
+					if errors := archiveDownloadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), downloadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), archiveDownloadParam)
 
 					apiClient := ctx.GetAPIClient().Archive
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(downloadParam.Selector) == 0 {
+						if len(archiveDownloadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1646,12 +1744,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Archives {
-							if hasTags(&v, downloadParam.Selector) {
+							if hasTags(&v, archiveDownloadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", downloadParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", archiveDownloadParam.Selector)
 						}
 
 					} else {
@@ -1673,7 +1771,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Archives {
-										if len(downloadParam.Selector) == 0 || hasTags(&v, downloadParam.Selector) {
+										if len(archiveDownloadParam.Selector) == 0 || hasTags(&v, archiveDownloadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1694,7 +1792,7 @@ func init() {
 					}
 
 					// confirm
-					if !downloadParam.Assumeyes {
+					if !archiveDownloadParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1708,11 +1806,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						downloadParam.SetId(id)
-						p := *downloadParam // copy struct value
-						downloadParam := &p
+						archiveDownloadParam.SetId(id)
+						p := *archiveDownloadParam // copy struct value
+						archiveDownloadParam := &p
 						go func() {
-							err := funcs.ArchiveDownload(ctx, downloadParam)
+							err := funcs.ArchiveDownload(ctx, archiveDownloadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1726,7 +1824,7 @@ func init() {
 			},
 			{
 				Name:      "ftp-open",
-				Usage:     "FtpOpen Archive",
+				Usage:     "FTPOpen Archive",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1743,8 +1841,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1797,60 +1903,66 @@ func init() {
 						return err
 					}
 
-					ftpOpenParam.ParamTemplate = c.String("param-template")
-					ftpOpenParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ftpOpenParam)
+					archiveFTPOpenParam.ParamTemplate = c.String("param-template")
+					archiveFTPOpenParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(archiveFTPOpenParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewFtpOpenArchiveParam()
+						p := params.NewFTPOpenArchiveParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ftpOpenParam, p, mergo.WithOverride)
+						mergo.Merge(archiveFTPOpenParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						ftpOpenParam.Selector = c.StringSlice("selector")
+						archiveFTPOpenParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						ftpOpenParam.Assumeyes = c.Bool("assumeyes")
+						archiveFTPOpenParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						ftpOpenParam.ParamTemplate = c.String("param-template")
+						archiveFTPOpenParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						archiveFTPOpenParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ftpOpenParam.ParamTemplateFile = c.String("param-template-file")
+						archiveFTPOpenParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						archiveFTPOpenParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ftpOpenParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						archiveFTPOpenParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						ftpOpenParam.OutputType = c.String("output-type")
+						archiveFTPOpenParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						ftpOpenParam.Column = c.StringSlice("column")
+						archiveFTPOpenParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						ftpOpenParam.Quiet = c.Bool("quiet")
+						archiveFTPOpenParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						ftpOpenParam.Format = c.String("format")
+						archiveFTPOpenParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						ftpOpenParam.FormatFile = c.String("format-file")
+						archiveFTPOpenParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						ftpOpenParam.Query = c.String("query")
+						archiveFTPOpenParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						ftpOpenParam.QueryFile = c.String("query-file")
+						archiveFTPOpenParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						ftpOpenParam.Id = sacloud.ID(c.Int64("id"))
+						archiveFTPOpenParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1858,7 +1970,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ftpOpenParam
+					var outputTypeHolder interface{} = archiveFTPOpenParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1869,10 +1981,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ftpOpenParam.GenerateSkeleton {
-						ftpOpenParam.GenerateSkeleton = false
-						ftpOpenParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ftpOpenParam, "", "\t")
+					if archiveFTPOpenParam.GenerateSkeleton {
+						archiveFTPOpenParam.GenerateSkeleton = false
+						archiveFTPOpenParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(archiveFTPOpenParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1881,19 +1993,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ftpOpenParam.Validate(); len(errors) > 0 {
+					if errors := archiveFTPOpenParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ftpOpenParam)
+					ctx := command.NewContext(c, c.Args().Slice(), archiveFTPOpenParam)
 
 					apiClient := ctx.GetAPIClient().Archive
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(ftpOpenParam.Selector) == 0 {
+						if len(archiveFTPOpenParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1902,12 +2014,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Archives {
-							if hasTags(&v, ftpOpenParam.Selector) {
+							if hasTags(&v, archiveFTPOpenParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", ftpOpenParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", archiveFTPOpenParam.Selector)
 						}
 
 					} else {
@@ -1929,7 +2041,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Archives {
-										if len(ftpOpenParam.Selector) == 0 || hasTags(&v, ftpOpenParam.Selector) {
+										if len(archiveFTPOpenParam.Selector) == 0 || hasTags(&v, archiveFTPOpenParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1946,7 +2058,7 @@ func init() {
 					}
 
 					// confirm
-					if !ftpOpenParam.Assumeyes {
+					if !archiveFTPOpenParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1960,11 +2072,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						ftpOpenParam.SetId(id)
-						p := *ftpOpenParam // copy struct value
-						ftpOpenParam := &p
+						archiveFTPOpenParam.SetId(id)
+						p := *archiveFTPOpenParam // copy struct value
+						archiveFTPOpenParam := &p
 						go func() {
-							err := funcs.ArchiveFtpOpen(ctx, ftpOpenParam)
+							err := funcs.ArchiveFTPOpen(ctx, archiveFTPOpenParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1978,7 +2090,7 @@ func init() {
 			},
 			{
 				Name:      "ftp-close",
-				Usage:     "FtpClose Archive",
+				Usage:     "FTPClose Archive",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -1995,8 +2107,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2017,39 +2137,45 @@ func init() {
 						return err
 					}
 
-					ftpCloseParam.ParamTemplate = c.String("param-template")
-					ftpCloseParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ftpCloseParam)
+					archiveFTPCloseParam.ParamTemplate = c.String("param-template")
+					archiveFTPCloseParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(archiveFTPCloseParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewFtpCloseArchiveParam()
+						p := params.NewFTPCloseArchiveParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ftpCloseParam, p, mergo.WithOverride)
+						mergo.Merge(archiveFTPCloseParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						ftpCloseParam.Selector = c.StringSlice("selector")
+						archiveFTPCloseParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						ftpCloseParam.Assumeyes = c.Bool("assumeyes")
+						archiveFTPCloseParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						ftpCloseParam.ParamTemplate = c.String("param-template")
+						archiveFTPCloseParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						archiveFTPCloseParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ftpCloseParam.ParamTemplateFile = c.String("param-template-file")
+						archiveFTPCloseParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						archiveFTPCloseParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ftpCloseParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						archiveFTPCloseParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						ftpCloseParam.Id = sacloud.ID(c.Int64("id"))
+						archiveFTPCloseParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2057,7 +2183,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ftpCloseParam
+					var outputTypeHolder interface{} = archiveFTPCloseParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2068,10 +2194,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ftpCloseParam.GenerateSkeleton {
-						ftpCloseParam.GenerateSkeleton = false
-						ftpCloseParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ftpCloseParam, "", "\t")
+					if archiveFTPCloseParam.GenerateSkeleton {
+						archiveFTPCloseParam.GenerateSkeleton = false
+						archiveFTPCloseParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(archiveFTPCloseParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2080,19 +2206,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ftpCloseParam.Validate(); len(errors) > 0 {
+					if errors := archiveFTPCloseParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ftpCloseParam)
+					ctx := command.NewContext(c, c.Args().Slice(), archiveFTPCloseParam)
 
 					apiClient := ctx.GetAPIClient().Archive
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(ftpCloseParam.Selector) == 0 {
+						if len(archiveFTPCloseParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2101,12 +2227,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Archives {
-							if hasTags(&v, ftpCloseParam.Selector) {
+							if hasTags(&v, archiveFTPCloseParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", ftpCloseParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", archiveFTPCloseParam.Selector)
 						}
 
 					} else {
@@ -2128,7 +2254,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Archives {
-										if len(ftpCloseParam.Selector) == 0 || hasTags(&v, ftpCloseParam.Selector) {
+										if len(archiveFTPCloseParam.Selector) == 0 || hasTags(&v, archiveFTPCloseParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2145,7 +2271,7 @@ func init() {
 					}
 
 					// confirm
-					if !ftpCloseParam.Assumeyes {
+					if !archiveFTPCloseParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2159,11 +2285,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						ftpCloseParam.SetId(id)
-						p := *ftpCloseParam // copy struct value
-						ftpCloseParam := &p
+						archiveFTPCloseParam.SetId(id)
+						p := *archiveFTPCloseParam // copy struct value
+						archiveFTPCloseParam := &p
 						go func() {
-							err := funcs.ArchiveFtpClose(ctx, ftpCloseParam)
+							err := funcs.ArchiveFTPClose(ctx, archiveFTPCloseParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2189,8 +2315,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2211,9 +2345,9 @@ func init() {
 						return err
 					}
 
-					waitForCopyParam.ParamTemplate = c.String("param-template")
-					waitForCopyParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(waitForCopyParam)
+					archiveWaitForCopyParam.ParamTemplate = c.String("param-template")
+					archiveWaitForCopyParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(archiveWaitForCopyParam)
 					if err != nil {
 						return err
 					}
@@ -2223,24 +2357,30 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(waitForCopyParam, p, mergo.WithOverride)
+						mergo.Merge(archiveWaitForCopyParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						waitForCopyParam.Selector = c.StringSlice("selector")
+						archiveWaitForCopyParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						waitForCopyParam.ParamTemplate = c.String("param-template")
+						archiveWaitForCopyParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						archiveWaitForCopyParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						waitForCopyParam.ParamTemplateFile = c.String("param-template-file")
+						archiveWaitForCopyParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						archiveWaitForCopyParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						waitForCopyParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						archiveWaitForCopyParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForCopyParam.Id = sacloud.ID(c.Int64("id"))
+						archiveWaitForCopyParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2248,7 +2388,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = waitForCopyParam
+					var outputTypeHolder interface{} = archiveWaitForCopyParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2259,10 +2399,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if waitForCopyParam.GenerateSkeleton {
-						waitForCopyParam.GenerateSkeleton = false
-						waitForCopyParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(waitForCopyParam, "", "\t")
+					if archiveWaitForCopyParam.GenerateSkeleton {
+						archiveWaitForCopyParam.GenerateSkeleton = false
+						archiveWaitForCopyParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(archiveWaitForCopyParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2271,19 +2411,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := waitForCopyParam.Validate(); len(errors) > 0 {
+					if errors := archiveWaitForCopyParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), waitForCopyParam)
+					ctx := command.NewContext(c, c.Args().Slice(), archiveWaitForCopyParam)
 
 					apiClient := ctx.GetAPIClient().Archive
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(waitForCopyParam.Selector) == 0 {
+						if len(archiveWaitForCopyParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2292,12 +2432,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Archives {
-							if hasTags(&v, waitForCopyParam.Selector) {
+							if hasTags(&v, archiveWaitForCopyParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", waitForCopyParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", archiveWaitForCopyParam.Selector)
 						}
 
 					} else {
@@ -2319,7 +2459,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Archives {
-										if len(waitForCopyParam.Selector) == 0 || hasTags(&v, waitForCopyParam.Selector) {
+										if len(archiveWaitForCopyParam.Selector) == 0 || hasTags(&v, archiveWaitForCopyParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2340,11 +2480,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						waitForCopyParam.SetId(id)
-						p := *waitForCopyParam // copy struct value
-						waitForCopyParam := &p
+						archiveWaitForCopyParam.SetId(id)
+						p := *archiveWaitForCopyParam // copy struct value
+						archiveWaitForCopyParam := &p
 						go func() {
-							err := funcs.ArchiveWaitForCopy(ctx, waitForCopyParam)
+							err := funcs.ArchiveWaitForCopy(ctx, archiveWaitForCopyParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2481,6 +2621,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("archive", "create", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("archive", "create", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("archive", "create", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2561,6 +2711,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("archive", "delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("archive", "delete", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("archive", "delete", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2611,6 +2771,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("archive", "download", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("archive", "download", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("archive", "download", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -2637,6 +2807,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("archive", "ftp-close", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("archive", "ftp-close", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("archive", "ftp-close", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -2687,6 +2867,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("archive", "ftp-open", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("archive", "ftp-open", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("archive", "ftp-open", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -2762,6 +2952,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("archive", "list", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("archive", "list", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("archive", "list", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -2846,6 +3046,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("archive", "read", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("archive", "read", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("archive", "read", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2926,6 +3136,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("archive", "update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("archive", "update", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("archive", "update", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3001,6 +3221,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("archive", "upload", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("archive", "upload", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("archive", "upload", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3037,6 +3267,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("archive", "wait-for-copy", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("archive", "wait-for-copy", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("archive", "wait-for-copy", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.32.2 (2020-03-05)
+
+* Fix validator - use sacloud.ID#IsEmpty for validate the conflistWith rule #495 (yamamoto-febc)
+
+
+## 0.32.1 (2020-02-27)
+
+* Fix converting ID when parsing arguments #493 (yamamoto-febc)
+
+
 ## 0.32.0 (2020-02-27)
 
 * Update copyright #483 (yamamoto-febc)

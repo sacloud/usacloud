@@ -32,7 +32,9 @@ type ListAutoBackupParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -71,8 +73,14 @@ func (p *ListAutoBackupParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -233,12 +241,26 @@ func (p *ListAutoBackupParam) SetParamTemplate(v string) {
 func (p *ListAutoBackupParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListAutoBackupParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListAutoBackupParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListAutoBackupParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListAutoBackupParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListAutoBackupParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListAutoBackupParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListAutoBackupParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -308,7 +330,9 @@ type CreateAutoBackupParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -357,8 +381,14 @@ func (p *CreateAutoBackupParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -578,12 +608,26 @@ func (p *CreateAutoBackupParam) SetParamTemplate(v string) {
 func (p *CreateAutoBackupParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateAutoBackupParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateAutoBackupParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateAutoBackupParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateAutoBackupParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateAutoBackupParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateAutoBackupParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateAutoBackupParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -646,7 +690,9 @@ func (p *CreateAutoBackupParam) GetQueryFile() string {
 type ReadAutoBackupParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -671,8 +717,14 @@ func (p *ReadAutoBackupParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -776,12 +828,26 @@ func (p *ReadAutoBackupParam) SetParamTemplate(v string) {
 func (p *ReadAutoBackupParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadAutoBackupParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadAutoBackupParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadAutoBackupParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadAutoBackupParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadAutoBackupParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadAutoBackupParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadAutoBackupParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -858,7 +924,9 @@ type UpdateAutoBackupParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -904,8 +972,14 @@ func (p *UpdateAutoBackupParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1100,12 +1174,26 @@ func (p *UpdateAutoBackupParam) SetParamTemplate(v string) {
 func (p *UpdateAutoBackupParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateAutoBackupParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateAutoBackupParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateAutoBackupParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateAutoBackupParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateAutoBackupParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateAutoBackupParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateAutoBackupParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1176,7 +1264,9 @@ type DeleteAutoBackupParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1204,8 +1294,14 @@ func (p *DeleteAutoBackupParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1316,12 +1412,26 @@ func (p *DeleteAutoBackupParam) SetParamTemplate(v string) {
 func (p *DeleteAutoBackupParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteAutoBackupParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteAutoBackupParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteAutoBackupParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteAutoBackupParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteAutoBackupParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteAutoBackupParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteAutoBackupParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

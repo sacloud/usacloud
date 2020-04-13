@@ -23,13 +23,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func VPCRouterSiteToSiteVpnInfo(ctx command.Context, params *params.SiteToSiteVpnInfoVPCRouterParam) error {
+func VPCRouterSiteToSiteVPNInfo(ctx command.Context, params *params.SiteToSiteVPNInfoVPCRouterParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetVPCRouterAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("VPCRouterSiteToSiteVpnInfo is failed: %s", e)
+		return fmt.Errorf("VPCRouterSiteToSiteVPNInfo is failed: %s", e)
 	}
 
 	if !p.HasSiteToSiteIPsecVPN() {

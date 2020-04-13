@@ -21,13 +21,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func VPCRouterSiteToSiteVpnAdd(ctx command.Context, params *params.SiteToSiteVpnAddVPCRouterParam) error {
+func VPCRouterSiteToSiteVPNAdd(ctx command.Context, params *params.SiteToSiteVPNAddVPCRouterParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetVPCRouterAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("VPCRouterSiteToSiteVpnAdd is failed: %s", e)
+		return fmt.Errorf("VPCRouterSiteToSiteVPNAdd is failed: %s", e)
 	}
 
 	if !p.HasSetting() {
@@ -44,11 +44,11 @@ func VPCRouterSiteToSiteVpnAdd(ctx command.Context, params *params.SiteToSiteVpn
 
 	_, err := api.UpdateSetting(params.Id, p)
 	if err != nil {
-		return fmt.Errorf("VPCRouterSiteToSiteVpnAdd is failed: %s", err)
+		return fmt.Errorf("VPCRouterSiteToSiteVPNAdd is failed: %s", err)
 	}
 	_, err = api.Config(params.Id)
 	if err != nil {
-		return fmt.Errorf("VPCRouterSiteToSiteVpnAdd is failed: %s", err)
+		return fmt.Errorf("VPCRouterSiteToSiteVPNAdd is failed: %s", err)
 	}
 	return nil
 

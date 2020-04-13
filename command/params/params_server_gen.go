@@ -32,7 +32,9 @@ type ListServerParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -71,8 +73,14 @@ func (p *ListServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -233,12 +241,26 @@ func (p *ListServerParam) SetParamTemplate(v string) {
 func (p *ListServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -312,7 +334,7 @@ type BuildServerParam struct {
 	SourceDiskId            sacloud.ID   `json:"source-disk-id"`
 	DistantFrom             []sacloud.ID `json:"distant-from"`
 	DiskId                  sacloud.ID   `json:"disk-id"`
-	IsoImageId              sacloud.ID   `json:"iso-image-id"`
+	ISOImageId              sacloud.ID   `json:"iso-image-id"`
 	NetworkMode             string       `json:"network-mode"`
 	InterfaceDriver         string       `json:"interface-driver"`
 	PacketFilterId          sacloud.ID   `json:"packet-filter-id"`
@@ -326,22 +348,24 @@ type BuildServerParam struct {
 	StartupScripts          []string     `json:"startup-scripts"`
 	StartupScriptIds        []sacloud.ID `json:"startup-script-ids"`
 	StartupScriptsEphemeral bool         `json:"startup-scripts-ephemeral"`
-	SshKeyMode              string       `json:"ssh-key-mode"`
-	SshKeyName              string       `json:"ssh-key-name"`
-	SshKeyIds               []sacloud.ID `json:"ssh-key-ids"`
-	SshKeyPassPhrase        string       `json:"ssh-key-pass-phrase"`
-	SshKeyDescription       string       `json:"ssh-key-description"`
-	SshKeyPrivateKeyOutput  string       `json:"ssh-key-private-key-output"`
-	SshKeyPublicKeys        []string     `json:"ssh-key-public-keys"`
-	SshKeyPublicKeyFiles    []string     `json:"ssh-key-public-key-files"`
-	SshKeyEphemeral         bool         `json:"ssh-key-ephemeral"`
+	SSHKeyMode              string       `json:"ssh-key-mode"`
+	SSHKeyName              string       `json:"ssh-key-name"`
+	SSHKeyIds               []sacloud.ID `json:"ssh-key-ids"`
+	SSHKeyPassPhrase        string       `json:"ssh-key-pass-phrase"`
+	SSHKeyDescription       string       `json:"ssh-key-description"`
+	SSHKeyPrivateKeyOutput  string       `json:"ssh-key-private-key-output"`
+	SSHKeyPublicKeys        []string     `json:"ssh-key-public-keys"`
+	SSHKeyPublicKeyFiles    []string     `json:"ssh-key-public-key-files"`
+	SSHKeyEphemeral         bool         `json:"ssh-key-ephemeral"`
 	Name                    string       `json:"name"`
 	Description             string       `json:"description"`
 	Tags                    []string     `json:"tags"`
 	IconId                  sacloud.ID   `json:"icon-id"`
 	Assumeyes               bool         `json:"assumeyes"`
 	ParamTemplate           string       `json:"param-template"`
+	Parameters              string       `json:"parameters"`
 	ParamTemplateFile       string       `json:"param-template-file"`
+	ParameterFile           string       `json:"parameter-file"`
 	GenerateSkeleton        bool         `json:"generate-skeleton"`
 	OutputType              string       `json:"output-type"`
 	Column                  []string     `json:"column"`
@@ -369,7 +393,7 @@ func NewBuildServerParam() *BuildServerParam {
 		InterfaceDriver:         "virtio",
 		NwMasklen:               24,
 		StartupScriptsEphemeral: true,
-		SshKeyEphemeral:         true,
+		SSHKeyEphemeral:         true,
 	}
 }
 
@@ -414,8 +438,8 @@ func (p *BuildServerParam) FillValueToSkeleton() {
 	if isEmpty(p.DiskId) {
 		p.DiskId = sacloud.ID(0)
 	}
-	if isEmpty(p.IsoImageId) {
-		p.IsoImageId = sacloud.ID(0)
+	if isEmpty(p.ISOImageId) {
+		p.ISOImageId = sacloud.ID(0)
 	}
 	if isEmpty(p.NetworkMode) {
 		p.NetworkMode = ""
@@ -456,32 +480,32 @@ func (p *BuildServerParam) FillValueToSkeleton() {
 	if isEmpty(p.StartupScriptsEphemeral) {
 		p.StartupScriptsEphemeral = false
 	}
-	if isEmpty(p.SshKeyMode) {
-		p.SshKeyMode = ""
+	if isEmpty(p.SSHKeyMode) {
+		p.SSHKeyMode = ""
 	}
-	if isEmpty(p.SshKeyName) {
-		p.SshKeyName = ""
+	if isEmpty(p.SSHKeyName) {
+		p.SSHKeyName = ""
 	}
-	if isEmpty(p.SshKeyIds) {
-		p.SshKeyIds = []sacloud.ID{}
+	if isEmpty(p.SSHKeyIds) {
+		p.SSHKeyIds = []sacloud.ID{}
 	}
-	if isEmpty(p.SshKeyPassPhrase) {
-		p.SshKeyPassPhrase = ""
+	if isEmpty(p.SSHKeyPassPhrase) {
+		p.SSHKeyPassPhrase = ""
 	}
-	if isEmpty(p.SshKeyDescription) {
-		p.SshKeyDescription = ""
+	if isEmpty(p.SSHKeyDescription) {
+		p.SSHKeyDescription = ""
 	}
-	if isEmpty(p.SshKeyPrivateKeyOutput) {
-		p.SshKeyPrivateKeyOutput = ""
+	if isEmpty(p.SSHKeyPrivateKeyOutput) {
+		p.SSHKeyPrivateKeyOutput = ""
 	}
-	if isEmpty(p.SshKeyPublicKeys) {
-		p.SshKeyPublicKeys = []string{""}
+	if isEmpty(p.SSHKeyPublicKeys) {
+		p.SSHKeyPublicKeys = []string{""}
 	}
-	if isEmpty(p.SshKeyPublicKeyFiles) {
-		p.SshKeyPublicKeyFiles = []string{""}
+	if isEmpty(p.SSHKeyPublicKeyFiles) {
+		p.SSHKeyPublicKeyFiles = []string{""}
 	}
-	if isEmpty(p.SshKeyEphemeral) {
-		p.SshKeyEphemeral = false
+	if isEmpty(p.SSHKeyEphemeral) {
+		p.SSHKeyEphemeral = false
 	}
 	if isEmpty(p.Name) {
 		p.Name = ""
@@ -501,8 +525,14 @@ func (p *BuildServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -640,7 +670,7 @@ func (p *BuildServerParam) Validate() []error {
 	}
 	{
 		validator := define.Resources["Server"].Commands["build"].Params["iso-image-id"].ValidateFunc
-		errs := validator("--iso-image-id", p.IsoImageId)
+		errs := validator("--iso-image-id", p.ISOImageId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -710,28 +740,28 @@ func (p *BuildServerParam) Validate() []error {
 	}
 	{
 		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-mode"].ValidateFunc
-		errs := validator("--ssh-key-mode", p.SshKeyMode)
+		errs := validator("--ssh-key-mode", p.SSHKeyMode)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-ids"].ValidateFunc
-		errs := validator("--ssh-key-ids", p.SshKeyIds)
+		errs := validator("--ssh-key-ids", p.SSHKeyIds)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-pass-phrase"].ValidateFunc
-		errs := validator("--ssh-key-pass-phrase", p.SshKeyPassPhrase)
+		errs := validator("--ssh-key-pass-phrase", p.SSHKeyPassPhrase)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-public-key-files"].ValidateFunc
-		errs := validator("--ssh-key-public-key-files", p.SshKeyPublicKeyFiles)
+		errs := validator("--ssh-key-public-key-files", p.SSHKeyPublicKeyFiles)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -910,12 +940,12 @@ func (p *BuildServerParam) SetDiskId(v sacloud.ID) {
 func (p *BuildServerParam) GetDiskId() sacloud.ID {
 	return p.DiskId
 }
-func (p *BuildServerParam) SetIsoImageId(v sacloud.ID) {
-	p.IsoImageId = v
+func (p *BuildServerParam) SetISOImageId(v sacloud.ID) {
+	p.ISOImageId = v
 }
 
-func (p *BuildServerParam) GetIsoImageId() sacloud.ID {
-	return p.IsoImageId
+func (p *BuildServerParam) GetISOImageId() sacloud.ID {
+	return p.ISOImageId
 }
 func (p *BuildServerParam) SetNetworkMode(v string) {
 	p.NetworkMode = v
@@ -1008,68 +1038,68 @@ func (p *BuildServerParam) SetStartupScriptsEphemeral(v bool) {
 func (p *BuildServerParam) GetStartupScriptsEphemeral() bool {
 	return p.StartupScriptsEphemeral
 }
-func (p *BuildServerParam) SetSshKeyMode(v string) {
-	p.SshKeyMode = v
+func (p *BuildServerParam) SetSSHKeyMode(v string) {
+	p.SSHKeyMode = v
 }
 
-func (p *BuildServerParam) GetSshKeyMode() string {
-	return p.SshKeyMode
+func (p *BuildServerParam) GetSSHKeyMode() string {
+	return p.SSHKeyMode
 }
-func (p *BuildServerParam) SetSshKeyName(v string) {
-	p.SshKeyName = v
-}
-
-func (p *BuildServerParam) GetSshKeyName() string {
-	return p.SshKeyName
-}
-func (p *BuildServerParam) SetSshKeyIds(v []sacloud.ID) {
-	p.SshKeyIds = v
+func (p *BuildServerParam) SetSSHKeyName(v string) {
+	p.SSHKeyName = v
 }
 
-func (p *BuildServerParam) GetSshKeyIds() []sacloud.ID {
-	return p.SshKeyIds
+func (p *BuildServerParam) GetSSHKeyName() string {
+	return p.SSHKeyName
 }
-func (p *BuildServerParam) SetSshKeyPassPhrase(v string) {
-	p.SshKeyPassPhrase = v
-}
-
-func (p *BuildServerParam) GetSshKeyPassPhrase() string {
-	return p.SshKeyPassPhrase
-}
-func (p *BuildServerParam) SetSshKeyDescription(v string) {
-	p.SshKeyDescription = v
+func (p *BuildServerParam) SetSSHKeyIds(v []sacloud.ID) {
+	p.SSHKeyIds = v
 }
 
-func (p *BuildServerParam) GetSshKeyDescription() string {
-	return p.SshKeyDescription
+func (p *BuildServerParam) GetSSHKeyIds() []sacloud.ID {
+	return p.SSHKeyIds
 }
-func (p *BuildServerParam) SetSshKeyPrivateKeyOutput(v string) {
-	p.SshKeyPrivateKeyOutput = v
-}
-
-func (p *BuildServerParam) GetSshKeyPrivateKeyOutput() string {
-	return p.SshKeyPrivateKeyOutput
-}
-func (p *BuildServerParam) SetSshKeyPublicKeys(v []string) {
-	p.SshKeyPublicKeys = v
+func (p *BuildServerParam) SetSSHKeyPassPhrase(v string) {
+	p.SSHKeyPassPhrase = v
 }
 
-func (p *BuildServerParam) GetSshKeyPublicKeys() []string {
-	return p.SshKeyPublicKeys
+func (p *BuildServerParam) GetSSHKeyPassPhrase() string {
+	return p.SSHKeyPassPhrase
 }
-func (p *BuildServerParam) SetSshKeyPublicKeyFiles(v []string) {
-	p.SshKeyPublicKeyFiles = v
-}
-
-func (p *BuildServerParam) GetSshKeyPublicKeyFiles() []string {
-	return p.SshKeyPublicKeyFiles
-}
-func (p *BuildServerParam) SetSshKeyEphemeral(v bool) {
-	p.SshKeyEphemeral = v
+func (p *BuildServerParam) SetSSHKeyDescription(v string) {
+	p.SSHKeyDescription = v
 }
 
-func (p *BuildServerParam) GetSshKeyEphemeral() bool {
-	return p.SshKeyEphemeral
+func (p *BuildServerParam) GetSSHKeyDescription() string {
+	return p.SSHKeyDescription
+}
+func (p *BuildServerParam) SetSSHKeyPrivateKeyOutput(v string) {
+	p.SSHKeyPrivateKeyOutput = v
+}
+
+func (p *BuildServerParam) GetSSHKeyPrivateKeyOutput() string {
+	return p.SSHKeyPrivateKeyOutput
+}
+func (p *BuildServerParam) SetSSHKeyPublicKeys(v []string) {
+	p.SSHKeyPublicKeys = v
+}
+
+func (p *BuildServerParam) GetSSHKeyPublicKeys() []string {
+	return p.SSHKeyPublicKeys
+}
+func (p *BuildServerParam) SetSSHKeyPublicKeyFiles(v []string) {
+	p.SSHKeyPublicKeyFiles = v
+}
+
+func (p *BuildServerParam) GetSSHKeyPublicKeyFiles() []string {
+	return p.SSHKeyPublicKeyFiles
+}
+func (p *BuildServerParam) SetSSHKeyEphemeral(v bool) {
+	p.SSHKeyEphemeral = v
+}
+
+func (p *BuildServerParam) GetSSHKeyEphemeral() bool {
+	return p.SSHKeyEphemeral
 }
 func (p *BuildServerParam) SetName(v string) {
 	p.Name = v
@@ -1113,12 +1143,26 @@ func (p *BuildServerParam) SetParamTemplate(v string) {
 func (p *BuildServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *BuildServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BuildServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *BuildServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *BuildServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *BuildServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BuildServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *BuildServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1195,7 +1239,9 @@ func (p *BuildServerParam) GetDisableBootAfterCreate() bool {
 type ReadServerParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1220,8 +1266,14 @@ func (p *ReadServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1325,12 +1377,26 @@ func (p *ReadServerParam) SetParamTemplate(v string) {
 func (p *ReadServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1406,7 +1472,9 @@ type UpdateServerParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1452,8 +1520,14 @@ func (p *UpdateServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1634,12 +1708,26 @@ func (p *UpdateServerParam) SetParamTemplate(v string) {
 func (p *UpdateServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1712,7 +1800,9 @@ type DeleteServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1746,8 +1836,14 @@ func (p *DeleteServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1872,12 +1968,26 @@ func (p *DeleteServerParam) SetParamTemplate(v string) {
 func (p *DeleteServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1951,7 +2061,9 @@ type PlanChangeServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1991,8 +2103,14 @@ func (p *PlanChangeServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2145,12 +2263,26 @@ func (p *PlanChangeServerParam) SetParamTemplate(v string) {
 func (p *PlanChangeServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *PlanChangeServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PlanChangeServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *PlanChangeServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *PlanChangeServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *PlanChangeServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PlanChangeServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *PlanChangeServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2221,7 +2353,9 @@ type BootServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2242,8 +2376,14 @@ func (p *BootServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2313,12 +2453,26 @@ func (p *BootServerParam) SetParamTemplate(v string) {
 func (p *BootServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *BootServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BootServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *BootServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *BootServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *BootServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BootServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *BootServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2340,7 +2494,9 @@ type ShutdownServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2361,8 +2517,14 @@ func (p *ShutdownServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2432,12 +2594,26 @@ func (p *ShutdownServerParam) SetParamTemplate(v string) {
 func (p *ShutdownServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ShutdownServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ShutdownServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ShutdownServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ShutdownServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ShutdownServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2459,7 +2635,9 @@ type ShutdownForceServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2480,8 +2658,14 @@ func (p *ShutdownForceServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2551,12 +2735,26 @@ func (p *ShutdownForceServerParam) SetParamTemplate(v string) {
 func (p *ShutdownForceServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ShutdownForceServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownForceServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ShutdownForceServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ShutdownForceServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ShutdownForceServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownForceServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ShutdownForceServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2578,7 +2776,9 @@ type ResetServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2599,8 +2799,14 @@ func (p *ResetServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2670,12 +2876,26 @@ func (p *ResetServerParam) SetParamTemplate(v string) {
 func (p *ResetServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ResetServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResetServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ResetServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ResetServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ResetServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResetServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ResetServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2696,7 +2916,9 @@ func (p *ResetServerParam) GetId() sacloud.ID {
 type WaitForBootServerParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2714,8 +2936,14 @@ func (p *WaitForBootServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2778,12 +3006,26 @@ func (p *WaitForBootServerParam) SetParamTemplate(v string) {
 func (p *WaitForBootServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *WaitForBootServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForBootServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *WaitForBootServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *WaitForBootServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *WaitForBootServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForBootServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *WaitForBootServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2804,7 +3046,9 @@ func (p *WaitForBootServerParam) GetId() sacloud.ID {
 type WaitForDownServerParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2822,8 +3066,14 @@ func (p *WaitForDownServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2886,12 +3136,26 @@ func (p *WaitForDownServerParam) SetParamTemplate(v string) {
 func (p *WaitForDownServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *WaitForDownServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForDownServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *WaitForDownServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *WaitForDownServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *WaitForDownServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForDownServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *WaitForDownServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2908,30 +3172,32 @@ func (p *WaitForDownServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// SshServerParam is input parameters for the sacloud API
-type SshServerParam struct {
+// SSHServerParam is input parameters for the sacloud API
+type SSHServerParam struct {
 	Key               string     `json:"key"`
 	User              string     `json:"user"`
 	Port              int        `json:"port"`
 	Password          string     `json:"password"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Quiet             bool       `json:"quiet"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewSshServerParam return new SshServerParam
-func NewSshServerParam() *SshServerParam {
-	return &SshServerParam{
+// NewSSHServerParam return new SSHServerParam
+func NewSSHServerParam() *SSHServerParam {
+	return &SSHServerParam{
 
 		Port: 22,
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *SshServerParam) FillValueToSkeleton() {
+func (p *SSHServerParam) FillValueToSkeleton() {
 	if isEmpty(p.Key) {
 		p.Key = ""
 	}
@@ -2950,8 +3216,14 @@ func (p *SshServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2966,7 +3238,7 @@ func (p *SshServerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *SshServerParam) Validate() []error {
+func (p *SSHServerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["Server"].Commands["ssh"].Params["key"].ValidateFunc
@@ -2993,124 +3265,140 @@ func (p *SshServerParam) Validate() []error {
 	return errors
 }
 
-func (p *SshServerParam) GetResourceDef() *schema.Resource {
+func (p *SSHServerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *SshServerParam) GetCommandDef() *schema.Command {
+func (p *SSHServerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ssh"]
 }
 
-func (p *SshServerParam) GetIncludeFields() []string {
+func (p *SSHServerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *SshServerParam) GetExcludeFields() []string {
+func (p *SSHServerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *SshServerParam) GetTableType() output.TableType {
+func (p *SSHServerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *SshServerParam) GetColumnDefs() []output.ColumnDef {
+func (p *SSHServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *SshServerParam) SetKey(v string) {
+func (p *SSHServerParam) SetKey(v string) {
 	p.Key = v
 }
 
-func (p *SshServerParam) GetKey() string {
+func (p *SSHServerParam) GetKey() string {
 	return p.Key
 }
-func (p *SshServerParam) SetUser(v string) {
+func (p *SSHServerParam) SetUser(v string) {
 	p.User = v
 }
 
-func (p *SshServerParam) GetUser() string {
+func (p *SSHServerParam) GetUser() string {
 	return p.User
 }
-func (p *SshServerParam) SetPort(v int) {
+func (p *SSHServerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *SshServerParam) GetPort() int {
+func (p *SSHServerParam) GetPort() int {
 	return p.Port
 }
-func (p *SshServerParam) SetPassword(v string) {
+func (p *SSHServerParam) SetPassword(v string) {
 	p.Password = v
 }
 
-func (p *SshServerParam) GetPassword() string {
+func (p *SSHServerParam) GetPassword() string {
 	return p.Password
 }
-func (p *SshServerParam) SetSelector(v []string) {
+func (p *SSHServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *SshServerParam) GetSelector() []string {
+func (p *SSHServerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *SshServerParam) SetParamTemplate(v string) {
+func (p *SSHServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *SshServerParam) GetParamTemplate() string {
+func (p *SSHServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *SshServerParam) SetParamTemplateFile(v string) {
+func (p *SSHServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *SSHServerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *SSHServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *SshServerParam) GetParamTemplateFile() string {
+func (p *SSHServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *SshServerParam) SetGenerateSkeleton(v bool) {
+func (p *SSHServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *SSHServerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *SSHServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *SshServerParam) GetGenerateSkeleton() bool {
+func (p *SSHServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *SshServerParam) SetQuiet(v bool) {
+func (p *SSHServerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *SshServerParam) GetQuiet() bool {
+func (p *SSHServerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *SshServerParam) SetId(v sacloud.ID) {
+func (p *SSHServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SshServerParam) GetId() sacloud.ID {
+func (p *SSHServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// SshExecServerParam is input parameters for the sacloud API
-type SshExecServerParam struct {
+// SSHExecServerParam is input parameters for the sacloud API
+type SSHExecServerParam struct {
 	Key               string     `json:"key"`
 	User              string     `json:"user"`
 	Port              int        `json:"port"`
 	Password          string     `json:"password"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Quiet             bool       `json:"quiet"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewSshExecServerParam return new SshExecServerParam
-func NewSshExecServerParam() *SshExecServerParam {
-	return &SshExecServerParam{
+// NewSSHExecServerParam return new SSHExecServerParam
+func NewSSHExecServerParam() *SSHExecServerParam {
+	return &SSHExecServerParam{
 
 		Port: 22,
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *SshExecServerParam) FillValueToSkeleton() {
+func (p *SSHExecServerParam) FillValueToSkeleton() {
 	if isEmpty(p.Key) {
 		p.Key = ""
 	}
@@ -3126,8 +3414,14 @@ func (p *SshExecServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3142,7 +3436,7 @@ func (p *SshExecServerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *SshExecServerParam) Validate() []error {
+func (p *SSHExecServerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["Server"].Commands["ssh-exec"].Params["key"].ValidateFunc
@@ -3169,91 +3463,105 @@ func (p *SshExecServerParam) Validate() []error {
 	return errors
 }
 
-func (p *SshExecServerParam) GetResourceDef() *schema.Resource {
+func (p *SSHExecServerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *SshExecServerParam) GetCommandDef() *schema.Command {
+func (p *SSHExecServerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ssh-exec"]
 }
 
-func (p *SshExecServerParam) GetIncludeFields() []string {
+func (p *SSHExecServerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *SshExecServerParam) GetExcludeFields() []string {
+func (p *SSHExecServerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *SshExecServerParam) GetTableType() output.TableType {
+func (p *SSHExecServerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *SshExecServerParam) GetColumnDefs() []output.ColumnDef {
+func (p *SSHExecServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *SshExecServerParam) SetKey(v string) {
+func (p *SSHExecServerParam) SetKey(v string) {
 	p.Key = v
 }
 
-func (p *SshExecServerParam) GetKey() string {
+func (p *SSHExecServerParam) GetKey() string {
 	return p.Key
 }
-func (p *SshExecServerParam) SetUser(v string) {
+func (p *SSHExecServerParam) SetUser(v string) {
 	p.User = v
 }
 
-func (p *SshExecServerParam) GetUser() string {
+func (p *SSHExecServerParam) GetUser() string {
 	return p.User
 }
-func (p *SshExecServerParam) SetPort(v int) {
+func (p *SSHExecServerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *SshExecServerParam) GetPort() int {
+func (p *SSHExecServerParam) GetPort() int {
 	return p.Port
 }
-func (p *SshExecServerParam) SetPassword(v string) {
+func (p *SSHExecServerParam) SetPassword(v string) {
 	p.Password = v
 }
 
-func (p *SshExecServerParam) GetPassword() string {
+func (p *SSHExecServerParam) GetPassword() string {
 	return p.Password
 }
-func (p *SshExecServerParam) SetParamTemplate(v string) {
+func (p *SSHExecServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *SshExecServerParam) GetParamTemplate() string {
+func (p *SSHExecServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *SshExecServerParam) SetParamTemplateFile(v string) {
+func (p *SSHExecServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *SSHExecServerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *SSHExecServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *SshExecServerParam) GetParamTemplateFile() string {
+func (p *SSHExecServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *SshExecServerParam) SetGenerateSkeleton(v bool) {
+func (p *SSHExecServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *SSHExecServerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *SSHExecServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *SshExecServerParam) GetGenerateSkeleton() bool {
+func (p *SSHExecServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *SshExecServerParam) SetQuiet(v bool) {
+func (p *SSHExecServerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *SshExecServerParam) GetQuiet() bool {
+func (p *SSHExecServerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *SshExecServerParam) SetId(v sacloud.ID) {
+func (p *SSHExecServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SshExecServerParam) GetId() sacloud.ID {
+func (p *SSHExecServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
@@ -3266,7 +3574,9 @@ type ScpServerParam struct {
 	Password          string `json:"password"`
 	Assumeyes         bool   `json:"assumeyes"`
 	ParamTemplate     string `json:"param-template"`
+	Parameters        string `json:"parameters"`
 	ParamTemplateFile string `json:"param-template-file"`
+	ParameterFile     string `json:"parameter-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 	Quiet             bool   `json:"quiet"`
 }
@@ -3302,8 +3612,14 @@ func (p *ScpServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3408,12 +3724,26 @@ func (p *ScpServerParam) SetParamTemplate(v string) {
 func (p *ScpServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ScpServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ScpServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ScpServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ScpServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ScpServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ScpServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ScpServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -3435,7 +3765,9 @@ type VncServerParam struct {
 	WaitForBoot       bool       `json:"wait-for-boot"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -3456,8 +3788,14 @@ func (p *VncServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3527,12 +3865,26 @@ func (p *VncServerParam) SetParamTemplate(v string) {
 func (p *VncServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *VncServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VncServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *VncServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *VncServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *VncServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VncServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *VncServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -3554,7 +3906,9 @@ type VncInfoServerParam struct {
 	WaitForBoot       bool       `json:"wait-for-boot"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -3582,8 +3936,14 @@ func (p *VncInfoServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3694,12 +4054,26 @@ func (p *VncInfoServerParam) SetParamTemplate(v string) {
 func (p *VncInfoServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *VncInfoServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VncInfoServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *VncInfoServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *VncInfoServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *VncInfoServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VncInfoServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *VncInfoServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -3775,7 +4149,9 @@ type VncSendServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -3818,8 +4194,14 @@ func (p *VncSendServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3981,12 +4363,26 @@ func (p *VncSendServerParam) SetParamTemplate(v string) {
 func (p *VncSendServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *VncSendServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VncSendServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *VncSendServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *VncSendServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *VncSendServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VncSendServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *VncSendServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -4059,7 +4455,9 @@ type VncSnapshotServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -4093,8 +4491,14 @@ func (p *VncSnapshotServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -4219,12 +4623,26 @@ func (p *VncSnapshotServerParam) SetParamTemplate(v string) {
 func (p *VncSnapshotServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *VncSnapshotServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VncSnapshotServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *VncSnapshotServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *VncSnapshotServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *VncSnapshotServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VncSnapshotServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *VncSnapshotServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -4296,7 +4714,9 @@ type RemoteDesktopServerParam struct {
 	Port              int        `json:"port"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -4324,8 +4744,14 @@ func (p *RemoteDesktopServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -4416,12 +4842,26 @@ func (p *RemoteDesktopServerParam) SetParamTemplate(v string) {
 func (p *RemoteDesktopServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *RemoteDesktopServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *RemoteDesktopServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *RemoteDesktopServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *RemoteDesktopServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *RemoteDesktopServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *RemoteDesktopServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *RemoteDesktopServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -4444,7 +4884,9 @@ type RemoteDesktopInfoServerParam struct {
 	Port              int        `json:"port"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -4479,8 +4921,14 @@ func (p *RemoteDesktopInfoServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -4612,12 +5060,26 @@ func (p *RemoteDesktopInfoServerParam) SetParamTemplate(v string) {
 func (p *RemoteDesktopInfoServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *RemoteDesktopInfoServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *RemoteDesktopInfoServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *RemoteDesktopInfoServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *RemoteDesktopInfoServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *RemoteDesktopInfoServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *RemoteDesktopInfoServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *RemoteDesktopInfoServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -4687,7 +5149,9 @@ func (p *RemoteDesktopInfoServerParam) GetId() sacloud.ID {
 type DiskInfoServerParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -4712,8 +5176,14 @@ func (p *DiskInfoServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -4817,12 +5287,26 @@ func (p *DiskInfoServerParam) SetParamTemplate(v string) {
 func (p *DiskInfoServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DiskInfoServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DiskInfoServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DiskInfoServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DiskInfoServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DiskInfoServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DiskInfoServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DiskInfoServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -4894,7 +5378,9 @@ type DiskConnectServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -4918,8 +5404,14 @@ func (p *DiskConnectServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -5010,12 +5502,26 @@ func (p *DiskConnectServerParam) SetParamTemplate(v string) {
 func (p *DiskConnectServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DiskConnectServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DiskConnectServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DiskConnectServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DiskConnectServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DiskConnectServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DiskConnectServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DiskConnectServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -5038,7 +5544,9 @@ type DiskDisconnectServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -5062,8 +5570,14 @@ func (p *DiskDisconnectServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -5154,12 +5668,26 @@ func (p *DiskDisconnectServerParam) SetParamTemplate(v string) {
 func (p *DiskDisconnectServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DiskDisconnectServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DiskDisconnectServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DiskDisconnectServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DiskDisconnectServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DiskDisconnectServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DiskDisconnectServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DiskDisconnectServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -5180,7 +5708,9 @@ func (p *DiskDisconnectServerParam) GetId() sacloud.ID {
 type InterfaceInfoServerParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -5205,8 +5735,14 @@ func (p *InterfaceInfoServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -5310,12 +5846,26 @@ func (p *InterfaceInfoServerParam) SetParamTemplate(v string) {
 func (p *InterfaceInfoServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *InterfaceInfoServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *InterfaceInfoServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *InterfaceInfoServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *InterfaceInfoServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *InterfaceInfoServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *InterfaceInfoServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *InterfaceInfoServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -5387,7 +5937,9 @@ type InterfaceAddForInternetServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -5411,8 +5963,14 @@ func (p *InterfaceAddForInternetServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -5489,12 +6047,26 @@ func (p *InterfaceAddForInternetServerParam) SetParamTemplate(v string) {
 func (p *InterfaceAddForInternetServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *InterfaceAddForInternetServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *InterfaceAddForInternetServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *InterfaceAddForInternetServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *InterfaceAddForInternetServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *InterfaceAddForInternetServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *InterfaceAddForInternetServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *InterfaceAddForInternetServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -5521,7 +6093,9 @@ type InterfaceAddForRouterServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -5560,8 +6134,14 @@ func (p *InterfaceAddForRouterServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -5701,12 +6281,26 @@ func (p *InterfaceAddForRouterServerParam) SetParamTemplate(v string) {
 func (p *InterfaceAddForRouterServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *InterfaceAddForRouterServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *InterfaceAddForRouterServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *InterfaceAddForRouterServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *InterfaceAddForRouterServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *InterfaceAddForRouterServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *InterfaceAddForRouterServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *InterfaceAddForRouterServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -5733,7 +6327,9 @@ type InterfaceAddForSwitchServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -5772,8 +6368,14 @@ func (p *InterfaceAddForSwitchServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -5913,12 +6515,26 @@ func (p *InterfaceAddForSwitchServerParam) SetParamTemplate(v string) {
 func (p *InterfaceAddForSwitchServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *InterfaceAddForSwitchServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *InterfaceAddForSwitchServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *InterfaceAddForSwitchServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *InterfaceAddForSwitchServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *InterfaceAddForSwitchServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *InterfaceAddForSwitchServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *InterfaceAddForSwitchServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -5940,7 +6556,9 @@ type InterfaceAddDisconnectedServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -5961,8 +6579,14 @@ func (p *InterfaceAddDisconnectedServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -6032,12 +6656,26 @@ func (p *InterfaceAddDisconnectedServerParam) SetParamTemplate(v string) {
 func (p *InterfaceAddDisconnectedServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *InterfaceAddDisconnectedServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *InterfaceAddDisconnectedServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *InterfaceAddDisconnectedServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *InterfaceAddDisconnectedServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *InterfaceAddDisconnectedServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *InterfaceAddDisconnectedServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *InterfaceAddDisconnectedServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -6054,11 +6692,13 @@ func (p *InterfaceAddDisconnectedServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// IsoInfoServerParam is input parameters for the sacloud API
-type IsoInfoServerParam struct {
+// ISOInfoServerParam is input parameters for the sacloud API
+type ISOInfoServerParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -6070,21 +6710,27 @@ type IsoInfoServerParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewIsoInfoServerParam return new IsoInfoServerParam
-func NewIsoInfoServerParam() *IsoInfoServerParam {
-	return &IsoInfoServerParam{}
+// NewISOInfoServerParam return new ISOInfoServerParam
+func NewISOInfoServerParam() *ISOInfoServerParam {
+	return &ISOInfoServerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *IsoInfoServerParam) FillValueToSkeleton() {
+func (p *ISOInfoServerParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -6117,7 +6763,7 @@ func (p *IsoInfoServerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *IsoInfoServerParam) Validate() []error {
+func (p *ISOInfoServerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -6150,120 +6796,134 @@ func (p *IsoInfoServerParam) Validate() []error {
 	return errors
 }
 
-func (p *IsoInfoServerParam) GetResourceDef() *schema.Resource {
+func (p *ISOInfoServerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *IsoInfoServerParam) GetCommandDef() *schema.Command {
+func (p *ISOInfoServerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["iso-info"]
 }
 
-func (p *IsoInfoServerParam) GetIncludeFields() []string {
+func (p *ISOInfoServerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *IsoInfoServerParam) GetExcludeFields() []string {
+func (p *ISOInfoServerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *IsoInfoServerParam) GetTableType() output.TableType {
+func (p *ISOInfoServerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *IsoInfoServerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ISOInfoServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *IsoInfoServerParam) SetSelector(v []string) {
+func (p *ISOInfoServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *IsoInfoServerParam) GetSelector() []string {
+func (p *ISOInfoServerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *IsoInfoServerParam) SetParamTemplate(v string) {
+func (p *ISOInfoServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *IsoInfoServerParam) GetParamTemplate() string {
+func (p *ISOInfoServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *IsoInfoServerParam) SetParamTemplateFile(v string) {
+func (p *ISOInfoServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ISOInfoServerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ISOInfoServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *IsoInfoServerParam) GetParamTemplateFile() string {
+func (p *ISOInfoServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *IsoInfoServerParam) SetGenerateSkeleton(v bool) {
+func (p *ISOInfoServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ISOInfoServerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ISOInfoServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *IsoInfoServerParam) GetGenerateSkeleton() bool {
+func (p *ISOInfoServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *IsoInfoServerParam) SetOutputType(v string) {
+func (p *ISOInfoServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *IsoInfoServerParam) GetOutputType() string {
+func (p *ISOInfoServerParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *IsoInfoServerParam) SetColumn(v []string) {
+func (p *ISOInfoServerParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *IsoInfoServerParam) GetColumn() []string {
+func (p *ISOInfoServerParam) GetColumn() []string {
 	return p.Column
 }
-func (p *IsoInfoServerParam) SetQuiet(v bool) {
+func (p *ISOInfoServerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *IsoInfoServerParam) GetQuiet() bool {
+func (p *ISOInfoServerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *IsoInfoServerParam) SetFormat(v string) {
+func (p *ISOInfoServerParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *IsoInfoServerParam) GetFormat() string {
+func (p *ISOInfoServerParam) GetFormat() string {
 	return p.Format
 }
-func (p *IsoInfoServerParam) SetFormatFile(v string) {
+func (p *ISOInfoServerParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *IsoInfoServerParam) GetFormatFile() string {
+func (p *ISOInfoServerParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *IsoInfoServerParam) SetQuery(v string) {
+func (p *ISOInfoServerParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *IsoInfoServerParam) GetQuery() string {
+func (p *ISOInfoServerParam) GetQuery() string {
 	return p.Query
 }
-func (p *IsoInfoServerParam) SetQueryFile(v string) {
+func (p *ISOInfoServerParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *IsoInfoServerParam) GetQueryFile() string {
+func (p *ISOInfoServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *IsoInfoServerParam) SetId(v sacloud.ID) {
+func (p *ISOInfoServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *IsoInfoServerParam) GetId() sacloud.ID {
+func (p *ISOInfoServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// IsoInsertServerParam is input parameters for the sacloud API
-type IsoInsertServerParam struct {
-	IsoImageId        sacloud.ID `json:"iso-image-id"`
+// ISOInsertServerParam is input parameters for the sacloud API
+type ISOInsertServerParam struct {
+	ISOImageId        sacloud.ID `json:"iso-image-id"`
 	Size              int        `json:"size"`
-	IsoFile           string     `json:"iso-file"`
+	ISOFile           string     `json:"iso-file"`
 	Name              string     `json:"name"`
 	Description       string     `json:"description"`
 	Tags              []string   `json:"tags"`
@@ -6271,29 +6931,31 @@ type IsoInsertServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewIsoInsertServerParam return new IsoInsertServerParam
-func NewIsoInsertServerParam() *IsoInsertServerParam {
-	return &IsoInsertServerParam{
+// NewISOInsertServerParam return new ISOInsertServerParam
+func NewISOInsertServerParam() *ISOInsertServerParam {
+	return &ISOInsertServerParam{
 
 		Size: 5,
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *IsoInsertServerParam) FillValueToSkeleton() {
-	if isEmpty(p.IsoImageId) {
-		p.IsoImageId = sacloud.ID(0)
+func (p *ISOInsertServerParam) FillValueToSkeleton() {
+	if isEmpty(p.ISOImageId) {
+		p.ISOImageId = sacloud.ID(0)
 	}
 	if isEmpty(p.Size) {
 		p.Size = 0
 	}
-	if isEmpty(p.IsoFile) {
-		p.IsoFile = ""
+	if isEmpty(p.ISOFile) {
+		p.ISOFile = ""
 	}
 	if isEmpty(p.Name) {
 		p.Name = ""
@@ -6316,8 +6978,14 @@ func (p *IsoInsertServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -6329,11 +6997,11 @@ func (p *IsoInsertServerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *IsoInsertServerParam) Validate() []error {
+func (p *ISOInsertServerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["Server"].Commands["iso-insert"].Params["iso-image-id"].ValidateFunc
-		errs := validator("--iso-image-id", p.IsoImageId)
+		errs := validator("--iso-image-id", p.ISOImageId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6384,139 +7052,155 @@ func (p *IsoInsertServerParam) Validate() []error {
 	return errors
 }
 
-func (p *IsoInsertServerParam) GetResourceDef() *schema.Resource {
+func (p *ISOInsertServerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *IsoInsertServerParam) GetCommandDef() *schema.Command {
+func (p *ISOInsertServerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["iso-insert"]
 }
 
-func (p *IsoInsertServerParam) GetIncludeFields() []string {
+func (p *ISOInsertServerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *IsoInsertServerParam) GetExcludeFields() []string {
+func (p *ISOInsertServerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *IsoInsertServerParam) GetTableType() output.TableType {
+func (p *ISOInsertServerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *IsoInsertServerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ISOInsertServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *IsoInsertServerParam) SetIsoImageId(v sacloud.ID) {
-	p.IsoImageId = v
+func (p *ISOInsertServerParam) SetISOImageId(v sacloud.ID) {
+	p.ISOImageId = v
 }
 
-func (p *IsoInsertServerParam) GetIsoImageId() sacloud.ID {
-	return p.IsoImageId
+func (p *ISOInsertServerParam) GetISOImageId() sacloud.ID {
+	return p.ISOImageId
 }
-func (p *IsoInsertServerParam) SetSize(v int) {
+func (p *ISOInsertServerParam) SetSize(v int) {
 	p.Size = v
 }
 
-func (p *IsoInsertServerParam) GetSize() int {
+func (p *ISOInsertServerParam) GetSize() int {
 	return p.Size
 }
-func (p *IsoInsertServerParam) SetIsoFile(v string) {
-	p.IsoFile = v
+func (p *ISOInsertServerParam) SetISOFile(v string) {
+	p.ISOFile = v
 }
 
-func (p *IsoInsertServerParam) GetIsoFile() string {
-	return p.IsoFile
+func (p *ISOInsertServerParam) GetISOFile() string {
+	return p.ISOFile
 }
-func (p *IsoInsertServerParam) SetName(v string) {
+func (p *ISOInsertServerParam) SetName(v string) {
 	p.Name = v
 }
 
-func (p *IsoInsertServerParam) GetName() string {
+func (p *ISOInsertServerParam) GetName() string {
 	return p.Name
 }
-func (p *IsoInsertServerParam) SetDescription(v string) {
+func (p *ISOInsertServerParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *IsoInsertServerParam) GetDescription() string {
+func (p *ISOInsertServerParam) GetDescription() string {
 	return p.Description
 }
-func (p *IsoInsertServerParam) SetTags(v []string) {
+func (p *ISOInsertServerParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *IsoInsertServerParam) GetTags() []string {
+func (p *ISOInsertServerParam) GetTags() []string {
 	return p.Tags
 }
-func (p *IsoInsertServerParam) SetIconId(v sacloud.ID) {
+func (p *ISOInsertServerParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *IsoInsertServerParam) GetIconId() sacloud.ID {
+func (p *ISOInsertServerParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
-func (p *IsoInsertServerParam) SetSelector(v []string) {
+func (p *ISOInsertServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *IsoInsertServerParam) GetSelector() []string {
+func (p *ISOInsertServerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *IsoInsertServerParam) SetAssumeyes(v bool) {
+func (p *ISOInsertServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *IsoInsertServerParam) GetAssumeyes() bool {
+func (p *ISOInsertServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *IsoInsertServerParam) SetParamTemplate(v string) {
+func (p *ISOInsertServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *IsoInsertServerParam) GetParamTemplate() string {
+func (p *ISOInsertServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *IsoInsertServerParam) SetParamTemplateFile(v string) {
+func (p *ISOInsertServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ISOInsertServerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ISOInsertServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *IsoInsertServerParam) GetParamTemplateFile() string {
+func (p *ISOInsertServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *IsoInsertServerParam) SetGenerateSkeleton(v bool) {
+func (p *ISOInsertServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ISOInsertServerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ISOInsertServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *IsoInsertServerParam) GetGenerateSkeleton() bool {
+func (p *ISOInsertServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *IsoInsertServerParam) SetId(v sacloud.ID) {
+func (p *ISOInsertServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *IsoInsertServerParam) GetId() sacloud.ID {
+func (p *ISOInsertServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// IsoEjectServerParam is input parameters for the sacloud API
-type IsoEjectServerParam struct {
+// ISOEjectServerParam is input parameters for the sacloud API
+type ISOEjectServerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewIsoEjectServerParam return new IsoEjectServerParam
-func NewIsoEjectServerParam() *IsoEjectServerParam {
-	return &IsoEjectServerParam{}
+// NewISOEjectServerParam return new ISOEjectServerParam
+func NewISOEjectServerParam() *ISOEjectServerParam {
+	return &ISOEjectServerParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *IsoEjectServerParam) FillValueToSkeleton() {
+func (p *ISOEjectServerParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -6526,8 +7210,14 @@ func (p *IsoEjectServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -6539,7 +7229,7 @@ func (p *IsoEjectServerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *IsoEjectServerParam) Validate() []error {
+func (p *ISOEjectServerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -6552,81 +7242,97 @@ func (p *IsoEjectServerParam) Validate() []error {
 	return errors
 }
 
-func (p *IsoEjectServerParam) GetResourceDef() *schema.Resource {
+func (p *ISOEjectServerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *IsoEjectServerParam) GetCommandDef() *schema.Command {
+func (p *ISOEjectServerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["iso-eject"]
 }
 
-func (p *IsoEjectServerParam) GetIncludeFields() []string {
+func (p *ISOEjectServerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *IsoEjectServerParam) GetExcludeFields() []string {
+func (p *ISOEjectServerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *IsoEjectServerParam) GetTableType() output.TableType {
+func (p *ISOEjectServerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *IsoEjectServerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ISOEjectServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *IsoEjectServerParam) SetSelector(v []string) {
+func (p *ISOEjectServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *IsoEjectServerParam) GetSelector() []string {
+func (p *ISOEjectServerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *IsoEjectServerParam) SetAssumeyes(v bool) {
+func (p *ISOEjectServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *IsoEjectServerParam) GetAssumeyes() bool {
+func (p *ISOEjectServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *IsoEjectServerParam) SetParamTemplate(v string) {
+func (p *ISOEjectServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *IsoEjectServerParam) GetParamTemplate() string {
+func (p *ISOEjectServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *IsoEjectServerParam) SetParamTemplateFile(v string) {
+func (p *ISOEjectServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ISOEjectServerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *ISOEjectServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *IsoEjectServerParam) GetParamTemplateFile() string {
+func (p *ISOEjectServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *IsoEjectServerParam) SetGenerateSkeleton(v bool) {
+func (p *ISOEjectServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ISOEjectServerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ISOEjectServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *IsoEjectServerParam) GetGenerateSkeleton() bool {
+func (p *ISOEjectServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *IsoEjectServerParam) SetId(v sacloud.ID) {
+func (p *ISOEjectServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *IsoEjectServerParam) GetId() sacloud.ID {
+func (p *ISOEjectServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// MonitorCpuServerParam is input parameters for the sacloud API
-type MonitorCpuServerParam struct {
+// MonitorCPUServerParam is input parameters for the sacloud API
+type MonitorCPUServerParam struct {
 	Start             string     `json:"start"`
 	End               string     `json:"end"`
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -6638,16 +7344,16 @@ type MonitorCpuServerParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewMonitorCpuServerParam return new MonitorCpuServerParam
-func NewMonitorCpuServerParam() *MonitorCpuServerParam {
-	return &MonitorCpuServerParam{
+// NewMonitorCPUServerParam return new MonitorCPUServerParam
+func NewMonitorCPUServerParam() *MonitorCPUServerParam {
+	return &MonitorCPUServerParam{
 
 		KeyFormat: "sakuracloud.server.{{.ID}}.cpu",
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *MonitorCpuServerParam) FillValueToSkeleton() {
+func (p *MonitorCPUServerParam) FillValueToSkeleton() {
 	if isEmpty(p.Start) {
 		p.Start = ""
 	}
@@ -6663,8 +7369,14 @@ func (p *MonitorCpuServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -6697,7 +7409,7 @@ func (p *MonitorCpuServerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *MonitorCpuServerParam) Validate() []error {
+func (p *MonitorCPUServerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["Server"].Commands["monitor-cpu"].Params["start"].ValidateFunc
@@ -6751,133 +7463,147 @@ func (p *MonitorCpuServerParam) Validate() []error {
 	return errors
 }
 
-func (p *MonitorCpuServerParam) GetResourceDef() *schema.Resource {
+func (p *MonitorCPUServerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *MonitorCpuServerParam) GetCommandDef() *schema.Command {
+func (p *MonitorCPUServerParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["monitor-cpu"]
 }
 
-func (p *MonitorCpuServerParam) GetIncludeFields() []string {
+func (p *MonitorCPUServerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *MonitorCpuServerParam) GetExcludeFields() []string {
+func (p *MonitorCPUServerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *MonitorCpuServerParam) GetTableType() output.TableType {
+func (p *MonitorCPUServerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *MonitorCpuServerParam) GetColumnDefs() []output.ColumnDef {
+func (p *MonitorCPUServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *MonitorCpuServerParam) SetStart(v string) {
+func (p *MonitorCPUServerParam) SetStart(v string) {
 	p.Start = v
 }
 
-func (p *MonitorCpuServerParam) GetStart() string {
+func (p *MonitorCPUServerParam) GetStart() string {
 	return p.Start
 }
-func (p *MonitorCpuServerParam) SetEnd(v string) {
+func (p *MonitorCPUServerParam) SetEnd(v string) {
 	p.End = v
 }
 
-func (p *MonitorCpuServerParam) GetEnd() string {
+func (p *MonitorCPUServerParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorCpuServerParam) SetKeyFormat(v string) {
+func (p *MonitorCPUServerParam) SetKeyFormat(v string) {
 	p.KeyFormat = v
 }
 
-func (p *MonitorCpuServerParam) GetKeyFormat() string {
+func (p *MonitorCPUServerParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
-func (p *MonitorCpuServerParam) SetSelector(v []string) {
+func (p *MonitorCPUServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *MonitorCpuServerParam) GetSelector() []string {
+func (p *MonitorCPUServerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *MonitorCpuServerParam) SetParamTemplate(v string) {
+func (p *MonitorCPUServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *MonitorCpuServerParam) GetParamTemplate() string {
+func (p *MonitorCPUServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *MonitorCpuServerParam) SetParamTemplateFile(v string) {
+func (p *MonitorCPUServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorCPUServerParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *MonitorCPUServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *MonitorCpuServerParam) GetParamTemplateFile() string {
+func (p *MonitorCPUServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *MonitorCpuServerParam) SetGenerateSkeleton(v bool) {
+func (p *MonitorCPUServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorCPUServerParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *MonitorCPUServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *MonitorCpuServerParam) GetGenerateSkeleton() bool {
+func (p *MonitorCPUServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *MonitorCpuServerParam) SetOutputType(v string) {
+func (p *MonitorCPUServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *MonitorCpuServerParam) GetOutputType() string {
+func (p *MonitorCPUServerParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *MonitorCpuServerParam) SetColumn(v []string) {
+func (p *MonitorCPUServerParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *MonitorCpuServerParam) GetColumn() []string {
+func (p *MonitorCPUServerParam) GetColumn() []string {
 	return p.Column
 }
-func (p *MonitorCpuServerParam) SetQuiet(v bool) {
+func (p *MonitorCPUServerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *MonitorCpuServerParam) GetQuiet() bool {
+func (p *MonitorCPUServerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *MonitorCpuServerParam) SetFormat(v string) {
+func (p *MonitorCPUServerParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *MonitorCpuServerParam) GetFormat() string {
+func (p *MonitorCPUServerParam) GetFormat() string {
 	return p.Format
 }
-func (p *MonitorCpuServerParam) SetFormatFile(v string) {
+func (p *MonitorCPUServerParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *MonitorCpuServerParam) GetFormatFile() string {
+func (p *MonitorCPUServerParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *MonitorCpuServerParam) SetQuery(v string) {
+func (p *MonitorCPUServerParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *MonitorCpuServerParam) GetQuery() string {
+func (p *MonitorCPUServerParam) GetQuery() string {
 	return p.Query
 }
-func (p *MonitorCpuServerParam) SetQueryFile(v string) {
+func (p *MonitorCPUServerParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *MonitorCpuServerParam) GetQueryFile() string {
+func (p *MonitorCPUServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorCpuServerParam) SetId(v sacloud.ID) {
+func (p *MonitorCPUServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorCpuServerParam) GetId() sacloud.ID {
+func (p *MonitorCPUServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
@@ -6889,7 +7615,9 @@ type MonitorNicServerParam struct {
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -6929,8 +7657,14 @@ func (p *MonitorNicServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -7083,12 +7817,26 @@ func (p *MonitorNicServerParam) SetParamTemplate(v string) {
 func (p *MonitorNicServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorNicServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorNicServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorNicServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorNicServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorNicServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorNicServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorNicServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -7162,7 +7910,9 @@ type MonitorDiskServerParam struct {
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -7202,8 +7952,14 @@ func (p *MonitorDiskServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -7356,12 +8112,26 @@ func (p *MonitorDiskServerParam) SetParamTemplate(v string) {
 func (p *MonitorDiskServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorDiskServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorDiskServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorDiskServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorDiskServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorDiskServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorDiskServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorDiskServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -7430,7 +8200,9 @@ func (p *MonitorDiskServerParam) GetId() sacloud.ID {
 // MaintenanceInfoServerParam is input parameters for the sacloud API
 type MaintenanceInfoServerParam struct {
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -7451,8 +8223,14 @@ func (p *MaintenanceInfoServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -7539,12 +8317,26 @@ func (p *MaintenanceInfoServerParam) SetParamTemplate(v string) {
 func (p *MaintenanceInfoServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MaintenanceInfoServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MaintenanceInfoServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MaintenanceInfoServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MaintenanceInfoServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MaintenanceInfoServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MaintenanceInfoServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MaintenanceInfoServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

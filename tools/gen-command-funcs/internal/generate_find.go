@@ -74,7 +74,7 @@ func generateFindSetParamActions(ctx *tools.GenerateContext, command *schema.Com
 
 	b := bytes.NewBufferString("")
 
-	for _, param := range command.BuildedParams() {
+	for _, param := range command.BuiltParams() {
 		k := param.ParamKey
 		p := param.Param
 
@@ -145,7 +145,7 @@ func generateFilterActions(ctx *tools.GenerateContext, command *schema.Command) 
 
 	b := bytes.NewBufferString("")
 
-	for _, param := range command.BuildedParams() {
+	for _, param := range command.BuiltParams() {
 		k := param.ParamKey
 		p := param.Param
 

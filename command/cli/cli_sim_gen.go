@@ -32,21 +32,21 @@ import (
 )
 
 func init() {
-	listParam := params.NewListSIMParam()
-	createParam := params.NewCreateSIMParam()
-	readParam := params.NewReadSIMParam()
-	updateParam := params.NewUpdateSIMParam()
-	deleteParam := params.NewDeleteSIMParam()
-	carrierInfoParam := params.NewCarrierInfoSIMParam()
-	carrierUpdateParam := params.NewCarrierUpdateSIMParam()
-	activateParam := params.NewActivateSIMParam()
-	deactivateParam := params.NewDeactivateSIMParam()
-	imeiLockParam := params.NewImeiLockSIMParam()
-	ipAddParam := params.NewIpAddSIMParam()
-	imeiUnlockParam := params.NewImeiUnlockSIMParam()
-	ipDeleteParam := params.NewIpDeleteSIMParam()
-	logsParam := params.NewLogsSIMParam()
-	monitorParam := params.NewMonitorSIMParam()
+	simListParam := params.NewListSIMParam()
+	simCreateParam := params.NewCreateSIMParam()
+	simReadParam := params.NewReadSIMParam()
+	simUpdateParam := params.NewUpdateSIMParam()
+	simDeleteParam := params.NewDeleteSIMParam()
+	simCarrierInfoParam := params.NewCarrierInfoSIMParam()
+	simCarrierUpdateParam := params.NewCarrierUpdateSIMParam()
+	simActivateParam := params.NewActivateSIMParam()
+	simDeactivateParam := params.NewDeactivateSIMParam()
+	simImeiLockParam := params.NewImeiLockSIMParam()
+	simIpAddParam := params.NewIpAddSIMParam()
+	simImeiUnlockParam := params.NewImeiUnlockSIMParam()
+	simIpDeleteParam := params.NewIpDeleteSIMParam()
+	simLogsParam := params.NewLogsSIMParam()
+	simMonitorParam := params.NewMonitorSIMParam()
 
 	cliCommand := &cli.Command{
 		Name:  "sim",
@@ -89,8 +89,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -138,9 +146,9 @@ func init() {
 						return err
 					}
 
-					listParam.ParamTemplate = c.String("param-template")
-					listParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(listParam)
+					simListParam.ParamTemplate = c.String("param-template")
+					simListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simListParam)
 					if err != nil {
 						return err
 					}
@@ -150,57 +158,63 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(listParam, p, mergo.WithOverride)
+						mergo.Merge(simListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						listParam.Name = c.StringSlice("name")
+						simListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						simListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						listParam.Tags = c.StringSlice("tags")
+						simListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						listParam.From = c.Int("from")
+						simListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						listParam.Max = c.Int("max")
+						simListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						listParam.Sort = c.StringSlice("sort")
+						simListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						listParam.ParamTemplate = c.String("param-template")
+						simListParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						listParam.ParamTemplateFile = c.String("param-template-file")
+						simListParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						listParam.OutputType = c.String("output-type")
+						simListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						listParam.Column = c.StringSlice("column")
+						simListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						listParam.Quiet = c.Bool("quiet")
+						simListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						listParam.Format = c.String("format")
+						simListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						listParam.FormatFile = c.String("format-file")
+						simListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						listParam.Query = c.String("query")
+						simListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						listParam.QueryFile = c.String("query-file")
+						simListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -208,7 +222,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = listParam
+					var outputTypeHolder interface{} = simListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -219,10 +233,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if listParam.GenerateSkeleton {
-						listParam.GenerateSkeleton = false
-						listParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(listParam, "", "\t")
+					if simListParam.GenerateSkeleton {
+						simListParam.GenerateSkeleton = false
+						simListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -231,15 +245,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := simListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), listParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simListParam)
 
 					// Run command with params
-					return funcs.SIMList(ctx, listParam)
+					return funcs.SIMList(ctx, simListParam)
 
 				},
 			},
@@ -293,8 +307,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -342,9 +364,9 @@ func init() {
 						return err
 					}
 
-					createParam.ParamTemplate = c.String("param-template")
-					createParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(createParam)
+					simCreateParam.ParamTemplate = c.String("param-template")
+					simCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simCreateParam)
 					if err != nil {
 						return err
 					}
@@ -354,69 +376,75 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(createParam, p, mergo.WithOverride)
+						mergo.Merge(simCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("iccid") {
-						createParam.Iccid = c.String("iccid")
+						simCreateParam.Iccid = c.String("iccid")
 					}
 					if c.IsSet("passcode") {
-						createParam.Passcode = c.String("passcode")
+						simCreateParam.Passcode = c.String("passcode")
 					}
 					if c.IsSet("disabled") {
-						createParam.Disabled = c.Bool("disabled")
+						simCreateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("imei") {
-						createParam.Imei = c.String("imei")
+						simCreateParam.Imei = c.String("imei")
 					}
 					if c.IsSet("carrier") {
-						createParam.Carrier = c.StringSlice("carrier")
+						simCreateParam.Carrier = c.StringSlice("carrier")
 					}
 					if c.IsSet("name") {
-						createParam.Name = c.String("name")
+						simCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						createParam.Description = c.String("description")
+						simCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						createParam.Tags = c.StringSlice("tags")
+						simCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						simCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						createParam.Assumeyes = c.Bool("assumeyes")
+						simCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						createParam.ParamTemplate = c.String("param-template")
+						simCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						createParam.ParamTemplateFile = c.String("param-template-file")
+						simCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						createParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						createParam.OutputType = c.String("output-type")
+						simCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						createParam.Column = c.StringSlice("column")
+						simCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						createParam.Quiet = c.Bool("quiet")
+						simCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						createParam.Format = c.String("format")
+						simCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						createParam.FormatFile = c.String("format-file")
+						simCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						createParam.Query = c.String("query")
+						simCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						createParam.QueryFile = c.String("query-file")
+						simCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -424,7 +452,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = createParam
+					var outputTypeHolder interface{} = simCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -435,10 +463,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if createParam.GenerateSkeleton {
-						createParam.GenerateSkeleton = false
-						createParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(createParam, "", "\t")
+					if simCreateParam.GenerateSkeleton {
+						simCreateParam.GenerateSkeleton = false
+						simCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -447,15 +475,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
+					if errors := simCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), createParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simCreateParam)
 
 					// confirm
-					if !createParam.Assumeyes {
+					if !simCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -465,7 +493,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.SIMCreate(ctx, createParam)
+					return funcs.SIMCreate(ctx, simCreateParam)
 
 				},
 			},
@@ -483,8 +511,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -537,9 +573,9 @@ func init() {
 						return err
 					}
 
-					readParam.ParamTemplate = c.String("param-template")
-					readParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(readParam)
+					simReadParam.ParamTemplate = c.String("param-template")
+					simReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simReadParam)
 					if err != nil {
 						return err
 					}
@@ -549,45 +585,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(readParam, p, mergo.WithOverride)
+						mergo.Merge(simReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						readParam.Selector = c.StringSlice("selector")
+						simReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						readParam.ParamTemplate = c.String("param-template")
+						simReadParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						readParam.ParamTemplateFile = c.String("param-template-file")
+						simReadParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						readParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						readParam.OutputType = c.String("output-type")
+						simReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						readParam.Column = c.StringSlice("column")
+						simReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						readParam.Quiet = c.Bool("quiet")
+						simReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						readParam.Format = c.String("format")
+						simReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						readParam.FormatFile = c.String("format-file")
+						simReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						readParam.Query = c.String("query")
+						simReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						readParam.QueryFile = c.String("query-file")
+						simReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = sacloud.ID(c.Int64("id"))
+						simReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -595,7 +637,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = readParam
+					var outputTypeHolder interface{} = simReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -606,10 +648,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if readParam.GenerateSkeleton {
-						readParam.GenerateSkeleton = false
-						readParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(readParam, "", "\t")
+					if simReadParam.GenerateSkeleton {
+						simReadParam.GenerateSkeleton = false
+						simReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -618,19 +660,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
+					if errors := simReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), readParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simReadParam)
 
 					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(readParam.Selector) == 0 {
+						if len(simReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -639,12 +681,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceSIMItems {
-							if hasTags(&v, readParam.Selector) {
+							if hasTags(&v, simReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simReadParam.Selector)
 						}
 
 					} else {
@@ -666,7 +708,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceSIMItems {
-										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+										if len(simReadParam.Selector) == 0 || hasTags(&v, simReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -691,11 +733,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						readParam.SetId(id)
-						p := *readParam // copy struct value
-						readParam := &p
+						simReadParam.SetId(id)
+						p := *simReadParam // copy struct value
+						simReadParam := &p
 						go func() {
-							err := funcs.SIMRead(ctx, readParam)
+							err := funcs.SIMRead(ctx, simReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -743,8 +785,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -797,9 +847,9 @@ func init() {
 						return err
 					}
 
-					updateParam.ParamTemplate = c.String("param-template")
-					updateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(updateParam)
+					simUpdateParam.ParamTemplate = c.String("param-template")
+					simUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simUpdateParam)
 					if err != nil {
 						return err
 					}
@@ -809,60 +859,66 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(updateParam, p, mergo.WithOverride)
+						mergo.Merge(simUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						updateParam.Selector = c.StringSlice("selector")
+						simUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						updateParam.Name = c.String("name")
+						simUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						updateParam.Description = c.String("description")
+						simUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						updateParam.Tags = c.StringSlice("tags")
+						simUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						simUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						updateParam.Assumeyes = c.Bool("assumeyes")
+						simUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						updateParam.ParamTemplate = c.String("param-template")
+						simUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						updateParam.ParamTemplateFile = c.String("param-template-file")
+						simUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						updateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						updateParam.OutputType = c.String("output-type")
+						simUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						updateParam.Column = c.StringSlice("column")
+						simUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						updateParam.Quiet = c.Bool("quiet")
+						simUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						updateParam.Format = c.String("format")
+						simUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						updateParam.FormatFile = c.String("format-file")
+						simUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						updateParam.Query = c.String("query")
+						simUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						updateParam.QueryFile = c.String("query-file")
+						simUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = sacloud.ID(c.Int64("id"))
+						simUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -870,7 +926,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = updateParam
+					var outputTypeHolder interface{} = simUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -881,10 +937,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if updateParam.GenerateSkeleton {
-						updateParam.GenerateSkeleton = false
-						updateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(updateParam, "", "\t")
+					if simUpdateParam.GenerateSkeleton {
+						simUpdateParam.GenerateSkeleton = false
+						simUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -893,19 +949,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
+					if errors := simUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simUpdateParam)
 
 					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(updateParam.Selector) == 0 {
+						if len(simUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -914,12 +970,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceSIMItems {
-							if hasTags(&v, updateParam.Selector) {
+							if hasTags(&v, simUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simUpdateParam.Selector)
 						}
 
 					} else {
@@ -941,7 +997,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceSIMItems {
-										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+										if len(simUpdateParam.Selector) == 0 || hasTags(&v, simUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -958,7 +1014,7 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes {
+					if !simUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -972,11 +1028,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						updateParam.SetId(id)
-						p := *updateParam // copy struct value
-						updateParam := &p
+						simUpdateParam.SetId(id)
+						p := *simUpdateParam // copy struct value
+						simUpdateParam := &p
 						go func() {
-							err := funcs.SIMUpdate(ctx, updateParam)
+							err := funcs.SIMUpdate(ctx, simUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1013,8 +1069,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1035,9 +1099,9 @@ func init() {
 						return err
 					}
 
-					deleteParam.ParamTemplate = c.String("param-template")
-					deleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(deleteParam)
+					simDeleteParam.ParamTemplate = c.String("param-template")
+					simDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simDeleteParam)
 					if err != nil {
 						return err
 					}
@@ -1047,30 +1111,36 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(deleteParam, p, mergo.WithOverride)
+						mergo.Merge(simDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("force") {
-						deleteParam.Force = c.Bool("force")
+						simDeleteParam.Force = c.Bool("force")
 					}
 					if c.IsSet("selector") {
-						deleteParam.Selector = c.StringSlice("selector")
+						simDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						deleteParam.Assumeyes = c.Bool("assumeyes")
+						simDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						deleteParam.ParamTemplate = c.String("param-template")
+						simDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						deleteParam.ParamTemplateFile = c.String("param-template-file")
+						simDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = sacloud.ID(c.Int64("id"))
+						simDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1078,7 +1148,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = deleteParam
+					var outputTypeHolder interface{} = simDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1089,10 +1159,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if deleteParam.GenerateSkeleton {
-						deleteParam.GenerateSkeleton = false
-						deleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(deleteParam, "", "\t")
+					if simDeleteParam.GenerateSkeleton {
+						simDeleteParam.GenerateSkeleton = false
+						simDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1101,19 +1171,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := simDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simDeleteParam)
 
 					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(deleteParam.Selector) == 0 {
+						if len(simDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1122,12 +1192,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceSIMItems {
-							if hasTags(&v, deleteParam.Selector) {
+							if hasTags(&v, simDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simDeleteParam.Selector)
 						}
 
 					} else {
@@ -1149,7 +1219,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceSIMItems {
-										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+										if len(simDeleteParam.Selector) == 0 || hasTags(&v, simDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1166,7 +1236,7 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes {
+					if !simDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1180,11 +1250,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						deleteParam.SetId(id)
-						p := *deleteParam // copy struct value
-						deleteParam := &p
+						simDeleteParam.SetId(id)
+						p := *simDeleteParam // copy struct value
+						simDeleteParam := &p
 						go func() {
-							err := funcs.SIMDelete(ctx, deleteParam)
+							err := funcs.SIMDelete(ctx, simDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1211,8 +1281,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1265,9 +1343,9 @@ func init() {
 						return err
 					}
 
-					carrierInfoParam.ParamTemplate = c.String("param-template")
-					carrierInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(carrierInfoParam)
+					simCarrierInfoParam.ParamTemplate = c.String("param-template")
+					simCarrierInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simCarrierInfoParam)
 					if err != nil {
 						return err
 					}
@@ -1277,45 +1355,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(carrierInfoParam, p, mergo.WithOverride)
+						mergo.Merge(simCarrierInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						carrierInfoParam.Selector = c.StringSlice("selector")
+						simCarrierInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						carrierInfoParam.ParamTemplate = c.String("param-template")
+						simCarrierInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simCarrierInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						carrierInfoParam.ParamTemplateFile = c.String("param-template-file")
+						simCarrierInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simCarrierInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						carrierInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simCarrierInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						carrierInfoParam.OutputType = c.String("output-type")
+						simCarrierInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						carrierInfoParam.Column = c.StringSlice("column")
+						simCarrierInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						carrierInfoParam.Quiet = c.Bool("quiet")
+						simCarrierInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						carrierInfoParam.Format = c.String("format")
+						simCarrierInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						carrierInfoParam.FormatFile = c.String("format-file")
+						simCarrierInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						carrierInfoParam.Query = c.String("query")
+						simCarrierInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						carrierInfoParam.QueryFile = c.String("query-file")
+						simCarrierInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						carrierInfoParam.Id = sacloud.ID(c.Int64("id"))
+						simCarrierInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1323,7 +1407,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = carrierInfoParam
+					var outputTypeHolder interface{} = simCarrierInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1334,10 +1418,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if carrierInfoParam.GenerateSkeleton {
-						carrierInfoParam.GenerateSkeleton = false
-						carrierInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(carrierInfoParam, "", "\t")
+					if simCarrierInfoParam.GenerateSkeleton {
+						simCarrierInfoParam.GenerateSkeleton = false
+						simCarrierInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simCarrierInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1346,19 +1430,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := carrierInfoParam.Validate(); len(errors) > 0 {
+					if errors := simCarrierInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), carrierInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simCarrierInfoParam)
 
 					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(carrierInfoParam.Selector) == 0 {
+						if len(simCarrierInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1367,12 +1451,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceSIMItems {
-							if hasTags(&v, carrierInfoParam.Selector) {
+							if hasTags(&v, simCarrierInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", carrierInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simCarrierInfoParam.Selector)
 						}
 
 					} else {
@@ -1394,7 +1478,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceSIMItems {
-										if len(carrierInfoParam.Selector) == 0 || hasTags(&v, carrierInfoParam.Selector) {
+										if len(simCarrierInfoParam.Selector) == 0 || hasTags(&v, simCarrierInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1419,11 +1503,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						carrierInfoParam.SetId(id)
-						p := *carrierInfoParam // copy struct value
-						carrierInfoParam := &p
+						simCarrierInfoParam.SetId(id)
+						p := *simCarrierInfoParam // copy struct value
+						simCarrierInfoParam := &p
 						go func() {
-							err := funcs.SIMCarrierInfo(ctx, carrierInfoParam)
+							err := funcs.SIMCarrierInfo(ctx, simCarrierInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1454,8 +1538,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1480,9 +1572,9 @@ func init() {
 						return err
 					}
 
-					carrierUpdateParam.ParamTemplate = c.String("param-template")
-					carrierUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(carrierUpdateParam)
+					simCarrierUpdateParam.ParamTemplate = c.String("param-template")
+					simCarrierUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simCarrierUpdateParam)
 					if err != nil {
 						return err
 					}
@@ -1492,30 +1584,36 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(carrierUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(simCarrierUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						carrierUpdateParam.Selector = c.StringSlice("selector")
+						simCarrierUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						carrierUpdateParam.Assumeyes = c.Bool("assumeyes")
+						simCarrierUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						carrierUpdateParam.ParamTemplate = c.String("param-template")
+						simCarrierUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simCarrierUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						carrierUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						simCarrierUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simCarrierUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						carrierUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simCarrierUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						carrierUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						simCarrierUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 					if c.IsSet("carrier") {
-						carrierUpdateParam.Carrier = c.StringSlice("carrier")
+						simCarrierUpdateParam.Carrier = c.StringSlice("carrier")
 					}
 
 					// Validate global params
@@ -1523,7 +1621,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = carrierUpdateParam
+					var outputTypeHolder interface{} = simCarrierUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1534,10 +1632,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if carrierUpdateParam.GenerateSkeleton {
-						carrierUpdateParam.GenerateSkeleton = false
-						carrierUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(carrierUpdateParam, "", "\t")
+					if simCarrierUpdateParam.GenerateSkeleton {
+						simCarrierUpdateParam.GenerateSkeleton = false
+						simCarrierUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simCarrierUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1546,19 +1644,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := carrierUpdateParam.Validate(); len(errors) > 0 {
+					if errors := simCarrierUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), carrierUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simCarrierUpdateParam)
 
 					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(carrierUpdateParam.Selector) == 0 {
+						if len(simCarrierUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1567,12 +1665,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceSIMItems {
-							if hasTags(&v, carrierUpdateParam.Selector) {
+							if hasTags(&v, simCarrierUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", carrierUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simCarrierUpdateParam.Selector)
 						}
 
 					} else {
@@ -1594,7 +1692,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceSIMItems {
-										if len(carrierUpdateParam.Selector) == 0 || hasTags(&v, carrierUpdateParam.Selector) {
+										if len(simCarrierUpdateParam.Selector) == 0 || hasTags(&v, simCarrierUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1611,7 +1709,7 @@ func init() {
 					}
 
 					// confirm
-					if !carrierUpdateParam.Assumeyes {
+					if !simCarrierUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1625,11 +1723,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						carrierUpdateParam.SetId(id)
-						p := *carrierUpdateParam // copy struct value
-						carrierUpdateParam := &p
+						simCarrierUpdateParam.SetId(id)
+						p := *simCarrierUpdateParam // copy struct value
+						simCarrierUpdateParam := &p
 						go func() {
-							err := funcs.SIMCarrierUpdate(ctx, carrierUpdateParam)
+							err := funcs.SIMCarrierUpdate(ctx, simCarrierUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1660,8 +1758,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1682,9 +1788,9 @@ func init() {
 						return err
 					}
 
-					activateParam.ParamTemplate = c.String("param-template")
-					activateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(activateParam)
+					simActivateParam.ParamTemplate = c.String("param-template")
+					simActivateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simActivateParam)
 					if err != nil {
 						return err
 					}
@@ -1694,27 +1800,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(activateParam, p, mergo.WithOverride)
+						mergo.Merge(simActivateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						activateParam.Selector = c.StringSlice("selector")
+						simActivateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						activateParam.Assumeyes = c.Bool("assumeyes")
+						simActivateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						activateParam.ParamTemplate = c.String("param-template")
+						simActivateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simActivateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						activateParam.ParamTemplateFile = c.String("param-template-file")
+						simActivateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simActivateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						activateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simActivateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						activateParam.Id = sacloud.ID(c.Int64("id"))
+						simActivateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1722,7 +1834,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = activateParam
+					var outputTypeHolder interface{} = simActivateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1733,10 +1845,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if activateParam.GenerateSkeleton {
-						activateParam.GenerateSkeleton = false
-						activateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(activateParam, "", "\t")
+					if simActivateParam.GenerateSkeleton {
+						simActivateParam.GenerateSkeleton = false
+						simActivateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simActivateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1745,19 +1857,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := activateParam.Validate(); len(errors) > 0 {
+					if errors := simActivateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), activateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simActivateParam)
 
 					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(activateParam.Selector) == 0 {
+						if len(simActivateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1766,12 +1878,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceSIMItems {
-							if hasTags(&v, activateParam.Selector) {
+							if hasTags(&v, simActivateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", activateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simActivateParam.Selector)
 						}
 
 					} else {
@@ -1793,7 +1905,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceSIMItems {
-										if len(activateParam.Selector) == 0 || hasTags(&v, activateParam.Selector) {
+										if len(simActivateParam.Selector) == 0 || hasTags(&v, simActivateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1810,7 +1922,7 @@ func init() {
 					}
 
 					// confirm
-					if !activateParam.Assumeyes {
+					if !simActivateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1824,11 +1936,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						activateParam.SetId(id)
-						p := *activateParam // copy struct value
-						activateParam := &p
+						simActivateParam.SetId(id)
+						p := *simActivateParam // copy struct value
+						simActivateParam := &p
 						go func() {
-							err := funcs.SIMActivate(ctx, activateParam)
+							err := funcs.SIMActivate(ctx, simActivateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1859,8 +1971,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1881,9 +2001,9 @@ func init() {
 						return err
 					}
 
-					deactivateParam.ParamTemplate = c.String("param-template")
-					deactivateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(deactivateParam)
+					simDeactivateParam.ParamTemplate = c.String("param-template")
+					simDeactivateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simDeactivateParam)
 					if err != nil {
 						return err
 					}
@@ -1893,27 +2013,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(deactivateParam, p, mergo.WithOverride)
+						mergo.Merge(simDeactivateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						deactivateParam.Selector = c.StringSlice("selector")
+						simDeactivateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						deactivateParam.Assumeyes = c.Bool("assumeyes")
+						simDeactivateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						deactivateParam.ParamTemplate = c.String("param-template")
+						simDeactivateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simDeactivateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						deactivateParam.ParamTemplateFile = c.String("param-template-file")
+						simDeactivateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simDeactivateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						deactivateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simDeactivateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						deactivateParam.Id = sacloud.ID(c.Int64("id"))
+						simDeactivateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1921,7 +2047,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = deactivateParam
+					var outputTypeHolder interface{} = simDeactivateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1932,10 +2058,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if deactivateParam.GenerateSkeleton {
-						deactivateParam.GenerateSkeleton = false
-						deactivateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(deactivateParam, "", "\t")
+					if simDeactivateParam.GenerateSkeleton {
+						simDeactivateParam.GenerateSkeleton = false
+						simDeactivateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simDeactivateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1944,19 +2070,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deactivateParam.Validate(); len(errors) > 0 {
+					if errors := simDeactivateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), deactivateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simDeactivateParam)
 
 					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(deactivateParam.Selector) == 0 {
+						if len(simDeactivateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1965,12 +2091,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceSIMItems {
-							if hasTags(&v, deactivateParam.Selector) {
+							if hasTags(&v, simDeactivateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deactivateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simDeactivateParam.Selector)
 						}
 
 					} else {
@@ -1992,7 +2118,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceSIMItems {
-										if len(deactivateParam.Selector) == 0 || hasTags(&v, deactivateParam.Selector) {
+										if len(simDeactivateParam.Selector) == 0 || hasTags(&v, simDeactivateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2009,7 +2135,7 @@ func init() {
 					}
 
 					// confirm
-					if !deactivateParam.Assumeyes {
+					if !simDeactivateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2023,11 +2149,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						deactivateParam.SetId(id)
-						p := *deactivateParam // copy struct value
-						deactivateParam := &p
+						simDeactivateParam.SetId(id)
+						p := *simDeactivateParam // copy struct value
+						simDeactivateParam := &p
 						go func() {
-							err := funcs.SIMDeactivate(ctx, deactivateParam)
+							err := funcs.SIMDeactivate(ctx, simDeactivateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2058,8 +2184,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2084,9 +2218,9 @@ func init() {
 						return err
 					}
 
-					imeiLockParam.ParamTemplate = c.String("param-template")
-					imeiLockParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(imeiLockParam)
+					simImeiLockParam.ParamTemplate = c.String("param-template")
+					simImeiLockParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simImeiLockParam)
 					if err != nil {
 						return err
 					}
@@ -2096,30 +2230,36 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(imeiLockParam, p, mergo.WithOverride)
+						mergo.Merge(simImeiLockParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						imeiLockParam.Selector = c.StringSlice("selector")
+						simImeiLockParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						imeiLockParam.Assumeyes = c.Bool("assumeyes")
+						simImeiLockParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						imeiLockParam.ParamTemplate = c.String("param-template")
+						simImeiLockParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simImeiLockParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						imeiLockParam.ParamTemplateFile = c.String("param-template-file")
+						simImeiLockParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simImeiLockParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						imeiLockParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simImeiLockParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						imeiLockParam.Id = sacloud.ID(c.Int64("id"))
+						simImeiLockParam.Id = sacloud.ID(c.Int64("id"))
 					}
 					if c.IsSet("imei") {
-						imeiLockParam.Imei = c.String("imei")
+						simImeiLockParam.Imei = c.String("imei")
 					}
 
 					// Validate global params
@@ -2127,7 +2267,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = imeiLockParam
+					var outputTypeHolder interface{} = simImeiLockParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2138,10 +2278,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if imeiLockParam.GenerateSkeleton {
-						imeiLockParam.GenerateSkeleton = false
-						imeiLockParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(imeiLockParam, "", "\t")
+					if simImeiLockParam.GenerateSkeleton {
+						simImeiLockParam.GenerateSkeleton = false
+						simImeiLockParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simImeiLockParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2150,19 +2290,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := imeiLockParam.Validate(); len(errors) > 0 {
+					if errors := simImeiLockParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), imeiLockParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simImeiLockParam)
 
 					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(imeiLockParam.Selector) == 0 {
+						if len(simImeiLockParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2171,12 +2311,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceSIMItems {
-							if hasTags(&v, imeiLockParam.Selector) {
+							if hasTags(&v, simImeiLockParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", imeiLockParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simImeiLockParam.Selector)
 						}
 
 					} else {
@@ -2198,7 +2338,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceSIMItems {
-										if len(imeiLockParam.Selector) == 0 || hasTags(&v, imeiLockParam.Selector) {
+										if len(simImeiLockParam.Selector) == 0 || hasTags(&v, simImeiLockParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2215,7 +2355,7 @@ func init() {
 					}
 
 					// confirm
-					if !imeiLockParam.Assumeyes {
+					if !simImeiLockParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2229,11 +2369,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						imeiLockParam.SetId(id)
-						p := *imeiLockParam // copy struct value
-						imeiLockParam := &p
+						simImeiLockParam.SetId(id)
+						p := *simImeiLockParam // copy struct value
+						simImeiLockParam := &p
 						go func() {
-							err := funcs.SIMImeiLock(ctx, imeiLockParam)
+							err := funcs.SIMImeiLock(ctx, simImeiLockParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2264,8 +2404,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2290,9 +2438,9 @@ func init() {
 						return err
 					}
 
-					ipAddParam.ParamTemplate = c.String("param-template")
-					ipAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ipAddParam)
+					simIpAddParam.ParamTemplate = c.String("param-template")
+					simIpAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simIpAddParam)
 					if err != nil {
 						return err
 					}
@@ -2302,30 +2450,36 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ipAddParam, p, mergo.WithOverride)
+						mergo.Merge(simIpAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						ipAddParam.Selector = c.StringSlice("selector")
+						simIpAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						ipAddParam.Assumeyes = c.Bool("assumeyes")
+						simIpAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						ipAddParam.ParamTemplate = c.String("param-template")
+						simIpAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simIpAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ipAddParam.ParamTemplateFile = c.String("param-template-file")
+						simIpAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simIpAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ipAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simIpAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						ipAddParam.Id = sacloud.ID(c.Int64("id"))
+						simIpAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 					if c.IsSet("ip") {
-						ipAddParam.Ip = c.String("ip")
+						simIpAddParam.Ip = c.String("ip")
 					}
 
 					// Validate global params
@@ -2333,7 +2487,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ipAddParam
+					var outputTypeHolder interface{} = simIpAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2344,10 +2498,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ipAddParam.GenerateSkeleton {
-						ipAddParam.GenerateSkeleton = false
-						ipAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ipAddParam, "", "\t")
+					if simIpAddParam.GenerateSkeleton {
+						simIpAddParam.GenerateSkeleton = false
+						simIpAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simIpAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2356,19 +2510,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ipAddParam.Validate(); len(errors) > 0 {
+					if errors := simIpAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ipAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simIpAddParam)
 
 					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(ipAddParam.Selector) == 0 {
+						if len(simIpAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2377,12 +2531,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceSIMItems {
-							if hasTags(&v, ipAddParam.Selector) {
+							if hasTags(&v, simIpAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", ipAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simIpAddParam.Selector)
 						}
 
 					} else {
@@ -2404,7 +2558,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceSIMItems {
-										if len(ipAddParam.Selector) == 0 || hasTags(&v, ipAddParam.Selector) {
+										if len(simIpAddParam.Selector) == 0 || hasTags(&v, simIpAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2425,7 +2579,7 @@ func init() {
 					}
 
 					// confirm
-					if !ipAddParam.Assumeyes {
+					if !simIpAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2439,11 +2593,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						ipAddParam.SetId(id)
-						p := *ipAddParam // copy struct value
-						ipAddParam := &p
+						simIpAddParam.SetId(id)
+						p := *simIpAddParam // copy struct value
+						simIpAddParam := &p
 						go func() {
-							err := funcs.SIMIpAdd(ctx, ipAddParam)
+							err := funcs.SIMIpAdd(ctx, simIpAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2474,8 +2628,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2496,9 +2658,9 @@ func init() {
 						return err
 					}
 
-					imeiUnlockParam.ParamTemplate = c.String("param-template")
-					imeiUnlockParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(imeiUnlockParam)
+					simImeiUnlockParam.ParamTemplate = c.String("param-template")
+					simImeiUnlockParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simImeiUnlockParam)
 					if err != nil {
 						return err
 					}
@@ -2508,27 +2670,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(imeiUnlockParam, p, mergo.WithOverride)
+						mergo.Merge(simImeiUnlockParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						imeiUnlockParam.Selector = c.StringSlice("selector")
+						simImeiUnlockParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						imeiUnlockParam.Assumeyes = c.Bool("assumeyes")
+						simImeiUnlockParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						imeiUnlockParam.ParamTemplate = c.String("param-template")
+						simImeiUnlockParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simImeiUnlockParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						imeiUnlockParam.ParamTemplateFile = c.String("param-template-file")
+						simImeiUnlockParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simImeiUnlockParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						imeiUnlockParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simImeiUnlockParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						imeiUnlockParam.Id = sacloud.ID(c.Int64("id"))
+						simImeiUnlockParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2536,7 +2704,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = imeiUnlockParam
+					var outputTypeHolder interface{} = simImeiUnlockParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2547,10 +2715,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if imeiUnlockParam.GenerateSkeleton {
-						imeiUnlockParam.GenerateSkeleton = false
-						imeiUnlockParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(imeiUnlockParam, "", "\t")
+					if simImeiUnlockParam.GenerateSkeleton {
+						simImeiUnlockParam.GenerateSkeleton = false
+						simImeiUnlockParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simImeiUnlockParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2559,19 +2727,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := imeiUnlockParam.Validate(); len(errors) > 0 {
+					if errors := simImeiUnlockParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), imeiUnlockParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simImeiUnlockParam)
 
 					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(imeiUnlockParam.Selector) == 0 {
+						if len(simImeiUnlockParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2580,12 +2748,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceSIMItems {
-							if hasTags(&v, imeiUnlockParam.Selector) {
+							if hasTags(&v, simImeiUnlockParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", imeiUnlockParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simImeiUnlockParam.Selector)
 						}
 
 					} else {
@@ -2607,7 +2775,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceSIMItems {
-										if len(imeiUnlockParam.Selector) == 0 || hasTags(&v, imeiUnlockParam.Selector) {
+										if len(simImeiUnlockParam.Selector) == 0 || hasTags(&v, simImeiUnlockParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2624,7 +2792,7 @@ func init() {
 					}
 
 					// confirm
-					if !imeiUnlockParam.Assumeyes {
+					if !simImeiUnlockParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2638,11 +2806,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						imeiUnlockParam.SetId(id)
-						p := *imeiUnlockParam // copy struct value
-						imeiUnlockParam := &p
+						simImeiUnlockParam.SetId(id)
+						p := *simImeiUnlockParam // copy struct value
+						simImeiUnlockParam := &p
 						go func() {
-							err := funcs.SIMImeiUnlock(ctx, imeiUnlockParam)
+							err := funcs.SIMImeiUnlock(ctx, simImeiUnlockParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2674,8 +2842,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2696,9 +2872,9 @@ func init() {
 						return err
 					}
 
-					ipDeleteParam.ParamTemplate = c.String("param-template")
-					ipDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ipDeleteParam)
+					simIpDeleteParam.ParamTemplate = c.String("param-template")
+					simIpDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simIpDeleteParam)
 					if err != nil {
 						return err
 					}
@@ -2708,27 +2884,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ipDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(simIpDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						ipDeleteParam.Selector = c.StringSlice("selector")
+						simIpDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						ipDeleteParam.Assumeyes = c.Bool("assumeyes")
+						simIpDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						ipDeleteParam.ParamTemplate = c.String("param-template")
+						simIpDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simIpDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ipDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						simIpDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simIpDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ipDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simIpDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						ipDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						simIpDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2736,7 +2918,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ipDeleteParam
+					var outputTypeHolder interface{} = simIpDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2747,10 +2929,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ipDeleteParam.GenerateSkeleton {
-						ipDeleteParam.GenerateSkeleton = false
-						ipDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ipDeleteParam, "", "\t")
+					if simIpDeleteParam.GenerateSkeleton {
+						simIpDeleteParam.GenerateSkeleton = false
+						simIpDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simIpDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2759,19 +2941,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ipDeleteParam.Validate(); len(errors) > 0 {
+					if errors := simIpDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ipDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simIpDeleteParam)
 
 					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(ipDeleteParam.Selector) == 0 {
+						if len(simIpDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2780,12 +2962,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceSIMItems {
-							if hasTags(&v, ipDeleteParam.Selector) {
+							if hasTags(&v, simIpDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", ipDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simIpDeleteParam.Selector)
 						}
 
 					} else {
@@ -2807,7 +2989,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceSIMItems {
-										if len(ipDeleteParam.Selector) == 0 || hasTags(&v, ipDeleteParam.Selector) {
+										if len(simIpDeleteParam.Selector) == 0 || hasTags(&v, simIpDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2828,7 +3010,7 @@ func init() {
 					}
 
 					// confirm
-					if !ipDeleteParam.Assumeyes {
+					if !simIpDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2842,11 +3024,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						ipDeleteParam.SetId(id)
-						p := *ipDeleteParam // copy struct value
-						ipDeleteParam := &p
+						simIpDeleteParam.SetId(id)
+						p := *simIpDeleteParam // copy struct value
+						simIpDeleteParam := &p
 						go func() {
-							err := funcs.SIMIpDelete(ctx, ipDeleteParam)
+							err := funcs.SIMIpDelete(ctx, simIpDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2882,8 +3064,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2936,9 +3126,9 @@ func init() {
 						return err
 					}
 
-					logsParam.ParamTemplate = c.String("param-template")
-					logsParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(logsParam)
+					simLogsParam.ParamTemplate = c.String("param-template")
+					simLogsParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simLogsParam)
 					if err != nil {
 						return err
 					}
@@ -2948,51 +3138,57 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(logsParam, p, mergo.WithOverride)
+						mergo.Merge(simLogsParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("follow") {
-						logsParam.Follow = c.Bool("follow")
+						simLogsParam.Follow = c.Bool("follow")
 					}
 					if c.IsSet("refresh-interval") {
-						logsParam.RefreshInterval = c.Int64("refresh-interval")
+						simLogsParam.RefreshInterval = c.Int64("refresh-interval")
 					}
 					if c.IsSet("selector") {
-						logsParam.Selector = c.StringSlice("selector")
+						simLogsParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						logsParam.ParamTemplate = c.String("param-template")
+						simLogsParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simLogsParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						logsParam.ParamTemplateFile = c.String("param-template-file")
+						simLogsParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simLogsParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						logsParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simLogsParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						logsParam.OutputType = c.String("output-type")
+						simLogsParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						logsParam.Column = c.StringSlice("column")
+						simLogsParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						logsParam.Quiet = c.Bool("quiet")
+						simLogsParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						logsParam.Format = c.String("format")
+						simLogsParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						logsParam.FormatFile = c.String("format-file")
+						simLogsParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						logsParam.Query = c.String("query")
+						simLogsParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						logsParam.QueryFile = c.String("query-file")
+						simLogsParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						logsParam.Id = sacloud.ID(c.Int64("id"))
+						simLogsParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3000,7 +3196,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = logsParam
+					var outputTypeHolder interface{} = simLogsParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3011,10 +3207,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if logsParam.GenerateSkeleton {
-						logsParam.GenerateSkeleton = false
-						logsParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(logsParam, "", "\t")
+					if simLogsParam.GenerateSkeleton {
+						simLogsParam.GenerateSkeleton = false
+						simLogsParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simLogsParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3023,19 +3219,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := logsParam.Validate(); len(errors) > 0 {
+					if errors := simLogsParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), logsParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simLogsParam)
 
 					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(logsParam.Selector) == 0 {
+						if len(simLogsParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3044,12 +3240,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceSIMItems {
-							if hasTags(&v, logsParam.Selector) {
+							if hasTags(&v, simLogsParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", logsParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simLogsParam.Selector)
 						}
 
 					} else {
@@ -3071,7 +3267,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceSIMItems {
-										if len(logsParam.Selector) == 0 || hasTags(&v, logsParam.Selector) {
+										if len(simLogsParam.Selector) == 0 || hasTags(&v, simLogsParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3096,11 +3292,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						logsParam.SetId(id)
-						p := *logsParam // copy struct value
-						logsParam := &p
+						simLogsParam.SetId(id)
+						p := *simLogsParam // copy struct value
+						simLogsParam := &p
 						go func() {
-							err := funcs.SIMLogs(ctx, logsParam)
+							err := funcs.SIMLogs(ctx, simLogsParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3139,8 +3335,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3193,9 +3397,9 @@ func init() {
 						return err
 					}
 
-					monitorParam.ParamTemplate = c.String("param-template")
-					monitorParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorParam)
+					simMonitorParam.ParamTemplate = c.String("param-template")
+					simMonitorParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simMonitorParam)
 					if err != nil {
 						return err
 					}
@@ -3205,54 +3409,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(monitorParam, p, mergo.WithOverride)
+						mergo.Merge(simMonitorParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						monitorParam.Start = c.String("start")
+						simMonitorParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						monitorParam.End = c.String("end")
+						simMonitorParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						monitorParam.KeyFormat = c.String("key-format")
+						simMonitorParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						monitorParam.Selector = c.StringSlice("selector")
+						simMonitorParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						monitorParam.ParamTemplate = c.String("param-template")
+						simMonitorParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simMonitorParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						monitorParam.ParamTemplateFile = c.String("param-template-file")
+						simMonitorParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simMonitorParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						monitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simMonitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						monitorParam.OutputType = c.String("output-type")
+						simMonitorParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						monitorParam.Column = c.StringSlice("column")
+						simMonitorParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						monitorParam.Quiet = c.Bool("quiet")
+						simMonitorParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						monitorParam.Format = c.String("format")
+						simMonitorParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						monitorParam.FormatFile = c.String("format-file")
+						simMonitorParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						monitorParam.Query = c.String("query")
+						simMonitorParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						monitorParam.QueryFile = c.String("query-file")
+						simMonitorParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						monitorParam.Id = sacloud.ID(c.Int64("id"))
+						simMonitorParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3260,7 +3470,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = monitorParam
+					var outputTypeHolder interface{} = simMonitorParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3271,10 +3481,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if monitorParam.GenerateSkeleton {
-						monitorParam.GenerateSkeleton = false
-						monitorParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorParam, "", "\t")
+					if simMonitorParam.GenerateSkeleton {
+						simMonitorParam.GenerateSkeleton = false
+						simMonitorParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simMonitorParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3283,19 +3493,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := monitorParam.Validate(); len(errors) > 0 {
+					if errors := simMonitorParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simMonitorParam)
 
 					apiClient := ctx.GetAPIClient().SIM
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(monitorParam.Selector) == 0 {
+						if len(simMonitorParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3304,12 +3514,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.CommonServiceSIMItems {
-							if hasTags(&v, monitorParam.Selector) {
+							if hasTags(&v, simMonitorParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simMonitorParam.Selector)
 						}
 
 					} else {
@@ -3331,7 +3541,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.CommonServiceSIMItems {
-										if len(monitorParam.Selector) == 0 || hasTags(&v, monitorParam.Selector) {
+										if len(simMonitorParam.Selector) == 0 || hasTags(&v, simMonitorParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3356,11 +3566,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						monitorParam.SetId(id)
-						p := *monitorParam // copy struct value
-						monitorParam := &p
+						simMonitorParam.SetId(id)
+						p := *simMonitorParam // copy struct value
+						simMonitorParam := &p
 						go func() {
-							err := funcs.SIMMonitor(ctx, monitorParam)
+							err := funcs.SIMMonitor(ctx, simMonitorParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3487,6 +3697,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("sim", "activate", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "activate", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("sim", "activate", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -3528,6 +3748,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("sim", "carrier-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "carrier-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "carrier-info", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3578,6 +3808,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("sim", "carrier-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "carrier-update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "carrier-update", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3662,6 +3902,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("sim", "create", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "create", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("sim", "create", "passcode", &schema.Category{
 		Key:         "sim",
 		DisplayName: "Sim options",
@@ -3712,6 +3962,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("sim", "deactivate", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "deactivate", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("sim", "deactivate", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -3743,6 +4003,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("sim", "delete", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "delete", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3782,6 +4052,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("sim", "imei-lock", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "imei-lock", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("sim", "imei-lock", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -3808,6 +4088,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("sim", "imei-unlock", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "imei-unlock", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "imei-unlock", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3847,6 +4137,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("sim", "ip-add", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "ip-add", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("sim", "ip-add", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -3873,6 +4173,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("sim", "ip-delete", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "ip-delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "ip-delete", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3933,6 +4243,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("sim", "list", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "list", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "list", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -4003,6 +4323,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("sim", "logs", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "logs", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "logs", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -4082,6 +4412,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("sim", "monitor", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "monitor", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("sim", "monitor", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -4143,6 +4483,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("sim", "read", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "read", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "read", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -4223,6 +4573,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("sim", "update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "update", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

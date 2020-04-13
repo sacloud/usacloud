@@ -122,7 +122,7 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 		DiskConnection:          "virtio",
 		DiskSize:                40,
 		DistantFrom:             []sacloud.ID{999999999999},
-		IsoImageId:              999999999999,
+		ISOImageId:              999999999999,
 		NetworkMode:             "switch",
 		InterfaceDriver:         "virtio",
 		PacketFilterId:          999999999999,
@@ -135,11 +135,11 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 		DefaultRoute:            "192.168.2.1",
 		StartupScriptIds:        []sacloud.ID{999999999999},
 		StartupScriptsEphemeral: true,
-		SshKeyMode:              "generate",
-		SshKeyName:              "dummy_keyname",
-		SshKeyPassPhrase:        "dummy_passphrase",
-		SshKeyDescription:       "dummy_description",
-		SshKeyEphemeral:         false,
+		SSHKeyMode:              "generate",
+		SSHKeyName:              "dummy_keyname",
+		SSHKeyPassPhrase:        "dummy_passphrase",
+		SSHKeyDescription:       "dummy_description",
+		SSHKeyEphemeral:         false,
 		Name:                    "dummy_name",
 		Description:             "dummy_description",
 		Tags:                    []string{"dummy1", "dummy2"},
@@ -178,7 +178,7 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 		b.SetTags(param.Tags)
 		b.SetIconID(param.IconId)
 		b.SetBootAfterCreate(false)
-		b.SetISOImageID(param.IsoImageId)
+		b.SetISOImageID(param.ISOImageId)
 		b.SetInterfaceDriver(sacloud.EInterfaceDriver(param.InterfaceDriver))
 	}
 	{
@@ -208,10 +208,10 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 		}
 		b.SetNotesEphemeral(param.StartupScriptsEphemeral)
 
-		b.SetSSHKeysEphemeral(param.SshKeyEphemeral)
-		b.SetGenerateSSHKeyName(param.SshKeyName)
-		b.SetGenerateSSHKeyPassPhrase(param.SshKeyPassPhrase)
-		b.SetGenerateSSHKeyDescription(param.SshKeyDescription)
+		b.SetSSHKeysEphemeral(param.SSHKeyEphemeral)
+		b.SetGenerateSSHKeyName(param.SSHKeyName)
+		b.SetGenerateSSHKeyPassPhrase(param.SSHKeyPassPhrase)
+		b.SetGenerateSSHKeyDescription(param.SSHKeyDescription)
 	}
 
 	assert.EqualValues(t, expectedBuilder, actualBuilder)

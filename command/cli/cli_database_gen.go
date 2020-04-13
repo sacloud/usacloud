@@ -32,33 +32,33 @@ import (
 )
 
 func init() {
-	listParam := params.NewListDatabaseParam()
-	createParam := params.NewCreateDatabaseParam()
-	readParam := params.NewReadDatabaseParam()
-	updateParam := params.NewUpdateDatabaseParam()
-	deleteParam := params.NewDeleteDatabaseParam()
-	bootParam := params.NewBootDatabaseParam()
-	shutdownParam := params.NewShutdownDatabaseParam()
-	shutdownForceParam := params.NewShutdownForceDatabaseParam()
-	resetParam := params.NewResetDatabaseParam()
-	waitForBootParam := params.NewWaitForBootDatabaseParam()
-	waitForDownParam := params.NewWaitForDownDatabaseParam()
-	backupInfoParam := params.NewBackupInfoDatabaseParam()
-	backupCreateParam := params.NewBackupCreateDatabaseParam()
-	backupRestoreParam := params.NewBackupRestoreDatabaseParam()
-	backupLockParam := params.NewBackupLockDatabaseParam()
-	backupUnlockParam := params.NewBackupUnlockDatabaseParam()
-	backupRemoveParam := params.NewBackupRemoveDatabaseParam()
-	cloneParam := params.NewCloneDatabaseParam()
-	replicaCreateParam := params.NewReplicaCreateDatabaseParam()
-	monitorCpuParam := params.NewMonitorCpuDatabaseParam()
-	monitorMemoryParam := params.NewMonitorMemoryDatabaseParam()
-	monitorNicParam := params.NewMonitorNicDatabaseParam()
-	monitorSystemDiskParam := params.NewMonitorSystemDiskDatabaseParam()
-	monitorBackupDiskParam := params.NewMonitorBackupDiskDatabaseParam()
-	monitorSystemDiskSizeParam := params.NewMonitorSystemDiskSizeDatabaseParam()
-	monitorBackupDiskSizeParam := params.NewMonitorBackupDiskSizeDatabaseParam()
-	logsParam := params.NewLogsDatabaseParam()
+	databaseListParam := params.NewListDatabaseParam()
+	databaseCreateParam := params.NewCreateDatabaseParam()
+	databaseReadParam := params.NewReadDatabaseParam()
+	databaseUpdateParam := params.NewUpdateDatabaseParam()
+	databaseDeleteParam := params.NewDeleteDatabaseParam()
+	databaseBootParam := params.NewBootDatabaseParam()
+	databaseShutdownParam := params.NewShutdownDatabaseParam()
+	databaseShutdownForceParam := params.NewShutdownForceDatabaseParam()
+	databaseResetParam := params.NewResetDatabaseParam()
+	databaseWaitForBootParam := params.NewWaitForBootDatabaseParam()
+	databaseWaitForDownParam := params.NewWaitForDownDatabaseParam()
+	databaseBackupInfoParam := params.NewBackupInfoDatabaseParam()
+	databaseBackupCreateParam := params.NewBackupCreateDatabaseParam()
+	databaseBackupRestoreParam := params.NewBackupRestoreDatabaseParam()
+	databaseBackupLockParam := params.NewBackupLockDatabaseParam()
+	databaseBackupUnlockParam := params.NewBackupUnlockDatabaseParam()
+	databaseBackupRemoveParam := params.NewBackupRemoveDatabaseParam()
+	databaseCloneParam := params.NewCloneDatabaseParam()
+	databaseReplicaCreateParam := params.NewReplicaCreateDatabaseParam()
+	databaseMonitorCPUParam := params.NewMonitorCPUDatabaseParam()
+	databaseMonitorMemoryParam := params.NewMonitorMemoryDatabaseParam()
+	databaseMonitorNicParam := params.NewMonitorNicDatabaseParam()
+	databaseMonitorSystemDiskParam := params.NewMonitorSystemDiskDatabaseParam()
+	databaseMonitorBackupDiskParam := params.NewMonitorBackupDiskDatabaseParam()
+	databaseMonitorSystemDiskSizeParam := params.NewMonitorSystemDiskSizeDatabaseParam()
+	databaseMonitorBackupDiskSizeParam := params.NewMonitorBackupDiskSizeDatabaseParam()
+	databaseLogsParam := params.NewLogsDatabaseParam()
 
 	cliCommand := &cli.Command{
 		Name:  "database",
@@ -101,8 +101,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -150,9 +158,9 @@ func init() {
 						return err
 					}
 
-					listParam.ParamTemplate = c.String("param-template")
-					listParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(listParam)
+					databaseListParam.ParamTemplate = c.String("param-template")
+					databaseListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseListParam)
 					if err != nil {
 						return err
 					}
@@ -162,57 +170,63 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(listParam, p, mergo.WithOverride)
+						mergo.Merge(databaseListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						listParam.Name = c.StringSlice("name")
+						databaseListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						databaseListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						listParam.Tags = c.StringSlice("tags")
+						databaseListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						listParam.From = c.Int("from")
+						databaseListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						listParam.Max = c.Int("max")
+						databaseListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						listParam.Sort = c.StringSlice("sort")
+						databaseListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						listParam.ParamTemplate = c.String("param-template")
+						databaseListParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						listParam.ParamTemplateFile = c.String("param-template-file")
+						databaseListParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						listParam.OutputType = c.String("output-type")
+						databaseListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						listParam.Column = c.StringSlice("column")
+						databaseListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						listParam.Quiet = c.Bool("quiet")
+						databaseListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						listParam.Format = c.String("format")
+						databaseListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						listParam.FormatFile = c.String("format-file")
+						databaseListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						listParam.Query = c.String("query")
+						databaseListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						listParam.QueryFile = c.String("query-file")
+						databaseListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -220,7 +234,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = listParam
+					var outputTypeHolder interface{} = databaseListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -231,10 +245,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if listParam.GenerateSkeleton {
-						listParam.GenerateSkeleton = false
-						listParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(listParam, "", "\t")
+					if databaseListParam.GenerateSkeleton {
+						databaseListParam.GenerateSkeleton = false
+						databaseListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -243,15 +257,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := databaseListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), listParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseListParam)
 
 					// Run command with params
-					return funcs.DatabaseList(ctx, listParam)
+					return funcs.DatabaseList(ctx, databaseListParam)
 
 				},
 			},
@@ -312,7 +326,7 @@ func init() {
 						DefaultText: "PostgreSQL:5432, MariaDB:3306",
 					},
 					&cli.StringFlag{
-						Name:    "ipaddress1",
+						Name:    "ipaddress-1",
 						Aliases: []string{"ip1", "ipaddress", "ip"},
 						Usage:   "[Required] set ipaddress(#1)",
 					},
@@ -351,8 +365,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -400,9 +422,9 @@ func init() {
 						return err
 					}
 
-					createParam.ParamTemplate = c.String("param-template")
-					createParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(createParam)
+					databaseCreateParam.ParamTemplate = c.String("param-template")
+					databaseCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseCreateParam)
 					if err != nil {
 						return err
 					}
@@ -412,99 +434,105 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(createParam, p, mergo.WithOverride)
+						mergo.Merge(databaseCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("switch-id") {
-						createParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
+						databaseCreateParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
 					}
 					if c.IsSet("plan") {
-						createParam.Plan = c.Int("plan")
+						databaseCreateParam.Plan = c.Int("plan")
 					}
 					if c.IsSet("database") {
-						createParam.Database = c.String("database")
+						databaseCreateParam.Database = c.String("database")
 					}
 					if c.IsSet("username") {
-						createParam.Username = c.String("username")
+						databaseCreateParam.Username = c.String("username")
 					}
 					if c.IsSet("password") {
-						createParam.Password = c.String("password")
+						databaseCreateParam.Password = c.String("password")
 					}
 					if c.IsSet("replica-user-password") {
-						createParam.ReplicaUserPassword = c.String("replica-user-password")
+						databaseCreateParam.ReplicaUserPassword = c.String("replica-user-password")
 					}
 					if c.IsSet("source-networks") {
-						createParam.SourceNetworks = c.StringSlice("source-networks")
+						databaseCreateParam.SourceNetworks = c.StringSlice("source-networks")
 					}
 					if c.IsSet("enable-web-ui") {
-						createParam.EnableWebUi = c.Bool("enable-web-ui")
+						databaseCreateParam.EnableWebUi = c.Bool("enable-web-ui")
 					}
 					if c.IsSet("enable-backup") {
-						createParam.EnableBackup = c.Bool("enable-backup")
+						databaseCreateParam.EnableBackup = c.Bool("enable-backup")
 					}
 					if c.IsSet("backup-weekdays") {
-						createParam.BackupWeekdays = c.StringSlice("backup-weekdays")
+						databaseCreateParam.BackupWeekdays = c.StringSlice("backup-weekdays")
 					}
 					if c.IsSet("backup-time") {
-						createParam.BackupTime = c.String("backup-time")
+						databaseCreateParam.BackupTime = c.String("backup-time")
 					}
 					if c.IsSet("port") {
-						createParam.Port = c.Int("port")
+						databaseCreateParam.Port = c.Int("port")
 					}
-					if c.IsSet("ipaddress1") {
-						createParam.Ipaddress1 = c.String("ipaddress1")
+					if c.IsSet("ipaddress-1") {
+						databaseCreateParam.Ipaddress1 = c.String("ipaddress-1")
 					}
 					if c.IsSet("nw-mask-len") {
-						createParam.NwMaskLen = c.Int("nw-mask-len")
+						databaseCreateParam.NwMaskLen = c.Int("nw-mask-len")
 					}
 					if c.IsSet("default-route") {
-						createParam.DefaultRoute = c.String("default-route")
+						databaseCreateParam.DefaultRoute = c.String("default-route")
 					}
 					if c.IsSet("name") {
-						createParam.Name = c.String("name")
+						databaseCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						createParam.Description = c.String("description")
+						databaseCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						createParam.Tags = c.StringSlice("tags")
+						databaseCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						databaseCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						createParam.Assumeyes = c.Bool("assumeyes")
+						databaseCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						createParam.ParamTemplate = c.String("param-template")
+						databaseCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						createParam.ParamTemplateFile = c.String("param-template-file")
+						databaseCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						createParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						createParam.OutputType = c.String("output-type")
+						databaseCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						createParam.Column = c.StringSlice("column")
+						databaseCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						createParam.Quiet = c.Bool("quiet")
+						databaseCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						createParam.Format = c.String("format")
+						databaseCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						createParam.FormatFile = c.String("format-file")
+						databaseCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						createParam.Query = c.String("query")
+						databaseCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						createParam.QueryFile = c.String("query-file")
+						databaseCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -512,7 +540,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = createParam
+					var outputTypeHolder interface{} = databaseCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -523,10 +551,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if createParam.GenerateSkeleton {
-						createParam.GenerateSkeleton = false
-						createParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(createParam, "", "\t")
+					if databaseCreateParam.GenerateSkeleton {
+						databaseCreateParam.GenerateSkeleton = false
+						databaseCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -535,15 +563,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
+					if errors := databaseCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), createParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseCreateParam)
 
 					// confirm
-					if !createParam.Assumeyes {
+					if !databaseCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -553,7 +581,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.DatabaseCreate(ctx, createParam)
+					return funcs.DatabaseCreate(ctx, databaseCreateParam)
 
 				},
 			},
@@ -571,8 +599,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -625,9 +661,9 @@ func init() {
 						return err
 					}
 
-					readParam.ParamTemplate = c.String("param-template")
-					readParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(readParam)
+					databaseReadParam.ParamTemplate = c.String("param-template")
+					databaseReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseReadParam)
 					if err != nil {
 						return err
 					}
@@ -637,45 +673,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(readParam, p, mergo.WithOverride)
+						mergo.Merge(databaseReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						readParam.Selector = c.StringSlice("selector")
+						databaseReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						readParam.ParamTemplate = c.String("param-template")
+						databaseReadParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						readParam.ParamTemplateFile = c.String("param-template-file")
+						databaseReadParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						readParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						readParam.OutputType = c.String("output-type")
+						databaseReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						readParam.Column = c.StringSlice("column")
+						databaseReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						readParam.Quiet = c.Bool("quiet")
+						databaseReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						readParam.Format = c.String("format")
+						databaseReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						readParam.FormatFile = c.String("format-file")
+						databaseReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						readParam.Query = c.String("query")
+						databaseReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						readParam.QueryFile = c.String("query-file")
+						databaseReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = sacloud.ID(c.Int64("id"))
+						databaseReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -683,7 +725,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = readParam
+					var outputTypeHolder interface{} = databaseReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -694,10 +736,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if readParam.GenerateSkeleton {
-						readParam.GenerateSkeleton = false
-						readParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(readParam, "", "\t")
+					if databaseReadParam.GenerateSkeleton {
+						databaseReadParam.GenerateSkeleton = false
+						databaseReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -706,19 +748,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
+					if errors := databaseReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), readParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseReadParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(readParam.Selector) == 0 {
+						if len(databaseReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -727,12 +769,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, readParam.Selector) {
+							if hasTags(&v, databaseReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseReadParam.Selector)
 						}
 
 					} else {
@@ -754,7 +796,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+										if len(databaseReadParam.Selector) == 0 || hasTags(&v, databaseReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -779,11 +821,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						readParam.SetId(id)
-						p := *readParam // copy struct value
-						readParam := &p
+						databaseReadParam.SetId(id)
+						p := *databaseReadParam // copy struct value
+						databaseReadParam := &p
 						go func() {
-							err := funcs.DatabaseRead(ctx, readParam)
+							err := funcs.DatabaseRead(ctx, databaseReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -869,8 +911,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -923,9 +973,9 @@ func init() {
 						return err
 					}
 
-					updateParam.ParamTemplate = c.String("param-template")
-					updateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(updateParam)
+					databaseUpdateParam.ParamTemplate = c.String("param-template")
+					databaseUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseUpdateParam)
 					if err != nil {
 						return err
 					}
@@ -935,87 +985,93 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(updateParam, p, mergo.WithOverride)
+						mergo.Merge(databaseUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("password") {
-						updateParam.Password = c.String("password")
+						databaseUpdateParam.Password = c.String("password")
 					}
 					if c.IsSet("replica-user-password") {
-						updateParam.ReplicaUserPassword = c.String("replica-user-password")
+						databaseUpdateParam.ReplicaUserPassword = c.String("replica-user-password")
 					}
 					if c.IsSet("enable-replication") {
-						updateParam.EnableReplication = c.Bool("enable-replication")
+						databaseUpdateParam.EnableReplication = c.Bool("enable-replication")
 					}
 					if c.IsSet("port") {
-						updateParam.Port = c.Int("port")
+						databaseUpdateParam.Port = c.Int("port")
 					}
 					if c.IsSet("source-networks") {
-						updateParam.SourceNetworks = c.StringSlice("source-networks")
+						databaseUpdateParam.SourceNetworks = c.StringSlice("source-networks")
 					}
 					if c.IsSet("enable-web-ui") {
-						updateParam.EnableWebUi = c.Bool("enable-web-ui")
+						databaseUpdateParam.EnableWebUi = c.Bool("enable-web-ui")
 					}
 					if c.IsSet("enable-backup") {
-						updateParam.EnableBackup = c.Bool("enable-backup")
+						databaseUpdateParam.EnableBackup = c.Bool("enable-backup")
 					}
 					if c.IsSet("backup-weekdays") {
-						updateParam.BackupWeekdays = c.StringSlice("backup-weekdays")
+						databaseUpdateParam.BackupWeekdays = c.StringSlice("backup-weekdays")
 					}
 					if c.IsSet("backup-time") {
-						updateParam.BackupTime = c.String("backup-time")
+						databaseUpdateParam.BackupTime = c.String("backup-time")
 					}
 					if c.IsSet("selector") {
-						updateParam.Selector = c.StringSlice("selector")
+						databaseUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						updateParam.Name = c.String("name")
+						databaseUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						updateParam.Description = c.String("description")
+						databaseUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						updateParam.Tags = c.StringSlice("tags")
+						databaseUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						databaseUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						updateParam.Assumeyes = c.Bool("assumeyes")
+						databaseUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						updateParam.ParamTemplate = c.String("param-template")
+						databaseUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						updateParam.ParamTemplateFile = c.String("param-template-file")
+						databaseUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						updateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						updateParam.OutputType = c.String("output-type")
+						databaseUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						updateParam.Column = c.StringSlice("column")
+						databaseUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						updateParam.Quiet = c.Bool("quiet")
+						databaseUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						updateParam.Format = c.String("format")
+						databaseUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						updateParam.FormatFile = c.String("format-file")
+						databaseUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						updateParam.Query = c.String("query")
+						databaseUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						updateParam.QueryFile = c.String("query-file")
+						databaseUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = sacloud.ID(c.Int64("id"))
+						databaseUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1023,7 +1079,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = updateParam
+					var outputTypeHolder interface{} = databaseUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1034,10 +1090,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if updateParam.GenerateSkeleton {
-						updateParam.GenerateSkeleton = false
-						updateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(updateParam, "", "\t")
+					if databaseUpdateParam.GenerateSkeleton {
+						databaseUpdateParam.GenerateSkeleton = false
+						databaseUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1046,19 +1102,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
+					if errors := databaseUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseUpdateParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(updateParam.Selector) == 0 {
+						if len(databaseUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1067,12 +1123,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, updateParam.Selector) {
+							if hasTags(&v, databaseUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseUpdateParam.Selector)
 						}
 
 					} else {
@@ -1094,7 +1150,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+										if len(databaseUpdateParam.Selector) == 0 || hasTags(&v, databaseUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1111,7 +1167,7 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes {
+					if !databaseUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1125,11 +1181,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						updateParam.SetId(id)
-						p := *updateParam // copy struct value
-						updateParam := &p
+						databaseUpdateParam.SetId(id)
+						p := *databaseUpdateParam // copy struct value
+						databaseUpdateParam := &p
 						go func() {
-							err := funcs.DatabaseUpdate(ctx, updateParam)
+							err := funcs.DatabaseUpdate(ctx, databaseUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1161,8 +1217,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1220,9 +1284,9 @@ func init() {
 						return err
 					}
 
-					deleteParam.ParamTemplate = c.String("param-template")
-					deleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(deleteParam)
+					databaseDeleteParam.ParamTemplate = c.String("param-template")
+					databaseDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseDeleteParam)
 					if err != nil {
 						return err
 					}
@@ -1232,51 +1296,57 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(deleteParam, p, mergo.WithOverride)
+						mergo.Merge(databaseDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						deleteParam.Selector = c.StringSlice("selector")
+						databaseDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						deleteParam.Assumeyes = c.Bool("assumeyes")
+						databaseDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						deleteParam.ParamTemplate = c.String("param-template")
+						databaseDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						deleteParam.ParamTemplateFile = c.String("param-template-file")
+						databaseDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						deleteParam.OutputType = c.String("output-type")
+						databaseDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						deleteParam.Column = c.StringSlice("column")
+						databaseDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						deleteParam.Quiet = c.Bool("quiet")
+						databaseDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						deleteParam.Format = c.String("format")
+						databaseDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						deleteParam.FormatFile = c.String("format-file")
+						databaseDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						deleteParam.Query = c.String("query")
+						databaseDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						deleteParam.QueryFile = c.String("query-file")
+						databaseDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("force") {
-						deleteParam.Force = c.Bool("force")
+						databaseDeleteParam.Force = c.Bool("force")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = sacloud.ID(c.Int64("id"))
+						databaseDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1284,7 +1354,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = deleteParam
+					var outputTypeHolder interface{} = databaseDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1295,10 +1365,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if deleteParam.GenerateSkeleton {
-						deleteParam.GenerateSkeleton = false
-						deleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(deleteParam, "", "\t")
+					if databaseDeleteParam.GenerateSkeleton {
+						databaseDeleteParam.GenerateSkeleton = false
+						databaseDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1307,19 +1377,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := databaseDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseDeleteParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(deleteParam.Selector) == 0 {
+						if len(databaseDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1328,12 +1398,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, deleteParam.Selector) {
+							if hasTags(&v, databaseDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseDeleteParam.Selector)
 						}
 
 					} else {
@@ -1355,7 +1425,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+										if len(databaseDeleteParam.Selector) == 0 || hasTags(&v, databaseDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1372,7 +1442,7 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes {
+					if !databaseDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1386,11 +1456,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						deleteParam.SetId(id)
-						p := *deleteParam // copy struct value
-						deleteParam := &p
+						databaseDeleteParam.SetId(id)
+						p := *databaseDeleteParam // copy struct value
+						databaseDeleteParam := &p
 						go func() {
-							err := funcs.DatabaseDelete(ctx, deleteParam)
+							err := funcs.DatabaseDelete(ctx, databaseDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1422,8 +1492,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1444,9 +1522,9 @@ func init() {
 						return err
 					}
 
-					bootParam.ParamTemplate = c.String("param-template")
-					bootParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(bootParam)
+					databaseBootParam.ParamTemplate = c.String("param-template")
+					databaseBootParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseBootParam)
 					if err != nil {
 						return err
 					}
@@ -1456,27 +1534,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(bootParam, p, mergo.WithOverride)
+						mergo.Merge(databaseBootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						bootParam.Selector = c.StringSlice("selector")
+						databaseBootParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						bootParam.Assumeyes = c.Bool("assumeyes")
+						databaseBootParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						bootParam.ParamTemplate = c.String("param-template")
+						databaseBootParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseBootParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						bootParam.ParamTemplateFile = c.String("param-template-file")
+						databaseBootParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseBootParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						bootParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						bootParam.Id = sacloud.ID(c.Int64("id"))
+						databaseBootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1484,7 +1568,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = bootParam
+					var outputTypeHolder interface{} = databaseBootParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1495,10 +1579,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if bootParam.GenerateSkeleton {
-						bootParam.GenerateSkeleton = false
-						bootParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(bootParam, "", "\t")
+					if databaseBootParam.GenerateSkeleton {
+						databaseBootParam.GenerateSkeleton = false
+						databaseBootParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseBootParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1507,19 +1591,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := bootParam.Validate(); len(errors) > 0 {
+					if errors := databaseBootParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), bootParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseBootParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(bootParam.Selector) == 0 {
+						if len(databaseBootParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1528,12 +1612,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, bootParam.Selector) {
+							if hasTags(&v, databaseBootParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bootParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseBootParam.Selector)
 						}
 
 					} else {
@@ -1555,7 +1639,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(bootParam.Selector) == 0 || hasTags(&v, bootParam.Selector) {
+										if len(databaseBootParam.Selector) == 0 || hasTags(&v, databaseBootParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1572,7 +1656,7 @@ func init() {
 					}
 
 					// confirm
-					if !bootParam.Assumeyes {
+					if !databaseBootParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1586,11 +1670,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						bootParam.SetId(id)
-						p := *bootParam // copy struct value
-						bootParam := &p
+						databaseBootParam.SetId(id)
+						p := *databaseBootParam // copy struct value
+						databaseBootParam := &p
 						go func() {
-							err := funcs.DatabaseBoot(ctx, bootParam)
+							err := funcs.DatabaseBoot(ctx, databaseBootParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1622,8 +1706,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1644,9 +1736,9 @@ func init() {
 						return err
 					}
 
-					shutdownParam.ParamTemplate = c.String("param-template")
-					shutdownParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(shutdownParam)
+					databaseShutdownParam.ParamTemplate = c.String("param-template")
+					databaseShutdownParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseShutdownParam)
 					if err != nil {
 						return err
 					}
@@ -1656,27 +1748,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(shutdownParam, p, mergo.WithOverride)
+						mergo.Merge(databaseShutdownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						shutdownParam.Selector = c.StringSlice("selector")
+						databaseShutdownParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						shutdownParam.Assumeyes = c.Bool("assumeyes")
+						databaseShutdownParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						shutdownParam.ParamTemplate = c.String("param-template")
+						databaseShutdownParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseShutdownParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						shutdownParam.ParamTemplateFile = c.String("param-template-file")
+						databaseShutdownParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseShutdownParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						shutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseShutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						shutdownParam.Id = sacloud.ID(c.Int64("id"))
+						databaseShutdownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1684,7 +1782,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = shutdownParam
+					var outputTypeHolder interface{} = databaseShutdownParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1695,10 +1793,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if shutdownParam.GenerateSkeleton {
-						shutdownParam.GenerateSkeleton = false
-						shutdownParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(shutdownParam, "", "\t")
+					if databaseShutdownParam.GenerateSkeleton {
+						databaseShutdownParam.GenerateSkeleton = false
+						databaseShutdownParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseShutdownParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1707,19 +1805,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := shutdownParam.Validate(); len(errors) > 0 {
+					if errors := databaseShutdownParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), shutdownParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseShutdownParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(shutdownParam.Selector) == 0 {
+						if len(databaseShutdownParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1728,12 +1826,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, shutdownParam.Selector) {
+							if hasTags(&v, databaseShutdownParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", shutdownParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseShutdownParam.Selector)
 						}
 
 					} else {
@@ -1755,7 +1853,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(shutdownParam.Selector) == 0 || hasTags(&v, shutdownParam.Selector) {
+										if len(databaseShutdownParam.Selector) == 0 || hasTags(&v, databaseShutdownParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1772,7 +1870,7 @@ func init() {
 					}
 
 					// confirm
-					if !shutdownParam.Assumeyes {
+					if !databaseShutdownParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1786,11 +1884,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						shutdownParam.SetId(id)
-						p := *shutdownParam // copy struct value
-						shutdownParam := &p
+						databaseShutdownParam.SetId(id)
+						p := *databaseShutdownParam // copy struct value
+						databaseShutdownParam := &p
 						go func() {
-							err := funcs.DatabaseShutdown(ctx, shutdownParam)
+							err := funcs.DatabaseShutdown(ctx, databaseShutdownParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1822,8 +1920,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1844,9 +1950,9 @@ func init() {
 						return err
 					}
 
-					shutdownForceParam.ParamTemplate = c.String("param-template")
-					shutdownForceParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(shutdownForceParam)
+					databaseShutdownForceParam.ParamTemplate = c.String("param-template")
+					databaseShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseShutdownForceParam)
 					if err != nil {
 						return err
 					}
@@ -1856,27 +1962,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(shutdownForceParam, p, mergo.WithOverride)
+						mergo.Merge(databaseShutdownForceParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						shutdownForceParam.Selector = c.StringSlice("selector")
+						databaseShutdownForceParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						shutdownForceParam.Assumeyes = c.Bool("assumeyes")
+						databaseShutdownForceParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						shutdownForceParam.ParamTemplate = c.String("param-template")
+						databaseShutdownForceParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseShutdownForceParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						shutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+						databaseShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseShutdownForceParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						shutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseShutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						shutdownForceParam.Id = sacloud.ID(c.Int64("id"))
+						databaseShutdownForceParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1884,7 +1996,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = shutdownForceParam
+					var outputTypeHolder interface{} = databaseShutdownForceParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1895,10 +2007,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if shutdownForceParam.GenerateSkeleton {
-						shutdownForceParam.GenerateSkeleton = false
-						shutdownForceParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(shutdownForceParam, "", "\t")
+					if databaseShutdownForceParam.GenerateSkeleton {
+						databaseShutdownForceParam.GenerateSkeleton = false
+						databaseShutdownForceParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseShutdownForceParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1907,19 +2019,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := shutdownForceParam.Validate(); len(errors) > 0 {
+					if errors := databaseShutdownForceParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), shutdownForceParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseShutdownForceParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(shutdownForceParam.Selector) == 0 {
+						if len(databaseShutdownForceParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1928,12 +2040,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, shutdownForceParam.Selector) {
+							if hasTags(&v, databaseShutdownForceParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", shutdownForceParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseShutdownForceParam.Selector)
 						}
 
 					} else {
@@ -1955,7 +2067,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(shutdownForceParam.Selector) == 0 || hasTags(&v, shutdownForceParam.Selector) {
+										if len(databaseShutdownForceParam.Selector) == 0 || hasTags(&v, databaseShutdownForceParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1972,7 +2084,7 @@ func init() {
 					}
 
 					// confirm
-					if !shutdownForceParam.Assumeyes {
+					if !databaseShutdownForceParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1986,11 +2098,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						shutdownForceParam.SetId(id)
-						p := *shutdownForceParam // copy struct value
-						shutdownForceParam := &p
+						databaseShutdownForceParam.SetId(id)
+						p := *databaseShutdownForceParam // copy struct value
+						databaseShutdownForceParam := &p
 						go func() {
-							err := funcs.DatabaseShutdownForce(ctx, shutdownForceParam)
+							err := funcs.DatabaseShutdownForce(ctx, databaseShutdownForceParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2021,8 +2133,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2043,9 +2163,9 @@ func init() {
 						return err
 					}
 
-					resetParam.ParamTemplate = c.String("param-template")
-					resetParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(resetParam)
+					databaseResetParam.ParamTemplate = c.String("param-template")
+					databaseResetParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseResetParam)
 					if err != nil {
 						return err
 					}
@@ -2055,27 +2175,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(resetParam, p, mergo.WithOverride)
+						mergo.Merge(databaseResetParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						resetParam.Selector = c.StringSlice("selector")
+						databaseResetParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						resetParam.Assumeyes = c.Bool("assumeyes")
+						databaseResetParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						resetParam.ParamTemplate = c.String("param-template")
+						databaseResetParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseResetParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						resetParam.ParamTemplateFile = c.String("param-template-file")
+						databaseResetParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseResetParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						resetParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseResetParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						resetParam.Id = sacloud.ID(c.Int64("id"))
+						databaseResetParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2083,7 +2209,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = resetParam
+					var outputTypeHolder interface{} = databaseResetParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2094,10 +2220,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if resetParam.GenerateSkeleton {
-						resetParam.GenerateSkeleton = false
-						resetParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(resetParam, "", "\t")
+					if databaseResetParam.GenerateSkeleton {
+						databaseResetParam.GenerateSkeleton = false
+						databaseResetParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseResetParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2106,19 +2232,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := resetParam.Validate(); len(errors) > 0 {
+					if errors := databaseResetParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), resetParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseResetParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(resetParam.Selector) == 0 {
+						if len(databaseResetParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2127,12 +2253,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, resetParam.Selector) {
+							if hasTags(&v, databaseResetParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", resetParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseResetParam.Selector)
 						}
 
 					} else {
@@ -2154,7 +2280,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(resetParam.Selector) == 0 || hasTags(&v, resetParam.Selector) {
+										if len(databaseResetParam.Selector) == 0 || hasTags(&v, databaseResetParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2171,7 +2297,7 @@ func init() {
 					}
 
 					// confirm
-					if !resetParam.Assumeyes {
+					if !databaseResetParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2185,11 +2311,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						resetParam.SetId(id)
-						p := *resetParam // copy struct value
-						resetParam := &p
+						databaseResetParam.SetId(id)
+						p := *databaseResetParam // copy struct value
+						databaseResetParam := &p
 						go func() {
-							err := funcs.DatabaseReset(ctx, resetParam)
+							err := funcs.DatabaseReset(ctx, databaseResetParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2215,8 +2341,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2237,9 +2371,9 @@ func init() {
 						return err
 					}
 
-					waitForBootParam.ParamTemplate = c.String("param-template")
-					waitForBootParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(waitForBootParam)
+					databaseWaitForBootParam.ParamTemplate = c.String("param-template")
+					databaseWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseWaitForBootParam)
 					if err != nil {
 						return err
 					}
@@ -2249,24 +2383,30 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(waitForBootParam, p, mergo.WithOverride)
+						mergo.Merge(databaseWaitForBootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						waitForBootParam.Selector = c.StringSlice("selector")
+						databaseWaitForBootParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						waitForBootParam.ParamTemplate = c.String("param-template")
+						databaseWaitForBootParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseWaitForBootParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						waitForBootParam.ParamTemplateFile = c.String("param-template-file")
+						databaseWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseWaitForBootParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						waitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseWaitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForBootParam.Id = sacloud.ID(c.Int64("id"))
+						databaseWaitForBootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2274,7 +2414,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = waitForBootParam
+					var outputTypeHolder interface{} = databaseWaitForBootParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2285,10 +2425,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if waitForBootParam.GenerateSkeleton {
-						waitForBootParam.GenerateSkeleton = false
-						waitForBootParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(waitForBootParam, "", "\t")
+					if databaseWaitForBootParam.GenerateSkeleton {
+						databaseWaitForBootParam.GenerateSkeleton = false
+						databaseWaitForBootParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseWaitForBootParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2297,19 +2437,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := waitForBootParam.Validate(); len(errors) > 0 {
+					if errors := databaseWaitForBootParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), waitForBootParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseWaitForBootParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(waitForBootParam.Selector) == 0 {
+						if len(databaseWaitForBootParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2318,12 +2458,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, waitForBootParam.Selector) {
+							if hasTags(&v, databaseWaitForBootParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", waitForBootParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseWaitForBootParam.Selector)
 						}
 
 					} else {
@@ -2345,7 +2485,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(waitForBootParam.Selector) == 0 || hasTags(&v, waitForBootParam.Selector) {
+										if len(databaseWaitForBootParam.Selector) == 0 || hasTags(&v, databaseWaitForBootParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2366,11 +2506,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						waitForBootParam.SetId(id)
-						p := *waitForBootParam // copy struct value
-						waitForBootParam := &p
+						databaseWaitForBootParam.SetId(id)
+						p := *databaseWaitForBootParam // copy struct value
+						databaseWaitForBootParam := &p
 						go func() {
-							err := funcs.DatabaseWaitForBoot(ctx, waitForBootParam)
+							err := funcs.DatabaseWaitForBoot(ctx, databaseWaitForBootParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2396,8 +2536,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2418,9 +2566,9 @@ func init() {
 						return err
 					}
 
-					waitForDownParam.ParamTemplate = c.String("param-template")
-					waitForDownParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(waitForDownParam)
+					databaseWaitForDownParam.ParamTemplate = c.String("param-template")
+					databaseWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseWaitForDownParam)
 					if err != nil {
 						return err
 					}
@@ -2430,24 +2578,30 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(waitForDownParam, p, mergo.WithOverride)
+						mergo.Merge(databaseWaitForDownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						waitForDownParam.Selector = c.StringSlice("selector")
+						databaseWaitForDownParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						waitForDownParam.ParamTemplate = c.String("param-template")
+						databaseWaitForDownParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseWaitForDownParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						waitForDownParam.ParamTemplateFile = c.String("param-template-file")
+						databaseWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseWaitForDownParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						waitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseWaitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForDownParam.Id = sacloud.ID(c.Int64("id"))
+						databaseWaitForDownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2455,7 +2609,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = waitForDownParam
+					var outputTypeHolder interface{} = databaseWaitForDownParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2466,10 +2620,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if waitForDownParam.GenerateSkeleton {
-						waitForDownParam.GenerateSkeleton = false
-						waitForDownParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(waitForDownParam, "", "\t")
+					if databaseWaitForDownParam.GenerateSkeleton {
+						databaseWaitForDownParam.GenerateSkeleton = false
+						databaseWaitForDownParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseWaitForDownParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2478,19 +2632,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := waitForDownParam.Validate(); len(errors) > 0 {
+					if errors := databaseWaitForDownParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), waitForDownParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseWaitForDownParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(waitForDownParam.Selector) == 0 {
+						if len(databaseWaitForDownParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2499,12 +2653,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, waitForDownParam.Selector) {
+							if hasTags(&v, databaseWaitForDownParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", waitForDownParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseWaitForDownParam.Selector)
 						}
 
 					} else {
@@ -2526,7 +2680,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(waitForDownParam.Selector) == 0 || hasTags(&v, waitForDownParam.Selector) {
+										if len(databaseWaitForDownParam.Selector) == 0 || hasTags(&v, databaseWaitForDownParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2547,11 +2701,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						waitForDownParam.SetId(id)
-						p := *waitForDownParam // copy struct value
-						waitForDownParam := &p
+						databaseWaitForDownParam.SetId(id)
+						p := *databaseWaitForDownParam // copy struct value
+						databaseWaitForDownParam := &p
 						go func() {
-							err := funcs.DatabaseWaitForDown(ctx, waitForDownParam)
+							err := funcs.DatabaseWaitForDown(ctx, databaseWaitForDownParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2578,8 +2732,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2632,9 +2794,9 @@ func init() {
 						return err
 					}
 
-					backupInfoParam.ParamTemplate = c.String("param-template")
-					backupInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(backupInfoParam)
+					databaseBackupInfoParam.ParamTemplate = c.String("param-template")
+					databaseBackupInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseBackupInfoParam)
 					if err != nil {
 						return err
 					}
@@ -2644,45 +2806,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(backupInfoParam, p, mergo.WithOverride)
+						mergo.Merge(databaseBackupInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						backupInfoParam.Selector = c.StringSlice("selector")
+						databaseBackupInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						backupInfoParam.ParamTemplate = c.String("param-template")
+						databaseBackupInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseBackupInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						backupInfoParam.ParamTemplateFile = c.String("param-template-file")
+						databaseBackupInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseBackupInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						backupInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseBackupInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						backupInfoParam.OutputType = c.String("output-type")
+						databaseBackupInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						backupInfoParam.Column = c.StringSlice("column")
+						databaseBackupInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						backupInfoParam.Quiet = c.Bool("quiet")
+						databaseBackupInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						backupInfoParam.Format = c.String("format")
+						databaseBackupInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						backupInfoParam.FormatFile = c.String("format-file")
+						databaseBackupInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						backupInfoParam.Query = c.String("query")
+						databaseBackupInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						backupInfoParam.QueryFile = c.String("query-file")
+						databaseBackupInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						backupInfoParam.Id = sacloud.ID(c.Int64("id"))
+						databaseBackupInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2690,7 +2858,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = backupInfoParam
+					var outputTypeHolder interface{} = databaseBackupInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2701,10 +2869,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if backupInfoParam.GenerateSkeleton {
-						backupInfoParam.GenerateSkeleton = false
-						backupInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(backupInfoParam, "", "\t")
+					if databaseBackupInfoParam.GenerateSkeleton {
+						databaseBackupInfoParam.GenerateSkeleton = false
+						databaseBackupInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseBackupInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2713,19 +2881,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := backupInfoParam.Validate(); len(errors) > 0 {
+					if errors := databaseBackupInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), backupInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseBackupInfoParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(backupInfoParam.Selector) == 0 {
+						if len(databaseBackupInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2734,12 +2902,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, backupInfoParam.Selector) {
+							if hasTags(&v, databaseBackupInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", backupInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseBackupInfoParam.Selector)
 						}
 
 					} else {
@@ -2761,7 +2929,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(backupInfoParam.Selector) == 0 || hasTags(&v, backupInfoParam.Selector) {
+										if len(databaseBackupInfoParam.Selector) == 0 || hasTags(&v, databaseBackupInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2786,11 +2954,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						backupInfoParam.SetId(id)
-						p := *backupInfoParam // copy struct value
-						backupInfoParam := &p
+						databaseBackupInfoParam.SetId(id)
+						p := *databaseBackupInfoParam // copy struct value
+						databaseBackupInfoParam := &p
 						go func() {
-							err := funcs.DatabaseBackupInfo(ctx, backupInfoParam)
+							err := funcs.DatabaseBackupInfo(ctx, databaseBackupInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2817,8 +2985,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2871,9 +3047,9 @@ func init() {
 						return err
 					}
 
-					backupCreateParam.ParamTemplate = c.String("param-template")
-					backupCreateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(backupCreateParam)
+					databaseBackupCreateParam.ParamTemplate = c.String("param-template")
+					databaseBackupCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseBackupCreateParam)
 					if err != nil {
 						return err
 					}
@@ -2883,45 +3059,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(backupCreateParam, p, mergo.WithOverride)
+						mergo.Merge(databaseBackupCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("assumeyes") {
-						backupCreateParam.Assumeyes = c.Bool("assumeyes")
+						databaseBackupCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						backupCreateParam.ParamTemplate = c.String("param-template")
+						databaseBackupCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseBackupCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						backupCreateParam.ParamTemplateFile = c.String("param-template-file")
+						databaseBackupCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseBackupCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						backupCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseBackupCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						backupCreateParam.OutputType = c.String("output-type")
+						databaseBackupCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						backupCreateParam.Column = c.StringSlice("column")
+						databaseBackupCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						backupCreateParam.Quiet = c.Bool("quiet")
+						databaseBackupCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						backupCreateParam.Format = c.String("format")
+						databaseBackupCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						backupCreateParam.FormatFile = c.String("format-file")
+						databaseBackupCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						backupCreateParam.Query = c.String("query")
+						databaseBackupCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						backupCreateParam.QueryFile = c.String("query-file")
+						databaseBackupCreateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						backupCreateParam.Id = sacloud.ID(c.Int64("id"))
+						databaseBackupCreateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2929,7 +3111,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = backupCreateParam
+					var outputTypeHolder interface{} = databaseBackupCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2940,10 +3122,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if backupCreateParam.GenerateSkeleton {
-						backupCreateParam.GenerateSkeleton = false
-						backupCreateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(backupCreateParam, "", "\t")
+					if databaseBackupCreateParam.GenerateSkeleton {
+						databaseBackupCreateParam.GenerateSkeleton = false
+						databaseBackupCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseBackupCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2952,12 +3134,12 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := backupCreateParam.Validate(); len(errors) > 0 {
+					if errors := databaseBackupCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), backupCreateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseBackupCreateParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
@@ -3006,7 +3188,7 @@ func init() {
 					}
 
 					// confirm
-					if !backupCreateParam.Assumeyes {
+					if !databaseBackupCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3020,11 +3202,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						backupCreateParam.SetId(id)
-						p := *backupCreateParam // copy struct value
-						backupCreateParam := &p
+						databaseBackupCreateParam.SetId(id)
+						p := *databaseBackupCreateParam // copy struct value
+						databaseBackupCreateParam := &p
 						go func() {
-							err := funcs.DatabaseBackupCreate(ctx, backupCreateParam)
+							err := funcs.DatabaseBackupCreate(ctx, databaseBackupCreateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3055,8 +3237,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3109,9 +3299,9 @@ func init() {
 						return err
 					}
 
-					backupRestoreParam.ParamTemplate = c.String("param-template")
-					backupRestoreParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(backupRestoreParam)
+					databaseBackupRestoreParam.ParamTemplate = c.String("param-template")
+					databaseBackupRestoreParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseBackupRestoreParam)
 					if err != nil {
 						return err
 					}
@@ -3121,48 +3311,54 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(backupRestoreParam, p, mergo.WithOverride)
+						mergo.Merge(databaseBackupRestoreParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						backupRestoreParam.Index = c.Int("index")
+						databaseBackupRestoreParam.Index = c.Int("index")
 					}
 					if c.IsSet("assumeyes") {
-						backupRestoreParam.Assumeyes = c.Bool("assumeyes")
+						databaseBackupRestoreParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						backupRestoreParam.ParamTemplate = c.String("param-template")
+						databaseBackupRestoreParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseBackupRestoreParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						backupRestoreParam.ParamTemplateFile = c.String("param-template-file")
+						databaseBackupRestoreParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseBackupRestoreParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						backupRestoreParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseBackupRestoreParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						backupRestoreParam.OutputType = c.String("output-type")
+						databaseBackupRestoreParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						backupRestoreParam.Column = c.StringSlice("column")
+						databaseBackupRestoreParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						backupRestoreParam.Quiet = c.Bool("quiet")
+						databaseBackupRestoreParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						backupRestoreParam.Format = c.String("format")
+						databaseBackupRestoreParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						backupRestoreParam.FormatFile = c.String("format-file")
+						databaseBackupRestoreParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						backupRestoreParam.Query = c.String("query")
+						databaseBackupRestoreParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						backupRestoreParam.QueryFile = c.String("query-file")
+						databaseBackupRestoreParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						backupRestoreParam.Id = sacloud.ID(c.Int64("id"))
+						databaseBackupRestoreParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3170,7 +3366,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = backupRestoreParam
+					var outputTypeHolder interface{} = databaseBackupRestoreParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3181,10 +3377,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if backupRestoreParam.GenerateSkeleton {
-						backupRestoreParam.GenerateSkeleton = false
-						backupRestoreParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(backupRestoreParam, "", "\t")
+					if databaseBackupRestoreParam.GenerateSkeleton {
+						databaseBackupRestoreParam.GenerateSkeleton = false
+						databaseBackupRestoreParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseBackupRestoreParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3193,12 +3389,12 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := backupRestoreParam.Validate(); len(errors) > 0 {
+					if errors := databaseBackupRestoreParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), backupRestoreParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseBackupRestoreParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
@@ -3247,7 +3443,7 @@ func init() {
 					}
 
 					// confirm
-					if !backupRestoreParam.Assumeyes {
+					if !databaseBackupRestoreParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3261,11 +3457,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						backupRestoreParam.SetId(id)
-						p := *backupRestoreParam // copy struct value
-						backupRestoreParam := &p
+						databaseBackupRestoreParam.SetId(id)
+						p := *databaseBackupRestoreParam // copy struct value
+						databaseBackupRestoreParam := &p
 						go func() {
-							err := funcs.DatabaseBackupRestore(ctx, backupRestoreParam)
+							err := funcs.DatabaseBackupRestore(ctx, databaseBackupRestoreParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3296,8 +3492,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3350,9 +3554,9 @@ func init() {
 						return err
 					}
 
-					backupLockParam.ParamTemplate = c.String("param-template")
-					backupLockParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(backupLockParam)
+					databaseBackupLockParam.ParamTemplate = c.String("param-template")
+					databaseBackupLockParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseBackupLockParam)
 					if err != nil {
 						return err
 					}
@@ -3362,48 +3566,54 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(backupLockParam, p, mergo.WithOverride)
+						mergo.Merge(databaseBackupLockParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						backupLockParam.Index = c.Int("index")
+						databaseBackupLockParam.Index = c.Int("index")
 					}
 					if c.IsSet("assumeyes") {
-						backupLockParam.Assumeyes = c.Bool("assumeyes")
+						databaseBackupLockParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						backupLockParam.ParamTemplate = c.String("param-template")
+						databaseBackupLockParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseBackupLockParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						backupLockParam.ParamTemplateFile = c.String("param-template-file")
+						databaseBackupLockParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseBackupLockParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						backupLockParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseBackupLockParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						backupLockParam.OutputType = c.String("output-type")
+						databaseBackupLockParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						backupLockParam.Column = c.StringSlice("column")
+						databaseBackupLockParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						backupLockParam.Quiet = c.Bool("quiet")
+						databaseBackupLockParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						backupLockParam.Format = c.String("format")
+						databaseBackupLockParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						backupLockParam.FormatFile = c.String("format-file")
+						databaseBackupLockParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						backupLockParam.Query = c.String("query")
+						databaseBackupLockParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						backupLockParam.QueryFile = c.String("query-file")
+						databaseBackupLockParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						backupLockParam.Id = sacloud.ID(c.Int64("id"))
+						databaseBackupLockParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3411,7 +3621,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = backupLockParam
+					var outputTypeHolder interface{} = databaseBackupLockParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3422,10 +3632,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if backupLockParam.GenerateSkeleton {
-						backupLockParam.GenerateSkeleton = false
-						backupLockParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(backupLockParam, "", "\t")
+					if databaseBackupLockParam.GenerateSkeleton {
+						databaseBackupLockParam.GenerateSkeleton = false
+						databaseBackupLockParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseBackupLockParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3434,12 +3644,12 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := backupLockParam.Validate(); len(errors) > 0 {
+					if errors := databaseBackupLockParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), backupLockParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseBackupLockParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
@@ -3488,7 +3698,7 @@ func init() {
 					}
 
 					// confirm
-					if !backupLockParam.Assumeyes {
+					if !databaseBackupLockParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3502,11 +3712,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						backupLockParam.SetId(id)
-						p := *backupLockParam // copy struct value
-						backupLockParam := &p
+						databaseBackupLockParam.SetId(id)
+						p := *databaseBackupLockParam // copy struct value
+						databaseBackupLockParam := &p
 						go func() {
-							err := funcs.DatabaseBackupLock(ctx, backupLockParam)
+							err := funcs.DatabaseBackupLock(ctx, databaseBackupLockParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3537,8 +3747,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3591,9 +3809,9 @@ func init() {
 						return err
 					}
 
-					backupUnlockParam.ParamTemplate = c.String("param-template")
-					backupUnlockParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(backupUnlockParam)
+					databaseBackupUnlockParam.ParamTemplate = c.String("param-template")
+					databaseBackupUnlockParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseBackupUnlockParam)
 					if err != nil {
 						return err
 					}
@@ -3603,48 +3821,54 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(backupUnlockParam, p, mergo.WithOverride)
+						mergo.Merge(databaseBackupUnlockParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						backupUnlockParam.Index = c.Int("index")
+						databaseBackupUnlockParam.Index = c.Int("index")
 					}
 					if c.IsSet("assumeyes") {
-						backupUnlockParam.Assumeyes = c.Bool("assumeyes")
+						databaseBackupUnlockParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						backupUnlockParam.ParamTemplate = c.String("param-template")
+						databaseBackupUnlockParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseBackupUnlockParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						backupUnlockParam.ParamTemplateFile = c.String("param-template-file")
+						databaseBackupUnlockParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseBackupUnlockParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						backupUnlockParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseBackupUnlockParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						backupUnlockParam.OutputType = c.String("output-type")
+						databaseBackupUnlockParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						backupUnlockParam.Column = c.StringSlice("column")
+						databaseBackupUnlockParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						backupUnlockParam.Quiet = c.Bool("quiet")
+						databaseBackupUnlockParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						backupUnlockParam.Format = c.String("format")
+						databaseBackupUnlockParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						backupUnlockParam.FormatFile = c.String("format-file")
+						databaseBackupUnlockParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						backupUnlockParam.Query = c.String("query")
+						databaseBackupUnlockParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						backupUnlockParam.QueryFile = c.String("query-file")
+						databaseBackupUnlockParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						backupUnlockParam.Id = sacloud.ID(c.Int64("id"))
+						databaseBackupUnlockParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3652,7 +3876,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = backupUnlockParam
+					var outputTypeHolder interface{} = databaseBackupUnlockParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3663,10 +3887,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if backupUnlockParam.GenerateSkeleton {
-						backupUnlockParam.GenerateSkeleton = false
-						backupUnlockParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(backupUnlockParam, "", "\t")
+					if databaseBackupUnlockParam.GenerateSkeleton {
+						databaseBackupUnlockParam.GenerateSkeleton = false
+						databaseBackupUnlockParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseBackupUnlockParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3675,12 +3899,12 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := backupUnlockParam.Validate(); len(errors) > 0 {
+					if errors := databaseBackupUnlockParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), backupUnlockParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseBackupUnlockParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
@@ -3729,7 +3953,7 @@ func init() {
 					}
 
 					// confirm
-					if !backupUnlockParam.Assumeyes {
+					if !databaseBackupUnlockParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3743,11 +3967,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						backupUnlockParam.SetId(id)
-						p := *backupUnlockParam // copy struct value
-						backupUnlockParam := &p
+						databaseBackupUnlockParam.SetId(id)
+						p := *databaseBackupUnlockParam // copy struct value
+						databaseBackupUnlockParam := &p
 						go func() {
-							err := funcs.DatabaseBackupUnlock(ctx, backupUnlockParam)
+							err := funcs.DatabaseBackupUnlock(ctx, databaseBackupUnlockParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3778,8 +4002,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3832,9 +4064,9 @@ func init() {
 						return err
 					}
 
-					backupRemoveParam.ParamTemplate = c.String("param-template")
-					backupRemoveParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(backupRemoveParam)
+					databaseBackupRemoveParam.ParamTemplate = c.String("param-template")
+					databaseBackupRemoveParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseBackupRemoveParam)
 					if err != nil {
 						return err
 					}
@@ -3844,48 +4076,54 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(backupRemoveParam, p, mergo.WithOverride)
+						mergo.Merge(databaseBackupRemoveParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("index") {
-						backupRemoveParam.Index = c.Int("index")
+						databaseBackupRemoveParam.Index = c.Int("index")
 					}
 					if c.IsSet("assumeyes") {
-						backupRemoveParam.Assumeyes = c.Bool("assumeyes")
+						databaseBackupRemoveParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						backupRemoveParam.ParamTemplate = c.String("param-template")
+						databaseBackupRemoveParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseBackupRemoveParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						backupRemoveParam.ParamTemplateFile = c.String("param-template-file")
+						databaseBackupRemoveParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseBackupRemoveParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						backupRemoveParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseBackupRemoveParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						backupRemoveParam.OutputType = c.String("output-type")
+						databaseBackupRemoveParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						backupRemoveParam.Column = c.StringSlice("column")
+						databaseBackupRemoveParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						backupRemoveParam.Quiet = c.Bool("quiet")
+						databaseBackupRemoveParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						backupRemoveParam.Format = c.String("format")
+						databaseBackupRemoveParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						backupRemoveParam.FormatFile = c.String("format-file")
+						databaseBackupRemoveParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						backupRemoveParam.Query = c.String("query")
+						databaseBackupRemoveParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						backupRemoveParam.QueryFile = c.String("query-file")
+						databaseBackupRemoveParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						backupRemoveParam.Id = sacloud.ID(c.Int64("id"))
+						databaseBackupRemoveParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3893,7 +4131,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = backupRemoveParam
+					var outputTypeHolder interface{} = databaseBackupRemoveParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3904,10 +4142,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if backupRemoveParam.GenerateSkeleton {
-						backupRemoveParam.GenerateSkeleton = false
-						backupRemoveParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(backupRemoveParam, "", "\t")
+					if databaseBackupRemoveParam.GenerateSkeleton {
+						databaseBackupRemoveParam.GenerateSkeleton = false
+						databaseBackupRemoveParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseBackupRemoveParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3916,12 +4154,12 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := backupRemoveParam.Validate(); len(errors) > 0 {
+					if errors := databaseBackupRemoveParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), backupRemoveParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseBackupRemoveParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
@@ -3970,7 +4208,7 @@ func init() {
 					}
 
 					// confirm
-					if !backupRemoveParam.Assumeyes {
+					if !databaseBackupRemoveParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3984,11 +4222,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						backupRemoveParam.SetId(id)
-						p := *backupRemoveParam // copy struct value
-						backupRemoveParam := &p
+						databaseBackupRemoveParam.SetId(id)
+						p := *databaseBackupRemoveParam // copy struct value
+						databaseBackupRemoveParam := &p
 						go func() {
-							err := funcs.DatabaseBackupRemove(ctx, backupRemoveParam)
+							err := funcs.DatabaseBackupRemove(ctx, databaseBackupRemoveParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4015,7 +4253,7 @@ func init() {
 						Usage: "set connect switch ID",
 					},
 					&cli.StringFlag{
-						Name:    "ipaddress1",
+						Name:    "ipaddress-1",
 						Aliases: []string{"ip1", "ipaddress", "ip"},
 						Usage:   "[Required] set ipaddress(#1)",
 					},
@@ -4084,8 +4322,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -4138,9 +4384,9 @@ func init() {
 						return err
 					}
 
-					cloneParam.ParamTemplate = c.String("param-template")
-					cloneParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(cloneParam)
+					databaseCloneParam.ParamTemplate = c.String("param-template")
+					databaseCloneParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseCloneParam)
 					if err != nil {
 						return err
 					}
@@ -4150,93 +4396,99 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(cloneParam, p, mergo.WithOverride)
+						mergo.Merge(databaseCloneParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("port") {
-						cloneParam.Port = c.Int("port")
+						databaseCloneParam.Port = c.Int("port")
 					}
 					if c.IsSet("switch-id") {
-						cloneParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
+						databaseCloneParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
 					}
-					if c.IsSet("ipaddress1") {
-						cloneParam.Ipaddress1 = c.String("ipaddress1")
+					if c.IsSet("ipaddress-1") {
+						databaseCloneParam.Ipaddress1 = c.String("ipaddress-1")
 					}
 					if c.IsSet("plan") {
-						cloneParam.Plan = c.Int("plan")
+						databaseCloneParam.Plan = c.Int("plan")
 					}
 					if c.IsSet("nw-mask-len") {
-						cloneParam.NwMaskLen = c.Int("nw-mask-len")
+						databaseCloneParam.NwMaskLen = c.Int("nw-mask-len")
 					}
 					if c.IsSet("default-route") {
-						cloneParam.DefaultRoute = c.String("default-route")
+						databaseCloneParam.DefaultRoute = c.String("default-route")
 					}
 					if c.IsSet("replica-user-password") {
-						cloneParam.ReplicaUserPassword = c.String("replica-user-password")
+						databaseCloneParam.ReplicaUserPassword = c.String("replica-user-password")
 					}
 					if c.IsSet("source-networks") {
-						cloneParam.SourceNetworks = c.StringSlice("source-networks")
+						databaseCloneParam.SourceNetworks = c.StringSlice("source-networks")
 					}
 					if c.IsSet("enable-web-ui") {
-						cloneParam.EnableWebUi = c.Bool("enable-web-ui")
+						databaseCloneParam.EnableWebUi = c.Bool("enable-web-ui")
 					}
 					if c.IsSet("enable-backup") {
-						cloneParam.EnableBackup = c.Bool("enable-backup")
+						databaseCloneParam.EnableBackup = c.Bool("enable-backup")
 					}
 					if c.IsSet("backup-weekdays") {
-						cloneParam.BackupWeekdays = c.StringSlice("backup-weekdays")
+						databaseCloneParam.BackupWeekdays = c.StringSlice("backup-weekdays")
 					}
 					if c.IsSet("backup-time") {
-						cloneParam.BackupTime = c.String("backup-time")
+						databaseCloneParam.BackupTime = c.String("backup-time")
 					}
 					if c.IsSet("name") {
-						cloneParam.Name = c.String("name")
+						databaseCloneParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						cloneParam.Description = c.String("description")
+						databaseCloneParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						cloneParam.Tags = c.StringSlice("tags")
+						databaseCloneParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						cloneParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						databaseCloneParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						cloneParam.Assumeyes = c.Bool("assumeyes")
+						databaseCloneParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						cloneParam.ParamTemplate = c.String("param-template")
+						databaseCloneParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseCloneParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						cloneParam.ParamTemplateFile = c.String("param-template-file")
+						databaseCloneParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseCloneParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						cloneParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseCloneParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						cloneParam.OutputType = c.String("output-type")
+						databaseCloneParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						cloneParam.Column = c.StringSlice("column")
+						databaseCloneParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						cloneParam.Quiet = c.Bool("quiet")
+						databaseCloneParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						cloneParam.Format = c.String("format")
+						databaseCloneParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						cloneParam.FormatFile = c.String("format-file")
+						databaseCloneParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						cloneParam.Query = c.String("query")
+						databaseCloneParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						cloneParam.QueryFile = c.String("query-file")
+						databaseCloneParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						cloneParam.Id = sacloud.ID(c.Int64("id"))
+						databaseCloneParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4244,7 +4496,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = cloneParam
+					var outputTypeHolder interface{} = databaseCloneParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4255,10 +4507,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if cloneParam.GenerateSkeleton {
-						cloneParam.GenerateSkeleton = false
-						cloneParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(cloneParam, "", "\t")
+					if databaseCloneParam.GenerateSkeleton {
+						databaseCloneParam.GenerateSkeleton = false
+						databaseCloneParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseCloneParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4267,12 +4519,12 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := cloneParam.Validate(); len(errors) > 0 {
+					if errors := databaseCloneParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), cloneParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseCloneParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
@@ -4321,7 +4573,7 @@ func init() {
 					}
 
 					// confirm
-					if !cloneParam.Assumeyes {
+					if !databaseCloneParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4335,11 +4587,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						cloneParam.SetId(id)
-						p := *cloneParam // copy struct value
-						cloneParam := &p
+						databaseCloneParam.SetId(id)
+						p := *databaseCloneParam // copy struct value
+						databaseCloneParam := &p
 						go func() {
-							err := funcs.DatabaseClone(ctx, cloneParam)
+							err := funcs.DatabaseClone(ctx, databaseCloneParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4361,7 +4613,7 @@ func init() {
 						Usage: "set connect switch ID",
 					},
 					&cli.StringFlag{
-						Name:    "ipaddress1",
+						Name:    "ipaddress-1",
 						Aliases: []string{"ip1", "ipaddress", "ip"},
 						Usage:   "[Required] set ipaddress(#1)",
 					},
@@ -4400,8 +4652,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -4454,9 +4714,9 @@ func init() {
 						return err
 					}
 
-					replicaCreateParam.ParamTemplate = c.String("param-template")
-					replicaCreateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(replicaCreateParam)
+					databaseReplicaCreateParam.ParamTemplate = c.String("param-template")
+					databaseReplicaCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseReplicaCreateParam)
 					if err != nil {
 						return err
 					}
@@ -4466,69 +4726,75 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(replicaCreateParam, p, mergo.WithOverride)
+						mergo.Merge(databaseReplicaCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("switch-id") {
-						replicaCreateParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
+						databaseReplicaCreateParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
 					}
-					if c.IsSet("ipaddress1") {
-						replicaCreateParam.Ipaddress1 = c.String("ipaddress1")
+					if c.IsSet("ipaddress-1") {
+						databaseReplicaCreateParam.Ipaddress1 = c.String("ipaddress-1")
 					}
 					if c.IsSet("nw-mask-len") {
-						replicaCreateParam.NwMaskLen = c.Int("nw-mask-len")
+						databaseReplicaCreateParam.NwMaskLen = c.Int("nw-mask-len")
 					}
 					if c.IsSet("default-route") {
-						replicaCreateParam.DefaultRoute = c.String("default-route")
+						databaseReplicaCreateParam.DefaultRoute = c.String("default-route")
 					}
 					if c.IsSet("name") {
-						replicaCreateParam.Name = c.String("name")
+						databaseReplicaCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						replicaCreateParam.Description = c.String("description")
+						databaseReplicaCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						replicaCreateParam.Tags = c.StringSlice("tags")
+						databaseReplicaCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						replicaCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						databaseReplicaCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						replicaCreateParam.Assumeyes = c.Bool("assumeyes")
+						databaseReplicaCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						replicaCreateParam.ParamTemplate = c.String("param-template")
+						databaseReplicaCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseReplicaCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						replicaCreateParam.ParamTemplateFile = c.String("param-template-file")
+						databaseReplicaCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseReplicaCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						replicaCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseReplicaCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						replicaCreateParam.OutputType = c.String("output-type")
+						databaseReplicaCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						replicaCreateParam.Column = c.StringSlice("column")
+						databaseReplicaCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						replicaCreateParam.Quiet = c.Bool("quiet")
+						databaseReplicaCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						replicaCreateParam.Format = c.String("format")
+						databaseReplicaCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						replicaCreateParam.FormatFile = c.String("format-file")
+						databaseReplicaCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						replicaCreateParam.Query = c.String("query")
+						databaseReplicaCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						replicaCreateParam.QueryFile = c.String("query-file")
+						databaseReplicaCreateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						replicaCreateParam.Id = sacloud.ID(c.Int64("id"))
+						databaseReplicaCreateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4536,7 +4802,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = replicaCreateParam
+					var outputTypeHolder interface{} = databaseReplicaCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4547,10 +4813,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if replicaCreateParam.GenerateSkeleton {
-						replicaCreateParam.GenerateSkeleton = false
-						replicaCreateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(replicaCreateParam, "", "\t")
+					if databaseReplicaCreateParam.GenerateSkeleton {
+						databaseReplicaCreateParam.GenerateSkeleton = false
+						databaseReplicaCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseReplicaCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4559,12 +4825,12 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := replicaCreateParam.Validate(); len(errors) > 0 {
+					if errors := databaseReplicaCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), replicaCreateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseReplicaCreateParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
@@ -4613,7 +4879,7 @@ func init() {
 					}
 
 					// confirm
-					if !replicaCreateParam.Assumeyes {
+					if !databaseReplicaCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4627,11 +4893,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						replicaCreateParam.SetId(id)
-						p := *replicaCreateParam // copy struct value
-						replicaCreateParam := &p
+						databaseReplicaCreateParam.SetId(id)
+						p := *databaseReplicaCreateParam // copy struct value
+						databaseReplicaCreateParam := &p
 						go func() {
-							err := funcs.DatabaseReplicaCreate(ctx, replicaCreateParam)
+							err := funcs.DatabaseReplicaCreate(ctx, databaseReplicaCreateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4670,8 +4936,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -4724,66 +4998,72 @@ func init() {
 						return err
 					}
 
-					monitorCpuParam.ParamTemplate = c.String("param-template")
-					monitorCpuParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorCpuParam)
+					databaseMonitorCPUParam.ParamTemplate = c.String("param-template")
+					databaseMonitorCPUParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseMonitorCPUParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewMonitorCpuDatabaseParam()
+						p := params.NewMonitorCPUDatabaseParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(monitorCpuParam, p, mergo.WithOverride)
+						mergo.Merge(databaseMonitorCPUParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						monitorCpuParam.Start = c.String("start")
+						databaseMonitorCPUParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						monitorCpuParam.End = c.String("end")
+						databaseMonitorCPUParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						monitorCpuParam.KeyFormat = c.String("key-format")
+						databaseMonitorCPUParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						monitorCpuParam.Selector = c.StringSlice("selector")
+						databaseMonitorCPUParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						monitorCpuParam.ParamTemplate = c.String("param-template")
+						databaseMonitorCPUParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseMonitorCPUParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						monitorCpuParam.ParamTemplateFile = c.String("param-template-file")
+						databaseMonitorCPUParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseMonitorCPUParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						monitorCpuParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseMonitorCPUParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						monitorCpuParam.OutputType = c.String("output-type")
+						databaseMonitorCPUParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						monitorCpuParam.Column = c.StringSlice("column")
+						databaseMonitorCPUParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						monitorCpuParam.Quiet = c.Bool("quiet")
+						databaseMonitorCPUParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						monitorCpuParam.Format = c.String("format")
+						databaseMonitorCPUParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						monitorCpuParam.FormatFile = c.String("format-file")
+						databaseMonitorCPUParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						monitorCpuParam.Query = c.String("query")
+						databaseMonitorCPUParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						monitorCpuParam.QueryFile = c.String("query-file")
+						databaseMonitorCPUParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						monitorCpuParam.Id = sacloud.ID(c.Int64("id"))
+						databaseMonitorCPUParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4791,7 +5071,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = monitorCpuParam
+					var outputTypeHolder interface{} = databaseMonitorCPUParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4802,10 +5082,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if monitorCpuParam.GenerateSkeleton {
-						monitorCpuParam.GenerateSkeleton = false
-						monitorCpuParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorCpuParam, "", "\t")
+					if databaseMonitorCPUParam.GenerateSkeleton {
+						databaseMonitorCPUParam.GenerateSkeleton = false
+						databaseMonitorCPUParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseMonitorCPUParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4814,19 +5094,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := monitorCpuParam.Validate(); len(errors) > 0 {
+					if errors := databaseMonitorCPUParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorCpuParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseMonitorCPUParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(monitorCpuParam.Selector) == 0 {
+						if len(databaseMonitorCPUParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4835,12 +5115,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, monitorCpuParam.Selector) {
+							if hasTags(&v, databaseMonitorCPUParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorCpuParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseMonitorCPUParam.Selector)
 						}
 
 					} else {
@@ -4862,7 +5142,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(monitorCpuParam.Selector) == 0 || hasTags(&v, monitorCpuParam.Selector) {
+										if len(databaseMonitorCPUParam.Selector) == 0 || hasTags(&v, databaseMonitorCPUParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4887,11 +5167,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						monitorCpuParam.SetId(id)
-						p := *monitorCpuParam // copy struct value
-						monitorCpuParam := &p
+						databaseMonitorCPUParam.SetId(id)
+						p := *databaseMonitorCPUParam // copy struct value
+						databaseMonitorCPUParam := &p
 						go func() {
-							err := funcs.DatabaseMonitorCpu(ctx, monitorCpuParam)
+							err := funcs.DatabaseMonitorCPU(ctx, databaseMonitorCPUParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4930,8 +5210,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -4984,9 +5272,9 @@ func init() {
 						return err
 					}
 
-					monitorMemoryParam.ParamTemplate = c.String("param-template")
-					monitorMemoryParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorMemoryParam)
+					databaseMonitorMemoryParam.ParamTemplate = c.String("param-template")
+					databaseMonitorMemoryParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseMonitorMemoryParam)
 					if err != nil {
 						return err
 					}
@@ -4996,54 +5284,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(monitorMemoryParam, p, mergo.WithOverride)
+						mergo.Merge(databaseMonitorMemoryParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						monitorMemoryParam.Start = c.String("start")
+						databaseMonitorMemoryParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						monitorMemoryParam.End = c.String("end")
+						databaseMonitorMemoryParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						monitorMemoryParam.KeyFormat = c.String("key-format")
+						databaseMonitorMemoryParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						monitorMemoryParam.Selector = c.StringSlice("selector")
+						databaseMonitorMemoryParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						monitorMemoryParam.ParamTemplate = c.String("param-template")
+						databaseMonitorMemoryParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseMonitorMemoryParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						monitorMemoryParam.ParamTemplateFile = c.String("param-template-file")
+						databaseMonitorMemoryParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseMonitorMemoryParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						monitorMemoryParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseMonitorMemoryParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						monitorMemoryParam.OutputType = c.String("output-type")
+						databaseMonitorMemoryParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						monitorMemoryParam.Column = c.StringSlice("column")
+						databaseMonitorMemoryParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						monitorMemoryParam.Quiet = c.Bool("quiet")
+						databaseMonitorMemoryParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						monitorMemoryParam.Format = c.String("format")
+						databaseMonitorMemoryParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						monitorMemoryParam.FormatFile = c.String("format-file")
+						databaseMonitorMemoryParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						monitorMemoryParam.Query = c.String("query")
+						databaseMonitorMemoryParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						monitorMemoryParam.QueryFile = c.String("query-file")
+						databaseMonitorMemoryParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						monitorMemoryParam.Id = sacloud.ID(c.Int64("id"))
+						databaseMonitorMemoryParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5051,7 +5345,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = monitorMemoryParam
+					var outputTypeHolder interface{} = databaseMonitorMemoryParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5062,10 +5356,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if monitorMemoryParam.GenerateSkeleton {
-						monitorMemoryParam.GenerateSkeleton = false
-						monitorMemoryParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorMemoryParam, "", "\t")
+					if databaseMonitorMemoryParam.GenerateSkeleton {
+						databaseMonitorMemoryParam.GenerateSkeleton = false
+						databaseMonitorMemoryParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseMonitorMemoryParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5074,19 +5368,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := monitorMemoryParam.Validate(); len(errors) > 0 {
+					if errors := databaseMonitorMemoryParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorMemoryParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseMonitorMemoryParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(monitorMemoryParam.Selector) == 0 {
+						if len(databaseMonitorMemoryParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5095,12 +5389,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, monitorMemoryParam.Selector) {
+							if hasTags(&v, databaseMonitorMemoryParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorMemoryParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseMonitorMemoryParam.Selector)
 						}
 
 					} else {
@@ -5122,7 +5416,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(monitorMemoryParam.Selector) == 0 || hasTags(&v, monitorMemoryParam.Selector) {
+										if len(databaseMonitorMemoryParam.Selector) == 0 || hasTags(&v, databaseMonitorMemoryParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5147,11 +5441,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						monitorMemoryParam.SetId(id)
-						p := *monitorMemoryParam // copy struct value
-						monitorMemoryParam := &p
+						databaseMonitorMemoryParam.SetId(id)
+						p := *databaseMonitorMemoryParam // copy struct value
+						databaseMonitorMemoryParam := &p
 						go func() {
-							err := funcs.DatabaseMonitorMemory(ctx, monitorMemoryParam)
+							err := funcs.DatabaseMonitorMemory(ctx, databaseMonitorMemoryParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5190,8 +5484,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -5244,9 +5546,9 @@ func init() {
 						return err
 					}
 
-					monitorNicParam.ParamTemplate = c.String("param-template")
-					monitorNicParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorNicParam)
+					databaseMonitorNicParam.ParamTemplate = c.String("param-template")
+					databaseMonitorNicParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseMonitorNicParam)
 					if err != nil {
 						return err
 					}
@@ -5256,54 +5558,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(monitorNicParam, p, mergo.WithOverride)
+						mergo.Merge(databaseMonitorNicParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						monitorNicParam.Start = c.String("start")
+						databaseMonitorNicParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						monitorNicParam.End = c.String("end")
+						databaseMonitorNicParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						monitorNicParam.KeyFormat = c.String("key-format")
+						databaseMonitorNicParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						monitorNicParam.Selector = c.StringSlice("selector")
+						databaseMonitorNicParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						monitorNicParam.ParamTemplate = c.String("param-template")
+						databaseMonitorNicParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseMonitorNicParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						monitorNicParam.ParamTemplateFile = c.String("param-template-file")
+						databaseMonitorNicParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseMonitorNicParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						monitorNicParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseMonitorNicParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						monitorNicParam.OutputType = c.String("output-type")
+						databaseMonitorNicParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						monitorNicParam.Column = c.StringSlice("column")
+						databaseMonitorNicParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						monitorNicParam.Quiet = c.Bool("quiet")
+						databaseMonitorNicParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						monitorNicParam.Format = c.String("format")
+						databaseMonitorNicParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						monitorNicParam.FormatFile = c.String("format-file")
+						databaseMonitorNicParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						monitorNicParam.Query = c.String("query")
+						databaseMonitorNicParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						monitorNicParam.QueryFile = c.String("query-file")
+						databaseMonitorNicParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						monitorNicParam.Id = sacloud.ID(c.Int64("id"))
+						databaseMonitorNicParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5311,7 +5619,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = monitorNicParam
+					var outputTypeHolder interface{} = databaseMonitorNicParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5322,10 +5630,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if monitorNicParam.GenerateSkeleton {
-						monitorNicParam.GenerateSkeleton = false
-						monitorNicParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorNicParam, "", "\t")
+					if databaseMonitorNicParam.GenerateSkeleton {
+						databaseMonitorNicParam.GenerateSkeleton = false
+						databaseMonitorNicParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseMonitorNicParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5334,19 +5642,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := monitorNicParam.Validate(); len(errors) > 0 {
+					if errors := databaseMonitorNicParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorNicParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseMonitorNicParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(monitorNicParam.Selector) == 0 {
+						if len(databaseMonitorNicParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5355,12 +5663,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, monitorNicParam.Selector) {
+							if hasTags(&v, databaseMonitorNicParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorNicParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseMonitorNicParam.Selector)
 						}
 
 					} else {
@@ -5382,7 +5690,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(monitorNicParam.Selector) == 0 || hasTags(&v, monitorNicParam.Selector) {
+										if len(databaseMonitorNicParam.Selector) == 0 || hasTags(&v, databaseMonitorNicParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5407,11 +5715,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						monitorNicParam.SetId(id)
-						p := *monitorNicParam // copy struct value
-						monitorNicParam := &p
+						databaseMonitorNicParam.SetId(id)
+						p := *databaseMonitorNicParam // copy struct value
+						databaseMonitorNicParam := &p
 						go func() {
-							err := funcs.DatabaseMonitorNic(ctx, monitorNicParam)
+							err := funcs.DatabaseMonitorNic(ctx, databaseMonitorNicParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5450,8 +5758,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -5504,9 +5820,9 @@ func init() {
 						return err
 					}
 
-					monitorSystemDiskParam.ParamTemplate = c.String("param-template")
-					monitorSystemDiskParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorSystemDiskParam)
+					databaseMonitorSystemDiskParam.ParamTemplate = c.String("param-template")
+					databaseMonitorSystemDiskParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseMonitorSystemDiskParam)
 					if err != nil {
 						return err
 					}
@@ -5516,54 +5832,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(monitorSystemDiskParam, p, mergo.WithOverride)
+						mergo.Merge(databaseMonitorSystemDiskParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						monitorSystemDiskParam.Start = c.String("start")
+						databaseMonitorSystemDiskParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						monitorSystemDiskParam.End = c.String("end")
+						databaseMonitorSystemDiskParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						monitorSystemDiskParam.KeyFormat = c.String("key-format")
+						databaseMonitorSystemDiskParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						monitorSystemDiskParam.Selector = c.StringSlice("selector")
+						databaseMonitorSystemDiskParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						monitorSystemDiskParam.ParamTemplate = c.String("param-template")
+						databaseMonitorSystemDiskParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseMonitorSystemDiskParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						monitorSystemDiskParam.ParamTemplateFile = c.String("param-template-file")
+						databaseMonitorSystemDiskParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseMonitorSystemDiskParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						monitorSystemDiskParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseMonitorSystemDiskParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						monitorSystemDiskParam.OutputType = c.String("output-type")
+						databaseMonitorSystemDiskParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						monitorSystemDiskParam.Column = c.StringSlice("column")
+						databaseMonitorSystemDiskParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						monitorSystemDiskParam.Quiet = c.Bool("quiet")
+						databaseMonitorSystemDiskParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						monitorSystemDiskParam.Format = c.String("format")
+						databaseMonitorSystemDiskParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						monitorSystemDiskParam.FormatFile = c.String("format-file")
+						databaseMonitorSystemDiskParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						monitorSystemDiskParam.Query = c.String("query")
+						databaseMonitorSystemDiskParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						monitorSystemDiskParam.QueryFile = c.String("query-file")
+						databaseMonitorSystemDiskParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						monitorSystemDiskParam.Id = sacloud.ID(c.Int64("id"))
+						databaseMonitorSystemDiskParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5571,7 +5893,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = monitorSystemDiskParam
+					var outputTypeHolder interface{} = databaseMonitorSystemDiskParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5582,10 +5904,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if monitorSystemDiskParam.GenerateSkeleton {
-						monitorSystemDiskParam.GenerateSkeleton = false
-						monitorSystemDiskParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorSystemDiskParam, "", "\t")
+					if databaseMonitorSystemDiskParam.GenerateSkeleton {
+						databaseMonitorSystemDiskParam.GenerateSkeleton = false
+						databaseMonitorSystemDiskParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseMonitorSystemDiskParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5594,19 +5916,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := monitorSystemDiskParam.Validate(); len(errors) > 0 {
+					if errors := databaseMonitorSystemDiskParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorSystemDiskParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseMonitorSystemDiskParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(monitorSystemDiskParam.Selector) == 0 {
+						if len(databaseMonitorSystemDiskParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5615,12 +5937,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, monitorSystemDiskParam.Selector) {
+							if hasTags(&v, databaseMonitorSystemDiskParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorSystemDiskParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseMonitorSystemDiskParam.Selector)
 						}
 
 					} else {
@@ -5642,7 +5964,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(monitorSystemDiskParam.Selector) == 0 || hasTags(&v, monitorSystemDiskParam.Selector) {
+										if len(databaseMonitorSystemDiskParam.Selector) == 0 || hasTags(&v, databaseMonitorSystemDiskParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5667,11 +5989,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						monitorSystemDiskParam.SetId(id)
-						p := *monitorSystemDiskParam // copy struct value
-						monitorSystemDiskParam := &p
+						databaseMonitorSystemDiskParam.SetId(id)
+						p := *databaseMonitorSystemDiskParam // copy struct value
+						databaseMonitorSystemDiskParam := &p
 						go func() {
-							err := funcs.DatabaseMonitorSystemDisk(ctx, monitorSystemDiskParam)
+							err := funcs.DatabaseMonitorSystemDisk(ctx, databaseMonitorSystemDiskParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5710,8 +6032,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -5764,9 +6094,9 @@ func init() {
 						return err
 					}
 
-					monitorBackupDiskParam.ParamTemplate = c.String("param-template")
-					monitorBackupDiskParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorBackupDiskParam)
+					databaseMonitorBackupDiskParam.ParamTemplate = c.String("param-template")
+					databaseMonitorBackupDiskParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseMonitorBackupDiskParam)
 					if err != nil {
 						return err
 					}
@@ -5776,54 +6106,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(monitorBackupDiskParam, p, mergo.WithOverride)
+						mergo.Merge(databaseMonitorBackupDiskParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						monitorBackupDiskParam.Start = c.String("start")
+						databaseMonitorBackupDiskParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						monitorBackupDiskParam.End = c.String("end")
+						databaseMonitorBackupDiskParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						monitorBackupDiskParam.KeyFormat = c.String("key-format")
+						databaseMonitorBackupDiskParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						monitorBackupDiskParam.Selector = c.StringSlice("selector")
+						databaseMonitorBackupDiskParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						monitorBackupDiskParam.ParamTemplate = c.String("param-template")
+						databaseMonitorBackupDiskParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseMonitorBackupDiskParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						monitorBackupDiskParam.ParamTemplateFile = c.String("param-template-file")
+						databaseMonitorBackupDiskParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseMonitorBackupDiskParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						monitorBackupDiskParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseMonitorBackupDiskParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						monitorBackupDiskParam.OutputType = c.String("output-type")
+						databaseMonitorBackupDiskParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						monitorBackupDiskParam.Column = c.StringSlice("column")
+						databaseMonitorBackupDiskParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						monitorBackupDiskParam.Quiet = c.Bool("quiet")
+						databaseMonitorBackupDiskParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						monitorBackupDiskParam.Format = c.String("format")
+						databaseMonitorBackupDiskParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						monitorBackupDiskParam.FormatFile = c.String("format-file")
+						databaseMonitorBackupDiskParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						monitorBackupDiskParam.Query = c.String("query")
+						databaseMonitorBackupDiskParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						monitorBackupDiskParam.QueryFile = c.String("query-file")
+						databaseMonitorBackupDiskParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						monitorBackupDiskParam.Id = sacloud.ID(c.Int64("id"))
+						databaseMonitorBackupDiskParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5831,7 +6167,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = monitorBackupDiskParam
+					var outputTypeHolder interface{} = databaseMonitorBackupDiskParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5842,10 +6178,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if monitorBackupDiskParam.GenerateSkeleton {
-						monitorBackupDiskParam.GenerateSkeleton = false
-						monitorBackupDiskParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorBackupDiskParam, "", "\t")
+					if databaseMonitorBackupDiskParam.GenerateSkeleton {
+						databaseMonitorBackupDiskParam.GenerateSkeleton = false
+						databaseMonitorBackupDiskParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseMonitorBackupDiskParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5854,19 +6190,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := monitorBackupDiskParam.Validate(); len(errors) > 0 {
+					if errors := databaseMonitorBackupDiskParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorBackupDiskParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseMonitorBackupDiskParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(monitorBackupDiskParam.Selector) == 0 {
+						if len(databaseMonitorBackupDiskParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5875,12 +6211,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, monitorBackupDiskParam.Selector) {
+							if hasTags(&v, databaseMonitorBackupDiskParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorBackupDiskParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseMonitorBackupDiskParam.Selector)
 						}
 
 					} else {
@@ -5902,7 +6238,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(monitorBackupDiskParam.Selector) == 0 || hasTags(&v, monitorBackupDiskParam.Selector) {
+										if len(databaseMonitorBackupDiskParam.Selector) == 0 || hasTags(&v, databaseMonitorBackupDiskParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5927,11 +6263,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						monitorBackupDiskParam.SetId(id)
-						p := *monitorBackupDiskParam // copy struct value
-						monitorBackupDiskParam := &p
+						databaseMonitorBackupDiskParam.SetId(id)
+						p := *databaseMonitorBackupDiskParam // copy struct value
+						databaseMonitorBackupDiskParam := &p
 						go func() {
-							err := funcs.DatabaseMonitorBackupDisk(ctx, monitorBackupDiskParam)
+							err := funcs.DatabaseMonitorBackupDisk(ctx, databaseMonitorBackupDiskParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5970,8 +6306,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -6024,9 +6368,9 @@ func init() {
 						return err
 					}
 
-					monitorSystemDiskSizeParam.ParamTemplate = c.String("param-template")
-					monitorSystemDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorSystemDiskSizeParam)
+					databaseMonitorSystemDiskSizeParam.ParamTemplate = c.String("param-template")
+					databaseMonitorSystemDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseMonitorSystemDiskSizeParam)
 					if err != nil {
 						return err
 					}
@@ -6036,54 +6380,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(monitorSystemDiskSizeParam, p, mergo.WithOverride)
+						mergo.Merge(databaseMonitorSystemDiskSizeParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						monitorSystemDiskSizeParam.Start = c.String("start")
+						databaseMonitorSystemDiskSizeParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						monitorSystemDiskSizeParam.End = c.String("end")
+						databaseMonitorSystemDiskSizeParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						monitorSystemDiskSizeParam.KeyFormat = c.String("key-format")
+						databaseMonitorSystemDiskSizeParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						monitorSystemDiskSizeParam.Selector = c.StringSlice("selector")
+						databaseMonitorSystemDiskSizeParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						monitorSystemDiskSizeParam.ParamTemplate = c.String("param-template")
+						databaseMonitorSystemDiskSizeParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseMonitorSystemDiskSizeParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						monitorSystemDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+						databaseMonitorSystemDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseMonitorSystemDiskSizeParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						monitorSystemDiskSizeParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseMonitorSystemDiskSizeParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						monitorSystemDiskSizeParam.OutputType = c.String("output-type")
+						databaseMonitorSystemDiskSizeParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						monitorSystemDiskSizeParam.Column = c.StringSlice("column")
+						databaseMonitorSystemDiskSizeParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						monitorSystemDiskSizeParam.Quiet = c.Bool("quiet")
+						databaseMonitorSystemDiskSizeParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						monitorSystemDiskSizeParam.Format = c.String("format")
+						databaseMonitorSystemDiskSizeParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						monitorSystemDiskSizeParam.FormatFile = c.String("format-file")
+						databaseMonitorSystemDiskSizeParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						monitorSystemDiskSizeParam.Query = c.String("query")
+						databaseMonitorSystemDiskSizeParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						monitorSystemDiskSizeParam.QueryFile = c.String("query-file")
+						databaseMonitorSystemDiskSizeParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						monitorSystemDiskSizeParam.Id = sacloud.ID(c.Int64("id"))
+						databaseMonitorSystemDiskSizeParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6091,7 +6441,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = monitorSystemDiskSizeParam
+					var outputTypeHolder interface{} = databaseMonitorSystemDiskSizeParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6102,10 +6452,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if monitorSystemDiskSizeParam.GenerateSkeleton {
-						monitorSystemDiskSizeParam.GenerateSkeleton = false
-						monitorSystemDiskSizeParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorSystemDiskSizeParam, "", "\t")
+					if databaseMonitorSystemDiskSizeParam.GenerateSkeleton {
+						databaseMonitorSystemDiskSizeParam.GenerateSkeleton = false
+						databaseMonitorSystemDiskSizeParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseMonitorSystemDiskSizeParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6114,19 +6464,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := monitorSystemDiskSizeParam.Validate(); len(errors) > 0 {
+					if errors := databaseMonitorSystemDiskSizeParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorSystemDiskSizeParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseMonitorSystemDiskSizeParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(monitorSystemDiskSizeParam.Selector) == 0 {
+						if len(databaseMonitorSystemDiskSizeParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6135,12 +6485,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, monitorSystemDiskSizeParam.Selector) {
+							if hasTags(&v, databaseMonitorSystemDiskSizeParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorSystemDiskSizeParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseMonitorSystemDiskSizeParam.Selector)
 						}
 
 					} else {
@@ -6162,7 +6512,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(monitorSystemDiskSizeParam.Selector) == 0 || hasTags(&v, monitorSystemDiskSizeParam.Selector) {
+										if len(databaseMonitorSystemDiskSizeParam.Selector) == 0 || hasTags(&v, databaseMonitorSystemDiskSizeParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6187,11 +6537,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						monitorSystemDiskSizeParam.SetId(id)
-						p := *monitorSystemDiskSizeParam // copy struct value
-						monitorSystemDiskSizeParam := &p
+						databaseMonitorSystemDiskSizeParam.SetId(id)
+						p := *databaseMonitorSystemDiskSizeParam // copy struct value
+						databaseMonitorSystemDiskSizeParam := &p
 						go func() {
-							err := funcs.DatabaseMonitorSystemDiskSize(ctx, monitorSystemDiskSizeParam)
+							err := funcs.DatabaseMonitorSystemDiskSize(ctx, databaseMonitorSystemDiskSizeParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6230,8 +6580,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -6284,9 +6642,9 @@ func init() {
 						return err
 					}
 
-					monitorBackupDiskSizeParam.ParamTemplate = c.String("param-template")
-					monitorBackupDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorBackupDiskSizeParam)
+					databaseMonitorBackupDiskSizeParam.ParamTemplate = c.String("param-template")
+					databaseMonitorBackupDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseMonitorBackupDiskSizeParam)
 					if err != nil {
 						return err
 					}
@@ -6296,54 +6654,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(monitorBackupDiskSizeParam, p, mergo.WithOverride)
+						mergo.Merge(databaseMonitorBackupDiskSizeParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						monitorBackupDiskSizeParam.Start = c.String("start")
+						databaseMonitorBackupDiskSizeParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						monitorBackupDiskSizeParam.End = c.String("end")
+						databaseMonitorBackupDiskSizeParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						monitorBackupDiskSizeParam.KeyFormat = c.String("key-format")
+						databaseMonitorBackupDiskSizeParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						monitorBackupDiskSizeParam.Selector = c.StringSlice("selector")
+						databaseMonitorBackupDiskSizeParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						monitorBackupDiskSizeParam.ParamTemplate = c.String("param-template")
+						databaseMonitorBackupDiskSizeParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseMonitorBackupDiskSizeParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						monitorBackupDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+						databaseMonitorBackupDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseMonitorBackupDiskSizeParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						monitorBackupDiskSizeParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseMonitorBackupDiskSizeParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						monitorBackupDiskSizeParam.OutputType = c.String("output-type")
+						databaseMonitorBackupDiskSizeParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						monitorBackupDiskSizeParam.Column = c.StringSlice("column")
+						databaseMonitorBackupDiskSizeParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						monitorBackupDiskSizeParam.Quiet = c.Bool("quiet")
+						databaseMonitorBackupDiskSizeParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						monitorBackupDiskSizeParam.Format = c.String("format")
+						databaseMonitorBackupDiskSizeParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						monitorBackupDiskSizeParam.FormatFile = c.String("format-file")
+						databaseMonitorBackupDiskSizeParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						monitorBackupDiskSizeParam.Query = c.String("query")
+						databaseMonitorBackupDiskSizeParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						monitorBackupDiskSizeParam.QueryFile = c.String("query-file")
+						databaseMonitorBackupDiskSizeParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						monitorBackupDiskSizeParam.Id = sacloud.ID(c.Int64("id"))
+						databaseMonitorBackupDiskSizeParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6351,7 +6715,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = monitorBackupDiskSizeParam
+					var outputTypeHolder interface{} = databaseMonitorBackupDiskSizeParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6362,10 +6726,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if monitorBackupDiskSizeParam.GenerateSkeleton {
-						monitorBackupDiskSizeParam.GenerateSkeleton = false
-						monitorBackupDiskSizeParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorBackupDiskSizeParam, "", "\t")
+					if databaseMonitorBackupDiskSizeParam.GenerateSkeleton {
+						databaseMonitorBackupDiskSizeParam.GenerateSkeleton = false
+						databaseMonitorBackupDiskSizeParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseMonitorBackupDiskSizeParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6374,19 +6738,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := monitorBackupDiskSizeParam.Validate(); len(errors) > 0 {
+					if errors := databaseMonitorBackupDiskSizeParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorBackupDiskSizeParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseMonitorBackupDiskSizeParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(monitorBackupDiskSizeParam.Selector) == 0 {
+						if len(databaseMonitorBackupDiskSizeParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6395,12 +6759,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, monitorBackupDiskSizeParam.Selector) {
+							if hasTags(&v, databaseMonitorBackupDiskSizeParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorBackupDiskSizeParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseMonitorBackupDiskSizeParam.Selector)
 						}
 
 					} else {
@@ -6422,7 +6786,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(monitorBackupDiskSizeParam.Selector) == 0 || hasTags(&v, monitorBackupDiskSizeParam.Selector) {
+										if len(databaseMonitorBackupDiskSizeParam.Selector) == 0 || hasTags(&v, databaseMonitorBackupDiskSizeParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6447,11 +6811,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						monitorBackupDiskSizeParam.SetId(id)
-						p := *monitorBackupDiskSizeParam // copy struct value
-						monitorBackupDiskSizeParam := &p
+						databaseMonitorBackupDiskSizeParam.SetId(id)
+						p := *databaseMonitorBackupDiskSizeParam // copy struct value
+						databaseMonitorBackupDiskSizeParam := &p
 						go func() {
-							err := funcs.DatabaseMonitorBackupDiskSize(ctx, monitorBackupDiskSizeParam)
+							err := funcs.DatabaseMonitorBackupDiskSize(ctx, databaseMonitorBackupDiskSizeParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6497,8 +6861,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -6519,9 +6891,9 @@ func init() {
 						return err
 					}
 
-					logsParam.ParamTemplate = c.String("param-template")
-					logsParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(logsParam)
+					databaseLogsParam.ParamTemplate = c.String("param-template")
+					databaseLogsParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(databaseLogsParam)
 					if err != nil {
 						return err
 					}
@@ -6531,36 +6903,42 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(logsParam, p, mergo.WithOverride)
+						mergo.Merge(databaseLogsParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("log-name") {
-						logsParam.LogName = c.String("log-name")
+						databaseLogsParam.LogName = c.String("log-name")
 					}
 					if c.IsSet("follow") {
-						logsParam.Follow = c.Bool("follow")
+						databaseLogsParam.Follow = c.Bool("follow")
 					}
 					if c.IsSet("refresh-interval") {
-						logsParam.RefreshInterval = sacloud.ID(c.Int64("refresh-interval"))
+						databaseLogsParam.RefreshInterval = sacloud.ID(c.Int64("refresh-interval"))
 					}
 					if c.IsSet("list-log-names") {
-						logsParam.ListLogNames = c.Bool("list-log-names")
+						databaseLogsParam.ListLogNames = c.Bool("list-log-names")
 					}
 					if c.IsSet("selector") {
-						logsParam.Selector = c.StringSlice("selector")
+						databaseLogsParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						logsParam.ParamTemplate = c.String("param-template")
+						databaseLogsParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						databaseLogsParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						logsParam.ParamTemplateFile = c.String("param-template-file")
+						databaseLogsParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						databaseLogsParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						logsParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						databaseLogsParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						logsParam.Id = sacloud.ID(c.Int64("id"))
+						databaseLogsParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6568,7 +6946,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = logsParam
+					var outputTypeHolder interface{} = databaseLogsParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6579,10 +6957,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if logsParam.GenerateSkeleton {
-						logsParam.GenerateSkeleton = false
-						logsParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(logsParam, "", "\t")
+					if databaseLogsParam.GenerateSkeleton {
+						databaseLogsParam.GenerateSkeleton = false
+						databaseLogsParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(databaseLogsParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6591,19 +6969,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := logsParam.Validate(); len(errors) > 0 {
+					if errors := databaseLogsParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), logsParam)
+					ctx := command.NewContext(c, c.Args().Slice(), databaseLogsParam)
 
 					apiClient := ctx.GetAPIClient().Database
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(logsParam.Selector) == 0 {
+						if len(databaseLogsParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6612,12 +6990,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Databases {
-							if hasTags(&v, logsParam.Selector) {
+							if hasTags(&v, databaseLogsParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", logsParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", databaseLogsParam.Selector)
 						}
 
 					} else {
@@ -6639,7 +7017,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Databases {
-										if len(logsParam.Selector) == 0 || hasTags(&v, logsParam.Selector) {
+										if len(databaseLogsParam.Selector) == 0 || hasTags(&v, databaseLogsParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6664,11 +7042,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						logsParam.SetId(id)
-						p := *logsParam // copy struct value
-						logsParam := &p
+						databaseLogsParam.SetId(id)
+						p := *databaseLogsParam // copy struct value
+						databaseLogsParam := &p
 						go func() {
-							err := funcs.DatabaseLogs(ctx, logsParam)
+							err := funcs.DatabaseLogs(ctx, databaseLogsParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6875,6 +7253,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "backup-create", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-create", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "backup-create", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -6926,6 +7314,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "backup-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-info", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -7000,6 +7398,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "backup-lock", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-lock", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "backup-lock", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -7061,6 +7469,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "backup-remove", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -7130,6 +7548,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "backup-restore", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-restore", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "backup-restore", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -7195,6 +7623,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "backup-unlock", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-unlock", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "backup-unlock", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -7231,6 +7669,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "boot", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "boot", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "boot", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -7331,6 +7779,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "clone", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "clone", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "clone", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -7475,6 +7933,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "create", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "create", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "create", "password", &schema.Category{
 		Key:         "database",
 		DisplayName: "Database options",
@@ -7580,6 +8048,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "delete", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "delete", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -7655,6 +8133,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "list", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "list", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "list", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -7715,6 +8203,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "logs", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "logs", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "logs", "refresh-interval", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitor options",
@@ -7771,6 +8269,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "monitor-backup-disk", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -7850,6 +8358,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -7921,6 +8439,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "monitor-cpu", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8000,6 +8528,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "monitor-memory", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "monitor-memory", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -8071,6 +8609,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "monitor-nic", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8150,6 +8698,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "monitor-system-disk", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -8225,6 +8783,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "monitor-system-disk-size", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -8286,6 +8854,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "read", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "read", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "read", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8385,6 +8963,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "replica-create", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "replica-create", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -8435,6 +9023,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "reset", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "reset", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "reset", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -8465,6 +9063,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "shutdown", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "shutdown", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "shutdown", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -8491,6 +9099,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "shutdown-force", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "shutdown-force", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "shutdown-force", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8585,6 +9203,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "update", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "update", "password", &schema.Category{
 		Key:         "database",
 		DisplayName: "Database options",
@@ -8650,6 +9278,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "wait-for-boot", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "wait-for-boot", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("database", "wait-for-boot", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -8671,6 +9309,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "wait-for-down", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "wait-for-down", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "wait-for-down", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

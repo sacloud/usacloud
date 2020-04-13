@@ -33,7 +33,9 @@ type ListISOImageParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -75,8 +77,14 @@ func (p *ListISOImageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -251,12 +259,26 @@ func (p *ListISOImageParam) SetParamTemplate(v string) {
 func (p *ListISOImageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListISOImageParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListISOImageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListISOImageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -318,14 +340,16 @@ func (p *ListISOImageParam) GetQueryFile() string {
 // CreateISOImageParam is input parameters for the sacloud API
 type CreateISOImageParam struct {
 	Size              int        `json:"size"`
-	IsoFile           string     `json:"iso-file"`
+	ISOFile           string     `json:"iso-file"`
 	Name              string     `json:"name"`
 	Description       string     `json:"description"`
 	Tags              []string   `json:"tags"`
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -349,8 +373,8 @@ func (p *CreateISOImageParam) FillValueToSkeleton() {
 	if isEmpty(p.Size) {
 		p.Size = 0
 	}
-	if isEmpty(p.IsoFile) {
-		p.IsoFile = ""
+	if isEmpty(p.ISOFile) {
+		p.ISOFile = ""
 	}
 	if isEmpty(p.Name) {
 		p.Name = ""
@@ -370,8 +394,14 @@ func (p *CreateISOImageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -419,7 +449,7 @@ func (p *CreateISOImageParam) Validate() []error {
 	}
 	{
 		validator := define.Resources["ISOImage"].Commands["create"].Params["iso-file"].ValidateFunc
-		errs := validator("--iso-file", p.IsoFile)
+		errs := validator("--iso-file", p.ISOFile)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -514,12 +544,12 @@ func (p *CreateISOImageParam) SetSize(v int) {
 func (p *CreateISOImageParam) GetSize() int {
 	return p.Size
 }
-func (p *CreateISOImageParam) SetIsoFile(v string) {
-	p.IsoFile = v
+func (p *CreateISOImageParam) SetISOFile(v string) {
+	p.ISOFile = v
 }
 
-func (p *CreateISOImageParam) GetIsoFile() string {
-	return p.IsoFile
+func (p *CreateISOImageParam) GetISOFile() string {
+	return p.ISOFile
 }
 func (p *CreateISOImageParam) SetName(v string) {
 	p.Name = v
@@ -563,12 +593,26 @@ func (p *CreateISOImageParam) SetParamTemplate(v string) {
 func (p *CreateISOImageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateISOImageParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateISOImageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateISOImageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -631,7 +675,9 @@ func (p *CreateISOImageParam) GetQueryFile() string {
 type ReadISOImageParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -656,8 +702,14 @@ func (p *ReadISOImageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -761,12 +813,26 @@ func (p *ReadISOImageParam) SetParamTemplate(v string) {
 func (p *ReadISOImageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadISOImageParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadISOImageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadISOImageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -841,7 +907,9 @@ type UpdateISOImageParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -881,8 +949,14 @@ func (p *UpdateISOImageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1049,12 +1123,26 @@ func (p *UpdateISOImageParam) SetParamTemplate(v string) {
 func (p *UpdateISOImageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateISOImageParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateISOImageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateISOImageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1125,7 +1213,9 @@ type DeleteISOImageParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1153,8 +1243,14 @@ func (p *DeleteISOImageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1265,12 +1361,26 @@ func (p *DeleteISOImageParam) SetParamTemplate(v string) {
 func (p *DeleteISOImageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteISOImageParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteISOImageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteISOImageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1338,11 +1448,13 @@ func (p *DeleteISOImageParam) GetId() sacloud.ID {
 
 // UploadISOImageParam is input parameters for the sacloud API
 type UploadISOImageParam struct {
-	IsoFile           string     `json:"iso-file"`
+	ISOFile           string     `json:"iso-file"`
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1361,8 +1473,8 @@ func NewUploadISOImageParam() *UploadISOImageParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *UploadISOImageParam) FillValueToSkeleton() {
-	if isEmpty(p.IsoFile) {
-		p.IsoFile = ""
+	if isEmpty(p.ISOFile) {
+		p.ISOFile = ""
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -1373,8 +1485,14 @@ func (p *UploadISOImageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1411,7 +1529,7 @@ func (p *UploadISOImageParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := define.Resources["ISOImage"].Commands["upload"].Params["iso-file"].ValidateFunc
-		errs := validator("--iso-file", p.IsoFile)
+		errs := validator("--iso-file", p.ISOFile)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1471,12 +1589,12 @@ func (p *UploadISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *UploadISOImageParam) SetIsoFile(v string) {
-	p.IsoFile = v
+func (p *UploadISOImageParam) SetISOFile(v string) {
+	p.ISOFile = v
 }
 
-func (p *UploadISOImageParam) GetIsoFile() string {
-	return p.IsoFile
+func (p *UploadISOImageParam) GetISOFile() string {
+	return p.ISOFile
 }
 func (p *UploadISOImageParam) SetSelector(v []string) {
 	p.Selector = v
@@ -1499,12 +1617,26 @@ func (p *UploadISOImageParam) SetParamTemplate(v string) {
 func (p *UploadISOImageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UploadISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UploadISOImageParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UploadISOImageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UploadISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UploadISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UploadISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UploadISOImageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1576,7 +1708,9 @@ type DownloadISOImageParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1600,8 +1734,14 @@ func (p *DownloadISOImageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1678,12 +1818,26 @@ func (p *DownloadISOImageParam) SetParamTemplate(v string) {
 func (p *DownloadISOImageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DownloadISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DownloadISOImageParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DownloadISOImageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DownloadISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DownloadISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DownloadISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DownloadISOImageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1700,12 +1854,14 @@ func (p *DownloadISOImageParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// FtpOpenISOImageParam is input parameters for the sacloud API
-type FtpOpenISOImageParam struct {
+// FTPOpenISOImageParam is input parameters for the sacloud API
+type FTPOpenISOImageParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1717,13 +1873,13 @@ type FtpOpenISOImageParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewFtpOpenISOImageParam return new FtpOpenISOImageParam
-func NewFtpOpenISOImageParam() *FtpOpenISOImageParam {
-	return &FtpOpenISOImageParam{}
+// NewFTPOpenISOImageParam return new FTPOpenISOImageParam
+func NewFTPOpenISOImageParam() *FTPOpenISOImageParam {
+	return &FTPOpenISOImageParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *FtpOpenISOImageParam) FillValueToSkeleton() {
+func (p *FTPOpenISOImageParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1733,8 +1889,14 @@ func (p *FtpOpenISOImageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1767,7 +1929,7 @@ func (p *FtpOpenISOImageParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *FtpOpenISOImageParam) Validate() []error {
+func (p *FTPOpenISOImageParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1800,139 +1962,155 @@ func (p *FtpOpenISOImageParam) Validate() []error {
 	return errors
 }
 
-func (p *FtpOpenISOImageParam) GetResourceDef() *schema.Resource {
+func (p *FTPOpenISOImageParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ISOImage"]
 }
 
-func (p *FtpOpenISOImageParam) GetCommandDef() *schema.Command {
+func (p *FTPOpenISOImageParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ftp-open"]
 }
 
-func (p *FtpOpenISOImageParam) GetIncludeFields() []string {
+func (p *FTPOpenISOImageParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *FtpOpenISOImageParam) GetExcludeFields() []string {
+func (p *FTPOpenISOImageParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *FtpOpenISOImageParam) GetTableType() output.TableType {
+func (p *FTPOpenISOImageParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *FtpOpenISOImageParam) GetColumnDefs() []output.ColumnDef {
+func (p *FTPOpenISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *FtpOpenISOImageParam) SetSelector(v []string) {
+func (p *FTPOpenISOImageParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *FtpOpenISOImageParam) GetSelector() []string {
+func (p *FTPOpenISOImageParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *FtpOpenISOImageParam) SetAssumeyes(v bool) {
+func (p *FTPOpenISOImageParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *FtpOpenISOImageParam) GetAssumeyes() bool {
+func (p *FTPOpenISOImageParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *FtpOpenISOImageParam) SetParamTemplate(v string) {
+func (p *FTPOpenISOImageParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *FtpOpenISOImageParam) GetParamTemplate() string {
+func (p *FTPOpenISOImageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *FtpOpenISOImageParam) SetParamTemplateFile(v string) {
+func (p *FTPOpenISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *FTPOpenISOImageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *FTPOpenISOImageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *FtpOpenISOImageParam) GetParamTemplateFile() string {
+func (p *FTPOpenISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *FtpOpenISOImageParam) SetGenerateSkeleton(v bool) {
+func (p *FTPOpenISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *FTPOpenISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *FTPOpenISOImageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *FtpOpenISOImageParam) GetGenerateSkeleton() bool {
+func (p *FTPOpenISOImageParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *FtpOpenISOImageParam) SetOutputType(v string) {
+func (p *FTPOpenISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *FtpOpenISOImageParam) GetOutputType() string {
+func (p *FTPOpenISOImageParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *FtpOpenISOImageParam) SetColumn(v []string) {
+func (p *FTPOpenISOImageParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *FtpOpenISOImageParam) GetColumn() []string {
+func (p *FTPOpenISOImageParam) GetColumn() []string {
 	return p.Column
 }
-func (p *FtpOpenISOImageParam) SetQuiet(v bool) {
+func (p *FTPOpenISOImageParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *FtpOpenISOImageParam) GetQuiet() bool {
+func (p *FTPOpenISOImageParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *FtpOpenISOImageParam) SetFormat(v string) {
+func (p *FTPOpenISOImageParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *FtpOpenISOImageParam) GetFormat() string {
+func (p *FTPOpenISOImageParam) GetFormat() string {
 	return p.Format
 }
-func (p *FtpOpenISOImageParam) SetFormatFile(v string) {
+func (p *FTPOpenISOImageParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *FtpOpenISOImageParam) GetFormatFile() string {
+func (p *FTPOpenISOImageParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *FtpOpenISOImageParam) SetQuery(v string) {
+func (p *FTPOpenISOImageParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *FtpOpenISOImageParam) GetQuery() string {
+func (p *FTPOpenISOImageParam) GetQuery() string {
 	return p.Query
 }
-func (p *FtpOpenISOImageParam) SetQueryFile(v string) {
+func (p *FTPOpenISOImageParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *FtpOpenISOImageParam) GetQueryFile() string {
+func (p *FTPOpenISOImageParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *FtpOpenISOImageParam) SetId(v sacloud.ID) {
+func (p *FTPOpenISOImageParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *FtpOpenISOImageParam) GetId() sacloud.ID {
+func (p *FTPOpenISOImageParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// FtpCloseISOImageParam is input parameters for the sacloud API
-type FtpCloseISOImageParam struct {
+// FTPCloseISOImageParam is input parameters for the sacloud API
+type FTPCloseISOImageParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewFtpCloseISOImageParam return new FtpCloseISOImageParam
-func NewFtpCloseISOImageParam() *FtpCloseISOImageParam {
-	return &FtpCloseISOImageParam{}
+// NewFTPCloseISOImageParam return new FTPCloseISOImageParam
+func NewFTPCloseISOImageParam() *FTPCloseISOImageParam {
+	return &FTPCloseISOImageParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *FtpCloseISOImageParam) FillValueToSkeleton() {
+func (p *FTPCloseISOImageParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1942,8 +2120,14 @@ func (p *FtpCloseISOImageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1955,7 +2139,7 @@ func (p *FtpCloseISOImageParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *FtpCloseISOImageParam) Validate() []error {
+func (p *FTPCloseISOImageParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1968,69 +2152,83 @@ func (p *FtpCloseISOImageParam) Validate() []error {
 	return errors
 }
 
-func (p *FtpCloseISOImageParam) GetResourceDef() *schema.Resource {
+func (p *FTPCloseISOImageParam) GetResourceDef() *schema.Resource {
 	return define.Resources["ISOImage"]
 }
 
-func (p *FtpCloseISOImageParam) GetCommandDef() *schema.Command {
+func (p *FTPCloseISOImageParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ftp-close"]
 }
 
-func (p *FtpCloseISOImageParam) GetIncludeFields() []string {
+func (p *FTPCloseISOImageParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *FtpCloseISOImageParam) GetExcludeFields() []string {
+func (p *FTPCloseISOImageParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *FtpCloseISOImageParam) GetTableType() output.TableType {
+func (p *FTPCloseISOImageParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *FtpCloseISOImageParam) GetColumnDefs() []output.ColumnDef {
+func (p *FTPCloseISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *FtpCloseISOImageParam) SetSelector(v []string) {
+func (p *FTPCloseISOImageParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *FtpCloseISOImageParam) GetSelector() []string {
+func (p *FTPCloseISOImageParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *FtpCloseISOImageParam) SetAssumeyes(v bool) {
+func (p *FTPCloseISOImageParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *FtpCloseISOImageParam) GetAssumeyes() bool {
+func (p *FTPCloseISOImageParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *FtpCloseISOImageParam) SetParamTemplate(v string) {
+func (p *FTPCloseISOImageParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *FtpCloseISOImageParam) GetParamTemplate() string {
+func (p *FTPCloseISOImageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *FtpCloseISOImageParam) SetParamTemplateFile(v string) {
+func (p *FTPCloseISOImageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *FTPCloseISOImageParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *FTPCloseISOImageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *FtpCloseISOImageParam) GetParamTemplateFile() string {
+func (p *FTPCloseISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *FtpCloseISOImageParam) SetGenerateSkeleton(v bool) {
+func (p *FTPCloseISOImageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *FTPCloseISOImageParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *FTPCloseISOImageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *FtpCloseISOImageParam) GetGenerateSkeleton() bool {
+func (p *FTPCloseISOImageParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *FtpCloseISOImageParam) SetId(v sacloud.ID) {
+func (p *FTPCloseISOImageParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *FtpCloseISOImageParam) GetId() sacloud.ID {
+func (p *FTPCloseISOImageParam) GetId() sacloud.ID {
 	return p.Id
 }

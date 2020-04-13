@@ -28,7 +28,7 @@ func SimpleMonitorUpdate(ctx command.Context, params *params.UpdateSimpleMonitor
 	api := client.GetSimpleMonitorAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("SimpleMonitorUpdate is failed: %s", e)
+		return fmt.Errorf("SIMpleMonitorUpdate is failed: %s", e)
 	}
 
 	protocol := p.Settings.SimpleMonitor.HealthCheck.Protocol
@@ -119,12 +119,12 @@ func SimpleMonitorUpdate(ctx command.Context, params *params.UpdateSimpleMonitor
 
 		qname := p.Settings.SimpleMonitor.HealthCheck.QName
 		if ctx.IsSet("dns-qname") {
-			qname = params.DnsQname
+			qname = params.DNSQname
 		}
 
 		excepted := p.Settings.SimpleMonitor.HealthCheck.ExpectedData
 		if ctx.IsSet("dns-excepted") {
-			excepted = params.DnsExcepted
+			excepted = params.DNSExcepted
 		}
 
 		if qname == "" {
@@ -192,7 +192,7 @@ func SimpleMonitorUpdate(ctx command.Context, params *params.UpdateSimpleMonitor
 	// call Update(id)
 	res, err := api.Update(params.Id, p)
 	if err != nil {
-		return fmt.Errorf("SimpleMonitorUpdate is failed: %s", err)
+		return fmt.Errorf("SIMpleMonitorUpdate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

@@ -32,12 +32,12 @@ import (
 )
 
 func init() {
-	listParam := params.NewListSimpleMonitorParam()
-	createParam := params.NewCreateSimpleMonitorParam()
-	readParam := params.NewReadSimpleMonitorParam()
-	updateParam := params.NewUpdateSimpleMonitorParam()
-	deleteParam := params.NewDeleteSimpleMonitorParam()
-	healthParam := params.NewHealthSimpleMonitorParam()
+	simpleMonitorListParam := params.NewListSimpleMonitorParam()
+	simpleMonitorCreateParam := params.NewCreateSimpleMonitorParam()
+	simpleMonitorReadParam := params.NewReadSimpleMonitorParam()
+	simpleMonitorUpdateParam := params.NewUpdateSimpleMonitorParam()
+	simpleMonitorDeleteParam := params.NewDeleteSimpleMonitorParam()
+	simpleMonitorHealthParam := params.NewHealthSimpleMonitorParam()
 
 	cliCommand := &cli.Command{
 		Name:  "simple-monitor",
@@ -84,8 +84,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -133,9 +141,9 @@ func init() {
 						return err
 					}
 
-					listParam.ParamTemplate = c.String("param-template")
-					listParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(listParam)
+					simpleMonitorListParam.ParamTemplate = c.String("param-template")
+					simpleMonitorListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simpleMonitorListParam)
 					if err != nil {
 						return err
 					}
@@ -145,60 +153,66 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(listParam, p, mergo.WithOverride)
+						mergo.Merge(simpleMonitorListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						listParam.Name = c.StringSlice("name")
+						simpleMonitorListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						simpleMonitorListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						listParam.Tags = c.StringSlice("tags")
+						simpleMonitorListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("health") {
-						listParam.Health = c.String("health")
+						simpleMonitorListParam.Health = c.String("health")
 					}
 					if c.IsSet("from") {
-						listParam.From = c.Int("from")
+						simpleMonitorListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						listParam.Max = c.Int("max")
+						simpleMonitorListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						listParam.Sort = c.StringSlice("sort")
+						simpleMonitorListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						listParam.ParamTemplate = c.String("param-template")
+						simpleMonitorListParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simpleMonitorListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						listParam.ParamTemplateFile = c.String("param-template-file")
+						simpleMonitorListParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simpleMonitorListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simpleMonitorListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						listParam.OutputType = c.String("output-type")
+						simpleMonitorListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						listParam.Column = c.StringSlice("column")
+						simpleMonitorListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						listParam.Quiet = c.Bool("quiet")
+						simpleMonitorListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						listParam.Format = c.String("format")
+						simpleMonitorListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						listParam.FormatFile = c.String("format-file")
+						simpleMonitorListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						listParam.Query = c.String("query")
+						simpleMonitorListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						listParam.QueryFile = c.String("query-file")
+						simpleMonitorListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -206,7 +220,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = listParam
+					var outputTypeHolder interface{} = simpleMonitorListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -217,10 +231,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if listParam.GenerateSkeleton {
-						listParam.GenerateSkeleton = false
-						listParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(listParam, "", "\t")
+					if simpleMonitorListParam.GenerateSkeleton {
+						simpleMonitorListParam.GenerateSkeleton = false
+						simpleMonitorListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simpleMonitorListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -229,15 +243,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := simpleMonitorListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), listParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simpleMonitorListParam)
 
 					// Run command with params
-					return funcs.SimpleMonitorList(ctx, listParam)
+					return funcs.SimpleMonitorList(ctx, simpleMonitorListParam)
 
 				},
 			},
@@ -349,8 +363,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -398,9 +420,9 @@ func init() {
 						return err
 					}
 
-					createParam.ParamTemplate = c.String("param-template")
-					createParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(createParam)
+					simpleMonitorCreateParam.ParamTemplate = c.String("param-template")
+					simpleMonitorCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simpleMonitorCreateParam)
 					if err != nil {
 						return err
 					}
@@ -410,105 +432,111 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(createParam, p, mergo.WithOverride)
+						mergo.Merge(simpleMonitorCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("target") {
-						createParam.Target = c.String("target")
+						simpleMonitorCreateParam.Target = c.String("target")
 					}
 					if c.IsSet("protocol") {
-						createParam.Protocol = c.String("protocol")
+						simpleMonitorCreateParam.Protocol = c.String("protocol")
 					}
 					if c.IsSet("port") {
-						createParam.Port = c.Int("port")
+						simpleMonitorCreateParam.Port = c.Int("port")
 					}
 					if c.IsSet("delay-loop") {
-						createParam.DelayLoop = c.Int("delay-loop")
+						simpleMonitorCreateParam.DelayLoop = c.Int("delay-loop")
 					}
 					if c.IsSet("disabled") {
-						createParam.Disabled = c.Bool("disabled")
+						simpleMonitorCreateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("host-header") {
-						createParam.HostHeader = c.String("host-header")
+						simpleMonitorCreateParam.HostHeader = c.String("host-header")
 					}
 					if c.IsSet("path") {
-						createParam.Path = c.String("path")
+						simpleMonitorCreateParam.Path = c.String("path")
 					}
 					if c.IsSet("response-code") {
-						createParam.ResponseCode = c.Int("response-code")
+						simpleMonitorCreateParam.ResponseCode = c.Int("response-code")
 					}
 					if c.IsSet("sni") {
-						createParam.Sni = c.Bool("sni")
+						simpleMonitorCreateParam.Sni = c.Bool("sni")
 					}
 					if c.IsSet("username") {
-						createParam.Username = c.String("username")
+						simpleMonitorCreateParam.Username = c.String("username")
 					}
 					if c.IsSet("password") {
-						createParam.Password = c.String("password")
+						simpleMonitorCreateParam.Password = c.String("password")
 					}
 					if c.IsSet("dns-qname") {
-						createParam.DnsQname = c.String("dns-qname")
+						simpleMonitorCreateParam.DNSQname = c.String("dns-qname")
 					}
 					if c.IsSet("dns-excepted") {
-						createParam.DnsExcepted = c.String("dns-excepted")
+						simpleMonitorCreateParam.DNSExcepted = c.String("dns-excepted")
 					}
 					if c.IsSet("remaining-days") {
-						createParam.RemainingDays = c.Int("remaining-days")
+						simpleMonitorCreateParam.RemainingDays = c.Int("remaining-days")
 					}
 					if c.IsSet("notify-email") {
-						createParam.NotifyEmail = c.Bool("notify-email")
+						simpleMonitorCreateParam.NotifyEmail = c.Bool("notify-email")
 					}
 					if c.IsSet("email-type") {
-						createParam.EmailType = c.String("email-type")
+						simpleMonitorCreateParam.EmailType = c.String("email-type")
 					}
 					if c.IsSet("slack-webhook") {
-						createParam.SlackWebhook = c.String("slack-webhook")
+						simpleMonitorCreateParam.SlackWebhook = c.String("slack-webhook")
 					}
 					if c.IsSet("notify-interval") {
-						createParam.NotifyInterval = c.Int("notify-interval")
+						simpleMonitorCreateParam.NotifyInterval = c.Int("notify-interval")
 					}
 					if c.IsSet("description") {
-						createParam.Description = c.String("description")
+						simpleMonitorCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						createParam.Tags = c.StringSlice("tags")
+						simpleMonitorCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						simpleMonitorCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						createParam.Assumeyes = c.Bool("assumeyes")
+						simpleMonitorCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						createParam.ParamTemplate = c.String("param-template")
+						simpleMonitorCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simpleMonitorCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						createParam.ParamTemplateFile = c.String("param-template-file")
+						simpleMonitorCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simpleMonitorCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						createParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simpleMonitorCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						createParam.OutputType = c.String("output-type")
+						simpleMonitorCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						createParam.Column = c.StringSlice("column")
+						simpleMonitorCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						createParam.Quiet = c.Bool("quiet")
+						simpleMonitorCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						createParam.Format = c.String("format")
+						simpleMonitorCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						createParam.FormatFile = c.String("format-file")
+						simpleMonitorCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						createParam.Query = c.String("query")
+						simpleMonitorCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						createParam.QueryFile = c.String("query-file")
+						simpleMonitorCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -516,7 +544,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = createParam
+					var outputTypeHolder interface{} = simpleMonitorCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -527,10 +555,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if createParam.GenerateSkeleton {
-						createParam.GenerateSkeleton = false
-						createParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(createParam, "", "\t")
+					if simpleMonitorCreateParam.GenerateSkeleton {
+						simpleMonitorCreateParam.GenerateSkeleton = false
+						simpleMonitorCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simpleMonitorCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -539,15 +567,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
+					if errors := simpleMonitorCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), createParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simpleMonitorCreateParam)
 
 					// confirm
-					if !createParam.Assumeyes {
+					if !simpleMonitorCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -557,7 +585,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.SimpleMonitorCreate(ctx, createParam)
+					return funcs.SimpleMonitorCreate(ctx, simpleMonitorCreateParam)
 
 				},
 			},
@@ -575,8 +603,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -629,9 +665,9 @@ func init() {
 						return err
 					}
 
-					readParam.ParamTemplate = c.String("param-template")
-					readParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(readParam)
+					simpleMonitorReadParam.ParamTemplate = c.String("param-template")
+					simpleMonitorReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simpleMonitorReadParam)
 					if err != nil {
 						return err
 					}
@@ -641,45 +677,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(readParam, p, mergo.WithOverride)
+						mergo.Merge(simpleMonitorReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						readParam.Selector = c.StringSlice("selector")
+						simpleMonitorReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						readParam.ParamTemplate = c.String("param-template")
+						simpleMonitorReadParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simpleMonitorReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						readParam.ParamTemplateFile = c.String("param-template-file")
+						simpleMonitorReadParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simpleMonitorReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						readParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simpleMonitorReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						readParam.OutputType = c.String("output-type")
+						simpleMonitorReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						readParam.Column = c.StringSlice("column")
+						simpleMonitorReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						readParam.Quiet = c.Bool("quiet")
+						simpleMonitorReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						readParam.Format = c.String("format")
+						simpleMonitorReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						readParam.FormatFile = c.String("format-file")
+						simpleMonitorReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						readParam.Query = c.String("query")
+						simpleMonitorReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						readParam.QueryFile = c.String("query-file")
+						simpleMonitorReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = sacloud.ID(c.Int64("id"))
+						simpleMonitorReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -687,7 +729,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = readParam
+					var outputTypeHolder interface{} = simpleMonitorReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -698,10 +740,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if readParam.GenerateSkeleton {
-						readParam.GenerateSkeleton = false
-						readParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(readParam, "", "\t")
+					if simpleMonitorReadParam.GenerateSkeleton {
+						simpleMonitorReadParam.GenerateSkeleton = false
+						simpleMonitorReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simpleMonitorReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -710,19 +752,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
+					if errors := simpleMonitorReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), readParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simpleMonitorReadParam)
 
 					apiClient := ctx.GetAPIClient().SimpleMonitor
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(readParam.Selector) == 0 {
+						if len(simpleMonitorReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -731,12 +773,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.SimpleMonitors {
-							if hasTags(&v, readParam.Selector) {
+							if hasTags(&v, simpleMonitorReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simpleMonitorReadParam.Selector)
 						}
 
 					} else {
@@ -758,7 +800,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.SimpleMonitors {
-										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+										if len(simpleMonitorReadParam.Selector) == 0 || hasTags(&v, simpleMonitorReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -783,11 +825,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						readParam.SetId(id)
-						p := *readParam // copy struct value
-						readParam := &p
+						simpleMonitorReadParam.SetId(id)
+						p := *simpleMonitorReadParam // copy struct value
+						simpleMonitorReadParam := &p
 						go func() {
-							err := funcs.SimpleMonitorRead(ctx, readParam)
+							err := funcs.SimpleMonitorRead(ctx, simpleMonitorReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -903,8 +945,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -957,9 +1007,9 @@ func init() {
 						return err
 					}
 
-					updateParam.ParamTemplate = c.String("param-template")
-					updateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(updateParam)
+					simpleMonitorUpdateParam.ParamTemplate = c.String("param-template")
+					simpleMonitorUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simpleMonitorUpdateParam)
 					if err != nil {
 						return err
 					}
@@ -969,108 +1019,114 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(updateParam, p, mergo.WithOverride)
+						mergo.Merge(simpleMonitorUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("protocol") {
-						updateParam.Protocol = c.String("protocol")
+						simpleMonitorUpdateParam.Protocol = c.String("protocol")
 					}
 					if c.IsSet("port") {
-						updateParam.Port = c.Int("port")
+						simpleMonitorUpdateParam.Port = c.Int("port")
 					}
 					if c.IsSet("delay-loop") {
-						updateParam.DelayLoop = c.Int("delay-loop")
+						simpleMonitorUpdateParam.DelayLoop = c.Int("delay-loop")
 					}
 					if c.IsSet("disabled") {
-						updateParam.Disabled = c.Bool("disabled")
+						simpleMonitorUpdateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("host-header") {
-						updateParam.HostHeader = c.String("host-header")
+						simpleMonitorUpdateParam.HostHeader = c.String("host-header")
 					}
 					if c.IsSet("path") {
-						updateParam.Path = c.String("path")
+						simpleMonitorUpdateParam.Path = c.String("path")
 					}
 					if c.IsSet("response-code") {
-						updateParam.ResponseCode = c.Int("response-code")
+						simpleMonitorUpdateParam.ResponseCode = c.Int("response-code")
 					}
 					if c.IsSet("sni") {
-						updateParam.Sni = c.Bool("sni")
+						simpleMonitorUpdateParam.Sni = c.Bool("sni")
 					}
 					if c.IsSet("username") {
-						updateParam.Username = c.String("username")
+						simpleMonitorUpdateParam.Username = c.String("username")
 					}
 					if c.IsSet("password") {
-						updateParam.Password = c.String("password")
+						simpleMonitorUpdateParam.Password = c.String("password")
 					}
 					if c.IsSet("dns-qname") {
-						updateParam.DnsQname = c.String("dns-qname")
+						simpleMonitorUpdateParam.DNSQname = c.String("dns-qname")
 					}
 					if c.IsSet("dns-excepted") {
-						updateParam.DnsExcepted = c.String("dns-excepted")
+						simpleMonitorUpdateParam.DNSExcepted = c.String("dns-excepted")
 					}
 					if c.IsSet("remaining-days") {
-						updateParam.RemainingDays = c.Int("remaining-days")
+						simpleMonitorUpdateParam.RemainingDays = c.Int("remaining-days")
 					}
 					if c.IsSet("notify-email") {
-						updateParam.NotifyEmail = c.Bool("notify-email")
+						simpleMonitorUpdateParam.NotifyEmail = c.Bool("notify-email")
 					}
 					if c.IsSet("email-type") {
-						updateParam.EmailType = c.String("email-type")
+						simpleMonitorUpdateParam.EmailType = c.String("email-type")
 					}
 					if c.IsSet("slack-webhook") {
-						updateParam.SlackWebhook = c.String("slack-webhook")
+						simpleMonitorUpdateParam.SlackWebhook = c.String("slack-webhook")
 					}
 					if c.IsSet("notify-interval") {
-						updateParam.NotifyInterval = c.Int("notify-interval")
+						simpleMonitorUpdateParam.NotifyInterval = c.Int("notify-interval")
 					}
 					if c.IsSet("selector") {
-						updateParam.Selector = c.StringSlice("selector")
+						simpleMonitorUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("description") {
-						updateParam.Description = c.String("description")
+						simpleMonitorUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						updateParam.Tags = c.StringSlice("tags")
+						simpleMonitorUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						simpleMonitorUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						updateParam.Assumeyes = c.Bool("assumeyes")
+						simpleMonitorUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						updateParam.ParamTemplate = c.String("param-template")
+						simpleMonitorUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simpleMonitorUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						updateParam.ParamTemplateFile = c.String("param-template-file")
+						simpleMonitorUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simpleMonitorUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						updateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simpleMonitorUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						updateParam.OutputType = c.String("output-type")
+						simpleMonitorUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						updateParam.Column = c.StringSlice("column")
+						simpleMonitorUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						updateParam.Quiet = c.Bool("quiet")
+						simpleMonitorUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						updateParam.Format = c.String("format")
+						simpleMonitorUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						updateParam.FormatFile = c.String("format-file")
+						simpleMonitorUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						updateParam.Query = c.String("query")
+						simpleMonitorUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						updateParam.QueryFile = c.String("query-file")
+						simpleMonitorUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = sacloud.ID(c.Int64("id"))
+						simpleMonitorUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1078,7 +1134,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = updateParam
+					var outputTypeHolder interface{} = simpleMonitorUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1089,10 +1145,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if updateParam.GenerateSkeleton {
-						updateParam.GenerateSkeleton = false
-						updateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(updateParam, "", "\t")
+					if simpleMonitorUpdateParam.GenerateSkeleton {
+						simpleMonitorUpdateParam.GenerateSkeleton = false
+						simpleMonitorUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simpleMonitorUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1101,19 +1157,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
+					if errors := simpleMonitorUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simpleMonitorUpdateParam)
 
 					apiClient := ctx.GetAPIClient().SimpleMonitor
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(updateParam.Selector) == 0 {
+						if len(simpleMonitorUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1122,12 +1178,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.SimpleMonitors {
-							if hasTags(&v, updateParam.Selector) {
+							if hasTags(&v, simpleMonitorUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simpleMonitorUpdateParam.Selector)
 						}
 
 					} else {
@@ -1149,7 +1205,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.SimpleMonitors {
-										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+										if len(simpleMonitorUpdateParam.Selector) == 0 || hasTags(&v, simpleMonitorUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1166,7 +1222,7 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes {
+					if !simpleMonitorUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1180,11 +1236,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						updateParam.SetId(id)
-						p := *updateParam // copy struct value
-						updateParam := &p
+						simpleMonitorUpdateParam.SetId(id)
+						p := *simpleMonitorUpdateParam // copy struct value
+						simpleMonitorUpdateParam := &p
 						go func() {
-							err := funcs.SimpleMonitorUpdate(ctx, updateParam)
+							err := funcs.SimpleMonitorUpdate(ctx, simpleMonitorUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1216,8 +1272,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1270,9 +1334,9 @@ func init() {
 						return err
 					}
 
-					deleteParam.ParamTemplate = c.String("param-template")
-					deleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(deleteParam)
+					simpleMonitorDeleteParam.ParamTemplate = c.String("param-template")
+					simpleMonitorDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simpleMonitorDeleteParam)
 					if err != nil {
 						return err
 					}
@@ -1282,48 +1346,54 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(deleteParam, p, mergo.WithOverride)
+						mergo.Merge(simpleMonitorDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						deleteParam.Selector = c.StringSlice("selector")
+						simpleMonitorDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						deleteParam.Assumeyes = c.Bool("assumeyes")
+						simpleMonitorDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						deleteParam.ParamTemplate = c.String("param-template")
+						simpleMonitorDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simpleMonitorDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						deleteParam.ParamTemplateFile = c.String("param-template-file")
+						simpleMonitorDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simpleMonitorDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simpleMonitorDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						deleteParam.OutputType = c.String("output-type")
+						simpleMonitorDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						deleteParam.Column = c.StringSlice("column")
+						simpleMonitorDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						deleteParam.Quiet = c.Bool("quiet")
+						simpleMonitorDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						deleteParam.Format = c.String("format")
+						simpleMonitorDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						deleteParam.FormatFile = c.String("format-file")
+						simpleMonitorDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						deleteParam.Query = c.String("query")
+						simpleMonitorDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						deleteParam.QueryFile = c.String("query-file")
+						simpleMonitorDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = sacloud.ID(c.Int64("id"))
+						simpleMonitorDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1331,7 +1401,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = deleteParam
+					var outputTypeHolder interface{} = simpleMonitorDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1342,10 +1412,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if deleteParam.GenerateSkeleton {
-						deleteParam.GenerateSkeleton = false
-						deleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(deleteParam, "", "\t")
+					if simpleMonitorDeleteParam.GenerateSkeleton {
+						simpleMonitorDeleteParam.GenerateSkeleton = false
+						simpleMonitorDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simpleMonitorDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1354,19 +1424,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := simpleMonitorDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simpleMonitorDeleteParam)
 
 					apiClient := ctx.GetAPIClient().SimpleMonitor
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(deleteParam.Selector) == 0 {
+						if len(simpleMonitorDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1375,12 +1445,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.SimpleMonitors {
-							if hasTags(&v, deleteParam.Selector) {
+							if hasTags(&v, simpleMonitorDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simpleMonitorDeleteParam.Selector)
 						}
 
 					} else {
@@ -1402,7 +1472,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.SimpleMonitors {
-										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+										if len(simpleMonitorDeleteParam.Selector) == 0 || hasTags(&v, simpleMonitorDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1419,7 +1489,7 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes {
+					if !simpleMonitorDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1433,11 +1503,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						deleteParam.SetId(id)
-						p := *deleteParam // copy struct value
-						deleteParam := &p
+						simpleMonitorDeleteParam.SetId(id)
+						p := *simpleMonitorDeleteParam // copy struct value
+						simpleMonitorDeleteParam := &p
 						go func() {
-							err := funcs.SimpleMonitorDelete(ctx, deleteParam)
+							err := funcs.SimpleMonitorDelete(ctx, simpleMonitorDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1463,8 +1533,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1517,9 +1595,9 @@ func init() {
 						return err
 					}
 
-					healthParam.ParamTemplate = c.String("param-template")
-					healthParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(healthParam)
+					simpleMonitorHealthParam.ParamTemplate = c.String("param-template")
+					simpleMonitorHealthParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simpleMonitorHealthParam)
 					if err != nil {
 						return err
 					}
@@ -1529,45 +1607,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(healthParam, p, mergo.WithOverride)
+						mergo.Merge(simpleMonitorHealthParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						healthParam.Selector = c.StringSlice("selector")
+						simpleMonitorHealthParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						healthParam.ParamTemplate = c.String("param-template")
+						simpleMonitorHealthParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						simpleMonitorHealthParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						healthParam.ParamTemplateFile = c.String("param-template-file")
+						simpleMonitorHealthParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						simpleMonitorHealthParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						healthParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						simpleMonitorHealthParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						healthParam.OutputType = c.String("output-type")
+						simpleMonitorHealthParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						healthParam.Column = c.StringSlice("column")
+						simpleMonitorHealthParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						healthParam.Quiet = c.Bool("quiet")
+						simpleMonitorHealthParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						healthParam.Format = c.String("format")
+						simpleMonitorHealthParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						healthParam.FormatFile = c.String("format-file")
+						simpleMonitorHealthParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						healthParam.Query = c.String("query")
+						simpleMonitorHealthParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						healthParam.QueryFile = c.String("query-file")
+						simpleMonitorHealthParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						healthParam.Id = sacloud.ID(c.Int64("id"))
+						simpleMonitorHealthParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1575,7 +1659,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = healthParam
+					var outputTypeHolder interface{} = simpleMonitorHealthParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1586,10 +1670,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if healthParam.GenerateSkeleton {
-						healthParam.GenerateSkeleton = false
-						healthParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(healthParam, "", "\t")
+					if simpleMonitorHealthParam.GenerateSkeleton {
+						simpleMonitorHealthParam.GenerateSkeleton = false
+						simpleMonitorHealthParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simpleMonitorHealthParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1598,19 +1682,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := healthParam.Validate(); len(errors) > 0 {
+					if errors := simpleMonitorHealthParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), healthParam)
+					ctx := command.NewContext(c, c.Args().Slice(), simpleMonitorHealthParam)
 
 					apiClient := ctx.GetAPIClient().SimpleMonitor
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(healthParam.Selector) == 0 {
+						if len(simpleMonitorHealthParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1619,12 +1703,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.SimpleMonitors {
-							if hasTags(&v, healthParam.Selector) {
+							if hasTags(&v, simpleMonitorHealthParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", healthParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simpleMonitorHealthParam.Selector)
 						}
 
 					} else {
@@ -1646,7 +1730,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.SimpleMonitors {
-										if len(healthParam.Selector) == 0 || hasTags(&v, healthParam.Selector) {
+										if len(simpleMonitorHealthParam.Selector) == 0 || hasTags(&v, simpleMonitorHealthParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1671,11 +1755,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						healthParam.SetId(id)
-						p := *healthParam // copy struct value
-						healthParam := &p
+						simpleMonitorHealthParam.SetId(id)
+						p := *simpleMonitorHealthParam // copy struct value
+						simpleMonitorHealthParam := &p
 						go func() {
-							err := funcs.SimpleMonitorHealth(ctx, healthParam)
+							err := funcs.SimpleMonitorHealth(ctx, simpleMonitorHealthParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1822,6 +1906,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("simple-monitor", "create", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("simple-monitor", "create", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("simple-monitor", "create", "password", &schema.Category{
 		Key:         "http-check",
 		DisplayName: "Health-Check(HTTP/HTTPS) options",
@@ -1937,6 +2031,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("simple-monitor", "delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("simple-monitor", "delete", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("simple-monitor", "delete", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -1993,6 +2097,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("simple-monitor", "health", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("simple-monitor", "health", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("simple-monitor", "health", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -2077,6 +2191,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("simple-monitor", "list", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("simple-monitor", "list", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("simple-monitor", "list", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2138,6 +2262,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("simple-monitor", "read", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("simple-monitor", "read", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("simple-monitor", "read", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -2253,6 +2387,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("simple-monitor", "update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("simple-monitor", "update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("simple-monitor", "update", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

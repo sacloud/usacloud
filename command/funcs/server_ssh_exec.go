@@ -29,7 +29,7 @@ import (
 
 var serverSSHMutex = sync.Mutex{}
 
-func ServerSshExec(ctx command.Context, params *params.SshExecServerParam) error {
+func ServerSSHExec(ctx command.Context, params *params.SSHExecServerParam) error {
 
 	// run as serialized
 	serverSSHMutex.Lock()
@@ -39,12 +39,12 @@ func ServerSshExec(ctx command.Context, params *params.SshExecServerParam) error
 	api := client.GetServerAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("ServerSshExec is failed: %s", e)
+		return fmt.Errorf("ServerSSHExec is failed: %s", e)
 	}
 
 	// has NIC?
 	if len(p.Interfaces) == 0 {
-		return fmt.Errorf("ServerSshExec is failed: server has no network interfaces")
+		return fmt.Errorf("ServerSSHExec is failed: server has no network interfaces")
 	}
 
 	// file exists?
@@ -52,7 +52,7 @@ func ServerSshExec(ctx command.Context, params *params.SshExecServerParam) error
 	if keyPath == "" {
 		p, err := getSSHPrivateKeyStorePath(p.ID)
 		if err != nil {
-			return fmt.Errorf("ServerSshExec is failed: getting HomeDir is failed: %s", e)
+			return fmt.Errorf("ServerSSHExec is failed: getting HomeDir is failed: %s", e)
 		}
 		keyPath = p
 	}
@@ -63,7 +63,7 @@ func ServerSshExec(ctx command.Context, params *params.SshExecServerParam) error
 		ip = p.Interfaces[0].UserIPAddress
 	}
 	if ip == "" {
-		return fmt.Errorf("ServerSshExec is failed: collecting IPAddress from server is failed: %#v", p)
+		return fmt.Errorf("ServerSSHExec is failed: collecting IPAddress from server is failed: %#v", p)
 	}
 
 	// collect username
@@ -72,7 +72,7 @@ func ServerSshExec(ctx command.Context, params *params.SshExecServerParam) error
 		if user == "" {
 			sshUser, err := getSSHDefaultUserName(client, p.ID)
 			if err != nil {
-				return fmt.Errorf("ServerSshExec is failed: get default ssh username is failed: %s", err)
+				return fmt.Errorf("ServerSSHExec is failed: get default ssh username is failed: %s", err)
 			}
 			if sshUser == "" {
 				sshUser = "root"
@@ -94,13 +94,13 @@ func ServerSshExec(ctx command.Context, params *params.SshExecServerParam) error
 	}
 	conn, err := server.CreateSSHClient(sshParam)
 	if err != nil {
-		return fmt.Errorf("ServerSshExec is failed: creating ssh-client is failed: %s", err)
+		return fmt.Errorf("ServerSSHExec is failed: creating ssh-client is failed: %s", err)
 	}
 	defer conn.Close()
 
 	session, err := conn.NewSession()
 	if err != nil {
-		return fmt.Errorf("ServerSshExec is failed: opening session is failed: %s", err)
+		return fmt.Errorf("ServerSSHExec is failed: opening session is failed: %s", err)
 	}
 	defer session.Close()
 
@@ -122,7 +122,7 @@ func ServerSshExec(ctx command.Context, params *params.SshExecServerParam) error
 	}
 
 	if err != nil {
-		return fmt.Errorf("ServerSshExec is failed: %s", err)
+		return fmt.Errorf("ServerSSHExec is failed: %s", err)
 		//if ee, ok := err.(*ssh.ExitError); ok {
 		//	return ee.ExitStatus()
 		//}

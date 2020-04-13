@@ -33,7 +33,9 @@ type ListSimpleMonitorParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -75,8 +77,14 @@ func (p *ListSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -251,12 +259,26 @@ func (p *ListSimpleMonitorParam) SetParamTemplate(v string) {
 func (p *ListSimpleMonitorParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListSimpleMonitorParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListSimpleMonitorParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListSimpleMonitorParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListSimpleMonitorParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListSimpleMonitorParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListSimpleMonitorParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -328,8 +350,8 @@ type CreateSimpleMonitorParam struct {
 	Sni               bool       `json:"sni"`
 	Username          string     `json:"username"`
 	Password          string     `json:"password"`
-	DnsQname          string     `json:"dns-qname"`
-	DnsExcepted       string     `json:"dns-excepted"`
+	DNSQname          string     `json:"dns-qname"`
+	DNSExcepted       string     `json:"dns-excepted"`
 	RemainingDays     int        `json:"remaining-days"`
 	NotifyEmail       bool       `json:"notify-email"`
 	EmailType         string     `json:"email-type"`
@@ -340,7 +362,9 @@ type CreateSimpleMonitorParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -399,11 +423,11 @@ func (p *CreateSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.Password) {
 		p.Password = ""
 	}
-	if isEmpty(p.DnsQname) {
-		p.DnsQname = ""
+	if isEmpty(p.DNSQname) {
+		p.DNSQname = ""
 	}
-	if isEmpty(p.DnsExcepted) {
-		p.DnsExcepted = ""
+	if isEmpty(p.DNSExcepted) {
+		p.DNSExcepted = ""
 	}
 	if isEmpty(p.RemainingDays) {
 		p.RemainingDays = 0
@@ -435,8 +459,14 @@ func (p *CreateSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -677,19 +707,19 @@ func (p *CreateSimpleMonitorParam) SetPassword(v string) {
 func (p *CreateSimpleMonitorParam) GetPassword() string {
 	return p.Password
 }
-func (p *CreateSimpleMonitorParam) SetDnsQname(v string) {
-	p.DnsQname = v
+func (p *CreateSimpleMonitorParam) SetDNSQname(v string) {
+	p.DNSQname = v
 }
 
-func (p *CreateSimpleMonitorParam) GetDnsQname() string {
-	return p.DnsQname
+func (p *CreateSimpleMonitorParam) GetDNSQname() string {
+	return p.DNSQname
 }
-func (p *CreateSimpleMonitorParam) SetDnsExcepted(v string) {
-	p.DnsExcepted = v
+func (p *CreateSimpleMonitorParam) SetDNSExcepted(v string) {
+	p.DNSExcepted = v
 }
 
-func (p *CreateSimpleMonitorParam) GetDnsExcepted() string {
-	return p.DnsExcepted
+func (p *CreateSimpleMonitorParam) GetDNSExcepted() string {
+	return p.DNSExcepted
 }
 func (p *CreateSimpleMonitorParam) SetRemainingDays(v int) {
 	p.RemainingDays = v
@@ -761,12 +791,26 @@ func (p *CreateSimpleMonitorParam) SetParamTemplate(v string) {
 func (p *CreateSimpleMonitorParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateSimpleMonitorParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateSimpleMonitorParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateSimpleMonitorParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateSimpleMonitorParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateSimpleMonitorParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateSimpleMonitorParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -829,7 +873,9 @@ func (p *CreateSimpleMonitorParam) GetQueryFile() string {
 type ReadSimpleMonitorParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -854,8 +900,14 @@ func (p *ReadSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -959,12 +1011,26 @@ func (p *ReadSimpleMonitorParam) SetParamTemplate(v string) {
 func (p *ReadSimpleMonitorParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadSimpleMonitorParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadSimpleMonitorParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadSimpleMonitorParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadSimpleMonitorParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadSimpleMonitorParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadSimpleMonitorParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1042,8 +1108,8 @@ type UpdateSimpleMonitorParam struct {
 	Sni               bool       `json:"sni"`
 	Username          string     `json:"username"`
 	Password          string     `json:"password"`
-	DnsQname          string     `json:"dns-qname"`
-	DnsExcepted       string     `json:"dns-excepted"`
+	DNSQname          string     `json:"dns-qname"`
+	DNSExcepted       string     `json:"dns-excepted"`
 	RemainingDays     int        `json:"remaining-days"`
 	NotifyEmail       bool       `json:"notify-email"`
 	EmailType         string     `json:"email-type"`
@@ -1055,7 +1121,9 @@ type UpdateSimpleMonitorParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1107,11 +1175,11 @@ func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.Password) {
 		p.Password = ""
 	}
-	if isEmpty(p.DnsQname) {
-		p.DnsQname = ""
+	if isEmpty(p.DNSQname) {
+		p.DNSQname = ""
 	}
-	if isEmpty(p.DnsExcepted) {
-		p.DnsExcepted = ""
+	if isEmpty(p.DNSExcepted) {
+		p.DNSExcepted = ""
 	}
 	if isEmpty(p.RemainingDays) {
 		p.RemainingDays = 0
@@ -1146,8 +1214,14 @@ func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1370,19 +1444,19 @@ func (p *UpdateSimpleMonitorParam) SetPassword(v string) {
 func (p *UpdateSimpleMonitorParam) GetPassword() string {
 	return p.Password
 }
-func (p *UpdateSimpleMonitorParam) SetDnsQname(v string) {
-	p.DnsQname = v
+func (p *UpdateSimpleMonitorParam) SetDNSQname(v string) {
+	p.DNSQname = v
 }
 
-func (p *UpdateSimpleMonitorParam) GetDnsQname() string {
-	return p.DnsQname
+func (p *UpdateSimpleMonitorParam) GetDNSQname() string {
+	return p.DNSQname
 }
-func (p *UpdateSimpleMonitorParam) SetDnsExcepted(v string) {
-	p.DnsExcepted = v
+func (p *UpdateSimpleMonitorParam) SetDNSExcepted(v string) {
+	p.DNSExcepted = v
 }
 
-func (p *UpdateSimpleMonitorParam) GetDnsExcepted() string {
-	return p.DnsExcepted
+func (p *UpdateSimpleMonitorParam) GetDNSExcepted() string {
+	return p.DNSExcepted
 }
 func (p *UpdateSimpleMonitorParam) SetRemainingDays(v int) {
 	p.RemainingDays = v
@@ -1461,12 +1535,26 @@ func (p *UpdateSimpleMonitorParam) SetParamTemplate(v string) {
 func (p *UpdateSimpleMonitorParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateSimpleMonitorParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateSimpleMonitorParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateSimpleMonitorParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateSimpleMonitorParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1537,7 +1625,9 @@ type DeleteSimpleMonitorParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1565,8 +1655,14 @@ func (p *DeleteSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1677,12 +1773,26 @@ func (p *DeleteSimpleMonitorParam) SetParamTemplate(v string) {
 func (p *DeleteSimpleMonitorParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteSimpleMonitorParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteSimpleMonitorParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteSimpleMonitorParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteSimpleMonitorParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteSimpleMonitorParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteSimpleMonitorParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1752,7 +1862,9 @@ func (p *DeleteSimpleMonitorParam) GetId() sacloud.ID {
 type HealthSimpleMonitorParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1777,8 +1889,14 @@ func (p *HealthSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1882,12 +2000,26 @@ func (p *HealthSimpleMonitorParam) SetParamTemplate(v string) {
 func (p *HealthSimpleMonitorParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *HealthSimpleMonitorParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *HealthSimpleMonitorParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *HealthSimpleMonitorParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *HealthSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *HealthSimpleMonitorParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *HealthSimpleMonitorParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *HealthSimpleMonitorParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

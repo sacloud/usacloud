@@ -32,7 +32,9 @@ type ListLoadBalancerParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -71,8 +73,14 @@ func (p *ListLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -233,12 +241,26 @@ func (p *ListLoadBalancerParam) SetParamTemplate(v string) {
 func (p *ListLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -303,8 +325,8 @@ type CreateLoadBalancerParam struct {
 	Vrid              int        `json:"vrid"`
 	HighAvailability  bool       `json:"high-availability"`
 	Plan              string     `json:"plan"`
-	Ipaddress1        string     `json:"ipaddress1"`
-	Ipaddress2        string     `json:"ipaddress2"`
+	Ipaddress1        string     `json:"ipaddress-1"`
+	Ipaddress2        string     `json:"ipaddress-2"`
 	NwMaskLen         int        `json:"nw-mask-len"`
 	DefaultRoute      string     `json:"default-route"`
 	Name              string     `json:"name"`
@@ -313,7 +335,9 @@ type CreateLoadBalancerParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -377,8 +401,14 @@ func (p *CreateLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -440,21 +470,21 @@ func (p *CreateLoadBalancerParam) Validate() []error {
 	}
 	{
 		validator := validateRequired
-		errs := validator("--ipaddress1", p.Ipaddress1)
+		errs := validator("--ipaddress-1", p.Ipaddress1)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress1"].ValidateFunc
-		errs := validator("--ipaddress1", p.Ipaddress1)
+		errs := validator("--ipaddress-1", p.Ipaddress1)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress2"].ValidateFunc
-		errs := validator("--ipaddress2", p.Ipaddress2)
+		errs := validator("--ipaddress-2", p.Ipaddress2)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -661,12 +691,26 @@ func (p *CreateLoadBalancerParam) SetParamTemplate(v string) {
 func (p *CreateLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -729,7 +773,9 @@ func (p *CreateLoadBalancerParam) GetQueryFile() string {
 type ReadLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -754,8 +800,14 @@ func (p *ReadLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -859,12 +911,26 @@ func (p *ReadLoadBalancerParam) SetParamTemplate(v string) {
 func (p *ReadLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -939,7 +1005,9 @@ type UpdateLoadBalancerParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -979,8 +1047,14 @@ func (p *UpdateLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1147,12 +1221,26 @@ func (p *UpdateLoadBalancerParam) SetParamTemplate(v string) {
 func (p *UpdateLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1224,7 +1312,9 @@ type DeleteLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1255,8 +1345,14 @@ func (p *DeleteLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1374,12 +1470,26 @@ func (p *DeleteLoadBalancerParam) SetParamTemplate(v string) {
 func (p *DeleteLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1450,7 +1560,9 @@ type BootLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1471,8 +1583,14 @@ func (p *BootLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1542,12 +1660,26 @@ func (p *BootLoadBalancerParam) SetParamTemplate(v string) {
 func (p *BootLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *BootLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BootLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *BootLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *BootLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *BootLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BootLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *BootLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1569,7 +1701,9 @@ type ShutdownLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1590,8 +1724,14 @@ func (p *ShutdownLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1661,12 +1801,26 @@ func (p *ShutdownLoadBalancerParam) SetParamTemplate(v string) {
 func (p *ShutdownLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ShutdownLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ShutdownLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ShutdownLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ShutdownLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ShutdownLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1688,7 +1842,9 @@ type ShutdownForceLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1709,8 +1865,14 @@ func (p *ShutdownForceLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1780,12 +1942,26 @@ func (p *ShutdownForceLoadBalancerParam) SetParamTemplate(v string) {
 func (p *ShutdownForceLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ShutdownForceLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ShutdownForceLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ShutdownForceLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ShutdownForceLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ShutdownForceLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1807,7 +1983,9 @@ type ResetLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1828,8 +2006,14 @@ func (p *ResetLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1899,12 +2083,26 @@ func (p *ResetLoadBalancerParam) SetParamTemplate(v string) {
 func (p *ResetLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ResetLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResetLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ResetLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ResetLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ResetLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResetLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ResetLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1925,7 +2123,9 @@ func (p *ResetLoadBalancerParam) GetId() sacloud.ID {
 type WaitForBootLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1943,8 +2143,14 @@ func (p *WaitForBootLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2007,12 +2213,26 @@ func (p *WaitForBootLoadBalancerParam) SetParamTemplate(v string) {
 func (p *WaitForBootLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *WaitForBootLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForBootLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *WaitForBootLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *WaitForBootLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *WaitForBootLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForBootLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *WaitForBootLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2033,7 +2253,9 @@ func (p *WaitForBootLoadBalancerParam) GetId() sacloud.ID {
 type WaitForDownLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2051,8 +2273,14 @@ func (p *WaitForDownLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2115,12 +2343,26 @@ func (p *WaitForDownLoadBalancerParam) SetParamTemplate(v string) {
 func (p *WaitForDownLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *WaitForDownLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForDownLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *WaitForDownLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *WaitForDownLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *WaitForDownLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForDownLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *WaitForDownLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2141,7 +2383,9 @@ func (p *WaitForDownLoadBalancerParam) GetId() sacloud.ID {
 type VipInfoLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2166,8 +2410,14 @@ func (p *VipInfoLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2271,12 +2521,26 @@ func (p *VipInfoLoadBalancerParam) SetParamTemplate(v string) {
 func (p *VipInfoLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *VipInfoLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *VipInfoLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *VipInfoLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *VipInfoLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *VipInfoLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2352,7 +2616,9 @@ type VipAddLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2391,8 +2657,14 @@ func (p *VipAddLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2539,12 +2811,26 @@ func (p *VipAddLoadBalancerParam) SetParamTemplate(v string) {
 func (p *VipAddLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *VipAddLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VipAddLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *VipAddLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *VipAddLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *VipAddLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VipAddLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *VipAddLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2572,7 +2858,9 @@ type VipUpdateLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2614,8 +2902,14 @@ func (p *VipUpdateLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2762,12 +3056,26 @@ func (p *VipUpdateLoadBalancerParam) SetParamTemplate(v string) {
 func (p *VipUpdateLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *VipUpdateLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *VipUpdateLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *VipUpdateLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *VipUpdateLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *VipUpdateLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2790,7 +3098,9 @@ type VipDeleteLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2814,8 +3124,14 @@ func (p *VipDeleteLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2899,12 +3215,26 @@ func (p *VipDeleteLoadBalancerParam) SetParamTemplate(v string) {
 func (p *VipDeleteLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *VipDeleteLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *VipDeleteLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *VipDeleteLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *VipDeleteLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *VipDeleteLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *VipDeleteLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *VipDeleteLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2928,7 +3258,9 @@ type ServerInfoLoadBalancerParam struct {
 	Port              int        `json:"port"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2962,8 +3294,14 @@ func (p *ServerInfoLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3130,12 +3468,26 @@ func (p *ServerInfoLoadBalancerParam) SetParamTemplate(v string) {
 func (p *ServerInfoLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ServerInfoLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ServerInfoLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ServerInfoLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ServerInfoLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ServerInfoLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -3214,7 +3566,9 @@ type ServerAddLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -3262,8 +3616,14 @@ func (p *ServerAddLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3459,12 +3819,26 @@ func (p *ServerAddLoadBalancerParam) SetParamTemplate(v string) {
 func (p *ServerAddLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ServerAddLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ServerAddLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ServerAddLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ServerAddLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ServerAddLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -3494,7 +3868,9 @@ type ServerUpdateLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -3539,8 +3915,14 @@ func (p *ServerUpdateLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3729,12 +4111,26 @@ func (p *ServerUpdateLoadBalancerParam) SetParamTemplate(v string) {
 func (p *ServerUpdateLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ServerUpdateLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ServerUpdateLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ServerUpdateLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ServerUpdateLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ServerUpdateLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -3760,7 +4156,9 @@ type ServerDeleteLoadBalancerParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -3793,8 +4191,14 @@ func (p *ServerDeleteLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -3948,12 +4352,26 @@ func (p *ServerDeleteLoadBalancerParam) SetParamTemplate(v string) {
 func (p *ServerDeleteLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ServerDeleteLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ServerDeleteLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ServerDeleteLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ServerDeleteLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ServerDeleteLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -3977,7 +4395,9 @@ type MonitorLoadBalancerParam struct {
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -4014,8 +4434,14 @@ func (p *MonitorLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -4161,12 +4587,26 @@ func (p *MonitorLoadBalancerParam) SetParamTemplate(v string) {
 func (p *MonitorLoadBalancerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorLoadBalancerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorLoadBalancerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorLoadBalancerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorLoadBalancerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorLoadBalancerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorLoadBalancerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

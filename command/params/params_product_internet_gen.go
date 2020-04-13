@@ -31,7 +31,9 @@ type ListProductInternetParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -67,8 +69,14 @@ func (p *ListProductInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -215,12 +223,26 @@ func (p *ListProductInternetParam) SetParamTemplate(v string) {
 func (p *ListProductInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListProductInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListProductInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListProductInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListProductInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListProductInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListProductInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListProductInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -283,7 +305,9 @@ func (p *ListProductInternetParam) GetQueryFile() string {
 type ReadProductInternetParam struct {
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -308,8 +332,14 @@ func (p *ReadProductInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -420,12 +450,26 @@ func (p *ReadProductInternetParam) SetParamTemplate(v string) {
 func (p *ReadProductInternetParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadProductInternetParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadProductInternetParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadProductInternetParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadProductInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadProductInternetParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadProductInternetParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadProductInternetParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

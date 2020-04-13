@@ -32,13 +32,13 @@ import (
 )
 
 func init() {
-	listParam := params.NewListSwitchParam()
-	createParam := params.NewCreateSwitchParam()
-	readParam := params.NewReadSwitchParam()
-	updateParam := params.NewUpdateSwitchParam()
-	deleteParam := params.NewDeleteSwitchParam()
-	bridgeConnectParam := params.NewBridgeConnectSwitchParam()
-	bridgeDisconnectParam := params.NewBridgeDisconnectSwitchParam()
+	switchListParam := params.NewListSwitchParam()
+	switchCreateParam := params.NewCreateSwitchParam()
+	switchReadParam := params.NewReadSwitchParam()
+	switchUpdateParam := params.NewUpdateSwitchParam()
+	switchDeleteParam := params.NewDeleteSwitchParam()
+	switchBridgeConnectParam := params.NewBridgeConnectSwitchParam()
+	switchBridgeDisconnectParam := params.NewBridgeDisconnectSwitchParam()
 
 	cliCommand := &cli.Command{
 		Name:  "switch",
@@ -81,8 +81,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -130,9 +138,9 @@ func init() {
 						return err
 					}
 
-					listParam.ParamTemplate = c.String("param-template")
-					listParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(listParam)
+					switchListParam.ParamTemplate = c.String("param-template")
+					switchListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(switchListParam)
 					if err != nil {
 						return err
 					}
@@ -142,57 +150,63 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(listParam, p, mergo.WithOverride)
+						mergo.Merge(switchListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						listParam.Name = c.StringSlice("name")
+						switchListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						switchListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						listParam.Tags = c.StringSlice("tags")
+						switchListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						listParam.From = c.Int("from")
+						switchListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						listParam.Max = c.Int("max")
+						switchListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						listParam.Sort = c.StringSlice("sort")
+						switchListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						listParam.ParamTemplate = c.String("param-template")
+						switchListParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						switchListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						listParam.ParamTemplateFile = c.String("param-template-file")
+						switchListParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						switchListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						switchListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						listParam.OutputType = c.String("output-type")
+						switchListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						listParam.Column = c.StringSlice("column")
+						switchListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						listParam.Quiet = c.Bool("quiet")
+						switchListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						listParam.Format = c.String("format")
+						switchListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						listParam.FormatFile = c.String("format-file")
+						switchListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						listParam.Query = c.String("query")
+						switchListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						listParam.QueryFile = c.String("query-file")
+						switchListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -200,7 +214,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = listParam
+					var outputTypeHolder interface{} = switchListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -211,10 +225,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if listParam.GenerateSkeleton {
-						listParam.GenerateSkeleton = false
-						listParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(listParam, "", "\t")
+					if switchListParam.GenerateSkeleton {
+						switchListParam.GenerateSkeleton = false
+						switchListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(switchListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -223,15 +237,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := switchListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), listParam)
+					ctx := command.NewContext(c, c.Args().Slice(), switchListParam)
 
 					// Run command with params
-					return funcs.SwitchList(ctx, listParam)
+					return funcs.SwitchList(ctx, switchListParam)
 
 				},
 			},
@@ -266,8 +280,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -315,9 +337,9 @@ func init() {
 						return err
 					}
 
-					createParam.ParamTemplate = c.String("param-template")
-					createParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(createParam)
+					switchCreateParam.ParamTemplate = c.String("param-template")
+					switchCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(switchCreateParam)
 					if err != nil {
 						return err
 					}
@@ -327,54 +349,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(createParam, p, mergo.WithOverride)
+						mergo.Merge(switchCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						createParam.Name = c.String("name")
+						switchCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						createParam.Description = c.String("description")
+						switchCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						createParam.Tags = c.StringSlice("tags")
+						switchCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						switchCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						createParam.Assumeyes = c.Bool("assumeyes")
+						switchCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						createParam.ParamTemplate = c.String("param-template")
+						switchCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						switchCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						createParam.ParamTemplateFile = c.String("param-template-file")
+						switchCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						switchCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						createParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						switchCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						createParam.OutputType = c.String("output-type")
+						switchCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						createParam.Column = c.StringSlice("column")
+						switchCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						createParam.Quiet = c.Bool("quiet")
+						switchCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						createParam.Format = c.String("format")
+						switchCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						createParam.FormatFile = c.String("format-file")
+						switchCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						createParam.Query = c.String("query")
+						switchCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						createParam.QueryFile = c.String("query-file")
+						switchCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -382,7 +410,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = createParam
+					var outputTypeHolder interface{} = switchCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -393,10 +421,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if createParam.GenerateSkeleton {
-						createParam.GenerateSkeleton = false
-						createParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(createParam, "", "\t")
+					if switchCreateParam.GenerateSkeleton {
+						switchCreateParam.GenerateSkeleton = false
+						switchCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(switchCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -405,15 +433,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
+					if errors := switchCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), createParam)
+					ctx := command.NewContext(c, c.Args().Slice(), switchCreateParam)
 
 					// confirm
-					if !createParam.Assumeyes {
+					if !switchCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -423,7 +451,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.SwitchCreate(ctx, createParam)
+					return funcs.SwitchCreate(ctx, switchCreateParam)
 
 				},
 			},
@@ -441,8 +469,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -495,9 +531,9 @@ func init() {
 						return err
 					}
 
-					readParam.ParamTemplate = c.String("param-template")
-					readParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(readParam)
+					switchReadParam.ParamTemplate = c.String("param-template")
+					switchReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(switchReadParam)
 					if err != nil {
 						return err
 					}
@@ -507,45 +543,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(readParam, p, mergo.WithOverride)
+						mergo.Merge(switchReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						readParam.Selector = c.StringSlice("selector")
+						switchReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						readParam.ParamTemplate = c.String("param-template")
+						switchReadParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						switchReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						readParam.ParamTemplateFile = c.String("param-template-file")
+						switchReadParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						switchReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						readParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						switchReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						readParam.OutputType = c.String("output-type")
+						switchReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						readParam.Column = c.StringSlice("column")
+						switchReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						readParam.Quiet = c.Bool("quiet")
+						switchReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						readParam.Format = c.String("format")
+						switchReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						readParam.FormatFile = c.String("format-file")
+						switchReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						readParam.Query = c.String("query")
+						switchReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						readParam.QueryFile = c.String("query-file")
+						switchReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = sacloud.ID(c.Int64("id"))
+						switchReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -553,7 +595,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = readParam
+					var outputTypeHolder interface{} = switchReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -564,10 +606,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if readParam.GenerateSkeleton {
-						readParam.GenerateSkeleton = false
-						readParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(readParam, "", "\t")
+					if switchReadParam.GenerateSkeleton {
+						switchReadParam.GenerateSkeleton = false
+						switchReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(switchReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -576,19 +618,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
+					if errors := switchReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), readParam)
+					ctx := command.NewContext(c, c.Args().Slice(), switchReadParam)
 
 					apiClient := ctx.GetAPIClient().Switch
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(readParam.Selector) == 0 {
+						if len(switchReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -597,12 +639,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Switches {
-							if hasTags(&v, readParam.Selector) {
+							if hasTags(&v, switchReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", switchReadParam.Selector)
 						}
 
 					} else {
@@ -624,7 +666,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Switches {
-										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+										if len(switchReadParam.Selector) == 0 || hasTags(&v, switchReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -649,11 +691,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						readParam.SetId(id)
-						p := *readParam // copy struct value
-						readParam := &p
+						switchReadParam.SetId(id)
+						p := *switchReadParam // copy struct value
+						switchReadParam := &p
 						go func() {
-							err := funcs.SwitchRead(ctx, readParam)
+							err := funcs.SwitchRead(ctx, switchReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -701,8 +743,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -755,9 +805,9 @@ func init() {
 						return err
 					}
 
-					updateParam.ParamTemplate = c.String("param-template")
-					updateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(updateParam)
+					switchUpdateParam.ParamTemplate = c.String("param-template")
+					switchUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(switchUpdateParam)
 					if err != nil {
 						return err
 					}
@@ -767,60 +817,66 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(updateParam, p, mergo.WithOverride)
+						mergo.Merge(switchUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						updateParam.Selector = c.StringSlice("selector")
+						switchUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						updateParam.Name = c.String("name")
+						switchUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						updateParam.Description = c.String("description")
+						switchUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						updateParam.Tags = c.StringSlice("tags")
+						switchUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						switchUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						updateParam.Assumeyes = c.Bool("assumeyes")
+						switchUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						updateParam.ParamTemplate = c.String("param-template")
+						switchUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						switchUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						updateParam.ParamTemplateFile = c.String("param-template-file")
+						switchUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						switchUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						updateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						switchUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						updateParam.OutputType = c.String("output-type")
+						switchUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						updateParam.Column = c.StringSlice("column")
+						switchUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						updateParam.Quiet = c.Bool("quiet")
+						switchUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						updateParam.Format = c.String("format")
+						switchUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						updateParam.FormatFile = c.String("format-file")
+						switchUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						updateParam.Query = c.String("query")
+						switchUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						updateParam.QueryFile = c.String("query-file")
+						switchUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = sacloud.ID(c.Int64("id"))
+						switchUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -828,7 +884,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = updateParam
+					var outputTypeHolder interface{} = switchUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -839,10 +895,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if updateParam.GenerateSkeleton {
-						updateParam.GenerateSkeleton = false
-						updateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(updateParam, "", "\t")
+					if switchUpdateParam.GenerateSkeleton {
+						switchUpdateParam.GenerateSkeleton = false
+						switchUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(switchUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -851,19 +907,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
+					if errors := switchUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), switchUpdateParam)
 
 					apiClient := ctx.GetAPIClient().Switch
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(updateParam.Selector) == 0 {
+						if len(switchUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -872,12 +928,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Switches {
-							if hasTags(&v, updateParam.Selector) {
+							if hasTags(&v, switchUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", switchUpdateParam.Selector)
 						}
 
 					} else {
@@ -899,7 +955,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Switches {
-										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+										if len(switchUpdateParam.Selector) == 0 || hasTags(&v, switchUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -916,7 +972,7 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes {
+					if !switchUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -930,11 +986,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						updateParam.SetId(id)
-						p := *updateParam // copy struct value
-						updateParam := &p
+						switchUpdateParam.SetId(id)
+						p := *switchUpdateParam // copy struct value
+						switchUpdateParam := &p
 						go func() {
-							err := funcs.SwitchUpdate(ctx, updateParam)
+							err := funcs.SwitchUpdate(ctx, switchUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -966,8 +1022,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1020,9 +1084,9 @@ func init() {
 						return err
 					}
 
-					deleteParam.ParamTemplate = c.String("param-template")
-					deleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(deleteParam)
+					switchDeleteParam.ParamTemplate = c.String("param-template")
+					switchDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(switchDeleteParam)
 					if err != nil {
 						return err
 					}
@@ -1032,48 +1096,54 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(deleteParam, p, mergo.WithOverride)
+						mergo.Merge(switchDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						deleteParam.Selector = c.StringSlice("selector")
+						switchDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						deleteParam.Assumeyes = c.Bool("assumeyes")
+						switchDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						deleteParam.ParamTemplate = c.String("param-template")
+						switchDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						switchDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						deleteParam.ParamTemplateFile = c.String("param-template-file")
+						switchDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						switchDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						switchDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						deleteParam.OutputType = c.String("output-type")
+						switchDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						deleteParam.Column = c.StringSlice("column")
+						switchDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						deleteParam.Quiet = c.Bool("quiet")
+						switchDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						deleteParam.Format = c.String("format")
+						switchDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						deleteParam.FormatFile = c.String("format-file")
+						switchDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						deleteParam.Query = c.String("query")
+						switchDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						deleteParam.QueryFile = c.String("query-file")
+						switchDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = sacloud.ID(c.Int64("id"))
+						switchDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1081,7 +1151,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = deleteParam
+					var outputTypeHolder interface{} = switchDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1092,10 +1162,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if deleteParam.GenerateSkeleton {
-						deleteParam.GenerateSkeleton = false
-						deleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(deleteParam, "", "\t")
+					if switchDeleteParam.GenerateSkeleton {
+						switchDeleteParam.GenerateSkeleton = false
+						switchDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(switchDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1104,19 +1174,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := switchDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), switchDeleteParam)
 
 					apiClient := ctx.GetAPIClient().Switch
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(deleteParam.Selector) == 0 {
+						if len(switchDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1125,12 +1195,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Switches {
-							if hasTags(&v, deleteParam.Selector) {
+							if hasTags(&v, switchDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", switchDeleteParam.Selector)
 						}
 
 					} else {
@@ -1152,7 +1222,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Switches {
-										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+										if len(switchDeleteParam.Selector) == 0 || hasTags(&v, switchDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1169,7 +1239,7 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes {
+					if !switchDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1183,11 +1253,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						deleteParam.SetId(id)
-						p := *deleteParam // copy struct value
-						deleteParam := &p
+						switchDeleteParam.SetId(id)
+						p := *switchDeleteParam // copy struct value
+						switchDeleteParam := &p
 						go func() {
-							err := funcs.SwitchDelete(ctx, deleteParam)
+							err := funcs.SwitchDelete(ctx, switchDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1222,8 +1292,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1244,9 +1322,9 @@ func init() {
 						return err
 					}
 
-					bridgeConnectParam.ParamTemplate = c.String("param-template")
-					bridgeConnectParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(bridgeConnectParam)
+					switchBridgeConnectParam.ParamTemplate = c.String("param-template")
+					switchBridgeConnectParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(switchBridgeConnectParam)
 					if err != nil {
 						return err
 					}
@@ -1256,30 +1334,36 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(bridgeConnectParam, p, mergo.WithOverride)
+						mergo.Merge(switchBridgeConnectParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("bridge-id") {
-						bridgeConnectParam.BridgeId = sacloud.ID(c.Int64("bridge-id"))
+						switchBridgeConnectParam.BridgeId = sacloud.ID(c.Int64("bridge-id"))
 					}
 					if c.IsSet("selector") {
-						bridgeConnectParam.Selector = c.StringSlice("selector")
+						switchBridgeConnectParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						bridgeConnectParam.Assumeyes = c.Bool("assumeyes")
+						switchBridgeConnectParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						bridgeConnectParam.ParamTemplate = c.String("param-template")
+						switchBridgeConnectParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						switchBridgeConnectParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						bridgeConnectParam.ParamTemplateFile = c.String("param-template-file")
+						switchBridgeConnectParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						switchBridgeConnectParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						bridgeConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						switchBridgeConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						bridgeConnectParam.Id = sacloud.ID(c.Int64("id"))
+						switchBridgeConnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1287,7 +1371,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = bridgeConnectParam
+					var outputTypeHolder interface{} = switchBridgeConnectParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1298,10 +1382,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if bridgeConnectParam.GenerateSkeleton {
-						bridgeConnectParam.GenerateSkeleton = false
-						bridgeConnectParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(bridgeConnectParam, "", "\t")
+					if switchBridgeConnectParam.GenerateSkeleton {
+						switchBridgeConnectParam.GenerateSkeleton = false
+						switchBridgeConnectParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(switchBridgeConnectParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1310,19 +1394,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := bridgeConnectParam.Validate(); len(errors) > 0 {
+					if errors := switchBridgeConnectParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), bridgeConnectParam)
+					ctx := command.NewContext(c, c.Args().Slice(), switchBridgeConnectParam)
 
 					apiClient := ctx.GetAPIClient().Switch
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(bridgeConnectParam.Selector) == 0 {
+						if len(switchBridgeConnectParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1331,12 +1415,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Switches {
-							if hasTags(&v, bridgeConnectParam.Selector) {
+							if hasTags(&v, switchBridgeConnectParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bridgeConnectParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", switchBridgeConnectParam.Selector)
 						}
 
 					} else {
@@ -1358,7 +1442,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Switches {
-										if len(bridgeConnectParam.Selector) == 0 || hasTags(&v, bridgeConnectParam.Selector) {
+										if len(switchBridgeConnectParam.Selector) == 0 || hasTags(&v, switchBridgeConnectParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1375,7 +1459,7 @@ func init() {
 					}
 
 					// confirm
-					if !bridgeConnectParam.Assumeyes {
+					if !switchBridgeConnectParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1389,11 +1473,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						bridgeConnectParam.SetId(id)
-						p := *bridgeConnectParam // copy struct value
-						bridgeConnectParam := &p
+						switchBridgeConnectParam.SetId(id)
+						p := *switchBridgeConnectParam // copy struct value
+						switchBridgeConnectParam := &p
 						go func() {
-							err := funcs.SwitchBridgeConnect(ctx, bridgeConnectParam)
+							err := funcs.SwitchBridgeConnect(ctx, switchBridgeConnectParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1424,8 +1508,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1446,9 +1538,9 @@ func init() {
 						return err
 					}
 
-					bridgeDisconnectParam.ParamTemplate = c.String("param-template")
-					bridgeDisconnectParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(bridgeDisconnectParam)
+					switchBridgeDisconnectParam.ParamTemplate = c.String("param-template")
+					switchBridgeDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(switchBridgeDisconnectParam)
 					if err != nil {
 						return err
 					}
@@ -1458,27 +1550,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(bridgeDisconnectParam, p, mergo.WithOverride)
+						mergo.Merge(switchBridgeDisconnectParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						bridgeDisconnectParam.Selector = c.StringSlice("selector")
+						switchBridgeDisconnectParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						bridgeDisconnectParam.Assumeyes = c.Bool("assumeyes")
+						switchBridgeDisconnectParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						bridgeDisconnectParam.ParamTemplate = c.String("param-template")
+						switchBridgeDisconnectParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						switchBridgeDisconnectParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						bridgeDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+						switchBridgeDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						switchBridgeDisconnectParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						bridgeDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						switchBridgeDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						bridgeDisconnectParam.Id = sacloud.ID(c.Int64("id"))
+						switchBridgeDisconnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1486,7 +1584,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = bridgeDisconnectParam
+					var outputTypeHolder interface{} = switchBridgeDisconnectParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1497,10 +1595,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if bridgeDisconnectParam.GenerateSkeleton {
-						bridgeDisconnectParam.GenerateSkeleton = false
-						bridgeDisconnectParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(bridgeDisconnectParam, "", "\t")
+					if switchBridgeDisconnectParam.GenerateSkeleton {
+						switchBridgeDisconnectParam.GenerateSkeleton = false
+						switchBridgeDisconnectParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(switchBridgeDisconnectParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1509,19 +1607,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := bridgeDisconnectParam.Validate(); len(errors) > 0 {
+					if errors := switchBridgeDisconnectParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), bridgeDisconnectParam)
+					ctx := command.NewContext(c, c.Args().Slice(), switchBridgeDisconnectParam)
 
 					apiClient := ctx.GetAPIClient().Switch
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(bridgeDisconnectParam.Selector) == 0 {
+						if len(switchBridgeDisconnectParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1530,12 +1628,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Switches {
-							if hasTags(&v, bridgeDisconnectParam.Selector) {
+							if hasTags(&v, switchBridgeDisconnectParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bridgeDisconnectParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", switchBridgeDisconnectParam.Selector)
 						}
 
 					} else {
@@ -1557,7 +1655,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Switches {
-										if len(bridgeDisconnectParam.Selector) == 0 || hasTags(&v, bridgeDisconnectParam.Selector) {
+										if len(switchBridgeDisconnectParam.Selector) == 0 || hasTags(&v, switchBridgeDisconnectParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1574,7 +1672,7 @@ func init() {
 					}
 
 					// confirm
-					if !bridgeDisconnectParam.Assumeyes {
+					if !switchBridgeDisconnectParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1588,11 +1686,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						bridgeDisconnectParam.SetId(id)
-						p := *bridgeDisconnectParam // copy struct value
-						bridgeDisconnectParam := &p
+						switchBridgeDisconnectParam.SetId(id)
+						p := *switchBridgeDisconnectParam // copy struct value
+						switchBridgeDisconnectParam := &p
 						go func() {
-							err := funcs.SwitchBridgeDisconnect(ctx, bridgeDisconnectParam)
+							err := funcs.SwitchBridgeDisconnect(ctx, switchBridgeDisconnectParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1684,6 +1782,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("switch", "bridge-connect", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("switch", "bridge-connect", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("switch", "bridge-connect", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -1710,6 +1818,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("switch", "bridge-disconnect", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("switch", "bridge-disconnect", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("switch", "bridge-disconnect", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -1770,6 +1888,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("switch", "create", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("switch", "create", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("switch", "create", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -1835,6 +1963,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("switch", "delete", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("switch", "delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("switch", "delete", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -1914,6 +2052,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("switch", "list", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("switch", "list", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("switch", "list", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -1975,6 +2123,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("switch", "read", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("switch", "read", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("switch", "read", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -2055,6 +2213,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("switch", "update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("switch", "update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("switch", "update", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

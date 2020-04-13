@@ -32,7 +32,9 @@ type ListNFSParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -71,8 +73,14 @@ func (p *ListNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -233,12 +241,26 @@ func (p *ListNFSParam) SetParamTemplate(v string) {
 func (p *ListNFSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListNFSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListNFSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListNFSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListNFSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListNFSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -311,7 +333,9 @@ type CreateNFSParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -369,8 +393,14 @@ func (p *CreateNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -646,12 +676,26 @@ func (p *CreateNFSParam) SetParamTemplate(v string) {
 func (p *CreateNFSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateNFSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateNFSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateNFSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateNFSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateNFSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -714,7 +758,9 @@ func (p *CreateNFSParam) GetQueryFile() string {
 type ReadNFSParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -739,8 +785,14 @@ func (p *ReadNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -844,12 +896,26 @@ func (p *ReadNFSParam) SetParamTemplate(v string) {
 func (p *ReadNFSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadNFSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadNFSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadNFSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadNFSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadNFSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -924,7 +990,9 @@ type UpdateNFSParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -964,8 +1032,14 @@ func (p *UpdateNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1132,12 +1206,26 @@ func (p *UpdateNFSParam) SetParamTemplate(v string) {
 func (p *UpdateNFSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateNFSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateNFSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateNFSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateNFSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateNFSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1209,7 +1297,9 @@ type DeleteNFSParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1240,8 +1330,14 @@ func (p *DeleteNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1359,12 +1455,26 @@ func (p *DeleteNFSParam) SetParamTemplate(v string) {
 func (p *DeleteNFSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteNFSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteNFSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteNFSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteNFSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteNFSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1435,7 +1545,9 @@ type BootNFSParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1456,8 +1568,14 @@ func (p *BootNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1527,12 +1645,26 @@ func (p *BootNFSParam) SetParamTemplate(v string) {
 func (p *BootNFSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *BootNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *BootNFSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *BootNFSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *BootNFSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *BootNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *BootNFSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *BootNFSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1554,7 +1686,9 @@ type ShutdownNFSParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1575,8 +1709,14 @@ func (p *ShutdownNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1646,12 +1786,26 @@ func (p *ShutdownNFSParam) SetParamTemplate(v string) {
 func (p *ShutdownNFSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ShutdownNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownNFSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ShutdownNFSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ShutdownNFSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ShutdownNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownNFSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ShutdownNFSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1673,7 +1827,9 @@ type ShutdownForceNFSParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1694,8 +1850,14 @@ func (p *ShutdownForceNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1765,12 +1927,26 @@ func (p *ShutdownForceNFSParam) SetParamTemplate(v string) {
 func (p *ShutdownForceNFSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ShutdownForceNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ShutdownForceNFSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ShutdownForceNFSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ShutdownForceNFSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ShutdownForceNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ShutdownForceNFSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ShutdownForceNFSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1792,7 +1968,9 @@ type ResetNFSParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1813,8 +1991,14 @@ func (p *ResetNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1884,12 +2068,26 @@ func (p *ResetNFSParam) SetParamTemplate(v string) {
 func (p *ResetNFSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ResetNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ResetNFSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ResetNFSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ResetNFSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ResetNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ResetNFSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ResetNFSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1910,7 +2108,9 @@ func (p *ResetNFSParam) GetId() sacloud.ID {
 type WaitForBootNFSParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1928,8 +2128,14 @@ func (p *WaitForBootNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1992,12 +2198,26 @@ func (p *WaitForBootNFSParam) SetParamTemplate(v string) {
 func (p *WaitForBootNFSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *WaitForBootNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForBootNFSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *WaitForBootNFSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *WaitForBootNFSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *WaitForBootNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForBootNFSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *WaitForBootNFSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2018,7 +2238,9 @@ func (p *WaitForBootNFSParam) GetId() sacloud.ID {
 type WaitForDownNFSParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2036,8 +2258,14 @@ func (p *WaitForDownNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2100,12 +2328,26 @@ func (p *WaitForDownNFSParam) SetParamTemplate(v string) {
 func (p *WaitForDownNFSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *WaitForDownNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForDownNFSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *WaitForDownNFSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *WaitForDownNFSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *WaitForDownNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForDownNFSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *WaitForDownNFSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2129,7 +2371,9 @@ type MonitorNicNFSParam struct {
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2166,8 +2410,14 @@ func (p *MonitorNicNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2313,12 +2563,26 @@ func (p *MonitorNicNFSParam) SetParamTemplate(v string) {
 func (p *MonitorNicNFSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorNicNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorNicNFSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorNicNFSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorNicNFSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorNicNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorNicNFSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorNicNFSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2391,7 +2655,9 @@ type MonitorFreeDiskSizeNFSParam struct {
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2428,8 +2694,14 @@ func (p *MonitorFreeDiskSizeNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2575,12 +2847,26 @@ func (p *MonitorFreeDiskSizeNFSParam) SetParamTemplate(v string) {
 func (p *MonitorFreeDiskSizeNFSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorFreeDiskSizeNFSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorFreeDiskSizeNFSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorFreeDiskSizeNFSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorFreeDiskSizeNFSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

@@ -31,7 +31,9 @@ type ListPacketFilterParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -67,8 +69,14 @@ func (p *ListPacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -215,12 +223,26 @@ func (p *ListPacketFilterParam) SetParamTemplate(v string) {
 func (p *ListPacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListPacketFilterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListPacketFilterParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListPacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListPacketFilterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListPacketFilterParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListPacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -285,7 +307,9 @@ type CreatePacketFilterParam struct {
 	Description       string   `json:"description"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -315,8 +339,14 @@ func (p *CreatePacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -445,12 +475,26 @@ func (p *CreatePacketFilterParam) SetParamTemplate(v string) {
 func (p *CreatePacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreatePacketFilterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreatePacketFilterParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreatePacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreatePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreatePacketFilterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreatePacketFilterParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreatePacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -512,7 +556,9 @@ func (p *CreatePacketFilterParam) GetQueryFile() string {
 // ReadPacketFilterParam is input parameters for the sacloud API
 type ReadPacketFilterParam struct {
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -534,8 +580,14 @@ func (p *ReadPacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -632,12 +684,26 @@ func (p *ReadPacketFilterParam) SetParamTemplate(v string) {
 func (p *ReadPacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadPacketFilterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadPacketFilterParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadPacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadPacketFilterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadPacketFilterParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadPacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -709,7 +775,9 @@ type UpdatePacketFilterParam struct {
 	Description       string     `json:"description"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -740,8 +808,14 @@ func (p *UpdatePacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -873,12 +947,26 @@ func (p *UpdatePacketFilterParam) SetParamTemplate(v string) {
 func (p *UpdatePacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdatePacketFilterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdatePacketFilterParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdatePacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdatePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdatePacketFilterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdatePacketFilterParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdatePacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -948,7 +1036,9 @@ func (p *UpdatePacketFilterParam) GetId() sacloud.ID {
 type DeletePacketFilterParam struct {
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -973,8 +1063,14 @@ func (p *DeletePacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1078,12 +1174,26 @@ func (p *DeletePacketFilterParam) SetParamTemplate(v string) {
 func (p *DeletePacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeletePacketFilterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeletePacketFilterParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeletePacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeletePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeletePacketFilterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeletePacketFilterParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeletePacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1152,7 +1262,9 @@ func (p *DeletePacketFilterParam) GetId() sacloud.ID {
 // RuleInfoPacketFilterParam is input parameters for the sacloud API
 type RuleInfoPacketFilterParam struct {
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1174,8 +1286,14 @@ func (p *RuleInfoPacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1272,12 +1390,26 @@ func (p *RuleInfoPacketFilterParam) SetParamTemplate(v string) {
 func (p *RuleInfoPacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *RuleInfoPacketFilterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *RuleInfoPacketFilterParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *RuleInfoPacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *RuleInfoPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *RuleInfoPacketFilterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *RuleInfoPacketFilterParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *RuleInfoPacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1354,7 +1486,9 @@ type RuleAddPacketFilterParam struct {
 	Description       string     `json:"description"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1403,8 +1537,14 @@ func (p *RuleAddPacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1599,12 +1739,26 @@ func (p *RuleAddPacketFilterParam) SetParamTemplate(v string) {
 func (p *RuleAddPacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *RuleAddPacketFilterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *RuleAddPacketFilterParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *RuleAddPacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *RuleAddPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *RuleAddPacketFilterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *RuleAddPacketFilterParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *RuleAddPacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1681,7 +1835,9 @@ type RuleUpdatePacketFilterParam struct {
 	Description       string     `json:"description"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1727,8 +1883,14 @@ func (p *RuleUpdatePacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1930,12 +2092,26 @@ func (p *RuleUpdatePacketFilterParam) SetParamTemplate(v string) {
 func (p *RuleUpdatePacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *RuleUpdatePacketFilterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *RuleUpdatePacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *RuleUpdatePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *RuleUpdatePacketFilterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *RuleUpdatePacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2006,7 +2182,9 @@ type RuleDeletePacketFilterParam struct {
 	Index             int        `json:"index"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2034,8 +2212,14 @@ func (p *RuleDeletePacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2153,12 +2337,26 @@ func (p *RuleDeletePacketFilterParam) SetParamTemplate(v string) {
 func (p *RuleDeletePacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *RuleDeletePacketFilterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *RuleDeletePacketFilterParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *RuleDeletePacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *RuleDeletePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *RuleDeletePacketFilterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *RuleDeletePacketFilterParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *RuleDeletePacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2229,7 +2427,9 @@ type InterfaceConnectPacketFilterParam struct {
 	InterfaceId       sacloud.ID `json:"interface-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2250,8 +2450,14 @@ func (p *InterfaceConnectPacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2335,12 +2541,26 @@ func (p *InterfaceConnectPacketFilterParam) SetParamTemplate(v string) {
 func (p *InterfaceConnectPacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *InterfaceConnectPacketFilterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *InterfaceConnectPacketFilterParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *InterfaceConnectPacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *InterfaceConnectPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *InterfaceConnectPacketFilterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *InterfaceConnectPacketFilterParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *InterfaceConnectPacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2362,7 +2582,9 @@ type InterfaceDisconnectPacketFilterParam struct {
 	InterfaceId       sacloud.ID `json:"interface-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2383,8 +2605,14 @@ func (p *InterfaceDisconnectPacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2468,12 +2696,26 @@ func (p *InterfaceDisconnectPacketFilterParam) SetParamTemplate(v string) {
 func (p *InterfaceDisconnectPacketFilterParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *InterfaceDisconnectPacketFilterParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *InterfaceDisconnectPacketFilterParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *InterfaceDisconnectPacketFilterParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *InterfaceDisconnectPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *InterfaceDisconnectPacketFilterParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *InterfaceDisconnectPacketFilterParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *InterfaceDisconnectPacketFilterParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

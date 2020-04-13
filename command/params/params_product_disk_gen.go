@@ -31,7 +31,9 @@ type ListProductDiskParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -67,8 +69,14 @@ func (p *ListProductDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -215,12 +223,26 @@ func (p *ListProductDiskParam) SetParamTemplate(v string) {
 func (p *ListProductDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListProductDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListProductDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListProductDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListProductDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListProductDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListProductDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListProductDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -283,7 +305,9 @@ func (p *ListProductDiskParam) GetQueryFile() string {
 type ReadProductDiskParam struct {
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -308,8 +332,14 @@ func (p *ReadProductDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -420,12 +450,26 @@ func (p *ReadProductDiskParam) SetParamTemplate(v string) {
 func (p *ReadProductDiskParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadProductDiskParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadProductDiskParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadProductDiskParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadProductDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadProductDiskParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadProductDiskParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadProductDiskParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

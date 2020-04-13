@@ -30,8 +30,8 @@ import (
 )
 
 func init() {
-	csvParam := params.NewCsvBillParam()
-	listParam := params.NewListBillParam()
+	billCsvParam := params.NewCsvBillParam()
+	billListParam := params.NewListBillParam()
 
 	cliCommand := &cli.Command{
 		Name:  "bill",
@@ -57,8 +57,16 @@ func init() {
 				Usage: "Set input parameter from string(JSON)",
 			},
 			&cli.StringFlag{
+				Name:  "parameters",
+				Usage: "Set input parameters from JSON string",
+			},
+			&cli.StringFlag{
 				Name:  "param-template-file",
 				Usage: "Set input parameter from file",
+			},
+			&cli.StringFlag{
+				Name:  "parameter-file",
+				Usage: "Set input parameters from file",
 			},
 			&cli.BoolFlag{
 				Name:  "generate-skeleton",
@@ -107,8 +115,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -137,9 +153,9 @@ func init() {
 						return err
 					}
 
-					csvParam.ParamTemplate = c.String("param-template")
-					csvParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(csvParam)
+					billCsvParam.ParamTemplate = c.String("param-template")
+					billCsvParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(billCsvParam)
 					if err != nil {
 						return err
 					}
@@ -149,27 +165,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(csvParam, p, mergo.WithOverride)
+						mergo.Merge(billCsvParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						csvParam.ParamTemplate = c.String("param-template")
+						billCsvParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						billCsvParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						csvParam.ParamTemplateFile = c.String("param-template-file")
+						billCsvParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						billCsvParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						csvParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						billCsvParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("no-header") {
-						csvParam.NoHeader = c.Bool("no-header")
+						billCsvParam.NoHeader = c.Bool("no-header")
 					}
 					if c.IsSet("bill-output") {
-						csvParam.BillOutput = c.String("bill-output")
+						billCsvParam.BillOutput = c.String("bill-output")
 					}
 					if c.IsSet("bill-id") {
-						csvParam.BillId = sacloud.ID(c.Int64("bill-id"))
+						billCsvParam.BillId = sacloud.ID(c.Int64("bill-id"))
 					}
 
 					// Validate global params
@@ -177,7 +199,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = csvParam
+					var outputTypeHolder interface{} = billCsvParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -188,10 +210,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if csvParam.GenerateSkeleton {
-						csvParam.GenerateSkeleton = false
-						csvParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(csvParam, "", "\t")
+					if billCsvParam.GenerateSkeleton {
+						billCsvParam.GenerateSkeleton = false
+						billCsvParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(billCsvParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -200,15 +222,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := csvParam.Validate(); len(errors) > 0 {
+					if errors := billCsvParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), csvParam)
+					ctx := command.NewContext(c, c.Args().Slice(), billCsvParam)
 
 					// Run command with params
-					return funcs.BillCsv(ctx, csvParam)
+					return funcs.BillCsv(ctx, billCsvParam)
 
 				},
 			},
@@ -230,8 +252,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -279,9 +309,9 @@ func init() {
 						return err
 					}
 
-					listParam.ParamTemplate = c.String("param-template")
-					listParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(listParam)
+					billListParam.ParamTemplate = c.String("param-template")
+					billListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(billListParam)
 					if err != nil {
 						return err
 					}
@@ -291,45 +321,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(listParam, p, mergo.WithOverride)
+						mergo.Merge(billListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("year") {
-						listParam.Year = c.Int("year")
+						billListParam.Year = c.Int("year")
 					}
 					if c.IsSet("month") {
-						listParam.Month = c.Int("month")
+						billListParam.Month = c.Int("month")
 					}
 					if c.IsSet("param-template") {
-						listParam.ParamTemplate = c.String("param-template")
+						billListParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						billListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						listParam.ParamTemplateFile = c.String("param-template-file")
+						billListParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						billListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						billListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						listParam.OutputType = c.String("output-type")
+						billListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						listParam.Column = c.StringSlice("column")
+						billListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						listParam.Quiet = c.Bool("quiet")
+						billListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						listParam.Format = c.String("format")
+						billListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						listParam.FormatFile = c.String("format-file")
+						billListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						listParam.Query = c.String("query")
+						billListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						listParam.QueryFile = c.String("query-file")
+						billListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -337,7 +373,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = listParam
+					var outputTypeHolder interface{} = billListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -348,10 +384,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if listParam.GenerateSkeleton {
-						listParam.GenerateSkeleton = false
-						listParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(listParam, "", "\t")
+					if billListParam.GenerateSkeleton {
+						billListParam.GenerateSkeleton = false
+						billListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(billListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -360,15 +396,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := billListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), listParam)
+					ctx := command.NewContext(c, c.Args().Slice(), billListParam)
 
 					// Run command with params
-					return funcs.BillList(ctx, listParam)
+					return funcs.BillList(ctx, billListParam)
 
 				},
 			},
@@ -427,6 +463,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("bill", "csv", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("bill", "csv", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("bill", "list", "column", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -463,6 +509,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("bill", "list", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("bill", "list", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("bill", "list", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

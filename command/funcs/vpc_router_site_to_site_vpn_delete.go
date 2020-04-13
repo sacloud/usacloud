@@ -21,13 +21,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func VPCRouterSiteToSiteVpnDelete(ctx command.Context, params *params.SiteToSiteVpnDeleteVPCRouterParam) error {
+func VPCRouterSiteToSiteVPNDelete(ctx command.Context, params *params.SiteToSiteVPNDeleteVPCRouterParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetVPCRouterAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("VPCRouterSiteToSiteVpnDelete is failed: %s", e)
+		return fmt.Errorf("VPCRouterSiteToSiteVPNDelete is failed: %s", e)
 	}
 
 	if !p.HasSiteToSiteIPsecVPN() {
@@ -43,11 +43,11 @@ func VPCRouterSiteToSiteVpnDelete(ctx command.Context, params *params.SiteToSite
 
 	_, err := api.UpdateSetting(params.Id, p)
 	if err != nil {
-		return fmt.Errorf("VPCRouterSiteToSiteVpnDelete is failed: %s", err)
+		return fmt.Errorf("VPCRouterSiteToSiteVPNDelete is failed: %s", err)
 	}
 	_, err = api.Config(params.Id)
 	if err != nil {
-		return fmt.Errorf("VPCRouterSiteToSiteVpnDelete is failed: %s", err)
+		return fmt.Errorf("VPCRouterSiteToSiteVPNDelete is failed: %s", err)
 	}
 
 	return nil

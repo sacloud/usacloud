@@ -35,7 +35,9 @@ type ListArchiveParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -83,8 +85,14 @@ func (p *ListArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -287,12 +295,26 @@ func (p *ListArchiveParam) SetParamTemplate(v string) {
 func (p *ListArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -363,7 +385,9 @@ type CreateArchiveParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -411,8 +435,14 @@ func (p *CreateArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -667,12 +697,26 @@ func (p *CreateArchiveParam) SetParamTemplate(v string) {
 func (p *CreateArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -735,7 +779,9 @@ func (p *CreateArchiveParam) GetQueryFile() string {
 type ReadArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -760,8 +806,14 @@ func (p *ReadArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -865,12 +917,26 @@ func (p *ReadArchiveParam) SetParamTemplate(v string) {
 func (p *ReadArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -945,7 +1011,9 @@ type UpdateArchiveParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -985,8 +1053,14 @@ func (p *UpdateArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1153,12 +1227,26 @@ func (p *UpdateArchiveParam) SetParamTemplate(v string) {
 func (p *UpdateArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1229,7 +1317,9 @@ type DeleteArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1257,8 +1347,14 @@ func (p *DeleteArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1369,12 +1465,26 @@ func (p *DeleteArchiveParam) SetParamTemplate(v string) {
 func (p *DeleteArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1446,7 +1556,9 @@ type UploadArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1477,8 +1589,14 @@ func (p *UploadArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1603,12 +1721,26 @@ func (p *UploadArchiveParam) SetParamTemplate(v string) {
 func (p *UploadArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UploadArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UploadArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UploadArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UploadArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UploadArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UploadArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UploadArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1680,7 +1812,9 @@ type DownloadArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1704,8 +1838,14 @@ func (p *DownloadArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1782,12 +1922,26 @@ func (p *DownloadArchiveParam) SetParamTemplate(v string) {
 func (p *DownloadArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DownloadArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DownloadArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DownloadArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DownloadArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DownloadArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DownloadArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DownloadArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1804,12 +1958,14 @@ func (p *DownloadArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// FtpOpenArchiveParam is input parameters for the sacloud API
-type FtpOpenArchiveParam struct {
+// FTPOpenArchiveParam is input parameters for the sacloud API
+type FTPOpenArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1821,13 +1977,13 @@ type FtpOpenArchiveParam struct {
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewFtpOpenArchiveParam return new FtpOpenArchiveParam
-func NewFtpOpenArchiveParam() *FtpOpenArchiveParam {
-	return &FtpOpenArchiveParam{}
+// NewFTPOpenArchiveParam return new FTPOpenArchiveParam
+func NewFTPOpenArchiveParam() *FTPOpenArchiveParam {
+	return &FTPOpenArchiveParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *FtpOpenArchiveParam) FillValueToSkeleton() {
+func (p *FTPOpenArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1837,8 +1993,14 @@ func (p *FtpOpenArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1871,7 +2033,7 @@ func (p *FtpOpenArchiveParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *FtpOpenArchiveParam) Validate() []error {
+func (p *FTPOpenArchiveParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -1904,139 +2066,155 @@ func (p *FtpOpenArchiveParam) Validate() []error {
 	return errors
 }
 
-func (p *FtpOpenArchiveParam) GetResourceDef() *schema.Resource {
+func (p *FTPOpenArchiveParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Archive"]
 }
 
-func (p *FtpOpenArchiveParam) GetCommandDef() *schema.Command {
+func (p *FTPOpenArchiveParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ftp-open"]
 }
 
-func (p *FtpOpenArchiveParam) GetIncludeFields() []string {
+func (p *FTPOpenArchiveParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *FtpOpenArchiveParam) GetExcludeFields() []string {
+func (p *FTPOpenArchiveParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *FtpOpenArchiveParam) GetTableType() output.TableType {
+func (p *FTPOpenArchiveParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *FtpOpenArchiveParam) GetColumnDefs() []output.ColumnDef {
+func (p *FTPOpenArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *FtpOpenArchiveParam) SetSelector(v []string) {
+func (p *FTPOpenArchiveParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *FtpOpenArchiveParam) GetSelector() []string {
+func (p *FTPOpenArchiveParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *FtpOpenArchiveParam) SetAssumeyes(v bool) {
+func (p *FTPOpenArchiveParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *FtpOpenArchiveParam) GetAssumeyes() bool {
+func (p *FTPOpenArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *FtpOpenArchiveParam) SetParamTemplate(v string) {
+func (p *FTPOpenArchiveParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *FtpOpenArchiveParam) GetParamTemplate() string {
+func (p *FTPOpenArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *FtpOpenArchiveParam) SetParamTemplateFile(v string) {
+func (p *FTPOpenArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *FTPOpenArchiveParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *FTPOpenArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *FtpOpenArchiveParam) GetParamTemplateFile() string {
+func (p *FTPOpenArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *FtpOpenArchiveParam) SetGenerateSkeleton(v bool) {
+func (p *FTPOpenArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *FTPOpenArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *FTPOpenArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *FtpOpenArchiveParam) GetGenerateSkeleton() bool {
+func (p *FTPOpenArchiveParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *FtpOpenArchiveParam) SetOutputType(v string) {
+func (p *FTPOpenArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *FtpOpenArchiveParam) GetOutputType() string {
+func (p *FTPOpenArchiveParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *FtpOpenArchiveParam) SetColumn(v []string) {
+func (p *FTPOpenArchiveParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *FtpOpenArchiveParam) GetColumn() []string {
+func (p *FTPOpenArchiveParam) GetColumn() []string {
 	return p.Column
 }
-func (p *FtpOpenArchiveParam) SetQuiet(v bool) {
+func (p *FTPOpenArchiveParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *FtpOpenArchiveParam) GetQuiet() bool {
+func (p *FTPOpenArchiveParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *FtpOpenArchiveParam) SetFormat(v string) {
+func (p *FTPOpenArchiveParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *FtpOpenArchiveParam) GetFormat() string {
+func (p *FTPOpenArchiveParam) GetFormat() string {
 	return p.Format
 }
-func (p *FtpOpenArchiveParam) SetFormatFile(v string) {
+func (p *FTPOpenArchiveParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *FtpOpenArchiveParam) GetFormatFile() string {
+func (p *FTPOpenArchiveParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *FtpOpenArchiveParam) SetQuery(v string) {
+func (p *FTPOpenArchiveParam) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *FtpOpenArchiveParam) GetQuery() string {
+func (p *FTPOpenArchiveParam) GetQuery() string {
 	return p.Query
 }
-func (p *FtpOpenArchiveParam) SetQueryFile(v string) {
+func (p *FTPOpenArchiveParam) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *FtpOpenArchiveParam) GetQueryFile() string {
+func (p *FTPOpenArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *FtpOpenArchiveParam) SetId(v sacloud.ID) {
+func (p *FTPOpenArchiveParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *FtpOpenArchiveParam) GetId() sacloud.ID {
+func (p *FTPOpenArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
-// FtpCloseArchiveParam is input parameters for the sacloud API
-type FtpCloseArchiveParam struct {
+// FTPCloseArchiveParam is input parameters for the sacloud API
+type FTPCloseArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
 
-// NewFtpCloseArchiveParam return new FtpCloseArchiveParam
-func NewFtpCloseArchiveParam() *FtpCloseArchiveParam {
-	return &FtpCloseArchiveParam{}
+// NewFTPCloseArchiveParam return new FTPCloseArchiveParam
+func NewFTPCloseArchiveParam() *FTPCloseArchiveParam {
+	return &FTPCloseArchiveParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *FtpCloseArchiveParam) FillValueToSkeleton() {
+func (p *FTPCloseArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -2046,8 +2224,14 @@ func (p *FtpCloseArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2059,7 +2243,7 @@ func (p *FtpCloseArchiveParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *FtpCloseArchiveParam) Validate() []error {
+func (p *FTPCloseArchiveParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateSakuraID
@@ -2072,70 +2256,84 @@ func (p *FtpCloseArchiveParam) Validate() []error {
 	return errors
 }
 
-func (p *FtpCloseArchiveParam) GetResourceDef() *schema.Resource {
+func (p *FTPCloseArchiveParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Archive"]
 }
 
-func (p *FtpCloseArchiveParam) GetCommandDef() *schema.Command {
+func (p *FTPCloseArchiveParam) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ftp-close"]
 }
 
-func (p *FtpCloseArchiveParam) GetIncludeFields() []string {
+func (p *FTPCloseArchiveParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *FtpCloseArchiveParam) GetExcludeFields() []string {
+func (p *FTPCloseArchiveParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *FtpCloseArchiveParam) GetTableType() output.TableType {
+func (p *FTPCloseArchiveParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *FtpCloseArchiveParam) GetColumnDefs() []output.ColumnDef {
+func (p *FTPCloseArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *FtpCloseArchiveParam) SetSelector(v []string) {
+func (p *FTPCloseArchiveParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *FtpCloseArchiveParam) GetSelector() []string {
+func (p *FTPCloseArchiveParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *FtpCloseArchiveParam) SetAssumeyes(v bool) {
+func (p *FTPCloseArchiveParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *FtpCloseArchiveParam) GetAssumeyes() bool {
+func (p *FTPCloseArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *FtpCloseArchiveParam) SetParamTemplate(v string) {
+func (p *FTPCloseArchiveParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *FtpCloseArchiveParam) GetParamTemplate() string {
+func (p *FTPCloseArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *FtpCloseArchiveParam) SetParamTemplateFile(v string) {
+func (p *FTPCloseArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *FTPCloseArchiveParam) GetParameters() string {
+	return p.Parameters
+}
+func (p *FTPCloseArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *FtpCloseArchiveParam) GetParamTemplateFile() string {
+func (p *FTPCloseArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *FtpCloseArchiveParam) SetGenerateSkeleton(v bool) {
+func (p *FTPCloseArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *FTPCloseArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *FTPCloseArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *FtpCloseArchiveParam) GetGenerateSkeleton() bool {
+func (p *FTPCloseArchiveParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *FtpCloseArchiveParam) SetId(v sacloud.ID) {
+func (p *FTPCloseArchiveParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *FtpCloseArchiveParam) GetId() sacloud.ID {
+func (p *FTPCloseArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
@@ -2143,7 +2341,9 @@ func (p *FtpCloseArchiveParam) GetId() sacloud.ID {
 type WaitForCopyArchiveParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2161,8 +2361,14 @@ func (p *WaitForCopyArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2225,12 +2431,26 @@ func (p *WaitForCopyArchiveParam) SetParamTemplate(v string) {
 func (p *WaitForCopyArchiveParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *WaitForCopyArchiveParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *WaitForCopyArchiveParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *WaitForCopyArchiveParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *WaitForCopyArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *WaitForCopyArchiveParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *WaitForCopyArchiveParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *WaitForCopyArchiveParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

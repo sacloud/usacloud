@@ -26,7 +26,9 @@ import (
 // ListWebAccelParam is input parameters for the sacloud API
 type ListWebAccelParam struct {
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -47,8 +49,14 @@ func (p *ListWebAccelParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -135,12 +143,26 @@ func (p *ListWebAccelParam) SetParamTemplate(v string) {
 func (p *ListWebAccelParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListWebAccelParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListWebAccelParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListWebAccelParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListWebAccelParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListWebAccelParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListWebAccelParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListWebAccelParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -203,7 +225,9 @@ func (p *ListWebAccelParam) GetQueryFile() string {
 type ReadWebAccelParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -228,8 +252,14 @@ func (p *ReadWebAccelParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -333,12 +363,26 @@ func (p *ReadWebAccelParam) SetParamTemplate(v string) {
 func (p *ReadWebAccelParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadWebAccelParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadWebAccelParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadWebAccelParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadWebAccelParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadWebAccelParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadWebAccelParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadWebAccelParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -408,7 +452,9 @@ func (p *ReadWebAccelParam) GetId() sacloud.ID {
 type CertificateInfoWebAccelParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -433,8 +479,14 @@ func (p *CertificateInfoWebAccelParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -538,12 +590,26 @@ func (p *CertificateInfoWebAccelParam) SetParamTemplate(v string) {
 func (p *CertificateInfoWebAccelParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CertificateInfoWebAccelParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CertificateInfoWebAccelParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CertificateInfoWebAccelParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CertificateInfoWebAccelParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CertificateInfoWebAccelParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CertificateInfoWebAccelParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CertificateInfoWebAccelParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -618,7 +684,9 @@ type CertificateNewWebAccelParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -658,8 +726,14 @@ func (p *CertificateNewWebAccelParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -830,12 +904,26 @@ func (p *CertificateNewWebAccelParam) SetParamTemplate(v string) {
 func (p *CertificateNewWebAccelParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CertificateNewWebAccelParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CertificateNewWebAccelParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CertificateNewWebAccelParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CertificateNewWebAccelParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CertificateNewWebAccelParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CertificateNewWebAccelParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CertificateNewWebAccelParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -910,7 +998,9 @@ type CertificateUpdateWebAccelParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -950,8 +1040,14 @@ func (p *CertificateUpdateWebAccelParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1122,12 +1218,26 @@ func (p *CertificateUpdateWebAccelParam) SetParamTemplate(v string) {
 func (p *CertificateUpdateWebAccelParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CertificateUpdateWebAccelParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CertificateUpdateWebAccelParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CertificateUpdateWebAccelParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CertificateUpdateWebAccelParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CertificateUpdateWebAccelParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CertificateUpdateWebAccelParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CertificateUpdateWebAccelParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1197,7 +1307,9 @@ func (p *CertificateUpdateWebAccelParam) GetId() sacloud.ID {
 type DeleteCacheWebAccelParam struct {
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -1221,8 +1333,14 @@ func (p *DeleteCacheWebAccelParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1316,12 +1434,26 @@ func (p *DeleteCacheWebAccelParam) SetParamTemplate(v string) {
 func (p *DeleteCacheWebAccelParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteCacheWebAccelParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteCacheWebAccelParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteCacheWebAccelParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteCacheWebAccelParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteCacheWebAccelParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteCacheWebAccelParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteCacheWebAccelParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

@@ -32,7 +32,9 @@ type ListDNSParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -71,8 +73,14 @@ func (p *ListDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -233,12 +241,26 @@ func (p *ListDNSParam) SetParamTemplate(v string) {
 func (p *ListDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListDNSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListDNSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListDNSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListDNSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -303,7 +325,9 @@ type RecordInfoDNSParam struct {
 	Type              string     `json:"type"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -334,8 +358,14 @@ func (p *RecordInfoDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -467,12 +497,26 @@ func (p *RecordInfoDNSParam) SetParamTemplate(v string) {
 func (p *RecordInfoDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *RecordInfoDNSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *RecordInfoDNSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *RecordInfoDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *RecordInfoDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *RecordInfoDNSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *RecordInfoDNSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *RecordInfoDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -545,7 +589,9 @@ type RecordBulkUpdateDNSParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -582,8 +628,14 @@ func (p *RecordBulkUpdateDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -736,12 +788,26 @@ func (p *RecordBulkUpdateDNSParam) SetParamTemplate(v string) {
 func (p *RecordBulkUpdateDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *RecordBulkUpdateDNSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *RecordBulkUpdateDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *RecordBulkUpdateDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *RecordBulkUpdateDNSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *RecordBulkUpdateDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -815,7 +881,9 @@ type CreateDNSParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -851,8 +919,14 @@ func (p *CreateDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1009,12 +1083,26 @@ func (p *CreateDNSParam) SetParamTemplate(v string) {
 func (p *CreateDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateDNSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateDNSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateDNSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateDNSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1087,7 +1175,9 @@ type RecordAddDNSParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1146,8 +1236,14 @@ func (p *RecordAddDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1391,12 +1487,26 @@ func (p *RecordAddDNSParam) SetParamTemplate(v string) {
 func (p *RecordAddDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *RecordAddDNSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *RecordAddDNSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *RecordAddDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *RecordAddDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *RecordAddDNSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *RecordAddDNSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *RecordAddDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1466,7 +1576,9 @@ func (p *RecordAddDNSParam) GetId() sacloud.ID {
 type ReadDNSParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1491,8 +1603,14 @@ func (p *ReadDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1596,12 +1714,26 @@ func (p *ReadDNSParam) SetParamTemplate(v string) {
 func (p *ReadDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadDNSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadDNSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadDNSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadDNSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1682,7 +1814,9 @@ type RecordUpdateDNSParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1740,8 +1874,14 @@ func (p *RecordUpdateDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1985,12 +2125,26 @@ func (p *RecordUpdateDNSParam) SetParamTemplate(v string) {
 func (p *RecordUpdateDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *RecordUpdateDNSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *RecordUpdateDNSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *RecordUpdateDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *RecordUpdateDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *RecordUpdateDNSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *RecordUpdateDNSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *RecordUpdateDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2062,7 +2216,9 @@ type RecordDeleteDNSParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2093,8 +2249,14 @@ func (p *RecordDeleteDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2219,12 +2381,26 @@ func (p *RecordDeleteDNSParam) SetParamTemplate(v string) {
 func (p *RecordDeleteDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *RecordDeleteDNSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *RecordDeleteDNSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *RecordDeleteDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *RecordDeleteDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *RecordDeleteDNSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *RecordDeleteDNSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *RecordDeleteDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2298,7 +2474,9 @@ type UpdateDNSParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2335,8 +2513,14 @@ func (p *UpdateDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2489,12 +2673,26 @@ func (p *UpdateDNSParam) SetParamTemplate(v string) {
 func (p *UpdateDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateDNSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateDNSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateDNSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateDNSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2565,7 +2763,9 @@ type DeleteDNSParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2593,8 +2793,14 @@ func (p *DeleteDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2705,12 +2911,26 @@ func (p *DeleteDNSParam) SetParamTemplate(v string) {
 func (p *DeleteDNSParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteDNSParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteDNSParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteDNSParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteDNSParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteDNSParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteDNSParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

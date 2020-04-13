@@ -32,19 +32,19 @@ import (
 )
 
 func init() {
-	listParam := params.NewListNFSParam()
-	createParam := params.NewCreateNFSParam()
-	readParam := params.NewReadNFSParam()
-	updateParam := params.NewUpdateNFSParam()
-	deleteParam := params.NewDeleteNFSParam()
-	bootParam := params.NewBootNFSParam()
-	shutdownParam := params.NewShutdownNFSParam()
-	shutdownForceParam := params.NewShutdownForceNFSParam()
-	resetParam := params.NewResetNFSParam()
-	waitForBootParam := params.NewWaitForBootNFSParam()
-	waitForDownParam := params.NewWaitForDownNFSParam()
-	monitorNicParam := params.NewMonitorNicNFSParam()
-	monitorFreeDiskSizeParam := params.NewMonitorFreeDiskSizeNFSParam()
+	nfsListParam := params.NewListNFSParam()
+	nfsCreateParam := params.NewCreateNFSParam()
+	nfsReadParam := params.NewReadNFSParam()
+	nfsUpdateParam := params.NewUpdateNFSParam()
+	nfsDeleteParam := params.NewDeleteNFSParam()
+	nfsBootParam := params.NewBootNFSParam()
+	nfsShutdownParam := params.NewShutdownNFSParam()
+	nfsShutdownForceParam := params.NewShutdownForceNFSParam()
+	nfsResetParam := params.NewResetNFSParam()
+	nfsWaitForBootParam := params.NewWaitForBootNFSParam()
+	nfsWaitForDownParam := params.NewWaitForDownNFSParam()
+	nfsMonitorNicParam := params.NewMonitorNicNFSParam()
+	nfsMonitorFreeDiskSizeParam := params.NewMonitorFreeDiskSizeNFSParam()
 
 	cliCommand := &cli.Command{
 		Name:  "nfs",
@@ -87,8 +87,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -136,9 +144,9 @@ func init() {
 						return err
 					}
 
-					listParam.ParamTemplate = c.String("param-template")
-					listParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(listParam)
+					nfsListParam.ParamTemplate = c.String("param-template")
+					nfsListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(nfsListParam)
 					if err != nil {
 						return err
 					}
@@ -148,57 +156,63 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(listParam, p, mergo.WithOverride)
+						mergo.Merge(nfsListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						listParam.Name = c.StringSlice("name")
+						nfsListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						nfsListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						listParam.Tags = c.StringSlice("tags")
+						nfsListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						listParam.From = c.Int("from")
+						nfsListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						listParam.Max = c.Int("max")
+						nfsListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						listParam.Sort = c.StringSlice("sort")
+						nfsListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						listParam.ParamTemplate = c.String("param-template")
+						nfsListParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						nfsListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						listParam.ParamTemplateFile = c.String("param-template-file")
+						nfsListParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						nfsListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						nfsListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						listParam.OutputType = c.String("output-type")
+						nfsListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						listParam.Column = c.StringSlice("column")
+						nfsListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						listParam.Quiet = c.Bool("quiet")
+						nfsListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						listParam.Format = c.String("format")
+						nfsListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						listParam.FormatFile = c.String("format-file")
+						nfsListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						listParam.Query = c.String("query")
+						nfsListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						listParam.QueryFile = c.String("query-file")
+						nfsListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -206,7 +220,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = listParam
+					var outputTypeHolder interface{} = nfsListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -217,10 +231,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if listParam.GenerateSkeleton {
-						listParam.GenerateSkeleton = false
-						listParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(listParam, "", "\t")
+					if nfsListParam.GenerateSkeleton {
+						nfsListParam.GenerateSkeleton = false
+						nfsListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(nfsListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -229,15 +243,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := nfsListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), listParam)
+					ctx := command.NewContext(c, c.Args().Slice(), nfsListParam)
 
 					// Run command with params
-					return funcs.NFSList(ctx, listParam)
+					return funcs.NFSList(ctx, nfsListParam)
 
 				},
 			},
@@ -299,8 +313,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -348,9 +370,9 @@ func init() {
 						return err
 					}
 
-					createParam.ParamTemplate = c.String("param-template")
-					createParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(createParam)
+					nfsCreateParam.ParamTemplate = c.String("param-template")
+					nfsCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(nfsCreateParam)
 					if err != nil {
 						return err
 					}
@@ -360,72 +382,78 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(createParam, p, mergo.WithOverride)
+						mergo.Merge(nfsCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("switch-id") {
-						createParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
+						nfsCreateParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
 					}
 					if c.IsSet("plan") {
-						createParam.Plan = c.String("plan")
+						nfsCreateParam.Plan = c.String("plan")
 					}
 					if c.IsSet("size") {
-						createParam.Size = c.Int("size")
+						nfsCreateParam.Size = c.Int("size")
 					}
 					if c.IsSet("ipaddress") {
-						createParam.Ipaddress = c.String("ipaddress")
+						nfsCreateParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("nw-mask-len") {
-						createParam.NwMaskLen = c.Int("nw-mask-len")
+						nfsCreateParam.NwMaskLen = c.Int("nw-mask-len")
 					}
 					if c.IsSet("default-route") {
-						createParam.DefaultRoute = c.String("default-route")
+						nfsCreateParam.DefaultRoute = c.String("default-route")
 					}
 					if c.IsSet("name") {
-						createParam.Name = c.String("name")
+						nfsCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						createParam.Description = c.String("description")
+						nfsCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						createParam.Tags = c.StringSlice("tags")
+						nfsCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						nfsCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						createParam.Assumeyes = c.Bool("assumeyes")
+						nfsCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						createParam.ParamTemplate = c.String("param-template")
+						nfsCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						nfsCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						createParam.ParamTemplateFile = c.String("param-template-file")
+						nfsCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						nfsCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						createParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						nfsCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						createParam.OutputType = c.String("output-type")
+						nfsCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						createParam.Column = c.StringSlice("column")
+						nfsCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						createParam.Quiet = c.Bool("quiet")
+						nfsCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						createParam.Format = c.String("format")
+						nfsCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						createParam.FormatFile = c.String("format-file")
+						nfsCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						createParam.Query = c.String("query")
+						nfsCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						createParam.QueryFile = c.String("query-file")
+						nfsCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -433,7 +461,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = createParam
+					var outputTypeHolder interface{} = nfsCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -444,10 +472,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if createParam.GenerateSkeleton {
-						createParam.GenerateSkeleton = false
-						createParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(createParam, "", "\t")
+					if nfsCreateParam.GenerateSkeleton {
+						nfsCreateParam.GenerateSkeleton = false
+						nfsCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(nfsCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -456,15 +484,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
+					if errors := nfsCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), createParam)
+					ctx := command.NewContext(c, c.Args().Slice(), nfsCreateParam)
 
 					// confirm
-					if !createParam.Assumeyes {
+					if !nfsCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -474,7 +502,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.NFSCreate(ctx, createParam)
+					return funcs.NFSCreate(ctx, nfsCreateParam)
 
 				},
 			},
@@ -492,8 +520,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -546,9 +582,9 @@ func init() {
 						return err
 					}
 
-					readParam.ParamTemplate = c.String("param-template")
-					readParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(readParam)
+					nfsReadParam.ParamTemplate = c.String("param-template")
+					nfsReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(nfsReadParam)
 					if err != nil {
 						return err
 					}
@@ -558,45 +594,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(readParam, p, mergo.WithOverride)
+						mergo.Merge(nfsReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						readParam.Selector = c.StringSlice("selector")
+						nfsReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						readParam.ParamTemplate = c.String("param-template")
+						nfsReadParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						nfsReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						readParam.ParamTemplateFile = c.String("param-template-file")
+						nfsReadParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						nfsReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						readParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						nfsReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						readParam.OutputType = c.String("output-type")
+						nfsReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						readParam.Column = c.StringSlice("column")
+						nfsReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						readParam.Quiet = c.Bool("quiet")
+						nfsReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						readParam.Format = c.String("format")
+						nfsReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						readParam.FormatFile = c.String("format-file")
+						nfsReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						readParam.Query = c.String("query")
+						nfsReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						readParam.QueryFile = c.String("query-file")
+						nfsReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = sacloud.ID(c.Int64("id"))
+						nfsReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -604,7 +646,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = readParam
+					var outputTypeHolder interface{} = nfsReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -615,10 +657,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if readParam.GenerateSkeleton {
-						readParam.GenerateSkeleton = false
-						readParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(readParam, "", "\t")
+					if nfsReadParam.GenerateSkeleton {
+						nfsReadParam.GenerateSkeleton = false
+						nfsReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(nfsReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -627,19 +669,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
+					if errors := nfsReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), readParam)
+					ctx := command.NewContext(c, c.Args().Slice(), nfsReadParam)
 
 					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(readParam.Selector) == 0 {
+						if len(nfsReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -648,12 +690,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.NFS {
-							if hasTags(&v, readParam.Selector) {
+							if hasTags(&v, nfsReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", nfsReadParam.Selector)
 						}
 
 					} else {
@@ -675,7 +717,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.NFS {
-										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+										if len(nfsReadParam.Selector) == 0 || hasTags(&v, nfsReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -700,11 +742,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						readParam.SetId(id)
-						p := *readParam // copy struct value
-						readParam := &p
+						nfsReadParam.SetId(id)
+						p := *nfsReadParam // copy struct value
+						nfsReadParam := &p
 						go func() {
-							err := funcs.NFSRead(ctx, readParam)
+							err := funcs.NFSRead(ctx, nfsReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -752,8 +794,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -806,9 +856,9 @@ func init() {
 						return err
 					}
 
-					updateParam.ParamTemplate = c.String("param-template")
-					updateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(updateParam)
+					nfsUpdateParam.ParamTemplate = c.String("param-template")
+					nfsUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(nfsUpdateParam)
 					if err != nil {
 						return err
 					}
@@ -818,60 +868,66 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(updateParam, p, mergo.WithOverride)
+						mergo.Merge(nfsUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						updateParam.Selector = c.StringSlice("selector")
+						nfsUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						updateParam.Name = c.String("name")
+						nfsUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						updateParam.Description = c.String("description")
+						nfsUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						updateParam.Tags = c.StringSlice("tags")
+						nfsUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						nfsUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						updateParam.Assumeyes = c.Bool("assumeyes")
+						nfsUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						updateParam.ParamTemplate = c.String("param-template")
+						nfsUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						nfsUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						updateParam.ParamTemplateFile = c.String("param-template-file")
+						nfsUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						nfsUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						updateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						nfsUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						updateParam.OutputType = c.String("output-type")
+						nfsUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						updateParam.Column = c.StringSlice("column")
+						nfsUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						updateParam.Quiet = c.Bool("quiet")
+						nfsUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						updateParam.Format = c.String("format")
+						nfsUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						updateParam.FormatFile = c.String("format-file")
+						nfsUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						updateParam.Query = c.String("query")
+						nfsUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						updateParam.QueryFile = c.String("query-file")
+						nfsUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = sacloud.ID(c.Int64("id"))
+						nfsUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -879,7 +935,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = updateParam
+					var outputTypeHolder interface{} = nfsUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -890,10 +946,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if updateParam.GenerateSkeleton {
-						updateParam.GenerateSkeleton = false
-						updateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(updateParam, "", "\t")
+					if nfsUpdateParam.GenerateSkeleton {
+						nfsUpdateParam.GenerateSkeleton = false
+						nfsUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(nfsUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -902,19 +958,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
+					if errors := nfsUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), nfsUpdateParam)
 
 					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(updateParam.Selector) == 0 {
+						if len(nfsUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -923,12 +979,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.NFS {
-							if hasTags(&v, updateParam.Selector) {
+							if hasTags(&v, nfsUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", nfsUpdateParam.Selector)
 						}
 
 					} else {
@@ -950,7 +1006,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.NFS {
-										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+										if len(nfsUpdateParam.Selector) == 0 || hasTags(&v, nfsUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -967,7 +1023,7 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes {
+					if !nfsUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -981,11 +1037,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						updateParam.SetId(id)
-						p := *updateParam // copy struct value
-						updateParam := &p
+						nfsUpdateParam.SetId(id)
+						p := *nfsUpdateParam // copy struct value
+						nfsUpdateParam := &p
 						go func() {
-							err := funcs.NFSUpdate(ctx, updateParam)
+							err := funcs.NFSUpdate(ctx, nfsUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1022,8 +1078,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1076,9 +1140,9 @@ func init() {
 						return err
 					}
 
-					deleteParam.ParamTemplate = c.String("param-template")
-					deleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(deleteParam)
+					nfsDeleteParam.ParamTemplate = c.String("param-template")
+					nfsDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(nfsDeleteParam)
 					if err != nil {
 						return err
 					}
@@ -1088,51 +1152,57 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(deleteParam, p, mergo.WithOverride)
+						mergo.Merge(nfsDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("force") {
-						deleteParam.Force = c.Bool("force")
+						nfsDeleteParam.Force = c.Bool("force")
 					}
 					if c.IsSet("selector") {
-						deleteParam.Selector = c.StringSlice("selector")
+						nfsDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						deleteParam.Assumeyes = c.Bool("assumeyes")
+						nfsDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						deleteParam.ParamTemplate = c.String("param-template")
+						nfsDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						nfsDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						deleteParam.ParamTemplateFile = c.String("param-template-file")
+						nfsDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						nfsDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						nfsDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						deleteParam.OutputType = c.String("output-type")
+						nfsDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						deleteParam.Column = c.StringSlice("column")
+						nfsDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						deleteParam.Quiet = c.Bool("quiet")
+						nfsDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						deleteParam.Format = c.String("format")
+						nfsDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						deleteParam.FormatFile = c.String("format-file")
+						nfsDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						deleteParam.Query = c.String("query")
+						nfsDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						deleteParam.QueryFile = c.String("query-file")
+						nfsDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = sacloud.ID(c.Int64("id"))
+						nfsDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1140,7 +1210,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = deleteParam
+					var outputTypeHolder interface{} = nfsDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1151,10 +1221,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if deleteParam.GenerateSkeleton {
-						deleteParam.GenerateSkeleton = false
-						deleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(deleteParam, "", "\t")
+					if nfsDeleteParam.GenerateSkeleton {
+						nfsDeleteParam.GenerateSkeleton = false
+						nfsDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(nfsDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1163,19 +1233,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := nfsDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), nfsDeleteParam)
 
 					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(deleteParam.Selector) == 0 {
+						if len(nfsDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1184,12 +1254,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.NFS {
-							if hasTags(&v, deleteParam.Selector) {
+							if hasTags(&v, nfsDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", nfsDeleteParam.Selector)
 						}
 
 					} else {
@@ -1211,7 +1281,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.NFS {
-										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+										if len(nfsDeleteParam.Selector) == 0 || hasTags(&v, nfsDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1228,7 +1298,7 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes {
+					if !nfsDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1242,11 +1312,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						deleteParam.SetId(id)
-						p := *deleteParam // copy struct value
-						deleteParam := &p
+						nfsDeleteParam.SetId(id)
+						p := *nfsDeleteParam // copy struct value
+						nfsDeleteParam := &p
 						go func() {
-							err := funcs.NFSDelete(ctx, deleteParam)
+							err := funcs.NFSDelete(ctx, nfsDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1278,8 +1348,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1300,9 +1378,9 @@ func init() {
 						return err
 					}
 
-					bootParam.ParamTemplate = c.String("param-template")
-					bootParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(bootParam)
+					nfsBootParam.ParamTemplate = c.String("param-template")
+					nfsBootParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(nfsBootParam)
 					if err != nil {
 						return err
 					}
@@ -1312,27 +1390,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(bootParam, p, mergo.WithOverride)
+						mergo.Merge(nfsBootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						bootParam.Selector = c.StringSlice("selector")
+						nfsBootParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						bootParam.Assumeyes = c.Bool("assumeyes")
+						nfsBootParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						bootParam.ParamTemplate = c.String("param-template")
+						nfsBootParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						nfsBootParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						bootParam.ParamTemplateFile = c.String("param-template-file")
+						nfsBootParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						nfsBootParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						bootParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						nfsBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						bootParam.Id = sacloud.ID(c.Int64("id"))
+						nfsBootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1340,7 +1424,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = bootParam
+					var outputTypeHolder interface{} = nfsBootParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1351,10 +1435,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if bootParam.GenerateSkeleton {
-						bootParam.GenerateSkeleton = false
-						bootParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(bootParam, "", "\t")
+					if nfsBootParam.GenerateSkeleton {
+						nfsBootParam.GenerateSkeleton = false
+						nfsBootParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(nfsBootParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1363,19 +1447,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := bootParam.Validate(); len(errors) > 0 {
+					if errors := nfsBootParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), bootParam)
+					ctx := command.NewContext(c, c.Args().Slice(), nfsBootParam)
 
 					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(bootParam.Selector) == 0 {
+						if len(nfsBootParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1384,12 +1468,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.NFS {
-							if hasTags(&v, bootParam.Selector) {
+							if hasTags(&v, nfsBootParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bootParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", nfsBootParam.Selector)
 						}
 
 					} else {
@@ -1411,7 +1495,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.NFS {
-										if len(bootParam.Selector) == 0 || hasTags(&v, bootParam.Selector) {
+										if len(nfsBootParam.Selector) == 0 || hasTags(&v, nfsBootParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1428,7 +1512,7 @@ func init() {
 					}
 
 					// confirm
-					if !bootParam.Assumeyes {
+					if !nfsBootParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1442,11 +1526,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						bootParam.SetId(id)
-						p := *bootParam // copy struct value
-						bootParam := &p
+						nfsBootParam.SetId(id)
+						p := *nfsBootParam // copy struct value
+						nfsBootParam := &p
 						go func() {
-							err := funcs.NFSBoot(ctx, bootParam)
+							err := funcs.NFSBoot(ctx, nfsBootParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1478,8 +1562,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1500,9 +1592,9 @@ func init() {
 						return err
 					}
 
-					shutdownParam.ParamTemplate = c.String("param-template")
-					shutdownParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(shutdownParam)
+					nfsShutdownParam.ParamTemplate = c.String("param-template")
+					nfsShutdownParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(nfsShutdownParam)
 					if err != nil {
 						return err
 					}
@@ -1512,27 +1604,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(shutdownParam, p, mergo.WithOverride)
+						mergo.Merge(nfsShutdownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						shutdownParam.Selector = c.StringSlice("selector")
+						nfsShutdownParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						shutdownParam.Assumeyes = c.Bool("assumeyes")
+						nfsShutdownParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						shutdownParam.ParamTemplate = c.String("param-template")
+						nfsShutdownParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						nfsShutdownParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						shutdownParam.ParamTemplateFile = c.String("param-template-file")
+						nfsShutdownParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						nfsShutdownParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						shutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						nfsShutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						shutdownParam.Id = sacloud.ID(c.Int64("id"))
+						nfsShutdownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1540,7 +1638,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = shutdownParam
+					var outputTypeHolder interface{} = nfsShutdownParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1551,10 +1649,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if shutdownParam.GenerateSkeleton {
-						shutdownParam.GenerateSkeleton = false
-						shutdownParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(shutdownParam, "", "\t")
+					if nfsShutdownParam.GenerateSkeleton {
+						nfsShutdownParam.GenerateSkeleton = false
+						nfsShutdownParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(nfsShutdownParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1563,19 +1661,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := shutdownParam.Validate(); len(errors) > 0 {
+					if errors := nfsShutdownParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), shutdownParam)
+					ctx := command.NewContext(c, c.Args().Slice(), nfsShutdownParam)
 
 					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(shutdownParam.Selector) == 0 {
+						if len(nfsShutdownParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1584,12 +1682,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.NFS {
-							if hasTags(&v, shutdownParam.Selector) {
+							if hasTags(&v, nfsShutdownParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", shutdownParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", nfsShutdownParam.Selector)
 						}
 
 					} else {
@@ -1611,7 +1709,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.NFS {
-										if len(shutdownParam.Selector) == 0 || hasTags(&v, shutdownParam.Selector) {
+										if len(nfsShutdownParam.Selector) == 0 || hasTags(&v, nfsShutdownParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1628,7 +1726,7 @@ func init() {
 					}
 
 					// confirm
-					if !shutdownParam.Assumeyes {
+					if !nfsShutdownParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1642,11 +1740,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						shutdownParam.SetId(id)
-						p := *shutdownParam // copy struct value
-						shutdownParam := &p
+						nfsShutdownParam.SetId(id)
+						p := *nfsShutdownParam // copy struct value
+						nfsShutdownParam := &p
 						go func() {
-							err := funcs.NFSShutdown(ctx, shutdownParam)
+							err := funcs.NFSShutdown(ctx, nfsShutdownParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1678,8 +1776,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1700,9 +1806,9 @@ func init() {
 						return err
 					}
 
-					shutdownForceParam.ParamTemplate = c.String("param-template")
-					shutdownForceParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(shutdownForceParam)
+					nfsShutdownForceParam.ParamTemplate = c.String("param-template")
+					nfsShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(nfsShutdownForceParam)
 					if err != nil {
 						return err
 					}
@@ -1712,27 +1818,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(shutdownForceParam, p, mergo.WithOverride)
+						mergo.Merge(nfsShutdownForceParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						shutdownForceParam.Selector = c.StringSlice("selector")
+						nfsShutdownForceParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						shutdownForceParam.Assumeyes = c.Bool("assumeyes")
+						nfsShutdownForceParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						shutdownForceParam.ParamTemplate = c.String("param-template")
+						nfsShutdownForceParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						nfsShutdownForceParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						shutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+						nfsShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						nfsShutdownForceParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						shutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						nfsShutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						shutdownForceParam.Id = sacloud.ID(c.Int64("id"))
+						nfsShutdownForceParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1740,7 +1852,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = shutdownForceParam
+					var outputTypeHolder interface{} = nfsShutdownForceParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1751,10 +1863,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if shutdownForceParam.GenerateSkeleton {
-						shutdownForceParam.GenerateSkeleton = false
-						shutdownForceParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(shutdownForceParam, "", "\t")
+					if nfsShutdownForceParam.GenerateSkeleton {
+						nfsShutdownForceParam.GenerateSkeleton = false
+						nfsShutdownForceParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(nfsShutdownForceParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1763,19 +1875,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := shutdownForceParam.Validate(); len(errors) > 0 {
+					if errors := nfsShutdownForceParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), shutdownForceParam)
+					ctx := command.NewContext(c, c.Args().Slice(), nfsShutdownForceParam)
 
 					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(shutdownForceParam.Selector) == 0 {
+						if len(nfsShutdownForceParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1784,12 +1896,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.NFS {
-							if hasTags(&v, shutdownForceParam.Selector) {
+							if hasTags(&v, nfsShutdownForceParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", shutdownForceParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", nfsShutdownForceParam.Selector)
 						}
 
 					} else {
@@ -1811,7 +1923,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.NFS {
-										if len(shutdownForceParam.Selector) == 0 || hasTags(&v, shutdownForceParam.Selector) {
+										if len(nfsShutdownForceParam.Selector) == 0 || hasTags(&v, nfsShutdownForceParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1828,7 +1940,7 @@ func init() {
 					}
 
 					// confirm
-					if !shutdownForceParam.Assumeyes {
+					if !nfsShutdownForceParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1842,11 +1954,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						shutdownForceParam.SetId(id)
-						p := *shutdownForceParam // copy struct value
-						shutdownForceParam := &p
+						nfsShutdownForceParam.SetId(id)
+						p := *nfsShutdownForceParam // copy struct value
+						nfsShutdownForceParam := &p
 						go func() {
-							err := funcs.NFSShutdownForce(ctx, shutdownForceParam)
+							err := funcs.NFSShutdownForce(ctx, nfsShutdownForceParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1877,8 +1989,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1899,9 +2019,9 @@ func init() {
 						return err
 					}
 
-					resetParam.ParamTemplate = c.String("param-template")
-					resetParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(resetParam)
+					nfsResetParam.ParamTemplate = c.String("param-template")
+					nfsResetParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(nfsResetParam)
 					if err != nil {
 						return err
 					}
@@ -1911,27 +2031,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(resetParam, p, mergo.WithOverride)
+						mergo.Merge(nfsResetParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						resetParam.Selector = c.StringSlice("selector")
+						nfsResetParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						resetParam.Assumeyes = c.Bool("assumeyes")
+						nfsResetParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						resetParam.ParamTemplate = c.String("param-template")
+						nfsResetParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						nfsResetParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						resetParam.ParamTemplateFile = c.String("param-template-file")
+						nfsResetParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						nfsResetParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						resetParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						nfsResetParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						resetParam.Id = sacloud.ID(c.Int64("id"))
+						nfsResetParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1939,7 +2065,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = resetParam
+					var outputTypeHolder interface{} = nfsResetParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1950,10 +2076,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if resetParam.GenerateSkeleton {
-						resetParam.GenerateSkeleton = false
-						resetParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(resetParam, "", "\t")
+					if nfsResetParam.GenerateSkeleton {
+						nfsResetParam.GenerateSkeleton = false
+						nfsResetParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(nfsResetParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1962,19 +2088,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := resetParam.Validate(); len(errors) > 0 {
+					if errors := nfsResetParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), resetParam)
+					ctx := command.NewContext(c, c.Args().Slice(), nfsResetParam)
 
 					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(resetParam.Selector) == 0 {
+						if len(nfsResetParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1983,12 +2109,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.NFS {
-							if hasTags(&v, resetParam.Selector) {
+							if hasTags(&v, nfsResetParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", resetParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", nfsResetParam.Selector)
 						}
 
 					} else {
@@ -2010,7 +2136,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.NFS {
-										if len(resetParam.Selector) == 0 || hasTags(&v, resetParam.Selector) {
+										if len(nfsResetParam.Selector) == 0 || hasTags(&v, nfsResetParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2027,7 +2153,7 @@ func init() {
 					}
 
 					// confirm
-					if !resetParam.Assumeyes {
+					if !nfsResetParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2041,11 +2167,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						resetParam.SetId(id)
-						p := *resetParam // copy struct value
-						resetParam := &p
+						nfsResetParam.SetId(id)
+						p := *nfsResetParam // copy struct value
+						nfsResetParam := &p
 						go func() {
-							err := funcs.NFSReset(ctx, resetParam)
+							err := funcs.NFSReset(ctx, nfsResetParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2071,8 +2197,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2093,9 +2227,9 @@ func init() {
 						return err
 					}
 
-					waitForBootParam.ParamTemplate = c.String("param-template")
-					waitForBootParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(waitForBootParam)
+					nfsWaitForBootParam.ParamTemplate = c.String("param-template")
+					nfsWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(nfsWaitForBootParam)
 					if err != nil {
 						return err
 					}
@@ -2105,24 +2239,30 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(waitForBootParam, p, mergo.WithOverride)
+						mergo.Merge(nfsWaitForBootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						waitForBootParam.Selector = c.StringSlice("selector")
+						nfsWaitForBootParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						waitForBootParam.ParamTemplate = c.String("param-template")
+						nfsWaitForBootParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						nfsWaitForBootParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						waitForBootParam.ParamTemplateFile = c.String("param-template-file")
+						nfsWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						nfsWaitForBootParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						waitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						nfsWaitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForBootParam.Id = sacloud.ID(c.Int64("id"))
+						nfsWaitForBootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2130,7 +2270,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = waitForBootParam
+					var outputTypeHolder interface{} = nfsWaitForBootParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2141,10 +2281,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if waitForBootParam.GenerateSkeleton {
-						waitForBootParam.GenerateSkeleton = false
-						waitForBootParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(waitForBootParam, "", "\t")
+					if nfsWaitForBootParam.GenerateSkeleton {
+						nfsWaitForBootParam.GenerateSkeleton = false
+						nfsWaitForBootParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(nfsWaitForBootParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2153,19 +2293,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := waitForBootParam.Validate(); len(errors) > 0 {
+					if errors := nfsWaitForBootParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), waitForBootParam)
+					ctx := command.NewContext(c, c.Args().Slice(), nfsWaitForBootParam)
 
 					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(waitForBootParam.Selector) == 0 {
+						if len(nfsWaitForBootParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2174,12 +2314,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.NFS {
-							if hasTags(&v, waitForBootParam.Selector) {
+							if hasTags(&v, nfsWaitForBootParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", waitForBootParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", nfsWaitForBootParam.Selector)
 						}
 
 					} else {
@@ -2201,7 +2341,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.NFS {
-										if len(waitForBootParam.Selector) == 0 || hasTags(&v, waitForBootParam.Selector) {
+										if len(nfsWaitForBootParam.Selector) == 0 || hasTags(&v, nfsWaitForBootParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2222,11 +2362,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						waitForBootParam.SetId(id)
-						p := *waitForBootParam // copy struct value
-						waitForBootParam := &p
+						nfsWaitForBootParam.SetId(id)
+						p := *nfsWaitForBootParam // copy struct value
+						nfsWaitForBootParam := &p
 						go func() {
-							err := funcs.NFSWaitForBoot(ctx, waitForBootParam)
+							err := funcs.NFSWaitForBoot(ctx, nfsWaitForBootParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2252,8 +2392,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2274,9 +2422,9 @@ func init() {
 						return err
 					}
 
-					waitForDownParam.ParamTemplate = c.String("param-template")
-					waitForDownParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(waitForDownParam)
+					nfsWaitForDownParam.ParamTemplate = c.String("param-template")
+					nfsWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(nfsWaitForDownParam)
 					if err != nil {
 						return err
 					}
@@ -2286,24 +2434,30 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(waitForDownParam, p, mergo.WithOverride)
+						mergo.Merge(nfsWaitForDownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						waitForDownParam.Selector = c.StringSlice("selector")
+						nfsWaitForDownParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						waitForDownParam.ParamTemplate = c.String("param-template")
+						nfsWaitForDownParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						nfsWaitForDownParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						waitForDownParam.ParamTemplateFile = c.String("param-template-file")
+						nfsWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						nfsWaitForDownParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						waitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						nfsWaitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForDownParam.Id = sacloud.ID(c.Int64("id"))
+						nfsWaitForDownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2311,7 +2465,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = waitForDownParam
+					var outputTypeHolder interface{} = nfsWaitForDownParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2322,10 +2476,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if waitForDownParam.GenerateSkeleton {
-						waitForDownParam.GenerateSkeleton = false
-						waitForDownParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(waitForDownParam, "", "\t")
+					if nfsWaitForDownParam.GenerateSkeleton {
+						nfsWaitForDownParam.GenerateSkeleton = false
+						nfsWaitForDownParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(nfsWaitForDownParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2334,19 +2488,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := waitForDownParam.Validate(); len(errors) > 0 {
+					if errors := nfsWaitForDownParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), waitForDownParam)
+					ctx := command.NewContext(c, c.Args().Slice(), nfsWaitForDownParam)
 
 					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(waitForDownParam.Selector) == 0 {
+						if len(nfsWaitForDownParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2355,12 +2509,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.NFS {
-							if hasTags(&v, waitForDownParam.Selector) {
+							if hasTags(&v, nfsWaitForDownParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", waitForDownParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", nfsWaitForDownParam.Selector)
 						}
 
 					} else {
@@ -2382,7 +2536,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.NFS {
-										if len(waitForDownParam.Selector) == 0 || hasTags(&v, waitForDownParam.Selector) {
+										if len(nfsWaitForDownParam.Selector) == 0 || hasTags(&v, nfsWaitForDownParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2403,11 +2557,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						waitForDownParam.SetId(id)
-						p := *waitForDownParam // copy struct value
-						waitForDownParam := &p
+						nfsWaitForDownParam.SetId(id)
+						p := *nfsWaitForDownParam // copy struct value
+						nfsWaitForDownParam := &p
 						go func() {
-							err := funcs.NFSWaitForDown(ctx, waitForDownParam)
+							err := funcs.NFSWaitForDown(ctx, nfsWaitForDownParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2446,8 +2600,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2500,9 +2662,9 @@ func init() {
 						return err
 					}
 
-					monitorNicParam.ParamTemplate = c.String("param-template")
-					monitorNicParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorNicParam)
+					nfsMonitorNicParam.ParamTemplate = c.String("param-template")
+					nfsMonitorNicParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(nfsMonitorNicParam)
 					if err != nil {
 						return err
 					}
@@ -2512,54 +2674,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(monitorNicParam, p, mergo.WithOverride)
+						mergo.Merge(nfsMonitorNicParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						monitorNicParam.Start = c.String("start")
+						nfsMonitorNicParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						monitorNicParam.End = c.String("end")
+						nfsMonitorNicParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						monitorNicParam.KeyFormat = c.String("key-format")
+						nfsMonitorNicParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						monitorNicParam.Selector = c.StringSlice("selector")
+						nfsMonitorNicParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						monitorNicParam.ParamTemplate = c.String("param-template")
+						nfsMonitorNicParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						nfsMonitorNicParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						monitorNicParam.ParamTemplateFile = c.String("param-template-file")
+						nfsMonitorNicParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						nfsMonitorNicParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						monitorNicParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						nfsMonitorNicParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						monitorNicParam.OutputType = c.String("output-type")
+						nfsMonitorNicParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						monitorNicParam.Column = c.StringSlice("column")
+						nfsMonitorNicParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						monitorNicParam.Quiet = c.Bool("quiet")
+						nfsMonitorNicParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						monitorNicParam.Format = c.String("format")
+						nfsMonitorNicParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						monitorNicParam.FormatFile = c.String("format-file")
+						nfsMonitorNicParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						monitorNicParam.Query = c.String("query")
+						nfsMonitorNicParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						monitorNicParam.QueryFile = c.String("query-file")
+						nfsMonitorNicParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						monitorNicParam.Id = sacloud.ID(c.Int64("id"))
+						nfsMonitorNicParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2567,7 +2735,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = monitorNicParam
+					var outputTypeHolder interface{} = nfsMonitorNicParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2578,10 +2746,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if monitorNicParam.GenerateSkeleton {
-						monitorNicParam.GenerateSkeleton = false
-						monitorNicParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorNicParam, "", "\t")
+					if nfsMonitorNicParam.GenerateSkeleton {
+						nfsMonitorNicParam.GenerateSkeleton = false
+						nfsMonitorNicParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(nfsMonitorNicParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2590,19 +2758,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := monitorNicParam.Validate(); len(errors) > 0 {
+					if errors := nfsMonitorNicParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorNicParam)
+					ctx := command.NewContext(c, c.Args().Slice(), nfsMonitorNicParam)
 
 					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(monitorNicParam.Selector) == 0 {
+						if len(nfsMonitorNicParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2611,12 +2779,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.NFS {
-							if hasTags(&v, monitorNicParam.Selector) {
+							if hasTags(&v, nfsMonitorNicParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorNicParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", nfsMonitorNicParam.Selector)
 						}
 
 					} else {
@@ -2638,7 +2806,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.NFS {
-										if len(monitorNicParam.Selector) == 0 || hasTags(&v, monitorNicParam.Selector) {
+										if len(nfsMonitorNicParam.Selector) == 0 || hasTags(&v, nfsMonitorNicParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2663,11 +2831,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						monitorNicParam.SetId(id)
-						p := *monitorNicParam // copy struct value
-						monitorNicParam := &p
+						nfsMonitorNicParam.SetId(id)
+						p := *nfsMonitorNicParam // copy struct value
+						nfsMonitorNicParam := &p
 						go func() {
-							err := funcs.NFSMonitorNic(ctx, monitorNicParam)
+							err := funcs.NFSMonitorNic(ctx, nfsMonitorNicParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2706,8 +2874,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2760,9 +2936,9 @@ func init() {
 						return err
 					}
 
-					monitorFreeDiskSizeParam.ParamTemplate = c.String("param-template")
-					monitorFreeDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorFreeDiskSizeParam)
+					nfsMonitorFreeDiskSizeParam.ParamTemplate = c.String("param-template")
+					nfsMonitorFreeDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(nfsMonitorFreeDiskSizeParam)
 					if err != nil {
 						return err
 					}
@@ -2772,54 +2948,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(monitorFreeDiskSizeParam, p, mergo.WithOverride)
+						mergo.Merge(nfsMonitorFreeDiskSizeParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						monitorFreeDiskSizeParam.Start = c.String("start")
+						nfsMonitorFreeDiskSizeParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						monitorFreeDiskSizeParam.End = c.String("end")
+						nfsMonitorFreeDiskSizeParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						monitorFreeDiskSizeParam.KeyFormat = c.String("key-format")
+						nfsMonitorFreeDiskSizeParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						monitorFreeDiskSizeParam.Selector = c.StringSlice("selector")
+						nfsMonitorFreeDiskSizeParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						monitorFreeDiskSizeParam.ParamTemplate = c.String("param-template")
+						nfsMonitorFreeDiskSizeParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						nfsMonitorFreeDiskSizeParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						monitorFreeDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+						nfsMonitorFreeDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						nfsMonitorFreeDiskSizeParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						monitorFreeDiskSizeParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						nfsMonitorFreeDiskSizeParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						monitorFreeDiskSizeParam.OutputType = c.String("output-type")
+						nfsMonitorFreeDiskSizeParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						monitorFreeDiskSizeParam.Column = c.StringSlice("column")
+						nfsMonitorFreeDiskSizeParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						monitorFreeDiskSizeParam.Quiet = c.Bool("quiet")
+						nfsMonitorFreeDiskSizeParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						monitorFreeDiskSizeParam.Format = c.String("format")
+						nfsMonitorFreeDiskSizeParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						monitorFreeDiskSizeParam.FormatFile = c.String("format-file")
+						nfsMonitorFreeDiskSizeParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						monitorFreeDiskSizeParam.Query = c.String("query")
+						nfsMonitorFreeDiskSizeParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						monitorFreeDiskSizeParam.QueryFile = c.String("query-file")
+						nfsMonitorFreeDiskSizeParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						monitorFreeDiskSizeParam.Id = sacloud.ID(c.Int64("id"))
+						nfsMonitorFreeDiskSizeParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2827,7 +3009,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = monitorFreeDiskSizeParam
+					var outputTypeHolder interface{} = nfsMonitorFreeDiskSizeParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2838,10 +3020,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if monitorFreeDiskSizeParam.GenerateSkeleton {
-						monitorFreeDiskSizeParam.GenerateSkeleton = false
-						monitorFreeDiskSizeParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorFreeDiskSizeParam, "", "\t")
+					if nfsMonitorFreeDiskSizeParam.GenerateSkeleton {
+						nfsMonitorFreeDiskSizeParam.GenerateSkeleton = false
+						nfsMonitorFreeDiskSizeParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(nfsMonitorFreeDiskSizeParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2850,19 +3032,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := monitorFreeDiskSizeParam.Validate(); len(errors) > 0 {
+					if errors := nfsMonitorFreeDiskSizeParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorFreeDiskSizeParam)
+					ctx := command.NewContext(c, c.Args().Slice(), nfsMonitorFreeDiskSizeParam)
 
 					apiClient := ctx.GetAPIClient().NFS
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(monitorFreeDiskSizeParam.Selector) == 0 {
+						if len(nfsMonitorFreeDiskSizeParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2871,12 +3053,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.NFS {
-							if hasTags(&v, monitorFreeDiskSizeParam.Selector) {
+							if hasTags(&v, nfsMonitorFreeDiskSizeParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorFreeDiskSizeParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", nfsMonitorFreeDiskSizeParam.Selector)
 						}
 
 					} else {
@@ -2898,7 +3080,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.NFS {
-										if len(monitorFreeDiskSizeParam.Selector) == 0 || hasTags(&v, monitorFreeDiskSizeParam.Selector) {
+										if len(nfsMonitorFreeDiskSizeParam.Selector) == 0 || hasTags(&v, nfsMonitorFreeDiskSizeParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2923,11 +3105,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						monitorFreeDiskSizeParam.SetId(id)
-						p := *monitorFreeDiskSizeParam // copy struct value
-						monitorFreeDiskSizeParam := &p
+						nfsMonitorFreeDiskSizeParam.SetId(id)
+						p := *nfsMonitorFreeDiskSizeParam // copy struct value
+						nfsMonitorFreeDiskSizeParam := &p
 						go func() {
-							err := funcs.NFSMonitorFreeDiskSize(ctx, monitorFreeDiskSizeParam)
+							err := funcs.NFSMonitorFreeDiskSize(ctx, nfsMonitorFreeDiskSizeParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3044,6 +3226,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("nfs", "boot", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "boot", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("nfs", "boot", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -3115,6 +3307,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("nfs", "create", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "create", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "create", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3204,6 +3406,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("nfs", "delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "delete", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("nfs", "delete", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3275,6 +3487,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("nfs", "list", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "list", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "list", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3354,6 +3576,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("nfs", "monitor-free-disk-size", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "monitor-free-disk-size", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("nfs", "monitor-free-disk-size", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3429,6 +3661,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("nfs", "monitor-nic", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "monitor-nic", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("nfs", "monitor-nic", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3494,6 +3736,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("nfs", "read", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "read", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("nfs", "read", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3539,6 +3791,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("nfs", "reset", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "reset", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("nfs", "reset", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -3569,6 +3831,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("nfs", "shutdown", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "shutdown", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("nfs", "shutdown", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -3595,6 +3867,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("nfs", "shutdown-force", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "shutdown-force", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "shutdown-force", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3664,6 +3946,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("nfs", "update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "update", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("nfs", "update", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3709,6 +4001,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("nfs", "wait-for-boot", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "wait-for-boot", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("nfs", "wait-for-boot", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -3730,6 +4032,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("nfs", "wait-for-down", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "wait-for-down", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("nfs", "wait-for-down", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

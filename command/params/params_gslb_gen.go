@@ -32,7 +32,9 @@ type ListGSLBParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -71,8 +73,14 @@ func (p *ListGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -233,12 +241,26 @@ func (p *ListGSLBParam) SetParamTemplate(v string) {
 func (p *ListGSLBParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListGSLBParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListGSLBParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListGSLBParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListGSLBParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListGSLBParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListGSLBParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -301,7 +323,9 @@ func (p *ListGSLBParam) GetQueryFile() string {
 type ServerInfoGSLBParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -326,8 +350,14 @@ func (p *ServerInfoGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -431,12 +461,26 @@ func (p *ServerInfoGSLBParam) SetParamTemplate(v string) {
 func (p *ServerInfoGSLBParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ServerInfoGSLBParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerInfoGSLBParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ServerInfoGSLBParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ServerInfoGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ServerInfoGSLBParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerInfoGSLBParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ServerInfoGSLBParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -518,7 +562,9 @@ type CreateGSLBParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -585,8 +631,14 @@ func (p *CreateGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -834,12 +886,26 @@ func (p *CreateGSLBParam) SetParamTemplate(v string) {
 func (p *CreateGSLBParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateGSLBParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateGSLBParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateGSLBParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateGSLBParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateGSLBParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateGSLBParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -906,7 +972,9 @@ type ServerAddGSLBParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -943,8 +1011,14 @@ func (p *ServerAddGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1090,12 +1164,26 @@ func (p *ServerAddGSLBParam) SetParamTemplate(v string) {
 func (p *ServerAddGSLBParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ServerAddGSLBParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerAddGSLBParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ServerAddGSLBParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ServerAddGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ServerAddGSLBParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerAddGSLBParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ServerAddGSLBParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1165,7 +1253,9 @@ func (p *ServerAddGSLBParam) GetId() sacloud.ID {
 type ReadGSLBParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1190,8 +1280,14 @@ func (p *ReadGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1295,12 +1391,26 @@ func (p *ReadGSLBParam) SetParamTemplate(v string) {
 func (p *ReadGSLBParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadGSLBParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadGSLBParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadGSLBParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadGSLBParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadGSLBParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadGSLBParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1375,7 +1485,9 @@ type ServerUpdateGSLBParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1415,8 +1527,14 @@ func (p *ServerUpdateGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1576,12 +1694,26 @@ func (p *ServerUpdateGSLBParam) SetParamTemplate(v string) {
 func (p *ServerUpdateGSLBParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ServerUpdateGSLBParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerUpdateGSLBParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ServerUpdateGSLBParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ServerUpdateGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ServerUpdateGSLBParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerUpdateGSLBParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ServerUpdateGSLBParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1653,7 +1785,9 @@ type ServerDeleteGSLBParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1684,8 +1818,14 @@ func (p *ServerDeleteGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1810,12 +1950,26 @@ func (p *ServerDeleteGSLBParam) SetParamTemplate(v string) {
 func (p *ServerDeleteGSLBParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ServerDeleteGSLBParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerDeleteGSLBParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ServerDeleteGSLBParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ServerDeleteGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ServerDeleteGSLBParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerDeleteGSLBParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ServerDeleteGSLBParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1898,7 +2052,9 @@ type UpdateGSLBParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1962,8 +2118,14 @@ func (p *UpdateGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2207,12 +2369,26 @@ func (p *UpdateGSLBParam) SetParamTemplate(v string) {
 func (p *UpdateGSLBParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateGSLBParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateGSLBParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateGSLBParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateGSLBParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateGSLBParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateGSLBParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2283,7 +2459,9 @@ type DeleteGSLBParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2311,8 +2489,14 @@ func (p *DeleteGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2423,12 +2607,26 @@ func (p *DeleteGSLBParam) SetParamTemplate(v string) {
 func (p *DeleteGSLBParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteGSLBParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteGSLBParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteGSLBParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteGSLBParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteGSLBParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteGSLBParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

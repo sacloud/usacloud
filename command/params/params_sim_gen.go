@@ -32,7 +32,9 @@ type ListSIMParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -71,8 +73,14 @@ func (p *ListSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -233,12 +241,26 @@ func (p *ListSIMParam) SetParamTemplate(v string) {
 func (p *ListSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -310,7 +332,9 @@ type CreateSIMParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -361,8 +385,14 @@ func (p *CreateSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -588,12 +618,26 @@ func (p *CreateSIMParam) SetParamTemplate(v string) {
 func (p *CreateSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -656,7 +700,9 @@ func (p *CreateSIMParam) GetQueryFile() string {
 type ReadSIMParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -681,8 +727,14 @@ func (p *ReadSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -786,12 +838,26 @@ func (p *ReadSIMParam) SetParamTemplate(v string) {
 func (p *ReadSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -866,7 +932,9 @@ type UpdateSIMParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -906,8 +974,14 @@ func (p *UpdateSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1074,12 +1148,26 @@ func (p *UpdateSIMParam) SetParamTemplate(v string) {
 func (p *UpdateSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1151,7 +1239,9 @@ type DeleteSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1175,8 +1265,14 @@ func (p *DeleteSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1253,12 +1349,26 @@ func (p *DeleteSIMParam) SetParamTemplate(v string) {
 func (p *DeleteSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1279,7 +1389,9 @@ func (p *DeleteSIMParam) GetId() sacloud.ID {
 type CarrierInfoSIMParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1304,8 +1416,14 @@ func (p *CarrierInfoSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1409,12 +1527,26 @@ func (p *CarrierInfoSIMParam) SetParamTemplate(v string) {
 func (p *CarrierInfoSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CarrierInfoSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CarrierInfoSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CarrierInfoSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CarrierInfoSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CarrierInfoSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CarrierInfoSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CarrierInfoSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1485,7 +1617,9 @@ type CarrierUpdateSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 	Carrier           []string   `json:"carrier"`
@@ -1507,8 +1641,14 @@ func (p *CarrierUpdateSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1601,12 +1741,26 @@ func (p *CarrierUpdateSIMParam) SetParamTemplate(v string) {
 func (p *CarrierUpdateSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CarrierUpdateSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CarrierUpdateSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CarrierUpdateSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CarrierUpdateSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CarrierUpdateSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CarrierUpdateSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CarrierUpdateSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1635,7 +1789,9 @@ type ActivateSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1656,8 +1812,14 @@ func (p *ActivateSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1727,12 +1889,26 @@ func (p *ActivateSIMParam) SetParamTemplate(v string) {
 func (p *ActivateSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ActivateSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ActivateSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ActivateSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ActivateSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ActivateSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ActivateSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ActivateSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1754,7 +1930,9 @@ type DeactivateSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -1775,8 +1953,14 @@ func (p *DeactivateSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1846,12 +2030,26 @@ func (p *DeactivateSIMParam) SetParamTemplate(v string) {
 func (p *DeactivateSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeactivateSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeactivateSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeactivateSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeactivateSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeactivateSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeactivateSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeactivateSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1873,7 +2071,9 @@ type ImeiLockSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 	Imei              string     `json:"imei"`
@@ -1895,8 +2095,14 @@ func (p *ImeiLockSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1976,12 +2182,26 @@ func (p *ImeiLockSIMParam) SetParamTemplate(v string) {
 func (p *ImeiLockSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ImeiLockSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ImeiLockSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ImeiLockSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ImeiLockSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ImeiLockSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ImeiLockSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ImeiLockSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2010,7 +2230,9 @@ type IpAddSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 	Ip                string     `json:"ip"`
@@ -2032,8 +2254,14 @@ func (p *IpAddSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2120,12 +2348,26 @@ func (p *IpAddSIMParam) SetParamTemplate(v string) {
 func (p *IpAddSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *IpAddSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *IpAddSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *IpAddSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *IpAddSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *IpAddSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *IpAddSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *IpAddSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2154,7 +2396,9 @@ type ImeiUnlockSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2175,8 +2419,14 @@ func (p *ImeiUnlockSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2246,12 +2496,26 @@ func (p *ImeiUnlockSIMParam) SetParamTemplate(v string) {
 func (p *ImeiUnlockSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ImeiUnlockSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ImeiUnlockSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ImeiUnlockSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ImeiUnlockSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ImeiUnlockSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ImeiUnlockSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ImeiUnlockSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2273,7 +2537,9 @@ type IpDeleteSIMParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -2294,8 +2560,14 @@ func (p *IpDeleteSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2365,12 +2637,26 @@ func (p *IpDeleteSIMParam) SetParamTemplate(v string) {
 func (p *IpDeleteSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *IpDeleteSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *IpDeleteSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *IpDeleteSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *IpDeleteSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *IpDeleteSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *IpDeleteSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *IpDeleteSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2393,7 +2679,9 @@ type LogsSIMParam struct {
 	RefreshInterval   int64      `json:"refresh-interval"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2427,8 +2715,14 @@ func (p *LogsSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2553,12 +2847,26 @@ func (p *LogsSIMParam) SetParamTemplate(v string) {
 func (p *LogsSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *LogsSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *LogsSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *LogsSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *LogsSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *LogsSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *LogsSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *LogsSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -2631,7 +2939,9 @@ type MonitorSIMParam struct {
 	KeyFormat         string     `json:"key-format"`
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -2668,8 +2978,14 @@ func (p *MonitorSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -2815,12 +3131,26 @@ func (p *MonitorSIMParam) SetParamTemplate(v string) {
 func (p *MonitorSIMParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *MonitorSIMParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *MonitorSIMParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *MonitorSIMParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *MonitorSIMParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorSIMParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *MonitorSIMParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *MonitorSIMParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

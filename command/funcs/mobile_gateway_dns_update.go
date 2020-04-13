@@ -22,18 +22,18 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func MobileGatewayDnsUpdate(ctx command.Context, params *params.DnsUpdateMobileGatewayParam) error {
+func MobileGatewayDNSUpdate(ctx command.Context, params *params.DNSUpdateMobileGatewayParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetMobileGatewayAPI()
 	_, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("MobileGatewayDnsUpdate is failed: %s", e)
+		return fmt.Errorf("MobileGatewayDNSUpdate is failed: %s", e)
 	}
 
-	_, err := api.SetDNS(params.Id, sacloud.NewMobileGatewayResolver(params.Dns1, params.Dns2))
+	_, err := api.SetDNS(params.Id, sacloud.NewMobileGatewayResolver(params.DNS1, params.DNS2))
 	if err != nil {
-		return fmt.Errorf("MobileGatewayDnsUpdate is failed: %s", err)
+		return fmt.Errorf("MobileGatewayDNSUpdate is failed: %s", err)
 	}
 	return nil
 }

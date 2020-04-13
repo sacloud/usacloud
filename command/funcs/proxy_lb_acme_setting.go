@@ -22,13 +22,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ProxyLBAcmeSetting(ctx command.Context, params *params.AcmeSettingProxyLBParam) error {
+func ProxyLBACMESetting(ctx command.Context, params *params.ACMESettingProxyLBParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetProxyLBAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("ProxyLBAcmeSetting is failed: %s", e)
+		return fmt.Errorf("ProxyLBACMESetting is failed: %s", e)
 	}
 
 	// validate params
@@ -48,7 +48,7 @@ func ProxyLBAcmeSetting(ctx command.Context, params *params.AcmeSettingProxyLBPa
 	// call manipurate functions
 	res, err := api.UpdateSetting(params.Id, p)
 	if err != nil {
-		return fmt.Errorf("ProxyLBAcmeSetting is failed: %s", err)
+		return fmt.Errorf("ProxyLBACMESetting is failed: %s", err)
 	}
 	return ctx.GetOutput().Print(&res.Settings.ProxyLB.LetsEncrypt)
 }

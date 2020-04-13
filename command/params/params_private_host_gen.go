@@ -32,7 +32,9 @@ type ListPrivateHostParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -71,8 +73,14 @@ func (p *ListPrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -233,12 +241,26 @@ func (p *ListPrivateHostParam) SetParamTemplate(v string) {
 func (p *ListPrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListPrivateHostParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListPrivateHostParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListPrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListPrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListPrivateHostParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListPrivateHostParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListPrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -305,7 +327,9 @@ type CreatePrivateHostParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -341,8 +365,14 @@ func (p *CreatePrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -499,12 +529,26 @@ func (p *CreatePrivateHostParam) SetParamTemplate(v string) {
 func (p *CreatePrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreatePrivateHostParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreatePrivateHostParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreatePrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreatePrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreatePrivateHostParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreatePrivateHostParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreatePrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -567,7 +611,9 @@ func (p *CreatePrivateHostParam) GetQueryFile() string {
 type ReadPrivateHostParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -592,8 +638,14 @@ func (p *ReadPrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -697,12 +749,26 @@ func (p *ReadPrivateHostParam) SetParamTemplate(v string) {
 func (p *ReadPrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadPrivateHostParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadPrivateHostParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadPrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadPrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadPrivateHostParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadPrivateHostParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadPrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -777,7 +843,9 @@ type UpdatePrivateHostParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -817,8 +885,14 @@ func (p *UpdatePrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -985,12 +1059,26 @@ func (p *UpdatePrivateHostParam) SetParamTemplate(v string) {
 func (p *UpdatePrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdatePrivateHostParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdatePrivateHostParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdatePrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdatePrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdatePrivateHostParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdatePrivateHostParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdatePrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1061,7 +1149,9 @@ type DeletePrivateHostParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1089,8 +1179,14 @@ func (p *DeletePrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1201,12 +1297,26 @@ func (p *DeletePrivateHostParam) SetParamTemplate(v string) {
 func (p *DeletePrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeletePrivateHostParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeletePrivateHostParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeletePrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeletePrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeletePrivateHostParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeletePrivateHostParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeletePrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1276,7 +1386,9 @@ func (p *DeletePrivateHostParam) GetId() sacloud.ID {
 type ServerInfoPrivateHostParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1301,8 +1413,14 @@ func (p *ServerInfoPrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1406,12 +1524,26 @@ func (p *ServerInfoPrivateHostParam) SetParamTemplate(v string) {
 func (p *ServerInfoPrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ServerInfoPrivateHostParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerInfoPrivateHostParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ServerInfoPrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ServerInfoPrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ServerInfoPrivateHostParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerInfoPrivateHostParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ServerInfoPrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1483,7 +1615,9 @@ type ServerAddPrivateHostParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1514,8 +1648,14 @@ func (p *ServerAddPrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1647,12 +1787,26 @@ func (p *ServerAddPrivateHostParam) SetParamTemplate(v string) {
 func (p *ServerAddPrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ServerAddPrivateHostParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerAddPrivateHostParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ServerAddPrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ServerAddPrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ServerAddPrivateHostParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerAddPrivateHostParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ServerAddPrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1724,7 +1878,9 @@ type ServerDeletePrivateHostParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1755,8 +1911,14 @@ func (p *ServerDeletePrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1888,12 +2050,26 @@ func (p *ServerDeletePrivateHostParam) SetParamTemplate(v string) {
 func (p *ServerDeletePrivateHostParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ServerDeletePrivateHostParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ServerDeletePrivateHostParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ServerDeletePrivateHostParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ServerDeletePrivateHostParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ServerDeletePrivateHostParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ServerDeletePrivateHostParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ServerDeletePrivateHostParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

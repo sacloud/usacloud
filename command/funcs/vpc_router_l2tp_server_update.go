@@ -21,13 +21,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func VPCRouterL2tpServerUpdate(ctx command.Context, params *params.L2tpServerUpdateVPCRouterParam) error {
+func VPCRouterL2TPServerUpdate(ctx command.Context, params *params.L2TPServerUpdateVPCRouterParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetVPCRouterAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("VPCRouterL2tpServerUpdate is failed: %s", e)
+		return fmt.Errorf("VPCRouterL2TPServerUpdate is failed: %s", e)
 	}
 
 	if !params.Disabled {
@@ -60,11 +60,11 @@ func VPCRouterL2tpServerUpdate(ctx command.Context, params *params.L2tpServerUpd
 
 	_, err := api.UpdateSetting(params.Id, p)
 	if err != nil {
-		return fmt.Errorf("VPCRouterL2tpServerUpdate is failed: %s", err)
+		return fmt.Errorf("VPCRouterL2TPServerUpdate is failed: %s", err)
 	}
 	_, err = api.Config(params.Id)
 	if err != nil {
-		return fmt.Errorf("VPCRouterL2tpServerUpdate is failed: %s", err)
+		return fmt.Errorf("VPCRouterL2TPServerUpdate is failed: %s", err)
 	}
 
 	return nil

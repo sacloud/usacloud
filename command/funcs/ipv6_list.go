@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func Ipv6List(ctx command.Context, params *params.ListIpv6Param) error {
+func IPv6List(ctx command.Context, params *params.ListIPv6Param) error {
 
 	client := ctx.GetAPIClient()
 	finder := client.GetIPv6AddrAPI()
@@ -45,7 +45,7 @@ func Ipv6List(ctx command.Context, params *params.ListIpv6Param) error {
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("Ipv6List is failed: %s", err)
+		return fmt.Errorf("IPv6List is failed: %s", err)
 	}
 
 	list := []interface{}{}
@@ -54,7 +54,7 @@ func Ipv6List(ctx command.Context, params *params.ListIpv6Param) error {
 
 		n, err := findIPv6NetIfAbsent(client, res.IPv6Addrs[i].IPv6Net.ID, ipv6NetCache)
 		if err != nil {
-			return fmt.Errorf("Ipv6List is failed: %s", err)
+			return fmt.Errorf("IPv6List is failed: %s", err)
 		}
 		res.IPv6Addrs[i].IPv6Net = n
 
@@ -63,7 +63,7 @@ func Ipv6List(ctx command.Context, params *params.ListIpv6Param) error {
 			continue
 		}
 		// filter by ipv6net id
-		if !params.GetCommandDef().Params["ipv6net-id"].FilterFunc(list, &res.IPv6Addrs[i], params.Ipv6netId) {
+		if !params.GetCommandDef().Params["ipv6net-id"].FilterFunc(list, &res.IPv6Addrs[i], params.IPv6netId) {
 			continue
 		}
 

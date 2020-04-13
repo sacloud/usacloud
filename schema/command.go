@@ -86,7 +86,7 @@ func (c *Command) ParamCategory(key string) *Category {
 	}
 }
 
-func (c *Command) BuildedParams() SortableParams {
+func (c *Command) BuiltParams() SortableParams {
 
 	// Notice: ここで追加されるパラメータはdefine.Resourcesからは見えない。
 	//         (コード生成時に追加されるため)
@@ -132,6 +132,7 @@ func (c *Command) BuildedParams() SortableParams {
 		}
 	}
 
+	// TODO あとで消す
 	if _, ok := c.Params["param-template"]; !ok {
 		c.Params["param-template"] = &Schema{
 			Type:        TypeString,
@@ -141,6 +142,7 @@ func (c *Command) BuildedParams() SortableParams {
 			Order:       20,
 		}
 	}
+	// TODO あとで消す
 	if _, ok := c.Params["param-template-file"]; !ok {
 		c.Params["param-template-file"] = &Schema{
 			Type:        TypeString,
@@ -148,6 +150,25 @@ func (c *Command) BuildedParams() SortableParams {
 			Description: "Set input parameter from file",
 			Category:    "input",
 			Order:       30,
+		}
+	}
+
+	if _, ok := c.Params["parameters"]; !ok {
+		c.Params["parameters"] = &Schema{
+			Type:        TypeString,
+			HandlerType: HandlerNoop,
+			Description: "Set input parameters from JSON string",
+			Category:    "input",
+			Order:       21,
+		}
+	}
+	if _, ok := c.Params["parameter-file"]; !ok {
+		c.Params["parameter-file"] = &Schema{
+			Type:        TypeString,
+			HandlerType: HandlerNoop,
+			Description: "Set input parameters from file",
+			Category:    "input",
+			Order:       31,
 		}
 	}
 	if _, ok := c.Params["generate-skeleton"]; !ok {
@@ -244,7 +265,7 @@ func (c *Command) BuildedParams() SortableParams {
 }
 
 func (c *Command) Validate() []error {
-	errors := []error{}
+	var errors []error
 
 	if c.Type == CommandInvalid {
 		errors = append(errors, fmt.Errorf("command#Type: command type is invalid: (%#v)", c))
@@ -297,20 +318,20 @@ func (c *Command) Validate() []error {
 			errors = append(errors, err)
 		}
 
-		if v.Category != "" && v.Category != "output" && len(c.ParamCategories) > 0 {
-			exists := false
-			// category is defined on command?
-			for _, category := range c.ParamCategories {
-				if category.Key == v.Category {
-					exists = true
-					break
-				}
-			}
-			if !exists {
-				err := fmt.Errorf("command#%s.%q: category(%s) isn't defined, but is used by %q", k, "Category", v.Category, k)
-				errors = append(errors, err)
-			}
-		}
+		//if v.Category != "" && v.Category != "output" && v.Category != "input" && len(c.ParamCategories) > 0 {
+		//	exists := false
+		//	// category is defined on command?
+		//	for _, category := range c.ParamCategories {
+		//		if category.Key == v.Category {
+		//			exists = true
+		//			break
+		//		}
+		//	}
+		//	if !exists {
+		//		err := fmt.Errorf("command#%s.%q: category(%s) isn't defined, but is used by %q", k, "Category", v.Category, k)
+		//		errors = append(errors, err)
+		//	}
+		//}
 	}
 
 	return errors

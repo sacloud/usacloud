@@ -28,7 +28,9 @@ type ListObjectStorageParam struct {
 	SecretKey         string   `json:"secret-key"`
 	Bucket            string   `json:"bucket"`
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -58,8 +60,14 @@ func (p *ListObjectStorageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -181,12 +189,26 @@ func (p *ListObjectStorageParam) SetParamTemplate(v string) {
 func (p *ListObjectStorageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListObjectStorageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListObjectStorageParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListObjectStorageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListObjectStorageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListObjectStorageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListObjectStorageParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListObjectStorageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -254,7 +276,9 @@ type PutObjectStorageParam struct {
 	Bucket            string `json:"bucket"`
 	Assumeyes         bool   `json:"assumeyes"`
 	ParamTemplate     string `json:"param-template"`
+	Parameters        string `json:"parameters"`
 	ParamTemplateFile string `json:"param-template-file"`
+	ParameterFile     string `json:"parameter-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
@@ -289,8 +313,14 @@ func (p *PutObjectStorageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -392,12 +422,26 @@ func (p *PutObjectStorageParam) SetParamTemplate(v string) {
 func (p *PutObjectStorageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *PutObjectStorageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PutObjectStorageParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *PutObjectStorageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *PutObjectStorageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *PutObjectStorageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PutObjectStorageParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *PutObjectStorageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -414,7 +458,9 @@ type GetObjectStorageParam struct {
 	SecretKey         string `json:"secret-key"`
 	Bucket            string `json:"bucket"`
 	ParamTemplate     string `json:"param-template"`
+	Parameters        string `json:"parameters"`
 	ParamTemplateFile string `json:"param-template-file"`
+	ParameterFile     string `json:"parameter-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
@@ -440,8 +486,14 @@ func (p *GetObjectStorageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -529,12 +581,26 @@ func (p *GetObjectStorageParam) SetParamTemplate(v string) {
 func (p *GetObjectStorageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *GetObjectStorageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *GetObjectStorageParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *GetObjectStorageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *GetObjectStorageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *GetObjectStorageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *GetObjectStorageParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *GetObjectStorageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -552,7 +618,9 @@ type DeleteObjectStorageParam struct {
 	Bucket            string `json:"bucket"`
 	Assumeyes         bool   `json:"assumeyes"`
 	ParamTemplate     string `json:"param-template"`
+	Parameters        string `json:"parameters"`
 	ParamTemplateFile string `json:"param-template-file"`
+	ParameterFile     string `json:"parameter-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
@@ -581,8 +649,14 @@ func (p *DeleteObjectStorageParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -677,12 +751,26 @@ func (p *DeleteObjectStorageParam) SetParamTemplate(v string) {
 func (p *DeleteObjectStorageParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteObjectStorageParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteObjectStorageParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteObjectStorageParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteObjectStorageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteObjectStorageParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteObjectStorageParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteObjectStorageParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

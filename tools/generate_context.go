@@ -18,23 +18,72 @@ import (
 	"fmt"
 	"go/build"
 	"path/filepath"
+	"sort"
 
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/schema"
 )
 
 type GenerateContext struct {
+	// for v0
 	R           string
 	C           string
 	P           string
 	ResourceDef map[string]*schema.Resource
+	// for v1
+	Resources            []*Resource
+	CategorizedResources []*CategorizedResources
+}
+
+type CategorizedResources struct {
+	*schema.Category
+	Resources []*Resource
 }
 
 func NewGenerateContext() *GenerateContext {
 	ctx := &GenerateContext{
 		ResourceDef: define.Resources,
 	}
+	for rn, r := range define.Resources {
+		ctx.Resources = append(ctx.Resources, NewResource(rn, r))
+	}
+	sort.Slice(ctx.Resources, func(i, j int) bool {
+		if ctx.Resources[i].ResourceCategory.Order == ctx.Resources[j].ResourceCategory.Order {
+			if ctx.Resources[i].ResourceCategory.Key == ctx.Resources[j].ResourceCategory.Key {
+				return ctx.Resources[i].Name < ctx.Resources[j].Name
+			}
+			return ctx.Resources[i].ResourceCategory.Key < ctx.Resources[j].ResourceCategory.Key
+		}
+		return ctx.Resources[i].ResourceCategory.Order < ctx.Resources[j].ResourceCategory.Order
+	})
+
+	ctx.buildCategorizedResources()
 	return ctx
+}
+
+func (c *GenerateContext) buildCategorizedResources() {
+	m := map[string]*CategorizedResources{}
+	for _, r := range c.Resources {
+		c := &r.ResourceCategory
+		cr, ok := m[c.Key]
+		if !ok {
+			cr = &CategorizedResources{
+				Category: c,
+			}
+		}
+		cr.Resources = append(cr.Resources, r)
+		m[c.Key] = cr
+	}
+	c.CategorizedResources = []*CategorizedResources{}
+	for _, cat := range m {
+		c.CategorizedResources = append(c.CategorizedResources, cat)
+	}
+	sort.Slice(c.CategorizedResources, func(i, j int) bool {
+		if c.CategorizedResources[i].Order == c.CategorizedResources[j].Order {
+			return c.CategorizedResources[i].Key < c.CategorizedResources[j].Key
+		}
+		return c.CategorizedResources[i].Order < c.CategorizedResources[j].Order
+	})
 }
 
 func (c *GenerateContext) SetCurrentR(k string) {
@@ -156,7 +205,7 @@ func (c *GenerateContext) InputParamCLIFlagName() string {
 }
 
 func (c *GenerateContext) InputParamVariableName() string {
-	return fmt.Sprintf("%sParam", ToCamelWithFirstLower(c.C))
+	return fmt.Sprintf("%s%sParam", ToCamelWithFirstLower(c.R), ToCamelCaseName(c.C))
 }
 
 func (c *GenerateContext) CommandFuncName() string {
@@ -172,6 +221,10 @@ func (c *GenerateContext) CommandFileName(useCustomCommand bool) string {
 
 func (c *GenerateContext) CLICommandsFileName() string {
 	return fmt.Sprintf("cli_%s_gen.go", c.SnakeR())
+}
+
+func (c *GenerateContext) CLIv2CommandsFileName() string {
+	return fmt.Sprintf("%s_gen.go", c.SnakeR())
 }
 
 func (c *GenerateContext) CommandResourceName() string {

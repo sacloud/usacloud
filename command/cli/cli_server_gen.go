@@ -32,42 +32,42 @@ import (
 )
 
 func init() {
-	listParam := params.NewListServerParam()
-	buildParam := params.NewBuildServerParam()
-	readParam := params.NewReadServerParam()
-	updateParam := params.NewUpdateServerParam()
-	deleteParam := params.NewDeleteServerParam()
-	planChangeParam := params.NewPlanChangeServerParam()
-	bootParam := params.NewBootServerParam()
-	shutdownParam := params.NewShutdownServerParam()
-	shutdownForceParam := params.NewShutdownForceServerParam()
-	resetParam := params.NewResetServerParam()
-	waitForBootParam := params.NewWaitForBootServerParam()
-	waitForDownParam := params.NewWaitForDownServerParam()
-	sshParam := params.NewSshServerParam()
-	sshExecParam := params.NewSshExecServerParam()
-	scpParam := params.NewScpServerParam()
-	vncParam := params.NewVncServerParam()
-	vncInfoParam := params.NewVncInfoServerParam()
-	vncSendParam := params.NewVncSendServerParam()
-	vncSnapshotParam := params.NewVncSnapshotServerParam()
-	remoteDesktopParam := params.NewRemoteDesktopServerParam()
-	remoteDesktopInfoParam := params.NewRemoteDesktopInfoServerParam()
-	diskInfoParam := params.NewDiskInfoServerParam()
-	diskConnectParam := params.NewDiskConnectServerParam()
-	diskDisconnectParam := params.NewDiskDisconnectServerParam()
-	interfaceInfoParam := params.NewInterfaceInfoServerParam()
-	interfaceAddForInternetParam := params.NewInterfaceAddForInternetServerParam()
-	interfaceAddForRouterParam := params.NewInterfaceAddForRouterServerParam()
-	interfaceAddForSwitchParam := params.NewInterfaceAddForSwitchServerParam()
-	interfaceAddDisconnectedParam := params.NewInterfaceAddDisconnectedServerParam()
-	isoInfoParam := params.NewIsoInfoServerParam()
-	isoInsertParam := params.NewIsoInsertServerParam()
-	isoEjectParam := params.NewIsoEjectServerParam()
-	monitorCpuParam := params.NewMonitorCpuServerParam()
-	monitorNicParam := params.NewMonitorNicServerParam()
-	monitorDiskParam := params.NewMonitorDiskServerParam()
-	maintenanceInfoParam := params.NewMaintenanceInfoServerParam()
+	serverListParam := params.NewListServerParam()
+	serverBuildParam := params.NewBuildServerParam()
+	serverReadParam := params.NewReadServerParam()
+	serverUpdateParam := params.NewUpdateServerParam()
+	serverDeleteParam := params.NewDeleteServerParam()
+	serverPlanChangeParam := params.NewPlanChangeServerParam()
+	serverBootParam := params.NewBootServerParam()
+	serverShutdownParam := params.NewShutdownServerParam()
+	serverShutdownForceParam := params.NewShutdownForceServerParam()
+	serverResetParam := params.NewResetServerParam()
+	serverWaitForBootParam := params.NewWaitForBootServerParam()
+	serverWaitForDownParam := params.NewWaitForDownServerParam()
+	serverSSHParam := params.NewSSHServerParam()
+	serverSSHExecParam := params.NewSSHExecServerParam()
+	serverScpParam := params.NewScpServerParam()
+	serverVncParam := params.NewVncServerParam()
+	serverVncInfoParam := params.NewVncInfoServerParam()
+	serverVncSendParam := params.NewVncSendServerParam()
+	serverVncSnapshotParam := params.NewVncSnapshotServerParam()
+	serverRemoteDesktopParam := params.NewRemoteDesktopServerParam()
+	serverRemoteDesktopInfoParam := params.NewRemoteDesktopInfoServerParam()
+	serverDiskInfoParam := params.NewDiskInfoServerParam()
+	serverDiskConnectParam := params.NewDiskConnectServerParam()
+	serverDiskDisconnectParam := params.NewDiskDisconnectServerParam()
+	serverInterfaceInfoParam := params.NewInterfaceInfoServerParam()
+	serverInterfaceAddForInternetParam := params.NewInterfaceAddForInternetServerParam()
+	serverInterfaceAddForRouterParam := params.NewInterfaceAddForRouterServerParam()
+	serverInterfaceAddForSwitchParam := params.NewInterfaceAddForSwitchServerParam()
+	serverInterfaceAddDisconnectedParam := params.NewInterfaceAddDisconnectedServerParam()
+	serverISOInfoParam := params.NewISOInfoServerParam()
+	serverISOInsertParam := params.NewISOInsertServerParam()
+	serverISOEjectParam := params.NewISOEjectServerParam()
+	serverMonitorCPUParam := params.NewMonitorCPUServerParam()
+	serverMonitorNicParam := params.NewMonitorNicServerParam()
+	serverMonitorDiskParam := params.NewMonitorDiskServerParam()
+	serverMaintenanceInfoParam := params.NewMaintenanceInfoServerParam()
 
 	cliCommand := &cli.Command{
 		Name:  "server",
@@ -110,8 +110,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -159,9 +167,9 @@ func init() {
 						return err
 					}
 
-					listParam.ParamTemplate = c.String("param-template")
-					listParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(listParam)
+					serverListParam.ParamTemplate = c.String("param-template")
+					serverListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverListParam)
 					if err != nil {
 						return err
 					}
@@ -171,57 +179,63 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(listParam, p, mergo.WithOverride)
+						mergo.Merge(serverListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						listParam.Name = c.StringSlice("name")
+						serverListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						serverListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						listParam.Tags = c.StringSlice("tags")
+						serverListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						listParam.From = c.Int("from")
+						serverListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						listParam.Max = c.Int("max")
+						serverListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						listParam.Sort = c.StringSlice("sort")
+						serverListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						listParam.ParamTemplate = c.String("param-template")
+						serverListParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						listParam.ParamTemplateFile = c.String("param-template-file")
+						serverListParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						listParam.OutputType = c.String("output-type")
+						serverListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						listParam.Column = c.StringSlice("column")
+						serverListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						listParam.Quiet = c.Bool("quiet")
+						serverListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						listParam.Format = c.String("format")
+						serverListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						listParam.FormatFile = c.String("format-file")
+						serverListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						listParam.Query = c.String("query")
+						serverListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						listParam.QueryFile = c.String("query-file")
+						serverListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -229,7 +243,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = listParam
+					var outputTypeHolder interface{} = serverListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -240,10 +254,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if listParam.GenerateSkeleton {
-						listParam.GenerateSkeleton = false
-						listParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(listParam, "", "\t")
+					if serverListParam.GenerateSkeleton {
+						serverListParam.GenerateSkeleton = false
+						serverListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -252,15 +266,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := serverListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), listParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverListParam)
 
 					// Run command with params
-					return funcs.ServerList(ctx, listParam)
+					return funcs.ServerList(ctx, serverListParam)
 
 				},
 			},
@@ -458,8 +472,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -515,9 +537,9 @@ func init() {
 						return err
 					}
 
-					buildParam.ParamTemplate = c.String("param-template")
-					buildParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(buildParam)
+					serverBuildParam.ParamTemplate = c.String("param-template")
+					serverBuildParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverBuildParam)
 					if err != nil {
 						return err
 					}
@@ -527,168 +549,174 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(buildParam, p, mergo.WithOverride)
+						mergo.Merge(serverBuildParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("core") {
-						buildParam.Core = c.Int("core")
+						serverBuildParam.Core = c.Int("core")
 					}
 					if c.IsSet("memory") {
-						buildParam.Memory = c.Int("memory")
+						serverBuildParam.Memory = c.Int("memory")
 					}
 					if c.IsSet("commitment") {
-						buildParam.Commitment = c.String("commitment")
+						serverBuildParam.Commitment = c.String("commitment")
 					}
 					if c.IsSet("private-host-id") {
-						buildParam.PrivateHostId = sacloud.ID(c.Int64("private-host-id"))
+						serverBuildParam.PrivateHostId = sacloud.ID(c.Int64("private-host-id"))
 					}
 					if c.IsSet("disk-mode") {
-						buildParam.DiskMode = c.String("disk-mode")
+						serverBuildParam.DiskMode = c.String("disk-mode")
 					}
 					if c.IsSet("os-type") {
-						buildParam.OsType = c.String("os-type")
+						serverBuildParam.OsType = c.String("os-type")
 					}
 					if c.IsSet("disk-plan") {
-						buildParam.DiskPlan = c.String("disk-plan")
+						serverBuildParam.DiskPlan = c.String("disk-plan")
 					}
 					if c.IsSet("disk-connection") {
-						buildParam.DiskConnection = c.String("disk-connection")
+						serverBuildParam.DiskConnection = c.String("disk-connection")
 					}
 					if c.IsSet("disk-size") {
-						buildParam.DiskSize = c.Int("disk-size")
+						serverBuildParam.DiskSize = c.Int("disk-size")
 					}
 					if c.IsSet("source-archive-id") {
-						buildParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
+						serverBuildParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
 					}
 					if c.IsSet("source-disk-id") {
-						buildParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
+						serverBuildParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
 					}
 					if c.IsSet("distant-from") {
-						buildParam.DistantFrom = toSakuraIDs(c.Int64Slice("distant-from"))
+						serverBuildParam.DistantFrom = toSakuraIDs(c.Int64Slice("distant-from"))
 					}
 					if c.IsSet("disk-id") {
-						buildParam.DiskId = sacloud.ID(c.Int64("disk-id"))
+						serverBuildParam.DiskId = sacloud.ID(c.Int64("disk-id"))
 					}
 					if c.IsSet("iso-image-id") {
-						buildParam.IsoImageId = sacloud.ID(c.Int64("iso-image-id"))
+						serverBuildParam.ISOImageId = sacloud.ID(c.Int64("iso-image-id"))
 					}
 					if c.IsSet("network-mode") {
-						buildParam.NetworkMode = c.String("network-mode")
+						serverBuildParam.NetworkMode = c.String("network-mode")
 					}
 					if c.IsSet("interface-driver") {
-						buildParam.InterfaceDriver = c.String("interface-driver")
+						serverBuildParam.InterfaceDriver = c.String("interface-driver")
 					}
 					if c.IsSet("packet-filter-id") {
-						buildParam.PacketFilterId = sacloud.ID(c.Int64("packet-filter-id"))
+						serverBuildParam.PacketFilterId = sacloud.ID(c.Int64("packet-filter-id"))
 					}
 					if c.IsSet("switch-id") {
-						buildParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
+						serverBuildParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
 					}
 					if c.IsSet("hostname") {
-						buildParam.Hostname = c.String("hostname")
+						serverBuildParam.Hostname = c.String("hostname")
 					}
-					if c.IsSet("password") || command.IsEmpty(buildParam.Password) {
-						buildParam.Password = c.String("password")
+					if c.IsSet("password") || command.IsEmpty(serverBuildParam.Password) {
+						serverBuildParam.Password = c.String("password")
 					}
 					if c.IsSet("disable-password-auth") {
-						buildParam.DisablePasswordAuth = c.Bool("disable-password-auth")
+						serverBuildParam.DisablePasswordAuth = c.Bool("disable-password-auth")
 					}
 					if c.IsSet("ipaddress") {
-						buildParam.Ipaddress = c.String("ipaddress")
+						serverBuildParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("nw-masklen") {
-						buildParam.NwMasklen = c.Int("nw-masklen")
+						serverBuildParam.NwMasklen = c.Int("nw-masklen")
 					}
 					if c.IsSet("default-route") {
-						buildParam.DefaultRoute = c.String("default-route")
+						serverBuildParam.DefaultRoute = c.String("default-route")
 					}
 					if c.IsSet("startup-scripts") {
-						buildParam.StartupScripts = c.StringSlice("startup-scripts")
+						serverBuildParam.StartupScripts = c.StringSlice("startup-scripts")
 					}
 					if c.IsSet("startup-script-ids") {
-						buildParam.StartupScriptIds = toSakuraIDs(c.Int64Slice("startup-script-ids"))
+						serverBuildParam.StartupScriptIds = toSakuraIDs(c.Int64Slice("startup-script-ids"))
 					}
 					if c.IsSet("startup-scripts-ephemeral") {
-						buildParam.StartupScriptsEphemeral = c.Bool("startup-scripts-ephemeral")
+						serverBuildParam.StartupScriptsEphemeral = c.Bool("startup-scripts-ephemeral")
 					}
 					if c.IsSet("ssh-key-mode") {
-						buildParam.SshKeyMode = c.String("ssh-key-mode")
+						serverBuildParam.SSHKeyMode = c.String("ssh-key-mode")
 					}
 					if c.IsSet("ssh-key-name") {
-						buildParam.SshKeyName = c.String("ssh-key-name")
+						serverBuildParam.SSHKeyName = c.String("ssh-key-name")
 					}
 					if c.IsSet("ssh-key-ids") {
-						buildParam.SshKeyIds = toSakuraIDs(c.Int64Slice("ssh-key-ids"))
+						serverBuildParam.SSHKeyIds = toSakuraIDs(c.Int64Slice("ssh-key-ids"))
 					}
 					if c.IsSet("ssh-key-pass-phrase") {
-						buildParam.SshKeyPassPhrase = c.String("ssh-key-pass-phrase")
+						serverBuildParam.SSHKeyPassPhrase = c.String("ssh-key-pass-phrase")
 					}
 					if c.IsSet("ssh-key-description") {
-						buildParam.SshKeyDescription = c.String("ssh-key-description")
+						serverBuildParam.SSHKeyDescription = c.String("ssh-key-description")
 					}
 					if c.IsSet("ssh-key-private-key-output") {
-						buildParam.SshKeyPrivateKeyOutput = c.String("ssh-key-private-key-output")
+						serverBuildParam.SSHKeyPrivateKeyOutput = c.String("ssh-key-private-key-output")
 					}
 					if c.IsSet("ssh-key-public-keys") {
-						buildParam.SshKeyPublicKeys = c.StringSlice("ssh-key-public-keys")
+						serverBuildParam.SSHKeyPublicKeys = c.StringSlice("ssh-key-public-keys")
 					}
 					if c.IsSet("ssh-key-public-key-files") {
-						buildParam.SshKeyPublicKeyFiles = c.StringSlice("ssh-key-public-key-files")
+						serverBuildParam.SSHKeyPublicKeyFiles = c.StringSlice("ssh-key-public-key-files")
 					}
 					if c.IsSet("ssh-key-ephemeral") {
-						buildParam.SshKeyEphemeral = c.Bool("ssh-key-ephemeral")
+						serverBuildParam.SSHKeyEphemeral = c.Bool("ssh-key-ephemeral")
 					}
 					if c.IsSet("name") {
-						buildParam.Name = c.String("name")
+						serverBuildParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						buildParam.Description = c.String("description")
+						serverBuildParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						buildParam.Tags = c.StringSlice("tags")
+						serverBuildParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						buildParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						serverBuildParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						buildParam.Assumeyes = c.Bool("assumeyes")
+						serverBuildParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						buildParam.ParamTemplate = c.String("param-template")
+						serverBuildParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverBuildParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						buildParam.ParamTemplateFile = c.String("param-template-file")
+						serverBuildParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverBuildParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						buildParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverBuildParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						buildParam.OutputType = c.String("output-type")
+						serverBuildParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						buildParam.Column = c.StringSlice("column")
+						serverBuildParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						buildParam.Quiet = c.Bool("quiet")
+						serverBuildParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						buildParam.Format = c.String("format")
+						serverBuildParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						buildParam.FormatFile = c.String("format-file")
+						serverBuildParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						buildParam.Query = c.String("query")
+						serverBuildParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						buildParam.QueryFile = c.String("query-file")
+						serverBuildParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("us-keyboard") {
-						buildParam.UsKeyboard = c.Bool("us-keyboard")
+						serverBuildParam.UsKeyboard = c.Bool("us-keyboard")
 					}
 					if c.IsSet("disable-boot-after-create") {
-						buildParam.DisableBootAfterCreate = c.Bool("disable-boot-after-create")
+						serverBuildParam.DisableBootAfterCreate = c.Bool("disable-boot-after-create")
 					}
 
 					// Validate global params
@@ -696,7 +724,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = buildParam
+					var outputTypeHolder interface{} = serverBuildParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -707,10 +735,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if buildParam.GenerateSkeleton {
-						buildParam.GenerateSkeleton = false
-						buildParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(buildParam, "", "\t")
+					if serverBuildParam.GenerateSkeleton {
+						serverBuildParam.GenerateSkeleton = false
+						serverBuildParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverBuildParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -719,15 +747,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := buildParam.Validate(); len(errors) > 0 {
+					if errors := serverBuildParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), buildParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverBuildParam)
 
 					// confirm
-					if !buildParam.Assumeyes {
+					if !serverBuildParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -737,7 +765,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.ServerBuild(ctx, buildParam)
+					return funcs.ServerBuild(ctx, serverBuildParam)
 
 				},
 			},
@@ -755,8 +783,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -809,9 +845,9 @@ func init() {
 						return err
 					}
 
-					readParam.ParamTemplate = c.String("param-template")
-					readParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(readParam)
+					serverReadParam.ParamTemplate = c.String("param-template")
+					serverReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverReadParam)
 					if err != nil {
 						return err
 					}
@@ -821,45 +857,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(readParam, p, mergo.WithOverride)
+						mergo.Merge(serverReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						readParam.Selector = c.StringSlice("selector")
+						serverReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						readParam.ParamTemplate = c.String("param-template")
+						serverReadParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						readParam.ParamTemplateFile = c.String("param-template-file")
+						serverReadParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						readParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						readParam.OutputType = c.String("output-type")
+						serverReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						readParam.Column = c.StringSlice("column")
+						serverReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						readParam.Quiet = c.Bool("quiet")
+						serverReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						readParam.Format = c.String("format")
+						serverReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						readParam.FormatFile = c.String("format-file")
+						serverReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						readParam.Query = c.String("query")
+						serverReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						readParam.QueryFile = c.String("query-file")
+						serverReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = sacloud.ID(c.Int64("id"))
+						serverReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -867,7 +909,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = readParam
+					var outputTypeHolder interface{} = serverReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -878,10 +920,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if readParam.GenerateSkeleton {
-						readParam.GenerateSkeleton = false
-						readParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(readParam, "", "\t")
+					if serverReadParam.GenerateSkeleton {
+						serverReadParam.GenerateSkeleton = false
+						serverReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -890,19 +932,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
+					if errors := serverReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), readParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverReadParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(readParam.Selector) == 0 {
+						if len(serverReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -911,12 +953,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, readParam.Selector) {
+							if hasTags(&v, serverReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverReadParam.Selector)
 						}
 
 					} else {
@@ -938,7 +980,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+										if len(serverReadParam.Selector) == 0 || hasTags(&v, serverReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -963,11 +1005,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						readParam.SetId(id)
-						p := *readParam // copy struct value
-						readParam := &p
+						serverReadParam.SetId(id)
+						p := *serverReadParam // copy struct value
+						serverReadParam := &p
 						go func() {
-							err := funcs.ServerRead(ctx, readParam)
+							err := funcs.ServerRead(ctx, serverReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1020,8 +1062,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1074,9 +1124,9 @@ func init() {
 						return err
 					}
 
-					updateParam.ParamTemplate = c.String("param-template")
-					updateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(updateParam)
+					serverUpdateParam.ParamTemplate = c.String("param-template")
+					serverUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverUpdateParam)
 					if err != nil {
 						return err
 					}
@@ -1086,63 +1136,69 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(updateParam, p, mergo.WithOverride)
+						mergo.Merge(serverUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("interface-driver") {
-						updateParam.InterfaceDriver = c.String("interface-driver")
+						serverUpdateParam.InterfaceDriver = c.String("interface-driver")
 					}
 					if c.IsSet("selector") {
-						updateParam.Selector = c.StringSlice("selector")
+						serverUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						updateParam.Name = c.String("name")
+						serverUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						updateParam.Description = c.String("description")
+						serverUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						updateParam.Tags = c.StringSlice("tags")
+						serverUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						serverUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						updateParam.Assumeyes = c.Bool("assumeyes")
+						serverUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						updateParam.ParamTemplate = c.String("param-template")
+						serverUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						updateParam.ParamTemplateFile = c.String("param-template-file")
+						serverUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						updateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						updateParam.OutputType = c.String("output-type")
+						serverUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						updateParam.Column = c.StringSlice("column")
+						serverUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						updateParam.Quiet = c.Bool("quiet")
+						serverUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						updateParam.Format = c.String("format")
+						serverUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						updateParam.FormatFile = c.String("format-file")
+						serverUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						updateParam.Query = c.String("query")
+						serverUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						updateParam.QueryFile = c.String("query-file")
+						serverUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = sacloud.ID(c.Int64("id"))
+						serverUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1150,7 +1206,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = updateParam
+					var outputTypeHolder interface{} = serverUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1161,10 +1217,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if updateParam.GenerateSkeleton {
-						updateParam.GenerateSkeleton = false
-						updateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(updateParam, "", "\t")
+					if serverUpdateParam.GenerateSkeleton {
+						serverUpdateParam.GenerateSkeleton = false
+						serverUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1173,19 +1229,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
+					if errors := serverUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverUpdateParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(updateParam.Selector) == 0 {
+						if len(serverUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1194,12 +1250,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, updateParam.Selector) {
+							if hasTags(&v, serverUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverUpdateParam.Selector)
 						}
 
 					} else {
@@ -1221,7 +1277,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+										if len(serverUpdateParam.Selector) == 0 || hasTags(&v, serverUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1238,7 +1294,7 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes {
+					if !serverUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1252,11 +1308,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						updateParam.SetId(id)
-						p := *updateParam // copy struct value
-						updateParam := &p
+						serverUpdateParam.SetId(id)
+						p := *serverUpdateParam // copy struct value
+						serverUpdateParam := &p
 						go func() {
-							err := funcs.ServerUpdate(ctx, updateParam)
+							err := funcs.ServerUpdate(ctx, serverUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1297,8 +1353,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1351,9 +1415,9 @@ func init() {
 						return err
 					}
 
-					deleteParam.ParamTemplate = c.String("param-template")
-					deleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(deleteParam)
+					serverDeleteParam.ParamTemplate = c.String("param-template")
+					serverDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverDeleteParam)
 					if err != nil {
 						return err
 					}
@@ -1363,54 +1427,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(deleteParam, p, mergo.WithOverride)
+						mergo.Merge(serverDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("force") {
-						deleteParam.Force = c.Bool("force")
+						serverDeleteParam.Force = c.Bool("force")
 					}
 					if c.IsSet("without-disk") {
-						deleteParam.WithoutDisk = c.Bool("without-disk")
+						serverDeleteParam.WithoutDisk = c.Bool("without-disk")
 					}
 					if c.IsSet("selector") {
-						deleteParam.Selector = c.StringSlice("selector")
+						serverDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						deleteParam.Assumeyes = c.Bool("assumeyes")
+						serverDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						deleteParam.ParamTemplate = c.String("param-template")
+						serverDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						deleteParam.ParamTemplateFile = c.String("param-template-file")
+						serverDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						deleteParam.OutputType = c.String("output-type")
+						serverDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						deleteParam.Column = c.StringSlice("column")
+						serverDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						deleteParam.Quiet = c.Bool("quiet")
+						serverDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						deleteParam.Format = c.String("format")
+						serverDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						deleteParam.FormatFile = c.String("format-file")
+						serverDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						deleteParam.Query = c.String("query")
+						serverDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						deleteParam.QueryFile = c.String("query-file")
+						serverDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = sacloud.ID(c.Int64("id"))
+						serverDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1418,7 +1488,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = deleteParam
+					var outputTypeHolder interface{} = serverDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1429,10 +1499,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if deleteParam.GenerateSkeleton {
-						deleteParam.GenerateSkeleton = false
-						deleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(deleteParam, "", "\t")
+					if serverDeleteParam.GenerateSkeleton {
+						serverDeleteParam.GenerateSkeleton = false
+						serverDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1441,19 +1511,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := serverDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverDeleteParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(deleteParam.Selector) == 0 {
+						if len(serverDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1462,12 +1532,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, deleteParam.Selector) {
+							if hasTags(&v, serverDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverDeleteParam.Selector)
 						}
 
 					} else {
@@ -1489,7 +1559,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+										if len(serverDeleteParam.Selector) == 0 || hasTags(&v, serverDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1506,7 +1576,7 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes {
+					if !serverDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1520,11 +1590,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						deleteParam.SetId(id)
-						p := *deleteParam // copy struct value
-						deleteParam := &p
+						serverDeleteParam.SetId(id)
+						p := *serverDeleteParam // copy struct value
+						serverDeleteParam := &p
 						go func() {
-							err := funcs.ServerDelete(ctx, deleteParam)
+							err := funcs.ServerDelete(ctx, serverDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1568,8 +1638,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1622,9 +1700,9 @@ func init() {
 						return err
 					}
 
-					planChangeParam.ParamTemplate = c.String("param-template")
-					planChangeParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(planChangeParam)
+					serverPlanChangeParam.ParamTemplate = c.String("param-template")
+					serverPlanChangeParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverPlanChangeParam)
 					if err != nil {
 						return err
 					}
@@ -1634,57 +1712,63 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(planChangeParam, p, mergo.WithOverride)
+						mergo.Merge(serverPlanChangeParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("core") {
-						planChangeParam.Core = c.Int("core")
+						serverPlanChangeParam.Core = c.Int("core")
 					}
 					if c.IsSet("memory") {
-						planChangeParam.Memory = c.Int("memory")
+						serverPlanChangeParam.Memory = c.Int("memory")
 					}
 					if c.IsSet("commitment") {
-						planChangeParam.Commitment = c.String("commitment")
+						serverPlanChangeParam.Commitment = c.String("commitment")
 					}
 					if c.IsSet("selector") {
-						planChangeParam.Selector = c.StringSlice("selector")
+						serverPlanChangeParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						planChangeParam.Assumeyes = c.Bool("assumeyes")
+						serverPlanChangeParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						planChangeParam.ParamTemplate = c.String("param-template")
+						serverPlanChangeParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverPlanChangeParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						planChangeParam.ParamTemplateFile = c.String("param-template-file")
+						serverPlanChangeParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverPlanChangeParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						planChangeParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverPlanChangeParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						planChangeParam.OutputType = c.String("output-type")
+						serverPlanChangeParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						planChangeParam.Column = c.StringSlice("column")
+						serverPlanChangeParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						planChangeParam.Quiet = c.Bool("quiet")
+						serverPlanChangeParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						planChangeParam.Format = c.String("format")
+						serverPlanChangeParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						planChangeParam.FormatFile = c.String("format-file")
+						serverPlanChangeParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						planChangeParam.Query = c.String("query")
+						serverPlanChangeParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						planChangeParam.QueryFile = c.String("query-file")
+						serverPlanChangeParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						planChangeParam.Id = sacloud.ID(c.Int64("id"))
+						serverPlanChangeParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1692,7 +1776,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = planChangeParam
+					var outputTypeHolder interface{} = serverPlanChangeParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1703,10 +1787,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if planChangeParam.GenerateSkeleton {
-						planChangeParam.GenerateSkeleton = false
-						planChangeParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(planChangeParam, "", "\t")
+					if serverPlanChangeParam.GenerateSkeleton {
+						serverPlanChangeParam.GenerateSkeleton = false
+						serverPlanChangeParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverPlanChangeParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1715,19 +1799,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := planChangeParam.Validate(); len(errors) > 0 {
+					if errors := serverPlanChangeParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), planChangeParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverPlanChangeParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(planChangeParam.Selector) == 0 {
+						if len(serverPlanChangeParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1736,12 +1820,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, planChangeParam.Selector) {
+							if hasTags(&v, serverPlanChangeParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", planChangeParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverPlanChangeParam.Selector)
 						}
 
 					} else {
@@ -1763,7 +1847,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(planChangeParam.Selector) == 0 || hasTags(&v, planChangeParam.Selector) {
+										if len(serverPlanChangeParam.Selector) == 0 || hasTags(&v, serverPlanChangeParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1780,7 +1864,7 @@ func init() {
 					}
 
 					// confirm
-					if !planChangeParam.Assumeyes {
+					if !serverPlanChangeParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1794,11 +1878,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						planChangeParam.SetId(id)
-						p := *planChangeParam // copy struct value
-						planChangeParam := &p
+						serverPlanChangeParam.SetId(id)
+						p := *serverPlanChangeParam // copy struct value
+						serverPlanChangeParam := &p
 						go func() {
-							err := funcs.ServerPlanChange(ctx, planChangeParam)
+							err := funcs.ServerPlanChange(ctx, serverPlanChangeParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1830,8 +1914,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1852,9 +1944,9 @@ func init() {
 						return err
 					}
 
-					bootParam.ParamTemplate = c.String("param-template")
-					bootParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(bootParam)
+					serverBootParam.ParamTemplate = c.String("param-template")
+					serverBootParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverBootParam)
 					if err != nil {
 						return err
 					}
@@ -1864,27 +1956,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(bootParam, p, mergo.WithOverride)
+						mergo.Merge(serverBootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						bootParam.Selector = c.StringSlice("selector")
+						serverBootParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						bootParam.Assumeyes = c.Bool("assumeyes")
+						serverBootParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						bootParam.ParamTemplate = c.String("param-template")
+						serverBootParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverBootParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						bootParam.ParamTemplateFile = c.String("param-template-file")
+						serverBootParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverBootParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						bootParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						bootParam.Id = sacloud.ID(c.Int64("id"))
+						serverBootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1892,7 +1990,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = bootParam
+					var outputTypeHolder interface{} = serverBootParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1903,10 +2001,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if bootParam.GenerateSkeleton {
-						bootParam.GenerateSkeleton = false
-						bootParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(bootParam, "", "\t")
+					if serverBootParam.GenerateSkeleton {
+						serverBootParam.GenerateSkeleton = false
+						serverBootParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverBootParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1915,19 +2013,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := bootParam.Validate(); len(errors) > 0 {
+					if errors := serverBootParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), bootParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverBootParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(bootParam.Selector) == 0 {
+						if len(serverBootParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1936,12 +2034,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, bootParam.Selector) {
+							if hasTags(&v, serverBootParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bootParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverBootParam.Selector)
 						}
 
 					} else {
@@ -1963,7 +2061,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(bootParam.Selector) == 0 || hasTags(&v, bootParam.Selector) {
+										if len(serverBootParam.Selector) == 0 || hasTags(&v, serverBootParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1980,7 +2078,7 @@ func init() {
 					}
 
 					// confirm
-					if !bootParam.Assumeyes {
+					if !serverBootParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1994,11 +2092,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						bootParam.SetId(id)
-						p := *bootParam // copy struct value
-						bootParam := &p
+						serverBootParam.SetId(id)
+						p := *serverBootParam // copy struct value
+						serverBootParam := &p
 						go func() {
-							err := funcs.ServerBoot(ctx, bootParam)
+							err := funcs.ServerBoot(ctx, serverBootParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2030,8 +2128,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2052,9 +2158,9 @@ func init() {
 						return err
 					}
 
-					shutdownParam.ParamTemplate = c.String("param-template")
-					shutdownParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(shutdownParam)
+					serverShutdownParam.ParamTemplate = c.String("param-template")
+					serverShutdownParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverShutdownParam)
 					if err != nil {
 						return err
 					}
@@ -2064,27 +2170,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(shutdownParam, p, mergo.WithOverride)
+						mergo.Merge(serverShutdownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						shutdownParam.Selector = c.StringSlice("selector")
+						serverShutdownParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						shutdownParam.Assumeyes = c.Bool("assumeyes")
+						serverShutdownParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						shutdownParam.ParamTemplate = c.String("param-template")
+						serverShutdownParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverShutdownParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						shutdownParam.ParamTemplateFile = c.String("param-template-file")
+						serverShutdownParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverShutdownParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						shutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverShutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						shutdownParam.Id = sacloud.ID(c.Int64("id"))
+						serverShutdownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2092,7 +2204,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = shutdownParam
+					var outputTypeHolder interface{} = serverShutdownParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2103,10 +2215,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if shutdownParam.GenerateSkeleton {
-						shutdownParam.GenerateSkeleton = false
-						shutdownParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(shutdownParam, "", "\t")
+					if serverShutdownParam.GenerateSkeleton {
+						serverShutdownParam.GenerateSkeleton = false
+						serverShutdownParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverShutdownParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2115,19 +2227,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := shutdownParam.Validate(); len(errors) > 0 {
+					if errors := serverShutdownParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), shutdownParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverShutdownParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(shutdownParam.Selector) == 0 {
+						if len(serverShutdownParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2136,12 +2248,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, shutdownParam.Selector) {
+							if hasTags(&v, serverShutdownParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", shutdownParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverShutdownParam.Selector)
 						}
 
 					} else {
@@ -2163,7 +2275,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(shutdownParam.Selector) == 0 || hasTags(&v, shutdownParam.Selector) {
+										if len(serverShutdownParam.Selector) == 0 || hasTags(&v, serverShutdownParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2180,7 +2292,7 @@ func init() {
 					}
 
 					// confirm
-					if !shutdownParam.Assumeyes {
+					if !serverShutdownParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2194,11 +2306,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						shutdownParam.SetId(id)
-						p := *shutdownParam // copy struct value
-						shutdownParam := &p
+						serverShutdownParam.SetId(id)
+						p := *serverShutdownParam // copy struct value
+						serverShutdownParam := &p
 						go func() {
-							err := funcs.ServerShutdown(ctx, shutdownParam)
+							err := funcs.ServerShutdown(ctx, serverShutdownParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2230,8 +2342,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2252,9 +2372,9 @@ func init() {
 						return err
 					}
 
-					shutdownForceParam.ParamTemplate = c.String("param-template")
-					shutdownForceParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(shutdownForceParam)
+					serverShutdownForceParam.ParamTemplate = c.String("param-template")
+					serverShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverShutdownForceParam)
 					if err != nil {
 						return err
 					}
@@ -2264,27 +2384,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(shutdownForceParam, p, mergo.WithOverride)
+						mergo.Merge(serverShutdownForceParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						shutdownForceParam.Selector = c.StringSlice("selector")
+						serverShutdownForceParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						shutdownForceParam.Assumeyes = c.Bool("assumeyes")
+						serverShutdownForceParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						shutdownForceParam.ParamTemplate = c.String("param-template")
+						serverShutdownForceParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverShutdownForceParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						shutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+						serverShutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverShutdownForceParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						shutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverShutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						shutdownForceParam.Id = sacloud.ID(c.Int64("id"))
+						serverShutdownForceParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2292,7 +2418,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = shutdownForceParam
+					var outputTypeHolder interface{} = serverShutdownForceParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2303,10 +2429,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if shutdownForceParam.GenerateSkeleton {
-						shutdownForceParam.GenerateSkeleton = false
-						shutdownForceParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(shutdownForceParam, "", "\t")
+					if serverShutdownForceParam.GenerateSkeleton {
+						serverShutdownForceParam.GenerateSkeleton = false
+						serverShutdownForceParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverShutdownForceParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2315,19 +2441,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := shutdownForceParam.Validate(); len(errors) > 0 {
+					if errors := serverShutdownForceParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), shutdownForceParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverShutdownForceParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(shutdownForceParam.Selector) == 0 {
+						if len(serverShutdownForceParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2336,12 +2462,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, shutdownForceParam.Selector) {
+							if hasTags(&v, serverShutdownForceParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", shutdownForceParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverShutdownForceParam.Selector)
 						}
 
 					} else {
@@ -2363,7 +2489,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(shutdownForceParam.Selector) == 0 || hasTags(&v, shutdownForceParam.Selector) {
+										if len(serverShutdownForceParam.Selector) == 0 || hasTags(&v, serverShutdownForceParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2380,7 +2506,7 @@ func init() {
 					}
 
 					// confirm
-					if !shutdownForceParam.Assumeyes {
+					if !serverShutdownForceParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2394,11 +2520,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						shutdownForceParam.SetId(id)
-						p := *shutdownForceParam // copy struct value
-						shutdownForceParam := &p
+						serverShutdownForceParam.SetId(id)
+						p := *serverShutdownForceParam // copy struct value
+						serverShutdownForceParam := &p
 						go func() {
-							err := funcs.ServerShutdownForce(ctx, shutdownForceParam)
+							err := funcs.ServerShutdownForce(ctx, serverShutdownForceParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2429,8 +2555,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2451,9 +2585,9 @@ func init() {
 						return err
 					}
 
-					resetParam.ParamTemplate = c.String("param-template")
-					resetParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(resetParam)
+					serverResetParam.ParamTemplate = c.String("param-template")
+					serverResetParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverResetParam)
 					if err != nil {
 						return err
 					}
@@ -2463,27 +2597,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(resetParam, p, mergo.WithOverride)
+						mergo.Merge(serverResetParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						resetParam.Selector = c.StringSlice("selector")
+						serverResetParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						resetParam.Assumeyes = c.Bool("assumeyes")
+						serverResetParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						resetParam.ParamTemplate = c.String("param-template")
+						serverResetParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverResetParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						resetParam.ParamTemplateFile = c.String("param-template-file")
+						serverResetParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverResetParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						resetParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverResetParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						resetParam.Id = sacloud.ID(c.Int64("id"))
+						serverResetParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2491,7 +2631,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = resetParam
+					var outputTypeHolder interface{} = serverResetParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2502,10 +2642,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if resetParam.GenerateSkeleton {
-						resetParam.GenerateSkeleton = false
-						resetParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(resetParam, "", "\t")
+					if serverResetParam.GenerateSkeleton {
+						serverResetParam.GenerateSkeleton = false
+						serverResetParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverResetParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2514,19 +2654,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := resetParam.Validate(); len(errors) > 0 {
+					if errors := serverResetParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), resetParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverResetParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(resetParam.Selector) == 0 {
+						if len(serverResetParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2535,12 +2675,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, resetParam.Selector) {
+							if hasTags(&v, serverResetParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", resetParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverResetParam.Selector)
 						}
 
 					} else {
@@ -2562,7 +2702,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(resetParam.Selector) == 0 || hasTags(&v, resetParam.Selector) {
+										if len(serverResetParam.Selector) == 0 || hasTags(&v, serverResetParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2579,7 +2719,7 @@ func init() {
 					}
 
 					// confirm
-					if !resetParam.Assumeyes {
+					if !serverResetParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2593,11 +2733,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						resetParam.SetId(id)
-						p := *resetParam // copy struct value
-						resetParam := &p
+						serverResetParam.SetId(id)
+						p := *serverResetParam // copy struct value
+						serverResetParam := &p
 						go func() {
-							err := funcs.ServerReset(ctx, resetParam)
+							err := funcs.ServerReset(ctx, serverResetParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2623,8 +2763,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2645,9 +2793,9 @@ func init() {
 						return err
 					}
 
-					waitForBootParam.ParamTemplate = c.String("param-template")
-					waitForBootParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(waitForBootParam)
+					serverWaitForBootParam.ParamTemplate = c.String("param-template")
+					serverWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverWaitForBootParam)
 					if err != nil {
 						return err
 					}
@@ -2657,24 +2805,30 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(waitForBootParam, p, mergo.WithOverride)
+						mergo.Merge(serverWaitForBootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						waitForBootParam.Selector = c.StringSlice("selector")
+						serverWaitForBootParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						waitForBootParam.ParamTemplate = c.String("param-template")
+						serverWaitForBootParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverWaitForBootParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						waitForBootParam.ParamTemplateFile = c.String("param-template-file")
+						serverWaitForBootParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverWaitForBootParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						waitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverWaitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForBootParam.Id = sacloud.ID(c.Int64("id"))
+						serverWaitForBootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2682,7 +2836,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = waitForBootParam
+					var outputTypeHolder interface{} = serverWaitForBootParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2693,10 +2847,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if waitForBootParam.GenerateSkeleton {
-						waitForBootParam.GenerateSkeleton = false
-						waitForBootParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(waitForBootParam, "", "\t")
+					if serverWaitForBootParam.GenerateSkeleton {
+						serverWaitForBootParam.GenerateSkeleton = false
+						serverWaitForBootParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverWaitForBootParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2705,19 +2859,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := waitForBootParam.Validate(); len(errors) > 0 {
+					if errors := serverWaitForBootParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), waitForBootParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverWaitForBootParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(waitForBootParam.Selector) == 0 {
+						if len(serverWaitForBootParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2726,12 +2880,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, waitForBootParam.Selector) {
+							if hasTags(&v, serverWaitForBootParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", waitForBootParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverWaitForBootParam.Selector)
 						}
 
 					} else {
@@ -2753,7 +2907,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(waitForBootParam.Selector) == 0 || hasTags(&v, waitForBootParam.Selector) {
+										if len(serverWaitForBootParam.Selector) == 0 || hasTags(&v, serverWaitForBootParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2774,11 +2928,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						waitForBootParam.SetId(id)
-						p := *waitForBootParam // copy struct value
-						waitForBootParam := &p
+						serverWaitForBootParam.SetId(id)
+						p := *serverWaitForBootParam // copy struct value
+						serverWaitForBootParam := &p
 						go func() {
-							err := funcs.ServerWaitForBoot(ctx, waitForBootParam)
+							err := funcs.ServerWaitForBoot(ctx, serverWaitForBootParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2804,8 +2958,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2826,9 +2988,9 @@ func init() {
 						return err
 					}
 
-					waitForDownParam.ParamTemplate = c.String("param-template")
-					waitForDownParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(waitForDownParam)
+					serverWaitForDownParam.ParamTemplate = c.String("param-template")
+					serverWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverWaitForDownParam)
 					if err != nil {
 						return err
 					}
@@ -2838,24 +3000,30 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(waitForDownParam, p, mergo.WithOverride)
+						mergo.Merge(serverWaitForDownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						waitForDownParam.Selector = c.StringSlice("selector")
+						serverWaitForDownParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						waitForDownParam.ParamTemplate = c.String("param-template")
+						serverWaitForDownParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverWaitForDownParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						waitForDownParam.ParamTemplateFile = c.String("param-template-file")
+						serverWaitForDownParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverWaitForDownParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						waitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverWaitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForDownParam.Id = sacloud.ID(c.Int64("id"))
+						serverWaitForDownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2863,7 +3031,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = waitForDownParam
+					var outputTypeHolder interface{} = serverWaitForDownParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2874,10 +3042,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if waitForDownParam.GenerateSkeleton {
-						waitForDownParam.GenerateSkeleton = false
-						waitForDownParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(waitForDownParam, "", "\t")
+					if serverWaitForDownParam.GenerateSkeleton {
+						serverWaitForDownParam.GenerateSkeleton = false
+						serverWaitForDownParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverWaitForDownParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2886,19 +3054,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := waitForDownParam.Validate(); len(errors) > 0 {
+					if errors := serverWaitForDownParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), waitForDownParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverWaitForDownParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(waitForDownParam.Selector) == 0 {
+						if len(serverWaitForDownParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2907,12 +3075,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, waitForDownParam.Selector) {
+							if hasTags(&v, serverWaitForDownParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", waitForDownParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverWaitForDownParam.Selector)
 						}
 
 					} else {
@@ -2934,7 +3102,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(waitForDownParam.Selector) == 0 || hasTags(&v, waitForDownParam.Selector) {
+										if len(serverWaitForDownParam.Selector) == 0 || hasTags(&v, serverWaitForDownParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2955,11 +3123,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						waitForDownParam.SetId(id)
-						p := *waitForDownParam // copy struct value
-						waitForDownParam := &p
+						serverWaitForDownParam.SetId(id)
+						p := *serverWaitForDownParam // copy struct value
+						serverWaitForDownParam := &p
 						go func() {
-							err := funcs.ServerWaitForDown(ctx, waitForDownParam)
+							err := funcs.ServerWaitForDown(ctx, serverWaitForDownParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3006,8 +3174,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3033,51 +3209,57 @@ func init() {
 						return err
 					}
 
-					sshParam.ParamTemplate = c.String("param-template")
-					sshParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(sshParam)
+					serverSSHParam.ParamTemplate = c.String("param-template")
+					serverSSHParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverSSHParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSshServerParam()
+						p := params.NewSSHServerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(sshParam, p, mergo.WithOverride)
+						mergo.Merge(serverSSHParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("key") {
-						sshParam.Key = c.String("key")
+						serverSSHParam.Key = c.String("key")
 					}
 					if c.IsSet("user") {
-						sshParam.User = c.String("user")
+						serverSSHParam.User = c.String("user")
 					}
 					if c.IsSet("port") {
-						sshParam.Port = c.Int("port")
+						serverSSHParam.Port = c.Int("port")
 					}
-					if c.IsSet("password") || command.IsEmpty(sshParam.Password) {
-						sshParam.Password = c.String("password")
+					if c.IsSet("password") || command.IsEmpty(serverSSHParam.Password) {
+						serverSSHParam.Password = c.String("password")
 					}
 					if c.IsSet("selector") {
-						sshParam.Selector = c.StringSlice("selector")
+						serverSSHParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						sshParam.ParamTemplate = c.String("param-template")
+						serverSSHParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverSSHParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						sshParam.ParamTemplateFile = c.String("param-template-file")
+						serverSSHParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverSSHParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						sshParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverSSHParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("quiet") {
-						sshParam.Quiet = c.Bool("quiet")
+						serverSSHParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("id") {
-						sshParam.Id = sacloud.ID(c.Int64("id"))
+						serverSSHParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3085,7 +3267,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = sshParam
+					var outputTypeHolder interface{} = serverSSHParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3096,10 +3278,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if sshParam.GenerateSkeleton {
-						sshParam.GenerateSkeleton = false
-						sshParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(sshParam, "", "\t")
+					if serverSSHParam.GenerateSkeleton {
+						serverSSHParam.GenerateSkeleton = false
+						serverSSHParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverSSHParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3108,19 +3290,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := sshParam.Validate(); len(errors) > 0 {
+					if errors := serverSSHParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), sshParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverSSHParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(sshParam.Selector) == 0 {
+						if len(serverSSHParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3129,12 +3311,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, sshParam.Selector) {
+							if hasTags(&v, serverSSHParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", sshParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverSSHParam.Selector)
 						}
 
 					} else {
@@ -3156,7 +3338,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(sshParam.Selector) == 0 || hasTags(&v, sshParam.Selector) {
+										if len(serverSSHParam.Selector) == 0 || hasTags(&v, serverSSHParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3181,11 +3363,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						sshParam.SetId(id)
-						p := *sshParam // copy struct value
-						sshParam := &p
+						serverSSHParam.SetId(id)
+						p := *serverSSHParam // copy struct value
+						serverSSHParam := &p
 						go func() {
-							err := funcs.ServerSsh(ctx, sshParam)
+							err := funcs.ServerSSH(ctx, serverSSHParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3228,8 +3410,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3255,48 +3445,54 @@ func init() {
 						return err
 					}
 
-					sshExecParam.ParamTemplate = c.String("param-template")
-					sshExecParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(sshExecParam)
+					serverSSHExecParam.ParamTemplate = c.String("param-template")
+					serverSSHExecParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverSSHExecParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewSshExecServerParam()
+						p := params.NewSSHExecServerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(sshExecParam, p, mergo.WithOverride)
+						mergo.Merge(serverSSHExecParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("key") {
-						sshExecParam.Key = c.String("key")
+						serverSSHExecParam.Key = c.String("key")
 					}
 					if c.IsSet("user") {
-						sshExecParam.User = c.String("user")
+						serverSSHExecParam.User = c.String("user")
 					}
 					if c.IsSet("port") {
-						sshExecParam.Port = c.Int("port")
+						serverSSHExecParam.Port = c.Int("port")
 					}
-					if c.IsSet("password") || command.IsEmpty(sshExecParam.Password) {
-						sshExecParam.Password = c.String("password")
+					if c.IsSet("password") || command.IsEmpty(serverSSHExecParam.Password) {
+						serverSSHExecParam.Password = c.String("password")
 					}
 					if c.IsSet("param-template") {
-						sshExecParam.ParamTemplate = c.String("param-template")
+						serverSSHExecParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverSSHExecParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						sshExecParam.ParamTemplateFile = c.String("param-template-file")
+						serverSSHExecParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverSSHExecParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						sshExecParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverSSHExecParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("quiet") {
-						sshExecParam.Quiet = c.Bool("quiet")
+						serverSSHExecParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("id") {
-						sshExecParam.Id = sacloud.ID(c.Int64("id"))
+						serverSSHExecParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3304,7 +3500,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = sshExecParam
+					var outputTypeHolder interface{} = serverSSHExecParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3315,10 +3511,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if sshExecParam.GenerateSkeleton {
-						sshExecParam.GenerateSkeleton = false
-						sshExecParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(sshExecParam, "", "\t")
+					if serverSSHExecParam.GenerateSkeleton {
+						serverSSHExecParam.GenerateSkeleton = false
+						serverSSHExecParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverSSHExecParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3327,12 +3523,12 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := sshExecParam.Validate(); len(errors) > 0 {
+					if errors := serverSSHExecParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), sshExecParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverSSHExecParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
@@ -3379,11 +3575,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						sshExecParam.SetId(id)
-						p := *sshExecParam // copy struct value
-						sshExecParam := &p
+						serverSSHExecParam.SetId(id)
+						p := *serverSSHExecParam // copy struct value
+						serverSSHExecParam := &p
 						go func() {
-							err := funcs.ServerSshExec(ctx, sshExecParam)
+							err := funcs.ServerSSHExec(ctx, serverSSHExecParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3436,8 +3632,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3458,9 +3662,9 @@ func init() {
 						return err
 					}
 
-					scpParam.ParamTemplate = c.String("param-template")
-					scpParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(scpParam)
+					serverScpParam.ParamTemplate = c.String("param-template")
+					serverScpParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverScpParam)
 					if err != nil {
 						return err
 					}
@@ -3470,39 +3674,45 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(scpParam, p, mergo.WithOverride)
+						mergo.Merge(serverScpParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("key") {
-						scpParam.Key = c.String("key")
+						serverScpParam.Key = c.String("key")
 					}
 					if c.IsSet("recursive") {
-						scpParam.Recursive = c.Bool("recursive")
+						serverScpParam.Recursive = c.Bool("recursive")
 					}
 					if c.IsSet("user") {
-						scpParam.User = c.String("user")
+						serverScpParam.User = c.String("user")
 					}
 					if c.IsSet("port") {
-						scpParam.Port = c.Int("port")
+						serverScpParam.Port = c.Int("port")
 					}
-					if c.IsSet("password") || command.IsEmpty(scpParam.Password) {
-						scpParam.Password = c.String("password")
+					if c.IsSet("password") || command.IsEmpty(serverScpParam.Password) {
+						serverScpParam.Password = c.String("password")
 					}
 					if c.IsSet("assumeyes") {
-						scpParam.Assumeyes = c.Bool("assumeyes")
+						serverScpParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						scpParam.ParamTemplate = c.String("param-template")
+						serverScpParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverScpParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						scpParam.ParamTemplateFile = c.String("param-template-file")
+						serverScpParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverScpParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						scpParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverScpParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("quiet") {
-						scpParam.Quiet = c.Bool("quiet")
+						serverScpParam.Quiet = c.Bool("quiet")
 					}
 
 					// Validate global params
@@ -3510,7 +3720,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = scpParam
+					var outputTypeHolder interface{} = serverScpParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3521,10 +3731,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if scpParam.GenerateSkeleton {
-						scpParam.GenerateSkeleton = false
-						scpParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(scpParam, "", "\t")
+					if serverScpParam.GenerateSkeleton {
+						serverScpParam.GenerateSkeleton = false
+						serverScpParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverScpParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3533,15 +3743,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := scpParam.Validate(); len(errors) > 0 {
+					if errors := serverScpParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), scpParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverScpParam)
 
 					// confirm
-					if !scpParam.Assumeyes {
+					if !serverScpParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3551,7 +3761,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.ServerScp(ctx, scpParam)
+					return funcs.ServerScp(ctx, serverScpParam)
 
 				},
 			},
@@ -3573,8 +3783,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3595,9 +3813,9 @@ func init() {
 						return err
 					}
 
-					vncParam.ParamTemplate = c.String("param-template")
-					vncParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vncParam)
+					serverVncParam.ParamTemplate = c.String("param-template")
+					serverVncParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverVncParam)
 					if err != nil {
 						return err
 					}
@@ -3607,27 +3825,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vncParam, p, mergo.WithOverride)
+						mergo.Merge(serverVncParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("wait-for-boot") {
-						vncParam.WaitForBoot = c.Bool("wait-for-boot")
+						serverVncParam.WaitForBoot = c.Bool("wait-for-boot")
 					}
 					if c.IsSet("selector") {
-						vncParam.Selector = c.StringSlice("selector")
+						serverVncParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vncParam.ParamTemplate = c.String("param-template")
+						serverVncParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverVncParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vncParam.ParamTemplateFile = c.String("param-template-file")
+						serverVncParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverVncParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vncParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverVncParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						vncParam.Id = sacloud.ID(c.Int64("id"))
+						serverVncParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3635,7 +3859,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vncParam
+					var outputTypeHolder interface{} = serverVncParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3646,10 +3870,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vncParam.GenerateSkeleton {
-						vncParam.GenerateSkeleton = false
-						vncParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vncParam, "", "\t")
+					if serverVncParam.GenerateSkeleton {
+						serverVncParam.GenerateSkeleton = false
+						serverVncParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverVncParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3658,19 +3882,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vncParam.Validate(); len(errors) > 0 {
+					if errors := serverVncParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vncParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverVncParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vncParam.Selector) == 0 {
+						if len(serverVncParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3679,12 +3903,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, vncParam.Selector) {
+							if hasTags(&v, serverVncParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vncParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverVncParam.Selector)
 						}
 
 					} else {
@@ -3706,7 +3930,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(vncParam.Selector) == 0 || hasTags(&v, vncParam.Selector) {
+										if len(serverVncParam.Selector) == 0 || hasTags(&v, serverVncParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3727,11 +3951,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vncParam.SetId(id)
-						p := *vncParam // copy struct value
-						vncParam := &p
+						serverVncParam.SetId(id)
+						p := *serverVncParam // copy struct value
+						serverVncParam := &p
 						go func() {
-							err := funcs.ServerVnc(ctx, vncParam)
+							err := funcs.ServerVnc(ctx, serverVncParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3761,8 +3985,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3815,9 +4047,9 @@ func init() {
 						return err
 					}
 
-					vncInfoParam.ParamTemplate = c.String("param-template")
-					vncInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vncInfoParam)
+					serverVncInfoParam.ParamTemplate = c.String("param-template")
+					serverVncInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverVncInfoParam)
 					if err != nil {
 						return err
 					}
@@ -3827,48 +4059,54 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vncInfoParam, p, mergo.WithOverride)
+						mergo.Merge(serverVncInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("wait-for-boot") {
-						vncInfoParam.WaitForBoot = c.Bool("wait-for-boot")
+						serverVncInfoParam.WaitForBoot = c.Bool("wait-for-boot")
 					}
 					if c.IsSet("selector") {
-						vncInfoParam.Selector = c.StringSlice("selector")
+						serverVncInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						vncInfoParam.ParamTemplate = c.String("param-template")
+						serverVncInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverVncInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vncInfoParam.ParamTemplateFile = c.String("param-template-file")
+						serverVncInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverVncInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vncInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverVncInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vncInfoParam.OutputType = c.String("output-type")
+						serverVncInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vncInfoParam.Column = c.StringSlice("column")
+						serverVncInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vncInfoParam.Quiet = c.Bool("quiet")
+						serverVncInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vncInfoParam.Format = c.String("format")
+						serverVncInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vncInfoParam.FormatFile = c.String("format-file")
+						serverVncInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vncInfoParam.Query = c.String("query")
+						serverVncInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vncInfoParam.QueryFile = c.String("query-file")
+						serverVncInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vncInfoParam.Id = sacloud.ID(c.Int64("id"))
+						serverVncInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3876,7 +4114,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vncInfoParam
+					var outputTypeHolder interface{} = serverVncInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3887,10 +4125,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vncInfoParam.GenerateSkeleton {
-						vncInfoParam.GenerateSkeleton = false
-						vncInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vncInfoParam, "", "\t")
+					if serverVncInfoParam.GenerateSkeleton {
+						serverVncInfoParam.GenerateSkeleton = false
+						serverVncInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverVncInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3899,19 +4137,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vncInfoParam.Validate(); len(errors) > 0 {
+					if errors := serverVncInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vncInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverVncInfoParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vncInfoParam.Selector) == 0 {
+						if len(serverVncInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3920,12 +4158,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, vncInfoParam.Selector) {
+							if hasTags(&v, serverVncInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vncInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverVncInfoParam.Selector)
 						}
 
 					} else {
@@ -3947,7 +4185,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(vncInfoParam.Selector) == 0 || hasTags(&v, vncInfoParam.Selector) {
+										if len(serverVncInfoParam.Selector) == 0 || hasTags(&v, serverVncInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3972,11 +4210,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vncInfoParam.SetId(id)
-						p := *vncInfoParam // copy struct value
-						vncInfoParam := &p
+						serverVncInfoParam.SetId(id)
+						p := *serverVncInfoParam // copy struct value
+						serverVncInfoParam := &p
 						go func() {
-							err := funcs.ServerVncInfo(ctx, vncInfoParam)
+							err := funcs.ServerVncInfo(ctx, serverVncInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4030,8 +4268,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -4084,9 +4330,9 @@ func init() {
 						return err
 					}
 
-					vncSendParam.ParamTemplate = c.String("param-template")
-					vncSendParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vncSendParam)
+					serverVncSendParam.ParamTemplate = c.String("param-template")
+					serverVncSendParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverVncSendParam)
 					if err != nil {
 						return err
 					}
@@ -4096,63 +4342,69 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vncSendParam, p, mergo.WithOverride)
+						mergo.Merge(serverVncSendParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("command") {
-						vncSendParam.Command = c.String("command")
+						serverVncSendParam.Command = c.String("command")
 					}
 					if c.IsSet("command-file") {
-						vncSendParam.CommandFile = c.String("command-file")
+						serverVncSendParam.CommandFile = c.String("command-file")
 					}
 					if c.IsSet("use-us-keyboard") {
-						vncSendParam.UseUsKeyboard = c.Bool("use-us-keyboard")
+						serverVncSendParam.UseUsKeyboard = c.Bool("use-us-keyboard")
 					}
 					if c.IsSet("debug") {
-						vncSendParam.Debug = c.Bool("debug")
+						serverVncSendParam.Debug = c.Bool("debug")
 					}
 					if c.IsSet("wait-for-boot") {
-						vncSendParam.WaitForBoot = c.Bool("wait-for-boot")
+						serverVncSendParam.WaitForBoot = c.Bool("wait-for-boot")
 					}
 					if c.IsSet("selector") {
-						vncSendParam.Selector = c.StringSlice("selector")
+						serverVncSendParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vncSendParam.Assumeyes = c.Bool("assumeyes")
+						serverVncSendParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vncSendParam.ParamTemplate = c.String("param-template")
+						serverVncSendParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverVncSendParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vncSendParam.ParamTemplateFile = c.String("param-template-file")
+						serverVncSendParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverVncSendParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vncSendParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverVncSendParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vncSendParam.OutputType = c.String("output-type")
+						serverVncSendParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vncSendParam.Column = c.StringSlice("column")
+						serverVncSendParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vncSendParam.Quiet = c.Bool("quiet")
+						serverVncSendParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vncSendParam.Format = c.String("format")
+						serverVncSendParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vncSendParam.FormatFile = c.String("format-file")
+						serverVncSendParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vncSendParam.Query = c.String("query")
+						serverVncSendParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vncSendParam.QueryFile = c.String("query-file")
+						serverVncSendParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vncSendParam.Id = sacloud.ID(c.Int64("id"))
+						serverVncSendParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4160,7 +4412,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vncSendParam
+					var outputTypeHolder interface{} = serverVncSendParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4171,10 +4423,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vncSendParam.GenerateSkeleton {
-						vncSendParam.GenerateSkeleton = false
-						vncSendParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vncSendParam, "", "\t")
+					if serverVncSendParam.GenerateSkeleton {
+						serverVncSendParam.GenerateSkeleton = false
+						serverVncSendParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverVncSendParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4183,19 +4435,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vncSendParam.Validate(); len(errors) > 0 {
+					if errors := serverVncSendParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vncSendParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverVncSendParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vncSendParam.Selector) == 0 {
+						if len(serverVncSendParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4204,12 +4456,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, vncSendParam.Selector) {
+							if hasTags(&v, serverVncSendParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vncSendParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverVncSendParam.Selector)
 						}
 
 					} else {
@@ -4231,7 +4483,7 @@ func init() {
 									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 								}
 								for _, v := range res.Servers {
-									if len(vncSendParam.Selector) == 0 || hasTags(&v, vncSendParam.Selector) {
+									if len(serverVncSendParam.Selector) == 0 || hasTags(&v, serverVncSendParam.Selector) {
 										ids = append(ids, v.GetID())
 									}
 								}
@@ -4250,7 +4502,7 @@ func init() {
 					}
 
 					// confirm
-					if !vncSendParam.Assumeyes {
+					if !serverVncSendParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4264,11 +4516,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vncSendParam.SetId(id)
-						p := *vncSendParam // copy struct value
-						vncSendParam := &p
+						serverVncSendParam.SetId(id)
+						p := *serverVncSendParam // copy struct value
+						serverVncSendParam := &p
 						go func() {
-							err := funcs.ServerVncSend(ctx, vncSendParam)
+							err := funcs.ServerVncSend(ctx, serverVncSendParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4307,8 +4559,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -4361,9 +4621,9 @@ func init() {
 						return err
 					}
 
-					vncSnapshotParam.ParamTemplate = c.String("param-template")
-					vncSnapshotParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(vncSnapshotParam)
+					serverVncSnapshotParam.ParamTemplate = c.String("param-template")
+					serverVncSnapshotParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverVncSnapshotParam)
 					if err != nil {
 						return err
 					}
@@ -4373,54 +4633,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(vncSnapshotParam, p, mergo.WithOverride)
+						mergo.Merge(serverVncSnapshotParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("wait-for-boot") {
-						vncSnapshotParam.WaitForBoot = c.Bool("wait-for-boot")
+						serverVncSnapshotParam.WaitForBoot = c.Bool("wait-for-boot")
 					}
 					if c.IsSet("output-path") {
-						vncSnapshotParam.OutputPath = c.String("output-path")
+						serverVncSnapshotParam.OutputPath = c.String("output-path")
 					}
 					if c.IsSet("selector") {
-						vncSnapshotParam.Selector = c.StringSlice("selector")
+						serverVncSnapshotParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						vncSnapshotParam.Assumeyes = c.Bool("assumeyes")
+						serverVncSnapshotParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						vncSnapshotParam.ParamTemplate = c.String("param-template")
+						serverVncSnapshotParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverVncSnapshotParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						vncSnapshotParam.ParamTemplateFile = c.String("param-template-file")
+						serverVncSnapshotParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverVncSnapshotParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						vncSnapshotParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverVncSnapshotParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						vncSnapshotParam.OutputType = c.String("output-type")
+						serverVncSnapshotParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						vncSnapshotParam.Column = c.StringSlice("column")
+						serverVncSnapshotParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						vncSnapshotParam.Quiet = c.Bool("quiet")
+						serverVncSnapshotParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						vncSnapshotParam.Format = c.String("format")
+						serverVncSnapshotParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						vncSnapshotParam.FormatFile = c.String("format-file")
+						serverVncSnapshotParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						vncSnapshotParam.Query = c.String("query")
+						serverVncSnapshotParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						vncSnapshotParam.QueryFile = c.String("query-file")
+						serverVncSnapshotParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						vncSnapshotParam.Id = sacloud.ID(c.Int64("id"))
+						serverVncSnapshotParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4428,7 +4694,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = vncSnapshotParam
+					var outputTypeHolder interface{} = serverVncSnapshotParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4439,10 +4705,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if vncSnapshotParam.GenerateSkeleton {
-						vncSnapshotParam.GenerateSkeleton = false
-						vncSnapshotParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(vncSnapshotParam, "", "\t")
+					if serverVncSnapshotParam.GenerateSkeleton {
+						serverVncSnapshotParam.GenerateSkeleton = false
+						serverVncSnapshotParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverVncSnapshotParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4451,19 +4717,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := vncSnapshotParam.Validate(); len(errors) > 0 {
+					if errors := serverVncSnapshotParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), vncSnapshotParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverVncSnapshotParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(vncSnapshotParam.Selector) == 0 {
+						if len(serverVncSnapshotParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4472,12 +4738,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, vncSnapshotParam.Selector) {
+							if hasTags(&v, serverVncSnapshotParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vncSnapshotParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverVncSnapshotParam.Selector)
 						}
 
 					} else {
@@ -4499,7 +4765,7 @@ func init() {
 									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 								}
 								for _, v := range res.Servers {
-									if len(vncSnapshotParam.Selector) == 0 || hasTags(&v, vncSnapshotParam.Selector) {
+									if len(serverVncSnapshotParam.Selector) == 0 || hasTags(&v, serverVncSnapshotParam.Selector) {
 										ids = append(ids, v.GetID())
 									}
 								}
@@ -4518,7 +4784,7 @@ func init() {
 					}
 
 					// confirm
-					if !vncSnapshotParam.Assumeyes {
+					if !serverVncSnapshotParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -4532,11 +4798,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						vncSnapshotParam.SetId(id)
-						p := *vncSnapshotParam // copy struct value
-						vncSnapshotParam := &p
+						serverVncSnapshotParam.SetId(id)
+						p := *serverVncSnapshotParam // copy struct value
+						serverVncSnapshotParam := &p
 						go func() {
-							err := funcs.ServerVncSnapshot(ctx, vncSnapshotParam)
+							err := funcs.ServerVncSnapshot(ctx, serverVncSnapshotParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4575,8 +4841,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -4597,9 +4871,9 @@ func init() {
 						return err
 					}
 
-					remoteDesktopParam.ParamTemplate = c.String("param-template")
-					remoteDesktopParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(remoteDesktopParam)
+					serverRemoteDesktopParam.ParamTemplate = c.String("param-template")
+					serverRemoteDesktopParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverRemoteDesktopParam)
 					if err != nil {
 						return err
 					}
@@ -4609,30 +4883,36 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(remoteDesktopParam, p, mergo.WithOverride)
+						mergo.Merge(serverRemoteDesktopParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("user") {
-						remoteDesktopParam.User = c.String("user")
+						serverRemoteDesktopParam.User = c.String("user")
 					}
 					if c.IsSet("port") {
-						remoteDesktopParam.Port = c.Int("port")
+						serverRemoteDesktopParam.Port = c.Int("port")
 					}
 					if c.IsSet("selector") {
-						remoteDesktopParam.Selector = c.StringSlice("selector")
+						serverRemoteDesktopParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						remoteDesktopParam.ParamTemplate = c.String("param-template")
+						serverRemoteDesktopParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverRemoteDesktopParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						remoteDesktopParam.ParamTemplateFile = c.String("param-template-file")
+						serverRemoteDesktopParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverRemoteDesktopParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						remoteDesktopParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverRemoteDesktopParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						remoteDesktopParam.Id = sacloud.ID(c.Int64("id"))
+						serverRemoteDesktopParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4640,7 +4920,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = remoteDesktopParam
+					var outputTypeHolder interface{} = serverRemoteDesktopParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4651,10 +4931,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if remoteDesktopParam.GenerateSkeleton {
-						remoteDesktopParam.GenerateSkeleton = false
-						remoteDesktopParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(remoteDesktopParam, "", "\t")
+					if serverRemoteDesktopParam.GenerateSkeleton {
+						serverRemoteDesktopParam.GenerateSkeleton = false
+						serverRemoteDesktopParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverRemoteDesktopParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4663,19 +4943,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := remoteDesktopParam.Validate(); len(errors) > 0 {
+					if errors := serverRemoteDesktopParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), remoteDesktopParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverRemoteDesktopParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(remoteDesktopParam.Selector) == 0 {
+						if len(serverRemoteDesktopParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4684,12 +4964,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, remoteDesktopParam.Selector) {
+							if hasTags(&v, serverRemoteDesktopParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", remoteDesktopParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverRemoteDesktopParam.Selector)
 						}
 
 					} else {
@@ -4711,7 +4991,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(remoteDesktopParam.Selector) == 0 || hasTags(&v, remoteDesktopParam.Selector) {
+										if len(serverRemoteDesktopParam.Selector) == 0 || hasTags(&v, serverRemoteDesktopParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4732,11 +5012,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						remoteDesktopParam.SetId(id)
-						p := *remoteDesktopParam // copy struct value
-						remoteDesktopParam := &p
+						serverRemoteDesktopParam.SetId(id)
+						p := *serverRemoteDesktopParam // copy struct value
+						serverRemoteDesktopParam := &p
 						go func() {
-							err := funcs.ServerRemoteDesktop(ctx, remoteDesktopParam)
+							err := funcs.ServerRemoteDesktop(ctx, serverRemoteDesktopParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4775,8 +5055,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -4829,9 +5117,9 @@ func init() {
 						return err
 					}
 
-					remoteDesktopInfoParam.ParamTemplate = c.String("param-template")
-					remoteDesktopInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(remoteDesktopInfoParam)
+					serverRemoteDesktopInfoParam.ParamTemplate = c.String("param-template")
+					serverRemoteDesktopInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverRemoteDesktopInfoParam)
 					if err != nil {
 						return err
 					}
@@ -4841,51 +5129,57 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(remoteDesktopInfoParam, p, mergo.WithOverride)
+						mergo.Merge(serverRemoteDesktopInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("user") {
-						remoteDesktopInfoParam.User = c.String("user")
+						serverRemoteDesktopInfoParam.User = c.String("user")
 					}
 					if c.IsSet("port") {
-						remoteDesktopInfoParam.Port = c.Int("port")
+						serverRemoteDesktopInfoParam.Port = c.Int("port")
 					}
 					if c.IsSet("selector") {
-						remoteDesktopInfoParam.Selector = c.StringSlice("selector")
+						serverRemoteDesktopInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						remoteDesktopInfoParam.ParamTemplate = c.String("param-template")
+						serverRemoteDesktopInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverRemoteDesktopInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						remoteDesktopInfoParam.ParamTemplateFile = c.String("param-template-file")
+						serverRemoteDesktopInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverRemoteDesktopInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						remoteDesktopInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverRemoteDesktopInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						remoteDesktopInfoParam.OutputType = c.String("output-type")
+						serverRemoteDesktopInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						remoteDesktopInfoParam.Column = c.StringSlice("column")
+						serverRemoteDesktopInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						remoteDesktopInfoParam.Quiet = c.Bool("quiet")
+						serverRemoteDesktopInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						remoteDesktopInfoParam.Format = c.String("format")
+						serverRemoteDesktopInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						remoteDesktopInfoParam.FormatFile = c.String("format-file")
+						serverRemoteDesktopInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						remoteDesktopInfoParam.Query = c.String("query")
+						serverRemoteDesktopInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						remoteDesktopInfoParam.QueryFile = c.String("query-file")
+						serverRemoteDesktopInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						remoteDesktopInfoParam.Id = sacloud.ID(c.Int64("id"))
+						serverRemoteDesktopInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4893,7 +5187,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = remoteDesktopInfoParam
+					var outputTypeHolder interface{} = serverRemoteDesktopInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -4904,10 +5198,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if remoteDesktopInfoParam.GenerateSkeleton {
-						remoteDesktopInfoParam.GenerateSkeleton = false
-						remoteDesktopInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(remoteDesktopInfoParam, "", "\t")
+					if serverRemoteDesktopInfoParam.GenerateSkeleton {
+						serverRemoteDesktopInfoParam.GenerateSkeleton = false
+						serverRemoteDesktopInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverRemoteDesktopInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -4916,19 +5210,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := remoteDesktopInfoParam.Validate(); len(errors) > 0 {
+					if errors := serverRemoteDesktopInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), remoteDesktopInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverRemoteDesktopInfoParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(remoteDesktopInfoParam.Selector) == 0 {
+						if len(serverRemoteDesktopInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -4937,12 +5231,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, remoteDesktopInfoParam.Selector) {
+							if hasTags(&v, serverRemoteDesktopInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", remoteDesktopInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverRemoteDesktopInfoParam.Selector)
 						}
 
 					} else {
@@ -4964,7 +5258,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(remoteDesktopInfoParam.Selector) == 0 || hasTags(&v, remoteDesktopInfoParam.Selector) {
+										if len(serverRemoteDesktopInfoParam.Selector) == 0 || hasTags(&v, serverRemoteDesktopInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -4989,11 +5283,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						remoteDesktopInfoParam.SetId(id)
-						p := *remoteDesktopInfoParam // copy struct value
-						remoteDesktopInfoParam := &p
+						serverRemoteDesktopInfoParam.SetId(id)
+						p := *serverRemoteDesktopInfoParam // copy struct value
+						serverRemoteDesktopInfoParam := &p
 						go func() {
-							err := funcs.ServerRemoteDesktopInfo(ctx, remoteDesktopInfoParam)
+							err := funcs.ServerRemoteDesktopInfo(ctx, serverRemoteDesktopInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5020,8 +5314,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -5074,9 +5376,9 @@ func init() {
 						return err
 					}
 
-					diskInfoParam.ParamTemplate = c.String("param-template")
-					diskInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(diskInfoParam)
+					serverDiskInfoParam.ParamTemplate = c.String("param-template")
+					serverDiskInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverDiskInfoParam)
 					if err != nil {
 						return err
 					}
@@ -5086,45 +5388,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(diskInfoParam, p, mergo.WithOverride)
+						mergo.Merge(serverDiskInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						diskInfoParam.Selector = c.StringSlice("selector")
+						serverDiskInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						diskInfoParam.ParamTemplate = c.String("param-template")
+						serverDiskInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverDiskInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						diskInfoParam.ParamTemplateFile = c.String("param-template-file")
+						serverDiskInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverDiskInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						diskInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverDiskInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						diskInfoParam.OutputType = c.String("output-type")
+						serverDiskInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						diskInfoParam.Column = c.StringSlice("column")
+						serverDiskInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						diskInfoParam.Quiet = c.Bool("quiet")
+						serverDiskInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						diskInfoParam.Format = c.String("format")
+						serverDiskInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						diskInfoParam.FormatFile = c.String("format-file")
+						serverDiskInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						diskInfoParam.Query = c.String("query")
+						serverDiskInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						diskInfoParam.QueryFile = c.String("query-file")
+						serverDiskInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						diskInfoParam.Id = sacloud.ID(c.Int64("id"))
+						serverDiskInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5132,7 +5440,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = diskInfoParam
+					var outputTypeHolder interface{} = serverDiskInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5143,10 +5451,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if diskInfoParam.GenerateSkeleton {
-						diskInfoParam.GenerateSkeleton = false
-						diskInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(diskInfoParam, "", "\t")
+					if serverDiskInfoParam.GenerateSkeleton {
+						serverDiskInfoParam.GenerateSkeleton = false
+						serverDiskInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverDiskInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5155,19 +5463,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := diskInfoParam.Validate(); len(errors) > 0 {
+					if errors := serverDiskInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), diskInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverDiskInfoParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(diskInfoParam.Selector) == 0 {
+						if len(serverDiskInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5176,12 +5484,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, diskInfoParam.Selector) {
+							if hasTags(&v, serverDiskInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", diskInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverDiskInfoParam.Selector)
 						}
 
 					} else {
@@ -5203,7 +5511,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(diskInfoParam.Selector) == 0 || hasTags(&v, diskInfoParam.Selector) {
+										if len(serverDiskInfoParam.Selector) == 0 || hasTags(&v, serverDiskInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5228,11 +5536,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						diskInfoParam.SetId(id)
-						p := *diskInfoParam // copy struct value
-						diskInfoParam := &p
+						serverDiskInfoParam.SetId(id)
+						p := *serverDiskInfoParam // copy struct value
+						serverDiskInfoParam := &p
 						go func() {
-							err := funcs.ServerDiskInfo(ctx, diskInfoParam)
+							err := funcs.ServerDiskInfo(ctx, serverDiskInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5267,8 +5575,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -5289,9 +5605,9 @@ func init() {
 						return err
 					}
 
-					diskConnectParam.ParamTemplate = c.String("param-template")
-					diskConnectParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(diskConnectParam)
+					serverDiskConnectParam.ParamTemplate = c.String("param-template")
+					serverDiskConnectParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverDiskConnectParam)
 					if err != nil {
 						return err
 					}
@@ -5301,30 +5617,36 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(diskConnectParam, p, mergo.WithOverride)
+						mergo.Merge(serverDiskConnectParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("disk-id") {
-						diskConnectParam.DiskId = sacloud.ID(c.Int64("disk-id"))
+						serverDiskConnectParam.DiskId = sacloud.ID(c.Int64("disk-id"))
 					}
 					if c.IsSet("selector") {
-						diskConnectParam.Selector = c.StringSlice("selector")
+						serverDiskConnectParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						diskConnectParam.Assumeyes = c.Bool("assumeyes")
+						serverDiskConnectParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						diskConnectParam.ParamTemplate = c.String("param-template")
+						serverDiskConnectParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverDiskConnectParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						diskConnectParam.ParamTemplateFile = c.String("param-template-file")
+						serverDiskConnectParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverDiskConnectParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						diskConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverDiskConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						diskConnectParam.Id = sacloud.ID(c.Int64("id"))
+						serverDiskConnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5332,7 +5654,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = diskConnectParam
+					var outputTypeHolder interface{} = serverDiskConnectParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5343,10 +5665,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if diskConnectParam.GenerateSkeleton {
-						diskConnectParam.GenerateSkeleton = false
-						diskConnectParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(diskConnectParam, "", "\t")
+					if serverDiskConnectParam.GenerateSkeleton {
+						serverDiskConnectParam.GenerateSkeleton = false
+						serverDiskConnectParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverDiskConnectParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5355,19 +5677,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := diskConnectParam.Validate(); len(errors) > 0 {
+					if errors := serverDiskConnectParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), diskConnectParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverDiskConnectParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(diskConnectParam.Selector) == 0 {
+						if len(serverDiskConnectParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5376,12 +5698,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, diskConnectParam.Selector) {
+							if hasTags(&v, serverDiskConnectParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", diskConnectParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverDiskConnectParam.Selector)
 						}
 
 					} else {
@@ -5403,7 +5725,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(diskConnectParam.Selector) == 0 || hasTags(&v, diskConnectParam.Selector) {
+										if len(serverDiskConnectParam.Selector) == 0 || hasTags(&v, serverDiskConnectParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5424,7 +5746,7 @@ func init() {
 					}
 
 					// confirm
-					if !diskConnectParam.Assumeyes {
+					if !serverDiskConnectParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -5438,11 +5760,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						diskConnectParam.SetId(id)
-						p := *diskConnectParam // copy struct value
-						diskConnectParam := &p
+						serverDiskConnectParam.SetId(id)
+						p := *serverDiskConnectParam // copy struct value
+						serverDiskConnectParam := &p
 						go func() {
-							err := funcs.ServerDiskConnect(ctx, diskConnectParam)
+							err := funcs.ServerDiskConnect(ctx, serverDiskConnectParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5477,8 +5799,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -5499,9 +5829,9 @@ func init() {
 						return err
 					}
 
-					diskDisconnectParam.ParamTemplate = c.String("param-template")
-					diskDisconnectParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(diskDisconnectParam)
+					serverDiskDisconnectParam.ParamTemplate = c.String("param-template")
+					serverDiskDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverDiskDisconnectParam)
 					if err != nil {
 						return err
 					}
@@ -5511,30 +5841,36 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(diskDisconnectParam, p, mergo.WithOverride)
+						mergo.Merge(serverDiskDisconnectParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("disk-id") {
-						diskDisconnectParam.DiskId = sacloud.ID(c.Int64("disk-id"))
+						serverDiskDisconnectParam.DiskId = sacloud.ID(c.Int64("disk-id"))
 					}
 					if c.IsSet("selector") {
-						diskDisconnectParam.Selector = c.StringSlice("selector")
+						serverDiskDisconnectParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						diskDisconnectParam.Assumeyes = c.Bool("assumeyes")
+						serverDiskDisconnectParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						diskDisconnectParam.ParamTemplate = c.String("param-template")
+						serverDiskDisconnectParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverDiskDisconnectParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						diskDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+						serverDiskDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverDiskDisconnectParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						diskDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverDiskDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						diskDisconnectParam.Id = sacloud.ID(c.Int64("id"))
+						serverDiskDisconnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5542,7 +5878,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = diskDisconnectParam
+					var outputTypeHolder interface{} = serverDiskDisconnectParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5553,10 +5889,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if diskDisconnectParam.GenerateSkeleton {
-						diskDisconnectParam.GenerateSkeleton = false
-						diskDisconnectParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(diskDisconnectParam, "", "\t")
+					if serverDiskDisconnectParam.GenerateSkeleton {
+						serverDiskDisconnectParam.GenerateSkeleton = false
+						serverDiskDisconnectParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverDiskDisconnectParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5565,19 +5901,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := diskDisconnectParam.Validate(); len(errors) > 0 {
+					if errors := serverDiskDisconnectParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), diskDisconnectParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverDiskDisconnectParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(diskDisconnectParam.Selector) == 0 {
+						if len(serverDiskDisconnectParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5586,12 +5922,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, diskDisconnectParam.Selector) {
+							if hasTags(&v, serverDiskDisconnectParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", diskDisconnectParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverDiskDisconnectParam.Selector)
 						}
 
 					} else {
@@ -5613,7 +5949,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(diskDisconnectParam.Selector) == 0 || hasTags(&v, diskDisconnectParam.Selector) {
+										if len(serverDiskDisconnectParam.Selector) == 0 || hasTags(&v, serverDiskDisconnectParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5634,7 +5970,7 @@ func init() {
 					}
 
 					// confirm
-					if !diskDisconnectParam.Assumeyes {
+					if !serverDiskDisconnectParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -5648,11 +5984,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						diskDisconnectParam.SetId(id)
-						p := *diskDisconnectParam // copy struct value
-						diskDisconnectParam := &p
+						serverDiskDisconnectParam.SetId(id)
+						p := *serverDiskDisconnectParam // copy struct value
+						serverDiskDisconnectParam := &p
 						go func() {
-							err := funcs.ServerDiskDisconnect(ctx, diskDisconnectParam)
+							err := funcs.ServerDiskDisconnect(ctx, serverDiskDisconnectParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5679,8 +6015,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -5733,9 +6077,9 @@ func init() {
 						return err
 					}
 
-					interfaceInfoParam.ParamTemplate = c.String("param-template")
-					interfaceInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(interfaceInfoParam)
+					serverInterfaceInfoParam.ParamTemplate = c.String("param-template")
+					serverInterfaceInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverInterfaceInfoParam)
 					if err != nil {
 						return err
 					}
@@ -5745,45 +6089,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(interfaceInfoParam, p, mergo.WithOverride)
+						mergo.Merge(serverInterfaceInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						interfaceInfoParam.Selector = c.StringSlice("selector")
+						serverInterfaceInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						interfaceInfoParam.ParamTemplate = c.String("param-template")
+						serverInterfaceInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverInterfaceInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						interfaceInfoParam.ParamTemplateFile = c.String("param-template-file")
+						serverInterfaceInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverInterfaceInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						interfaceInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverInterfaceInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						interfaceInfoParam.OutputType = c.String("output-type")
+						serverInterfaceInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						interfaceInfoParam.Column = c.StringSlice("column")
+						serverInterfaceInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						interfaceInfoParam.Quiet = c.Bool("quiet")
+						serverInterfaceInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						interfaceInfoParam.Format = c.String("format")
+						serverInterfaceInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						interfaceInfoParam.FormatFile = c.String("format-file")
+						serverInterfaceInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						interfaceInfoParam.Query = c.String("query")
+						serverInterfaceInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						interfaceInfoParam.QueryFile = c.String("query-file")
+						serverInterfaceInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						interfaceInfoParam.Id = sacloud.ID(c.Int64("id"))
+						serverInterfaceInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5791,7 +6141,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = interfaceInfoParam
+					var outputTypeHolder interface{} = serverInterfaceInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5802,10 +6152,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if interfaceInfoParam.GenerateSkeleton {
-						interfaceInfoParam.GenerateSkeleton = false
-						interfaceInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(interfaceInfoParam, "", "\t")
+					if serverInterfaceInfoParam.GenerateSkeleton {
+						serverInterfaceInfoParam.GenerateSkeleton = false
+						serverInterfaceInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverInterfaceInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5814,19 +6164,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := interfaceInfoParam.Validate(); len(errors) > 0 {
+					if errors := serverInterfaceInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), interfaceInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverInterfaceInfoParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(interfaceInfoParam.Selector) == 0 {
+						if len(serverInterfaceInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5835,12 +6185,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, interfaceInfoParam.Selector) {
+							if hasTags(&v, serverInterfaceInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverInterfaceInfoParam.Selector)
 						}
 
 					} else {
@@ -5862,7 +6212,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(interfaceInfoParam.Selector) == 0 || hasTags(&v, interfaceInfoParam.Selector) {
+										if len(serverInterfaceInfoParam.Selector) == 0 || hasTags(&v, serverInterfaceInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5887,11 +6237,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						interfaceInfoParam.SetId(id)
-						p := *interfaceInfoParam // copy struct value
-						interfaceInfoParam := &p
+						serverInterfaceInfoParam.SetId(id)
+						p := *serverInterfaceInfoParam // copy struct value
+						serverInterfaceInfoParam := &p
 						go func() {
-							err := funcs.ServerInterfaceInfo(ctx, interfaceInfoParam)
+							err := funcs.ServerInterfaceInfo(ctx, serverInterfaceInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -5926,8 +6276,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -5948,9 +6306,9 @@ func init() {
 						return err
 					}
 
-					interfaceAddForInternetParam.ParamTemplate = c.String("param-template")
-					interfaceAddForInternetParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(interfaceAddForInternetParam)
+					serverInterfaceAddForInternetParam.ParamTemplate = c.String("param-template")
+					serverInterfaceAddForInternetParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverInterfaceAddForInternetParam)
 					if err != nil {
 						return err
 					}
@@ -5960,30 +6318,36 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(interfaceAddForInternetParam, p, mergo.WithOverride)
+						mergo.Merge(serverInterfaceAddForInternetParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("without-disk-edit") {
-						interfaceAddForInternetParam.WithoutDiskEdit = c.Bool("without-disk-edit")
+						serverInterfaceAddForInternetParam.WithoutDiskEdit = c.Bool("without-disk-edit")
 					}
 					if c.IsSet("selector") {
-						interfaceAddForInternetParam.Selector = c.StringSlice("selector")
+						serverInterfaceAddForInternetParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						interfaceAddForInternetParam.Assumeyes = c.Bool("assumeyes")
+						serverInterfaceAddForInternetParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						interfaceAddForInternetParam.ParamTemplate = c.String("param-template")
+						serverInterfaceAddForInternetParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverInterfaceAddForInternetParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						interfaceAddForInternetParam.ParamTemplateFile = c.String("param-template-file")
+						serverInterfaceAddForInternetParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverInterfaceAddForInternetParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						interfaceAddForInternetParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverInterfaceAddForInternetParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						interfaceAddForInternetParam.Id = sacloud.ID(c.Int64("id"))
+						serverInterfaceAddForInternetParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5991,7 +6355,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = interfaceAddForInternetParam
+					var outputTypeHolder interface{} = serverInterfaceAddForInternetParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6002,10 +6366,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if interfaceAddForInternetParam.GenerateSkeleton {
-						interfaceAddForInternetParam.GenerateSkeleton = false
-						interfaceAddForInternetParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(interfaceAddForInternetParam, "", "\t")
+					if serverInterfaceAddForInternetParam.GenerateSkeleton {
+						serverInterfaceAddForInternetParam.GenerateSkeleton = false
+						serverInterfaceAddForInternetParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverInterfaceAddForInternetParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6014,19 +6378,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := interfaceAddForInternetParam.Validate(); len(errors) > 0 {
+					if errors := serverInterfaceAddForInternetParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), interfaceAddForInternetParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverInterfaceAddForInternetParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(interfaceAddForInternetParam.Selector) == 0 {
+						if len(serverInterfaceAddForInternetParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6035,12 +6399,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, interfaceAddForInternetParam.Selector) {
+							if hasTags(&v, serverInterfaceAddForInternetParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceAddForInternetParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverInterfaceAddForInternetParam.Selector)
 						}
 
 					} else {
@@ -6062,7 +6426,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(interfaceAddForInternetParam.Selector) == 0 || hasTags(&v, interfaceAddForInternetParam.Selector) {
+										if len(serverInterfaceAddForInternetParam.Selector) == 0 || hasTags(&v, serverInterfaceAddForInternetParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6083,7 +6447,7 @@ func init() {
 					}
 
 					// confirm
-					if !interfaceAddForInternetParam.Assumeyes {
+					if !serverInterfaceAddForInternetParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -6097,11 +6461,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						interfaceAddForInternetParam.SetId(id)
-						p := *interfaceAddForInternetParam // copy struct value
-						interfaceAddForInternetParam := &p
+						serverInterfaceAddForInternetParam.SetId(id)
+						p := *serverInterfaceAddForInternetParam // copy struct value
+						serverInterfaceAddForInternetParam := &p
 						go func() {
-							err := funcs.ServerInterfaceAddForInternet(ctx, interfaceAddForInternetParam)
+							err := funcs.ServerInterfaceAddForInternet(ctx, serverInterfaceAddForInternetParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6156,8 +6520,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -6178,9 +6550,9 @@ func init() {
 						return err
 					}
 
-					interfaceAddForRouterParam.ParamTemplate = c.String("param-template")
-					interfaceAddForRouterParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(interfaceAddForRouterParam)
+					serverInterfaceAddForRouterParam.ParamTemplate = c.String("param-template")
+					serverInterfaceAddForRouterParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverInterfaceAddForRouterParam)
 					if err != nil {
 						return err
 					}
@@ -6190,42 +6562,48 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(interfaceAddForRouterParam, p, mergo.WithOverride)
+						mergo.Merge(serverInterfaceAddForRouterParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("switch-id") {
-						interfaceAddForRouterParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
+						serverInterfaceAddForRouterParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
 					}
 					if c.IsSet("without-disk-edit") {
-						interfaceAddForRouterParam.WithoutDiskEdit = c.Bool("without-disk-edit")
+						serverInterfaceAddForRouterParam.WithoutDiskEdit = c.Bool("without-disk-edit")
 					}
 					if c.IsSet("ipaddress") {
-						interfaceAddForRouterParam.Ipaddress = c.String("ipaddress")
+						serverInterfaceAddForRouterParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("default-route") {
-						interfaceAddForRouterParam.DefaultRoute = c.String("default-route")
+						serverInterfaceAddForRouterParam.DefaultRoute = c.String("default-route")
 					}
 					if c.IsSet("nw-masklen") {
-						interfaceAddForRouterParam.NwMasklen = c.Int("nw-masklen")
+						serverInterfaceAddForRouterParam.NwMasklen = c.Int("nw-masklen")
 					}
 					if c.IsSet("selector") {
-						interfaceAddForRouterParam.Selector = c.StringSlice("selector")
+						serverInterfaceAddForRouterParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						interfaceAddForRouterParam.Assumeyes = c.Bool("assumeyes")
+						serverInterfaceAddForRouterParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						interfaceAddForRouterParam.ParamTemplate = c.String("param-template")
+						serverInterfaceAddForRouterParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverInterfaceAddForRouterParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						interfaceAddForRouterParam.ParamTemplateFile = c.String("param-template-file")
+						serverInterfaceAddForRouterParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverInterfaceAddForRouterParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						interfaceAddForRouterParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverInterfaceAddForRouterParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						interfaceAddForRouterParam.Id = sacloud.ID(c.Int64("id"))
+						serverInterfaceAddForRouterParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6233,7 +6611,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = interfaceAddForRouterParam
+					var outputTypeHolder interface{} = serverInterfaceAddForRouterParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6244,10 +6622,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if interfaceAddForRouterParam.GenerateSkeleton {
-						interfaceAddForRouterParam.GenerateSkeleton = false
-						interfaceAddForRouterParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(interfaceAddForRouterParam, "", "\t")
+					if serverInterfaceAddForRouterParam.GenerateSkeleton {
+						serverInterfaceAddForRouterParam.GenerateSkeleton = false
+						serverInterfaceAddForRouterParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverInterfaceAddForRouterParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6256,19 +6634,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := interfaceAddForRouterParam.Validate(); len(errors) > 0 {
+					if errors := serverInterfaceAddForRouterParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), interfaceAddForRouterParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverInterfaceAddForRouterParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(interfaceAddForRouterParam.Selector) == 0 {
+						if len(serverInterfaceAddForRouterParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6277,12 +6655,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, interfaceAddForRouterParam.Selector) {
+							if hasTags(&v, serverInterfaceAddForRouterParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceAddForRouterParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverInterfaceAddForRouterParam.Selector)
 						}
 
 					} else {
@@ -6304,7 +6682,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(interfaceAddForRouterParam.Selector) == 0 || hasTags(&v, interfaceAddForRouterParam.Selector) {
+										if len(serverInterfaceAddForRouterParam.Selector) == 0 || hasTags(&v, serverInterfaceAddForRouterParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6325,7 +6703,7 @@ func init() {
 					}
 
 					// confirm
-					if !interfaceAddForRouterParam.Assumeyes {
+					if !serverInterfaceAddForRouterParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -6339,11 +6717,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						interfaceAddForRouterParam.SetId(id)
-						p := *interfaceAddForRouterParam // copy struct value
-						interfaceAddForRouterParam := &p
+						serverInterfaceAddForRouterParam.SetId(id)
+						p := *serverInterfaceAddForRouterParam // copy struct value
+						serverInterfaceAddForRouterParam := &p
 						go func() {
-							err := funcs.ServerInterfaceAddForRouter(ctx, interfaceAddForRouterParam)
+							err := funcs.ServerInterfaceAddForRouter(ctx, serverInterfaceAddForRouterParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6398,8 +6776,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -6420,9 +6806,9 @@ func init() {
 						return err
 					}
 
-					interfaceAddForSwitchParam.ParamTemplate = c.String("param-template")
-					interfaceAddForSwitchParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(interfaceAddForSwitchParam)
+					serverInterfaceAddForSwitchParam.ParamTemplate = c.String("param-template")
+					serverInterfaceAddForSwitchParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverInterfaceAddForSwitchParam)
 					if err != nil {
 						return err
 					}
@@ -6432,42 +6818,48 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(interfaceAddForSwitchParam, p, mergo.WithOverride)
+						mergo.Merge(serverInterfaceAddForSwitchParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("switch-id") {
-						interfaceAddForSwitchParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
+						serverInterfaceAddForSwitchParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
 					}
 					if c.IsSet("without-disk-edit") {
-						interfaceAddForSwitchParam.WithoutDiskEdit = c.Bool("without-disk-edit")
+						serverInterfaceAddForSwitchParam.WithoutDiskEdit = c.Bool("without-disk-edit")
 					}
 					if c.IsSet("ipaddress") {
-						interfaceAddForSwitchParam.Ipaddress = c.String("ipaddress")
+						serverInterfaceAddForSwitchParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("default-route") {
-						interfaceAddForSwitchParam.DefaultRoute = c.String("default-route")
+						serverInterfaceAddForSwitchParam.DefaultRoute = c.String("default-route")
 					}
 					if c.IsSet("nw-masklen") {
-						interfaceAddForSwitchParam.NwMasklen = c.Int("nw-masklen")
+						serverInterfaceAddForSwitchParam.NwMasklen = c.Int("nw-masklen")
 					}
 					if c.IsSet("selector") {
-						interfaceAddForSwitchParam.Selector = c.StringSlice("selector")
+						serverInterfaceAddForSwitchParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						interfaceAddForSwitchParam.Assumeyes = c.Bool("assumeyes")
+						serverInterfaceAddForSwitchParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						interfaceAddForSwitchParam.ParamTemplate = c.String("param-template")
+						serverInterfaceAddForSwitchParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverInterfaceAddForSwitchParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						interfaceAddForSwitchParam.ParamTemplateFile = c.String("param-template-file")
+						serverInterfaceAddForSwitchParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverInterfaceAddForSwitchParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						interfaceAddForSwitchParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverInterfaceAddForSwitchParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						interfaceAddForSwitchParam.Id = sacloud.ID(c.Int64("id"))
+						serverInterfaceAddForSwitchParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6475,7 +6867,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = interfaceAddForSwitchParam
+					var outputTypeHolder interface{} = serverInterfaceAddForSwitchParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6486,10 +6878,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if interfaceAddForSwitchParam.GenerateSkeleton {
-						interfaceAddForSwitchParam.GenerateSkeleton = false
-						interfaceAddForSwitchParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(interfaceAddForSwitchParam, "", "\t")
+					if serverInterfaceAddForSwitchParam.GenerateSkeleton {
+						serverInterfaceAddForSwitchParam.GenerateSkeleton = false
+						serverInterfaceAddForSwitchParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverInterfaceAddForSwitchParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6498,19 +6890,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := interfaceAddForSwitchParam.Validate(); len(errors) > 0 {
+					if errors := serverInterfaceAddForSwitchParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), interfaceAddForSwitchParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverInterfaceAddForSwitchParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(interfaceAddForSwitchParam.Selector) == 0 {
+						if len(serverInterfaceAddForSwitchParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6519,12 +6911,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, interfaceAddForSwitchParam.Selector) {
+							if hasTags(&v, serverInterfaceAddForSwitchParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceAddForSwitchParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverInterfaceAddForSwitchParam.Selector)
 						}
 
 					} else {
@@ -6546,7 +6938,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(interfaceAddForSwitchParam.Selector) == 0 || hasTags(&v, interfaceAddForSwitchParam.Selector) {
+										if len(serverInterfaceAddForSwitchParam.Selector) == 0 || hasTags(&v, serverInterfaceAddForSwitchParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6567,7 +6959,7 @@ func init() {
 					}
 
 					// confirm
-					if !interfaceAddForSwitchParam.Assumeyes {
+					if !serverInterfaceAddForSwitchParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -6581,11 +6973,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						interfaceAddForSwitchParam.SetId(id)
-						p := *interfaceAddForSwitchParam // copy struct value
-						interfaceAddForSwitchParam := &p
+						serverInterfaceAddForSwitchParam.SetId(id)
+						p := *serverInterfaceAddForSwitchParam // copy struct value
+						serverInterfaceAddForSwitchParam := &p
 						go func() {
-							err := funcs.ServerInterfaceAddForSwitch(ctx, interfaceAddForSwitchParam)
+							err := funcs.ServerInterfaceAddForSwitch(ctx, serverInterfaceAddForSwitchParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6616,8 +7008,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -6638,9 +7038,9 @@ func init() {
 						return err
 					}
 
-					interfaceAddDisconnectedParam.ParamTemplate = c.String("param-template")
-					interfaceAddDisconnectedParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(interfaceAddDisconnectedParam)
+					serverInterfaceAddDisconnectedParam.ParamTemplate = c.String("param-template")
+					serverInterfaceAddDisconnectedParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverInterfaceAddDisconnectedParam)
 					if err != nil {
 						return err
 					}
@@ -6650,27 +7050,33 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(interfaceAddDisconnectedParam, p, mergo.WithOverride)
+						mergo.Merge(serverInterfaceAddDisconnectedParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						interfaceAddDisconnectedParam.Selector = c.StringSlice("selector")
+						serverInterfaceAddDisconnectedParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						interfaceAddDisconnectedParam.Assumeyes = c.Bool("assumeyes")
+						serverInterfaceAddDisconnectedParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						interfaceAddDisconnectedParam.ParamTemplate = c.String("param-template")
+						serverInterfaceAddDisconnectedParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverInterfaceAddDisconnectedParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						interfaceAddDisconnectedParam.ParamTemplateFile = c.String("param-template-file")
+						serverInterfaceAddDisconnectedParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverInterfaceAddDisconnectedParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						interfaceAddDisconnectedParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverInterfaceAddDisconnectedParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						interfaceAddDisconnectedParam.Id = sacloud.ID(c.Int64("id"))
+						serverInterfaceAddDisconnectedParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6678,7 +7084,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = interfaceAddDisconnectedParam
+					var outputTypeHolder interface{} = serverInterfaceAddDisconnectedParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6689,10 +7095,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if interfaceAddDisconnectedParam.GenerateSkeleton {
-						interfaceAddDisconnectedParam.GenerateSkeleton = false
-						interfaceAddDisconnectedParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(interfaceAddDisconnectedParam, "", "\t")
+					if serverInterfaceAddDisconnectedParam.GenerateSkeleton {
+						serverInterfaceAddDisconnectedParam.GenerateSkeleton = false
+						serverInterfaceAddDisconnectedParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverInterfaceAddDisconnectedParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6701,19 +7107,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := interfaceAddDisconnectedParam.Validate(); len(errors) > 0 {
+					if errors := serverInterfaceAddDisconnectedParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), interfaceAddDisconnectedParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverInterfaceAddDisconnectedParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(interfaceAddDisconnectedParam.Selector) == 0 {
+						if len(serverInterfaceAddDisconnectedParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6722,12 +7128,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, interfaceAddDisconnectedParam.Selector) {
+							if hasTags(&v, serverInterfaceAddDisconnectedParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceAddDisconnectedParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverInterfaceAddDisconnectedParam.Selector)
 						}
 
 					} else {
@@ -6749,7 +7155,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(interfaceAddDisconnectedParam.Selector) == 0 || hasTags(&v, interfaceAddDisconnectedParam.Selector) {
+										if len(serverInterfaceAddDisconnectedParam.Selector) == 0 || hasTags(&v, serverInterfaceAddDisconnectedParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -6770,7 +7176,7 @@ func init() {
 					}
 
 					// confirm
-					if !interfaceAddDisconnectedParam.Assumeyes {
+					if !serverInterfaceAddDisconnectedParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -6784,11 +7190,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						interfaceAddDisconnectedParam.SetId(id)
-						p := *interfaceAddDisconnectedParam // copy struct value
-						interfaceAddDisconnectedParam := &p
+						serverInterfaceAddDisconnectedParam.SetId(id)
+						p := *serverInterfaceAddDisconnectedParam // copy struct value
+						serverInterfaceAddDisconnectedParam := &p
 						go func() {
-							err := funcs.ServerInterfaceAddDisconnected(ctx, interfaceAddDisconnectedParam)
+							err := funcs.ServerInterfaceAddDisconnected(ctx, serverInterfaceAddDisconnectedParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6814,8 +7220,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -6868,57 +7282,63 @@ func init() {
 						return err
 					}
 
-					isoInfoParam.ParamTemplate = c.String("param-template")
-					isoInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(isoInfoParam)
+					serverISOInfoParam.ParamTemplate = c.String("param-template")
+					serverISOInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverISOInfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewIsoInfoServerParam()
+						p := params.NewISOInfoServerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(isoInfoParam, p, mergo.WithOverride)
+						mergo.Merge(serverISOInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						isoInfoParam.Selector = c.StringSlice("selector")
+						serverISOInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						isoInfoParam.ParamTemplate = c.String("param-template")
+						serverISOInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverISOInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						isoInfoParam.ParamTemplateFile = c.String("param-template-file")
+						serverISOInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverISOInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						isoInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverISOInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						isoInfoParam.OutputType = c.String("output-type")
+						serverISOInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						isoInfoParam.Column = c.StringSlice("column")
+						serverISOInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						isoInfoParam.Quiet = c.Bool("quiet")
+						serverISOInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						isoInfoParam.Format = c.String("format")
+						serverISOInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						isoInfoParam.FormatFile = c.String("format-file")
+						serverISOInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						isoInfoParam.Query = c.String("query")
+						serverISOInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						isoInfoParam.QueryFile = c.String("query-file")
+						serverISOInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						isoInfoParam.Id = sacloud.ID(c.Int64("id"))
+						serverISOInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6926,7 +7346,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = isoInfoParam
+					var outputTypeHolder interface{} = serverISOInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -6937,10 +7357,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if isoInfoParam.GenerateSkeleton {
-						isoInfoParam.GenerateSkeleton = false
-						isoInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(isoInfoParam, "", "\t")
+					if serverISOInfoParam.GenerateSkeleton {
+						serverISOInfoParam.GenerateSkeleton = false
+						serverISOInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverISOInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -6949,19 +7369,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := isoInfoParam.Validate(); len(errors) > 0 {
+					if errors := serverISOInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), isoInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverISOInfoParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(isoInfoParam.Selector) == 0 {
+						if len(serverISOInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -6970,12 +7390,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, isoInfoParam.Selector) {
+							if hasTags(&v, serverISOInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverISOInfoParam.Selector)
 						}
 
 					} else {
@@ -6997,7 +7417,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(isoInfoParam.Selector) == 0 || hasTags(&v, isoInfoParam.Selector) {
+										if len(serverISOInfoParam.Selector) == 0 || hasTags(&v, serverISOInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -7022,11 +7442,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						isoInfoParam.SetId(id)
-						p := *isoInfoParam // copy struct value
-						isoInfoParam := &p
+						serverISOInfoParam.SetId(id)
+						p := *serverISOInfoParam // copy struct value
+						serverISOInfoParam := &p
 						go func() {
-							err := funcs.ServerIsoInfo(ctx, isoInfoParam)
+							err := funcs.ServerISOInfo(ctx, serverISOInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -7087,8 +7507,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -7109,60 +7537,66 @@ func init() {
 						return err
 					}
 
-					isoInsertParam.ParamTemplate = c.String("param-template")
-					isoInsertParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(isoInsertParam)
+					serverISOInsertParam.ParamTemplate = c.String("param-template")
+					serverISOInsertParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverISOInsertParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewIsoInsertServerParam()
+						p := params.NewISOInsertServerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(isoInsertParam, p, mergo.WithOverride)
+						mergo.Merge(serverISOInsertParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("iso-image-id") {
-						isoInsertParam.IsoImageId = sacloud.ID(c.Int64("iso-image-id"))
+						serverISOInsertParam.ISOImageId = sacloud.ID(c.Int64("iso-image-id"))
 					}
 					if c.IsSet("size") {
-						isoInsertParam.Size = c.Int("size")
+						serverISOInsertParam.Size = c.Int("size")
 					}
 					if c.IsSet("iso-file") {
-						isoInsertParam.IsoFile = c.String("iso-file")
+						serverISOInsertParam.ISOFile = c.String("iso-file")
 					}
 					if c.IsSet("name") {
-						isoInsertParam.Name = c.String("name")
+						serverISOInsertParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						isoInsertParam.Description = c.String("description")
+						serverISOInsertParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						isoInsertParam.Tags = c.StringSlice("tags")
+						serverISOInsertParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						isoInsertParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						serverISOInsertParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("selector") {
-						isoInsertParam.Selector = c.StringSlice("selector")
+						serverISOInsertParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						isoInsertParam.Assumeyes = c.Bool("assumeyes")
+						serverISOInsertParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						isoInsertParam.ParamTemplate = c.String("param-template")
+						serverISOInsertParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverISOInsertParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						isoInsertParam.ParamTemplateFile = c.String("param-template-file")
+						serverISOInsertParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverISOInsertParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						isoInsertParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverISOInsertParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						isoInsertParam.Id = sacloud.ID(c.Int64("id"))
+						serverISOInsertParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -7170,7 +7604,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = isoInsertParam
+					var outputTypeHolder interface{} = serverISOInsertParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -7181,10 +7615,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if isoInsertParam.GenerateSkeleton {
-						isoInsertParam.GenerateSkeleton = false
-						isoInsertParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(isoInsertParam, "", "\t")
+					if serverISOInsertParam.GenerateSkeleton {
+						serverISOInsertParam.GenerateSkeleton = false
+						serverISOInsertParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverISOInsertParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -7193,19 +7627,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := isoInsertParam.Validate(); len(errors) > 0 {
+					if errors := serverISOInsertParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), isoInsertParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverISOInsertParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(isoInsertParam.Selector) == 0 {
+						if len(serverISOInsertParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -7214,12 +7648,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, isoInsertParam.Selector) {
+							if hasTags(&v, serverISOInsertParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoInsertParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverISOInsertParam.Selector)
 						}
 
 					} else {
@@ -7241,7 +7675,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(isoInsertParam.Selector) == 0 || hasTags(&v, isoInsertParam.Selector) {
+										if len(serverISOInsertParam.Selector) == 0 || hasTags(&v, serverISOInsertParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -7262,7 +7696,7 @@ func init() {
 					}
 
 					// confirm
-					if !isoInsertParam.Assumeyes {
+					if !serverISOInsertParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -7276,11 +7710,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						isoInsertParam.SetId(id)
-						p := *isoInsertParam // copy struct value
-						isoInsertParam := &p
+						serverISOInsertParam.SetId(id)
+						p := *serverISOInsertParam // copy struct value
+						serverISOInsertParam := &p
 						go func() {
-							err := funcs.ServerIsoInsert(ctx, isoInsertParam)
+							err := funcs.ServerISOInsert(ctx, serverISOInsertParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -7311,8 +7745,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -7333,39 +7775,45 @@ func init() {
 						return err
 					}
 
-					isoEjectParam.ParamTemplate = c.String("param-template")
-					isoEjectParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(isoEjectParam)
+					serverISOEjectParam.ParamTemplate = c.String("param-template")
+					serverISOEjectParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverISOEjectParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewIsoEjectServerParam()
+						p := params.NewISOEjectServerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(isoEjectParam, p, mergo.WithOverride)
+						mergo.Merge(serverISOEjectParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						isoEjectParam.Selector = c.StringSlice("selector")
+						serverISOEjectParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						isoEjectParam.Assumeyes = c.Bool("assumeyes")
+						serverISOEjectParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						isoEjectParam.ParamTemplate = c.String("param-template")
+						serverISOEjectParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverISOEjectParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						isoEjectParam.ParamTemplateFile = c.String("param-template-file")
+						serverISOEjectParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverISOEjectParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						isoEjectParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverISOEjectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						isoEjectParam.Id = sacloud.ID(c.Int64("id"))
+						serverISOEjectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -7373,7 +7821,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = isoEjectParam
+					var outputTypeHolder interface{} = serverISOEjectParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -7384,10 +7832,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if isoEjectParam.GenerateSkeleton {
-						isoEjectParam.GenerateSkeleton = false
-						isoEjectParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(isoEjectParam, "", "\t")
+					if serverISOEjectParam.GenerateSkeleton {
+						serverISOEjectParam.GenerateSkeleton = false
+						serverISOEjectParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverISOEjectParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -7396,19 +7844,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := isoEjectParam.Validate(); len(errors) > 0 {
+					if errors := serverISOEjectParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), isoEjectParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverISOEjectParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(isoEjectParam.Selector) == 0 {
+						if len(serverISOEjectParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -7417,12 +7865,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, isoEjectParam.Selector) {
+							if hasTags(&v, serverISOEjectParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoEjectParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverISOEjectParam.Selector)
 						}
 
 					} else {
@@ -7444,7 +7892,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(isoEjectParam.Selector) == 0 || hasTags(&v, isoEjectParam.Selector) {
+										if len(serverISOEjectParam.Selector) == 0 || hasTags(&v, serverISOEjectParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -7465,7 +7913,7 @@ func init() {
 					}
 
 					// confirm
-					if !isoEjectParam.Assumeyes {
+					if !serverISOEjectParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -7479,11 +7927,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						isoEjectParam.SetId(id)
-						p := *isoEjectParam // copy struct value
-						isoEjectParam := &p
+						serverISOEjectParam.SetId(id)
+						p := *serverISOEjectParam // copy struct value
+						serverISOEjectParam := &p
 						go func() {
-							err := funcs.ServerIsoEject(ctx, isoEjectParam)
+							err := funcs.ServerISOEject(ctx, serverISOEjectParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -7522,8 +7970,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -7576,66 +8032,72 @@ func init() {
 						return err
 					}
 
-					monitorCpuParam.ParamTemplate = c.String("param-template")
-					monitorCpuParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorCpuParam)
+					serverMonitorCPUParam.ParamTemplate = c.String("param-template")
+					serverMonitorCPUParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverMonitorCPUParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewMonitorCpuServerParam()
+						p := params.NewMonitorCPUServerParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(monitorCpuParam, p, mergo.WithOverride)
+						mergo.Merge(serverMonitorCPUParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						monitorCpuParam.Start = c.String("start")
+						serverMonitorCPUParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						monitorCpuParam.End = c.String("end")
+						serverMonitorCPUParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						monitorCpuParam.KeyFormat = c.String("key-format")
+						serverMonitorCPUParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						monitorCpuParam.Selector = c.StringSlice("selector")
+						serverMonitorCPUParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						monitorCpuParam.ParamTemplate = c.String("param-template")
+						serverMonitorCPUParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverMonitorCPUParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						monitorCpuParam.ParamTemplateFile = c.String("param-template-file")
+						serverMonitorCPUParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverMonitorCPUParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						monitorCpuParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverMonitorCPUParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						monitorCpuParam.OutputType = c.String("output-type")
+						serverMonitorCPUParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						monitorCpuParam.Column = c.StringSlice("column")
+						serverMonitorCPUParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						monitorCpuParam.Quiet = c.Bool("quiet")
+						serverMonitorCPUParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						monitorCpuParam.Format = c.String("format")
+						serverMonitorCPUParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						monitorCpuParam.FormatFile = c.String("format-file")
+						serverMonitorCPUParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						monitorCpuParam.Query = c.String("query")
+						serverMonitorCPUParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						monitorCpuParam.QueryFile = c.String("query-file")
+						serverMonitorCPUParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						monitorCpuParam.Id = sacloud.ID(c.Int64("id"))
+						serverMonitorCPUParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -7643,7 +8105,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = monitorCpuParam
+					var outputTypeHolder interface{} = serverMonitorCPUParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -7654,10 +8116,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if monitorCpuParam.GenerateSkeleton {
-						monitorCpuParam.GenerateSkeleton = false
-						monitorCpuParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorCpuParam, "", "\t")
+					if serverMonitorCPUParam.GenerateSkeleton {
+						serverMonitorCPUParam.GenerateSkeleton = false
+						serverMonitorCPUParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverMonitorCPUParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -7666,19 +8128,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := monitorCpuParam.Validate(); len(errors) > 0 {
+					if errors := serverMonitorCPUParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorCpuParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverMonitorCPUParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(monitorCpuParam.Selector) == 0 {
+						if len(serverMonitorCPUParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -7687,12 +8149,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, monitorCpuParam.Selector) {
+							if hasTags(&v, serverMonitorCPUParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorCpuParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverMonitorCPUParam.Selector)
 						}
 
 					} else {
@@ -7714,7 +8176,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(monitorCpuParam.Selector) == 0 || hasTags(&v, monitorCpuParam.Selector) {
+										if len(serverMonitorCPUParam.Selector) == 0 || hasTags(&v, serverMonitorCPUParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -7739,11 +8201,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						monitorCpuParam.SetId(id)
-						p := *monitorCpuParam // copy struct value
-						monitorCpuParam := &p
+						serverMonitorCPUParam.SetId(id)
+						p := *serverMonitorCPUParam // copy struct value
+						serverMonitorCPUParam := &p
 						go func() {
-							err := funcs.ServerMonitorCpu(ctx, monitorCpuParam)
+							err := funcs.ServerMonitorCPU(ctx, serverMonitorCPUParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -7786,8 +8248,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -7840,9 +8310,9 @@ func init() {
 						return err
 					}
 
-					monitorNicParam.ParamTemplate = c.String("param-template")
-					monitorNicParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorNicParam)
+					serverMonitorNicParam.ParamTemplate = c.String("param-template")
+					serverMonitorNicParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverMonitorNicParam)
 					if err != nil {
 						return err
 					}
@@ -7852,57 +8322,63 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(monitorNicParam, p, mergo.WithOverride)
+						mergo.Merge(serverMonitorNicParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						monitorNicParam.Start = c.String("start")
+						serverMonitorNicParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						monitorNicParam.End = c.String("end")
+						serverMonitorNicParam.End = c.String("end")
 					}
 					if c.IsSet("index") {
-						monitorNicParam.Index = c.Int64Slice("index")
+						serverMonitorNicParam.Index = c.Int64Slice("index")
 					}
 					if c.IsSet("key-format") {
-						monitorNicParam.KeyFormat = c.String("key-format")
+						serverMonitorNicParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						monitorNicParam.Selector = c.StringSlice("selector")
+						serverMonitorNicParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						monitorNicParam.ParamTemplate = c.String("param-template")
+						serverMonitorNicParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverMonitorNicParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						monitorNicParam.ParamTemplateFile = c.String("param-template-file")
+						serverMonitorNicParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverMonitorNicParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						monitorNicParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverMonitorNicParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						monitorNicParam.OutputType = c.String("output-type")
+						serverMonitorNicParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						monitorNicParam.Column = c.StringSlice("column")
+						serverMonitorNicParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						monitorNicParam.Quiet = c.Bool("quiet")
+						serverMonitorNicParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						monitorNicParam.Format = c.String("format")
+						serverMonitorNicParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						monitorNicParam.FormatFile = c.String("format-file")
+						serverMonitorNicParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						monitorNicParam.Query = c.String("query")
+						serverMonitorNicParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						monitorNicParam.QueryFile = c.String("query-file")
+						serverMonitorNicParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						monitorNicParam.Id = sacloud.ID(c.Int64("id"))
+						serverMonitorNicParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -7910,7 +8386,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = monitorNicParam
+					var outputTypeHolder interface{} = serverMonitorNicParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -7921,10 +8397,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if monitorNicParam.GenerateSkeleton {
-						monitorNicParam.GenerateSkeleton = false
-						monitorNicParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorNicParam, "", "\t")
+					if serverMonitorNicParam.GenerateSkeleton {
+						serverMonitorNicParam.GenerateSkeleton = false
+						serverMonitorNicParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverMonitorNicParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -7933,19 +8409,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := monitorNicParam.Validate(); len(errors) > 0 {
+					if errors := serverMonitorNicParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorNicParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverMonitorNicParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(monitorNicParam.Selector) == 0 {
+						if len(serverMonitorNicParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -7954,12 +8430,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, monitorNicParam.Selector) {
+							if hasTags(&v, serverMonitorNicParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorNicParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverMonitorNicParam.Selector)
 						}
 
 					} else {
@@ -7981,7 +8457,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(monitorNicParam.Selector) == 0 || hasTags(&v, monitorNicParam.Selector) {
+										if len(serverMonitorNicParam.Selector) == 0 || hasTags(&v, serverMonitorNicParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -8006,11 +8482,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						monitorNicParam.SetId(id)
-						p := *monitorNicParam // copy struct value
-						monitorNicParam := &p
+						serverMonitorNicParam.SetId(id)
+						p := *serverMonitorNicParam // copy struct value
+						serverMonitorNicParam := &p
 						go func() {
-							err := funcs.ServerMonitorNic(ctx, monitorNicParam)
+							err := funcs.ServerMonitorNic(ctx, serverMonitorNicParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -8053,8 +8529,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -8107,9 +8591,9 @@ func init() {
 						return err
 					}
 
-					monitorDiskParam.ParamTemplate = c.String("param-template")
-					monitorDiskParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorDiskParam)
+					serverMonitorDiskParam.ParamTemplate = c.String("param-template")
+					serverMonitorDiskParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverMonitorDiskParam)
 					if err != nil {
 						return err
 					}
@@ -8119,57 +8603,63 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(monitorDiskParam, p, mergo.WithOverride)
+						mergo.Merge(serverMonitorDiskParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						monitorDiskParam.Start = c.String("start")
+						serverMonitorDiskParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						monitorDiskParam.End = c.String("end")
+						serverMonitorDiskParam.End = c.String("end")
 					}
 					if c.IsSet("index") {
-						monitorDiskParam.Index = c.Int64Slice("index")
+						serverMonitorDiskParam.Index = c.Int64Slice("index")
 					}
 					if c.IsSet("key-format") {
-						monitorDiskParam.KeyFormat = c.String("key-format")
+						serverMonitorDiskParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						monitorDiskParam.Selector = c.StringSlice("selector")
+						serverMonitorDiskParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						monitorDiskParam.ParamTemplate = c.String("param-template")
+						serverMonitorDiskParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverMonitorDiskParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						monitorDiskParam.ParamTemplateFile = c.String("param-template-file")
+						serverMonitorDiskParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverMonitorDiskParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						monitorDiskParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverMonitorDiskParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						monitorDiskParam.OutputType = c.String("output-type")
+						serverMonitorDiskParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						monitorDiskParam.Column = c.StringSlice("column")
+						serverMonitorDiskParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						monitorDiskParam.Quiet = c.Bool("quiet")
+						serverMonitorDiskParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						monitorDiskParam.Format = c.String("format")
+						serverMonitorDiskParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						monitorDiskParam.FormatFile = c.String("format-file")
+						serverMonitorDiskParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						monitorDiskParam.Query = c.String("query")
+						serverMonitorDiskParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						monitorDiskParam.QueryFile = c.String("query-file")
+						serverMonitorDiskParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						monitorDiskParam.Id = sacloud.ID(c.Int64("id"))
+						serverMonitorDiskParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -8177,7 +8667,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = monitorDiskParam
+					var outputTypeHolder interface{} = serverMonitorDiskParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -8188,10 +8678,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if monitorDiskParam.GenerateSkeleton {
-						monitorDiskParam.GenerateSkeleton = false
-						monitorDiskParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorDiskParam, "", "\t")
+					if serverMonitorDiskParam.GenerateSkeleton {
+						serverMonitorDiskParam.GenerateSkeleton = false
+						serverMonitorDiskParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverMonitorDiskParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -8200,19 +8690,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := monitorDiskParam.Validate(); len(errors) > 0 {
+					if errors := serverMonitorDiskParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorDiskParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverMonitorDiskParam)
 
 					apiClient := ctx.GetAPIClient().Server
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(monitorDiskParam.Selector) == 0 {
+						if len(serverMonitorDiskParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -8221,12 +8711,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Servers {
-							if hasTags(&v, monitorDiskParam.Selector) {
+							if hasTags(&v, serverMonitorDiskParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorDiskParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverMonitorDiskParam.Selector)
 						}
 
 					} else {
@@ -8248,7 +8738,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Servers {
-										if len(monitorDiskParam.Selector) == 0 || hasTags(&v, monitorDiskParam.Selector) {
+										if len(serverMonitorDiskParam.Selector) == 0 || hasTags(&v, serverMonitorDiskParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -8273,11 +8763,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						monitorDiskParam.SetId(id)
-						p := *monitorDiskParam // copy struct value
-						monitorDiskParam := &p
+						serverMonitorDiskParam.SetId(id)
+						p := *serverMonitorDiskParam // copy struct value
+						serverMonitorDiskParam := &p
 						go func() {
-							err := funcs.ServerMonitorDisk(ctx, monitorDiskParam)
+							err := funcs.ServerMonitorDisk(ctx, serverMonitorDiskParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -8298,8 +8788,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -8347,9 +8845,9 @@ func init() {
 						return err
 					}
 
-					maintenanceInfoParam.ParamTemplate = c.String("param-template")
-					maintenanceInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(maintenanceInfoParam)
+					serverMaintenanceInfoParam.ParamTemplate = c.String("param-template")
+					serverMaintenanceInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverMaintenanceInfoParam)
 					if err != nil {
 						return err
 					}
@@ -8359,39 +8857,45 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(maintenanceInfoParam, p, mergo.WithOverride)
+						mergo.Merge(serverMaintenanceInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						maintenanceInfoParam.ParamTemplate = c.String("param-template")
+						serverMaintenanceInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						serverMaintenanceInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						maintenanceInfoParam.ParamTemplateFile = c.String("param-template-file")
+						serverMaintenanceInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						serverMaintenanceInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						maintenanceInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						serverMaintenanceInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						maintenanceInfoParam.OutputType = c.String("output-type")
+						serverMaintenanceInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						maintenanceInfoParam.Column = c.StringSlice("column")
+						serverMaintenanceInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						maintenanceInfoParam.Quiet = c.Bool("quiet")
+						serverMaintenanceInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						maintenanceInfoParam.Format = c.String("format")
+						serverMaintenanceInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						maintenanceInfoParam.FormatFile = c.String("format-file")
+						serverMaintenanceInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						maintenanceInfoParam.Query = c.String("query")
+						serverMaintenanceInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						maintenanceInfoParam.QueryFile = c.String("query-file")
+						serverMaintenanceInfoParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -8399,7 +8903,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = maintenanceInfoParam
+					var outputTypeHolder interface{} = serverMaintenanceInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -8410,10 +8914,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if maintenanceInfoParam.GenerateSkeleton {
-						maintenanceInfoParam.GenerateSkeleton = false
-						maintenanceInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(maintenanceInfoParam, "", "\t")
+					if serverMaintenanceInfoParam.GenerateSkeleton {
+						serverMaintenanceInfoParam.GenerateSkeleton = false
+						serverMaintenanceInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverMaintenanceInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -8422,15 +8926,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := maintenanceInfoParam.Validate(); len(errors) > 0 {
+					if errors := serverMaintenanceInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), maintenanceInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), serverMaintenanceInfoParam)
 
 					// Run command with params
-					return funcs.ServerMaintenanceInfo(ctx, maintenanceInfoParam)
+					return funcs.ServerMaintenanceInfo(ctx, serverMaintenanceInfoParam)
 
 				},
 			},
@@ -8654,6 +9158,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "boot", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "boot", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "boot", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -8810,6 +9324,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "build", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "build", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "build", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -8974,6 +9498,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "delete", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "delete", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -9029,6 +9563,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "disk-connect", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "disk-connect", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "disk-connect", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -9060,6 +9604,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "disk-disconnect", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "disk-disconnect", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "disk-disconnect", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -9109,6 +9663,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "disk-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "disk-info", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "disk-info", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -9154,6 +9718,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "interface-add-disconnected", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "interface-add-disconnected", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "interface-add-disconnected", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -9180,6 +9754,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "interface-add-for-internet", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "interface-add-for-internet", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "interface-add-for-internet", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -9230,6 +9814,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "interface-add-for-router", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "interface-add-for-router", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "interface-add-for-router", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -9289,6 +9883,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "interface-add-for-switch", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "interface-add-for-switch", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "interface-add-for-switch", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -9344,6 +9948,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "interface-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "interface-info", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "interface-info", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -9389,6 +10003,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "iso-eject", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "iso-eject", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "iso-eject", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -9430,6 +10054,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "iso-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "iso-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "iso-info", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -9504,6 +10138,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "iso-insert", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "iso-insert", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "iso-insert", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -9574,6 +10218,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "list", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "list", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "list", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -9630,6 +10284,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "maintenance-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "maintenance-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "maintenance-info", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -9695,6 +10359,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "monitor-cpu", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "monitor-cpu", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "monitor-cpu", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -9779,6 +10453,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "monitor-disk", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "monitor-disk", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "monitor-disk", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -9855,6 +10539,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "monitor-nic", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "monitor-nic", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "monitor-nic", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -9944,6 +10638,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "plan-change", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "plan-change", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "plan-change", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -10004,6 +10708,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "read", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "read", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "read", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -10040,6 +10754,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "remote-desktop", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -10099,6 +10823,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "remote-desktop-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop-info", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "remote-desktop-info", "port", &schema.Category{
 		Key:         "auth",
 		DisplayName: "Auth options",
@@ -10154,6 +10888,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "reset", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "reset", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "reset", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -10180,6 +10924,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "scp", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "scp", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "scp", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -10234,6 +10988,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "shutdown", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "shutdown", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "shutdown", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -10264,6 +11028,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "shutdown-force", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "shutdown-force", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "shutdown-force", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -10290,6 +11064,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "ssh", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "ssh", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "ssh", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -10340,6 +11124,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "ssh-exec", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "ssh-exec", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "ssh-exec", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -10429,6 +11223,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "update", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "update", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -10470,6 +11274,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "vnc", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "vnc", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "vnc", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -10520,6 +11334,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "vnc-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "vnc-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "vnc-info", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -10609,6 +11433,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "vnc-send", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "vnc-send", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "vnc-send", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -10689,6 +11523,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "vnc-snapshot", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -10734,6 +11578,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "wait-for-boot", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "wait-for-boot", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("server", "wait-for-boot", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
@@ -10755,6 +11609,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "wait-for-down", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "wait-for-down", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "wait-for-down", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

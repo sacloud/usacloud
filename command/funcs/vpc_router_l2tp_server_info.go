@@ -22,13 +22,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func VPCRouterL2tpServerInfo(ctx command.Context, params *params.L2tpServerInfoVPCRouterParam) error {
+func VPCRouterL2TPServerInfo(ctx command.Context, params *params.L2TPServerInfoVPCRouterParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetVPCRouterAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("VPCRouterL2tpServerInfo is failed: %s", e)
+		return fmt.Errorf("VPCRouterL2TPServerInfo is failed: %s", e)
 	}
 
 	type l2tpConf struct {

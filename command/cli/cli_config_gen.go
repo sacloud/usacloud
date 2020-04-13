@@ -29,13 +29,13 @@ import (
 )
 
 func init() {
-	currentParam := params.NewCurrentConfigParam()
-	deleteParam := params.NewDeleteConfigParam()
-	editParam := params.NewEditConfigParam()
-	listParam := params.NewListConfigParam()
-	migrateParam := params.NewMigrateConfigParam()
-	showParam := params.NewShowConfigParam()
-	useParam := params.NewUseConfigParam()
+	configCurrentParam := params.NewCurrentConfigParam()
+	configDeleteParam := params.NewDeleteConfigParam()
+	configEditParam := params.NewEditConfigParam()
+	configListParam := params.NewListConfigParam()
+	configMigrateParam := params.NewMigrateConfigParam()
+	configShowParam := params.NewShowConfigParam()
+	configUseParam := params.NewUseConfigParam()
 
 	cliCommand := &cli.Command{
 		Name:    "config",
@@ -70,8 +70,16 @@ func init() {
 				Usage: "Set input parameter from string(JSON)",
 			},
 			&cli.StringFlag{
+				Name:  "parameters",
+				Usage: "Set input parameters from JSON string",
+			},
+			&cli.StringFlag{
 				Name:  "param-template-file",
 				Usage: "Set input parameter from file",
+			},
+			&cli.StringFlag{
+				Name:  "parameter-file",
+				Usage: "Set input parameters from file",
 			},
 			&cli.BoolFlag{
 				Name:  "generate-skeleton",
@@ -88,8 +96,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -98,9 +114,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					currentParam.ParamTemplate = c.String("param-template")
-					currentParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(currentParam)
+					configCurrentParam.ParamTemplate = c.String("param-template")
+					configCurrentParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(configCurrentParam)
 					if err != nil {
 						return err
 					}
@@ -110,21 +126,27 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(currentParam, p, mergo.WithOverride)
+						mergo.Merge(configCurrentParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						currentParam.ParamTemplate = c.String("param-template")
+						configCurrentParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						configCurrentParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						currentParam.ParamTemplateFile = c.String("param-template-file")
+						configCurrentParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						configCurrentParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						currentParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						configCurrentParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
-					var outputTypeHolder interface{} = currentParam
+					var outputTypeHolder interface{} = configCurrentParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -135,10 +157,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if currentParam.GenerateSkeleton {
-						currentParam.GenerateSkeleton = false
-						currentParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(currentParam, "", "\t")
+					if configCurrentParam.GenerateSkeleton {
+						configCurrentParam.GenerateSkeleton = false
+						configCurrentParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(configCurrentParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -147,15 +169,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := currentParam.Validate(); len(errors) > 0 {
+					if errors := configCurrentParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), currentParam)
+					ctx := command.NewContext(c, c.Args().Slice(), configCurrentParam)
 
 					// Run command with params
-					return funcs.ConfigCurrent(ctx, currentParam)
+					return funcs.ConfigCurrent(ctx, configCurrentParam)
 
 				},
 			},
@@ -174,8 +196,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -184,9 +214,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					deleteParam.ParamTemplate = c.String("param-template")
-					deleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(deleteParam)
+					configDeleteParam.ParamTemplate = c.String("param-template")
+					configDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(configDeleteParam)
 					if err != nil {
 						return err
 					}
@@ -196,24 +226,30 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(deleteParam, p, mergo.WithOverride)
+						mergo.Merge(configDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("assumeyes") {
-						deleteParam.Assumeyes = c.Bool("assumeyes")
+						configDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						deleteParam.ParamTemplate = c.String("param-template")
+						configDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						configDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						deleteParam.ParamTemplateFile = c.String("param-template-file")
+						configDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						configDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						configDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
-					var outputTypeHolder interface{} = deleteParam
+					var outputTypeHolder interface{} = configDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -224,10 +260,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if deleteParam.GenerateSkeleton {
-						deleteParam.GenerateSkeleton = false
-						deleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(deleteParam, "", "\t")
+					if configDeleteParam.GenerateSkeleton {
+						configDeleteParam.GenerateSkeleton = false
+						configDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(configDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -236,15 +272,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := configDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), configDeleteParam)
 
 					// confirm
-					if !deleteParam.Assumeyes {
+					if !configDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -254,7 +290,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.ConfigDelete(ctx, deleteParam)
+					return funcs.ConfigDelete(ctx, configDeleteParam)
 
 				},
 			},
@@ -283,8 +319,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -293,9 +337,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					editParam.ParamTemplate = c.String("param-template")
-					editParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(editParam)
+					configEditParam.ParamTemplate = c.String("param-template")
+					configEditParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(configEditParam)
 					if err != nil {
 						return err
 					}
@@ -305,33 +349,39 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(editParam, p, mergo.WithOverride)
+						mergo.Merge(configEditParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("token") {
-						editParam.Token = c.String("token")
+						configEditParam.Token = c.String("token")
 					}
 					if c.IsSet("secret") {
-						editParam.Secret = c.String("secret")
+						configEditParam.Secret = c.String("secret")
 					}
 					if c.IsSet("zone") {
-						editParam.Zone = c.String("zone")
+						configEditParam.Zone = c.String("zone")
 					}
 					if c.IsSet("default-output-type") {
-						editParam.DefaultOutputType = c.String("default-output-type")
+						configEditParam.DefaultOutputType = c.String("default-output-type")
 					}
 					if c.IsSet("param-template") {
-						editParam.ParamTemplate = c.String("param-template")
+						configEditParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						configEditParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						editParam.ParamTemplateFile = c.String("param-template-file")
+						configEditParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						configEditParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						editParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						configEditParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
-					var outputTypeHolder interface{} = editParam
+					var outputTypeHolder interface{} = configEditParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -342,10 +392,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if editParam.GenerateSkeleton {
-						editParam.GenerateSkeleton = false
-						editParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(editParam, "", "\t")
+					if configEditParam.GenerateSkeleton {
+						configEditParam.GenerateSkeleton = false
+						configEditParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(configEditParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -354,15 +404,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := editParam.Validate(); len(errors) > 0 {
+					if errors := configEditParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), editParam)
+					ctx := command.NewContext(c, c.Args().Slice(), configEditParam)
 
 					// Run command with params
-					return funcs.ConfigEdit(ctx, editParam)
+					return funcs.ConfigEdit(ctx, configEditParam)
 
 				},
 			},
@@ -376,8 +426,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -386,9 +444,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					listParam.ParamTemplate = c.String("param-template")
-					listParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(listParam)
+					configListParam.ParamTemplate = c.String("param-template")
+					configListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(configListParam)
 					if err != nil {
 						return err
 					}
@@ -398,21 +456,27 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(listParam, p, mergo.WithOverride)
+						mergo.Merge(configListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						listParam.ParamTemplate = c.String("param-template")
+						configListParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						configListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						listParam.ParamTemplateFile = c.String("param-template-file")
+						configListParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						configListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						configListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
-					var outputTypeHolder interface{} = listParam
+					var outputTypeHolder interface{} = configListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -423,10 +487,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if listParam.GenerateSkeleton {
-						listParam.GenerateSkeleton = false
-						listParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(listParam, "", "\t")
+					if configListParam.GenerateSkeleton {
+						configListParam.GenerateSkeleton = false
+						configListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(configListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -435,15 +499,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := configListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), listParam)
+					ctx := command.NewContext(c, c.Args().Slice(), configListParam)
 
 					// Run command with params
-					return funcs.ConfigList(ctx, listParam)
+					return funcs.ConfigList(ctx, configListParam)
 
 				},
 			},
@@ -456,8 +520,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -466,9 +538,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					migrateParam.ParamTemplate = c.String("param-template")
-					migrateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(migrateParam)
+					configMigrateParam.ParamTemplate = c.String("param-template")
+					configMigrateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(configMigrateParam)
 					if err != nil {
 						return err
 					}
@@ -478,21 +550,27 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(migrateParam, p, mergo.WithOverride)
+						mergo.Merge(configMigrateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						migrateParam.ParamTemplate = c.String("param-template")
+						configMigrateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						configMigrateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						migrateParam.ParamTemplateFile = c.String("param-template-file")
+						configMigrateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						configMigrateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						migrateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						configMigrateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
-					var outputTypeHolder interface{} = migrateParam
+					var outputTypeHolder interface{} = configMigrateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -503,10 +581,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if migrateParam.GenerateSkeleton {
-						migrateParam.GenerateSkeleton = false
-						migrateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(migrateParam, "", "\t")
+					if configMigrateParam.GenerateSkeleton {
+						configMigrateParam.GenerateSkeleton = false
+						configMigrateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(configMigrateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -515,15 +593,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := migrateParam.Validate(); len(errors) > 0 {
+					if errors := configMigrateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), migrateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), configMigrateParam)
 
 					// Run command with params
-					return funcs.ConfigMigrate(ctx, migrateParam)
+					return funcs.ConfigMigrate(ctx, configMigrateParam)
 
 				},
 			},
@@ -536,8 +614,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -546,9 +632,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					showParam.ParamTemplate = c.String("param-template")
-					showParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(showParam)
+					configShowParam.ParamTemplate = c.String("param-template")
+					configShowParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(configShowParam)
 					if err != nil {
 						return err
 					}
@@ -558,21 +644,27 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(showParam, p, mergo.WithOverride)
+						mergo.Merge(configShowParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						showParam.ParamTemplate = c.String("param-template")
+						configShowParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						configShowParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						showParam.ParamTemplateFile = c.String("param-template-file")
+						configShowParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						configShowParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						showParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						configShowParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
-					var outputTypeHolder interface{} = showParam
+					var outputTypeHolder interface{} = configShowParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -583,10 +675,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if showParam.GenerateSkeleton {
-						showParam.GenerateSkeleton = false
-						showParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(showParam, "", "\t")
+					if configShowParam.GenerateSkeleton {
+						configShowParam.GenerateSkeleton = false
+						configShowParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(configShowParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -595,15 +687,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := showParam.Validate(); len(errors) > 0 {
+					if errors := configShowParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), showParam)
+					ctx := command.NewContext(c, c.Args().Slice(), configShowParam)
 
 					// Run command with params
-					return funcs.ConfigShow(ctx, showParam)
+					return funcs.ConfigShow(ctx, configShowParam)
 
 				},
 			},
@@ -616,8 +708,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -626,9 +726,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					useParam.ParamTemplate = c.String("param-template")
-					useParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(useParam)
+					configUseParam.ParamTemplate = c.String("param-template")
+					configUseParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(configUseParam)
 					if err != nil {
 						return err
 					}
@@ -638,21 +738,27 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(useParam, p, mergo.WithOverride)
+						mergo.Merge(configUseParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						useParam.ParamTemplate = c.String("param-template")
+						configUseParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						configUseParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						useParam.ParamTemplateFile = c.String("param-template-file")
+						configUseParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						configUseParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						useParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						configUseParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
-					var outputTypeHolder interface{} = useParam
+					var outputTypeHolder interface{} = configUseParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -663,10 +769,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if useParam.GenerateSkeleton {
-						useParam.GenerateSkeleton = false
-						useParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(useParam, "", "\t")
+					if configUseParam.GenerateSkeleton {
+						configUseParam.GenerateSkeleton = false
+						configUseParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(configUseParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -675,15 +781,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := useParam.Validate(); len(errors) > 0 {
+					if errors := configUseParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), useParam)
+					ctx := command.NewContext(c, c.Args().Slice(), configUseParam)
 
 					// Run command with params
-					return funcs.ConfigUse(ctx, useParam)
+					return funcs.ConfigUse(ctx, configUseParam)
 
 				},
 			},
@@ -752,6 +858,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("config", "current", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("config", "current", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("config", "delete", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -772,6 +888,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("config", "delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("config", "delete", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("config", "edit", "default-output-type", &schema.Category{
 		Key:         "config",
 		DisplayName: "Config options",
@@ -788,6 +914,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("config", "edit", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("config", "edit", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("config", "edit", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -822,6 +958,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("config", "list", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("config", "list", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("config", "migrate", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -833,6 +979,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("config", "migrate", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("config", "migrate", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("config", "migrate", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -852,6 +1008,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("config", "show", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("config", "show", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("config", "use", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -863,6 +1029,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("config", "use", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("config", "use", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("config", "use", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

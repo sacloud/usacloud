@@ -29,7 +29,7 @@ import (
 )
 
 func init() {
-	showParam := params.NewShowAuthStatusParam()
+	authStatusShowParam := params.NewShowAuthStatusParam()
 
 	cliCommand := &cli.Command{
 		Name:  "auth-status",
@@ -47,8 +47,16 @@ func init() {
 				Usage: "Set input parameter from string(JSON)",
 			},
 			&cli.StringFlag{
+				Name:  "parameters",
+				Usage: "Set input parameters from JSON string",
+			},
+			&cli.StringFlag{
 				Name:  "param-template-file",
 				Usage: "Set input parameter from file",
+			},
+			&cli.StringFlag{
+				Name:  "parameter-file",
+				Usage: "Set input parameters from file",
 			},
 			&cli.BoolFlag{
 				Name:  "generate-skeleton",
@@ -97,8 +105,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -146,9 +162,9 @@ func init() {
 						return err
 					}
 
-					showParam.ParamTemplate = c.String("param-template")
-					showParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(showParam)
+					authStatusShowParam.ParamTemplate = c.String("param-template")
+					authStatusShowParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(authStatusShowParam)
 					if err != nil {
 						return err
 					}
@@ -158,39 +174,45 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(showParam, p, mergo.WithOverride)
+						mergo.Merge(authStatusShowParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						showParam.ParamTemplate = c.String("param-template")
+						authStatusShowParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						authStatusShowParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						showParam.ParamTemplateFile = c.String("param-template-file")
+						authStatusShowParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						authStatusShowParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						showParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						authStatusShowParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						showParam.OutputType = c.String("output-type")
+						authStatusShowParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						showParam.Column = c.StringSlice("column")
+						authStatusShowParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						showParam.Quiet = c.Bool("quiet")
+						authStatusShowParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						showParam.Format = c.String("format")
+						authStatusShowParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						showParam.FormatFile = c.String("format-file")
+						authStatusShowParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						showParam.Query = c.String("query")
+						authStatusShowParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						showParam.QueryFile = c.String("query-file")
+						authStatusShowParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -198,7 +220,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = showParam
+					var outputTypeHolder interface{} = authStatusShowParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -209,10 +231,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if showParam.GenerateSkeleton {
-						showParam.GenerateSkeleton = false
-						showParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(showParam, "", "\t")
+					if authStatusShowParam.GenerateSkeleton {
+						authStatusShowParam.GenerateSkeleton = false
+						authStatusShowParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(authStatusShowParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -221,15 +243,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := showParam.Validate(); len(errors) > 0 {
+					if errors := authStatusShowParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), showParam)
+					ctx := command.NewContext(c, c.Args().Slice(), authStatusShowParam)
 
 					// Run command with params
-					return funcs.AuthStatusShow(ctx, showParam)
+					return funcs.AuthStatusShow(ctx, authStatusShowParam)
 
 				},
 			},
@@ -284,6 +306,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("auth-status", "show", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("auth-status", "show", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("auth-status", "show", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

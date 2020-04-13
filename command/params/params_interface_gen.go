@@ -31,7 +31,9 @@ type ListInterfaceParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -67,8 +69,14 @@ func (p *ListInterfaceParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -215,12 +223,26 @@ func (p *ListInterfaceParam) SetParamTemplate(v string) {
 func (p *ListInterfaceParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListInterfaceParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListInterfaceParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListInterfaceParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListInterfaceParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListInterfaceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListInterfaceParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListInterfaceParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -284,7 +306,9 @@ type PacketFilterConnectInterfaceParam struct {
 	PacketFilterId    sacloud.ID `json:"packet-filter-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -305,8 +329,14 @@ func (p *PacketFilterConnectInterfaceParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -390,12 +420,26 @@ func (p *PacketFilterConnectInterfaceParam) SetParamTemplate(v string) {
 func (p *PacketFilterConnectInterfaceParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *PacketFilterConnectInterfaceParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *PacketFilterConnectInterfaceParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *PacketFilterConnectInterfaceParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *PacketFilterConnectInterfaceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *PacketFilterConnectInterfaceParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -417,7 +461,9 @@ type CreateInterfaceParam struct {
 	ServerId          sacloud.ID `json:"server-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -444,8 +490,14 @@ func (p *CreateInterfaceParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -560,12 +612,26 @@ func (p *CreateInterfaceParam) SetParamTemplate(v string) {
 func (p *CreateInterfaceParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateInterfaceParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateInterfaceParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateInterfaceParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateInterfaceParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateInterfaceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateInterfaceParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateInterfaceParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -629,7 +695,9 @@ type PacketFilterDisconnectInterfaceParam struct {
 	PacketFilterId    sacloud.ID `json:"packet-filter-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	Id                sacloud.ID `json:"id"`
 }
@@ -650,8 +718,14 @@ func (p *PacketFilterDisconnectInterfaceParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -735,12 +809,26 @@ func (p *PacketFilterDisconnectInterfaceParam) SetParamTemplate(v string) {
 func (p *PacketFilterDisconnectInterfaceParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *PacketFilterDisconnectInterfaceParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *PacketFilterDisconnectInterfaceParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *PacketFilterDisconnectInterfaceParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *PacketFilterDisconnectInterfaceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *PacketFilterDisconnectInterfaceParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -760,7 +848,9 @@ func (p *PacketFilterDisconnectInterfaceParam) GetId() sacloud.ID {
 // ReadInterfaceParam is input parameters for the sacloud API
 type ReadInterfaceParam struct {
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -782,8 +872,14 @@ func (p *ReadInterfaceParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -880,12 +976,26 @@ func (p *ReadInterfaceParam) SetParamTemplate(v string) {
 func (p *ReadInterfaceParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadInterfaceParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadInterfaceParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadInterfaceParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadInterfaceParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadInterfaceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadInterfaceParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadInterfaceParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -956,7 +1066,9 @@ type UpdateInterfaceParam struct {
 	UserIpaddress     string     `json:"user-ipaddress"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -984,8 +1096,14 @@ func (p *UpdateInterfaceParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1103,12 +1221,26 @@ func (p *UpdateInterfaceParam) SetParamTemplate(v string) {
 func (p *UpdateInterfaceParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateInterfaceParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateInterfaceParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateInterfaceParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateInterfaceParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateInterfaceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateInterfaceParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateInterfaceParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1178,7 +1310,9 @@ func (p *UpdateInterfaceParam) GetId() sacloud.ID {
 type DeleteInterfaceParam struct {
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1203,8 +1337,14 @@ func (p *DeleteInterfaceParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1308,12 +1448,26 @@ func (p *DeleteInterfaceParam) SetParamTemplate(v string) {
 func (p *DeleteInterfaceParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteInterfaceParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteInterfaceParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteInterfaceParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteInterfaceParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteInterfaceParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteInterfaceParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteInterfaceParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

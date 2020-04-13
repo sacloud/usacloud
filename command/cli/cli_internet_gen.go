@@ -32,20 +32,20 @@ import (
 )
 
 func init() {
-	listParam := params.NewListInternetParam()
-	createParam := params.NewCreateInternetParam()
-	readParam := params.NewReadInternetParam()
-	updateParam := params.NewUpdateInternetParam()
-	deleteParam := params.NewDeleteInternetParam()
-	updateBandwidthParam := params.NewUpdateBandwidthInternetParam()
-	subnetInfoParam := params.NewSubnetInfoInternetParam()
-	subnetAddParam := params.NewSubnetAddInternetParam()
-	subnetDeleteParam := params.NewSubnetDeleteInternetParam()
-	subnetUpdateParam := params.NewSubnetUpdateInternetParam()
-	ipv6InfoParam := params.NewIpv6InfoInternetParam()
-	ipv6EnableParam := params.NewIpv6EnableInternetParam()
-	ipv6DisableParam := params.NewIpv6DisableInternetParam()
-	monitorParam := params.NewMonitorInternetParam()
+	internetListParam := params.NewListInternetParam()
+	internetCreateParam := params.NewCreateInternetParam()
+	internetReadParam := params.NewReadInternetParam()
+	internetUpdateParam := params.NewUpdateInternetParam()
+	internetDeleteParam := params.NewDeleteInternetParam()
+	internetUpdateBandwidthParam := params.NewUpdateBandwidthInternetParam()
+	internetSubnetInfoParam := params.NewSubnetInfoInternetParam()
+	internetSubnetAddParam := params.NewSubnetAddInternetParam()
+	internetSubnetDeleteParam := params.NewSubnetDeleteInternetParam()
+	internetSubnetUpdateParam := params.NewSubnetUpdateInternetParam()
+	internetIPv6InfoParam := params.NewIPv6InfoInternetParam()
+	internetIPv6EnableParam := params.NewIPv6EnableInternetParam()
+	internetIPv6DisableParam := params.NewIPv6DisableInternetParam()
+	internetMonitorParam := params.NewMonitorInternetParam()
 
 	cliCommand := &cli.Command{
 		Name:  "internet",
@@ -88,8 +88,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -137,9 +145,9 @@ func init() {
 						return err
 					}
 
-					listParam.ParamTemplate = c.String("param-template")
-					listParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(listParam)
+					internetListParam.ParamTemplate = c.String("param-template")
+					internetListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetListParam)
 					if err != nil {
 						return err
 					}
@@ -149,57 +157,63 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(listParam, p, mergo.WithOverride)
+						mergo.Merge(internetListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						listParam.Name = c.StringSlice("name")
+						internetListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						internetListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
-						listParam.Tags = c.StringSlice("tags")
+						internetListParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("from") {
-						listParam.From = c.Int("from")
+						internetListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						listParam.Max = c.Int("max")
+						internetListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						listParam.Sort = c.StringSlice("sort")
+						internetListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						listParam.ParamTemplate = c.String("param-template")
+						internetListParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						internetListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						listParam.ParamTemplateFile = c.String("param-template-file")
+						internetListParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						internetListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						listParam.OutputType = c.String("output-type")
+						internetListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						listParam.Column = c.StringSlice("column")
+						internetListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						listParam.Quiet = c.Bool("quiet")
+						internetListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						listParam.Format = c.String("format")
+						internetListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						listParam.FormatFile = c.String("format-file")
+						internetListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						listParam.Query = c.String("query")
+						internetListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						listParam.QueryFile = c.String("query-file")
+						internetListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -207,7 +221,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = listParam
+					var outputTypeHolder interface{} = internetListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -218,10 +232,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if listParam.GenerateSkeleton {
-						listParam.GenerateSkeleton = false
-						listParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(listParam, "", "\t")
+					if internetListParam.GenerateSkeleton {
+						internetListParam.GenerateSkeleton = false
+						internetListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -230,15 +244,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := internetListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), listParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetListParam)
 
 					// Run command with params
-					return funcs.InternetList(ctx, listParam)
+					return funcs.InternetList(ctx, internetListParam)
 
 				},
 			},
@@ -284,8 +298,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -333,9 +355,9 @@ func init() {
 						return err
 					}
 
-					createParam.ParamTemplate = c.String("param-template")
-					createParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(createParam)
+					internetCreateParam.ParamTemplate = c.String("param-template")
+					internetCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetCreateParam)
 					if err != nil {
 						return err
 					}
@@ -345,60 +367,66 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(createParam, p, mergo.WithOverride)
+						mergo.Merge(internetCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("nw-masklen") {
-						createParam.NwMasklen = c.Int("nw-masklen")
+						internetCreateParam.NwMasklen = c.Int("nw-masklen")
 					}
 					if c.IsSet("band-width") {
-						createParam.BandWidth = c.Int("band-width")
+						internetCreateParam.BandWidth = c.Int("band-width")
 					}
 					if c.IsSet("name") {
-						createParam.Name = c.String("name")
+						internetCreateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						createParam.Description = c.String("description")
+						internetCreateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						createParam.Tags = c.StringSlice("tags")
+						internetCreateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						internetCreateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						createParam.Assumeyes = c.Bool("assumeyes")
+						internetCreateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						createParam.ParamTemplate = c.String("param-template")
+						internetCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						internetCreateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						createParam.ParamTemplateFile = c.String("param-template-file")
+						internetCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						internetCreateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						createParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						createParam.OutputType = c.String("output-type")
+						internetCreateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						createParam.Column = c.StringSlice("column")
+						internetCreateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						createParam.Quiet = c.Bool("quiet")
+						internetCreateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						createParam.Format = c.String("format")
+						internetCreateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						createParam.FormatFile = c.String("format-file")
+						internetCreateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						createParam.Query = c.String("query")
+						internetCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						createParam.QueryFile = c.String("query-file")
+						internetCreateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -406,7 +434,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = createParam
+					var outputTypeHolder interface{} = internetCreateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -417,10 +445,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if createParam.GenerateSkeleton {
-						createParam.GenerateSkeleton = false
-						createParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(createParam, "", "\t")
+					if internetCreateParam.GenerateSkeleton {
+						internetCreateParam.GenerateSkeleton = false
+						internetCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetCreateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -429,15 +457,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
+					if errors := internetCreateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), createParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetCreateParam)
 
 					// confirm
-					if !createParam.Assumeyes {
+					if !internetCreateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -447,7 +475,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.InternetCreate(ctx, createParam)
+					return funcs.InternetCreate(ctx, internetCreateParam)
 
 				},
 			},
@@ -465,8 +493,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -519,9 +555,9 @@ func init() {
 						return err
 					}
 
-					readParam.ParamTemplate = c.String("param-template")
-					readParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(readParam)
+					internetReadParam.ParamTemplate = c.String("param-template")
+					internetReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetReadParam)
 					if err != nil {
 						return err
 					}
@@ -531,45 +567,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(readParam, p, mergo.WithOverride)
+						mergo.Merge(internetReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						readParam.Selector = c.StringSlice("selector")
+						internetReadParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						readParam.ParamTemplate = c.String("param-template")
+						internetReadParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						internetReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						readParam.ParamTemplateFile = c.String("param-template-file")
+						internetReadParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						internetReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						readParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						readParam.OutputType = c.String("output-type")
+						internetReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						readParam.Column = c.StringSlice("column")
+						internetReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						readParam.Quiet = c.Bool("quiet")
+						internetReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						readParam.Format = c.String("format")
+						internetReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						readParam.FormatFile = c.String("format-file")
+						internetReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						readParam.Query = c.String("query")
+						internetReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						readParam.QueryFile = c.String("query-file")
+						internetReadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = sacloud.ID(c.Int64("id"))
+						internetReadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -577,7 +619,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = readParam
+					var outputTypeHolder interface{} = internetReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -588,10 +630,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if readParam.GenerateSkeleton {
-						readParam.GenerateSkeleton = false
-						readParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(readParam, "", "\t")
+					if internetReadParam.GenerateSkeleton {
+						internetReadParam.GenerateSkeleton = false
+						internetReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -600,19 +642,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
+					if errors := internetReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), readParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetReadParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(readParam.Selector) == 0 {
+						if len(internetReadParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -621,12 +663,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, readParam.Selector) {
+							if hasTags(&v, internetReadParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetReadParam.Selector)
 						}
 
 					} else {
@@ -648,7 +690,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+										if len(internetReadParam.Selector) == 0 || hasTags(&v, internetReadParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -673,11 +715,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						readParam.SetId(id)
-						p := *readParam // copy struct value
-						readParam := &p
+						internetReadParam.SetId(id)
+						p := *internetReadParam // copy struct value
+						internetReadParam := &p
 						go func() {
-							err := funcs.InternetRead(ctx, readParam)
+							err := funcs.InternetRead(ctx, internetReadParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -729,8 +771,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -783,9 +833,9 @@ func init() {
 						return err
 					}
 
-					updateParam.ParamTemplate = c.String("param-template")
-					updateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(updateParam)
+					internetUpdateParam.ParamTemplate = c.String("param-template")
+					internetUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetUpdateParam)
 					if err != nil {
 						return err
 					}
@@ -795,63 +845,69 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(updateParam, p, mergo.WithOverride)
+						mergo.Merge(internetUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("band-width") {
-						updateParam.BandWidth = c.Int("band-width")
+						internetUpdateParam.BandWidth = c.Int("band-width")
 					}
 					if c.IsSet("selector") {
-						updateParam.Selector = c.StringSlice("selector")
+						internetUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
-						updateParam.Name = c.String("name")
+						internetUpdateParam.Name = c.String("name")
 					}
 					if c.IsSet("description") {
-						updateParam.Description = c.String("description")
+						internetUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("tags") {
-						updateParam.Tags = c.StringSlice("tags")
+						internetUpdateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
+						internetUpdateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
-						updateParam.Assumeyes = c.Bool("assumeyes")
+						internetUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						updateParam.ParamTemplate = c.String("param-template")
+						internetUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						internetUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						updateParam.ParamTemplateFile = c.String("param-template-file")
+						internetUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						internetUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						updateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						updateParam.OutputType = c.String("output-type")
+						internetUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						updateParam.Column = c.StringSlice("column")
+						internetUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						updateParam.Quiet = c.Bool("quiet")
+						internetUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						updateParam.Format = c.String("format")
+						internetUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						updateParam.FormatFile = c.String("format-file")
+						internetUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						updateParam.Query = c.String("query")
+						internetUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						updateParam.QueryFile = c.String("query-file")
+						internetUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = sacloud.ID(c.Int64("id"))
+						internetUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -859,7 +915,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = updateParam
+					var outputTypeHolder interface{} = internetUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -870,10 +926,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if updateParam.GenerateSkeleton {
-						updateParam.GenerateSkeleton = false
-						updateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(updateParam, "", "\t")
+					if internetUpdateParam.GenerateSkeleton {
+						internetUpdateParam.GenerateSkeleton = false
+						internetUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -882,19 +938,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
+					if errors := internetUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetUpdateParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(updateParam.Selector) == 0 {
+						if len(internetUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -903,12 +959,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, updateParam.Selector) {
+							if hasTags(&v, internetUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetUpdateParam.Selector)
 						}
 
 					} else {
@@ -930,7 +986,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+										if len(internetUpdateParam.Selector) == 0 || hasTags(&v, internetUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -947,7 +1003,7 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes {
+					if !internetUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -961,11 +1017,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						updateParam.SetId(id)
-						p := *updateParam // copy struct value
-						updateParam := &p
+						internetUpdateParam.SetId(id)
+						p := *internetUpdateParam // copy struct value
+						internetUpdateParam := &p
 						go func() {
-							err := funcs.InternetUpdate(ctx, updateParam)
+							err := funcs.InternetUpdate(ctx, internetUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -997,8 +1053,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1051,9 +1115,9 @@ func init() {
 						return err
 					}
 
-					deleteParam.ParamTemplate = c.String("param-template")
-					deleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(deleteParam)
+					internetDeleteParam.ParamTemplate = c.String("param-template")
+					internetDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetDeleteParam)
 					if err != nil {
 						return err
 					}
@@ -1063,48 +1127,54 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(deleteParam, p, mergo.WithOverride)
+						mergo.Merge(internetDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						deleteParam.Selector = c.StringSlice("selector")
+						internetDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						deleteParam.Assumeyes = c.Bool("assumeyes")
+						internetDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						deleteParam.ParamTemplate = c.String("param-template")
+						internetDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						internetDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						deleteParam.ParamTemplateFile = c.String("param-template-file")
+						internetDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						internetDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						deleteParam.OutputType = c.String("output-type")
+						internetDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						deleteParam.Column = c.StringSlice("column")
+						internetDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						deleteParam.Quiet = c.Bool("quiet")
+						internetDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						deleteParam.Format = c.String("format")
+						internetDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						deleteParam.FormatFile = c.String("format-file")
+						internetDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						deleteParam.Query = c.String("query")
+						internetDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						deleteParam.QueryFile = c.String("query-file")
+						internetDeleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = sacloud.ID(c.Int64("id"))
+						internetDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1112,7 +1182,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = deleteParam
+					var outputTypeHolder interface{} = internetDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1123,10 +1193,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if deleteParam.GenerateSkeleton {
-						deleteParam.GenerateSkeleton = false
-						deleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(deleteParam, "", "\t")
+					if internetDeleteParam.GenerateSkeleton {
+						internetDeleteParam.GenerateSkeleton = false
+						internetDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1135,19 +1205,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := internetDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetDeleteParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(deleteParam.Selector) == 0 {
+						if len(internetDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1156,12 +1226,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, deleteParam.Selector) {
+							if hasTags(&v, internetDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetDeleteParam.Selector)
 						}
 
 					} else {
@@ -1183,7 +1253,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+										if len(internetDeleteParam.Selector) == 0 || hasTags(&v, internetDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1200,7 +1270,7 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes {
+					if !internetDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1214,11 +1284,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						deleteParam.SetId(id)
-						p := *deleteParam // copy struct value
-						deleteParam := &p
+						internetDeleteParam.SetId(id)
+						p := *internetDeleteParam // copy struct value
+						internetDeleteParam := &p
 						go func() {
-							err := funcs.InternetDelete(ctx, deleteParam)
+							err := funcs.InternetDelete(ctx, internetDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1254,8 +1324,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1308,9 +1386,9 @@ func init() {
 						return err
 					}
 
-					updateBandwidthParam.ParamTemplate = c.String("param-template")
-					updateBandwidthParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(updateBandwidthParam)
+					internetUpdateBandwidthParam.ParamTemplate = c.String("param-template")
+					internetUpdateBandwidthParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetUpdateBandwidthParam)
 					if err != nil {
 						return err
 					}
@@ -1320,51 +1398,57 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(updateBandwidthParam, p, mergo.WithOverride)
+						mergo.Merge(internetUpdateBandwidthParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("band-width") {
-						updateBandwidthParam.BandWidth = c.Int("band-width")
+						internetUpdateBandwidthParam.BandWidth = c.Int("band-width")
 					}
 					if c.IsSet("selector") {
-						updateBandwidthParam.Selector = c.StringSlice("selector")
+						internetUpdateBandwidthParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						updateBandwidthParam.Assumeyes = c.Bool("assumeyes")
+						internetUpdateBandwidthParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						updateBandwidthParam.ParamTemplate = c.String("param-template")
+						internetUpdateBandwidthParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						internetUpdateBandwidthParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						updateBandwidthParam.ParamTemplateFile = c.String("param-template-file")
+						internetUpdateBandwidthParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						internetUpdateBandwidthParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						updateBandwidthParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetUpdateBandwidthParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						updateBandwidthParam.OutputType = c.String("output-type")
+						internetUpdateBandwidthParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						updateBandwidthParam.Column = c.StringSlice("column")
+						internetUpdateBandwidthParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						updateBandwidthParam.Quiet = c.Bool("quiet")
+						internetUpdateBandwidthParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						updateBandwidthParam.Format = c.String("format")
+						internetUpdateBandwidthParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						updateBandwidthParam.FormatFile = c.String("format-file")
+						internetUpdateBandwidthParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						updateBandwidthParam.Query = c.String("query")
+						internetUpdateBandwidthParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						updateBandwidthParam.QueryFile = c.String("query-file")
+						internetUpdateBandwidthParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateBandwidthParam.Id = sacloud.ID(c.Int64("id"))
+						internetUpdateBandwidthParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1372,7 +1456,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = updateBandwidthParam
+					var outputTypeHolder interface{} = internetUpdateBandwidthParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1383,10 +1467,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if updateBandwidthParam.GenerateSkeleton {
-						updateBandwidthParam.GenerateSkeleton = false
-						updateBandwidthParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(updateBandwidthParam, "", "\t")
+					if internetUpdateBandwidthParam.GenerateSkeleton {
+						internetUpdateBandwidthParam.GenerateSkeleton = false
+						internetUpdateBandwidthParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetUpdateBandwidthParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1395,19 +1479,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := updateBandwidthParam.Validate(); len(errors) > 0 {
+					if errors := internetUpdateBandwidthParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), updateBandwidthParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetUpdateBandwidthParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(updateBandwidthParam.Selector) == 0 {
+						if len(internetUpdateBandwidthParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1416,12 +1500,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, updateBandwidthParam.Selector) {
+							if hasTags(&v, internetUpdateBandwidthParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateBandwidthParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetUpdateBandwidthParam.Selector)
 						}
 
 					} else {
@@ -1443,7 +1527,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(updateBandwidthParam.Selector) == 0 || hasTags(&v, updateBandwidthParam.Selector) {
+										if len(internetUpdateBandwidthParam.Selector) == 0 || hasTags(&v, internetUpdateBandwidthParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1460,7 +1544,7 @@ func init() {
 					}
 
 					// confirm
-					if !updateBandwidthParam.Assumeyes {
+					if !internetUpdateBandwidthParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1474,11 +1558,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						updateBandwidthParam.SetId(id)
-						p := *updateBandwidthParam // copy struct value
-						updateBandwidthParam := &p
+						internetUpdateBandwidthParam.SetId(id)
+						p := *internetUpdateBandwidthParam // copy struct value
+						internetUpdateBandwidthParam := &p
 						go func() {
-							err := funcs.InternetUpdateBandwidth(ctx, updateBandwidthParam)
+							err := funcs.InternetUpdateBandwidth(ctx, internetUpdateBandwidthParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1504,8 +1588,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1558,9 +1650,9 @@ func init() {
 						return err
 					}
 
-					subnetInfoParam.ParamTemplate = c.String("param-template")
-					subnetInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(subnetInfoParam)
+					internetSubnetInfoParam.ParamTemplate = c.String("param-template")
+					internetSubnetInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetSubnetInfoParam)
 					if err != nil {
 						return err
 					}
@@ -1570,45 +1662,51 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(subnetInfoParam, p, mergo.WithOverride)
+						mergo.Merge(internetSubnetInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						subnetInfoParam.Selector = c.StringSlice("selector")
+						internetSubnetInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						subnetInfoParam.ParamTemplate = c.String("param-template")
+						internetSubnetInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						internetSubnetInfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						subnetInfoParam.ParamTemplateFile = c.String("param-template-file")
+						internetSubnetInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						internetSubnetInfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						subnetInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetSubnetInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						subnetInfoParam.OutputType = c.String("output-type")
+						internetSubnetInfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						subnetInfoParam.Column = c.StringSlice("column")
+						internetSubnetInfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						subnetInfoParam.Quiet = c.Bool("quiet")
+						internetSubnetInfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						subnetInfoParam.Format = c.String("format")
+						internetSubnetInfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						subnetInfoParam.FormatFile = c.String("format-file")
+						internetSubnetInfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						subnetInfoParam.Query = c.String("query")
+						internetSubnetInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						subnetInfoParam.QueryFile = c.String("query-file")
+						internetSubnetInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						subnetInfoParam.Id = sacloud.ID(c.Int64("id"))
+						internetSubnetInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1616,7 +1714,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = subnetInfoParam
+					var outputTypeHolder interface{} = internetSubnetInfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1627,10 +1725,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if subnetInfoParam.GenerateSkeleton {
-						subnetInfoParam.GenerateSkeleton = false
-						subnetInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(subnetInfoParam, "", "\t")
+					if internetSubnetInfoParam.GenerateSkeleton {
+						internetSubnetInfoParam.GenerateSkeleton = false
+						internetSubnetInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetSubnetInfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1639,19 +1737,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := subnetInfoParam.Validate(); len(errors) > 0 {
+					if errors := internetSubnetInfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), subnetInfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetSubnetInfoParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(subnetInfoParam.Selector) == 0 {
+						if len(internetSubnetInfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1660,12 +1758,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, subnetInfoParam.Selector) {
+							if hasTags(&v, internetSubnetInfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", subnetInfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetSubnetInfoParam.Selector)
 						}
 
 					} else {
@@ -1687,7 +1785,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(subnetInfoParam.Selector) == 0 || hasTags(&v, subnetInfoParam.Selector) {
+										if len(internetSubnetInfoParam.Selector) == 0 || hasTags(&v, internetSubnetInfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1708,11 +1806,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						subnetInfoParam.SetId(id)
-						p := *subnetInfoParam // copy struct value
-						subnetInfoParam := &p
+						internetSubnetInfoParam.SetId(id)
+						p := *internetSubnetInfoParam // copy struct value
+						internetSubnetInfoParam := &p
 						go func() {
-							err := funcs.InternetSubnetInfo(ctx, subnetInfoParam)
+							err := funcs.InternetSubnetInfo(ctx, internetSubnetInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -1753,8 +1851,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -1807,9 +1913,9 @@ func init() {
 						return err
 					}
 
-					subnetAddParam.ParamTemplate = c.String("param-template")
-					subnetAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(subnetAddParam)
+					internetSubnetAddParam.ParamTemplate = c.String("param-template")
+					internetSubnetAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetSubnetAddParam)
 					if err != nil {
 						return err
 					}
@@ -1819,54 +1925,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(subnetAddParam, p, mergo.WithOverride)
+						mergo.Merge(internetSubnetAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("next-hop") {
-						subnetAddParam.NextHop = c.String("next-hop")
+						internetSubnetAddParam.NextHop = c.String("next-hop")
 					}
 					if c.IsSet("nw-masklen") {
-						subnetAddParam.NwMasklen = c.Int("nw-masklen")
+						internetSubnetAddParam.NwMasklen = c.Int("nw-masklen")
 					}
 					if c.IsSet("selector") {
-						subnetAddParam.Selector = c.StringSlice("selector")
+						internetSubnetAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						subnetAddParam.Assumeyes = c.Bool("assumeyes")
+						internetSubnetAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						subnetAddParam.ParamTemplate = c.String("param-template")
+						internetSubnetAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						internetSubnetAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						subnetAddParam.ParamTemplateFile = c.String("param-template-file")
+						internetSubnetAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						internetSubnetAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						subnetAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetSubnetAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						subnetAddParam.OutputType = c.String("output-type")
+						internetSubnetAddParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						subnetAddParam.Column = c.StringSlice("column")
+						internetSubnetAddParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						subnetAddParam.Quiet = c.Bool("quiet")
+						internetSubnetAddParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						subnetAddParam.Format = c.String("format")
+						internetSubnetAddParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						subnetAddParam.FormatFile = c.String("format-file")
+						internetSubnetAddParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						subnetAddParam.Query = c.String("query")
+						internetSubnetAddParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						subnetAddParam.QueryFile = c.String("query-file")
+						internetSubnetAddParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						subnetAddParam.Id = sacloud.ID(c.Int64("id"))
+						internetSubnetAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1874,7 +1986,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = subnetAddParam
+					var outputTypeHolder interface{} = internetSubnetAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -1885,10 +1997,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if subnetAddParam.GenerateSkeleton {
-						subnetAddParam.GenerateSkeleton = false
-						subnetAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(subnetAddParam, "", "\t")
+					if internetSubnetAddParam.GenerateSkeleton {
+						internetSubnetAddParam.GenerateSkeleton = false
+						internetSubnetAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetSubnetAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -1897,19 +2009,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := subnetAddParam.Validate(); len(errors) > 0 {
+					if errors := internetSubnetAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), subnetAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetSubnetAddParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(subnetAddParam.Selector) == 0 {
+						if len(internetSubnetAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -1918,12 +2030,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, subnetAddParam.Selector) {
+							if hasTags(&v, internetSubnetAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", subnetAddParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetSubnetAddParam.Selector)
 						}
 
 					} else {
@@ -1945,7 +2057,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(subnetAddParam.Selector) == 0 || hasTags(&v, subnetAddParam.Selector) {
+										if len(internetSubnetAddParam.Selector) == 0 || hasTags(&v, internetSubnetAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -1962,7 +2074,7 @@ func init() {
 					}
 
 					// confirm
-					if !subnetAddParam.Assumeyes {
+					if !internetSubnetAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -1976,11 +2088,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						subnetAddParam.SetId(id)
-						p := *subnetAddParam // copy struct value
-						subnetAddParam := &p
+						internetSubnetAddParam.SetId(id)
+						p := *internetSubnetAddParam // copy struct value
+						internetSubnetAddParam := &p
 						go func() {
-							err := funcs.InternetSubnetAdd(ctx, subnetAddParam)
+							err := funcs.InternetSubnetAdd(ctx, internetSubnetAddParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2015,8 +2127,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2037,9 +2157,9 @@ func init() {
 						return err
 					}
 
-					subnetDeleteParam.ParamTemplate = c.String("param-template")
-					subnetDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(subnetDeleteParam)
+					internetSubnetDeleteParam.ParamTemplate = c.String("param-template")
+					internetSubnetDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetSubnetDeleteParam)
 					if err != nil {
 						return err
 					}
@@ -2049,30 +2169,36 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(subnetDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(internetSubnetDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("subnet-id") {
-						subnetDeleteParam.SubnetId = sacloud.ID(c.Int64("subnet-id"))
+						internetSubnetDeleteParam.SubnetId = sacloud.ID(c.Int64("subnet-id"))
 					}
 					if c.IsSet("selector") {
-						subnetDeleteParam.Selector = c.StringSlice("selector")
+						internetSubnetDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						subnetDeleteParam.Assumeyes = c.Bool("assumeyes")
+						internetSubnetDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						subnetDeleteParam.ParamTemplate = c.String("param-template")
+						internetSubnetDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						internetSubnetDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						subnetDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						internetSubnetDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						internetSubnetDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						subnetDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetSubnetDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						subnetDeleteParam.Id = sacloud.ID(c.Int64("id"))
+						internetSubnetDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2080,7 +2206,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = subnetDeleteParam
+					var outputTypeHolder interface{} = internetSubnetDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2091,10 +2217,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if subnetDeleteParam.GenerateSkeleton {
-						subnetDeleteParam.GenerateSkeleton = false
-						subnetDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(subnetDeleteParam, "", "\t")
+					if internetSubnetDeleteParam.GenerateSkeleton {
+						internetSubnetDeleteParam.GenerateSkeleton = false
+						internetSubnetDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetSubnetDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2103,19 +2229,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := subnetDeleteParam.Validate(); len(errors) > 0 {
+					if errors := internetSubnetDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), subnetDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetSubnetDeleteParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(subnetDeleteParam.Selector) == 0 {
+						if len(internetSubnetDeleteParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2124,12 +2250,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, subnetDeleteParam.Selector) {
+							if hasTags(&v, internetSubnetDeleteParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", subnetDeleteParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetSubnetDeleteParam.Selector)
 						}
 
 					} else {
@@ -2151,7 +2277,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(subnetDeleteParam.Selector) == 0 || hasTags(&v, subnetDeleteParam.Selector) {
+										if len(internetSubnetDeleteParam.Selector) == 0 || hasTags(&v, internetSubnetDeleteParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2168,7 +2294,7 @@ func init() {
 					}
 
 					// confirm
-					if !subnetDeleteParam.Assumeyes {
+					if !internetSubnetDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2182,11 +2308,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						subnetDeleteParam.SetId(id)
-						p := *subnetDeleteParam // copy struct value
-						subnetDeleteParam := &p
+						internetSubnetDeleteParam.SetId(id)
+						p := *internetSubnetDeleteParam // copy struct value
+						internetSubnetDeleteParam := &p
 						go func() {
-							err := funcs.InternetSubnetDelete(ctx, subnetDeleteParam)
+							err := funcs.InternetSubnetDelete(ctx, internetSubnetDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2225,8 +2351,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2279,9 +2413,9 @@ func init() {
 						return err
 					}
 
-					subnetUpdateParam.ParamTemplate = c.String("param-template")
-					subnetUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(subnetUpdateParam)
+					internetSubnetUpdateParam.ParamTemplate = c.String("param-template")
+					internetSubnetUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetSubnetUpdateParam)
 					if err != nil {
 						return err
 					}
@@ -2291,54 +2425,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(subnetUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(internetSubnetUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("next-hop") {
-						subnetUpdateParam.NextHop = c.String("next-hop")
+						internetSubnetUpdateParam.NextHop = c.String("next-hop")
 					}
 					if c.IsSet("subnet-id") {
-						subnetUpdateParam.SubnetId = sacloud.ID(c.Int64("subnet-id"))
+						internetSubnetUpdateParam.SubnetId = sacloud.ID(c.Int64("subnet-id"))
 					}
 					if c.IsSet("selector") {
-						subnetUpdateParam.Selector = c.StringSlice("selector")
+						internetSubnetUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						subnetUpdateParam.Assumeyes = c.Bool("assumeyes")
+						internetSubnetUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						subnetUpdateParam.ParamTemplate = c.String("param-template")
+						internetSubnetUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						internetSubnetUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						subnetUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						internetSubnetUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						internetSubnetUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						subnetUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetSubnetUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						subnetUpdateParam.OutputType = c.String("output-type")
+						internetSubnetUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						subnetUpdateParam.Column = c.StringSlice("column")
+						internetSubnetUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						subnetUpdateParam.Quiet = c.Bool("quiet")
+						internetSubnetUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						subnetUpdateParam.Format = c.String("format")
+						internetSubnetUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						subnetUpdateParam.FormatFile = c.String("format-file")
+						internetSubnetUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						subnetUpdateParam.Query = c.String("query")
+						internetSubnetUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						subnetUpdateParam.QueryFile = c.String("query-file")
+						internetSubnetUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						subnetUpdateParam.Id = sacloud.ID(c.Int64("id"))
+						internetSubnetUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2346,7 +2486,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = subnetUpdateParam
+					var outputTypeHolder interface{} = internetSubnetUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2357,10 +2497,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if subnetUpdateParam.GenerateSkeleton {
-						subnetUpdateParam.GenerateSkeleton = false
-						subnetUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(subnetUpdateParam, "", "\t")
+					if internetSubnetUpdateParam.GenerateSkeleton {
+						internetSubnetUpdateParam.GenerateSkeleton = false
+						internetSubnetUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetSubnetUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2369,19 +2509,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := subnetUpdateParam.Validate(); len(errors) > 0 {
+					if errors := internetSubnetUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), subnetUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetSubnetUpdateParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(subnetUpdateParam.Selector) == 0 {
+						if len(internetSubnetUpdateParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2390,12 +2530,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, subnetUpdateParam.Selector) {
+							if hasTags(&v, internetSubnetUpdateParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", subnetUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetSubnetUpdateParam.Selector)
 						}
 
 					} else {
@@ -2417,7 +2557,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(subnetUpdateParam.Selector) == 0 || hasTags(&v, subnetUpdateParam.Selector) {
+										if len(internetSubnetUpdateParam.Selector) == 0 || hasTags(&v, internetSubnetUpdateParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2434,7 +2574,7 @@ func init() {
 					}
 
 					// confirm
-					if !subnetUpdateParam.Assumeyes {
+					if !internetSubnetUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2448,11 +2588,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						subnetUpdateParam.SetId(id)
-						p := *subnetUpdateParam // copy struct value
-						subnetUpdateParam := &p
+						internetSubnetUpdateParam.SetId(id)
+						p := *internetSubnetUpdateParam // copy struct value
+						internetSubnetUpdateParam := &p
 						go func() {
-							err := funcs.InternetSubnetUpdate(ctx, subnetUpdateParam)
+							err := funcs.InternetSubnetUpdate(ctx, internetSubnetUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2466,7 +2606,7 @@ func init() {
 			},
 			{
 				Name:      "ipv6-info",
-				Usage:     "Ipv6Info Internet",
+				Usage:     "IPv6Info Internet",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2478,8 +2618,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2532,57 +2680,63 @@ func init() {
 						return err
 					}
 
-					ipv6InfoParam.ParamTemplate = c.String("param-template")
-					ipv6InfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ipv6InfoParam)
+					internetIPv6InfoParam.ParamTemplate = c.String("param-template")
+					internetIPv6InfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetIPv6InfoParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewIpv6InfoInternetParam()
+						p := params.NewIPv6InfoInternetParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ipv6InfoParam, p, mergo.WithOverride)
+						mergo.Merge(internetIPv6InfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						ipv6InfoParam.Selector = c.StringSlice("selector")
+						internetIPv6InfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						ipv6InfoParam.ParamTemplate = c.String("param-template")
+						internetIPv6InfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						internetIPv6InfoParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ipv6InfoParam.ParamTemplateFile = c.String("param-template-file")
+						internetIPv6InfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						internetIPv6InfoParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ipv6InfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetIPv6InfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						ipv6InfoParam.OutputType = c.String("output-type")
+						internetIPv6InfoParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						ipv6InfoParam.Column = c.StringSlice("column")
+						internetIPv6InfoParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						ipv6InfoParam.Quiet = c.Bool("quiet")
+						internetIPv6InfoParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						ipv6InfoParam.Format = c.String("format")
+						internetIPv6InfoParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						ipv6InfoParam.FormatFile = c.String("format-file")
+						internetIPv6InfoParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						ipv6InfoParam.Query = c.String("query")
+						internetIPv6InfoParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						ipv6InfoParam.QueryFile = c.String("query-file")
+						internetIPv6InfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						ipv6InfoParam.Id = sacloud.ID(c.Int64("id"))
+						internetIPv6InfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2590,7 +2744,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ipv6InfoParam
+					var outputTypeHolder interface{} = internetIPv6InfoParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2601,10 +2755,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ipv6InfoParam.GenerateSkeleton {
-						ipv6InfoParam.GenerateSkeleton = false
-						ipv6InfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ipv6InfoParam, "", "\t")
+					if internetIPv6InfoParam.GenerateSkeleton {
+						internetIPv6InfoParam.GenerateSkeleton = false
+						internetIPv6InfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetIPv6InfoParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2613,19 +2767,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ipv6InfoParam.Validate(); len(errors) > 0 {
+					if errors := internetIPv6InfoParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ipv6InfoParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetIPv6InfoParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(ipv6InfoParam.Selector) == 0 {
+						if len(internetIPv6InfoParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2634,12 +2788,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, ipv6InfoParam.Selector) {
+							if hasTags(&v, internetIPv6InfoParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", ipv6InfoParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetIPv6InfoParam.Selector)
 						}
 
 					} else {
@@ -2661,7 +2815,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(ipv6InfoParam.Selector) == 0 || hasTags(&v, ipv6InfoParam.Selector) {
+										if len(internetIPv6InfoParam.Selector) == 0 || hasTags(&v, internetIPv6InfoParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2682,11 +2836,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						ipv6InfoParam.SetId(id)
-						p := *ipv6InfoParam // copy struct value
-						ipv6InfoParam := &p
+						internetIPv6InfoParam.SetId(id)
+						p := *internetIPv6InfoParam // copy struct value
+						internetIPv6InfoParam := &p
 						go func() {
-							err := funcs.InternetIpv6Info(ctx, ipv6InfoParam)
+							err := funcs.InternetIPv6Info(ctx, internetIPv6InfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2700,7 +2854,7 @@ func init() {
 			},
 			{
 				Name:      "ipv6-enable",
-				Usage:     "Ipv6Enable Internet",
+				Usage:     "IPv6Enable Internet",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2717,8 +2871,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2771,60 +2933,66 @@ func init() {
 						return err
 					}
 
-					ipv6EnableParam.ParamTemplate = c.String("param-template")
-					ipv6EnableParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ipv6EnableParam)
+					internetIPv6EnableParam.ParamTemplate = c.String("param-template")
+					internetIPv6EnableParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetIPv6EnableParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewIpv6EnableInternetParam()
+						p := params.NewIPv6EnableInternetParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ipv6EnableParam, p, mergo.WithOverride)
+						mergo.Merge(internetIPv6EnableParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						ipv6EnableParam.Selector = c.StringSlice("selector")
+						internetIPv6EnableParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						ipv6EnableParam.Assumeyes = c.Bool("assumeyes")
+						internetIPv6EnableParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						ipv6EnableParam.ParamTemplate = c.String("param-template")
+						internetIPv6EnableParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						internetIPv6EnableParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ipv6EnableParam.ParamTemplateFile = c.String("param-template-file")
+						internetIPv6EnableParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						internetIPv6EnableParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ipv6EnableParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetIPv6EnableParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						ipv6EnableParam.OutputType = c.String("output-type")
+						internetIPv6EnableParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						ipv6EnableParam.Column = c.StringSlice("column")
+						internetIPv6EnableParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						ipv6EnableParam.Quiet = c.Bool("quiet")
+						internetIPv6EnableParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						ipv6EnableParam.Format = c.String("format")
+						internetIPv6EnableParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						ipv6EnableParam.FormatFile = c.String("format-file")
+						internetIPv6EnableParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						ipv6EnableParam.Query = c.String("query")
+						internetIPv6EnableParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						ipv6EnableParam.QueryFile = c.String("query-file")
+						internetIPv6EnableParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						ipv6EnableParam.Id = sacloud.ID(c.Int64("id"))
+						internetIPv6EnableParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2832,7 +3000,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ipv6EnableParam
+					var outputTypeHolder interface{} = internetIPv6EnableParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -2843,10 +3011,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ipv6EnableParam.GenerateSkeleton {
-						ipv6EnableParam.GenerateSkeleton = false
-						ipv6EnableParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ipv6EnableParam, "", "\t")
+					if internetIPv6EnableParam.GenerateSkeleton {
+						internetIPv6EnableParam.GenerateSkeleton = false
+						internetIPv6EnableParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetIPv6EnableParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -2855,19 +3023,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ipv6EnableParam.Validate(); len(errors) > 0 {
+					if errors := internetIPv6EnableParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ipv6EnableParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetIPv6EnableParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(ipv6EnableParam.Selector) == 0 {
+						if len(internetIPv6EnableParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -2876,12 +3044,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, ipv6EnableParam.Selector) {
+							if hasTags(&v, internetIPv6EnableParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", ipv6EnableParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetIPv6EnableParam.Selector)
 						}
 
 					} else {
@@ -2903,7 +3071,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(ipv6EnableParam.Selector) == 0 || hasTags(&v, ipv6EnableParam.Selector) {
+										if len(internetIPv6EnableParam.Selector) == 0 || hasTags(&v, internetIPv6EnableParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -2920,7 +3088,7 @@ func init() {
 					}
 
 					// confirm
-					if !ipv6EnableParam.Assumeyes {
+					if !internetIPv6EnableParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -2934,11 +3102,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						ipv6EnableParam.SetId(id)
-						p := *ipv6EnableParam // copy struct value
-						ipv6EnableParam := &p
+						internetIPv6EnableParam.SetId(id)
+						p := *internetIPv6EnableParam // copy struct value
+						internetIPv6EnableParam := &p
 						go func() {
-							err := funcs.InternetIpv6Enable(ctx, ipv6EnableParam)
+							err := funcs.InternetIPv6Enable(ctx, internetIPv6EnableParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -2952,7 +3120,7 @@ func init() {
 			},
 			{
 				Name:      "ipv6-disable",
-				Usage:     "Ipv6Disable Internet",
+				Usage:     "IPv6Disable Internet",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -2969,8 +3137,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -2991,39 +3167,45 @@ func init() {
 						return err
 					}
 
-					ipv6DisableParam.ParamTemplate = c.String("param-template")
-					ipv6DisableParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ipv6DisableParam)
+					internetIPv6DisableParam.ParamTemplate = c.String("param-template")
+					internetIPv6DisableParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetIPv6DisableParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewIpv6DisableInternetParam()
+						p := params.NewIPv6DisableInternetParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ipv6DisableParam, p, mergo.WithOverride)
+						mergo.Merge(internetIPv6DisableParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("selector") {
-						ipv6DisableParam.Selector = c.StringSlice("selector")
+						internetIPv6DisableParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						ipv6DisableParam.Assumeyes = c.Bool("assumeyes")
+						internetIPv6DisableParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						ipv6DisableParam.ParamTemplate = c.String("param-template")
+						internetIPv6DisableParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						internetIPv6DisableParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ipv6DisableParam.ParamTemplateFile = c.String("param-template-file")
+						internetIPv6DisableParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						internetIPv6DisableParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ipv6DisableParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetIPv6DisableParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						ipv6DisableParam.Id = sacloud.ID(c.Int64("id"))
+						internetIPv6DisableParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3031,7 +3213,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ipv6DisableParam
+					var outputTypeHolder interface{} = internetIPv6DisableParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3042,10 +3224,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ipv6DisableParam.GenerateSkeleton {
-						ipv6DisableParam.GenerateSkeleton = false
-						ipv6DisableParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ipv6DisableParam, "", "\t")
+					if internetIPv6DisableParam.GenerateSkeleton {
+						internetIPv6DisableParam.GenerateSkeleton = false
+						internetIPv6DisableParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetIPv6DisableParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3054,19 +3236,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ipv6DisableParam.Validate(); len(errors) > 0 {
+					if errors := internetIPv6DisableParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ipv6DisableParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetIPv6DisableParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(ipv6DisableParam.Selector) == 0 {
+						if len(internetIPv6DisableParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3075,12 +3257,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, ipv6DisableParam.Selector) {
+							if hasTags(&v, internetIPv6DisableParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", ipv6DisableParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetIPv6DisableParam.Selector)
 						}
 
 					} else {
@@ -3102,7 +3284,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(ipv6DisableParam.Selector) == 0 || hasTags(&v, ipv6DisableParam.Selector) {
+										if len(internetIPv6DisableParam.Selector) == 0 || hasTags(&v, internetIPv6DisableParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3119,7 +3301,7 @@ func init() {
 					}
 
 					// confirm
-					if !ipv6DisableParam.Assumeyes {
+					if !internetIPv6DisableParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -3133,11 +3315,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						ipv6DisableParam.SetId(id)
-						p := *ipv6DisableParam // copy struct value
-						ipv6DisableParam := &p
+						internetIPv6DisableParam.SetId(id)
+						p := *internetIPv6DisableParam // copy struct value
+						internetIPv6DisableParam := &p
 						go func() {
-							err := funcs.InternetIpv6Disable(ctx, ipv6DisableParam)
+							err := funcs.InternetIPv6Disable(ctx, internetIPv6DisableParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3176,8 +3358,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -3230,9 +3420,9 @@ func init() {
 						return err
 					}
 
-					monitorParam.ParamTemplate = c.String("param-template")
-					monitorParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorParam)
+					internetMonitorParam.ParamTemplate = c.String("param-template")
+					internetMonitorParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(internetMonitorParam)
 					if err != nil {
 						return err
 					}
@@ -3242,54 +3432,60 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(monitorParam, p, mergo.WithOverride)
+						mergo.Merge(internetMonitorParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("start") {
-						monitorParam.Start = c.String("start")
+						internetMonitorParam.Start = c.String("start")
 					}
 					if c.IsSet("end") {
-						monitorParam.End = c.String("end")
+						internetMonitorParam.End = c.String("end")
 					}
 					if c.IsSet("key-format") {
-						monitorParam.KeyFormat = c.String("key-format")
+						internetMonitorParam.KeyFormat = c.String("key-format")
 					}
 					if c.IsSet("selector") {
-						monitorParam.Selector = c.StringSlice("selector")
+						internetMonitorParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
-						monitorParam.ParamTemplate = c.String("param-template")
+						internetMonitorParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						internetMonitorParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						monitorParam.ParamTemplateFile = c.String("param-template-file")
+						internetMonitorParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						internetMonitorParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						monitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						internetMonitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						monitorParam.OutputType = c.String("output-type")
+						internetMonitorParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						monitorParam.Column = c.StringSlice("column")
+						internetMonitorParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						monitorParam.Quiet = c.Bool("quiet")
+						internetMonitorParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						monitorParam.Format = c.String("format")
+						internetMonitorParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						monitorParam.FormatFile = c.String("format-file")
+						internetMonitorParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						monitorParam.Query = c.String("query")
+						internetMonitorParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						monitorParam.QueryFile = c.String("query-file")
+						internetMonitorParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						monitorParam.Id = sacloud.ID(c.Int64("id"))
+						internetMonitorParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3297,7 +3493,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = monitorParam
+					var outputTypeHolder interface{} = internetMonitorParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -3308,10 +3504,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if monitorParam.GenerateSkeleton {
-						monitorParam.GenerateSkeleton = false
-						monitorParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorParam, "", "\t")
+					if internetMonitorParam.GenerateSkeleton {
+						internetMonitorParam.GenerateSkeleton = false
+						internetMonitorParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(internetMonitorParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -3320,19 +3516,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := monitorParam.Validate(); len(errors) > 0 {
+					if errors := internetMonitorParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorParam)
+					ctx := command.NewContext(c, c.Args().Slice(), internetMonitorParam)
 
 					apiClient := ctx.GetAPIClient().Internet
 					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
-						if len(monitorParam.Selector) == 0 {
+						if len(internetMonitorParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -3341,12 +3537,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.Internet {
-							if hasTags(&v, monitorParam.Selector) {
+							if hasTags(&v, internetMonitorParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", internetMonitorParam.Selector)
 						}
 
 					} else {
@@ -3368,7 +3564,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.Internet {
-										if len(monitorParam.Selector) == 0 || hasTags(&v, monitorParam.Selector) {
+										if len(internetMonitorParam.Selector) == 0 || hasTags(&v, internetMonitorParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -3393,11 +3589,11 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						monitorParam.SetId(id)
-						p := *monitorParam // copy struct value
-						monitorParam := &p
+						internetMonitorParam.SetId(id)
+						p := *internetMonitorParam // copy struct value
+						internetMonitorParam := &p
 						go func() {
-							err := funcs.InternetMonitor(ctx, monitorParam)
+							err := funcs.InternetMonitor(ctx, internetMonitorParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3559,6 +3755,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("internet", "create", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "create", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("internet", "create", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3624,6 +3830,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("internet", "delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "delete", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("internet", "delete", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3665,6 +3881,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("internet", "ipv6-disable", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-disable", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-disable", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3715,6 +3941,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("internet", "ipv6-enable", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-enable", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-enable", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3775,6 +4011,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("internet", "ipv6-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-info", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -3854,6 +4100,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("internet", "list", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "list", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("internet", "list", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3929,6 +4185,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("internet", "monitor", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "monitor", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("internet", "monitor", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3990,6 +4256,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("internet", "read", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "read", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "read", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -4069,6 +4345,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("internet", "subnet-add", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-add", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("internet", "subnet-add", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -4110,6 +4396,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("internet", "subnet-delete", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-delete", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -4160,6 +4456,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("internet", "subnet-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-info", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-info", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -4230,6 +4536,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("internet", "subnet-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -4324,6 +4640,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("internet", "update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "update", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("internet", "update", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -4395,6 +4721,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("internet", "update-bandwidth", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "update-bandwidth", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "update-bandwidth", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

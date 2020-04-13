@@ -21,7 +21,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func MobileGatewaySimAdd(ctx command.Context, params *params.SimAddMobileGatewayParam) error {
+func MobileGatewaySIMAdd(ctx command.Context, params *params.SIMAddMobileGatewayParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetMobileGatewayAPI()
@@ -30,14 +30,14 @@ func MobileGatewaySimAdd(ctx command.Context, params *params.SimAddMobileGateway
 		return fmt.Errorf("MobileGatewaySimAdd is failed: %s", e)
 	}
 
-	_, err := api.AddSIM(p.ID, params.SimId)
+	_, err := api.AddSIM(p.ID, params.SIMId)
 	if err != nil {
 		return fmt.Errorf("MobileGatewaySimAdd is failed: %s", err)
 	}
 
 	// set IPAddress
 	simAPI := client.GetSIMAPI()
-	_, err = simAPI.AssignIP(params.SimId, params.Ipaddress)
+	_, err = simAPI.AssignIP(params.SIMId, params.Ipaddress)
 	if err != nil {
 		return fmt.Errorf("MobileGatewaySimAdd is failed: %s", err)
 	}

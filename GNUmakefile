@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-TEST            ?=$$(go list ./... | grep -v vendor)
 VETARGS         ?=-all
 GOFMT_FILES     ?=$$(find . -name '*.go' | grep -v vendor)
 GOGEN_FILES     ?=$$(go list ./... | grep -v vendor)
@@ -38,6 +37,10 @@ default: test build
 run:
 	go run $(CURDIR)/main.go $(ARGS)
 
+.PHONY: run-v1
+run-v1:
+	go run $(CURDIR)/cmdv2/main.go $(ARGS)
+
 .PHONY: clean
 clean:
 	rm -Rf bin/*
@@ -48,6 +51,8 @@ clean-all:
 	rm -f command/cli/*_gen.go \
 	rm -f command/funcs/*_gen.go \
 	rm -f command/params/*_gen.go \
+	rm -f cmdv2/commands/*_gen.go \
+	rm -f cmdv2/params/*_gen.go \
 
 
 .PHONY: tools
@@ -58,15 +63,18 @@ tools:
 	GO111MODULE=off go get github.com/sacloud/addlicense
 
 .PHONY: gen
-gen: command/cli/*_gen.go command/funcs/*_gen.go command/params/*_gen.go
+gen: command/*/*_gen.go cmdv2/*/*_gen.go set-license fmt goimports
 
 .PHONY: gen-force
-gen-force: clean-all _gen-force set-license
+gen-force: clean-all _gen-force set-license fmt goimports
 _gen-force: 
-	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES); goimports -l -w $(GOFMT_FILES)
+	go generate ./...
 
-command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-funcs/*.go tools/gen-input-models/*.go
-	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
+command/*/*_gen.go: define/*.go tools/gen-*/*.go tools/*.go
+	go generate ./...
+
+cmdv2/*/*_gen.go: define/*.go tools/gen-*/*.go tools/*.go
+	go generate ./...
 
 .PHONY: build build-x build-darwin build-windows build-linux
 build: bin/usacloud
@@ -117,7 +125,7 @@ deb: rpm
 
 .PHONY: test
 test: 
-	go test $(TEST) $(TESTARGS) -v -timeout=30m -parallel=4 ;
+	go test $(TESTARGS) -v ./...
 
 .PHONY: integration-test
 integration-test: bin/usacloud
@@ -136,11 +144,11 @@ golint: goimports
 
 .PHONY: goimports
 goimports:
-	goimports -l -w $(GOFMT_FILES)
+	find . -name '*.go' | grep -v vendor | xargs goimports -l -w
 
 .PHONY: fmt
 fmt:
-	gofmt -s -l -w $(GOFMT_FILES)
+	find . -name '*.go' | grep -v vendor | xargs gofmt -s -w
 
 .PHONY: build-docs serve-docs lint-docs
 build-docs:

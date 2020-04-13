@@ -31,7 +31,9 @@ type ListProductServerParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -67,8 +69,14 @@ func (p *ListProductServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -215,12 +223,26 @@ func (p *ListProductServerParam) SetParamTemplate(v string) {
 func (p *ListProductServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListProductServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListProductServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListProductServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListProductServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListProductServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListProductServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListProductServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -283,7 +305,9 @@ func (p *ListProductServerParam) GetQueryFile() string {
 type ReadProductServerParam struct {
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -308,8 +332,14 @@ func (p *ReadProductServerParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -420,12 +450,26 @@ func (p *ReadProductServerParam) SetParamTemplate(v string) {
 func (p *ReadProductServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadProductServerParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadProductServerParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadProductServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadProductServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadProductServerParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadProductServerParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadProductServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

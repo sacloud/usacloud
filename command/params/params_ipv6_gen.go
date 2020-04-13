@@ -23,17 +23,19 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListIpv6Param is input parameters for the sacloud API
-type ListIpv6Param struct {
+// ListIPv6Param is input parameters for the sacloud API
+type ListIPv6Param struct {
 	Name              []string     `json:"name"`
 	Id                []sacloud.ID `json:"id"`
-	Ipv6netId         sacloud.ID   `json:"ipv6net-id"`
+	IPv6netId         sacloud.ID   `json:"ipv6net-id"`
 	InternetId        sacloud.ID   `json:"internet-id"`
 	From              int          `json:"from"`
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -44,21 +46,21 @@ type ListIpv6Param struct {
 	QueryFile         string       `json:"query-file"`
 }
 
-// NewListIpv6Param return new ListIpv6Param
-func NewListIpv6Param() *ListIpv6Param {
-	return &ListIpv6Param{}
+// NewListIPv6Param return new ListIPv6Param
+func NewListIPv6Param() *ListIPv6Param {
+	return &ListIPv6Param{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *ListIpv6Param) FillValueToSkeleton() {
+func (p *ListIPv6Param) FillValueToSkeleton() {
 	if isEmpty(p.Name) {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
-	if isEmpty(p.Ipv6netId) {
-		p.Ipv6netId = sacloud.ID(0)
+	if isEmpty(p.IPv6netId) {
+		p.IPv6netId = sacloud.ID(0)
 	}
 	if isEmpty(p.InternetId) {
 		p.InternetId = sacloud.ID(0)
@@ -75,8 +77,14 @@ func (p *ListIpv6Param) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -106,7 +114,7 @@ func (p *ListIpv6Param) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *ListIpv6Param) Validate() []error {
+func (p *ListIPv6Param) Validate() []error {
 	errors := []error{}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
@@ -135,7 +143,7 @@ func (p *ListIpv6Param) Validate() []error {
 	}
 	{
 		validator := define.Resources["IPv6"].Commands["list"].Params["ipv6net-id"].ValidateFunc
-		errs := validator("--ipv6net-id", p.Ipv6netId)
+		errs := validator("--ipv6net-id", p.IPv6netId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -171,156 +179,172 @@ func (p *ListIpv6Param) Validate() []error {
 	return errors
 }
 
-func (p *ListIpv6Param) GetResourceDef() *schema.Resource {
+func (p *ListIPv6Param) GetResourceDef() *schema.Resource {
 	return define.Resources["IPv6"]
 }
 
-func (p *ListIpv6Param) GetCommandDef() *schema.Command {
+func (p *ListIPv6Param) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["list"]
 }
 
-func (p *ListIpv6Param) GetIncludeFields() []string {
+func (p *ListIPv6Param) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *ListIpv6Param) GetExcludeFields() []string {
+func (p *ListIPv6Param) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *ListIpv6Param) GetTableType() output.TableType {
+func (p *ListIPv6Param) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *ListIpv6Param) GetColumnDefs() []output.ColumnDef {
+func (p *ListIPv6Param) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ListIpv6Param) SetName(v []string) {
+func (p *ListIPv6Param) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *ListIpv6Param) GetName() []string {
+func (p *ListIPv6Param) GetName() []string {
 	return p.Name
 }
-func (p *ListIpv6Param) SetId(v []sacloud.ID) {
+func (p *ListIPv6Param) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListIpv6Param) GetId() []sacloud.ID {
+func (p *ListIPv6Param) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListIpv6Param) SetIpv6netId(v sacloud.ID) {
-	p.Ipv6netId = v
+func (p *ListIPv6Param) SetIPv6netId(v sacloud.ID) {
+	p.IPv6netId = v
 }
 
-func (p *ListIpv6Param) GetIpv6netId() sacloud.ID {
-	return p.Ipv6netId
+func (p *ListIPv6Param) GetIPv6netId() sacloud.ID {
+	return p.IPv6netId
 }
-func (p *ListIpv6Param) SetInternetId(v sacloud.ID) {
+func (p *ListIPv6Param) SetInternetId(v sacloud.ID) {
 	p.InternetId = v
 }
 
-func (p *ListIpv6Param) GetInternetId() sacloud.ID {
+func (p *ListIPv6Param) GetInternetId() sacloud.ID {
 	return p.InternetId
 }
-func (p *ListIpv6Param) SetFrom(v int) {
+func (p *ListIPv6Param) SetFrom(v int) {
 	p.From = v
 }
 
-func (p *ListIpv6Param) GetFrom() int {
+func (p *ListIPv6Param) GetFrom() int {
 	return p.From
 }
-func (p *ListIpv6Param) SetMax(v int) {
+func (p *ListIPv6Param) SetMax(v int) {
 	p.Max = v
 }
 
-func (p *ListIpv6Param) GetMax() int {
+func (p *ListIPv6Param) GetMax() int {
 	return p.Max
 }
-func (p *ListIpv6Param) SetSort(v []string) {
+func (p *ListIPv6Param) SetSort(v []string) {
 	p.Sort = v
 }
 
-func (p *ListIpv6Param) GetSort() []string {
+func (p *ListIPv6Param) GetSort() []string {
 	return p.Sort
 }
-func (p *ListIpv6Param) SetParamTemplate(v string) {
+func (p *ListIPv6Param) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *ListIpv6Param) GetParamTemplate() string {
+func (p *ListIPv6Param) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *ListIpv6Param) SetParamTemplateFile(v string) {
+func (p *ListIPv6Param) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListIPv6Param) GetParameters() string {
+	return p.Parameters
+}
+func (p *ListIPv6Param) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *ListIpv6Param) GetParamTemplateFile() string {
+func (p *ListIPv6Param) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *ListIpv6Param) SetGenerateSkeleton(v bool) {
+func (p *ListIPv6Param) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListIPv6Param) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *ListIPv6Param) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *ListIpv6Param) GetGenerateSkeleton() bool {
+func (p *ListIPv6Param) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ListIpv6Param) SetOutputType(v string) {
+func (p *ListIPv6Param) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *ListIpv6Param) GetOutputType() string {
+func (p *ListIPv6Param) GetOutputType() string {
 	return p.OutputType
 }
-func (p *ListIpv6Param) SetColumn(v []string) {
+func (p *ListIPv6Param) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *ListIpv6Param) GetColumn() []string {
+func (p *ListIPv6Param) GetColumn() []string {
 	return p.Column
 }
-func (p *ListIpv6Param) SetQuiet(v bool) {
+func (p *ListIPv6Param) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *ListIpv6Param) GetQuiet() bool {
+func (p *ListIPv6Param) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *ListIpv6Param) SetFormat(v string) {
+func (p *ListIPv6Param) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *ListIpv6Param) GetFormat() string {
+func (p *ListIPv6Param) GetFormat() string {
 	return p.Format
 }
-func (p *ListIpv6Param) SetFormatFile(v string) {
+func (p *ListIPv6Param) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *ListIpv6Param) GetFormatFile() string {
+func (p *ListIPv6Param) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *ListIpv6Param) SetQuery(v string) {
+func (p *ListIPv6Param) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *ListIpv6Param) GetQuery() string {
+func (p *ListIPv6Param) GetQuery() string {
 	return p.Query
 }
-func (p *ListIpv6Param) SetQueryFile(v string) {
+func (p *ListIPv6Param) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *ListIpv6Param) GetQueryFile() string {
+func (p *ListIPv6Param) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// PtrAddIpv6Param is input parameters for the sacloud API
-type PtrAddIpv6Param struct {
+// PtrAddIPv6Param is input parameters for the sacloud API
+type PtrAddIPv6Param struct {
 	Hostname          string   `json:"hostname"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -331,13 +355,13 @@ type PtrAddIpv6Param struct {
 	QueryFile         string   `json:"query-file"`
 }
 
-// NewPtrAddIpv6Param return new PtrAddIpv6Param
-func NewPtrAddIpv6Param() *PtrAddIpv6Param {
-	return &PtrAddIpv6Param{}
+// NewPtrAddIPv6Param return new PtrAddIPv6Param
+func NewPtrAddIPv6Param() *PtrAddIPv6Param {
+	return &PtrAddIPv6Param{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *PtrAddIpv6Param) FillValueToSkeleton() {
+func (p *PtrAddIPv6Param) FillValueToSkeleton() {
 	if isEmpty(p.Hostname) {
 		p.Hostname = ""
 	}
@@ -347,8 +371,14 @@ func (p *PtrAddIpv6Param) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -378,7 +408,7 @@ func (p *PtrAddIpv6Param) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *PtrAddIpv6Param) Validate() []error {
+func (p *PtrAddIPv6Param) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -411,119 +441,135 @@ func (p *PtrAddIpv6Param) Validate() []error {
 	return errors
 }
 
-func (p *PtrAddIpv6Param) GetResourceDef() *schema.Resource {
+func (p *PtrAddIPv6Param) GetResourceDef() *schema.Resource {
 	return define.Resources["IPv6"]
 }
 
-func (p *PtrAddIpv6Param) GetCommandDef() *schema.Command {
+func (p *PtrAddIPv6Param) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ptr-add"]
 }
 
-func (p *PtrAddIpv6Param) GetIncludeFields() []string {
+func (p *PtrAddIPv6Param) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *PtrAddIpv6Param) GetExcludeFields() []string {
+func (p *PtrAddIPv6Param) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *PtrAddIpv6Param) GetTableType() output.TableType {
+func (p *PtrAddIPv6Param) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *PtrAddIpv6Param) GetColumnDefs() []output.ColumnDef {
+func (p *PtrAddIPv6Param) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *PtrAddIpv6Param) SetHostname(v string) {
+func (p *PtrAddIPv6Param) SetHostname(v string) {
 	p.Hostname = v
 }
 
-func (p *PtrAddIpv6Param) GetHostname() string {
+func (p *PtrAddIPv6Param) GetHostname() string {
 	return p.Hostname
 }
-func (p *PtrAddIpv6Param) SetAssumeyes(v bool) {
+func (p *PtrAddIPv6Param) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *PtrAddIpv6Param) GetAssumeyes() bool {
+func (p *PtrAddIPv6Param) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *PtrAddIpv6Param) SetParamTemplate(v string) {
+func (p *PtrAddIPv6Param) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *PtrAddIpv6Param) GetParamTemplate() string {
+func (p *PtrAddIPv6Param) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *PtrAddIpv6Param) SetParamTemplateFile(v string) {
+func (p *PtrAddIPv6Param) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PtrAddIPv6Param) GetParameters() string {
+	return p.Parameters
+}
+func (p *PtrAddIPv6Param) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *PtrAddIpv6Param) GetParamTemplateFile() string {
+func (p *PtrAddIPv6Param) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *PtrAddIpv6Param) SetGenerateSkeleton(v bool) {
+func (p *PtrAddIPv6Param) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PtrAddIPv6Param) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PtrAddIPv6Param) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *PtrAddIpv6Param) GetGenerateSkeleton() bool {
+func (p *PtrAddIPv6Param) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *PtrAddIpv6Param) SetOutputType(v string) {
+func (p *PtrAddIPv6Param) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *PtrAddIpv6Param) GetOutputType() string {
+func (p *PtrAddIPv6Param) GetOutputType() string {
 	return p.OutputType
 }
-func (p *PtrAddIpv6Param) SetColumn(v []string) {
+func (p *PtrAddIPv6Param) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *PtrAddIpv6Param) GetColumn() []string {
+func (p *PtrAddIPv6Param) GetColumn() []string {
 	return p.Column
 }
-func (p *PtrAddIpv6Param) SetQuiet(v bool) {
+func (p *PtrAddIPv6Param) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *PtrAddIpv6Param) GetQuiet() bool {
+func (p *PtrAddIPv6Param) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *PtrAddIpv6Param) SetFormat(v string) {
+func (p *PtrAddIPv6Param) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *PtrAddIpv6Param) GetFormat() string {
+func (p *PtrAddIPv6Param) GetFormat() string {
 	return p.Format
 }
-func (p *PtrAddIpv6Param) SetFormatFile(v string) {
+func (p *PtrAddIPv6Param) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *PtrAddIpv6Param) GetFormatFile() string {
+func (p *PtrAddIPv6Param) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *PtrAddIpv6Param) SetQuery(v string) {
+func (p *PtrAddIPv6Param) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *PtrAddIpv6Param) GetQuery() string {
+func (p *PtrAddIPv6Param) GetQuery() string {
 	return p.Query
 }
-func (p *PtrAddIpv6Param) SetQueryFile(v string) {
+func (p *PtrAddIPv6Param) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *PtrAddIpv6Param) GetQueryFile() string {
+func (p *PtrAddIPv6Param) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// PtrReadIpv6Param is input parameters for the sacloud API
-type PtrReadIpv6Param struct {
+// PtrReadIPv6Param is input parameters for the sacloud API
+type PtrReadIPv6Param struct {
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -534,18 +580,24 @@ type PtrReadIpv6Param struct {
 	QueryFile         string   `json:"query-file"`
 }
 
-// NewPtrReadIpv6Param return new PtrReadIpv6Param
-func NewPtrReadIpv6Param() *PtrReadIpv6Param {
-	return &PtrReadIpv6Param{}
+// NewPtrReadIPv6Param return new PtrReadIPv6Param
+func NewPtrReadIPv6Param() *PtrReadIPv6Param {
+	return &PtrReadIPv6Param{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *PtrReadIpv6Param) FillValueToSkeleton() {
+func (p *PtrReadIPv6Param) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -575,7 +627,7 @@ func (p *PtrReadIpv6Param) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *PtrReadIpv6Param) Validate() []error {
+func (p *PtrReadIPv6Param) Validate() []error {
 	errors := []error{}
 
 	{
@@ -601,107 +653,123 @@ func (p *PtrReadIpv6Param) Validate() []error {
 	return errors
 }
 
-func (p *PtrReadIpv6Param) GetResourceDef() *schema.Resource {
+func (p *PtrReadIPv6Param) GetResourceDef() *schema.Resource {
 	return define.Resources["IPv6"]
 }
 
-func (p *PtrReadIpv6Param) GetCommandDef() *schema.Command {
+func (p *PtrReadIPv6Param) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ptr-read"]
 }
 
-func (p *PtrReadIpv6Param) GetIncludeFields() []string {
+func (p *PtrReadIPv6Param) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *PtrReadIpv6Param) GetExcludeFields() []string {
+func (p *PtrReadIPv6Param) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *PtrReadIpv6Param) GetTableType() output.TableType {
+func (p *PtrReadIPv6Param) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *PtrReadIpv6Param) GetColumnDefs() []output.ColumnDef {
+func (p *PtrReadIPv6Param) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *PtrReadIpv6Param) SetParamTemplate(v string) {
+func (p *PtrReadIPv6Param) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *PtrReadIpv6Param) GetParamTemplate() string {
+func (p *PtrReadIPv6Param) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *PtrReadIpv6Param) SetParamTemplateFile(v string) {
+func (p *PtrReadIPv6Param) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PtrReadIPv6Param) GetParameters() string {
+	return p.Parameters
+}
+func (p *PtrReadIPv6Param) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *PtrReadIpv6Param) GetParamTemplateFile() string {
+func (p *PtrReadIPv6Param) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *PtrReadIpv6Param) SetGenerateSkeleton(v bool) {
+func (p *PtrReadIPv6Param) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PtrReadIPv6Param) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PtrReadIPv6Param) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *PtrReadIpv6Param) GetGenerateSkeleton() bool {
+func (p *PtrReadIPv6Param) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *PtrReadIpv6Param) SetOutputType(v string) {
+func (p *PtrReadIPv6Param) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *PtrReadIpv6Param) GetOutputType() string {
+func (p *PtrReadIPv6Param) GetOutputType() string {
 	return p.OutputType
 }
-func (p *PtrReadIpv6Param) SetColumn(v []string) {
+func (p *PtrReadIPv6Param) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *PtrReadIpv6Param) GetColumn() []string {
+func (p *PtrReadIPv6Param) GetColumn() []string {
 	return p.Column
 }
-func (p *PtrReadIpv6Param) SetQuiet(v bool) {
+func (p *PtrReadIPv6Param) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *PtrReadIpv6Param) GetQuiet() bool {
+func (p *PtrReadIPv6Param) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *PtrReadIpv6Param) SetFormat(v string) {
+func (p *PtrReadIPv6Param) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *PtrReadIpv6Param) GetFormat() string {
+func (p *PtrReadIPv6Param) GetFormat() string {
 	return p.Format
 }
-func (p *PtrReadIpv6Param) SetFormatFile(v string) {
+func (p *PtrReadIPv6Param) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *PtrReadIpv6Param) GetFormatFile() string {
+func (p *PtrReadIPv6Param) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *PtrReadIpv6Param) SetQuery(v string) {
+func (p *PtrReadIPv6Param) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *PtrReadIpv6Param) GetQuery() string {
+func (p *PtrReadIPv6Param) GetQuery() string {
 	return p.Query
 }
-func (p *PtrReadIpv6Param) SetQueryFile(v string) {
+func (p *PtrReadIPv6Param) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *PtrReadIpv6Param) GetQueryFile() string {
+func (p *PtrReadIPv6Param) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// PtrUpdateIpv6Param is input parameters for the sacloud API
-type PtrUpdateIpv6Param struct {
+// PtrUpdateIPv6Param is input parameters for the sacloud API
+type PtrUpdateIPv6Param struct {
 	Hostname          string   `json:"hostname"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -712,13 +780,13 @@ type PtrUpdateIpv6Param struct {
 	QueryFile         string   `json:"query-file"`
 }
 
-// NewPtrUpdateIpv6Param return new PtrUpdateIpv6Param
-func NewPtrUpdateIpv6Param() *PtrUpdateIpv6Param {
-	return &PtrUpdateIpv6Param{}
+// NewPtrUpdateIPv6Param return new PtrUpdateIPv6Param
+func NewPtrUpdateIPv6Param() *PtrUpdateIPv6Param {
+	return &PtrUpdateIPv6Param{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *PtrUpdateIpv6Param) FillValueToSkeleton() {
+func (p *PtrUpdateIPv6Param) FillValueToSkeleton() {
 	if isEmpty(p.Hostname) {
 		p.Hostname = ""
 	}
@@ -728,8 +796,14 @@ func (p *PtrUpdateIpv6Param) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -759,7 +833,7 @@ func (p *PtrUpdateIpv6Param) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *PtrUpdateIpv6Param) Validate() []error {
+func (p *PtrUpdateIPv6Param) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -792,120 +866,136 @@ func (p *PtrUpdateIpv6Param) Validate() []error {
 	return errors
 }
 
-func (p *PtrUpdateIpv6Param) GetResourceDef() *schema.Resource {
+func (p *PtrUpdateIPv6Param) GetResourceDef() *schema.Resource {
 	return define.Resources["IPv6"]
 }
 
-func (p *PtrUpdateIpv6Param) GetCommandDef() *schema.Command {
+func (p *PtrUpdateIPv6Param) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ptr-update"]
 }
 
-func (p *PtrUpdateIpv6Param) GetIncludeFields() []string {
+func (p *PtrUpdateIPv6Param) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *PtrUpdateIpv6Param) GetExcludeFields() []string {
+func (p *PtrUpdateIPv6Param) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *PtrUpdateIpv6Param) GetTableType() output.TableType {
+func (p *PtrUpdateIPv6Param) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *PtrUpdateIpv6Param) GetColumnDefs() []output.ColumnDef {
+func (p *PtrUpdateIPv6Param) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *PtrUpdateIpv6Param) SetHostname(v string) {
+func (p *PtrUpdateIPv6Param) SetHostname(v string) {
 	p.Hostname = v
 }
 
-func (p *PtrUpdateIpv6Param) GetHostname() string {
+func (p *PtrUpdateIPv6Param) GetHostname() string {
 	return p.Hostname
 }
-func (p *PtrUpdateIpv6Param) SetAssumeyes(v bool) {
+func (p *PtrUpdateIPv6Param) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *PtrUpdateIpv6Param) GetAssumeyes() bool {
+func (p *PtrUpdateIPv6Param) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *PtrUpdateIpv6Param) SetParamTemplate(v string) {
+func (p *PtrUpdateIPv6Param) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *PtrUpdateIpv6Param) GetParamTemplate() string {
+func (p *PtrUpdateIPv6Param) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *PtrUpdateIpv6Param) SetParamTemplateFile(v string) {
+func (p *PtrUpdateIPv6Param) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PtrUpdateIPv6Param) GetParameters() string {
+	return p.Parameters
+}
+func (p *PtrUpdateIPv6Param) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *PtrUpdateIpv6Param) GetParamTemplateFile() string {
+func (p *PtrUpdateIPv6Param) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *PtrUpdateIpv6Param) SetGenerateSkeleton(v bool) {
+func (p *PtrUpdateIPv6Param) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PtrUpdateIPv6Param) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PtrUpdateIPv6Param) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *PtrUpdateIpv6Param) GetGenerateSkeleton() bool {
+func (p *PtrUpdateIPv6Param) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *PtrUpdateIpv6Param) SetOutputType(v string) {
+func (p *PtrUpdateIPv6Param) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *PtrUpdateIpv6Param) GetOutputType() string {
+func (p *PtrUpdateIPv6Param) GetOutputType() string {
 	return p.OutputType
 }
-func (p *PtrUpdateIpv6Param) SetColumn(v []string) {
+func (p *PtrUpdateIPv6Param) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *PtrUpdateIpv6Param) GetColumn() []string {
+func (p *PtrUpdateIPv6Param) GetColumn() []string {
 	return p.Column
 }
-func (p *PtrUpdateIpv6Param) SetQuiet(v bool) {
+func (p *PtrUpdateIPv6Param) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *PtrUpdateIpv6Param) GetQuiet() bool {
+func (p *PtrUpdateIPv6Param) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *PtrUpdateIpv6Param) SetFormat(v string) {
+func (p *PtrUpdateIPv6Param) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *PtrUpdateIpv6Param) GetFormat() string {
+func (p *PtrUpdateIPv6Param) GetFormat() string {
 	return p.Format
 }
-func (p *PtrUpdateIpv6Param) SetFormatFile(v string) {
+func (p *PtrUpdateIPv6Param) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *PtrUpdateIpv6Param) GetFormatFile() string {
+func (p *PtrUpdateIPv6Param) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *PtrUpdateIpv6Param) SetQuery(v string) {
+func (p *PtrUpdateIPv6Param) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *PtrUpdateIpv6Param) GetQuery() string {
+func (p *PtrUpdateIPv6Param) GetQuery() string {
 	return p.Query
 }
-func (p *PtrUpdateIpv6Param) SetQueryFile(v string) {
+func (p *PtrUpdateIPv6Param) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *PtrUpdateIpv6Param) GetQueryFile() string {
+func (p *PtrUpdateIPv6Param) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// PtrDeleteIpv6Param is input parameters for the sacloud API
-type PtrDeleteIpv6Param struct {
+// PtrDeleteIPv6Param is input parameters for the sacloud API
+type PtrDeleteIPv6Param struct {
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -916,21 +1006,27 @@ type PtrDeleteIpv6Param struct {
 	QueryFile         string   `json:"query-file"`
 }
 
-// NewPtrDeleteIpv6Param return new PtrDeleteIpv6Param
-func NewPtrDeleteIpv6Param() *PtrDeleteIpv6Param {
-	return &PtrDeleteIpv6Param{}
+// NewPtrDeleteIPv6Param return new PtrDeleteIPv6Param
+func NewPtrDeleteIPv6Param() *PtrDeleteIPv6Param {
+	return &PtrDeleteIPv6Param{}
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *PtrDeleteIpv6Param) FillValueToSkeleton() {
+func (p *PtrDeleteIPv6Param) FillValueToSkeleton() {
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -960,7 +1056,7 @@ func (p *PtrDeleteIpv6Param) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *PtrDeleteIpv6Param) Validate() []error {
+func (p *PtrDeleteIPv6Param) Validate() []error {
 	errors := []error{}
 
 	{
@@ -986,104 +1082,118 @@ func (p *PtrDeleteIpv6Param) Validate() []error {
 	return errors
 }
 
-func (p *PtrDeleteIpv6Param) GetResourceDef() *schema.Resource {
+func (p *PtrDeleteIPv6Param) GetResourceDef() *schema.Resource {
 	return define.Resources["IPv6"]
 }
 
-func (p *PtrDeleteIpv6Param) GetCommandDef() *schema.Command {
+func (p *PtrDeleteIPv6Param) GetCommandDef() *schema.Command {
 	return p.GetResourceDef().Commands["ptr-delete"]
 }
 
-func (p *PtrDeleteIpv6Param) GetIncludeFields() []string {
+func (p *PtrDeleteIPv6Param) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *PtrDeleteIpv6Param) GetExcludeFields() []string {
+func (p *PtrDeleteIPv6Param) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *PtrDeleteIpv6Param) GetTableType() output.TableType {
+func (p *PtrDeleteIPv6Param) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *PtrDeleteIpv6Param) GetColumnDefs() []output.ColumnDef {
+func (p *PtrDeleteIPv6Param) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *PtrDeleteIpv6Param) SetAssumeyes(v bool) {
+func (p *PtrDeleteIPv6Param) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
 
-func (p *PtrDeleteIpv6Param) GetAssumeyes() bool {
+func (p *PtrDeleteIPv6Param) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *PtrDeleteIpv6Param) SetParamTemplate(v string) {
+func (p *PtrDeleteIPv6Param) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *PtrDeleteIpv6Param) GetParamTemplate() string {
+func (p *PtrDeleteIPv6Param) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *PtrDeleteIpv6Param) SetParamTemplateFile(v string) {
+func (p *PtrDeleteIPv6Param) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *PtrDeleteIPv6Param) GetParameters() string {
+	return p.Parameters
+}
+func (p *PtrDeleteIPv6Param) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *PtrDeleteIpv6Param) GetParamTemplateFile() string {
+func (p *PtrDeleteIPv6Param) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *PtrDeleteIpv6Param) SetGenerateSkeleton(v bool) {
+func (p *PtrDeleteIPv6Param) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *PtrDeleteIPv6Param) GetParameterFile() string {
+	return p.ParameterFile
+}
+func (p *PtrDeleteIPv6Param) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *PtrDeleteIpv6Param) GetGenerateSkeleton() bool {
+func (p *PtrDeleteIPv6Param) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *PtrDeleteIpv6Param) SetOutputType(v string) {
+func (p *PtrDeleteIPv6Param) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *PtrDeleteIpv6Param) GetOutputType() string {
+func (p *PtrDeleteIPv6Param) GetOutputType() string {
 	return p.OutputType
 }
-func (p *PtrDeleteIpv6Param) SetColumn(v []string) {
+func (p *PtrDeleteIPv6Param) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *PtrDeleteIpv6Param) GetColumn() []string {
+func (p *PtrDeleteIPv6Param) GetColumn() []string {
 	return p.Column
 }
-func (p *PtrDeleteIpv6Param) SetQuiet(v bool) {
+func (p *PtrDeleteIPv6Param) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *PtrDeleteIpv6Param) GetQuiet() bool {
+func (p *PtrDeleteIPv6Param) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *PtrDeleteIpv6Param) SetFormat(v string) {
+func (p *PtrDeleteIPv6Param) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *PtrDeleteIpv6Param) GetFormat() string {
+func (p *PtrDeleteIPv6Param) GetFormat() string {
 	return p.Format
 }
-func (p *PtrDeleteIpv6Param) SetFormatFile(v string) {
+func (p *PtrDeleteIPv6Param) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *PtrDeleteIpv6Param) GetFormatFile() string {
+func (p *PtrDeleteIPv6Param) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *PtrDeleteIpv6Param) SetQuery(v string) {
+func (p *PtrDeleteIPv6Param) SetQuery(v string) {
 	p.Query = v
 }
 
-func (p *PtrDeleteIpv6Param) GetQuery() string {
+func (p *PtrDeleteIPv6Param) GetQuery() string {
 	return p.Query
 }
-func (p *PtrDeleteIpv6Param) SetQueryFile(v string) {
+func (p *PtrDeleteIPv6Param) SetQueryFile(v string) {
 	p.QueryFile = v
 }
 
-func (p *PtrDeleteIpv6Param) GetQueryFile() string {
+func (p *PtrDeleteIPv6Param) GetQueryFile() string {
 	return p.QueryFile
 }

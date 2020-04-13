@@ -22,13 +22,13 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func ServerIsoInfo(ctx command.Context, params *params.IsoInfoServerParam) error {
+func ServerISOInfo(ctx command.Context, params *params.ISOInfoServerParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetServerAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("ServerIsoInfo is failed: %s", e)
+		return fmt.Errorf("ServerISOInfo is failed: %s", e)
 	}
 
 	if p.Instance.CDROM == nil || p.Instance.CDROM.ID == sacloud.EmptyID {

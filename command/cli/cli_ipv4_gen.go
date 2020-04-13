@@ -29,11 +29,11 @@ import (
 )
 
 func init() {
-	listParam := params.NewListIpv4Param()
-	ptrAddParam := params.NewPtrAddIpv4Param()
-	ptrReadParam := params.NewPtrReadIpv4Param()
-	ptrUpdateParam := params.NewPtrUpdateIpv4Param()
-	ptrDeleteParam := params.NewPtrDeleteIpv4Param()
+	ipv4ListParam := params.NewListIPv4Param()
+	ipv4PtrAddParam := params.NewPtrAddIPv4Param()
+	ipv4PtrReadParam := params.NewPtrReadIPv4Param()
+	ipv4PtrUpdateParam := params.NewPtrUpdateIPv4Param()
+	ipv4PtrDeleteParam := params.NewPtrDeleteIPv4Param()
 
 	cliCommand := &cli.Command{
 		Name:  "ipv4",
@@ -42,7 +42,7 @@ func init() {
 			{
 				Name:      "list",
 				Aliases:   []string{"ls", "find"},
-				Usage:     "List Ipv4",
+				Usage:     "List IPv4",
 				ArgsUsage: "IPAddress",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -72,8 +72,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -121,66 +129,72 @@ func init() {
 						return err
 					}
 
-					listParam.ParamTemplate = c.String("param-template")
-					listParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(listParam)
+					ipv4ListParam.ParamTemplate = c.String("param-template")
+					ipv4ListParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ipv4ListParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewListIpv4Param()
+						p := params.NewListIPv4Param()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(listParam, p, mergo.WithOverride)
+						mergo.Merge(ipv4ListParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("name") {
-						listParam.Name = c.StringSlice("name")
+						ipv4ListParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
+						ipv4ListParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("from") {
-						listParam.From = c.Int("from")
+						ipv4ListParam.From = c.Int("from")
 					}
 					if c.IsSet("max") {
-						listParam.Max = c.Int("max")
+						ipv4ListParam.Max = c.Int("max")
 					}
 					if c.IsSet("sort") {
-						listParam.Sort = c.StringSlice("sort")
+						ipv4ListParam.Sort = c.StringSlice("sort")
 					}
 					if c.IsSet("param-template") {
-						listParam.ParamTemplate = c.String("param-template")
+						ipv4ListParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						ipv4ListParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						listParam.ParamTemplateFile = c.String("param-template-file")
+						ipv4ListParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						ipv4ListParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						ipv4ListParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						listParam.OutputType = c.String("output-type")
+						ipv4ListParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						listParam.Column = c.StringSlice("column")
+						ipv4ListParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						listParam.Quiet = c.Bool("quiet")
+						ipv4ListParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						listParam.Format = c.String("format")
+						ipv4ListParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						listParam.FormatFile = c.String("format-file")
+						ipv4ListParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						listParam.Query = c.String("query")
+						ipv4ListParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						listParam.QueryFile = c.String("query-file")
+						ipv4ListParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -188,7 +202,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = listParam
+					var outputTypeHolder interface{} = ipv4ListParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -199,10 +213,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if listParam.GenerateSkeleton {
-						listParam.GenerateSkeleton = false
-						listParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(listParam, "", "\t")
+					if ipv4ListParam.GenerateSkeleton {
+						ipv4ListParam.GenerateSkeleton = false
+						ipv4ListParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(ipv4ListParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -211,21 +225,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := ipv4ListParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), listParam)
+					ctx := command.NewContext(c, c.Args().Slice(), ipv4ListParam)
 
 					// Run command with params
-					return funcs.Ipv4List(ctx, listParam)
+					return funcs.IPv4List(ctx, ipv4ListParam)
 
 				},
 			},
 			{
 				Name:      "ptr-add",
-				Usage:     "PtrAdd Ipv4",
+				Usage:     "PtrAdd IPv4",
 				ArgsUsage: "IPAddress",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -242,8 +256,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -291,57 +313,63 @@ func init() {
 						return err
 					}
 
-					ptrAddParam.ParamTemplate = c.String("param-template")
-					ptrAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ptrAddParam)
+					ipv4PtrAddParam.ParamTemplate = c.String("param-template")
+					ipv4PtrAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ipv4PtrAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPtrAddIpv4Param()
+						p := params.NewPtrAddIPv4Param()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ptrAddParam, p, mergo.WithOverride)
+						mergo.Merge(ipv4PtrAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("hostname") {
-						ptrAddParam.Hostname = c.String("hostname")
+						ipv4PtrAddParam.Hostname = c.String("hostname")
 					}
 					if c.IsSet("assumeyes") {
-						ptrAddParam.Assumeyes = c.Bool("assumeyes")
+						ipv4PtrAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						ptrAddParam.ParamTemplate = c.String("param-template")
+						ipv4PtrAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						ipv4PtrAddParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ptrAddParam.ParamTemplateFile = c.String("param-template-file")
+						ipv4PtrAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						ipv4PtrAddParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ptrAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						ipv4PtrAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						ptrAddParam.OutputType = c.String("output-type")
+						ipv4PtrAddParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						ptrAddParam.Column = c.StringSlice("column")
+						ipv4PtrAddParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						ptrAddParam.Quiet = c.Bool("quiet")
+						ipv4PtrAddParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						ptrAddParam.Format = c.String("format")
+						ipv4PtrAddParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						ptrAddParam.FormatFile = c.String("format-file")
+						ipv4PtrAddParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						ptrAddParam.Query = c.String("query")
+						ipv4PtrAddParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						ptrAddParam.QueryFile = c.String("query-file")
+						ipv4PtrAddParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -349,7 +377,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ptrAddParam
+					var outputTypeHolder interface{} = ipv4PtrAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -360,10 +388,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ptrAddParam.GenerateSkeleton {
-						ptrAddParam.GenerateSkeleton = false
-						ptrAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ptrAddParam, "", "\t")
+					if ipv4PtrAddParam.GenerateSkeleton {
+						ipv4PtrAddParam.GenerateSkeleton = false
+						ipv4PtrAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(ipv4PtrAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -372,15 +400,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ptrAddParam.Validate(); len(errors) > 0 {
+					if errors := ipv4PtrAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ptrAddParam)
+					ctx := command.NewContext(c, c.Args().Slice(), ipv4PtrAddParam)
 
 					// confirm
-					if !ptrAddParam.Assumeyes {
+					if !ipv4PtrAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -390,13 +418,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.Ipv4PtrAdd(ctx, ptrAddParam)
+					return funcs.IPv4PtrAdd(ctx, ipv4PtrAddParam)
 
 				},
 			},
 			{
 				Name:      "ptr-read",
-				Usage:     "PtrRead Ipv4",
+				Usage:     "PtrRead IPv4",
 				ArgsUsage: "IPAddress",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -404,8 +432,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -453,51 +489,57 @@ func init() {
 						return err
 					}
 
-					ptrReadParam.ParamTemplate = c.String("param-template")
-					ptrReadParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ptrReadParam)
+					ipv4PtrReadParam.ParamTemplate = c.String("param-template")
+					ipv4PtrReadParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ipv4PtrReadParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPtrReadIpv4Param()
+						p := params.NewPtrReadIPv4Param()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ptrReadParam, p, mergo.WithOverride)
+						mergo.Merge(ipv4PtrReadParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("param-template") {
-						ptrReadParam.ParamTemplate = c.String("param-template")
+						ipv4PtrReadParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						ipv4PtrReadParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ptrReadParam.ParamTemplateFile = c.String("param-template-file")
+						ipv4PtrReadParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						ipv4PtrReadParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ptrReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						ipv4PtrReadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						ptrReadParam.OutputType = c.String("output-type")
+						ipv4PtrReadParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						ptrReadParam.Column = c.StringSlice("column")
+						ipv4PtrReadParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						ptrReadParam.Quiet = c.Bool("quiet")
+						ipv4PtrReadParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						ptrReadParam.Format = c.String("format")
+						ipv4PtrReadParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						ptrReadParam.FormatFile = c.String("format-file")
+						ipv4PtrReadParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						ptrReadParam.Query = c.String("query")
+						ipv4PtrReadParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						ptrReadParam.QueryFile = c.String("query-file")
+						ipv4PtrReadParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -505,7 +547,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ptrReadParam
+					var outputTypeHolder interface{} = ipv4PtrReadParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -516,10 +558,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ptrReadParam.GenerateSkeleton {
-						ptrReadParam.GenerateSkeleton = false
-						ptrReadParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ptrReadParam, "", "\t")
+					if ipv4PtrReadParam.GenerateSkeleton {
+						ipv4PtrReadParam.GenerateSkeleton = false
+						ipv4PtrReadParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(ipv4PtrReadParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -528,21 +570,21 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ptrReadParam.Validate(); len(errors) > 0 {
+					if errors := ipv4PtrReadParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ptrReadParam)
+					ctx := command.NewContext(c, c.Args().Slice(), ipv4PtrReadParam)
 
 					// Run command with params
-					return funcs.Ipv4PtrRead(ctx, ptrReadParam)
+					return funcs.IPv4PtrRead(ctx, ipv4PtrReadParam)
 
 				},
 			},
 			{
 				Name:      "ptr-update",
-				Usage:     "PtrUpdate Ipv4",
+				Usage:     "PtrUpdate IPv4",
 				ArgsUsage: "IPAddress",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -559,8 +601,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -608,57 +658,63 @@ func init() {
 						return err
 					}
 
-					ptrUpdateParam.ParamTemplate = c.String("param-template")
-					ptrUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ptrUpdateParam)
+					ipv4PtrUpdateParam.ParamTemplate = c.String("param-template")
+					ipv4PtrUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ipv4PtrUpdateParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPtrUpdateIpv4Param()
+						p := params.NewPtrUpdateIPv4Param()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ptrUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(ipv4PtrUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("hostname") {
-						ptrUpdateParam.Hostname = c.String("hostname")
+						ipv4PtrUpdateParam.Hostname = c.String("hostname")
 					}
 					if c.IsSet("assumeyes") {
-						ptrUpdateParam.Assumeyes = c.Bool("assumeyes")
+						ipv4PtrUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						ptrUpdateParam.ParamTemplate = c.String("param-template")
+						ipv4PtrUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						ipv4PtrUpdateParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ptrUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						ipv4PtrUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						ipv4PtrUpdateParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ptrUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						ipv4PtrUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						ptrUpdateParam.OutputType = c.String("output-type")
+						ipv4PtrUpdateParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						ptrUpdateParam.Column = c.StringSlice("column")
+						ipv4PtrUpdateParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						ptrUpdateParam.Quiet = c.Bool("quiet")
+						ipv4PtrUpdateParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						ptrUpdateParam.Format = c.String("format")
+						ipv4PtrUpdateParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						ptrUpdateParam.FormatFile = c.String("format-file")
+						ipv4PtrUpdateParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						ptrUpdateParam.Query = c.String("query")
+						ipv4PtrUpdateParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						ptrUpdateParam.QueryFile = c.String("query-file")
+						ipv4PtrUpdateParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -666,7 +722,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ptrUpdateParam
+					var outputTypeHolder interface{} = ipv4PtrUpdateParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -677,10 +733,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ptrUpdateParam.GenerateSkeleton {
-						ptrUpdateParam.GenerateSkeleton = false
-						ptrUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ptrUpdateParam, "", "\t")
+					if ipv4PtrUpdateParam.GenerateSkeleton {
+						ipv4PtrUpdateParam.GenerateSkeleton = false
+						ipv4PtrUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(ipv4PtrUpdateParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -689,15 +745,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ptrUpdateParam.Validate(); len(errors) > 0 {
+					if errors := ipv4PtrUpdateParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ptrUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), ipv4PtrUpdateParam)
 
 					// confirm
-					if !ptrUpdateParam.Assumeyes {
+					if !ipv4PtrUpdateParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -707,13 +763,13 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.Ipv4PtrUpdate(ctx, ptrUpdateParam)
+					return funcs.IPv4PtrUpdate(ctx, ipv4PtrUpdateParam)
 
 				},
 			},
 			{
 				Name:      "ptr-delete",
-				Usage:     "PtrDelete Ipv4",
+				Usage:     "PtrDelete IPv4",
 				ArgsUsage: "IPAddress",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
@@ -726,8 +782,16 @@ func init() {
 						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
+						Name:  "parameters",
+						Usage: "Set input parameters from JSON string",
+					},
+					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:  "parameter-file",
+						Usage: "Set input parameters from file",
 					},
 					&cli.BoolFlag{
 						Name:  "generate-skeleton",
@@ -775,54 +839,60 @@ func init() {
 						return err
 					}
 
-					ptrDeleteParam.ParamTemplate = c.String("param-template")
-					ptrDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(ptrDeleteParam)
+					ipv4PtrDeleteParam.ParamTemplate = c.String("param-template")
+					ipv4PtrDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ipv4PtrDeleteParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewPtrDeleteIpv4Param()
+						p := params.NewPtrDeleteIPv4Param()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(ptrDeleteParam, p, mergo.WithOverride)
+						mergo.Merge(ipv4PtrDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("assumeyes") {
-						ptrDeleteParam.Assumeyes = c.Bool("assumeyes")
+						ipv4PtrDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						ptrDeleteParam.ParamTemplate = c.String("param-template")
+						ipv4PtrDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("parameters") {
+						ipv4PtrDeleteParam.Parameters = c.String("parameters")
 					}
 					if c.IsSet("param-template-file") {
-						ptrDeleteParam.ParamTemplateFile = c.String("param-template-file")
+						ipv4PtrDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("parameter-file") {
+						ipv4PtrDeleteParam.ParameterFile = c.String("parameter-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						ptrDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						ipv4PtrDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
-						ptrDeleteParam.OutputType = c.String("output-type")
+						ipv4PtrDeleteParam.OutputType = c.String("output-type")
 					}
 					if c.IsSet("column") {
-						ptrDeleteParam.Column = c.StringSlice("column")
+						ipv4PtrDeleteParam.Column = c.StringSlice("column")
 					}
 					if c.IsSet("quiet") {
-						ptrDeleteParam.Quiet = c.Bool("quiet")
+						ipv4PtrDeleteParam.Quiet = c.Bool("quiet")
 					}
 					if c.IsSet("format") {
-						ptrDeleteParam.Format = c.String("format")
+						ipv4PtrDeleteParam.Format = c.String("format")
 					}
 					if c.IsSet("format-file") {
-						ptrDeleteParam.FormatFile = c.String("format-file")
+						ipv4PtrDeleteParam.FormatFile = c.String("format-file")
 					}
 					if c.IsSet("query") {
-						ptrDeleteParam.Query = c.String("query")
+						ipv4PtrDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("query-file") {
-						ptrDeleteParam.QueryFile = c.String("query-file")
+						ipv4PtrDeleteParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -830,7 +900,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = ptrDeleteParam
+					var outputTypeHolder interface{} = ipv4PtrDeleteParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -841,10 +911,10 @@ func init() {
 					printWarning("")
 
 					// Generate skeleton
-					if ptrDeleteParam.GenerateSkeleton {
-						ptrDeleteParam.GenerateSkeleton = false
-						ptrDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(ptrDeleteParam, "", "\t")
+					if ipv4PtrDeleteParam.GenerateSkeleton {
+						ipv4PtrDeleteParam.GenerateSkeleton = false
+						ipv4PtrDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(ipv4PtrDeleteParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -853,15 +923,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ptrDeleteParam.Validate(); len(errors) > 0 {
+					if errors := ipv4PtrDeleteParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), ptrDeleteParam)
+					ctx := command.NewContext(c, c.Args().Slice(), ipv4PtrDeleteParam)
 
 					// confirm
-					if !ptrDeleteParam.Assumeyes {
+					if !ipv4PtrDeleteParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
@@ -871,7 +941,7 @@ func init() {
 					}
 
 					// Run command with params
-					return funcs.Ipv4PtrDelete(ctx, ptrDeleteParam)
+					return funcs.IPv4PtrDelete(ctx, ipv4PtrDeleteParam)
 
 				},
 			},
@@ -970,6 +1040,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("ipv4", "list", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("ipv4", "list", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("ipv4", "list", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -1035,6 +1115,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("ipv4", "ptr-add", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("ipv4", "ptr-add", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("ipv4", "ptr-add", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -1090,6 +1180,16 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("ipv4", "ptr-delete", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("ipv4", "ptr-delete", "parameters", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("ipv4", "ptr-delete", "query", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -1136,6 +1236,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("ipv4", "ptr-read", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("ipv4", "ptr-read", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("ipv4", "ptr-read", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -1196,6 +1306,16 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("ipv4", "ptr-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("ipv4", "ptr-update", "parameter-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("ipv4", "ptr-update", "parameters", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

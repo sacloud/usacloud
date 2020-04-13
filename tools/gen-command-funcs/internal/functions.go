@@ -27,7 +27,7 @@ func generateSetParamActions(ctx *tools.GenerateContext, command *schema.Command
 
 	b := bytes.NewBufferString("")
 
-	for _, param := range command.BuildedParams() {
+	for _, param := range command.BuiltParams() {
 		p := param.Param
 		k := param.ParamKey
 

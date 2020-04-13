@@ -26,7 +26,9 @@ import (
 // CsvBillParam is input parameters for the sacloud API
 type CsvBillParam struct {
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	NoHeader          bool       `json:"no-header"`
 	BillOutput        string     `json:"bill-output"`
@@ -43,8 +45,14 @@ func (p *CsvBillParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -106,12 +114,26 @@ func (p *CsvBillParam) SetParamTemplate(v string) {
 func (p *CsvBillParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CsvBillParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CsvBillParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CsvBillParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CsvBillParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CsvBillParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CsvBillParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CsvBillParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -147,7 +169,9 @@ type ListBillParam struct {
 	Year              int      `json:"year"`
 	Month             int      `json:"month"`
 	ParamTemplate     string   `json:"param-template"`
+	Parameters        string   `json:"parameters"`
 	ParamTemplateFile string   `json:"param-template-file"`
+	ParameterFile     string   `json:"parameter-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
 	OutputType        string   `json:"output-type"`
 	Column            []string `json:"column"`
@@ -174,8 +198,14 @@ func (p *ListBillParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -290,12 +320,26 @@ func (p *ListBillParam) SetParamTemplate(v string) {
 func (p *ListBillParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListBillParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListBillParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListBillParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListBillParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListBillParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListBillParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListBillParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v

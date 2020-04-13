@@ -34,7 +34,9 @@ type ListStartupScriptParam struct {
 	Max               int          `json:"max"`
 	Sort              []string     `json:"sort"`
 	ParamTemplate     string       `json:"param-template"`
+	Parameters        string       `json:"parameters"`
 	ParamTemplateFile string       `json:"param-template-file"`
+	ParameterFile     string       `json:"parameter-file"`
 	GenerateSkeleton  bool         `json:"generate-skeleton"`
 	OutputType        string       `json:"output-type"`
 	Column            []string     `json:"column"`
@@ -79,8 +81,14 @@ func (p *ListStartupScriptParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -262,12 +270,26 @@ func (p *ListStartupScriptParam) SetParamTemplate(v string) {
 func (p *ListStartupScriptParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ListStartupScriptParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ListStartupScriptParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ListStartupScriptParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ListStartupScriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListStartupScriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ListStartupScriptParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ListStartupScriptParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -336,7 +358,9 @@ type CreateStartupScriptParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -381,8 +405,14 @@ func (p *CreateStartupScriptParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -576,12 +606,26 @@ func (p *CreateStartupScriptParam) SetParamTemplate(v string) {
 func (p *CreateStartupScriptParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *CreateStartupScriptParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *CreateStartupScriptParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *CreateStartupScriptParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *CreateStartupScriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *CreateStartupScriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *CreateStartupScriptParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *CreateStartupScriptParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -644,7 +688,9 @@ func (p *CreateStartupScriptParam) GetQueryFile() string {
 type ReadStartupScriptParam struct {
 	Selector          []string   `json:"selector"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -669,8 +715,14 @@ func (p *ReadStartupScriptParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -774,12 +826,26 @@ func (p *ReadStartupScriptParam) SetParamTemplate(v string) {
 func (p *ReadStartupScriptParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *ReadStartupScriptParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *ReadStartupScriptParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *ReadStartupScriptParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *ReadStartupScriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadStartupScriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *ReadStartupScriptParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *ReadStartupScriptParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -856,7 +922,9 @@ type UpdateStartupScriptParam struct {
 	IconId            sacloud.ID `json:"icon-id"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -902,8 +970,14 @@ func (p *UpdateStartupScriptParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1100,12 +1174,26 @@ func (p *UpdateStartupScriptParam) SetParamTemplate(v string) {
 func (p *UpdateStartupScriptParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *UpdateStartupScriptParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *UpdateStartupScriptParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *UpdateStartupScriptParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *UpdateStartupScriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *UpdateStartupScriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *UpdateStartupScriptParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *UpdateStartupScriptParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
@@ -1176,7 +1264,9 @@ type DeleteStartupScriptParam struct {
 	Selector          []string   `json:"selector"`
 	Assumeyes         bool       `json:"assumeyes"`
 	ParamTemplate     string     `json:"param-template"`
+	Parameters        string     `json:"parameters"`
 	ParamTemplateFile string     `json:"param-template-file"`
+	ParameterFile     string     `json:"parameter-file"`
 	GenerateSkeleton  bool       `json:"generate-skeleton"`
 	OutputType        string     `json:"output-type"`
 	Column            []string   `json:"column"`
@@ -1204,8 +1294,14 @@ func (p *DeleteStartupScriptParam) FillValueToSkeleton() {
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
+	if isEmpty(p.Parameters) {
+		p.Parameters = ""
+	}
 	if isEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.ParameterFile) {
+		p.ParameterFile = ""
 	}
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
@@ -1316,12 +1412,26 @@ func (p *DeleteStartupScriptParam) SetParamTemplate(v string) {
 func (p *DeleteStartupScriptParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
+func (p *DeleteStartupScriptParam) SetParameters(v string) {
+	p.Parameters = v
+}
+
+func (p *DeleteStartupScriptParam) GetParameters() string {
+	return p.Parameters
+}
 func (p *DeleteStartupScriptParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
 func (p *DeleteStartupScriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteStartupScriptParam) SetParameterFile(v string) {
+	p.ParameterFile = v
+}
+
+func (p *DeleteStartupScriptParam) GetParameterFile() string {
+	return p.ParameterFile
 }
 func (p *DeleteStartupScriptParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
