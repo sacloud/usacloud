@@ -34,8 +34,9 @@ func mobileGatewayCmd() *cobra.Command {
 		Use:   "mobile-gateway",
 		Short: "A manage commands of MobileGateway",
 		Long:  `A manage commands of MobileGateway`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

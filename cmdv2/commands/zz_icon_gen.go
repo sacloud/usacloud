@@ -34,8 +34,9 @@ func iconCmd() *cobra.Command {
 		Use:   "icon",
 		Short: "A manage commands of Icon",
 		Long:  `A manage commands of Icon`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

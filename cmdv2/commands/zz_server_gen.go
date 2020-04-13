@@ -34,8 +34,9 @@ func serverCmd() *cobra.Command {
 		Use:   "server",
 		Short: "A manage commands of Server",
 		Long:  `A manage commands of Server`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

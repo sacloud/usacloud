@@ -28,8 +28,8 @@ func couponCmd() *cobra.Command {
 		Use:   "coupon",
 		Short: "A manage commands of Coupon",
 		Long:  `A manage commands of Coupon`,
-		Run: func(cmd *cobra.Command, args []string) {
-			// TODO not implements: call list func as default
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return runDefaultCmd(cmd, args, "list")
 		},
 	}
 }

@@ -34,8 +34,9 @@ func dnsCmd() *cobra.Command {
 		Use:   "dns",
 		Short: "A manage commands of DNS",
 		Long:  `A manage commands of DNS`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

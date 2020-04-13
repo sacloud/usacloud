@@ -34,8 +34,9 @@ func simCmd() *cobra.Command {
 		Use:   "sim",
 		Short: "A manage commands of SIM",
 		Long:  `A manage commands of SIM`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

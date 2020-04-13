@@ -34,8 +34,9 @@ func switchCmd() *cobra.Command {
 		Use:   "switch",
 		Short: "A manage commands of Switch",
 		Long:  `A manage commands of Switch`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

@@ -34,8 +34,9 @@ func vpcRouterCmd() *cobra.Command {
 		Use:   "vpc-router",
 		Short: "A manage commands of VPCRouter",
 		Long:  `A manage commands of VPCRouter`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

@@ -34,8 +34,9 @@ func startupScriptCmd() *cobra.Command {
 		Use:   "startup-script",
 		Short: "A manage commands of StartupScript",
 		Long:  `A manage commands of StartupScript`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

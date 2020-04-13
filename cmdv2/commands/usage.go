@@ -69,6 +69,15 @@ func lookupCmd(cmd *cobra.Command, name string) *cobra.Command {
 	return nil
 }
 
+func runDefaultCmd(cmd *cobra.Command, args []string, commandName string) error {
+	defaultCmd := lookupCmd(cmd, commandName)
+	if defaultCmd == nil {
+		cmd.HelpFunc()(cmd, args)
+		return nil
+	}
+	return defaultCmd.RunE(defaultCmd, args)
+}
+
 const originalFlagsUsage = `Flags:
 {{.LocalFlags.FlagUsages | trimTrailingWhitespaces}}`
 

@@ -34,8 +34,9 @@ func internetCmd() *cobra.Command {
 		Use:   "internet",
 		Short: "A manage commands of Internet",
 		Long:  `A manage commands of Internet`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

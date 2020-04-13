@@ -28,8 +28,8 @@ func selfCmd() *cobra.Command {
 		Use:   "self",
 		Short: "Show self info",
 		Long:  `Show self info`,
-		Run: func(cmd *cobra.Command, args []string) {
-			// TODO not implements: call info func as default
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return runDefaultCmd(cmd, args, "info")
 		},
 	}
 }

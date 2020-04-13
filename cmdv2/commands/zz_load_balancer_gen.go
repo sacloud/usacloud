@@ -34,8 +34,9 @@ func loadBalancerCmd() *cobra.Command {
 		Use:   "load-balancer",
 		Short: "A manage commands of LoadBalancer",
 		Long:  `A manage commands of LoadBalancer`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }

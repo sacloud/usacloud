@@ -34,8 +34,9 @@ func databaseCmd() *cobra.Command {
 		Use:   "database",
 		Short: "A manage commands of Database",
 		Long:  `A manage commands of Database`,
-		Run: func(cmd *cobra.Command, args []string) {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
+			return nil
 		},
 	}
 }
