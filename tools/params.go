@@ -77,6 +77,9 @@ func (p *Parameter) FlagDefinitionStatement() string {
 	shorthands := p.FlagNameShorthands()
 	value := p.DefaultValueOnSource()
 	usage := p.Description
+	if len(p.LongAliases()) > 0 {
+		usage = fmt.Sprintf("%s (aliases: %s)", usage, strings.Join(p.LongAliases(), ", "))
+	}
 
 	statement := ""
 	switch p.Type {
