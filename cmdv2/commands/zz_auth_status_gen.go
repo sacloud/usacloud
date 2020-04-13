@@ -76,6 +76,7 @@ func authStatusShowCmd() *cobra.Command {
 	fs.StringVarP(&authStatusShowParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&authStatusShowParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&authStatusShowParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(authStatusShowNormalizeFlagNames)
 	buildFlagsUsage(cmd, authStatusShowFlagOrder(cmd))
 	return cmd
 }

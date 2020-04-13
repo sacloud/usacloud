@@ -77,6 +77,7 @@ func summaryShowCmd() *cobra.Command {
 	fs.StringVarP(&summaryShowParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&summaryShowParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.BoolVarP(&summaryShowParam.PaidResourcesOnly, "paid-resources-only", "", false, "Show paid-resource only")
+	fs.SetNormalizeFunc(summaryShowNormalizeFlagNames)
 	buildFlagsUsage(cmd, summaryShowFlagOrder(cmd))
 	return cmd
 }

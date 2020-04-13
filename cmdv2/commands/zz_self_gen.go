@@ -69,6 +69,7 @@ func selfInfoCmd() *cobra.Command {
 	fs.StringVarP(&selfInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&selfInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&selfInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.SetNormalizeFunc(selfInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, selfInfoFlagOrder(cmd))
 	return cmd
 }

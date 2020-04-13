@@ -88,6 +88,7 @@ func internetListCmd() *cobra.Command {
 	fs.StringVarP(&internetListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&internetListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(internetListNormalizeFlagNames)
 	buildFlagsUsage(cmd, internetListFlagOrder(cmd))
 	return cmd
 }
@@ -152,6 +153,7 @@ func internetCreateCmd() *cobra.Command {
 	fs.StringVarP(&internetCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&internetCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(internetCreateNormalizeFlagNames)
 	buildFlagsUsage(cmd, internetCreateFlagOrder(cmd))
 	return cmd
 }
@@ -221,6 +223,7 @@ func internetReadCmd() *cobra.Command {
 	fs.StringVarP(&internetReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetReadParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(internetReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, internetReadFlagOrder(cmd))
 	return cmd
 }
@@ -307,6 +310,7 @@ func internetUpdateCmd() *cobra.Command {
 	fs.StringVarP(&internetUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(internetUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, internetUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -388,6 +392,7 @@ func internetDeleteCmd() *cobra.Command {
 	fs.StringVarP(&internetDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(internetDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, internetDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -470,6 +475,7 @@ func internetUpdateBandwidthCmd() *cobra.Command {
 	fs.StringVarP(&internetUpdateBandwidthParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetUpdateBandwidthParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetUpdateBandwidthParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(internetUpdateBandwidthNormalizeFlagNames)
 	buildFlagsUsage(cmd, internetUpdateBandwidthFlagOrder(cmd))
 	return cmd
 }
@@ -539,6 +545,7 @@ func internetSubnetInfoCmd() *cobra.Command {
 	fs.StringVarP(&internetSubnetInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetSubnetInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetSubnetInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(internetSubnetInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, internetSubnetInfoFlagOrder(cmd))
 	return cmd
 }
@@ -622,6 +629,7 @@ func internetSubnetAddCmd() *cobra.Command {
 	fs.StringVarP(&internetSubnetAddParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetSubnetAddParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetSubnetAddParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(internetSubnetAddNormalizeFlagNames)
 	buildFlagsUsage(cmd, internetSubnetAddFlagOrder(cmd))
 	return cmd
 }
@@ -697,6 +705,7 @@ func internetSubnetDeleteCmd() *cobra.Command {
 	fs.StringVarP(&internetSubnetDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&internetSubnetDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &internetSubnetDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(internetSubnetDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, internetSubnetDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -780,6 +789,7 @@ func internetSubnetUpdateCmd() *cobra.Command {
 	fs.StringVarP(&internetSubnetUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetSubnetUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetSubnetUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(internetSubnetUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, internetSubnetUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -849,6 +859,7 @@ func internetIPv6InfoCmd() *cobra.Command {
 	fs.StringVarP(&internetIPv6InfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetIPv6InfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetIPv6InfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(internetIPv6InfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, internetIPv6InfoFlagOrder(cmd))
 	return cmd
 }
@@ -930,6 +941,7 @@ func internetIPv6EnableCmd() *cobra.Command {
 	fs.StringVarP(&internetIPv6EnableParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetIPv6EnableParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetIPv6EnableParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(internetIPv6EnableNormalizeFlagNames)
 	buildFlagsUsage(cmd, internetIPv6EnableFlagOrder(cmd))
 	return cmd
 }
@@ -1004,6 +1016,7 @@ func internetIPv6DisableCmd() *cobra.Command {
 	fs.StringVarP(&internetIPv6DisableParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&internetIPv6DisableParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &internetIPv6DisableParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(internetIPv6DisableNormalizeFlagNames)
 	buildFlagsUsage(cmd, internetIPv6DisableFlagOrder(cmd))
 	return cmd
 }
@@ -1076,6 +1089,7 @@ func internetMonitorCmd() *cobra.Command {
 	fs.StringVarP(&internetMonitorParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&internetMonitorParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &internetMonitorParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(internetMonitorNormalizeFlagNames)
 	buildFlagsUsage(cmd, internetMonitorFlagOrder(cmd))
 	return cmd
 }

@@ -88,6 +88,7 @@ func vpcRouterListCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&vpcRouterListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(vpcRouterListNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterListFlagOrder(cmd))
 	return cmd
 }
@@ -158,6 +159,7 @@ func vpcRouterCreateCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&vpcRouterCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(vpcRouterCreateNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterCreateFlagOrder(cmd))
 	return cmd
 }
@@ -227,6 +229,7 @@ func vpcRouterReadCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterReadParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterReadFlagOrder(cmd))
 	return cmd
 }
@@ -314,6 +317,7 @@ func vpcRouterUpdateCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -396,6 +400,7 @@ func vpcRouterDeleteCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -470,6 +475,7 @@ func vpcRouterBootCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterBootParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterBootNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterBootFlagOrder(cmd))
 	return cmd
 }
@@ -544,6 +550,7 @@ func vpcRouterShutdownCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterShutdownParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterShutdownNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterShutdownFlagOrder(cmd))
 	return cmd
 }
@@ -618,6 +625,7 @@ func vpcRouterShutdownForceCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterShutdownForceParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterShutdownForceNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterShutdownForceFlagOrder(cmd))
 	return cmd
 }
@@ -692,6 +700,7 @@ func vpcRouterResetCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterResetParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterResetNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterResetFlagOrder(cmd))
 	return cmd
 }
@@ -754,6 +763,7 @@ func vpcRouterWaitForBootCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterWaitForBootParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterWaitForBootNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterWaitForBootFlagOrder(cmd))
 	return cmd
 }
@@ -816,6 +826,7 @@ func vpcRouterWaitForDownCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterWaitForDownParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterWaitForDownNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterWaitForDownFlagOrder(cmd))
 	return cmd
 }
@@ -890,6 +901,7 @@ func vpcRouterEnableInternetConnectionCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterEnableInternetConnectionParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterEnableInternetConnectionParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterEnableInternetConnectionParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterEnableInternetConnectionNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterEnableInternetConnectionFlagOrder(cmd))
 	return cmd
 }
@@ -964,6 +976,7 @@ func vpcRouterDisableInternetConnectionCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterDisableInternetConnectionParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterDisableInternetConnectionParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterDisableInternetConnectionParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterDisableInternetConnectionNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterDisableInternetConnectionFlagOrder(cmd))
 	return cmd
 }
@@ -1033,6 +1046,7 @@ func vpcRouterInterfaceInfoCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterInterfaceInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterInterfaceInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterInterfaceInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterInterfaceInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterInterfaceInfoFlagOrder(cmd))
 	return cmd
 }
@@ -1114,6 +1128,7 @@ func vpcRouterInterfaceConnectCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterInterfaceConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterInterfaceConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterInterfaceConnectParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterInterfaceConnectNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterInterfaceConnectFlagOrder(cmd))
 	return cmd
 }
@@ -1196,6 +1211,7 @@ func vpcRouterInterfaceUpdateCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterInterfaceUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterInterfaceUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterInterfaceUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterInterfaceUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterInterfaceUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -1272,6 +1288,7 @@ func vpcRouterInterfaceDisconnectCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterInterfaceDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterInterfaceDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterInterfaceDisconnectParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterInterfaceDisconnectNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterInterfaceDisconnectFlagOrder(cmd))
 	return cmd
 }
@@ -1341,6 +1358,7 @@ func vpcRouterStaticNatInfoCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterStaticNatInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterStaticNatInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterStaticNatInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterStaticNatInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterStaticNatInfoFlagOrder(cmd))
 	return cmd
 }
@@ -1418,6 +1436,7 @@ func vpcRouterStaticNatAddCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterStaticNatAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterStaticNatAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterStaticNatAddParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterStaticNatAddNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterStaticNatAddFlagOrder(cmd))
 	return cmd
 }
@@ -1496,6 +1515,7 @@ func vpcRouterStaticNatUpdateCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterStaticNatUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterStaticNatUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterStaticNatUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterStaticNatUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterStaticNatUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -1571,6 +1591,7 @@ func vpcRouterStaticNatDeleteCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterStaticNatDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterStaticNatDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterStaticNatDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterStaticNatDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterStaticNatDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -1640,6 +1661,7 @@ func vpcRouterPortForwardingInfoCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterPortForwardingInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterPortForwardingInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterPortForwardingInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterPortForwardingInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterPortForwardingInfoFlagOrder(cmd))
 	return cmd
 }
@@ -1719,6 +1741,7 @@ func vpcRouterPortForwardingAddCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterPortForwardingAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterPortForwardingAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterPortForwardingAddParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterPortForwardingAddNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterPortForwardingAddFlagOrder(cmd))
 	return cmd
 }
@@ -1799,6 +1822,7 @@ func vpcRouterPortForwardingUpdateCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterPortForwardingUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterPortForwardingUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterPortForwardingUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterPortForwardingUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterPortForwardingUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -1874,6 +1898,7 @@ func vpcRouterPortForwardingDeleteCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterPortForwardingDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterPortForwardingDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterPortForwardingDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterPortForwardingDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterPortForwardingDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -1945,6 +1970,7 @@ func vpcRouterFirewallInfoCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterFirewallInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterFirewallInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterFirewallInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterFirewallInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterFirewallInfoFlagOrder(cmd))
 	return cmd
 }
@@ -2029,6 +2055,7 @@ func vpcRouterFirewallAddCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterFirewallAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterFirewallAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterFirewallAddParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterFirewallAddNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterFirewallAddFlagOrder(cmd))
 	return cmd
 }
@@ -2114,6 +2141,7 @@ func vpcRouterFirewallUpdateCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterFirewallUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterFirewallUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterFirewallUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterFirewallUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterFirewallUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -2191,6 +2219,7 @@ func vpcRouterFirewallDeleteCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterFirewallDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterFirewallDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterFirewallDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterFirewallDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterFirewallDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -2260,6 +2289,7 @@ func vpcRouterDhcpServerInfoCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterDhcpServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterDhcpServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterDhcpServerInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterDhcpServerInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterDhcpServerInfoFlagOrder(cmd))
 	return cmd
 }
@@ -2338,6 +2368,7 @@ func vpcRouterDhcpServerAddCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterDhcpServerAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterDhcpServerAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterDhcpServerAddParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterDhcpServerAddNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterDhcpServerAddFlagOrder(cmd))
 	return cmd
 }
@@ -2416,6 +2447,7 @@ func vpcRouterDhcpServerUpdateCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterDhcpServerUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterDhcpServerUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterDhcpServerUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterDhcpServerUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterDhcpServerUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -2491,6 +2523,7 @@ func vpcRouterDhcpServerDeleteCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterDhcpServerDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterDhcpServerDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterDhcpServerDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterDhcpServerDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterDhcpServerDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -2560,6 +2593,7 @@ func vpcRouterDhcpStaticMappingInfoCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterDhcpStaticMappingInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterDhcpStaticMappingInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterDhcpStaticMappingInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterDhcpStaticMappingInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterDhcpStaticMappingInfoFlagOrder(cmd))
 	return cmd
 }
@@ -2636,6 +2670,7 @@ func vpcRouterDhcpStaticMappingAddCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterDhcpStaticMappingAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterDhcpStaticMappingAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterDhcpStaticMappingAddParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterDhcpStaticMappingAddNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterDhcpStaticMappingAddFlagOrder(cmd))
 	return cmd
 }
@@ -2713,6 +2748,7 @@ func vpcRouterDhcpStaticMappingUpdateCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterDhcpStaticMappingUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterDhcpStaticMappingUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterDhcpStaticMappingUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterDhcpStaticMappingUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterDhcpStaticMappingUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -2788,6 +2824,7 @@ func vpcRouterDhcpStaticMappingDeleteCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterDhcpStaticMappingDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterDhcpStaticMappingDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterDhcpStaticMappingDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterDhcpStaticMappingDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterDhcpStaticMappingDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -2857,6 +2894,7 @@ func vpcRouterPptpServerInfoCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterPptpServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterPptpServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterPptpServerInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterPptpServerInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterPptpServerInfoFlagOrder(cmd))
 	return cmd
 }
@@ -2934,6 +2972,7 @@ func vpcRouterPptpServerUpdateCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterPptpServerUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterPptpServerUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterPptpServerUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterPptpServerUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterPptpServerUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -3003,6 +3042,7 @@ func vpcRouterL2TPServerInfoCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterL2TPServerInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterL2TPServerInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterL2TPServerInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterL2TPServerInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterL2TPServerInfoFlagOrder(cmd))
 	return cmd
 }
@@ -3081,6 +3121,7 @@ func vpcRouterL2TPServerUpdateCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterL2TPServerUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterL2TPServerUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterL2TPServerUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterL2TPServerUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterL2TPServerUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -3150,6 +3191,7 @@ func vpcRouterUserInfoCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterUserInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterUserInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterUserInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterUserInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterUserInfoFlagOrder(cmd))
 	return cmd
 }
@@ -3226,6 +3268,7 @@ func vpcRouterUserAddCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterUserAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterUserAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterUserAddParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterUserAddNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterUserAddFlagOrder(cmd))
 	return cmd
 }
@@ -3303,6 +3346,7 @@ func vpcRouterUserUpdateCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterUserUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterUserUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterUserUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterUserUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterUserUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -3378,6 +3422,7 @@ func vpcRouterUserDeleteCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterUserDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterUserDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterUserDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterUserDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterUserDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -3447,6 +3492,7 @@ func vpcRouterSiteToSiteVPNInfoCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterSiteToSiteVPNInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterSiteToSiteVPNInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterSiteToSiteVPNInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterSiteToSiteVPNInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterSiteToSiteVPNInfoFlagOrder(cmd))
 	return cmd
 }
@@ -3526,6 +3572,7 @@ func vpcRouterSiteToSiteVPNAddCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterSiteToSiteVPNAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterSiteToSiteVPNAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterSiteToSiteVPNAddParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterSiteToSiteVPNAddNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterSiteToSiteVPNAddFlagOrder(cmd))
 	return cmd
 }
@@ -3606,6 +3653,7 @@ func vpcRouterSiteToSiteVPNUpdateCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterSiteToSiteVPNUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterSiteToSiteVPNUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterSiteToSiteVPNUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterSiteToSiteVPNUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterSiteToSiteVPNUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -3681,6 +3729,7 @@ func vpcRouterSiteToSiteVPNDeleteCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterSiteToSiteVPNDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterSiteToSiteVPNDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterSiteToSiteVPNDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterSiteToSiteVPNDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterSiteToSiteVPNDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -3750,6 +3799,7 @@ func vpcRouterSiteToSiteVPNPeersCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterSiteToSiteVPNPeersParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterSiteToSiteVPNPeersParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterSiteToSiteVPNPeersParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterSiteToSiteVPNPeersNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterSiteToSiteVPNPeersFlagOrder(cmd))
 	return cmd
 }
@@ -3819,6 +3869,7 @@ func vpcRouterStaticRouteInfoCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterStaticRouteInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterStaticRouteInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterStaticRouteInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterStaticRouteInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterStaticRouteInfoFlagOrder(cmd))
 	return cmd
 }
@@ -3895,6 +3946,7 @@ func vpcRouterStaticRouteAddCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterStaticRouteAddParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterStaticRouteAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterStaticRouteAddParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterStaticRouteAddNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterStaticRouteAddFlagOrder(cmd))
 	return cmd
 }
@@ -3972,6 +4024,7 @@ func vpcRouterStaticRouteUpdateCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterStaticRouteUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterStaticRouteUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterStaticRouteUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterStaticRouteUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterStaticRouteUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -4047,6 +4100,7 @@ func vpcRouterStaticRouteDeleteCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterStaticRouteDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterStaticRouteDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterStaticRouteDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterStaticRouteDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterStaticRouteDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -4120,6 +4174,7 @@ func vpcRouterMonitorCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterMonitorParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&vpcRouterMonitorParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &vpcRouterMonitorParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterMonitorNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterMonitorFlagOrder(cmd))
 	return cmd
 }
@@ -4186,6 +4241,7 @@ func vpcRouterLogsCmd() *cobra.Command {
 	fs.StringVarP(&vpcRouterLogsParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&vpcRouterLogsParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &vpcRouterLogsParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(vpcRouterLogsNormalizeFlagNames)
 	buildFlagsUsage(cmd, vpcRouterLogsFlagOrder(cmd))
 	return cmd
 }

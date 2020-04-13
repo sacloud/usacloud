@@ -89,6 +89,7 @@ func iconListCmd() *cobra.Command {
 	fs.StringVarP(&iconListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&iconListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&iconListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(iconListNormalizeFlagNames)
 	buildFlagsUsage(cmd, iconListFlagOrder(cmd))
 	return cmd
 }
@@ -150,6 +151,7 @@ func iconCreateCmd() *cobra.Command {
 	fs.StringVarP(&iconCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&iconCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&iconCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(iconCreateNormalizeFlagNames)
 	buildFlagsUsage(cmd, iconCreateFlagOrder(cmd))
 	return cmd
 }
@@ -219,6 +221,7 @@ func iconReadCmd() *cobra.Command {
 	fs.StringVarP(&iconReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&iconReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &iconReadParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(iconReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, iconReadFlagOrder(cmd))
 	return cmd
 }
@@ -302,6 +305,7 @@ func iconUpdateCmd() *cobra.Command {
 	fs.StringVarP(&iconUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&iconUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &iconUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(iconUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, iconUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -383,6 +387,7 @@ func iconDeleteCmd() *cobra.Command {
 	fs.StringVarP(&iconDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&iconDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &iconDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(iconDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, iconDeleteFlagOrder(cmd))
 	return cmd
 }

@@ -72,6 +72,7 @@ func configCurrentCmd() *cobra.Command {
 	fs.StringVarP(&configCurrentParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configCurrentParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configCurrentParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.SetNormalizeFunc(configCurrentNormalizeFlagNames)
 	buildFlagsUsage(cmd, configCurrentFlagOrder(cmd))
 	return cmd
 }
@@ -123,6 +124,7 @@ func configDeleteCmd() *cobra.Command {
 	fs.StringVarP(&configDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.SetNormalizeFunc(configDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, configDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -166,6 +168,7 @@ func configEditCmd() *cobra.Command {
 	fs.StringVarP(&configEditParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configEditParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configEditParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.SetNormalizeFunc(configEditNormalizeFlagNames)
 	buildFlagsUsage(cmd, configEditFlagOrder(cmd))
 	return cmd
 }
@@ -205,6 +208,7 @@ func configListCmd() *cobra.Command {
 	fs.StringVarP(&configListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.SetNormalizeFunc(configListNormalizeFlagNames)
 	buildFlagsUsage(cmd, configListFlagOrder(cmd))
 	return cmd
 }
@@ -244,6 +248,7 @@ func configMigrateCmd() *cobra.Command {
 	fs.StringVarP(&configMigrateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configMigrateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configMigrateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.SetNormalizeFunc(configMigrateNormalizeFlagNames)
 	buildFlagsUsage(cmd, configMigrateFlagOrder(cmd))
 	return cmd
 }
@@ -283,6 +288,7 @@ func configShowCmd() *cobra.Command {
 	fs.StringVarP(&configShowParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configShowParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configShowParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.SetNormalizeFunc(configShowNormalizeFlagNames)
 	buildFlagsUsage(cmd, configShowFlagOrder(cmd))
 	return cmd
 }
@@ -322,6 +328,7 @@ func configUseCmd() *cobra.Command {
 	fs.StringVarP(&configUseParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configUseParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configUseParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
+	fs.SetNormalizeFunc(configUseNormalizeFlagNames)
 	buildFlagsUsage(cmd, configUseFlagOrder(cmd))
 	return cmd
 }

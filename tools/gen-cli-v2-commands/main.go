@@ -167,6 +167,7 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 {{ range .Params -}}
 	fs.{{ .FlagDefinitionStatement }}
 {{ end -}}
+	fs.SetNormalizeFunc({{ .CLINormalizeFlagsFuncName }})
 	buildFlagsUsage(cmd, {{.FlagOrderFunc}}(cmd))
 {{ end -}}
 

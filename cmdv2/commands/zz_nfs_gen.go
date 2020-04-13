@@ -88,6 +88,7 @@ func nfsListCmd() *cobra.Command {
 	fs.StringVarP(&nfsListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&nfsListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&nfsListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(nfsListNormalizeFlagNames)
 	buildFlagsUsage(cmd, nfsListFlagOrder(cmd))
 	return cmd
 }
@@ -156,6 +157,7 @@ func nfsCreateCmd() *cobra.Command {
 	fs.StringVarP(&nfsCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&nfsCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&nfsCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(nfsCreateNormalizeFlagNames)
 	buildFlagsUsage(cmd, nfsCreateFlagOrder(cmd))
 	return cmd
 }
@@ -225,6 +227,7 @@ func nfsReadCmd() *cobra.Command {
 	fs.StringVarP(&nfsReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&nfsReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &nfsReadParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(nfsReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, nfsReadFlagOrder(cmd))
 	return cmd
 }
@@ -310,6 +313,7 @@ func nfsUpdateCmd() *cobra.Command {
 	fs.StringVarP(&nfsUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&nfsUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &nfsUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(nfsUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, nfsUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -392,6 +396,7 @@ func nfsDeleteCmd() *cobra.Command {
 	fs.StringVarP(&nfsDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&nfsDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &nfsDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(nfsDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, nfsDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -466,6 +471,7 @@ func nfsBootCmd() *cobra.Command {
 	fs.StringVarP(&nfsBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&nfsBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &nfsBootParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(nfsBootNormalizeFlagNames)
 	buildFlagsUsage(cmd, nfsBootFlagOrder(cmd))
 	return cmd
 }
@@ -540,6 +546,7 @@ func nfsShutdownCmd() *cobra.Command {
 	fs.StringVarP(&nfsShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&nfsShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &nfsShutdownParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(nfsShutdownNormalizeFlagNames)
 	buildFlagsUsage(cmd, nfsShutdownFlagOrder(cmd))
 	return cmd
 }
@@ -614,6 +621,7 @@ func nfsShutdownForceCmd() *cobra.Command {
 	fs.StringVarP(&nfsShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&nfsShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &nfsShutdownForceParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(nfsShutdownForceNormalizeFlagNames)
 	buildFlagsUsage(cmd, nfsShutdownForceFlagOrder(cmd))
 	return cmd
 }
@@ -688,6 +696,7 @@ func nfsResetCmd() *cobra.Command {
 	fs.StringVarP(&nfsResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&nfsResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &nfsResetParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(nfsResetNormalizeFlagNames)
 	buildFlagsUsage(cmd, nfsResetFlagOrder(cmd))
 	return cmd
 }
@@ -750,6 +759,7 @@ func nfsWaitForBootCmd() *cobra.Command {
 	fs.StringVarP(&nfsWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&nfsWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &nfsWaitForBootParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(nfsWaitForBootNormalizeFlagNames)
 	buildFlagsUsage(cmd, nfsWaitForBootFlagOrder(cmd))
 	return cmd
 }
@@ -812,6 +822,7 @@ func nfsWaitForDownCmd() *cobra.Command {
 	fs.StringVarP(&nfsWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&nfsWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &nfsWaitForDownParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(nfsWaitForDownNormalizeFlagNames)
 	buildFlagsUsage(cmd, nfsWaitForDownFlagOrder(cmd))
 	return cmd
 }
@@ -884,6 +895,7 @@ func nfsMonitorNicCmd() *cobra.Command {
 	fs.StringVarP(&nfsMonitorNicParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&nfsMonitorNicParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &nfsMonitorNicParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(nfsMonitorNicNormalizeFlagNames)
 	buildFlagsUsage(cmd, nfsMonitorNicFlagOrder(cmd))
 	return cmd
 }
@@ -956,6 +968,7 @@ func nfsMonitorFreeDiskSizeCmd() *cobra.Command {
 	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&nfsMonitorFreeDiskSizeParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &nfsMonitorFreeDiskSizeParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(nfsMonitorFreeDiskSizeNormalizeFlagNames)
 	buildFlagsUsage(cmd, nfsMonitorFreeDiskSizeFlagOrder(cmd))
 	return cmd
 }

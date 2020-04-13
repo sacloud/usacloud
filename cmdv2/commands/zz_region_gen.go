@@ -85,6 +85,7 @@ func regionListCmd() *cobra.Command {
 	fs.StringVarP(&regionListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&regionListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&regionListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(regionListNormalizeFlagNames)
 	buildFlagsUsage(cmd, regionListFlagOrder(cmd))
 	return cmd
 }
@@ -144,6 +145,7 @@ func regionReadCmd() *cobra.Command {
 	fs.StringVarP(&regionReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&regionReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &regionReadParam.Id), "id", "", "set resource ID")
+	fs.SetNormalizeFunc(regionReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, regionReadFlagOrder(cmd))
 	return cmd
 }

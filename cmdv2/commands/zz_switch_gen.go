@@ -88,6 +88,7 @@ func switchListCmd() *cobra.Command {
 	fs.StringVarP(&switchListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&switchListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&switchListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(switchListNormalizeFlagNames)
 	buildFlagsUsage(cmd, switchListFlagOrder(cmd))
 	return cmd
 }
@@ -150,6 +151,7 @@ func switchCreateCmd() *cobra.Command {
 	fs.StringVarP(&switchCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&switchCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&switchCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(switchCreateNormalizeFlagNames)
 	buildFlagsUsage(cmd, switchCreateFlagOrder(cmd))
 	return cmd
 }
@@ -219,6 +221,7 @@ func switchReadCmd() *cobra.Command {
 	fs.StringVarP(&switchReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&switchReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &switchReadParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(switchReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, switchReadFlagOrder(cmd))
 	return cmd
 }
@@ -304,6 +307,7 @@ func switchUpdateCmd() *cobra.Command {
 	fs.StringVarP(&switchUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&switchUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &switchUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(switchUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, switchUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -385,6 +389,7 @@ func switchDeleteCmd() *cobra.Command {
 	fs.StringVarP(&switchDeleteParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&switchDeleteParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &switchDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(switchDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, switchDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -460,6 +465,7 @@ func switchBridgeConnectCmd() *cobra.Command {
 	fs.StringVarP(&switchBridgeConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&switchBridgeConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &switchBridgeConnectParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(switchBridgeConnectNormalizeFlagNames)
 	buildFlagsUsage(cmd, switchBridgeConnectFlagOrder(cmd))
 	return cmd
 }
@@ -534,6 +540,7 @@ func switchBridgeDisconnectCmd() *cobra.Command {
 	fs.StringVarP(&switchBridgeDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&switchBridgeDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &switchBridgeDisconnectParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(switchBridgeDisconnectNormalizeFlagNames)
 	buildFlagsUsage(cmd, switchBridgeDisconnectFlagOrder(cmd))
 	return cmd
 }

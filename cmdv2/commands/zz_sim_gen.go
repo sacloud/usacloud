@@ -88,6 +88,7 @@ func simListCmd() *cobra.Command {
 	fs.StringVarP(&simListParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&simListParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simListParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(simListNormalizeFlagNames)
 	buildFlagsUsage(cmd, simListFlagOrder(cmd))
 	return cmd
 }
@@ -155,6 +156,7 @@ func simCreateCmd() *cobra.Command {
 	fs.StringVarP(&simCreateParam.FormatFile, "format-file", "", "", "Output format from file(see text/template package document for detail)")
 	fs.StringVarP(&simCreateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simCreateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
+	fs.SetNormalizeFunc(simCreateNormalizeFlagNames)
 	buildFlagsUsage(cmd, simCreateFlagOrder(cmd))
 	return cmd
 }
@@ -224,6 +226,7 @@ func simReadCmd() *cobra.Command {
 	fs.StringVarP(&simReadParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simReadParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simReadParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(simReadNormalizeFlagNames)
 	buildFlagsUsage(cmd, simReadFlagOrder(cmd))
 	return cmd
 }
@@ -309,6 +312,7 @@ func simUpdateCmd() *cobra.Command {
 	fs.StringVarP(&simUpdateParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simUpdateParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simUpdateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(simUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, simUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -384,6 +388,7 @@ func simDeleteCmd() *cobra.Command {
 	fs.StringVarP(&simDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&simDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(simDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, simDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -453,6 +458,7 @@ func simCarrierInfoCmd() *cobra.Command {
 	fs.StringVarP(&simCarrierInfoParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simCarrierInfoParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simCarrierInfoParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(simCarrierInfoNormalizeFlagNames)
 	buildFlagsUsage(cmd, simCarrierInfoFlagOrder(cmd))
 	return cmd
 }
@@ -528,6 +534,7 @@ func simCarrierUpdateCmd() *cobra.Command {
 	fs.BoolVarP(&simCarrierUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simCarrierUpdateParam.Id), "id", "", "Set target ID")
 	fs.StringSliceVarP(&simCarrierUpdateParam.Carrier, "carrier", "", []string{}, "")
+	fs.SetNormalizeFunc(simCarrierUpdateNormalizeFlagNames)
 	buildFlagsUsage(cmd, simCarrierUpdateFlagOrder(cmd))
 	return cmd
 }
@@ -602,6 +609,7 @@ func simActivateCmd() *cobra.Command {
 	fs.StringVarP(&simActivateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&simActivateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simActivateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(simActivateNormalizeFlagNames)
 	buildFlagsUsage(cmd, simActivateFlagOrder(cmd))
 	return cmd
 }
@@ -676,6 +684,7 @@ func simDeactivateCmd() *cobra.Command {
 	fs.StringVarP(&simDeactivateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&simDeactivateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simDeactivateParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(simDeactivateNormalizeFlagNames)
 	buildFlagsUsage(cmd, simDeactivateFlagOrder(cmd))
 	return cmd
 }
@@ -751,6 +760,7 @@ func simImeiLockCmd() *cobra.Command {
 	fs.BoolVarP(&simImeiLockParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simImeiLockParam.Id), "id", "", "Set target ID")
 	fs.StringVarP(&simImeiLockParam.Imei, "imei", "", "", "")
+	fs.SetNormalizeFunc(simImeiLockNormalizeFlagNames)
 	buildFlagsUsage(cmd, simImeiLockFlagOrder(cmd))
 	return cmd
 }
@@ -826,6 +836,7 @@ func simIpAddCmd() *cobra.Command {
 	fs.BoolVarP(&simIpAddParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simIpAddParam.Id), "id", "", "Set target ID")
 	fs.StringVarP(&simIpAddParam.Ip, "ip", "", "", "")
+	fs.SetNormalizeFunc(simIpAddNormalizeFlagNames)
 	buildFlagsUsage(cmd, simIpAddFlagOrder(cmd))
 	return cmd
 }
@@ -900,6 +911,7 @@ func simImeiUnlockCmd() *cobra.Command {
 	fs.StringVarP(&simImeiUnlockParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&simImeiUnlockParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simImeiUnlockParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(simImeiUnlockNormalizeFlagNames)
 	buildFlagsUsage(cmd, simImeiUnlockFlagOrder(cmd))
 	return cmd
 }
@@ -974,6 +986,7 @@ func simIpDeleteCmd() *cobra.Command {
 	fs.StringVarP(&simIpDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&simIpDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &simIpDeleteParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(simIpDeleteNormalizeFlagNames)
 	buildFlagsUsage(cmd, simIpDeleteFlagOrder(cmd))
 	return cmd
 }
@@ -1045,6 +1058,7 @@ func simLogsCmd() *cobra.Command {
 	fs.StringVarP(&simLogsParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simLogsParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simLogsParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(simLogsNormalizeFlagNames)
 	buildFlagsUsage(cmd, simLogsFlagOrder(cmd))
 	return cmd
 }
@@ -1117,6 +1131,7 @@ func simMonitorCmd() *cobra.Command {
 	fs.StringVarP(&simMonitorParam.Query, "query", "", "", "JMESPath query(using when '--output-type' is json only)")
 	fs.StringVarP(&simMonitorParam.QueryFile, "query-file", "", "", "JMESPath query from file(using when '--output-type' is json only)")
 	fs.VarP(newIDValue(0, &simMonitorParam.Id), "id", "", "Set target ID")
+	fs.SetNormalizeFunc(simMonitorNormalizeFlagNames)
 	buildFlagsUsage(cmd, simMonitorFlagOrder(cmd))
 	return cmd
 }
