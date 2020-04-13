@@ -44,7 +44,7 @@ func simpleMonitorListCmd() *cobra.Command {
 	simpleMonitorListParam := params.NewListSimpleMonitorParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List SimpleMonitor",
 		Long:         `List SimpleMonitor`,
 		SilenceUsage: true,

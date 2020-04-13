@@ -44,7 +44,7 @@ func proxyLBListCmd() *cobra.Command {
 	proxyLBListParam := params.NewListProxyLBParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List ProxyLB",
 		Long:         `List ProxyLB`,
 		SilenceUsage: true,

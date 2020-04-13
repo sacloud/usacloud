@@ -44,7 +44,7 @@ func isoImageListCmd() *cobra.Command {
 	isoImageListParam := params.NewListISOImageParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List ISOImage",
 		Long:         `List ISOImage`,
 		SilenceUsage: true,

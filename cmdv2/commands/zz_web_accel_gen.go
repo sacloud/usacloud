@@ -43,7 +43,7 @@ func webAccelListCmd() *cobra.Command {
 	webAccelListParam := params.NewListWebAccelParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List WebAccel",
 		Long:         `List WebAccel`,
 		SilenceUsage: true,

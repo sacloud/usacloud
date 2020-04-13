@@ -53,7 +53,7 @@ func init() {
 		Subcommands: []*cli.Command{
 			{
 				Name:    "list",
-				Aliases: []string{"ls", "find", "selector"},
+				Aliases: []string{"ls", "find", "select"},
 				Usage:   "List Internet",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{

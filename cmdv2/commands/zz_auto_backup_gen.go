@@ -44,7 +44,7 @@ func autoBackupListCmd() *cobra.Command {
 	autoBackupListParam := params.NewListAutoBackupParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List AutoBackup",
 		Long:         `List AutoBackup`,
 		SilenceUsage: true,

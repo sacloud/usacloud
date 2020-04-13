@@ -44,7 +44,7 @@ func iconListCmd() *cobra.Command {
 	iconListParam := params.NewListIconParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List Icon",
 		Long:         `List Icon`,
 		SilenceUsage: true,

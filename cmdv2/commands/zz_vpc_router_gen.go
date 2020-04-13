@@ -44,7 +44,7 @@ func vpcRouterListCmd() *cobra.Command {
 	vpcRouterListParam := params.NewListVPCRouterParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List VPCRouter",
 		Long:         `List VPCRouter`,
 		SilenceUsage: true,

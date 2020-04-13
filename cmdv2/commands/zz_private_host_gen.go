@@ -44,7 +44,7 @@ func privateHostListCmd() *cobra.Command {
 	privateHostListParam := params.NewListPrivateHostParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List PrivateHost",
 		Long:         `List PrivateHost`,
 		SilenceUsage: true,

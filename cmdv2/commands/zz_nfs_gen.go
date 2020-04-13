@@ -44,7 +44,7 @@ func nfsListCmd() *cobra.Command {
 	nfsListParam := params.NewListNFSParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List NFS",
 		Long:         `List NFS`,
 		SilenceUsage: true,

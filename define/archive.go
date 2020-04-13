@@ -24,7 +24,7 @@ func ArchiveResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find", "selector"},
+			Aliases:            []string{"ls", "find", "select"},
 			Params:             archiveListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: archiveListColumns(),

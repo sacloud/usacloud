@@ -44,7 +44,7 @@ func serverListCmd() *cobra.Command {
 	serverListParam := params.NewListServerParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List Server",
 		Long:         `List Server`,
 		SilenceUsage: true,

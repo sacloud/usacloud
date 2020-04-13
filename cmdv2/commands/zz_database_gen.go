@@ -44,7 +44,7 @@ func databaseListCmd() *cobra.Command {
 	databaseListParam := params.NewListDatabaseParam()
 	cmd := &cobra.Command{
 		Use:          "list",
-		Aliases:      []string{"ls", "find", "selector"},
+		Aliases:      []string{"ls", "find", "select"},
 		Short:        "List Database",
 		Long:         `List Database`,
 		SilenceUsage: true,
