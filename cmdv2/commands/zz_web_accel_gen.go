@@ -30,7 +30,8 @@ import (
 // webAccelCmd represents the command to manage SAKURA Cloud WebAccel
 func webAccelCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "web-accel",
+		Use: "web-accel",
+
 		Short: "A manage commands of WebAccel",
 		Long:  `A manage commands of WebAccel`,
 		RunE: func(cmd *cobra.Command, args []string) error {

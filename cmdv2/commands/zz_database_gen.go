@@ -31,7 +31,8 @@ import (
 // databaseCmd represents the command to manage SAKURA Cloud Database
 func databaseCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "database",
+		Use: "database",
+
 		Short: "A manage commands of Database",
 		Long:  `A manage commands of Database`,
 		RunE: func(cmd *cobra.Command, args []string) error {

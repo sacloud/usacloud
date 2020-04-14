@@ -31,7 +31,8 @@ import (
 // sshKeyCmd represents the command to manage SAKURA Cloud SSHKey
 func sshKeyCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "ssh-key",
+		Use: "ssh-key",
+
 		Short: "A manage commands of SSHKey",
 		Long:  `A manage commands of SSHKey`,
 		RunE: func(cmd *cobra.Command, args []string) error {

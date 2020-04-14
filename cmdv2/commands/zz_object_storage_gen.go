@@ -28,9 +28,10 @@ import (
 // objectStorageCmd represents the command to manage SAKURA Cloud ObjectStorage
 func objectStorageCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "object-storage",
-		Short: "A manage commands of ObjectStorage",
-		Long:  `A manage commands of ObjectStorage`,
+		Use:     "object-storage",
+		Aliases: []string{"ojs"},
+		Short:   "A manage commands of ObjectStorage",
+		Long:    `A manage commands of ObjectStorage`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
 			return nil

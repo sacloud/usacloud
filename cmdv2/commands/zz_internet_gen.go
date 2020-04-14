@@ -31,7 +31,8 @@ import (
 // internetCmd represents the command to manage SAKURA Cloud Internet
 func internetCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "internet",
+		Use: "internet",
+
 		Short: "A manage commands of Internet",
 		Long:  `A manage commands of Internet`,
 		RunE: func(cmd *cobra.Command, args []string) error {

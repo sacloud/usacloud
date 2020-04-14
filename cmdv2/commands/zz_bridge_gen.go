@@ -31,7 +31,8 @@ import (
 // bridgeCmd represents the command to manage SAKURA Cloud Bridge
 func bridgeCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "bridge",
+		Use: "bridge",
+
 		Short: "A manage commands of Bridge",
 		Long:  `A manage commands of Bridge`,
 		RunE: func(cmd *cobra.Command, args []string) error {

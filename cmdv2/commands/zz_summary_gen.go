@@ -25,7 +25,8 @@ import (
 // summaryCmd represents the command to manage SAKURA Cloud Summary
 func summaryCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "summary",
+		Use: "summary",
+
 		Short: "Show summary of resource usage",
 		Long:  `Show summary of resource usage`,
 		RunE: func(cmd *cobra.Command, args []string) error {

@@ -26,9 +26,10 @@ import (
 // priceCmd represents the command to manage SAKURA Cloud Price
 func priceCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "price",
-		Short: "A manage commands of Price",
-		Long:  `A manage commands of Price`,
+		Use:     "price",
+		Aliases: []string{"public-price"},
+		Short:   "A manage commands of Price",
+		Long:    `A manage commands of Price`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runDefaultCmd(cmd, args, "list")
 		},

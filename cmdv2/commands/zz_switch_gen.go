@@ -31,7 +31,8 @@ import (
 // switchCmd represents the command to manage SAKURA Cloud Switch
 func switchCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "switch",
+		Use: "switch",
+
 		Short: "A manage commands of Switch",
 		Long:  `A manage commands of Switch`,
 		RunE: func(cmd *cobra.Command, args []string) error {

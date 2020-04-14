@@ -85,6 +85,7 @@ import (
 func {{ .CLIVariableFuncName }}() *cobra.Command {
 	return &cobra.Command {
 		Use:   "{{ .CLIName }}",
+		{{ if .Aliases }}Aliases: []string{ {{ .AliasesLiteral }} },{{ end }}
 		Short: "{{ .Usage }}",
 		Long: ` + "`{{.Usage}}`" + `,
 		RunE: func(cmd *cobra.Command, args []string) error {

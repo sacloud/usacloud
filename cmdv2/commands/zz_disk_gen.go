@@ -31,7 +31,8 @@ import (
 // diskCmd represents the command to manage SAKURA Cloud Disk
 func diskCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "disk",
+		Use: "disk",
+
 		Short: "A manage commands of Disk",
 		Long:  `A manage commands of Disk`,
 		RunE: func(cmd *cobra.Command, args []string) error {

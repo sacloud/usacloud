@@ -31,7 +31,8 @@ import (
 // dnsCmd represents the command to manage SAKURA Cloud DNS
 func dnsCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "dns",
+		Use: "dns",
+
 		Short: "A manage commands of DNS",
 		Long:  `A manage commands of DNS`,
 		RunE: func(cmd *cobra.Command, args []string) error {

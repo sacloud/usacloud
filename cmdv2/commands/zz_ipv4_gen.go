@@ -29,7 +29,8 @@ import (
 // ipv4Cmd represents the command to manage SAKURA Cloud IPv4
 func ipv4Cmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "ipv4",
+		Use: "ipv4",
+
 		Short: "A manage commands of IPv4",
 		Long:  `A manage commands of IPv4`,
 		RunE: func(cmd *cobra.Command, args []string) error {

@@ -31,7 +31,8 @@ import (
 // interfaceCmd represents the command to manage SAKURA Cloud Interface
 func interfaceCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "interface",
+		Use: "interface",
+
 		Short: "A manage commands of Interface",
 		Long:  `A manage commands of Interface`,
 		RunE: func(cmd *cobra.Command, args []string) error {

@@ -29,7 +29,8 @@ import (
 // ipv6Cmd represents the command to manage SAKURA Cloud IPv6
 func ipv6Cmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "ipv6",
+		Use: "ipv6",
+
 		Short: "A manage commands of IPv6",
 		Long:  `A manage commands of IPv6`,
 		RunE: func(cmd *cobra.Command, args []string) error {

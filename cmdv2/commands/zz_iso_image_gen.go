@@ -31,7 +31,8 @@ import (
 // isoImageCmd represents the command to manage SAKURA Cloud ISOImage
 func isoImageCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "iso-image",
+		Use: "iso-image",
+
 		Short: "A manage commands of ISOImage",
 		Long:  `A manage commands of ISOImage`,
 		RunE: func(cmd *cobra.Command, args []string) error {

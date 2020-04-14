@@ -29,7 +29,8 @@ import (
 // zoneCmd represents the command to manage SAKURA Cloud Zone
 func zoneCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "zone",
+		Use: "zone",
+
 		Short: "A manage commands of Zone",
 		Long:  `A manage commands of Zone`,
 		RunE: func(cmd *cobra.Command, args []string) error {

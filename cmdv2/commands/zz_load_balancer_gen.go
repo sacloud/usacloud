@@ -31,7 +31,8 @@ import (
 // loadBalancerCmd represents the command to manage SAKURA Cloud LoadBalancer
 func loadBalancerCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "load-balancer",
+		Use: "load-balancer",
+
 		Short: "A manage commands of LoadBalancer",
 		Long:  `A manage commands of LoadBalancer`,
 		RunE: func(cmd *cobra.Command, args []string) error {

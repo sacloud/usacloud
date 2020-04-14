@@ -25,7 +25,8 @@ import (
 // authStatusCmd represents the command to manage SAKURA Cloud AuthStatus
 func authStatusCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "auth-status",
+		Use: "auth-status",
+
 		Short: "A manage commands of AuthStatus",
 		Long:  `A manage commands of AuthStatus`,
 		RunE: func(cmd *cobra.Command, args []string) error {

@@ -31,7 +31,8 @@ import (
 // simCmd represents the command to manage SAKURA Cloud SIM
 func simCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "sim",
+		Use: "sim",
+
 		Short: "A manage commands of SIM",
 		Long:  `A manage commands of SIM`,
 		RunE: func(cmd *cobra.Command, args []string) error {

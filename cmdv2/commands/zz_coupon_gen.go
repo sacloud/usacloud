@@ -25,7 +25,8 @@ import (
 // couponCmd represents the command to manage SAKURA Cloud Coupon
 func couponCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "coupon",
+		Use: "coupon",
+
 		Short: "A manage commands of Coupon",
 		Long:  `A manage commands of Coupon`,
 		RunE: func(cmd *cobra.Command, args []string) error {

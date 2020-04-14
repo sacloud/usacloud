@@ -29,9 +29,10 @@ import (
 // productLicenseCmd represents the command to manage SAKURA Cloud ProductLicense
 func productLicenseCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "product-license",
-		Short: "A manage commands of ProductLicense",
-		Long:  `A manage commands of ProductLicense`,
+		Use:     "product-license",
+		Aliases: []string{"license-info"},
+		Short:   "A manage commands of ProductLicense",
+		Long:    `A manage commands of ProductLicense`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runDefaultCmd(cmd, args, "list")
 		},
