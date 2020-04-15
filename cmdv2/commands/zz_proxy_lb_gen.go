@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func proxyLBListCmd() *cobra.Command {
 				return generateSkeleton(ctx, proxyLBListParam)
 			}
 
-			return funcs.ProxyLBList(ctx, proxyLBListParam.ToV0())
+			return funcs.ProxyLBList(ctx, proxyLBListParam)
 
 		},
 	}
@@ -130,7 +130,7 @@ func proxyLBCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.ProxyLBCreate(ctx, proxyLBCreateParam.ToV0())
+			return funcs.ProxyLBCreate(ctx, proxyLBCreateParam)
 
 		},
 	}
@@ -204,7 +204,7 @@ func proxyLBReadCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBReadParam.SetId(id)
 				go func(p *params.ReadProxyLBParam) {
-					err := funcs.ProxyLBRead(ctx, p.ToV0())
+					err := funcs.ProxyLBRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -285,7 +285,7 @@ func proxyLBUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBUpdateParam.SetId(id)
 				go func(p *params.UpdateProxyLBParam) {
-					err := funcs.ProxyLBUpdate(ctx, p.ToV0())
+					err := funcs.ProxyLBUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -379,7 +379,7 @@ func proxyLBDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBDeleteParam.SetId(id)
 				go func(p *params.DeleteProxyLBParam) {
-					err := funcs.ProxyLBDelete(ctx, p.ToV0())
+					err := funcs.ProxyLBDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -461,7 +461,7 @@ func proxyLBPlanChangeCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBPlanChangeParam.SetId(id)
 				go func(p *params.PlanChangeProxyLBParam) {
-					err := funcs.ProxyLBPlanChange(ctx, p.ToV0())
+					err := funcs.ProxyLBPlanChange(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -533,7 +533,7 @@ func proxyLBBindPortInfoCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBBindPortInfoParam.SetId(id)
 				go func(p *params.BindPortInfoProxyLBParam) {
-					err := funcs.ProxyLBBindPortInfo(ctx, p.ToV0())
+					err := funcs.ProxyLBBindPortInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -614,7 +614,7 @@ func proxyLBBindPortAddCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBBindPortAddParam.SetId(id)
 				go func(p *params.BindPortAddProxyLBParam) {
-					err := funcs.ProxyLBBindPortAdd(ctx, p.ToV0())
+					err := funcs.ProxyLBBindPortAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -700,7 +700,7 @@ func proxyLBBindPortUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBBindPortUpdateParam.SetId(id)
 				go func(p *params.BindPortUpdateProxyLBParam) {
-					err := funcs.ProxyLBBindPortUpdate(ctx, p.ToV0())
+					err := funcs.ProxyLBBindPortUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -787,7 +787,7 @@ func proxyLBBindPortDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBBindPortDeleteParam.SetId(id)
 				go func(p *params.BindPortDeleteProxyLBParam) {
-					err := funcs.ProxyLBBindPortDelete(ctx, p.ToV0())
+					err := funcs.ProxyLBBindPortDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -859,7 +859,7 @@ func proxyLBResponseHeaderInfoCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBResponseHeaderInfoParam.SetId(id)
 				go func(p *params.ResponseHeaderInfoProxyLBParam) {
-					err := funcs.ProxyLBResponseHeaderInfo(ctx, p.ToV0())
+					err := funcs.ProxyLBResponseHeaderInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -941,7 +941,7 @@ func proxyLBResponseHeaderAddCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBResponseHeaderAddParam.SetId(id)
 				go func(p *params.ResponseHeaderAddProxyLBParam) {
-					err := funcs.ProxyLBResponseHeaderAdd(ctx, p.ToV0())
+					err := funcs.ProxyLBResponseHeaderAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1026,7 +1026,7 @@ func proxyLBResponseHeaderUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBResponseHeaderUpdateParam.SetId(id)
 				go func(p *params.ResponseHeaderUpdateProxyLBParam) {
-					err := funcs.ProxyLBResponseHeaderUpdate(ctx, p.ToV0())
+					err := funcs.ProxyLBResponseHeaderUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1112,7 +1112,7 @@ func proxyLBResponseHeaderDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBResponseHeaderDeleteParam.SetId(id)
 				go func(p *params.ResponseHeaderDeleteProxyLBParam) {
-					err := funcs.ProxyLBResponseHeaderDelete(ctx, p.ToV0())
+					err := funcs.ProxyLBResponseHeaderDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1185,7 +1185,7 @@ func proxyLBACMEInfoCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBACMEInfoParam.SetId(id)
 				go func(p *params.ACMEInfoProxyLBParam) {
-					err := funcs.ProxyLBACMEInfo(ctx, p.ToV0())
+					err := funcs.ProxyLBACMEInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1266,7 +1266,7 @@ func proxyLBACMESettingCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBACMESettingParam.SetId(id)
 				go func(p *params.ACMESettingProxyLBParam) {
-					err := funcs.ProxyLBACMESetting(ctx, p.ToV0())
+					err := funcs.ProxyLBACMESetting(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1351,7 +1351,7 @@ func proxyLBACMERenewCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBACMERenewParam.SetId(id)
 				go func(p *params.ACMERenewProxyLBParam) {
-					err := funcs.ProxyLBACMERenew(ctx, p.ToV0())
+					err := funcs.ProxyLBACMERenew(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1415,7 +1415,7 @@ func proxyLBServerInfoCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBServerInfoParam.SetId(id)
 				go func(p *params.ServerInfoProxyLBParam) {
-					err := funcs.ProxyLBServerInfo(ctx, p.ToV0())
+					err := funcs.ProxyLBServerInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1496,7 +1496,7 @@ func proxyLBServerAddCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBServerAddParam.SetId(id)
 				go func(p *params.ServerAddProxyLBParam) {
-					err := funcs.ProxyLBServerAdd(ctx, p.ToV0())
+					err := funcs.ProxyLBServerAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1581,7 +1581,7 @@ func proxyLBServerUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBServerUpdateParam.SetId(id)
 				go func(p *params.ServerUpdateProxyLBParam) {
-					err := funcs.ProxyLBServerUpdate(ctx, p.ToV0())
+					err := funcs.ProxyLBServerUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1667,7 +1667,7 @@ func proxyLBServerDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBServerDeleteParam.SetId(id)
 				go func(p *params.ServerDeleteProxyLBParam) {
-					err := funcs.ProxyLBServerDelete(ctx, p.ToV0())
+					err := funcs.ProxyLBServerDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1739,7 +1739,7 @@ func proxyLBCertificateInfoCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBCertificateInfoParam.SetId(id)
 				go func(p *params.CertificateInfoProxyLBParam) {
-					err := funcs.ProxyLBCertificateInfo(ctx, p.ToV0())
+					err := funcs.ProxyLBCertificateInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1820,7 +1820,7 @@ func proxyLBCertificateAddCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBCertificateAddParam.SetId(id)
 				go func(p *params.CertificateAddProxyLBParam) {
-					err := funcs.ProxyLBCertificateAdd(ctx, p.ToV0())
+					err := funcs.ProxyLBCertificateAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1905,7 +1905,7 @@ func proxyLBCertificateUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBCertificateUpdateParam.SetId(id)
 				go func(p *params.CertificateUpdateProxyLBParam) {
-					err := funcs.ProxyLBCertificateUpdate(ctx, p.ToV0())
+					err := funcs.ProxyLBCertificateUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1990,7 +1990,7 @@ func proxyLBCertificateDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBCertificateDeleteParam.SetId(id)
 				go func(p *params.CertificateDeleteProxyLBParam) {
-					err := funcs.ProxyLBCertificateDelete(ctx, p.ToV0())
+					err := funcs.ProxyLBCertificateDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2061,7 +2061,7 @@ func proxyLBMonitorCmd() *cobra.Command {
 				wg.Add(1)
 				proxyLBMonitorParam.SetId(id)
 				go func(p *params.MonitorProxyLBParam) {
-					err := funcs.ProxyLBMonitor(ctx, p.ToV0())
+					err := funcs.ProxyLBMonitor(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

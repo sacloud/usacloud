@@ -20,9 +20,9 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -65,7 +65,7 @@ func webAccelListCmd() *cobra.Command {
 				return generateSkeleton(ctx, webAccelListParam)
 			}
 
-			return funcs.WebAccelList(ctx, webAccelListParam.ToV0())
+			return funcs.WebAccelList(ctx, webAccelListParam)
 
 		},
 	}
@@ -125,7 +125,7 @@ func webAccelReadCmd() *cobra.Command {
 				wg.Add(1)
 				webAccelReadParam.SetId(id)
 				go func(p *params.ReadWebAccelParam) {
-					err := funcs.WebAccelRead(ctx, p.ToV0())
+					err := funcs.WebAccelRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -195,7 +195,7 @@ func webAccelCertificateInfoCmd() *cobra.Command {
 				wg.Add(1)
 				webAccelCertificateInfoParam.SetId(id)
 				go func(p *params.CertificateInfoWebAccelParam) {
-					err := funcs.WebAccelCertificateInfo(ctx, p.ToV0())
+					err := funcs.WebAccelCertificateInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -276,7 +276,7 @@ func webAccelCertificateNewCmd() *cobra.Command {
 				wg.Add(1)
 				webAccelCertificateNewParam.SetId(id)
 				go func(p *params.CertificateNewWebAccelParam) {
-					err := funcs.WebAccelCertificateNew(ctx, p.ToV0())
+					err := funcs.WebAccelCertificateNew(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -362,7 +362,7 @@ func webAccelCertificateUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				webAccelCertificateUpdateParam.SetId(id)
 				go func(p *params.CertificateUpdateWebAccelParam) {
-					err := funcs.WebAccelCertificateUpdate(ctx, p.ToV0())
+					err := funcs.WebAccelCertificateUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -435,7 +435,7 @@ func webAccelDeleteCacheCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.WebAccelDeleteCache(ctx, webAccelDeleteCacheParam.ToV0())
+			return funcs.WebAccelDeleteCache(ctx, webAccelDeleteCacheParam)
 
 		},
 	}

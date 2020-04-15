@@ -76,7 +76,7 @@ import (
 	"fmt"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -153,7 +153,7 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 				wg.Add(1)
 				{{ .InputParameterVariable }}.SetId(id)
 				go func(p *params.{{ .InputParameterTypeName }}) {
-					err := funcs.{{ .FunctionName }}(ctx, p.ToV0())
+					err := funcs.{{ .FunctionName }}(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -163,7 +163,7 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 			wg.Wait()
 			return command.FlattenErrors(errs)
 			{{ else }}
-			return funcs.{{ .FunctionName }}(ctx, {{ .InputParameterVariable }}.ToV0())
+			return funcs.{{ .FunctionName }}(ctx, {{ .InputParameterVariable }})
 			{{ end }}
 		},
 	}

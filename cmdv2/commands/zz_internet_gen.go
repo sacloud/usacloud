@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func internetListCmd() *cobra.Command {
 				return generateSkeleton(ctx, internetListParam)
 			}
 
-			return funcs.InternetList(ctx, internetListParam.ToV0())
+			return funcs.InternetList(ctx, internetListParam)
 
 		},
 	}
@@ -130,7 +130,7 @@ func internetCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.InternetCreate(ctx, internetCreateParam.ToV0())
+			return funcs.InternetCreate(ctx, internetCreateParam)
 
 		},
 	}
@@ -197,7 +197,7 @@ func internetReadCmd() *cobra.Command {
 				wg.Add(1)
 				internetReadParam.SetId(id)
 				go func(p *params.ReadInternetParam) {
-					err := funcs.InternetRead(ctx, p.ToV0())
+					err := funcs.InternetRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -278,7 +278,7 @@ func internetUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				internetUpdateParam.SetId(id)
 				go func(p *params.UpdateInternetParam) {
-					err := funcs.InternetUpdate(ctx, p.ToV0())
+					err := funcs.InternetUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -365,7 +365,7 @@ func internetDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				internetDeleteParam.SetId(id)
 				go func(p *params.DeleteInternetParam) {
-					err := funcs.InternetDelete(ctx, p.ToV0())
+					err := funcs.InternetDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -447,7 +447,7 @@ func internetUpdateBandwidthCmd() *cobra.Command {
 				wg.Add(1)
 				internetUpdateBandwidthParam.SetId(id)
 				go func(p *params.UpdateBandwidthInternetParam) {
-					err := funcs.InternetUpdateBandwidth(ctx, p.ToV0())
+					err := funcs.InternetUpdateBandwidth(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -519,7 +519,7 @@ func internetSubnetInfoCmd() *cobra.Command {
 				wg.Add(1)
 				internetSubnetInfoParam.SetId(id)
 				go func(p *params.SubnetInfoInternetParam) {
-					err := funcs.InternetSubnetInfo(ctx, p.ToV0())
+					err := funcs.InternetSubnetInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -600,7 +600,7 @@ func internetSubnetAddCmd() *cobra.Command {
 				wg.Add(1)
 				internetSubnetAddParam.SetId(id)
 				go func(p *params.SubnetAddInternetParam) {
-					err := funcs.InternetSubnetAdd(ctx, p.ToV0())
+					err := funcs.InternetSubnetAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -684,7 +684,7 @@ func internetSubnetDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				internetSubnetDeleteParam.SetId(id)
 				go func(p *params.SubnetDeleteInternetParam) {
-					err := funcs.InternetSubnetDelete(ctx, p.ToV0())
+					err := funcs.InternetSubnetDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -760,7 +760,7 @@ func internetSubnetUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				internetSubnetUpdateParam.SetId(id)
 				go func(p *params.SubnetUpdateInternetParam) {
-					err := funcs.InternetSubnetUpdate(ctx, p.ToV0())
+					err := funcs.InternetSubnetUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -833,7 +833,7 @@ func internetIPv6InfoCmd() *cobra.Command {
 				wg.Add(1)
 				internetIPv6InfoParam.SetId(id)
 				go func(p *params.IPv6InfoInternetParam) {
-					err := funcs.InternetIPv6Info(ctx, p.ToV0())
+					err := funcs.InternetIPv6Info(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -914,7 +914,7 @@ func internetIPv6EnableCmd() *cobra.Command {
 				wg.Add(1)
 				internetIPv6EnableParam.SetId(id)
 				go func(p *params.IPv6EnableInternetParam) {
-					err := funcs.InternetIPv6Enable(ctx, p.ToV0())
+					err := funcs.InternetIPv6Enable(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -996,7 +996,7 @@ func internetIPv6DisableCmd() *cobra.Command {
 				wg.Add(1)
 				internetIPv6DisableParam.SetId(id)
 				go func(p *params.IPv6DisableInternetParam) {
-					err := funcs.InternetIPv6Disable(ctx, p.ToV0())
+					err := funcs.InternetIPv6Disable(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1060,7 +1060,7 @@ func internetMonitorCmd() *cobra.Command {
 				wg.Add(1)
 				internetMonitorParam.SetId(id)
 				go func(p *params.MonitorInternetParam) {
-					err := funcs.InternetMonitor(ctx, p.ToV0())
+					err := funcs.InternetMonitor(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

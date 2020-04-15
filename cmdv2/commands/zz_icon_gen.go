@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func iconListCmd() *cobra.Command {
 				return generateSkeleton(ctx, iconListParam)
 			}
 
-			return funcs.IconList(ctx, iconListParam.ToV0())
+			return funcs.IconList(ctx, iconListParam)
 
 		},
 	}
@@ -131,7 +131,7 @@ func iconCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.IconCreate(ctx, iconCreateParam.ToV0())
+			return funcs.IconCreate(ctx, iconCreateParam)
 
 		},
 	}
@@ -195,7 +195,7 @@ func iconReadCmd() *cobra.Command {
 				wg.Add(1)
 				iconReadParam.SetId(id)
 				go func(p *params.ReadIconParam) {
-					err := funcs.IconRead(ctx, p.ToV0())
+					err := funcs.IconRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -276,7 +276,7 @@ func iconUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				iconUpdateParam.SetId(id)
 				go func(p *params.UpdateIconParam) {
-					err := funcs.IconUpdate(ctx, p.ToV0())
+					err := funcs.IconUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -360,7 +360,7 @@ func iconDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				iconDeleteParam.SetId(id)
 				go func(p *params.DeleteIconParam) {
-					err := funcs.IconDelete(ctx, p.ToV0())
+					err := funcs.IconDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

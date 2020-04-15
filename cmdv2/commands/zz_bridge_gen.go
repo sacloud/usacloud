@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func bridgeListCmd() *cobra.Command {
 				return generateSkeleton(ctx, bridgeListParam)
 			}
 
-			return funcs.BridgeList(ctx, bridgeListParam.ToV0())
+			return funcs.BridgeList(ctx, bridgeListParam)
 
 		},
 	}
@@ -129,7 +129,7 @@ func bridgeCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.BridgeCreate(ctx, bridgeCreateParam.ToV0())
+			return funcs.BridgeCreate(ctx, bridgeCreateParam)
 
 		},
 	}
@@ -192,7 +192,7 @@ func bridgeReadCmd() *cobra.Command {
 				wg.Add(1)
 				bridgeReadParam.SetId(id)
 				go func(p *params.ReadBridgeParam) {
-					err := funcs.BridgeRead(ctx, p.ToV0())
+					err := funcs.BridgeRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -272,7 +272,7 @@ func bridgeUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				bridgeUpdateParam.SetId(id)
 				go func(p *params.UpdateBridgeParam) {
-					err := funcs.BridgeUpdate(ctx, p.ToV0())
+					err := funcs.BridgeUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -355,7 +355,7 @@ func bridgeDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				bridgeDeleteParam.SetId(id)
 				go func(p *params.DeleteBridgeParam) {
-					err := funcs.BridgeDelete(ctx, p.ToV0())
+					err := funcs.BridgeDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

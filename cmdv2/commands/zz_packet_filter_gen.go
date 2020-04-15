@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func packetFilterListCmd() *cobra.Command {
 				return generateSkeleton(ctx, packetFilterListParam)
 			}
 
-			return funcs.PacketFilterList(ctx, packetFilterListParam.ToV0())
+			return funcs.PacketFilterList(ctx, packetFilterListParam)
 
 		},
 	}
@@ -129,7 +129,7 @@ func packetFilterCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.PacketFilterCreate(ctx, packetFilterCreateParam.ToV0())
+			return funcs.PacketFilterCreate(ctx, packetFilterCreateParam)
 
 		},
 	}
@@ -192,7 +192,7 @@ func packetFilterReadCmd() *cobra.Command {
 				wg.Add(1)
 				packetFilterReadParam.SetId(id)
 				go func(p *params.ReadPacketFilterParam) {
-					err := funcs.PacketFilterRead(ctx, p.ToV0())
+					err := funcs.PacketFilterRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -272,7 +272,7 @@ func packetFilterUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				packetFilterUpdateParam.SetId(id)
 				go func(p *params.UpdatePacketFilterParam) {
-					err := funcs.PacketFilterUpdate(ctx, p.ToV0())
+					err := funcs.PacketFilterUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -355,7 +355,7 @@ func packetFilterDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				packetFilterDeleteParam.SetId(id)
 				go func(p *params.DeletePacketFilterParam) {
-					err := funcs.PacketFilterDelete(ctx, p.ToV0())
+					err := funcs.PacketFilterDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -425,7 +425,7 @@ func packetFilterRuleInfoCmd() *cobra.Command {
 				wg.Add(1)
 				packetFilterRuleInfoParam.SetId(id)
 				go func(p *params.RuleInfoPacketFilterParam) {
-					err := funcs.PacketFilterRuleInfo(ctx, p.ToV0())
+					err := funcs.PacketFilterRuleInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -505,7 +505,7 @@ func packetFilterRuleAddCmd() *cobra.Command {
 				wg.Add(1)
 				packetFilterRuleAddParam.SetId(id)
 				go func(p *params.RuleAddPacketFilterParam) {
-					err := funcs.PacketFilterRuleAdd(ctx, p.ToV0())
+					err := funcs.PacketFilterRuleAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -593,7 +593,7 @@ func packetFilterRuleUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				packetFilterRuleUpdateParam.SetId(id)
 				go func(p *params.RuleUpdatePacketFilterParam) {
-					err := funcs.PacketFilterRuleUpdate(ctx, p.ToV0())
+					err := funcs.PacketFilterRuleUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -681,7 +681,7 @@ func packetFilterRuleDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				packetFilterRuleDeleteParam.SetId(id)
 				go func(p *params.RuleDeletePacketFilterParam) {
-					err := funcs.PacketFilterRuleDelete(ctx, p.ToV0())
+					err := funcs.PacketFilterRuleDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -763,7 +763,7 @@ func packetFilterInterfaceConnectCmd() *cobra.Command {
 				wg.Add(1)
 				packetFilterInterfaceConnectParam.SetId(id)
 				go func(p *params.InterfaceConnectPacketFilterParam) {
-					err := funcs.PacketFilterInterfaceConnect(ctx, p.ToV0())
+					err := funcs.PacketFilterInterfaceConnect(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -838,7 +838,7 @@ func packetFilterInterfaceDisconnectCmd() *cobra.Command {
 				wg.Add(1)
 				packetFilterInterfaceDisconnectParam.SetId(id)
 				go func(p *params.InterfaceDisconnectPacketFilterParam) {
-					err := funcs.PacketFilterInterfaceDisconnect(ctx, p.ToV0())
+					err := funcs.PacketFilterInterfaceDisconnect(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

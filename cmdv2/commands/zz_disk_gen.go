@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func diskListCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskListParam)
 			}
 
-			return funcs.DiskList(ctx, diskListParam.ToV0())
+			return funcs.DiskList(ctx, diskListParam)
 
 		},
 	}
@@ -134,7 +134,7 @@ func diskCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.DiskCreate(ctx, diskCreateParam.ToV0())
+			return funcs.DiskCreate(ctx, diskCreateParam)
 
 		},
 	}
@@ -205,7 +205,7 @@ func diskReadCmd() *cobra.Command {
 				wg.Add(1)
 				diskReadParam.SetId(id)
 				go func(p *params.ReadDiskParam) {
-					err := funcs.DiskRead(ctx, p.ToV0())
+					err := funcs.DiskRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -286,7 +286,7 @@ func diskUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				diskUpdateParam.SetId(id)
 				go func(p *params.UpdateDiskParam) {
-					err := funcs.DiskUpdate(ctx, p.ToV0())
+					err := funcs.DiskUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -373,7 +373,7 @@ func diskDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				diskDeleteParam.SetId(id)
 				go func(p *params.DeleteDiskParam) {
-					err := funcs.DiskDelete(ctx, p.ToV0())
+					err := funcs.DiskDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -455,7 +455,7 @@ func diskEditCmd() *cobra.Command {
 				wg.Add(1)
 				diskEditParam.SetId(id)
 				go func(p *params.EditDiskParam) {
-					err := funcs.DiskEdit(ctx, p.ToV0())
+					err := funcs.DiskEdit(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -545,7 +545,7 @@ func diskResizePartitionCmd() *cobra.Command {
 				wg.Add(1)
 				diskResizePartitionParam.SetId(id)
 				go func(p *params.ResizePartitionDiskParam) {
-					err := funcs.DiskResizePartition(ctx, p.ToV0())
+					err := funcs.DiskResizePartition(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -627,7 +627,7 @@ func diskReinstallFromArchiveCmd() *cobra.Command {
 				wg.Add(1)
 				diskReinstallFromArchiveParam.SetId(id)
 				go func(p *params.ReinstallFromArchiveDiskParam) {
-					err := funcs.DiskReinstallFromArchive(ctx, p.ToV0())
+					err := funcs.DiskReinstallFromArchive(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -704,7 +704,7 @@ func diskReinstallFromDiskCmd() *cobra.Command {
 				wg.Add(1)
 				diskReinstallFromDiskParam.SetId(id)
 				go func(p *params.ReinstallFromDiskDiskParam) {
-					err := funcs.DiskReinstallFromDisk(ctx, p.ToV0())
+					err := funcs.DiskReinstallFromDisk(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -781,7 +781,7 @@ func diskReinstallToBlankCmd() *cobra.Command {
 				wg.Add(1)
 				diskReinstallToBlankParam.SetId(id)
 				go func(p *params.ReinstallToBlankDiskParam) {
-					err := funcs.DiskReinstallToBlank(ctx, p.ToV0())
+					err := funcs.DiskReinstallToBlank(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -857,7 +857,7 @@ func diskServerConnectCmd() *cobra.Command {
 				wg.Add(1)
 				diskServerConnectParam.SetId(id)
 				go func(p *params.ServerConnectDiskParam) {
-					err := funcs.DiskServerConnect(ctx, p.ToV0())
+					err := funcs.DiskServerConnect(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -933,7 +933,7 @@ func diskServerDisconnectCmd() *cobra.Command {
 				wg.Add(1)
 				diskServerDisconnectParam.SetId(id)
 				go func(p *params.ServerDisconnectDiskParam) {
-					err := funcs.DiskServerDisconnect(ctx, p.ToV0())
+					err := funcs.DiskServerDisconnect(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -997,7 +997,7 @@ func diskMonitorCmd() *cobra.Command {
 				wg.Add(1)
 				diskMonitorParam.SetId(id)
 				go func(p *params.MonitorDiskParam) {
-					err := funcs.DiskMonitor(ctx, p.ToV0())
+					err := funcs.DiskMonitor(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1070,7 +1070,7 @@ func diskWaitForCopyCmd() *cobra.Command {
 				wg.Add(1)
 				diskWaitForCopyParam.SetId(id)
 				go func(p *params.WaitForCopyDiskParam) {
-					err := funcs.DiskWaitForCopy(ctx, p.ToV0())
+					err := funcs.DiskWaitForCopy(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

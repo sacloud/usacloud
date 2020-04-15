@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func isoImageListCmd() *cobra.Command {
 				return generateSkeleton(ctx, isoImageListParam)
 			}
 
-			return funcs.ISOImageList(ctx, isoImageListParam.ToV0())
+			return funcs.ISOImageList(ctx, isoImageListParam)
 
 		},
 	}
@@ -131,7 +131,7 @@ func isoImageCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.ISOImageCreate(ctx, isoImageCreateParam.ToV0())
+			return funcs.ISOImageCreate(ctx, isoImageCreateParam)
 
 		},
 	}
@@ -198,7 +198,7 @@ func isoImageReadCmd() *cobra.Command {
 				wg.Add(1)
 				isoImageReadParam.SetId(id)
 				go func(p *params.ReadISOImageParam) {
-					err := funcs.ISOImageRead(ctx, p.ToV0())
+					err := funcs.ISOImageRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -279,7 +279,7 @@ func isoImageUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				isoImageUpdateParam.SetId(id)
 				go func(p *params.UpdateISOImageParam) {
-					err := funcs.ISOImageUpdate(ctx, p.ToV0())
+					err := funcs.ISOImageUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -365,7 +365,7 @@ func isoImageDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				isoImageDeleteParam.SetId(id)
 				go func(p *params.DeleteISOImageParam) {
-					err := funcs.ISOImageDelete(ctx, p.ToV0())
+					err := funcs.ISOImageDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -447,7 +447,7 @@ func isoImageUploadCmd() *cobra.Command {
 				wg.Add(1)
 				isoImageUploadParam.SetId(id)
 				go func(p *params.UploadISOImageParam) {
-					err := funcs.ISOImageUpload(ctx, p.ToV0())
+					err := funcs.ISOImageUpload(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -530,7 +530,7 @@ func isoImageDownloadCmd() *cobra.Command {
 				wg.Add(1)
 				isoImageDownloadParam.SetId(id)
 				go func(p *params.DownloadISOImageParam) {
-					err := funcs.ISOImageDownload(ctx, p.ToV0())
+					err := funcs.ISOImageDownload(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -606,7 +606,7 @@ func isoImageFTPOpenCmd() *cobra.Command {
 				wg.Add(1)
 				isoImageFTPOpenParam.SetId(id)
 				go func(p *params.FTPOpenISOImageParam) {
-					err := funcs.ISOImageFTPOpen(ctx, p.ToV0())
+					err := funcs.ISOImageFTPOpen(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -688,7 +688,7 @@ func isoImageFTPCloseCmd() *cobra.Command {
 				wg.Add(1)
 				isoImageFTPCloseParam.SetId(id)
 				go func(p *params.FTPCloseISOImageParam) {
-					err := funcs.ISOImageFTPClose(ctx, p.ToV0())
+					err := funcs.ISOImageFTPClose(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

@@ -41,19 +41,6 @@ func ServerISOInsert(ctx command.Context, params *usacloud_params.ISOInsertServe
 	imageID := params.ISOImageId
 	if imageID == sacloud.EmptyID {
 
-		//validate
-		isoParams := &usacloud_params.CreateISOImageParam{
-			Tags:        params.Tags,
-			IconId:      params.IconId,
-			Size:        params.Size,
-			Name:        params.Name,
-			Description: params.Description,
-			ISOFile:     params.ISOFile,
-		}
-		if errs := isoParams.Validate(); len(errs) > 0 {
-			return command.FlattenErrors(errs)
-		}
-
 		// Upload iso image
 		api := client.GetCDROMAPI()
 		iso := api.New()

@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func gslbListCmd() *cobra.Command {
 				return generateSkeleton(ctx, gslbListParam)
 			}
 
-			return funcs.GSLBList(ctx, gslbListParam.ToV0())
+			return funcs.GSLBList(ctx, gslbListParam)
 
 		},
 	}
@@ -132,7 +132,7 @@ func gslbServerInfoCmd() *cobra.Command {
 				wg.Add(1)
 				gslbServerInfoParam.SetId(id)
 				go func(p *params.ServerInfoGSLBParam) {
-					err := funcs.GSLBServerInfo(ctx, p.ToV0())
+					err := funcs.GSLBServerInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -200,7 +200,7 @@ func gslbCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.GSLBCreate(ctx, gslbCreateParam.ToV0())
+			return funcs.GSLBCreate(ctx, gslbCreateParam)
 
 		},
 	}
@@ -284,7 +284,7 @@ func gslbServerAddCmd() *cobra.Command {
 				wg.Add(1)
 				gslbServerAddParam.SetId(id)
 				go func(p *params.ServerAddGSLBParam) {
-					err := funcs.GSLBServerAdd(ctx, p.ToV0())
+					err := funcs.GSLBServerAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -358,7 +358,7 @@ func gslbReadCmd() *cobra.Command {
 				wg.Add(1)
 				gslbReadParam.SetId(id)
 				go func(p *params.ReadGSLBParam) {
-					err := funcs.GSLBRead(ctx, p.ToV0())
+					err := funcs.GSLBRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -439,7 +439,7 @@ func gslbServerUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				gslbServerUpdateParam.SetId(id)
 				go func(p *params.ServerUpdateGSLBParam) {
-					err := funcs.GSLBServerUpdate(ctx, p.ToV0())
+					err := funcs.GSLBServerUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -525,7 +525,7 @@ func gslbServerDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				gslbServerDeleteParam.SetId(id)
 				go func(p *params.ServerDeleteGSLBParam) {
-					err := funcs.GSLBServerDelete(ctx, p.ToV0())
+					err := funcs.GSLBServerDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -608,7 +608,7 @@ func gslbUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				gslbUpdateParam.SetId(id)
 				go func(p *params.UpdateGSLBParam) {
-					err := funcs.GSLBUpdate(ctx, p.ToV0())
+					err := funcs.GSLBUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -702,7 +702,7 @@ func gslbDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				gslbDeleteParam.SetId(id)
 				go func(p *params.DeleteGSLBParam) {
-					err := funcs.GSLBDelete(ctx, p.ToV0())
+					err := funcs.GSLBDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

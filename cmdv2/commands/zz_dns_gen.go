@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func dnsListCmd() *cobra.Command {
 				return generateSkeleton(ctx, dnsListParam)
 			}
 
-			return funcs.DNSList(ctx, dnsListParam.ToV0())
+			return funcs.DNSList(ctx, dnsListParam)
 
 		},
 	}
@@ -132,7 +132,7 @@ func dnsRecordInfoCmd() *cobra.Command {
 				wg.Add(1)
 				dnsRecordInfoParam.SetId(id)
 				go func(p *params.RecordInfoDNSParam) {
-					err := funcs.DNSRecordInfo(ctx, p.ToV0())
+					err := funcs.DNSRecordInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -215,7 +215,7 @@ func dnsRecordBulkUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				dnsRecordBulkUpdateParam.SetId(id)
 				go func(p *params.RecordBulkUpdateDNSParam) {
-					err := funcs.DNSRecordBulkUpdate(ctx, p.ToV0())
+					err := funcs.DNSRecordBulkUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -286,7 +286,7 @@ func dnsCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.DNSCreate(ctx, dnsCreateParam.ToV0())
+			return funcs.DNSCreate(ctx, dnsCreateParam)
 
 		},
 	}
@@ -362,7 +362,7 @@ func dnsRecordAddCmd() *cobra.Command {
 				wg.Add(1)
 				dnsRecordAddParam.SetId(id)
 				go func(p *params.RecordAddDNSParam) {
-					err := funcs.DNSRecordAdd(ctx, p.ToV0())
+					err := funcs.DNSRecordAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -442,7 +442,7 @@ func dnsReadCmd() *cobra.Command {
 				wg.Add(1)
 				dnsReadParam.SetId(id)
 				go func(p *params.ReadDNSParam) {
-					err := funcs.DNSRead(ctx, p.ToV0())
+					err := funcs.DNSRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -523,7 +523,7 @@ func dnsRecordUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				dnsRecordUpdateParam.SetId(id)
 				go func(p *params.RecordUpdateDNSParam) {
-					err := funcs.DNSRecordUpdate(ctx, p.ToV0())
+					err := funcs.DNSRecordUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -615,7 +615,7 @@ func dnsRecordDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				dnsRecordDeleteParam.SetId(id)
 				go func(p *params.RecordDeleteDNSParam) {
-					err := funcs.DNSRecordDelete(ctx, p.ToV0())
+					err := funcs.DNSRecordDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -698,7 +698,7 @@ func dnsUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				dnsUpdateParam.SetId(id)
 				go func(p *params.UpdateDNSParam) {
-					err := funcs.DNSUpdate(ctx, p.ToV0())
+					err := funcs.DNSUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -783,7 +783,7 @@ func dnsDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				dnsDeleteParam.SetId(id)
 				go func(p *params.DeleteDNSParam) {
-					err := funcs.DNSDelete(ctx, p.ToV0())
+					err := funcs.DNSDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

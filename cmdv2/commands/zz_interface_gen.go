@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func interfaceListCmd() *cobra.Command {
 				return generateSkeleton(ctx, interfaceListParam)
 			}
 
-			return funcs.InterfaceList(ctx, interfaceListParam.ToV0())
+			return funcs.InterfaceList(ctx, interfaceListParam)
 
 		},
 	}
@@ -142,7 +142,7 @@ func interfacePacketFilterConnectCmd() *cobra.Command {
 				wg.Add(1)
 				interfacePacketFilterConnectParam.SetId(id)
 				go func(p *params.PacketFilterConnectInterfaceParam) {
-					err := funcs.InterfacePacketFilterConnect(ctx, p.ToV0())
+					err := funcs.InterfacePacketFilterConnect(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -204,7 +204,7 @@ func interfaceCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.InterfaceCreate(ctx, interfaceCreateParam.ToV0())
+			return funcs.InterfaceCreate(ctx, interfaceCreateParam)
 
 		},
 	}
@@ -277,7 +277,7 @@ func interfacePacketFilterDisconnectCmd() *cobra.Command {
 				wg.Add(1)
 				interfacePacketFilterDisconnectParam.SetId(id)
 				go func(p *params.PacketFilterDisconnectInterfaceParam) {
-					err := funcs.InterfacePacketFilterDisconnect(ctx, p.ToV0())
+					err := funcs.InterfacePacketFilterDisconnect(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -341,7 +341,7 @@ func interfaceReadCmd() *cobra.Command {
 				wg.Add(1)
 				interfaceReadParam.SetId(id)
 				go func(p *params.ReadInterfaceParam) {
-					err := funcs.InterfaceRead(ctx, p.ToV0())
+					err := funcs.InterfaceRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -421,7 +421,7 @@ func interfaceUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				interfaceUpdateParam.SetId(id)
 				go func(p *params.UpdateInterfaceParam) {
-					err := funcs.InterfaceUpdate(ctx, p.ToV0())
+					err := funcs.InterfaceUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -503,7 +503,7 @@ func interfaceDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				interfaceDeleteParam.SetId(id)
 				go func(p *params.DeleteInterfaceParam) {
-					err := funcs.InterfaceDelete(ctx, p.ToV0())
+					err := funcs.InterfaceDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

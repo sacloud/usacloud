@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func archiveListCmd() *cobra.Command {
 				return generateSkeleton(ctx, archiveListParam)
 			}
 
-			return funcs.ArchiveList(ctx, archiveListParam.ToV0())
+			return funcs.ArchiveList(ctx, archiveListParam)
 
 		},
 	}
@@ -133,7 +133,7 @@ func archiveCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.ArchiveCreate(ctx, archiveCreateParam.ToV0())
+			return funcs.ArchiveCreate(ctx, archiveCreateParam)
 
 		},
 	}
@@ -202,7 +202,7 @@ func archiveReadCmd() *cobra.Command {
 				wg.Add(1)
 				archiveReadParam.SetId(id)
 				go func(p *params.ReadArchiveParam) {
-					err := funcs.ArchiveRead(ctx, p.ToV0())
+					err := funcs.ArchiveRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -283,7 +283,7 @@ func archiveUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				archiveUpdateParam.SetId(id)
 				go func(p *params.UpdateArchiveParam) {
-					err := funcs.ArchiveUpdate(ctx, p.ToV0())
+					err := funcs.ArchiveUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -369,7 +369,7 @@ func archiveDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				archiveDeleteParam.SetId(id)
 				go func(p *params.DeleteArchiveParam) {
-					err := funcs.ArchiveDelete(ctx, p.ToV0())
+					err := funcs.ArchiveDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -451,7 +451,7 @@ func archiveUploadCmd() *cobra.Command {
 				wg.Add(1)
 				archiveUploadParam.SetId(id)
 				go func(p *params.UploadArchiveParam) {
-					err := funcs.ArchiveUpload(ctx, p.ToV0())
+					err := funcs.ArchiveUpload(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -534,7 +534,7 @@ func archiveDownloadCmd() *cobra.Command {
 				wg.Add(1)
 				archiveDownloadParam.SetId(id)
 				go func(p *params.DownloadArchiveParam) {
-					err := funcs.ArchiveDownload(ctx, p.ToV0())
+					err := funcs.ArchiveDownload(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -610,7 +610,7 @@ func archiveFTPOpenCmd() *cobra.Command {
 				wg.Add(1)
 				archiveFTPOpenParam.SetId(id)
 				go func(p *params.FTPOpenArchiveParam) {
-					err := funcs.ArchiveFTPOpen(ctx, p.ToV0())
+					err := funcs.ArchiveFTPOpen(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -692,7 +692,7 @@ func archiveFTPCloseCmd() *cobra.Command {
 				wg.Add(1)
 				archiveFTPCloseParam.SetId(id)
 				go func(p *params.FTPCloseArchiveParam) {
-					err := funcs.ArchiveFTPClose(ctx, p.ToV0())
+					err := funcs.ArchiveFTPClose(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -756,7 +756,7 @@ func archiveWaitForCopyCmd() *cobra.Command {
 				wg.Add(1)
 				archiveWaitForCopyParam.SetId(id)
 				go func(p *params.WaitForCopyArchiveParam) {
-					err := funcs.ArchiveWaitForCopy(ctx, p.ToV0())
+					err := funcs.ArchiveWaitForCopy(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

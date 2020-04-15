@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func startupScriptListCmd() *cobra.Command {
 				return generateSkeleton(ctx, startupScriptListParam)
 			}
 
-			return funcs.StartupScriptList(ctx, startupScriptListParam.ToV0())
+			return funcs.StartupScriptList(ctx, startupScriptListParam)
 
 		},
 	}
@@ -132,7 +132,7 @@ func startupScriptCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.StartupScriptCreate(ctx, startupScriptCreateParam.ToV0())
+			return funcs.StartupScriptCreate(ctx, startupScriptCreateParam)
 
 		},
 	}
@@ -199,7 +199,7 @@ func startupScriptReadCmd() *cobra.Command {
 				wg.Add(1)
 				startupScriptReadParam.SetId(id)
 				go func(p *params.ReadStartupScriptParam) {
-					err := funcs.StartupScriptRead(ctx, p.ToV0())
+					err := funcs.StartupScriptRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -280,7 +280,7 @@ func startupScriptUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				startupScriptUpdateParam.SetId(id)
 				go func(p *params.UpdateStartupScriptParam) {
-					err := funcs.StartupScriptUpdate(ctx, p.ToV0())
+					err := funcs.StartupScriptUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -368,7 +368,7 @@ func startupScriptDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				startupScriptDeleteParam.SetId(id)
 				go func(p *params.DeleteStartupScriptParam) {
-					err := funcs.StartupScriptDelete(ctx, p.ToV0())
+					err := funcs.StartupScriptDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

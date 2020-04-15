@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func simpleMonitorListCmd() *cobra.Command {
 				return generateSkeleton(ctx, simpleMonitorListParam)
 			}
 
-			return funcs.SimpleMonitorList(ctx, simpleMonitorListParam.ToV0())
+			return funcs.SimpleMonitorList(ctx, simpleMonitorListParam)
 
 		},
 	}
@@ -131,7 +131,7 @@ func simpleMonitorCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.SimpleMonitorCreate(ctx, simpleMonitorCreateParam.ToV0())
+			return funcs.SimpleMonitorCreate(ctx, simpleMonitorCreateParam)
 
 		},
 	}
@@ -213,7 +213,7 @@ func simpleMonitorReadCmd() *cobra.Command {
 				wg.Add(1)
 				simpleMonitorReadParam.SetId(id)
 				go func(p *params.ReadSimpleMonitorParam) {
-					err := funcs.SimpleMonitorRead(ctx, p.ToV0())
+					err := funcs.SimpleMonitorRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -294,7 +294,7 @@ func simpleMonitorUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				simpleMonitorUpdateParam.SetId(id)
 				go func(p *params.UpdateSimpleMonitorParam) {
-					err := funcs.SimpleMonitorUpdate(ctx, p.ToV0())
+					err := funcs.SimpleMonitorUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -396,7 +396,7 @@ func simpleMonitorDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				simpleMonitorDeleteParam.SetId(id)
 				go func(p *params.DeleteSimpleMonitorParam) {
-					err := funcs.SimpleMonitorDelete(ctx, p.ToV0())
+					err := funcs.SimpleMonitorDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -467,7 +467,7 @@ func simpleMonitorHealthCmd() *cobra.Command {
 				wg.Add(1)
 				simpleMonitorHealthParam.SetId(id)
 				go func(p *params.HealthSimpleMonitorParam) {
-					err := funcs.SimpleMonitorHealth(ctx, p.ToV0())
+					err := funcs.SimpleMonitorHealth(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

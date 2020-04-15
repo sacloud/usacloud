@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func simListCmd() *cobra.Command {
 				return generateSkeleton(ctx, simListParam)
 			}
 
-			return funcs.SIMList(ctx, simListParam.ToV0())
+			return funcs.SIMList(ctx, simListParam)
 
 		},
 	}
@@ -130,7 +130,7 @@ func simCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.SIMCreate(ctx, simCreateParam.ToV0())
+			return funcs.SIMCreate(ctx, simCreateParam)
 
 		},
 	}
@@ -200,7 +200,7 @@ func simReadCmd() *cobra.Command {
 				wg.Add(1)
 				simReadParam.SetId(id)
 				go func(p *params.ReadSIMParam) {
-					err := funcs.SIMRead(ctx, p.ToV0())
+					err := funcs.SIMRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -281,7 +281,7 @@ func simUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				simUpdateParam.SetId(id)
 				go func(p *params.UpdateSIMParam) {
-					err := funcs.SIMUpdate(ctx, p.ToV0())
+					err := funcs.SIMUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -367,7 +367,7 @@ func simDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				simDeleteParam.SetId(id)
 				go func(p *params.DeleteSIMParam) {
-					err := funcs.SIMDelete(ctx, p.ToV0())
+					err := funcs.SIMDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -432,7 +432,7 @@ func simCarrierInfoCmd() *cobra.Command {
 				wg.Add(1)
 				simCarrierInfoParam.SetId(id)
 				go func(p *params.CarrierInfoSIMParam) {
-					err := funcs.SIMCarrierInfo(ctx, p.ToV0())
+					err := funcs.SIMCarrierInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -513,7 +513,7 @@ func simCarrierUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				simCarrierUpdateParam.SetId(id)
 				go func(p *params.CarrierUpdateSIMParam) {
-					err := funcs.SIMCarrierUpdate(ctx, p.ToV0())
+					err := funcs.SIMCarrierUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -589,7 +589,7 @@ func simActivateCmd() *cobra.Command {
 				wg.Add(1)
 				simActivateParam.SetId(id)
 				go func(p *params.ActivateSIMParam) {
-					err := funcs.SIMActivate(ctx, p.ToV0())
+					err := funcs.SIMActivate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -664,7 +664,7 @@ func simDeactivateCmd() *cobra.Command {
 				wg.Add(1)
 				simDeactivateParam.SetId(id)
 				go func(p *params.DeactivateSIMParam) {
-					err := funcs.SIMDeactivate(ctx, p.ToV0())
+					err := funcs.SIMDeactivate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -739,7 +739,7 @@ func simImeiLockCmd() *cobra.Command {
 				wg.Add(1)
 				simImeiLockParam.SetId(id)
 				go func(p *params.ImeiLockSIMParam) {
-					err := funcs.SIMImeiLock(ctx, p.ToV0())
+					err := funcs.SIMImeiLock(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -815,7 +815,7 @@ func simIpAddCmd() *cobra.Command {
 				wg.Add(1)
 				simIpAddParam.SetId(id)
 				go func(p *params.IpAddSIMParam) {
-					err := funcs.SIMIpAdd(ctx, p.ToV0())
+					err := funcs.SIMIpAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -891,7 +891,7 @@ func simImeiUnlockCmd() *cobra.Command {
 				wg.Add(1)
 				simImeiUnlockParam.SetId(id)
 				go func(p *params.ImeiUnlockSIMParam) {
-					err := funcs.SIMImeiUnlock(ctx, p.ToV0())
+					err := funcs.SIMImeiUnlock(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -966,7 +966,7 @@ func simIpDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				simIpDeleteParam.SetId(id)
 				go func(p *params.IpDeleteSIMParam) {
-					err := funcs.SIMIpDelete(ctx, p.ToV0())
+					err := funcs.SIMIpDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1030,7 +1030,7 @@ func simLogsCmd() *cobra.Command {
 				wg.Add(1)
 				simLogsParam.SetId(id)
 				go func(p *params.LogsSIMParam) {
-					err := funcs.SIMLogs(ctx, p.ToV0())
+					err := funcs.SIMLogs(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1102,7 +1102,7 @@ func simMonitorCmd() *cobra.Command {
 				wg.Add(1)
 				simMonitorParam.SetId(id)
 				go func(p *params.MonitorSIMParam) {
-					err := funcs.SIMMonitor(ctx, p.ToV0())
+					err := funcs.SIMMonitor(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

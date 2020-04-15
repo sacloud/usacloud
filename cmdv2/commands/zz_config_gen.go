@@ -19,8 +19,8 @@ package commands
 import (
 	"errors"
 
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -62,7 +62,7 @@ func configCurrentCmd() *cobra.Command {
 				return generateSkeleton(ctx, configCurrentParam)
 			}
 
-			return funcs.ConfigCurrent(ctx, configCurrentParam.ToV0())
+			return funcs.ConfigCurrent(ctx, configCurrentParam)
 
 		},
 	}
@@ -113,7 +113,7 @@ func configDeleteCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.ConfigDelete(ctx, configDeleteParam.ToV0())
+			return funcs.ConfigDelete(ctx, configDeleteParam)
 
 		},
 	}
@@ -154,7 +154,7 @@ func configEditCmd() *cobra.Command {
 				return generateSkeleton(ctx, configEditParam)
 			}
 
-			return funcs.ConfigEdit(ctx, configEditParam.ToV0())
+			return funcs.ConfigEdit(ctx, configEditParam)
 
 		},
 	}
@@ -198,7 +198,7 @@ func configListCmd() *cobra.Command {
 				return generateSkeleton(ctx, configListParam)
 			}
 
-			return funcs.ConfigList(ctx, configListParam.ToV0())
+			return funcs.ConfigList(ctx, configListParam)
 
 		},
 	}
@@ -238,7 +238,7 @@ func configMigrateCmd() *cobra.Command {
 				return generateSkeleton(ctx, configMigrateParam)
 			}
 
-			return funcs.ConfigMigrate(ctx, configMigrateParam.ToV0())
+			return funcs.ConfigMigrate(ctx, configMigrateParam)
 
 		},
 	}
@@ -278,7 +278,7 @@ func configShowCmd() *cobra.Command {
 				return generateSkeleton(ctx, configShowParam)
 			}
 
-			return funcs.ConfigShow(ctx, configShowParam.ToV0())
+			return funcs.ConfigShow(ctx, configShowParam)
 
 		},
 	}
@@ -318,7 +318,7 @@ func configUseCmd() *cobra.Command {
 				return generateSkeleton(ctx, configUseParam)
 			}
 
-			return funcs.ConfigUse(ctx, configUseParam.ToV0())
+			return funcs.ConfigUse(ctx, configUseParam)
 
 		},
 	}

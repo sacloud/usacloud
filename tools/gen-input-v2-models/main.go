@@ -28,7 +28,7 @@ import (
 )
 
 var (
-	destination = "src/github.com/sacloud/usacloud/cmdv2/params"
+	destination = "src/github.com/sacloud/usacloud/command/params"
 	ctx         = tools.NewGenerateContext()
 )
 
@@ -96,7 +96,6 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	v0params "github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/schema"
 	"github.com/sacloud/usacloud/output"
@@ -247,14 +246,6 @@ func (p *{{.Command.InputParameterTypeName}}) Get{{.FieldName}}() {{.FieldTypeNa
 // Changed usacloud v0系との互換性維持のための実装
 func (p *{{.InputParameterTypeName}}) Changed(name string) bool {
 	return p.input.Changed(name)
-}
-
-func (p *{{.InputParameterTypeName }}) ToV0() *v0params.{{.InputParameterTypeName}} {
-	return &v0params.{{.InputParameterTypeName}}{
-{{ range .Params -}}
-		{{.FieldName}}: p.{{.FieldName}},
-{{ end }}
-	}
 }
 {{ end }}
 `

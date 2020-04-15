@@ -20,8 +20,8 @@ import (
 	"errors"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -64,7 +64,7 @@ func ipv6ListCmd() *cobra.Command {
 				return generateSkeleton(ctx, ipv6ListParam)
 			}
 
-			return funcs.IPv6List(ctx, ipv6ListParam.ToV0())
+			return funcs.IPv6List(ctx, ipv6ListParam)
 
 		},
 	}
@@ -129,7 +129,7 @@ func ipv6PtrAddCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.IPv6PtrAdd(ctx, ipv6PtrAddParam.ToV0())
+			return funcs.IPv6PtrAdd(ctx, ipv6PtrAddParam)
 
 		},
 	}
@@ -178,7 +178,7 @@ func ipv6PtrReadCmd() *cobra.Command {
 				return generateSkeleton(ctx, ipv6PtrReadParam)
 			}
 
-			return funcs.IPv6PtrRead(ctx, ipv6PtrReadParam.ToV0())
+			return funcs.IPv6PtrRead(ctx, ipv6PtrReadParam)
 
 		},
 	}
@@ -236,7 +236,7 @@ func ipv6PtrUpdateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.IPv6PtrUpdate(ctx, ipv6PtrUpdateParam.ToV0())
+			return funcs.IPv6PtrUpdate(ctx, ipv6PtrUpdateParam)
 
 		},
 	}
@@ -296,7 +296,7 @@ func ipv6PtrDeleteCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.IPv6PtrDelete(ctx, ipv6PtrDeleteParam.ToV0())
+			return funcs.IPv6PtrDelete(ctx, ipv6PtrDeleteParam)
 
 		},
 	}

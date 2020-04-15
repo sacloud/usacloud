@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func databaseListCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseListParam)
 			}
 
-			return funcs.DatabaseList(ctx, databaseListParam.ToV0())
+			return funcs.DatabaseList(ctx, databaseListParam)
 
 		},
 	}
@@ -130,7 +130,7 @@ func databaseCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.DatabaseCreate(ctx, databaseCreateParam.ToV0())
+			return funcs.DatabaseCreate(ctx, databaseCreateParam)
 
 		},
 	}
@@ -210,7 +210,7 @@ func databaseReadCmd() *cobra.Command {
 				wg.Add(1)
 				databaseReadParam.SetId(id)
 				go func(p *params.ReadDatabaseParam) {
-					err := funcs.DatabaseRead(ctx, p.ToV0())
+					err := funcs.DatabaseRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -291,7 +291,7 @@ func databaseUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				databaseUpdateParam.SetId(id)
 				go func(p *params.UpdateDatabaseParam) {
-					err := funcs.DatabaseUpdate(ctx, p.ToV0())
+					err := funcs.DatabaseUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -386,7 +386,7 @@ func databaseDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				databaseDeleteParam.SetId(id)
 				go func(p *params.DeleteDatabaseParam) {
-					err := funcs.DatabaseDelete(ctx, p.ToV0())
+					err := funcs.DatabaseDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -469,7 +469,7 @@ func databaseBootCmd() *cobra.Command {
 				wg.Add(1)
 				databaseBootParam.SetId(id)
 				go func(p *params.BootDatabaseParam) {
-					err := funcs.DatabaseBoot(ctx, p.ToV0())
+					err := funcs.DatabaseBoot(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -544,7 +544,7 @@ func databaseShutdownCmd() *cobra.Command {
 				wg.Add(1)
 				databaseShutdownParam.SetId(id)
 				go func(p *params.ShutdownDatabaseParam) {
-					err := funcs.DatabaseShutdown(ctx, p.ToV0())
+					err := funcs.DatabaseShutdown(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -619,7 +619,7 @@ func databaseShutdownForceCmd() *cobra.Command {
 				wg.Add(1)
 				databaseShutdownForceParam.SetId(id)
 				go func(p *params.ShutdownForceDatabaseParam) {
-					err := funcs.DatabaseShutdownForce(ctx, p.ToV0())
+					err := funcs.DatabaseShutdownForce(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -694,7 +694,7 @@ func databaseResetCmd() *cobra.Command {
 				wg.Add(1)
 				databaseResetParam.SetId(id)
 				go func(p *params.ResetDatabaseParam) {
-					err := funcs.DatabaseReset(ctx, p.ToV0())
+					err := funcs.DatabaseReset(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -758,7 +758,7 @@ func databaseWaitForBootCmd() *cobra.Command {
 				wg.Add(1)
 				databaseWaitForBootParam.SetId(id)
 				go func(p *params.WaitForBootDatabaseParam) {
-					err := funcs.DatabaseWaitForBoot(ctx, p.ToV0())
+					err := funcs.DatabaseWaitForBoot(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -821,7 +821,7 @@ func databaseWaitForDownCmd() *cobra.Command {
 				wg.Add(1)
 				databaseWaitForDownParam.SetId(id)
 				go func(p *params.WaitForDownDatabaseParam) {
-					err := funcs.DatabaseWaitForDown(ctx, p.ToV0())
+					err := funcs.DatabaseWaitForDown(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -884,7 +884,7 @@ func databaseBackupInfoCmd() *cobra.Command {
 				wg.Add(1)
 				databaseBackupInfoParam.SetId(id)
 				go func(p *params.BackupInfoDatabaseParam) {
-					err := funcs.DatabaseBackupInfo(ctx, p.ToV0())
+					err := funcs.DatabaseBackupInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -965,7 +965,7 @@ func databaseBackupCreateCmd() *cobra.Command {
 				wg.Add(1)
 				databaseBackupCreateParam.SetId(id)
 				go func(p *params.BackupCreateDatabaseParam) {
-					err := funcs.DatabaseBackupCreate(ctx, p.ToV0())
+					err := funcs.DatabaseBackupCreate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1046,7 +1046,7 @@ func databaseBackupRestoreCmd() *cobra.Command {
 				wg.Add(1)
 				databaseBackupRestoreParam.SetId(id)
 				go func(p *params.BackupRestoreDatabaseParam) {
-					err := funcs.DatabaseBackupRestore(ctx, p.ToV0())
+					err := funcs.DatabaseBackupRestore(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1128,7 +1128,7 @@ func databaseBackupLockCmd() *cobra.Command {
 				wg.Add(1)
 				databaseBackupLockParam.SetId(id)
 				go func(p *params.BackupLockDatabaseParam) {
-					err := funcs.DatabaseBackupLock(ctx, p.ToV0())
+					err := funcs.DatabaseBackupLock(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1210,7 +1210,7 @@ func databaseBackupUnlockCmd() *cobra.Command {
 				wg.Add(1)
 				databaseBackupUnlockParam.SetId(id)
 				go func(p *params.BackupUnlockDatabaseParam) {
-					err := funcs.DatabaseBackupUnlock(ctx, p.ToV0())
+					err := funcs.DatabaseBackupUnlock(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1292,7 +1292,7 @@ func databaseBackupRemoveCmd() *cobra.Command {
 				wg.Add(1)
 				databaseBackupRemoveParam.SetId(id)
 				go func(p *params.BackupRemoveDatabaseParam) {
-					err := funcs.DatabaseBackupRemove(ctx, p.ToV0())
+					err := funcs.DatabaseBackupRemove(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1374,7 +1374,7 @@ func databaseCloneCmd() *cobra.Command {
 				wg.Add(1)
 				databaseCloneParam.SetId(id)
 				go func(p *params.CloneDatabaseParam) {
-					err := funcs.DatabaseClone(ctx, p.ToV0())
+					err := funcs.DatabaseClone(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1471,7 +1471,7 @@ func databaseReplicaCreateCmd() *cobra.Command {
 				wg.Add(1)
 				databaseReplicaCreateParam.SetId(id)
 				go func(p *params.ReplicaCreateDatabaseParam) {
-					err := funcs.DatabaseReplicaCreate(ctx, p.ToV0())
+					err := funcs.DatabaseReplicaCreate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1549,7 +1549,7 @@ func databaseMonitorCPUCmd() *cobra.Command {
 				wg.Add(1)
 				databaseMonitorCPUParam.SetId(id)
 				go func(p *params.MonitorCPUDatabaseParam) {
-					err := funcs.DatabaseMonitorCPU(ctx, p.ToV0())
+					err := funcs.DatabaseMonitorCPU(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1622,7 +1622,7 @@ func databaseMonitorMemoryCmd() *cobra.Command {
 				wg.Add(1)
 				databaseMonitorMemoryParam.SetId(id)
 				go func(p *params.MonitorMemoryDatabaseParam) {
-					err := funcs.DatabaseMonitorMemory(ctx, p.ToV0())
+					err := funcs.DatabaseMonitorMemory(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1695,7 +1695,7 @@ func databaseMonitorNicCmd() *cobra.Command {
 				wg.Add(1)
 				databaseMonitorNicParam.SetId(id)
 				go func(p *params.MonitorNicDatabaseParam) {
-					err := funcs.DatabaseMonitorNic(ctx, p.ToV0())
+					err := funcs.DatabaseMonitorNic(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1768,7 +1768,7 @@ func databaseMonitorSystemDiskCmd() *cobra.Command {
 				wg.Add(1)
 				databaseMonitorSystemDiskParam.SetId(id)
 				go func(p *params.MonitorSystemDiskDatabaseParam) {
-					err := funcs.DatabaseMonitorSystemDisk(ctx, p.ToV0())
+					err := funcs.DatabaseMonitorSystemDisk(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1841,7 +1841,7 @@ func databaseMonitorBackupDiskCmd() *cobra.Command {
 				wg.Add(1)
 				databaseMonitorBackupDiskParam.SetId(id)
 				go func(p *params.MonitorBackupDiskDatabaseParam) {
-					err := funcs.DatabaseMonitorBackupDisk(ctx, p.ToV0())
+					err := funcs.DatabaseMonitorBackupDisk(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1914,7 +1914,7 @@ func databaseMonitorSystemDiskSizeCmd() *cobra.Command {
 				wg.Add(1)
 				databaseMonitorSystemDiskSizeParam.SetId(id)
 				go func(p *params.MonitorSystemDiskSizeDatabaseParam) {
-					err := funcs.DatabaseMonitorSystemDiskSize(ctx, p.ToV0())
+					err := funcs.DatabaseMonitorSystemDiskSize(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1987,7 +1987,7 @@ func databaseMonitorBackupDiskSizeCmd() *cobra.Command {
 				wg.Add(1)
 				databaseMonitorBackupDiskSizeParam.SetId(id)
 				go func(p *params.MonitorBackupDiskSizeDatabaseParam) {
-					err := funcs.DatabaseMonitorBackupDiskSize(ctx, p.ToV0())
+					err := funcs.DatabaseMonitorBackupDiskSize(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2060,7 +2060,7 @@ func databaseLogsCmd() *cobra.Command {
 				wg.Add(1)
 				databaseLogsParam.SetId(id)
 				go func(p *params.LogsDatabaseParam) {
-					err := funcs.DatabaseLogs(ctx, p.ToV0())
+					err := funcs.DatabaseLogs(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

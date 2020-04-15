@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func sshKeyListCmd() *cobra.Command {
 				return generateSkeleton(ctx, sshKeyListParam)
 			}
 
-			return funcs.SSHKeyList(ctx, sshKeyListParam.ToV0())
+			return funcs.SSHKeyList(ctx, sshKeyListParam)
 
 		},
 	}
@@ -129,7 +129,7 @@ func sshKeyCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.SSHKeyCreate(ctx, sshKeyCreateParam.ToV0())
+			return funcs.SSHKeyCreate(ctx, sshKeyCreateParam)
 
 		},
 	}
@@ -194,7 +194,7 @@ func sshKeyReadCmd() *cobra.Command {
 				wg.Add(1)
 				sshKeyReadParam.SetId(id)
 				go func(p *params.ReadSSHKeyParam) {
-					err := funcs.SSHKeyRead(ctx, p.ToV0())
+					err := funcs.SSHKeyRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -274,7 +274,7 @@ func sshKeyUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				sshKeyUpdateParam.SetId(id)
 				go func(p *params.UpdateSSHKeyParam) {
-					err := funcs.SSHKeyUpdate(ctx, p.ToV0())
+					err := funcs.SSHKeyUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -357,7 +357,7 @@ func sshKeyDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				sshKeyDeleteParam.SetId(id)
 				go func(p *params.DeleteSSHKeyParam) {
-					err := funcs.SSHKeyDelete(ctx, p.ToV0())
+					err := funcs.SSHKeyDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -425,7 +425,7 @@ func sshKeyGenerateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.SSHKeyGenerate(ctx, sshKeyGenerateParam.ToV0())
+			return funcs.SSHKeyGenerate(ctx, sshKeyGenerateParam)
 
 		},
 	}

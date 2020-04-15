@@ -17,8 +17,8 @@
 package commands
 
 import (
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/spf13/cobra"
 )
 
@@ -59,7 +59,7 @@ func selfInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, selfInfoParam)
 			}
 
-			return funcs.SelfInfo(ctx, selfInfoParam.ToV0())
+			return funcs.SelfInfo(ctx, selfInfoParam)
 
 		},
 	}

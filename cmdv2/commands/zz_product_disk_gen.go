@@ -20,8 +20,8 @@ import (
 	"errors"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -63,7 +63,7 @@ func productDiskListCmd() *cobra.Command {
 				return generateSkeleton(ctx, productDiskListParam)
 			}
 
-			return funcs.ProductDiskList(ctx, productDiskListParam.ToV0())
+			return funcs.ProductDiskList(ctx, productDiskListParam)
 
 		},
 	}
@@ -126,7 +126,7 @@ func productDiskReadCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.ProductDiskRead(ctx, productDiskReadParam.ToV0())
+			return funcs.ProductDiskRead(ctx, productDiskReadParam)
 
 		},
 	}

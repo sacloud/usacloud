@@ -17,8 +17,8 @@
 package commands
 
 import (
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/spf13/cobra"
 )
 
@@ -59,7 +59,7 @@ func billCsvCmd() *cobra.Command {
 				return generateSkeleton(ctx, billCsvParam)
 			}
 
-			return funcs.BillCsv(ctx, billCsvParam.ToV0())
+			return funcs.BillCsv(ctx, billCsvParam)
 
 		},
 	}
@@ -102,7 +102,7 @@ func billListCmd() *cobra.Command {
 				return generateSkeleton(ctx, billListParam)
 			}
 
-			return funcs.BillList(ctx, billListParam.ToV0())
+			return funcs.BillList(ctx, billListParam)
 
 		},
 	}

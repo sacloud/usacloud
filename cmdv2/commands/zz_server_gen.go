@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func serverListCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverListParam)
 			}
 
-			return funcs.ServerList(ctx, serverListParam.ToV0())
+			return funcs.ServerList(ctx, serverListParam)
 
 		},
 	}
@@ -130,7 +130,7 @@ func serverBuildCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.ServerBuild(ctx, serverBuildParam.ToV0())
+			return funcs.ServerBuild(ctx, serverBuildParam)
 
 		},
 	}
@@ -233,7 +233,7 @@ func serverReadCmd() *cobra.Command {
 				wg.Add(1)
 				serverReadParam.SetId(id)
 				go func(p *params.ReadServerParam) {
-					err := funcs.ServerRead(ctx, p.ToV0())
+					err := funcs.ServerRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -314,7 +314,7 @@ func serverUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				serverUpdateParam.SetId(id)
 				go func(p *params.UpdateServerParam) {
-					err := funcs.ServerUpdate(ctx, p.ToV0())
+					err := funcs.ServerUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -401,7 +401,7 @@ func serverDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				serverDeleteParam.SetId(id)
 				go func(p *params.DeleteServerParam) {
-					err := funcs.ServerDelete(ctx, p.ToV0())
+					err := funcs.ServerDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -485,7 +485,7 @@ func serverPlanChangeCmd() *cobra.Command {
 				wg.Add(1)
 				serverPlanChangeParam.SetId(id)
 				go func(p *params.PlanChangeServerParam) {
-					err := funcs.ServerPlanChange(ctx, p.ToV0())
+					err := funcs.ServerPlanChange(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -570,7 +570,7 @@ func serverBootCmd() *cobra.Command {
 				wg.Add(1)
 				serverBootParam.SetId(id)
 				go func(p *params.BootServerParam) {
-					err := funcs.ServerBoot(ctx, p.ToV0())
+					err := funcs.ServerBoot(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -645,7 +645,7 @@ func serverShutdownCmd() *cobra.Command {
 				wg.Add(1)
 				serverShutdownParam.SetId(id)
 				go func(p *params.ShutdownServerParam) {
-					err := funcs.ServerShutdown(ctx, p.ToV0())
+					err := funcs.ServerShutdown(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -720,7 +720,7 @@ func serverShutdownForceCmd() *cobra.Command {
 				wg.Add(1)
 				serverShutdownForceParam.SetId(id)
 				go func(p *params.ShutdownForceServerParam) {
-					err := funcs.ServerShutdownForce(ctx, p.ToV0())
+					err := funcs.ServerShutdownForce(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -795,7 +795,7 @@ func serverResetCmd() *cobra.Command {
 				wg.Add(1)
 				serverResetParam.SetId(id)
 				go func(p *params.ResetServerParam) {
-					err := funcs.ServerReset(ctx, p.ToV0())
+					err := funcs.ServerReset(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -859,7 +859,7 @@ func serverWaitForBootCmd() *cobra.Command {
 				wg.Add(1)
 				serverWaitForBootParam.SetId(id)
 				go func(p *params.WaitForBootServerParam) {
-					err := funcs.ServerWaitForBoot(ctx, p.ToV0())
+					err := funcs.ServerWaitForBoot(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -922,7 +922,7 @@ func serverWaitForDownCmd() *cobra.Command {
 				wg.Add(1)
 				serverWaitForDownParam.SetId(id)
 				go func(p *params.WaitForDownServerParam) {
-					err := funcs.ServerWaitForDown(ctx, p.ToV0())
+					err := funcs.ServerWaitForDown(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -985,7 +985,7 @@ func serverSSHCmd() *cobra.Command {
 				wg.Add(1)
 				serverSSHParam.SetId(id)
 				go func(p *params.SSHServerParam) {
-					err := funcs.ServerSSH(ctx, p.ToV0())
+					err := funcs.ServerSSH(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1053,7 +1053,7 @@ func serverSSHExecCmd() *cobra.Command {
 				wg.Add(1)
 				serverSSHExecParam.SetId(id)
 				go func(p *params.SSHExecServerParam) {
-					err := funcs.ServerSSHExec(ctx, p.ToV0())
+					err := funcs.ServerSSHExec(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1118,7 +1118,7 @@ func serverScpCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.ServerScp(ctx, serverScpParam.ToV0())
+			return funcs.ServerScp(ctx, serverScpParam)
 
 		},
 	}
@@ -1178,7 +1178,7 @@ func serverVncCmd() *cobra.Command {
 				wg.Add(1)
 				serverVncParam.SetId(id)
 				go func(p *params.VncServerParam) {
-					err := funcs.ServerVnc(ctx, p.ToV0())
+					err := funcs.ServerVnc(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1242,7 +1242,7 @@ func serverVncInfoCmd() *cobra.Command {
 				wg.Add(1)
 				serverVncInfoParam.SetId(id)
 				go func(p *params.VncInfoServerParam) {
-					err := funcs.ServerVncInfo(ctx, p.ToV0())
+					err := funcs.ServerVncInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1324,7 +1324,7 @@ func serverVncSendCmd() *cobra.Command {
 				wg.Add(1)
 				serverVncSendParam.SetId(id)
 				go func(p *params.VncSendServerParam) {
-					err := funcs.ServerVncSend(ctx, p.ToV0())
+					err := funcs.ServerVncSend(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1411,7 +1411,7 @@ func serverVncSnapshotCmd() *cobra.Command {
 				wg.Add(1)
 				serverVncSnapshotParam.SetId(id)
 				go func(p *params.VncSnapshotServerParam) {
-					err := funcs.ServerVncSnapshot(ctx, p.ToV0())
+					err := funcs.ServerVncSnapshot(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1484,7 +1484,7 @@ func serverRemoteDesktopCmd() *cobra.Command {
 				wg.Add(1)
 				serverRemoteDesktopParam.SetId(id)
 				go func(p *params.RemoteDesktopServerParam) {
-					err := funcs.ServerRemoteDesktop(ctx, p.ToV0())
+					err := funcs.ServerRemoteDesktop(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1549,7 +1549,7 @@ func serverRemoteDesktopInfoCmd() *cobra.Command {
 				wg.Add(1)
 				serverRemoteDesktopInfoParam.SetId(id)
 				go func(p *params.RemoteDesktopInfoServerParam) {
-					err := funcs.ServerRemoteDesktopInfo(ctx, p.ToV0())
+					err := funcs.ServerRemoteDesktopInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1621,7 +1621,7 @@ func serverDiskInfoCmd() *cobra.Command {
 				wg.Add(1)
 				serverDiskInfoParam.SetId(id)
 				go func(p *params.DiskInfoServerParam) {
-					err := funcs.ServerDiskInfo(ctx, p.ToV0())
+					err := funcs.ServerDiskInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1702,7 +1702,7 @@ func serverDiskConnectCmd() *cobra.Command {
 				wg.Add(1)
 				serverDiskConnectParam.SetId(id)
 				go func(p *params.DiskConnectServerParam) {
-					err := funcs.ServerDiskConnect(ctx, p.ToV0())
+					err := funcs.ServerDiskConnect(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1778,7 +1778,7 @@ func serverDiskDisconnectCmd() *cobra.Command {
 				wg.Add(1)
 				serverDiskDisconnectParam.SetId(id)
 				go func(p *params.DiskDisconnectServerParam) {
-					err := funcs.ServerDiskDisconnect(ctx, p.ToV0())
+					err := funcs.ServerDiskDisconnect(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1843,7 +1843,7 @@ func serverInterfaceInfoCmd() *cobra.Command {
 				wg.Add(1)
 				serverInterfaceInfoParam.SetId(id)
 				go func(p *params.InterfaceInfoServerParam) {
-					err := funcs.ServerInterfaceInfo(ctx, p.ToV0())
+					err := funcs.ServerInterfaceInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1924,7 +1924,7 @@ func serverInterfaceAddForInternetCmd() *cobra.Command {
 				wg.Add(1)
 				serverInterfaceAddForInternetParam.SetId(id)
 				go func(p *params.InterfaceAddForInternetServerParam) {
-					err := funcs.ServerInterfaceAddForInternet(ctx, p.ToV0())
+					err := funcs.ServerInterfaceAddForInternet(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2000,7 +2000,7 @@ func serverInterfaceAddForRouterCmd() *cobra.Command {
 				wg.Add(1)
 				serverInterfaceAddForRouterParam.SetId(id)
 				go func(p *params.InterfaceAddForRouterServerParam) {
-					err := funcs.ServerInterfaceAddForRouter(ctx, p.ToV0())
+					err := funcs.ServerInterfaceAddForRouter(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2080,7 +2080,7 @@ func serverInterfaceAddForSwitchCmd() *cobra.Command {
 				wg.Add(1)
 				serverInterfaceAddForSwitchParam.SetId(id)
 				go func(p *params.InterfaceAddForSwitchServerParam) {
-					err := funcs.ServerInterfaceAddForSwitch(ctx, p.ToV0())
+					err := funcs.ServerInterfaceAddForSwitch(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2160,7 +2160,7 @@ func serverInterfaceAddDisconnectedCmd() *cobra.Command {
 				wg.Add(1)
 				serverInterfaceAddDisconnectedParam.SetId(id)
 				go func(p *params.InterfaceAddDisconnectedServerParam) {
-					err := funcs.ServerInterfaceAddDisconnected(ctx, p.ToV0())
+					err := funcs.ServerInterfaceAddDisconnected(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2224,7 +2224,7 @@ func serverISOInfoCmd() *cobra.Command {
 				wg.Add(1)
 				serverISOInfoParam.SetId(id)
 				go func(p *params.ISOInfoServerParam) {
-					err := funcs.ServerISOInfo(ctx, p.ToV0())
+					err := funcs.ServerISOInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2305,7 +2305,7 @@ func serverISOInsertCmd() *cobra.Command {
 				wg.Add(1)
 				serverISOInsertParam.SetId(id)
 				go func(p *params.ISOInsertServerParam) {
-					err := funcs.ServerISOInsert(ctx, p.ToV0())
+					err := funcs.ServerISOInsert(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2387,7 +2387,7 @@ func serverISOEjectCmd() *cobra.Command {
 				wg.Add(1)
 				serverISOEjectParam.SetId(id)
 				go func(p *params.ISOEjectServerParam) {
-					err := funcs.ServerISOEject(ctx, p.ToV0())
+					err := funcs.ServerISOEject(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2451,7 +2451,7 @@ func serverMonitorCPUCmd() *cobra.Command {
 				wg.Add(1)
 				serverMonitorCPUParam.SetId(id)
 				go func(p *params.MonitorCPUServerParam) {
-					err := funcs.ServerMonitorCPU(ctx, p.ToV0())
+					err := funcs.ServerMonitorCPU(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2524,7 +2524,7 @@ func serverMonitorNicCmd() *cobra.Command {
 				wg.Add(1)
 				serverMonitorNicParam.SetId(id)
 				go func(p *params.MonitorNicServerParam) {
-					err := funcs.ServerMonitorNic(ctx, p.ToV0())
+					err := funcs.ServerMonitorNic(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2598,7 +2598,7 @@ func serverMonitorDiskCmd() *cobra.Command {
 				wg.Add(1)
 				serverMonitorDiskParam.SetId(id)
 				go func(p *params.MonitorDiskServerParam) {
-					err := funcs.ServerMonitorDisk(ctx, p.ToV0())
+					err := funcs.ServerMonitorDisk(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2659,7 +2659,7 @@ func serverMaintenanceInfoCmd() *cobra.Command {
 				return generateSkeleton(ctx, serverMaintenanceInfoParam)
 			}
 
-			return funcs.ServerMaintenanceInfo(ctx, serverMaintenanceInfoParam.ToV0())
+			return funcs.ServerMaintenanceInfo(ctx, serverMaintenanceInfoParam)
 
 		},
 	}

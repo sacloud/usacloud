@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func nfsListCmd() *cobra.Command {
 				return generateSkeleton(ctx, nfsListParam)
 			}
 
-			return funcs.NFSList(ctx, nfsListParam.ToV0())
+			return funcs.NFSList(ctx, nfsListParam)
 
 		},
 	}
@@ -130,7 +130,7 @@ func nfsCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.NFSCreate(ctx, nfsCreateParam.ToV0())
+			return funcs.NFSCreate(ctx, nfsCreateParam)
 
 		},
 	}
@@ -201,7 +201,7 @@ func nfsReadCmd() *cobra.Command {
 				wg.Add(1)
 				nfsReadParam.SetId(id)
 				go func(p *params.ReadNFSParam) {
-					err := funcs.NFSRead(ctx, p.ToV0())
+					err := funcs.NFSRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -282,7 +282,7 @@ func nfsUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				nfsUpdateParam.SetId(id)
 				go func(p *params.UpdateNFSParam) {
-					err := funcs.NFSUpdate(ctx, p.ToV0())
+					err := funcs.NFSUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -368,7 +368,7 @@ func nfsDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				nfsDeleteParam.SetId(id)
 				go func(p *params.DeleteNFSParam) {
-					err := funcs.NFSDelete(ctx, p.ToV0())
+					err := funcs.NFSDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -451,7 +451,7 @@ func nfsBootCmd() *cobra.Command {
 				wg.Add(1)
 				nfsBootParam.SetId(id)
 				go func(p *params.BootNFSParam) {
-					err := funcs.NFSBoot(ctx, p.ToV0())
+					err := funcs.NFSBoot(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -526,7 +526,7 @@ func nfsShutdownCmd() *cobra.Command {
 				wg.Add(1)
 				nfsShutdownParam.SetId(id)
 				go func(p *params.ShutdownNFSParam) {
-					err := funcs.NFSShutdown(ctx, p.ToV0())
+					err := funcs.NFSShutdown(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -601,7 +601,7 @@ func nfsShutdownForceCmd() *cobra.Command {
 				wg.Add(1)
 				nfsShutdownForceParam.SetId(id)
 				go func(p *params.ShutdownForceNFSParam) {
-					err := funcs.NFSShutdownForce(ctx, p.ToV0())
+					err := funcs.NFSShutdownForce(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -676,7 +676,7 @@ func nfsResetCmd() *cobra.Command {
 				wg.Add(1)
 				nfsResetParam.SetId(id)
 				go func(p *params.ResetNFSParam) {
-					err := funcs.NFSReset(ctx, p.ToV0())
+					err := funcs.NFSReset(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -740,7 +740,7 @@ func nfsWaitForBootCmd() *cobra.Command {
 				wg.Add(1)
 				nfsWaitForBootParam.SetId(id)
 				go func(p *params.WaitForBootNFSParam) {
-					err := funcs.NFSWaitForBoot(ctx, p.ToV0())
+					err := funcs.NFSWaitForBoot(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -803,7 +803,7 @@ func nfsWaitForDownCmd() *cobra.Command {
 				wg.Add(1)
 				nfsWaitForDownParam.SetId(id)
 				go func(p *params.WaitForDownNFSParam) {
-					err := funcs.NFSWaitForDown(ctx, p.ToV0())
+					err := funcs.NFSWaitForDown(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -866,7 +866,7 @@ func nfsMonitorNicCmd() *cobra.Command {
 				wg.Add(1)
 				nfsMonitorNicParam.SetId(id)
 				go func(p *params.MonitorNicNFSParam) {
-					err := funcs.NFSMonitorNic(ctx, p.ToV0())
+					err := funcs.NFSMonitorNic(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -939,7 +939,7 @@ func nfsMonitorFreeDiskSizeCmd() *cobra.Command {
 				wg.Add(1)
 				nfsMonitorFreeDiskSizeParam.SetId(id)
 				go func(p *params.MonitorFreeDiskSizeNFSParam) {
-					err := funcs.NFSMonitorFreeDiskSize(ctx, p.ToV0())
+					err := funcs.NFSMonitorFreeDiskSize(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

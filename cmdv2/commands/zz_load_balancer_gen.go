@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func loadBalancerListCmd() *cobra.Command {
 				return generateSkeleton(ctx, loadBalancerListParam)
 			}
 
-			return funcs.LoadBalancerList(ctx, loadBalancerListParam.ToV0())
+			return funcs.LoadBalancerList(ctx, loadBalancerListParam)
 
 		},
 	}
@@ -130,7 +130,7 @@ func loadBalancerCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.LoadBalancerCreate(ctx, loadBalancerCreateParam.ToV0())
+			return funcs.LoadBalancerCreate(ctx, loadBalancerCreateParam)
 
 		},
 	}
@@ -203,7 +203,7 @@ func loadBalancerReadCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerReadParam.SetId(id)
 				go func(p *params.ReadLoadBalancerParam) {
-					err := funcs.LoadBalancerRead(ctx, p.ToV0())
+					err := funcs.LoadBalancerRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -284,7 +284,7 @@ func loadBalancerUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerUpdateParam.SetId(id)
 				go func(p *params.UpdateLoadBalancerParam) {
-					err := funcs.LoadBalancerUpdate(ctx, p.ToV0())
+					err := funcs.LoadBalancerUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -370,7 +370,7 @@ func loadBalancerDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerDeleteParam.SetId(id)
 				go func(p *params.DeleteLoadBalancerParam) {
-					err := funcs.LoadBalancerDelete(ctx, p.ToV0())
+					err := funcs.LoadBalancerDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -453,7 +453,7 @@ func loadBalancerBootCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerBootParam.SetId(id)
 				go func(p *params.BootLoadBalancerParam) {
-					err := funcs.LoadBalancerBoot(ctx, p.ToV0())
+					err := funcs.LoadBalancerBoot(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -528,7 +528,7 @@ func loadBalancerShutdownCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerShutdownParam.SetId(id)
 				go func(p *params.ShutdownLoadBalancerParam) {
-					err := funcs.LoadBalancerShutdown(ctx, p.ToV0())
+					err := funcs.LoadBalancerShutdown(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -603,7 +603,7 @@ func loadBalancerShutdownForceCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerShutdownForceParam.SetId(id)
 				go func(p *params.ShutdownForceLoadBalancerParam) {
-					err := funcs.LoadBalancerShutdownForce(ctx, p.ToV0())
+					err := funcs.LoadBalancerShutdownForce(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -678,7 +678,7 @@ func loadBalancerResetCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerResetParam.SetId(id)
 				go func(p *params.ResetLoadBalancerParam) {
-					err := funcs.LoadBalancerReset(ctx, p.ToV0())
+					err := funcs.LoadBalancerReset(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -742,7 +742,7 @@ func loadBalancerWaitForBootCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerWaitForBootParam.SetId(id)
 				go func(p *params.WaitForBootLoadBalancerParam) {
-					err := funcs.LoadBalancerWaitForBoot(ctx, p.ToV0())
+					err := funcs.LoadBalancerWaitForBoot(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -805,7 +805,7 @@ func loadBalancerWaitForDownCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerWaitForDownParam.SetId(id)
 				go func(p *params.WaitForDownLoadBalancerParam) {
-					err := funcs.LoadBalancerWaitForDown(ctx, p.ToV0())
+					err := funcs.LoadBalancerWaitForDown(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -868,7 +868,7 @@ func loadBalancerVipInfoCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerVipInfoParam.SetId(id)
 				go func(p *params.VipInfoLoadBalancerParam) {
-					err := funcs.LoadBalancerVipInfo(ctx, p.ToV0())
+					err := funcs.LoadBalancerVipInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -949,7 +949,7 @@ func loadBalancerVipAddCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerVipAddParam.SetId(id)
 				go func(p *params.VipAddLoadBalancerParam) {
-					err := funcs.LoadBalancerVipAdd(ctx, p.ToV0())
+					err := funcs.LoadBalancerVipAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1029,7 +1029,7 @@ func loadBalancerVipUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerVipUpdateParam.SetId(id)
 				go func(p *params.VipUpdateLoadBalancerParam) {
-					err := funcs.LoadBalancerVipUpdate(ctx, p.ToV0())
+					err := funcs.LoadBalancerVipUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1110,7 +1110,7 @@ func loadBalancerVipDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerVipDeleteParam.SetId(id)
 				go func(p *params.VipDeleteLoadBalancerParam) {
-					err := funcs.LoadBalancerVipDelete(ctx, p.ToV0())
+					err := funcs.LoadBalancerVipDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1175,7 +1175,7 @@ func loadBalancerServerInfoCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerServerInfoParam.SetId(id)
 				go func(p *params.ServerInfoLoadBalancerParam) {
-					err := funcs.LoadBalancerServerInfo(ctx, p.ToV0())
+					err := funcs.LoadBalancerServerInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1259,7 +1259,7 @@ func loadBalancerServerAddCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerServerAddParam.SetId(id)
 				go func(p *params.ServerAddLoadBalancerParam) {
-					err := funcs.LoadBalancerServerAdd(ctx, p.ToV0())
+					err := funcs.LoadBalancerServerAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1342,7 +1342,7 @@ func loadBalancerServerUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerServerUpdateParam.SetId(id)
 				go func(p *params.ServerUpdateLoadBalancerParam) {
-					err := funcs.LoadBalancerServerUpdate(ctx, p.ToV0())
+					err := funcs.LoadBalancerServerUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1425,7 +1425,7 @@ func loadBalancerServerDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerServerDeleteParam.SetId(id)
 				go func(p *params.ServerDeleteLoadBalancerParam) {
-					err := funcs.LoadBalancerServerDelete(ctx, p.ToV0())
+					err := funcs.LoadBalancerServerDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1493,7 +1493,7 @@ func loadBalancerMonitorCmd() *cobra.Command {
 				wg.Add(1)
 				loadBalancerMonitorParam.SetId(id)
 				go func(p *params.MonitorLoadBalancerParam) {
-					err := funcs.LoadBalancerMonitor(ctx, p.ToV0())
+					err := funcs.LoadBalancerMonitor(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func switchListCmd() *cobra.Command {
 				return generateSkeleton(ctx, switchListParam)
 			}
 
-			return funcs.SwitchList(ctx, switchListParam.ToV0())
+			return funcs.SwitchList(ctx, switchListParam)
 
 		},
 	}
@@ -130,7 +130,7 @@ func switchCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.SwitchCreate(ctx, switchCreateParam.ToV0())
+			return funcs.SwitchCreate(ctx, switchCreateParam)
 
 		},
 	}
@@ -195,7 +195,7 @@ func switchReadCmd() *cobra.Command {
 				wg.Add(1)
 				switchReadParam.SetId(id)
 				go func(p *params.ReadSwitchParam) {
-					err := funcs.SwitchRead(ctx, p.ToV0())
+					err := funcs.SwitchRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -276,7 +276,7 @@ func switchUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				switchUpdateParam.SetId(id)
 				go func(p *params.UpdateSwitchParam) {
-					err := funcs.SwitchUpdate(ctx, p.ToV0())
+					err := funcs.SwitchUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -362,7 +362,7 @@ func switchDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				switchDeleteParam.SetId(id)
 				go func(p *params.DeleteSwitchParam) {
-					err := funcs.SwitchDelete(ctx, p.ToV0())
+					err := funcs.SwitchDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -444,7 +444,7 @@ func switchBridgeConnectCmd() *cobra.Command {
 				wg.Add(1)
 				switchBridgeConnectParam.SetId(id)
 				go func(p *params.BridgeConnectSwitchParam) {
-					err := funcs.SwitchBridgeConnect(ctx, p.ToV0())
+					err := funcs.SwitchBridgeConnect(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -520,7 +520,7 @@ func switchBridgeDisconnectCmd() *cobra.Command {
 				wg.Add(1)
 				switchBridgeDisconnectParam.SetId(id)
 				go func(p *params.BridgeDisconnectSwitchParam) {
-					err := funcs.SwitchBridgeDisconnect(ctx, p.ToV0())
+					err := funcs.SwitchBridgeDisconnect(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

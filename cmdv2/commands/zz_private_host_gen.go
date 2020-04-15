@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func privateHostListCmd() *cobra.Command {
 				return generateSkeleton(ctx, privateHostListParam)
 			}
 
-			return funcs.PrivateHostList(ctx, privateHostListParam.ToV0())
+			return funcs.PrivateHostList(ctx, privateHostListParam)
 
 		},
 	}
@@ -130,7 +130,7 @@ func privateHostCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.PrivateHostCreate(ctx, privateHostCreateParam.ToV0())
+			return funcs.PrivateHostCreate(ctx, privateHostCreateParam)
 
 		},
 	}
@@ -195,7 +195,7 @@ func privateHostReadCmd() *cobra.Command {
 				wg.Add(1)
 				privateHostReadParam.SetId(id)
 				go func(p *params.ReadPrivateHostParam) {
-					err := funcs.PrivateHostRead(ctx, p.ToV0())
+					err := funcs.PrivateHostRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -276,7 +276,7 @@ func privateHostUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				privateHostUpdateParam.SetId(id)
 				go func(p *params.UpdatePrivateHostParam) {
-					err := funcs.PrivateHostUpdate(ctx, p.ToV0())
+					err := funcs.PrivateHostUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -362,7 +362,7 @@ func privateHostDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				privateHostDeleteParam.SetId(id)
 				go func(p *params.DeletePrivateHostParam) {
-					err := funcs.PrivateHostDelete(ctx, p.ToV0())
+					err := funcs.PrivateHostDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -433,7 +433,7 @@ func privateHostServerInfoCmd() *cobra.Command {
 				wg.Add(1)
 				privateHostServerInfoParam.SetId(id)
 				go func(p *params.ServerInfoPrivateHostParam) {
-					err := funcs.PrivateHostServerInfo(ctx, p.ToV0())
+					err := funcs.PrivateHostServerInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -514,7 +514,7 @@ func privateHostServerAddCmd() *cobra.Command {
 				wg.Add(1)
 				privateHostServerAddParam.SetId(id)
 				go func(p *params.ServerAddPrivateHostParam) {
-					err := funcs.PrivateHostServerAdd(ctx, p.ToV0())
+					err := funcs.PrivateHostServerAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -597,7 +597,7 @@ func privateHostServerDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				privateHostServerDeleteParam.SetId(id)
 				go func(p *params.ServerDeletePrivateHostParam) {
-					err := funcs.PrivateHostServerDelete(ctx, p.ToV0())
+					err := funcs.PrivateHostServerDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

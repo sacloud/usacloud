@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func mobileGatewayListCmd() *cobra.Command {
 				return generateSkeleton(ctx, mobileGatewayListParam)
 			}
 
-			return funcs.MobileGatewayList(ctx, mobileGatewayListParam.ToV0())
+			return funcs.MobileGatewayList(ctx, mobileGatewayListParam)
 
 		},
 	}
@@ -130,7 +130,7 @@ func mobileGatewayCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.MobileGatewayCreate(ctx, mobileGatewayCreateParam.ToV0())
+			return funcs.MobileGatewayCreate(ctx, mobileGatewayCreateParam)
 
 		},
 	}
@@ -196,7 +196,7 @@ func mobileGatewayReadCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayReadParam.SetId(id)
 				go func(p *params.ReadMobileGatewayParam) {
-					err := funcs.MobileGatewayRead(ctx, p.ToV0())
+					err := funcs.MobileGatewayRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -277,7 +277,7 @@ func mobileGatewayUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayUpdateParam.SetId(id)
 				go func(p *params.UpdateMobileGatewayParam) {
-					err := funcs.MobileGatewayUpdate(ctx, p.ToV0())
+					err := funcs.MobileGatewayUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -364,7 +364,7 @@ func mobileGatewayDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayDeleteParam.SetId(id)
 				go func(p *params.DeleteMobileGatewayParam) {
-					err := funcs.MobileGatewayDelete(ctx, p.ToV0())
+					err := funcs.MobileGatewayDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -447,7 +447,7 @@ func mobileGatewayBootCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayBootParam.SetId(id)
 				go func(p *params.BootMobileGatewayParam) {
-					err := funcs.MobileGatewayBoot(ctx, p.ToV0())
+					err := funcs.MobileGatewayBoot(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -522,7 +522,7 @@ func mobileGatewayShutdownCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayShutdownParam.SetId(id)
 				go func(p *params.ShutdownMobileGatewayParam) {
-					err := funcs.MobileGatewayShutdown(ctx, p.ToV0())
+					err := funcs.MobileGatewayShutdown(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -597,7 +597,7 @@ func mobileGatewayShutdownForceCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayShutdownForceParam.SetId(id)
 				go func(p *params.ShutdownForceMobileGatewayParam) {
-					err := funcs.MobileGatewayShutdownForce(ctx, p.ToV0())
+					err := funcs.MobileGatewayShutdownForce(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -672,7 +672,7 @@ func mobileGatewayResetCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayResetParam.SetId(id)
 				go func(p *params.ResetMobileGatewayParam) {
-					err := funcs.MobileGatewayReset(ctx, p.ToV0())
+					err := funcs.MobileGatewayReset(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -736,7 +736,7 @@ func mobileGatewayWaitForBootCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayWaitForBootParam.SetId(id)
 				go func(p *params.WaitForBootMobileGatewayParam) {
-					err := funcs.MobileGatewayWaitForBoot(ctx, p.ToV0())
+					err := funcs.MobileGatewayWaitForBoot(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -799,7 +799,7 @@ func mobileGatewayWaitForDownCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayWaitForDownParam.SetId(id)
 				go func(p *params.WaitForDownMobileGatewayParam) {
-					err := funcs.MobileGatewayWaitForDown(ctx, p.ToV0())
+					err := funcs.MobileGatewayWaitForDown(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -862,7 +862,7 @@ func mobileGatewayInterfaceInfoCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayInterfaceInfoParam.SetId(id)
 				go func(p *params.InterfaceInfoMobileGatewayParam) {
-					err := funcs.MobileGatewayInterfaceInfo(ctx, p.ToV0())
+					err := funcs.MobileGatewayInterfaceInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -943,7 +943,7 @@ func mobileGatewayInterfaceConnectCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayInterfaceConnectParam.SetId(id)
 				go func(p *params.InterfaceConnectMobileGatewayParam) {
-					err := funcs.MobileGatewayInterfaceConnect(ctx, p.ToV0())
+					err := funcs.MobileGatewayInterfaceConnect(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1021,7 +1021,7 @@ func mobileGatewayInterfaceUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayInterfaceUpdateParam.SetId(id)
 				go func(p *params.InterfaceUpdateMobileGatewayParam) {
-					err := funcs.MobileGatewayInterfaceUpdate(ctx, p.ToV0())
+					err := funcs.MobileGatewayInterfaceUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1098,7 +1098,7 @@ func mobileGatewayInterfaceDisconnectCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayInterfaceDisconnectParam.SetId(id)
 				go func(p *params.InterfaceDisconnectMobileGatewayParam) {
-					err := funcs.MobileGatewayInterfaceDisconnect(ctx, p.ToV0())
+					err := funcs.MobileGatewayInterfaceDisconnect(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1162,7 +1162,7 @@ func mobileGatewayTrafficControlInfoCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayTrafficControlInfoParam.SetId(id)
 				go func(p *params.TrafficControlInfoMobileGatewayParam) {
-					err := funcs.MobileGatewayTrafficControlInfo(ctx, p.ToV0())
+					err := funcs.MobileGatewayTrafficControlInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1243,7 +1243,7 @@ func mobileGatewayTrafficControlEnableCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayTrafficControlEnableParam.SetId(id)
 				go func(p *params.TrafficControlEnableMobileGatewayParam) {
-					err := funcs.MobileGatewayTrafficControlEnable(ctx, p.ToV0())
+					err := funcs.MobileGatewayTrafficControlEnable(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1323,7 +1323,7 @@ func mobileGatewayTrafficControlUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayTrafficControlUpdateParam.SetId(id)
 				go func(p *params.TrafficControlUpdateMobileGatewayParam) {
-					err := funcs.MobileGatewayTrafficControlUpdate(ctx, p.ToV0())
+					err := funcs.MobileGatewayTrafficControlUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1403,7 +1403,7 @@ func mobileGatewayTrafficControlDisableCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayTrafficControlDisableParam.SetId(id)
 				go func(p *params.TrafficControlDisableMobileGatewayParam) {
-					err := funcs.MobileGatewayTrafficControlDisable(ctx, p.ToV0())
+					err := funcs.MobileGatewayTrafficControlDisable(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1467,7 +1467,7 @@ func mobileGatewayStaticRouteInfoCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayStaticRouteInfoParam.SetId(id)
 				go func(p *params.StaticRouteInfoMobileGatewayParam) {
-					err := funcs.MobileGatewayStaticRouteInfo(ctx, p.ToV0())
+					err := funcs.MobileGatewayStaticRouteInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1548,7 +1548,7 @@ func mobileGatewayStaticRouteAddCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayStaticRouteAddParam.SetId(id)
 				go func(p *params.StaticRouteAddMobileGatewayParam) {
-					err := funcs.MobileGatewayStaticRouteAdd(ctx, p.ToV0())
+					err := funcs.MobileGatewayStaticRouteAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1625,7 +1625,7 @@ func mobileGatewayStaticRouteUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayStaticRouteUpdateParam.SetId(id)
 				go func(p *params.StaticRouteUpdateMobileGatewayParam) {
-					err := funcs.MobileGatewayStaticRouteUpdate(ctx, p.ToV0())
+					err := funcs.MobileGatewayStaticRouteUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1703,7 +1703,7 @@ func mobileGatewayStaticRouteDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayStaticRouteDeleteParam.SetId(id)
 				go func(p *params.StaticRouteDeleteMobileGatewayParam) {
-					err := funcs.MobileGatewayStaticRouteDelete(ctx, p.ToV0())
+					err := funcs.MobileGatewayStaticRouteDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1768,7 +1768,7 @@ func mobileGatewaySIMInfoCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewaySIMInfoParam.SetId(id)
 				go func(p *params.SIMInfoMobileGatewayParam) {
-					err := funcs.MobileGatewaySIMInfo(ctx, p.ToV0())
+					err := funcs.MobileGatewaySIMInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1849,7 +1849,7 @@ func mobileGatewaySIMAddCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewaySIMAddParam.SetId(id)
 				go func(p *params.SIMAddMobileGatewayParam) {
-					err := funcs.MobileGatewaySIMAdd(ctx, p.ToV0())
+					err := funcs.MobileGatewaySIMAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1926,7 +1926,7 @@ func mobileGatewaySIMUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewaySIMUpdateParam.SetId(id)
 				go func(p *params.SIMUpdateMobileGatewayParam) {
-					err := funcs.MobileGatewaySIMUpdate(ctx, p.ToV0())
+					err := funcs.MobileGatewaySIMUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2003,7 +2003,7 @@ func mobileGatewaySIMDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewaySIMDeleteParam.SetId(id)
 				go func(p *params.SIMDeleteMobileGatewayParam) {
-					err := funcs.MobileGatewaySIMDelete(ctx, p.ToV0())
+					err := funcs.MobileGatewaySIMDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2068,7 +2068,7 @@ func mobileGatewaySIMRouteInfoCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewaySIMRouteInfoParam.SetId(id)
 				go func(p *params.SIMRouteInfoMobileGatewayParam) {
-					err := funcs.MobileGatewaySIMRouteInfo(ctx, p.ToV0())
+					err := funcs.MobileGatewaySIMRouteInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2149,7 +2149,7 @@ func mobileGatewaySIMRouteAddCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewaySIMRouteAddParam.SetId(id)
 				go func(p *params.SIMRouteAddMobileGatewayParam) {
-					err := funcs.MobileGatewaySIMRouteAdd(ctx, p.ToV0())
+					err := funcs.MobileGatewaySIMRouteAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2226,7 +2226,7 @@ func mobileGatewaySIMRouteUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewaySIMRouteUpdateParam.SetId(id)
 				go func(p *params.SIMRouteUpdateMobileGatewayParam) {
-					err := funcs.MobileGatewaySIMRouteUpdate(ctx, p.ToV0())
+					err := funcs.MobileGatewaySIMRouteUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2304,7 +2304,7 @@ func mobileGatewaySIMRouteDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewaySIMRouteDeleteParam.SetId(id)
 				go func(p *params.SIMRouteDeleteMobileGatewayParam) {
-					err := funcs.MobileGatewaySIMRouteDelete(ctx, p.ToV0())
+					err := funcs.MobileGatewaySIMRouteDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2380,7 +2380,7 @@ func mobileGatewayDNSUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayDNSUpdateParam.SetId(id)
 				go func(p *params.DNSUpdateMobileGatewayParam) {
-					err := funcs.MobileGatewayDNSUpdate(ctx, p.ToV0())
+					err := funcs.MobileGatewayDNSUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2446,7 +2446,7 @@ func mobileGatewayLogsCmd() *cobra.Command {
 				wg.Add(1)
 				mobileGatewayLogsParam.SetId(id)
 				go func(p *params.LogsMobileGatewayParam) {
-					err := funcs.MobileGatewayLogs(ctx, p.ToV0())
+					err := funcs.MobileGatewayLogs(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

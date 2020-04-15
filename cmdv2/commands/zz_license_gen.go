@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func licenseListCmd() *cobra.Command {
 				return generateSkeleton(ctx, licenseListParam)
 			}
 
-			return funcs.LicenseList(ctx, licenseListParam.ToV0())
+			return funcs.LicenseList(ctx, licenseListParam)
 
 		},
 	}
@@ -129,7 +129,7 @@ func licenseCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.LicenseCreate(ctx, licenseCreateParam.ToV0())
+			return funcs.LicenseCreate(ctx, licenseCreateParam)
 
 		},
 	}
@@ -192,7 +192,7 @@ func licenseReadCmd() *cobra.Command {
 				wg.Add(1)
 				licenseReadParam.SetId(id)
 				go func(p *params.ReadLicenseParam) {
-					err := funcs.LicenseRead(ctx, p.ToV0())
+					err := funcs.LicenseRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -272,7 +272,7 @@ func licenseUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				licenseUpdateParam.SetId(id)
 				go func(p *params.UpdateLicenseParam) {
-					err := funcs.LicenseUpdate(ctx, p.ToV0())
+					err := funcs.LicenseUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -354,7 +354,7 @@ func licenseDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				licenseDeleteParam.SetId(id)
 				go func(p *params.DeleteLicenseParam) {
-					err := funcs.LicenseDelete(ctx, p.ToV0())
+					err := funcs.LicenseDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

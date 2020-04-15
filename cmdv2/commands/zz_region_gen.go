@@ -20,8 +20,8 @@ import (
 	"errors"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -63,7 +63,7 @@ func regionListCmd() *cobra.Command {
 				return generateSkeleton(ctx, regionListParam)
 			}
 
-			return funcs.RegionList(ctx, regionListParam.ToV0())
+			return funcs.RegionList(ctx, regionListParam)
 
 		},
 	}
@@ -126,7 +126,7 @@ func regionReadCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.RegionRead(ctx, regionReadParam.ToV0())
+			return funcs.RegionRead(ctx, regionReadParam)
 
 		},
 	}

@@ -20,8 +20,8 @@ import (
 	"errors"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -63,7 +63,7 @@ func productInternetListCmd() *cobra.Command {
 				return generateSkeleton(ctx, productInternetListParam)
 			}
 
-			return funcs.ProductInternetList(ctx, productInternetListParam.ToV0())
+			return funcs.ProductInternetList(ctx, productInternetListParam)
 
 		},
 	}
@@ -126,7 +126,7 @@ func productInternetReadCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.ProductInternetRead(ctx, productInternetReadParam.ToV0())
+			return funcs.ProductInternetRead(ctx, productInternetReadParam)
 
 		},
 	}

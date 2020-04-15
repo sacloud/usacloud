@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func vpcRouterListCmd() *cobra.Command {
 				return generateSkeleton(ctx, vpcRouterListParam)
 			}
 
-			return funcs.VPCRouterList(ctx, vpcRouterListParam.ToV0())
+			return funcs.VPCRouterList(ctx, vpcRouterListParam)
 
 		},
 	}
@@ -130,7 +130,7 @@ func vpcRouterCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.VPCRouterCreate(ctx, vpcRouterCreateParam.ToV0())
+			return funcs.VPCRouterCreate(ctx, vpcRouterCreateParam)
 
 		},
 	}
@@ -203,7 +203,7 @@ func vpcRouterReadCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterReadParam.SetId(id)
 				go func(p *params.ReadVPCRouterParam) {
-					err := funcs.VPCRouterRead(ctx, p.ToV0())
+					err := funcs.VPCRouterRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -284,7 +284,7 @@ func vpcRouterUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterUpdateParam.SetId(id)
 				go func(p *params.UpdateVPCRouterParam) {
-					err := funcs.VPCRouterUpdate(ctx, p.ToV0())
+					err := funcs.VPCRouterUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -372,7 +372,7 @@ func vpcRouterDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterDeleteParam.SetId(id)
 				go func(p *params.DeleteVPCRouterParam) {
-					err := funcs.VPCRouterDelete(ctx, p.ToV0())
+					err := funcs.VPCRouterDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -455,7 +455,7 @@ func vpcRouterBootCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterBootParam.SetId(id)
 				go func(p *params.BootVPCRouterParam) {
-					err := funcs.VPCRouterBoot(ctx, p.ToV0())
+					err := funcs.VPCRouterBoot(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -530,7 +530,7 @@ func vpcRouterShutdownCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterShutdownParam.SetId(id)
 				go func(p *params.ShutdownVPCRouterParam) {
-					err := funcs.VPCRouterShutdown(ctx, p.ToV0())
+					err := funcs.VPCRouterShutdown(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -605,7 +605,7 @@ func vpcRouterShutdownForceCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterShutdownForceParam.SetId(id)
 				go func(p *params.ShutdownForceVPCRouterParam) {
-					err := funcs.VPCRouterShutdownForce(ctx, p.ToV0())
+					err := funcs.VPCRouterShutdownForce(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -680,7 +680,7 @@ func vpcRouterResetCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterResetParam.SetId(id)
 				go func(p *params.ResetVPCRouterParam) {
-					err := funcs.VPCRouterReset(ctx, p.ToV0())
+					err := funcs.VPCRouterReset(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -744,7 +744,7 @@ func vpcRouterWaitForBootCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterWaitForBootParam.SetId(id)
 				go func(p *params.WaitForBootVPCRouterParam) {
-					err := funcs.VPCRouterWaitForBoot(ctx, p.ToV0())
+					err := funcs.VPCRouterWaitForBoot(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -807,7 +807,7 @@ func vpcRouterWaitForDownCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterWaitForDownParam.SetId(id)
 				go func(p *params.WaitForDownVPCRouterParam) {
-					err := funcs.VPCRouterWaitForDown(ctx, p.ToV0())
+					err := funcs.VPCRouterWaitForDown(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -881,7 +881,7 @@ func vpcRouterEnableInternetConnectionCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterEnableInternetConnectionParam.SetId(id)
 				go func(p *params.EnableInternetConnectionVPCRouterParam) {
-					err := funcs.VPCRouterEnableInternetConnection(ctx, p.ToV0())
+					err := funcs.VPCRouterEnableInternetConnection(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -956,7 +956,7 @@ func vpcRouterDisableInternetConnectionCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterDisableInternetConnectionParam.SetId(id)
 				go func(p *params.DisableInternetConnectionVPCRouterParam) {
-					err := funcs.VPCRouterDisableInternetConnection(ctx, p.ToV0())
+					err := funcs.VPCRouterDisableInternetConnection(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1020,7 +1020,7 @@ func vpcRouterInterfaceInfoCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterInterfaceInfoParam.SetId(id)
 				go func(p *params.InterfaceInfoVPCRouterParam) {
-					err := funcs.VPCRouterInterfaceInfo(ctx, p.ToV0())
+					err := funcs.VPCRouterInterfaceInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1101,7 +1101,7 @@ func vpcRouterInterfaceConnectCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterInterfaceConnectParam.SetId(id)
 				go func(p *params.InterfaceConnectVPCRouterParam) {
-					err := funcs.VPCRouterInterfaceConnect(ctx, p.ToV0())
+					err := funcs.VPCRouterInterfaceConnect(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1183,7 +1183,7 @@ func vpcRouterInterfaceUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterInterfaceUpdateParam.SetId(id)
 				go func(p *params.InterfaceUpdateVPCRouterParam) {
-					err := funcs.VPCRouterInterfaceUpdate(ctx, p.ToV0())
+					err := funcs.VPCRouterInterfaceUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1266,7 +1266,7 @@ func vpcRouterInterfaceDisconnectCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterInterfaceDisconnectParam.SetId(id)
 				go func(p *params.InterfaceDisconnectVPCRouterParam) {
-					err := funcs.VPCRouterInterfaceDisconnect(ctx, p.ToV0())
+					err := funcs.VPCRouterInterfaceDisconnect(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1332,7 +1332,7 @@ func vpcRouterStaticNatInfoCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterStaticNatInfoParam.SetId(id)
 				go func(p *params.StaticNatInfoVPCRouterParam) {
-					err := funcs.VPCRouterStaticNatInfo(ctx, p.ToV0())
+					err := funcs.VPCRouterStaticNatInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1413,7 +1413,7 @@ func vpcRouterStaticNatAddCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterStaticNatAddParam.SetId(id)
 				go func(p *params.StaticNatAddVPCRouterParam) {
-					err := funcs.VPCRouterStaticNatAdd(ctx, p.ToV0())
+					err := funcs.VPCRouterStaticNatAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1491,7 +1491,7 @@ func vpcRouterStaticNatUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterStaticNatUpdateParam.SetId(id)
 				go func(p *params.StaticNatUpdateVPCRouterParam) {
-					err := funcs.VPCRouterStaticNatUpdate(ctx, p.ToV0())
+					err := funcs.VPCRouterStaticNatUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1570,7 +1570,7 @@ func vpcRouterStaticNatDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterStaticNatDeleteParam.SetId(id)
 				go func(p *params.StaticNatDeleteVPCRouterParam) {
-					err := funcs.VPCRouterStaticNatDelete(ctx, p.ToV0())
+					err := funcs.VPCRouterStaticNatDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1635,7 +1635,7 @@ func vpcRouterPortForwardingInfoCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterPortForwardingInfoParam.SetId(id)
 				go func(p *params.PortForwardingInfoVPCRouterParam) {
-					err := funcs.VPCRouterPortForwardingInfo(ctx, p.ToV0())
+					err := funcs.VPCRouterPortForwardingInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1716,7 +1716,7 @@ func vpcRouterPortForwardingAddCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterPortForwardingAddParam.SetId(id)
 				go func(p *params.PortForwardingAddVPCRouterParam) {
-					err := funcs.VPCRouterPortForwardingAdd(ctx, p.ToV0())
+					err := funcs.VPCRouterPortForwardingAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1796,7 +1796,7 @@ func vpcRouterPortForwardingUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterPortForwardingUpdateParam.SetId(id)
 				go func(p *params.PortForwardingUpdateVPCRouterParam) {
-					err := funcs.VPCRouterPortForwardingUpdate(ctx, p.ToV0())
+					err := funcs.VPCRouterPortForwardingUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1877,7 +1877,7 @@ func vpcRouterPortForwardingDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterPortForwardingDeleteParam.SetId(id)
 				go func(p *params.PortForwardingDeleteVPCRouterParam) {
-					err := funcs.VPCRouterPortForwardingDelete(ctx, p.ToV0())
+					err := funcs.VPCRouterPortForwardingDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -1942,7 +1942,7 @@ func vpcRouterFirewallInfoCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterFirewallInfoParam.SetId(id)
 				go func(p *params.FirewallInfoVPCRouterParam) {
-					err := funcs.VPCRouterFirewallInfo(ctx, p.ToV0())
+					err := funcs.VPCRouterFirewallInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2025,7 +2025,7 @@ func vpcRouterFirewallAddCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterFirewallAddParam.SetId(id)
 				go func(p *params.FirewallAddVPCRouterParam) {
-					err := funcs.VPCRouterFirewallAdd(ctx, p.ToV0())
+					err := funcs.VPCRouterFirewallAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2110,7 +2110,7 @@ func vpcRouterFirewallUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterFirewallUpdateParam.SetId(id)
 				go func(p *params.FirewallUpdateVPCRouterParam) {
-					err := funcs.VPCRouterFirewallUpdate(ctx, p.ToV0())
+					err := funcs.VPCRouterFirewallUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2196,7 +2196,7 @@ func vpcRouterFirewallDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterFirewallDeleteParam.SetId(id)
 				go func(p *params.FirewallDeleteVPCRouterParam) {
-					err := funcs.VPCRouterFirewallDelete(ctx, p.ToV0())
+					err := funcs.VPCRouterFirewallDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2263,7 +2263,7 @@ func vpcRouterDhcpServerInfoCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterDhcpServerInfoParam.SetId(id)
 				go func(p *params.DhcpServerInfoVPCRouterParam) {
-					err := funcs.VPCRouterDhcpServerInfo(ctx, p.ToV0())
+					err := funcs.VPCRouterDhcpServerInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2344,7 +2344,7 @@ func vpcRouterDhcpServerAddCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterDhcpServerAddParam.SetId(id)
 				go func(p *params.DhcpServerAddVPCRouterParam) {
-					err := funcs.VPCRouterDhcpServerAdd(ctx, p.ToV0())
+					err := funcs.VPCRouterDhcpServerAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2423,7 +2423,7 @@ func vpcRouterDhcpServerUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterDhcpServerUpdateParam.SetId(id)
 				go func(p *params.DhcpServerUpdateVPCRouterParam) {
-					err := funcs.VPCRouterDhcpServerUpdate(ctx, p.ToV0())
+					err := funcs.VPCRouterDhcpServerUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2502,7 +2502,7 @@ func vpcRouterDhcpServerDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterDhcpServerDeleteParam.SetId(id)
 				go func(p *params.DhcpServerDeleteVPCRouterParam) {
-					err := funcs.VPCRouterDhcpServerDelete(ctx, p.ToV0())
+					err := funcs.VPCRouterDhcpServerDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2567,7 +2567,7 @@ func vpcRouterDhcpStaticMappingInfoCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterDhcpStaticMappingInfoParam.SetId(id)
 				go func(p *params.DhcpStaticMappingInfoVPCRouterParam) {
-					err := funcs.VPCRouterDhcpStaticMappingInfo(ctx, p.ToV0())
+					err := funcs.VPCRouterDhcpStaticMappingInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2648,7 +2648,7 @@ func vpcRouterDhcpStaticMappingAddCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterDhcpStaticMappingAddParam.SetId(id)
 				go func(p *params.DhcpStaticMappingAddVPCRouterParam) {
-					err := funcs.VPCRouterDhcpStaticMappingAdd(ctx, p.ToV0())
+					err := funcs.VPCRouterDhcpStaticMappingAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2725,7 +2725,7 @@ func vpcRouterDhcpStaticMappingUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterDhcpStaticMappingUpdateParam.SetId(id)
 				go func(p *params.DhcpStaticMappingUpdateVPCRouterParam) {
-					err := funcs.VPCRouterDhcpStaticMappingUpdate(ctx, p.ToV0())
+					err := funcs.VPCRouterDhcpStaticMappingUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2803,7 +2803,7 @@ func vpcRouterDhcpStaticMappingDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterDhcpStaticMappingDeleteParam.SetId(id)
 				go func(p *params.DhcpStaticMappingDeleteVPCRouterParam) {
-					err := funcs.VPCRouterDhcpStaticMappingDelete(ctx, p.ToV0())
+					err := funcs.VPCRouterDhcpStaticMappingDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2868,7 +2868,7 @@ func vpcRouterPptpServerInfoCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterPptpServerInfoParam.SetId(id)
 				go func(p *params.PptpServerInfoVPCRouterParam) {
-					err := funcs.VPCRouterPptpServerInfo(ctx, p.ToV0())
+					err := funcs.VPCRouterPptpServerInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -2949,7 +2949,7 @@ func vpcRouterPptpServerUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterPptpServerUpdateParam.SetId(id)
 				go func(p *params.PptpServerUpdateVPCRouterParam) {
-					err := funcs.VPCRouterPptpServerUpdate(ctx, p.ToV0())
+					err := funcs.VPCRouterPptpServerUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -3016,7 +3016,7 @@ func vpcRouterL2TPServerInfoCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterL2TPServerInfoParam.SetId(id)
 				go func(p *params.L2TPServerInfoVPCRouterParam) {
-					err := funcs.VPCRouterL2TPServerInfo(ctx, p.ToV0())
+					err := funcs.VPCRouterL2TPServerInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -3097,7 +3097,7 @@ func vpcRouterL2TPServerUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterL2TPServerUpdateParam.SetId(id)
 				go func(p *params.L2TPServerUpdateVPCRouterParam) {
-					err := funcs.VPCRouterL2TPServerUpdate(ctx, p.ToV0())
+					err := funcs.VPCRouterL2TPServerUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -3165,7 +3165,7 @@ func vpcRouterUserInfoCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterUserInfoParam.SetId(id)
 				go func(p *params.UserInfoVPCRouterParam) {
-					err := funcs.VPCRouterUserInfo(ctx, p.ToV0())
+					err := funcs.VPCRouterUserInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -3246,7 +3246,7 @@ func vpcRouterUserAddCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterUserAddParam.SetId(id)
 				go func(p *params.UserAddVPCRouterParam) {
-					err := funcs.VPCRouterUserAdd(ctx, p.ToV0())
+					err := funcs.VPCRouterUserAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -3323,7 +3323,7 @@ func vpcRouterUserUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterUserUpdateParam.SetId(id)
 				go func(p *params.UserUpdateVPCRouterParam) {
-					err := funcs.VPCRouterUserUpdate(ctx, p.ToV0())
+					err := funcs.VPCRouterUserUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -3401,7 +3401,7 @@ func vpcRouterUserDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterUserDeleteParam.SetId(id)
 				go func(p *params.UserDeleteVPCRouterParam) {
-					err := funcs.VPCRouterUserDelete(ctx, p.ToV0())
+					err := funcs.VPCRouterUserDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -3466,7 +3466,7 @@ func vpcRouterSiteToSiteVPNInfoCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterSiteToSiteVPNInfoParam.SetId(id)
 				go func(p *params.SiteToSiteVPNInfoVPCRouterParam) {
-					err := funcs.VPCRouterSiteToSiteVPNInfo(ctx, p.ToV0())
+					err := funcs.VPCRouterSiteToSiteVPNInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -3547,7 +3547,7 @@ func vpcRouterSiteToSiteVPNAddCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterSiteToSiteVPNAddParam.SetId(id)
 				go func(p *params.SiteToSiteVPNAddVPCRouterParam) {
-					err := funcs.VPCRouterSiteToSiteVPNAdd(ctx, p.ToV0())
+					err := funcs.VPCRouterSiteToSiteVPNAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -3627,7 +3627,7 @@ func vpcRouterSiteToSiteVPNUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterSiteToSiteVPNUpdateParam.SetId(id)
 				go func(p *params.SiteToSiteVPNUpdateVPCRouterParam) {
-					err := funcs.VPCRouterSiteToSiteVPNUpdate(ctx, p.ToV0())
+					err := funcs.VPCRouterSiteToSiteVPNUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -3708,7 +3708,7 @@ func vpcRouterSiteToSiteVPNDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterSiteToSiteVPNDeleteParam.SetId(id)
 				go func(p *params.SiteToSiteVPNDeleteVPCRouterParam) {
-					err := funcs.VPCRouterSiteToSiteVPNDelete(ctx, p.ToV0())
+					err := funcs.VPCRouterSiteToSiteVPNDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -3773,7 +3773,7 @@ func vpcRouterSiteToSiteVPNPeersCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterSiteToSiteVPNPeersParam.SetId(id)
 				go func(p *params.SiteToSiteVPNPeersVPCRouterParam) {
-					err := funcs.VPCRouterSiteToSiteVPNPeers(ctx, p.ToV0())
+					err := funcs.VPCRouterSiteToSiteVPNPeers(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -3843,7 +3843,7 @@ func vpcRouterStaticRouteInfoCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterStaticRouteInfoParam.SetId(id)
 				go func(p *params.StaticRouteInfoVPCRouterParam) {
-					err := funcs.VPCRouterStaticRouteInfo(ctx, p.ToV0())
+					err := funcs.VPCRouterStaticRouteInfo(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -3924,7 +3924,7 @@ func vpcRouterStaticRouteAddCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterStaticRouteAddParam.SetId(id)
 				go func(p *params.StaticRouteAddVPCRouterParam) {
-					err := funcs.VPCRouterStaticRouteAdd(ctx, p.ToV0())
+					err := funcs.VPCRouterStaticRouteAdd(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -4001,7 +4001,7 @@ func vpcRouterStaticRouteUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterStaticRouteUpdateParam.SetId(id)
 				go func(p *params.StaticRouteUpdateVPCRouterParam) {
-					err := funcs.VPCRouterStaticRouteUpdate(ctx, p.ToV0())
+					err := funcs.VPCRouterStaticRouteUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -4079,7 +4079,7 @@ func vpcRouterStaticRouteDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterStaticRouteDeleteParam.SetId(id)
 				go func(p *params.StaticRouteDeleteVPCRouterParam) {
-					err := funcs.VPCRouterStaticRouteDelete(ctx, p.ToV0())
+					err := funcs.VPCRouterStaticRouteDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -4144,7 +4144,7 @@ func vpcRouterMonitorCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterMonitorParam.SetId(id)
 				go func(p *params.MonitorVPCRouterParam) {
-					err := funcs.VPCRouterMonitor(ctx, p.ToV0())
+					err := funcs.VPCRouterMonitor(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -4218,7 +4218,7 @@ func vpcRouterLogsCmd() *cobra.Command {
 				wg.Add(1)
 				vpcRouterLogsParam.SetId(id)
 				go func(p *params.LogsVPCRouterParam) {
-					err := funcs.VPCRouterLogs(ctx, p.ToV0())
+					err := funcs.VPCRouterLogs(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}

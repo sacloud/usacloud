@@ -19,8 +19,8 @@ package commands
 import (
 	"errors"
 
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -63,7 +63,7 @@ func objectStorageListCmd() *cobra.Command {
 				return generateSkeleton(ctx, objectStorageListParam)
 			}
 
-			return funcs.ObjectStorageList(ctx, objectStorageListParam.ToV0())
+			return funcs.ObjectStorageList(ctx, objectStorageListParam)
 
 		},
 	}
@@ -124,7 +124,7 @@ func objectStoragePutCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.ObjectStoragePut(ctx, objectStoragePutParam.ToV0())
+			return funcs.ObjectStoragePut(ctx, objectStoragePutParam)
 
 		},
 	}
@@ -170,7 +170,7 @@ func objectStorageGetCmd() *cobra.Command {
 				return generateSkeleton(ctx, objectStorageGetParam)
 			}
 
-			return funcs.ObjectStorageGet(ctx, objectStorageGetParam.ToV0())
+			return funcs.ObjectStorageGet(ctx, objectStorageGetParam)
 
 		},
 	}
@@ -225,7 +225,7 @@ func objectStorageDeleteCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.ObjectStorageDelete(ctx, objectStorageDeleteParam.ToV0())
+			return funcs.ObjectStorageDelete(ctx, objectStorageDeleteParam)
 
 		},
 	}

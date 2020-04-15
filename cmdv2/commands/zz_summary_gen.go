@@ -17,8 +17,8 @@
 package commands
 
 import (
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/spf13/cobra"
 )
 
@@ -59,7 +59,7 @@ func summaryShowCmd() *cobra.Command {
 				return generateSkeleton(ctx, summaryShowParam)
 			}
 
-			return funcs.SummaryShow(ctx, summaryShowParam.ToV0())
+			return funcs.SummaryShow(ctx, summaryShowParam)
 
 		},
 	}

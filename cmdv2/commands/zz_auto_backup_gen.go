@@ -21,9 +21,9 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
+	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,7 +66,7 @@ func autoBackupListCmd() *cobra.Command {
 				return generateSkeleton(ctx, autoBackupListParam)
 			}
 
-			return funcs.AutoBackupList(ctx, autoBackupListParam.ToV0())
+			return funcs.AutoBackupList(ctx, autoBackupListParam)
 
 		},
 	}
@@ -130,7 +130,7 @@ func autoBackupCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.AutoBackupCreate(ctx, autoBackupCreateParam.ToV0())
+			return funcs.AutoBackupCreate(ctx, autoBackupCreateParam)
 
 		},
 	}
@@ -198,7 +198,7 @@ func autoBackupReadCmd() *cobra.Command {
 				wg.Add(1)
 				autoBackupReadParam.SetId(id)
 				go func(p *params.ReadAutoBackupParam) {
-					err := funcs.AutoBackupRead(ctx, p.ToV0())
+					err := funcs.AutoBackupRead(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -279,7 +279,7 @@ func autoBackupUpdateCmd() *cobra.Command {
 				wg.Add(1)
 				autoBackupUpdateParam.SetId(id)
 				go func(p *params.UpdateAutoBackupParam) {
-					err := funcs.AutoBackupUpdate(ctx, p.ToV0())
+					err := funcs.AutoBackupUpdate(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -367,7 +367,7 @@ func autoBackupDeleteCmd() *cobra.Command {
 				wg.Add(1)
 				autoBackupDeleteParam.SetId(id)
 				go func(p *params.DeleteAutoBackupParam) {
-					err := funcs.AutoBackupDelete(ctx, p.ToV0())
+					err := funcs.AutoBackupDelete(ctx, p)
 					if err != nil {
 						errs = append(errs, err)
 					}
