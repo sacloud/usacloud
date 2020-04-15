@@ -50,7 +50,6 @@ clean:
 .PHONY: clean-all
 clean-all:
 	rm -Rf bin/* ; rm -Rf tools/bin/* ; rm -f command/*_gen.go; \
-	rm -f command/cli/*_gen.go \
 	rm -f command/funcs/*_gen.go \
 	rm -f command/params/*_gen.go \
 	rm -f cmdv2/commands/*_gen.go \
