@@ -12,24 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package version
+package commands
 
 import (
 	"fmt"
-	"runtime"
+	"os"
+
+	"github.com/sacloud/usacloud/version"
+
+	"github.com/spf13/cobra"
 )
 
-var (
-	// Version app version
-	Version = "1.0.0-dev"
-	// Revision git commit short commithash
-	Revision = "xxxxxx" // set on build time
+// versionCmd represents the version command
+var versionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "show version info",
+	Long:  `show version info`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		_, err := fmt.Fprintln(os.Stdout, version.FullVersion())
+		return err
+	},
+}
 
-	// CopyrightYear .
-	CopyrightYear = "2017-2020"
-)
-
-// FullVersion return sackerel full version text
-func FullVersion() string {
-	return fmt.Sprintf("%s %s/%s, build %s", Version, runtime.GOOS, runtime.GOARCH, Revision)
+func init() {
+	rootCmd.AddCommand(versionCmd)
 }
