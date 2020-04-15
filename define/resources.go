@@ -13,13 +13,13 @@
 // limitations under the License.
 
 // Package define .
+//go:generate go run ../tools/gen-command-params/main.go
 //go:generate go run ../tools/gen-command-funcs/main.go
-//go:generate go run ../tools/gen-input-v2-models/main.go
-//go:generate go run ../tools/gen-cli-v2-commands/main.go
-//go:generate go run ../tools/gen-cli-v2-resource-finder/main.go
-//go:generate go run ../tools/gen-cli-v2-usage/main.go
-//go:generate go run ../tools/gen-cli-v2-normalize-flag-name/main.go
-//go:generate go run ../tools/gen-cli-v2-root-command/main.go
+//go:generate go run ../tools/gen-cli-commands/main.go
+//go:generate go run ../tools/gen-cli-resource-finder/main.go
+//go:generate go run ../tools/gen-cli-usage/main.go
+//go:generate go run ../tools/gen-cli-normalize-flag-name/main.go
+//go:generate go run ../tools/gen-cli-root-command/main.go
 package define
 
 import "github.com/sacloud/usacloud/schema"
