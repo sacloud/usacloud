@@ -200,3 +200,23 @@ func (c *Command) HasLongAliases() bool {
 	}
 	return false
 }
+
+func (c *Command) CommandFileName() string {
+	format := "%s_%s_gen.go"
+	if c.UseCustomCommand {
+		format = "%s_%s.go"
+	}
+	return fmt.Sprintf(format, ToSnakeCaseName(c.Resource.Name), ToSnakeCaseName(c.Name))
+}
+
+func (c *Command) ResourceName() string {
+	return utils.FirstNonEmptyString(c.AltResource, c.Resource.AltResource, ToCamelCaseName(c.Resource.Name))
+}
+
+func (c *Command) FuncName() string {
+	return fmt.Sprintf("%s%s", ToCamelCaseName(c.Resource.Name), ToCamelCaseName(c.Name))
+}
+
+func (c *Command) InputModelTypeName() string {
+	return fmt.Sprintf("%s%sParam", ToCamelCaseName(c.Name), ToCamelCaseName(c.Resource.Name))
+}

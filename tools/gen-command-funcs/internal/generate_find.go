@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/usacloud/tools"
 )
 
-func GenerateFindCommand(ctx *tools.GenerateContext, command *schema.Command) (string, error) {
+func GenerateFindCommand(ctx *tools.GenerateContext, command *tools.Command) (string, error) {
 	b := bytes.NewBufferString("")
 	t := template.New("c")
 	template.Must(t.Parse(findCommandTemplate))
@@ -39,10 +39,10 @@ func GenerateFindCommand(ctx *tools.GenerateContext, command *schema.Command) (s
 	}
 
 	err = t.Execute(b, map[string]interface{}{
-		"FinderFieldName": ctx.CommandResourceName(),
+		"FinderFieldName": command.ResourceName(),
 		"SetParamActions": setParamActions,
-		"FuncName":        ctx.CommandFuncName(),
-		"ListResultField": ctx.FindResultFieldName(),
+		"FuncName":        command.FuncName(),
+		"ListResultField": command.FindResultFieldName(),
 		"FilterActions":   filterActions,
 	})
 	return b.String(), err
@@ -70,16 +70,11 @@ var findCommandTemplate = `
 	return ctx.GetOutput().Print(list...)
 `
 
-func generateFindSetParamActions(ctx *tools.GenerateContext, command *schema.Command) (string, error) {
+func generateFindSetParamActions(ctx *tools.GenerateContext, command *tools.Command) (string, error) {
 
 	b := bytes.NewBufferString("")
 
-	for _, param := range command.BuiltParams() {
-		k := param.ParamKey
-		p := param.Param
-
-		ctx.P = k
-
+	for _, p := range command.Params {
 		if p.HandlerType == schema.HandlerFilterFunc {
 			continue
 		}
@@ -87,12 +82,12 @@ func generateFindSetParamActions(ctx *tools.GenerateContext, command *schema.Com
 		t := template.New("c")
 		template.Must(t.Parse(findSetParamTemplates[p.HandlerType]))
 
-		customHandlerName := fmt.Sprintf(`params.GetCommandDef().Params["%s"].CustomHandler`, ctx.P)
+		customHandlerName := fmt.Sprintf(`params.GetCommandDef().Params["%s"].CustomHandler`, p.Name)
 
 		err := t.Execute(b, map[string]interface{}{
-			"ParamName":         ctx.InputParamFieldName(),
-			"SetterFuncName":    ctx.InputParamSetterFuncName(),
-			"Destination":       ctx.InputParamDestinationName(),
+			"ParamName":         p.FieldName(),
+			"SetterFuncName":    p.SetterFuncName(),
+			"Destination":       p.DestinationName(),
 			"CustomHandlerName": customHandlerName,
 		})
 		if err != nil {
@@ -141,16 +136,11 @@ var findSetParamTemplates = map[schema.HandlerType]string{
 	}`,
 }
 
-func generateFilterActions(ctx *tools.GenerateContext, command *schema.Command) (string, error) {
+func generateFilterActions(ctx *tools.GenerateContext, command *tools.Command) (string, error) {
 
 	b := bytes.NewBufferString("")
 
-	for _, param := range command.BuiltParams() {
-		k := param.ParamKey
-		p := param.Param
-
-		ctx.P = k
-
+	for _, p := range command.Params {
 		if p.HandlerType != schema.HandlerFilterFunc {
 			continue
 		}
@@ -158,11 +148,11 @@ func generateFilterActions(ctx *tools.GenerateContext, command *schema.Command) 
 		t := template.New("c")
 		template.Must(t.Parse(findFilterFuncTemplate))
 
-		customHandlerName := fmt.Sprintf(`params.GetCommandDef().Params["%s"].FilterFunc`, ctx.P)
+		customHandlerName := fmt.Sprintf(`params.GetCommandDef().Params["%s"].FilterFunc`, p.Name)
 
 		err := t.Execute(b, map[string]interface{}{
-			"ParamName":       ctx.InputParamFieldName(),
-			"ListResultField": ctx.FindResultFieldName(),
+			"ParamName":       p.FieldName(),
+			"ListResultField": command.FindResultFieldName(),
 			"FilterFuncName":  customHandlerName,
 		})
 		if err != nil {

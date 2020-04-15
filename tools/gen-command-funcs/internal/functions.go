@@ -23,29 +23,25 @@ import (
 	"github.com/sacloud/usacloud/tools"
 )
 
-func generateSetParamActions(ctx *tools.GenerateContext, command *schema.Command) (string, error) {
+func generateSetParamActions(ctx *tools.GenerateContext, command *tools.Command) (string, error) {
 
 	b := bytes.NewBufferString("")
 
-	for _, param := range command.BuiltParams() {
-		p := param.Param
-		k := param.ParamKey
-
-		ctx.P = k
-		if k == "id" {
+	for _, p := range command.Params {
+		if p.Name == "id" {
 			continue
 		}
 
 		t := template.New("c")
 		template.Must(t.Parse(setParamTemplates[p.HandlerType]))
 
-		customFunc := fmt.Sprintf(`params.GetCommandDef().Params["%s"].CustomHandler`, ctx.P)
+		customFunc := fmt.Sprintf(`params.GetCommandDef().Params["%s"].CustomHandler`, p.Name)
 		needIsSetCheck := command.Type == schema.CommandUpdate
 
 		err := t.Execute(b, map[string]interface{}{
-			"FlagName":       ctx.InputParamFlagName(),
-			"ParamName":      ctx.InputParamFieldName(),
-			"SetterFuncName": ctx.InputParamSetterFuncName(),
+			"FlagName":       p.FlagName(),
+			"ParamName":      p.FieldName(),
+			"SetterFuncName": p.SetterFuncName(),
 			"CustomFunc":     customFunc,
 			"NeedIsSetCheck": needIsSetCheck,
 		})
