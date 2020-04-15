@@ -39,10 +39,6 @@ default: test build
 run:
 	go run $(CURDIR)/main.go $(ARGS)
 
-.PHONY: run-v1
-run-v1:
-	go run $(CURDIR)/cmdv2/main.go $(ARGS)
-
 .PHONY: clean
 clean:
 	rm -Rf bin/*
@@ -50,10 +46,9 @@ clean:
 .PHONY: clean-all
 clean-all:
 	rm -Rf bin/* ; rm -Rf tools/bin/* ; rm -f command/*_gen.go; \
+	rm -f command/cli/*_gen.go \
 	rm -f command/funcs/*_gen.go \
-	rm -f command/params/*_gen.go \
-	rm -f cmdv2/commands/*_gen.go \
-	rm -f cmdv2/params/*_gen.go \
+	rm -f command/params/*_gen.go
 
 
 .PHONY: tools
@@ -64,7 +59,7 @@ tools:
 	GO111MODULE=off go get github.com/sacloud/addlicense
 
 .PHONY: gen
-gen: command/*/*_gen.go cmdv2/*/*_gen.go set-license fmt goimports
+gen: command/*/*_gen.go set-license fmt goimports
 
 .PHONY: gen-force
 gen-force: clean-all _gen-force set-license fmt goimports
@@ -72,9 +67,6 @@ _gen-force:
 	go generate ./...
 
 command/*/*_gen.go: define/*.go tools/gen-*/*.go tools/*.go
-	go generate ./...
-
-cmdv2/*/*_gen.go: define/*.go tools/gen-*/*.go tools/*.go
 	go generate ./...
 
 .PHONY: build build-x build-darwin build-windows build-linux
@@ -199,7 +191,7 @@ set-license:
 
 
 build-completion-test-image:
-	GOOS=linux GOARCH=amd64 go build -o usacloud-linux cmdv2/main.go
+	GOOS=linux GOARCH=amd64 go build -o usacloud-linux main.go
 	docker build -t usacloud-bash-completion -f scripts/completion-dev.dockerfile .
 	rm -f usacloud-linux
 
