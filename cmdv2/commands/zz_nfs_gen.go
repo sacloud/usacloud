@@ -31,7 +31,8 @@ import (
 // nfsCmd represents the command to manage SAKURA Cloud NFS
 func nfsCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "nfs",
+		Use: "nfs",
+
 		Short: "A manage commands of NFS",
 		Long:  `A manage commands of NFS`,
 		RunE: func(cmd *cobra.Command, args []string) error {

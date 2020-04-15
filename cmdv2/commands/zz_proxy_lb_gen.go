@@ -31,9 +31,10 @@ import (
 // proxyLBCmd represents the command to manage SAKURA Cloud ProxyLB
 func proxyLBCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "proxy-lb",
-		Short: "A manage commands of ProxyLB",
-		Long:  `A manage commands of ProxyLB`,
+		Use:     "proxy-lb",
+		Aliases: []string{"enhanced-load-balancer", "proxylb"},
+		Short:   "A manage commands of ProxyLB",
+		Long:    `A manage commands of ProxyLB`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
 			return nil

@@ -31,7 +31,8 @@ import (
 // simpleMonitorCmd represents the command to manage SAKURA Cloud SimpleMonitor
 func simpleMonitorCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "simple-monitor",
+		Use: "simple-monitor",
+
 		Short: "A manage commands of SimpleMonitor",
 		Long:  `A manage commands of SimpleMonitor`,
 		RunE: func(cmd *cobra.Command, args []string) error {

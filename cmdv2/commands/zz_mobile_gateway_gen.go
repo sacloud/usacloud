@@ -31,9 +31,10 @@ import (
 // mobileGatewayCmd represents the command to manage SAKURA Cloud MobileGateway
 func mobileGatewayCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "mobile-gateway",
-		Short: "A manage commands of MobileGateway",
-		Long:  `A manage commands of MobileGateway`,
+		Use:     "mobile-gateway",
+		Aliases: []string{"mgw"},
+		Short:   "A manage commands of MobileGateway",
+		Long:    `A manage commands of MobileGateway`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
 			return nil

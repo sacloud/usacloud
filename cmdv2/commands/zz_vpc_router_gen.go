@@ -31,7 +31,8 @@ import (
 // vpcRouterCmd represents the command to manage SAKURA Cloud VPCRouter
 func vpcRouterCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "vpc-router",
+		Use: "vpc-router",
+
 		Short: "A manage commands of VPCRouter",
 		Long:  `A manage commands of VPCRouter`,
 		RunE: func(cmd *cobra.Command, args []string) error {

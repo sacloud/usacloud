@@ -31,7 +31,8 @@ import (
 // packetFilterCmd represents the command to manage SAKURA Cloud PacketFilter
 func packetFilterCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "packet-filter",
+		Use: "packet-filter",
+
 		Short: "A manage commands of PacketFilter",
 		Long:  `A manage commands of PacketFilter`,
 		RunE: func(cmd *cobra.Command, args []string) error {

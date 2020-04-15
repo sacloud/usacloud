@@ -28,9 +28,10 @@ import (
 // configCmd represents the command to manage SAKURA Cloud Config
 func configCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "config",
-		Short: "A manage command of APIKey settings",
-		Long:  `A manage command of APIKey settings`,
+		Use:     "config",
+		Aliases: []string{"profile"},
+		Short:   "A manage command of APIKey settings",
+		Long:    `A manage command of APIKey settings`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runDefaultCmd(cmd, args, "edit")
 		},

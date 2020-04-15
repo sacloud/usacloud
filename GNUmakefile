@@ -195,3 +195,12 @@ git-tag:
 
 set-license:
 	@addlicense -c $(AUTHOR) -y $(COPYRIGHT_YEAR) $(COPYRIGHT_FILES)
+
+
+build-completion-test-image:
+	GOOS=linux GOARCH=amd64 go build -o usacloud-linux cmdv2/main.go
+	docker build -t usacloud-bash-completion -f scripts/completion-dev.dockerfile .
+	rm -f usacloud-linux
+
+run-completion-test: build-completion-test-image
+	docker run -it --rm usacloud-bash-completion

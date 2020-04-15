@@ -31,9 +31,10 @@ import (
 // startupScriptCmd represents the command to manage SAKURA Cloud StartupScript
 func startupScriptCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "startup-script",
-		Short: "A manage commands of StartupScript",
-		Long:  `A manage commands of StartupScript`,
+		Use:     "startup-script",
+		Aliases: []string{"note"},
+		Short:   "A manage commands of StartupScript",
+		Long:    `A manage commands of StartupScript`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cmd.HelpFunc()(cmd, args)
 			return nil

@@ -29,7 +29,8 @@ import (
 // regionCmd represents the command to manage SAKURA Cloud Region
 func regionCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "region",
+		Use: "region",
+
 		Short: "A manage commands of Region",
 		Long:  `A manage commands of Region`,
 		RunE: func(cmd *cobra.Command, args []string) error {

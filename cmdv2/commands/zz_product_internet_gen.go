@@ -29,9 +29,10 @@ import (
 // productInternetCmd represents the command to manage SAKURA Cloud ProductInternet
 func productInternetCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "product-internet",
-		Short: "A manage commands of ProductInternet",
-		Long:  `A manage commands of ProductInternet`,
+		Use:     "product-internet",
+		Aliases: []string{"internet-plan"},
+		Short:   "A manage commands of ProductInternet",
+		Long:    `A manage commands of ProductInternet`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runDefaultCmd(cmd, args, "list")
 		},

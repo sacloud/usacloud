@@ -29,9 +29,10 @@ import (
 // productServerCmd represents the command to manage SAKURA Cloud ProductServer
 func productServerCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "product-server",
-		Short: "A manage commands of ProductServer",
-		Long:  `A manage commands of ProductServer`,
+		Use:     "product-server",
+		Aliases: []string{"server-plan"},
+		Short:   "A manage commands of ProductServer",
+		Long:    `A manage commands of ProductServer`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runDefaultCmd(cmd, args, "list")
 		},

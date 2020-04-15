@@ -29,9 +29,10 @@ import (
 // productDiskCmd represents the command to manage SAKURA Cloud ProductDisk
 func productDiskCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "product-disk",
-		Short: "A manage commands of ProductDisk",
-		Long:  `A manage commands of ProductDisk`,
+		Use:     "product-disk",
+		Aliases: []string{"disk-plan"},
+		Short:   "A manage commands of ProductDisk",
+		Long:    `A manage commands of ProductDisk`,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runDefaultCmd(cmd, args, "list")
 		},

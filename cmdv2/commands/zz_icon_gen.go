@@ -31,7 +31,8 @@ import (
 // iconCmd represents the command to manage SAKURA Cloud Icon
 func iconCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "icon",
+		Use: "icon",
+
 		Short: "A manage commands of Icon",
 		Long:  `A manage commands of Icon`,
 		RunE: func(cmd *cobra.Command, args []string) error {

@@ -25,7 +25,8 @@ import (
 // billCmd represents the command to manage SAKURA Cloud Bill
 func billCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "bill",
+		Use: "bill",
+
 		Short: "A manage commands of Bill",
 		Long:  `A manage commands of Bill`,
 		RunE: func(cmd *cobra.Command, args []string) error {

@@ -31,7 +31,8 @@ import (
 // gslbCmd represents the command to manage SAKURA Cloud GSLB
 func gslbCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "gslb",
+		Use: "gslb",
+
 		Short: "A manage commands of GSLB",
 		Long:  `A manage commands of GSLB`,
 		RunE: func(cmd *cobra.Command, args []string) error {

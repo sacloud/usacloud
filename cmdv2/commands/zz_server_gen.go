@@ -31,7 +31,8 @@ import (
 // serverCmd represents the command to manage SAKURA Cloud Server
 func serverCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "server",
+		Use: "server",
+
 		Short: "A manage commands of Server",
 		Long:  `A manage commands of Server`,
 		RunE: func(cmd *cobra.Command, args []string) error {

@@ -31,7 +31,8 @@ import (
 // autoBackupCmd represents the command to manage SAKURA Cloud AutoBackup
 func autoBackupCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "auto-backup",
+		Use: "auto-backup",
+
 		Short: "A manage commands of AutoBackup",
 		Long:  `A manage commands of AutoBackup`,
 		RunE: func(cmd *cobra.Command, args []string) error {

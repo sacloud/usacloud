@@ -25,7 +25,8 @@ import (
 // selfCmd represents the command to manage SAKURA Cloud Self
 func selfCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "self",
+		Use: "self",
+
 		Short: "Show self info",
 		Long:  `Show self info`,
 		RunE: func(cmd *cobra.Command, args []string) error {

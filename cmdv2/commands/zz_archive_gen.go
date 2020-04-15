@@ -31,7 +31,8 @@ import (
 // archiveCmd represents the command to manage SAKURA Cloud Archive
 func archiveCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "archive",
+		Use: "archive",
+
 		Short: "A manage commands of Archive",
 		Long:  `A manage commands of Archive`,
 		RunE: func(cmd *cobra.Command, args []string) error {

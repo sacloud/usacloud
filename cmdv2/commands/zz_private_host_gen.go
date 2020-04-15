@@ -31,7 +31,8 @@ import (
 // privateHostCmd represents the command to manage SAKURA Cloud PrivateHost
 func privateHostCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "private-host",
+		Use: "private-host",
+
 		Short: "A manage commands of PrivateHost",
 		Long:  `A manage commands of PrivateHost`,
 		RunE: func(cmd *cobra.Command, args []string) error {
