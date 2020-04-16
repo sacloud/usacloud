@@ -20,6 +20,7 @@ import (
 	"errors"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -52,7 +53,7 @@ func ipv6ListCmd() *cobra.Command {
 			return ipv6ListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, ipv6ListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, ipv6ListParam)
 			if err != nil {
 				return err
 			}
@@ -106,7 +107,7 @@ func ipv6PtrAddCmd() *cobra.Command {
 			return ipv6PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, ipv6PtrAddParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, ipv6PtrAddParam)
 			if err != nil {
 				return err
 			}
@@ -166,7 +167,7 @@ func ipv6PtrReadCmd() *cobra.Command {
 			return ipv6PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, ipv6PtrReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, ipv6PtrReadParam)
 			if err != nil {
 				return err
 			}
@@ -213,7 +214,7 @@ func ipv6PtrUpdateCmd() *cobra.Command {
 			return ipv6PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, ipv6PtrUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, ipv6PtrUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -273,7 +274,7 @@ func ipv6PtrDeleteCmd() *cobra.Command {
 			return ipv6PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, ipv6PtrDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, ipv6PtrDeleteParam)
 			if err != nil {
 				return err
 			}

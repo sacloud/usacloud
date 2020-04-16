@@ -54,7 +54,7 @@ func startupScriptListCmd() *cobra.Command {
 			return startupScriptListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, startupScriptListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, startupScriptListParam)
 			if err != nil {
 				return err
 			}
@@ -109,7 +109,7 @@ func startupScriptCreateCmd() *cobra.Command {
 			return startupScriptCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, startupScriptCreateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, startupScriptCreateParam)
 			if err != nil {
 				return err
 			}
@@ -174,7 +174,7 @@ func startupScriptReadCmd() *cobra.Command {
 			return startupScriptReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, startupScriptReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, startupScriptReadParam)
 			if err != nil {
 				return err
 			}
@@ -244,7 +244,7 @@ func startupScriptUpdateCmd() *cobra.Command {
 			return startupScriptUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, startupScriptUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, startupScriptUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -332,7 +332,7 @@ func startupScriptDeleteCmd() *cobra.Command {
 			return startupScriptDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, startupScriptDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, startupScriptDeleteParam)
 			if err != nil {
 				return err
 			}

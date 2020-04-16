@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findIconReadTargets(ctx Context, param *params.ReadIconParam) ([]sacloud.ID, error) {
+func findIconReadTargets(ctx command.Context, param *params.ReadIconParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Icon
@@ -86,7 +87,7 @@ func findIconReadTargets(ctx Context, param *params.ReadIconParam) ([]sacloud.ID
 	return ids, nil
 }
 
-func findIconUpdateTargets(ctx Context, param *params.UpdateIconParam) ([]sacloud.ID, error) {
+func findIconUpdateTargets(ctx command.Context, param *params.UpdateIconParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Icon
@@ -144,7 +145,7 @@ func findIconUpdateTargets(ctx Context, param *params.UpdateIconParam) ([]saclou
 	return ids, nil
 }
 
-func findIconDeleteTargets(ctx Context, param *params.DeleteIconParam) ([]sacloud.ID, error) {
+func findIconDeleteTargets(ctx command.Context, param *params.DeleteIconParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Icon

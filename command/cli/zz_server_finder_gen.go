@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findServerReadTargets(ctx Context, param *params.ReadServerParam) ([]sacloud.ID, error) {
+func findServerReadTargets(ctx command.Context, param *params.ReadServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -86,7 +87,7 @@ func findServerReadTargets(ctx Context, param *params.ReadServerParam) ([]saclou
 	return ids, nil
 }
 
-func findServerUpdateTargets(ctx Context, param *params.UpdateServerParam) ([]sacloud.ID, error) {
+func findServerUpdateTargets(ctx command.Context, param *params.UpdateServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -144,7 +145,7 @@ func findServerUpdateTargets(ctx Context, param *params.UpdateServerParam) ([]sa
 	return ids, nil
 }
 
-func findServerDeleteTargets(ctx Context, param *params.DeleteServerParam) ([]sacloud.ID, error) {
+func findServerDeleteTargets(ctx command.Context, param *params.DeleteServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -202,7 +203,7 @@ func findServerDeleteTargets(ctx Context, param *params.DeleteServerParam) ([]sa
 	return ids, nil
 }
 
-func findServerPlanChangeTargets(ctx Context, param *params.PlanChangeServerParam) ([]sacloud.ID, error) {
+func findServerPlanChangeTargets(ctx command.Context, param *params.PlanChangeServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -260,7 +261,7 @@ func findServerPlanChangeTargets(ctx Context, param *params.PlanChangeServerPara
 	return ids, nil
 }
 
-func findServerBootTargets(ctx Context, param *params.BootServerParam) ([]sacloud.ID, error) {
+func findServerBootTargets(ctx command.Context, param *params.BootServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -318,7 +319,7 @@ func findServerBootTargets(ctx Context, param *params.BootServerParam) ([]saclou
 	return ids, nil
 }
 
-func findServerShutdownTargets(ctx Context, param *params.ShutdownServerParam) ([]sacloud.ID, error) {
+func findServerShutdownTargets(ctx command.Context, param *params.ShutdownServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -376,7 +377,7 @@ func findServerShutdownTargets(ctx Context, param *params.ShutdownServerParam) (
 	return ids, nil
 }
 
-func findServerShutdownForceTargets(ctx Context, param *params.ShutdownForceServerParam) ([]sacloud.ID, error) {
+func findServerShutdownForceTargets(ctx command.Context, param *params.ShutdownForceServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -434,7 +435,7 @@ func findServerShutdownForceTargets(ctx Context, param *params.ShutdownForceServ
 	return ids, nil
 }
 
-func findServerResetTargets(ctx Context, param *params.ResetServerParam) ([]sacloud.ID, error) {
+func findServerResetTargets(ctx command.Context, param *params.ResetServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -492,7 +493,7 @@ func findServerResetTargets(ctx Context, param *params.ResetServerParam) ([]sacl
 	return ids, nil
 }
 
-func findServerWaitForBootTargets(ctx Context, param *params.WaitForBootServerParam) ([]sacloud.ID, error) {
+func findServerWaitForBootTargets(ctx command.Context, param *params.WaitForBootServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -550,7 +551,7 @@ func findServerWaitForBootTargets(ctx Context, param *params.WaitForBootServerPa
 	return ids, nil
 }
 
-func findServerWaitForDownTargets(ctx Context, param *params.WaitForDownServerParam) ([]sacloud.ID, error) {
+func findServerWaitForDownTargets(ctx command.Context, param *params.WaitForDownServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -608,7 +609,7 @@ func findServerWaitForDownTargets(ctx Context, param *params.WaitForDownServerPa
 	return ids, nil
 }
 
-func findServerSSHTargets(ctx Context, param *params.SSHServerParam) ([]sacloud.ID, error) {
+func findServerSSHTargets(ctx command.Context, param *params.SSHServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -669,7 +670,7 @@ func findServerSSHTargets(ctx Context, param *params.SSHServerParam) ([]sacloud.
 	return ids, nil
 }
 
-func findServerSSHExecTargets(ctx Context, param *params.SSHExecServerParam) ([]sacloud.ID, error) {
+func findServerSSHExecTargets(ctx command.Context, param *params.SSHExecServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -710,7 +711,7 @@ func findServerSSHExecTargets(ctx Context, param *params.SSHExecServerParam) ([]
 	return ids, nil
 }
 
-func findServerVncTargets(ctx Context, param *params.VncServerParam) ([]sacloud.ID, error) {
+func findServerVncTargets(ctx command.Context, param *params.VncServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -768,7 +769,7 @@ func findServerVncTargets(ctx Context, param *params.VncServerParam) ([]sacloud.
 	return ids, nil
 }
 
-func findServerVncInfoTargets(ctx Context, param *params.VncInfoServerParam) ([]sacloud.ID, error) {
+func findServerVncInfoTargets(ctx command.Context, param *params.VncInfoServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -829,7 +830,7 @@ func findServerVncInfoTargets(ctx Context, param *params.VncInfoServerParam) ([]
 	return ids, nil
 }
 
-func findServerVncSendTargets(ctx Context, param *params.VncSendServerParam) ([]sacloud.ID, error) {
+func findServerVncSendTargets(ctx command.Context, param *params.VncSendServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -888,7 +889,7 @@ func findServerVncSendTargets(ctx Context, param *params.VncSendServerParam) ([]
 	return ids, nil
 }
 
-func findServerVncSnapshotTargets(ctx Context, param *params.VncSnapshotServerParam) ([]sacloud.ID, error) {
+func findServerVncSnapshotTargets(ctx command.Context, param *params.VncSnapshotServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -947,7 +948,7 @@ func findServerVncSnapshotTargets(ctx Context, param *params.VncSnapshotServerPa
 	return ids, nil
 }
 
-func findServerRemoteDesktopTargets(ctx Context, param *params.RemoteDesktopServerParam) ([]sacloud.ID, error) {
+func findServerRemoteDesktopTargets(ctx command.Context, param *params.RemoteDesktopServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -1005,68 +1006,7 @@ func findServerRemoteDesktopTargets(ctx Context, param *params.RemoteDesktopServ
 	return ids, nil
 }
 
-func findServerRemoteDesktopInfoTargets(ctx Context, param *params.RemoteDesktopInfoServerParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
-	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Server
-
-	if len(args) == 0 {
-		if len(param.Selector) == 0 {
-			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
-		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
-		if err != nil {
-			return ids, fmt.Errorf("finding resource id is failed: %s", err)
-		}
-		for _, v := range res.Servers {
-			if utils.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
-			}
-		}
-		if len(ids) == 0 {
-			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
-		}
-	} else {
-		for _, arg := range args {
-			for _, a := range strings.Split(arg, "\n") {
-				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
-					ids = append(ids, id)
-				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
-					if err != nil {
-						return ids, fmt.Errorf("finding resource id is failed: %s", err)
-					}
-					if res.Count == 0 {
-						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
-					}
-					for _, v := range res.Servers {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
-						}
-					}
-				}
-			}
-
-		}
-
-	}
-
-	ids = utils.UniqIDs(ids)
-	if len(ids) == 0 {
-		return ids, fmt.Errorf("finding resource is is failed: not found")
-	}
-	if len(ids) != 1 {
-		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
-	}
-
-	return ids, nil
-}
-
-func findServerDiskInfoTargets(ctx Context, param *params.DiskInfoServerParam) ([]sacloud.ID, error) {
+func findServerRemoteDesktopInfoTargets(ctx command.Context, param *params.RemoteDesktopInfoServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -1127,7 +1067,7 @@ func findServerDiskInfoTargets(ctx Context, param *params.DiskInfoServerParam) (
 	return ids, nil
 }
 
-func findServerDiskConnectTargets(ctx Context, param *params.DiskConnectServerParam) ([]sacloud.ID, error) {
+func findServerDiskInfoTargets(ctx command.Context, param *params.DiskInfoServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -1188,7 +1128,7 @@ func findServerDiskConnectTargets(ctx Context, param *params.DiskConnectServerPa
 	return ids, nil
 }
 
-func findServerDiskDisconnectTargets(ctx Context, param *params.DiskDisconnectServerParam) ([]sacloud.ID, error) {
+func findServerDiskConnectTargets(ctx command.Context, param *params.DiskConnectServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -1249,7 +1189,7 @@ func findServerDiskDisconnectTargets(ctx Context, param *params.DiskDisconnectSe
 	return ids, nil
 }
 
-func findServerInterfaceInfoTargets(ctx Context, param *params.InterfaceInfoServerParam) ([]sacloud.ID, error) {
+func findServerDiskDisconnectTargets(ctx command.Context, param *params.DiskDisconnectServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -1310,7 +1250,7 @@ func findServerInterfaceInfoTargets(ctx Context, param *params.InterfaceInfoServ
 	return ids, nil
 }
 
-func findServerInterfaceAddForInternetTargets(ctx Context, param *params.InterfaceAddForInternetServerParam) ([]sacloud.ID, error) {
+func findServerInterfaceInfoTargets(ctx command.Context, param *params.InterfaceInfoServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -1371,7 +1311,7 @@ func findServerInterfaceAddForInternetTargets(ctx Context, param *params.Interfa
 	return ids, nil
 }
 
-func findServerInterfaceAddForRouterTargets(ctx Context, param *params.InterfaceAddForRouterServerParam) ([]sacloud.ID, error) {
+func findServerInterfaceAddForInternetTargets(ctx command.Context, param *params.InterfaceAddForInternetServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -1432,7 +1372,7 @@ func findServerInterfaceAddForRouterTargets(ctx Context, param *params.Interface
 	return ids, nil
 }
 
-func findServerInterfaceAddForSwitchTargets(ctx Context, param *params.InterfaceAddForSwitchServerParam) ([]sacloud.ID, error) {
+func findServerInterfaceAddForRouterTargets(ctx command.Context, param *params.InterfaceAddForRouterServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -1493,7 +1433,7 @@ func findServerInterfaceAddForSwitchTargets(ctx Context, param *params.Interface
 	return ids, nil
 }
 
-func findServerInterfaceAddDisconnectedTargets(ctx Context, param *params.InterfaceAddDisconnectedServerParam) ([]sacloud.ID, error) {
+func findServerInterfaceAddForSwitchTargets(ctx command.Context, param *params.InterfaceAddForSwitchServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -1554,7 +1494,7 @@ func findServerInterfaceAddDisconnectedTargets(ctx Context, param *params.Interf
 	return ids, nil
 }
 
-func findServerISOInfoTargets(ctx Context, param *params.ISOInfoServerParam) ([]sacloud.ID, error) {
+func findServerInterfaceAddDisconnectedTargets(ctx command.Context, param *params.InterfaceAddDisconnectedServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -1615,7 +1555,7 @@ func findServerISOInfoTargets(ctx Context, param *params.ISOInfoServerParam) ([]
 	return ids, nil
 }
 
-func findServerISOInsertTargets(ctx Context, param *params.ISOInsertServerParam) ([]sacloud.ID, error) {
+func findServerISOInfoTargets(ctx command.Context, param *params.ISOInfoServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -1676,7 +1616,7 @@ func findServerISOInsertTargets(ctx Context, param *params.ISOInsertServerParam)
 	return ids, nil
 }
 
-func findServerISOEjectTargets(ctx Context, param *params.ISOEjectServerParam) ([]sacloud.ID, error) {
+func findServerISOInsertTargets(ctx command.Context, param *params.ISOInsertServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -1737,7 +1677,7 @@ func findServerISOEjectTargets(ctx Context, param *params.ISOEjectServerParam) (
 	return ids, nil
 }
 
-func findServerMonitorCPUTargets(ctx Context, param *params.MonitorCPUServerParam) ([]sacloud.ID, error) {
+func findServerISOEjectTargets(ctx command.Context, param *params.ISOEjectServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -1798,7 +1738,7 @@ func findServerMonitorCPUTargets(ctx Context, param *params.MonitorCPUServerPara
 	return ids, nil
 }
 
-func findServerMonitorNicTargets(ctx Context, param *params.MonitorNicServerParam) ([]sacloud.ID, error) {
+func findServerMonitorCPUTargets(ctx command.Context, param *params.MonitorCPUServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server
@@ -1859,7 +1799,68 @@ func findServerMonitorNicTargets(ctx Context, param *params.MonitorNicServerPara
 	return ids, nil
 }
 
-func findServerMonitorDiskTargets(ctx Context, param *params.MonitorDiskServerParam) ([]sacloud.ID, error) {
+func findServerMonitorNicTargets(ctx command.Context, param *params.MonitorNicServerParam) ([]sacloud.ID, error) {
+	var ids []sacloud.ID
+	args := ctx.Args()
+	apiClient := ctx.GetAPIClient().Server
+
+	if len(args) == 0 {
+		if len(param.Selector) == 0 {
+			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
+		}
+		apiClient.Reset()
+		res, err := apiClient.Find()
+		if err != nil {
+			return ids, fmt.Errorf("finding resource id is failed: %s", err)
+		}
+		for _, v := range res.Servers {
+			if utils.HasTags(&v, param.Selector) {
+				ids = append(ids, v.GetID())
+			}
+		}
+		if len(ids) == 0 {
+			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
+		}
+	} else {
+		for _, arg := range args {
+			for _, a := range strings.Split(arg, "\n") {
+				idOrName := a
+				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+					ids = append(ids, id)
+				} else {
+					apiClient.Reset()
+					apiClient.SetFilterBy("Name", idOrName)
+					res, err := apiClient.Find()
+					if err != nil {
+						return ids, fmt.Errorf("finding resource id is failed: %s", err)
+					}
+					if res.Count == 0 {
+						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
+					}
+					for _, v := range res.Servers {
+						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+							ids = append(ids, v.GetID())
+						}
+					}
+				}
+			}
+
+		}
+
+	}
+
+	ids = utils.UniqIDs(ids)
+	if len(ids) == 0 {
+		return ids, fmt.Errorf("finding resource is is failed: not found")
+	}
+	if len(ids) != 1 {
+		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
+	}
+
+	return ids, nil
+}
+
+func findServerMonitorDiskTargets(ctx command.Context, param *params.MonitorDiskServerParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Server

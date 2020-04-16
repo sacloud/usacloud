@@ -54,7 +54,7 @@ func iconListCmd() *cobra.Command {
 			return iconListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, iconListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, iconListParam)
 			if err != nil {
 				return err
 			}
@@ -108,7 +108,7 @@ func iconCreateCmd() *cobra.Command {
 			return iconCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, iconCreateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, iconCreateParam)
 			if err != nil {
 				return err
 			}
@@ -170,7 +170,7 @@ func iconReadCmd() *cobra.Command {
 			return iconReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, iconReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, iconReadParam)
 			if err != nil {
 				return err
 			}
@@ -240,7 +240,7 @@ func iconUpdateCmd() *cobra.Command {
 			return iconUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, iconUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, iconUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -324,7 +324,7 @@ func iconDeleteCmd() *cobra.Command {
 			return iconDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, iconDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, iconDeleteParam)
 			if err != nil {
 				return err
 			}

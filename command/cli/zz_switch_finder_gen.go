@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findSwitchReadTargets(ctx Context, param *params.ReadSwitchParam) ([]sacloud.ID, error) {
+func findSwitchReadTargets(ctx command.Context, param *params.ReadSwitchParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Switch
@@ -86,7 +87,7 @@ func findSwitchReadTargets(ctx Context, param *params.ReadSwitchParam) ([]saclou
 	return ids, nil
 }
 
-func findSwitchUpdateTargets(ctx Context, param *params.UpdateSwitchParam) ([]sacloud.ID, error) {
+func findSwitchUpdateTargets(ctx command.Context, param *params.UpdateSwitchParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Switch
@@ -144,7 +145,7 @@ func findSwitchUpdateTargets(ctx Context, param *params.UpdateSwitchParam) ([]sa
 	return ids, nil
 }
 
-func findSwitchDeleteTargets(ctx Context, param *params.DeleteSwitchParam) ([]sacloud.ID, error) {
+func findSwitchDeleteTargets(ctx command.Context, param *params.DeleteSwitchParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Switch
@@ -202,7 +203,7 @@ func findSwitchDeleteTargets(ctx Context, param *params.DeleteSwitchParam) ([]sa
 	return ids, nil
 }
 
-func findSwitchBridgeConnectTargets(ctx Context, param *params.BridgeConnectSwitchParam) ([]sacloud.ID, error) {
+func findSwitchBridgeConnectTargets(ctx command.Context, param *params.BridgeConnectSwitchParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Switch
@@ -260,7 +261,7 @@ func findSwitchBridgeConnectTargets(ctx Context, param *params.BridgeConnectSwit
 	return ids, nil
 }
 
-func findSwitchBridgeDisconnectTargets(ctx Context, param *params.BridgeDisconnectSwitchParam) ([]sacloud.ID, error) {
+func findSwitchBridgeDisconnectTargets(ctx command.Context, param *params.BridgeDisconnectSwitchParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Switch

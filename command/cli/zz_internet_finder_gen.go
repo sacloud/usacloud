@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findInternetReadTargets(ctx Context, param *params.ReadInternetParam) ([]sacloud.ID, error) {
+func findInternetReadTargets(ctx command.Context, param *params.ReadInternetParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Internet
@@ -86,7 +87,7 @@ func findInternetReadTargets(ctx Context, param *params.ReadInternetParam) ([]sa
 	return ids, nil
 }
 
-func findInternetUpdateTargets(ctx Context, param *params.UpdateInternetParam) ([]sacloud.ID, error) {
+func findInternetUpdateTargets(ctx command.Context, param *params.UpdateInternetParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Internet
@@ -144,7 +145,7 @@ func findInternetUpdateTargets(ctx Context, param *params.UpdateInternetParam) (
 	return ids, nil
 }
 
-func findInternetDeleteTargets(ctx Context, param *params.DeleteInternetParam) ([]sacloud.ID, error) {
+func findInternetDeleteTargets(ctx command.Context, param *params.DeleteInternetParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Internet
@@ -202,7 +203,7 @@ func findInternetDeleteTargets(ctx Context, param *params.DeleteInternetParam) (
 	return ids, nil
 }
 
-func findInternetUpdateBandwidthTargets(ctx Context, param *params.UpdateBandwidthInternetParam) ([]sacloud.ID, error) {
+func findInternetUpdateBandwidthTargets(ctx command.Context, param *params.UpdateBandwidthInternetParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Internet
@@ -260,7 +261,7 @@ func findInternetUpdateBandwidthTargets(ctx Context, param *params.UpdateBandwid
 	return ids, nil
 }
 
-func findInternetSubnetInfoTargets(ctx Context, param *params.SubnetInfoInternetParam) ([]sacloud.ID, error) {
+func findInternetSubnetInfoTargets(ctx command.Context, param *params.SubnetInfoInternetParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Internet
@@ -318,7 +319,7 @@ func findInternetSubnetInfoTargets(ctx Context, param *params.SubnetInfoInternet
 	return ids, nil
 }
 
-func findInternetSubnetAddTargets(ctx Context, param *params.SubnetAddInternetParam) ([]sacloud.ID, error) {
+func findInternetSubnetAddTargets(ctx command.Context, param *params.SubnetAddInternetParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Internet
@@ -376,7 +377,7 @@ func findInternetSubnetAddTargets(ctx Context, param *params.SubnetAddInternetPa
 	return ids, nil
 }
 
-func findInternetSubnetDeleteTargets(ctx Context, param *params.SubnetDeleteInternetParam) ([]sacloud.ID, error) {
+func findInternetSubnetDeleteTargets(ctx command.Context, param *params.SubnetDeleteInternetParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Internet
@@ -434,7 +435,7 @@ func findInternetSubnetDeleteTargets(ctx Context, param *params.SubnetDeleteInte
 	return ids, nil
 }
 
-func findInternetSubnetUpdateTargets(ctx Context, param *params.SubnetUpdateInternetParam) ([]sacloud.ID, error) {
+func findInternetSubnetUpdateTargets(ctx command.Context, param *params.SubnetUpdateInternetParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Internet
@@ -492,7 +493,7 @@ func findInternetSubnetUpdateTargets(ctx Context, param *params.SubnetUpdateInte
 	return ids, nil
 }
 
-func findInternetIPv6InfoTargets(ctx Context, param *params.IPv6InfoInternetParam) ([]sacloud.ID, error) {
+func findInternetIPv6InfoTargets(ctx command.Context, param *params.IPv6InfoInternetParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Internet
@@ -550,7 +551,7 @@ func findInternetIPv6InfoTargets(ctx Context, param *params.IPv6InfoInternetPara
 	return ids, nil
 }
 
-func findInternetIPv6EnableTargets(ctx Context, param *params.IPv6EnableInternetParam) ([]sacloud.ID, error) {
+func findInternetIPv6EnableTargets(ctx command.Context, param *params.IPv6EnableInternetParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Internet
@@ -608,7 +609,7 @@ func findInternetIPv6EnableTargets(ctx Context, param *params.IPv6EnableInternet
 	return ids, nil
 }
 
-func findInternetIPv6DisableTargets(ctx Context, param *params.IPv6DisableInternetParam) ([]sacloud.ID, error) {
+func findInternetIPv6DisableTargets(ctx command.Context, param *params.IPv6DisableInternetParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Internet
@@ -666,7 +667,7 @@ func findInternetIPv6DisableTargets(ctx Context, param *params.IPv6DisableIntern
 	return ids, nil
 }
 
-func findInternetMonitorTargets(ctx Context, param *params.MonitorInternetParam) ([]sacloud.ID, error) {
+func findInternetMonitorTargets(ctx command.Context, param *params.MonitorInternetParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Internet

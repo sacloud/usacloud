@@ -54,7 +54,7 @@ func sshKeyListCmd() *cobra.Command {
 			return sshKeyListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, sshKeyListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, sshKeyListParam)
 			if err != nil {
 				return err
 			}
@@ -106,7 +106,7 @@ func sshKeyCreateCmd() *cobra.Command {
 			return sshKeyCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, sshKeyCreateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, sshKeyCreateParam)
 			if err != nil {
 				return err
 			}
@@ -169,7 +169,7 @@ func sshKeyReadCmd() *cobra.Command {
 			return sshKeyReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, sshKeyReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, sshKeyReadParam)
 			if err != nil {
 				return err
 			}
@@ -238,7 +238,7 @@ func sshKeyUpdateCmd() *cobra.Command {
 			return sshKeyUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, sshKeyUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, sshKeyUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -321,7 +321,7 @@ func sshKeyDeleteCmd() *cobra.Command {
 			return sshKeyDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, sshKeyDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, sshKeyDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -402,7 +402,7 @@ func sshKeyGenerateCmd() *cobra.Command {
 			return sshKeyGenerateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, sshKeyGenerateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, sshKeyGenerateParam)
 			if err != nil {
 				return err
 			}

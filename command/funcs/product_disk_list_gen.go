@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
+	"github.com/sacloud/usacloud/pkg/utils"
 )
 
 func ProductDiskList(ctx command.Context, params *params.ListProductDiskParam) error {
@@ -30,23 +31,23 @@ func ProductDiskList(ctx command.Context, params *params.ListProductDiskParam) e
 
 	finder.SetEmpty()
 
-	if !command.IsEmpty(params.Name) {
+	if !utils.IsEmpty(params.Name) {
 		for _, v := range params.Name {
 			finder.SetFilterBy("Name", v)
 		}
 	}
-	if !command.IsEmpty(params.Id) {
+	if !utils.IsEmpty(params.Id) {
 		for _, v := range params.Id {
 			finder.SetFilterMultiBy("ID", v)
 		}
 	}
-	if !command.IsEmpty(params.From) {
+	if !utils.IsEmpty(params.From) {
 		finder.SetOffset(params.From)
 	}
-	if !command.IsEmpty(params.Max) {
+	if !utils.IsEmpty(params.Max) {
 		finder.SetLimit(params.Max)
 	}
-	if !command.IsEmpty(params.Sort) {
+	if !utils.IsEmpty(params.Sort) {
 		for _, v := range params.Sort {
 			setSortBy(finder, v)
 		}

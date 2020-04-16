@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findDatabaseReadTargets(ctx Context, param *params.ReadDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseReadTargets(ctx command.Context, param *params.ReadDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -86,7 +87,7 @@ func findDatabaseReadTargets(ctx Context, param *params.ReadDatabaseParam) ([]sa
 	return ids, nil
 }
 
-func findDatabaseUpdateTargets(ctx Context, param *params.UpdateDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseUpdateTargets(ctx command.Context, param *params.UpdateDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -144,7 +145,7 @@ func findDatabaseUpdateTargets(ctx Context, param *params.UpdateDatabaseParam) (
 	return ids, nil
 }
 
-func findDatabaseDeleteTargets(ctx Context, param *params.DeleteDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseDeleteTargets(ctx command.Context, param *params.DeleteDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -202,7 +203,7 @@ func findDatabaseDeleteTargets(ctx Context, param *params.DeleteDatabaseParam) (
 	return ids, nil
 }
 
-func findDatabaseBootTargets(ctx Context, param *params.BootDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseBootTargets(ctx command.Context, param *params.BootDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -260,7 +261,7 @@ func findDatabaseBootTargets(ctx Context, param *params.BootDatabaseParam) ([]sa
 	return ids, nil
 }
 
-func findDatabaseShutdownTargets(ctx Context, param *params.ShutdownDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseShutdownTargets(ctx command.Context, param *params.ShutdownDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -318,7 +319,7 @@ func findDatabaseShutdownTargets(ctx Context, param *params.ShutdownDatabasePara
 	return ids, nil
 }
 
-func findDatabaseShutdownForceTargets(ctx Context, param *params.ShutdownForceDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseShutdownForceTargets(ctx command.Context, param *params.ShutdownForceDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -376,7 +377,7 @@ func findDatabaseShutdownForceTargets(ctx Context, param *params.ShutdownForceDa
 	return ids, nil
 }
 
-func findDatabaseResetTargets(ctx Context, param *params.ResetDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseResetTargets(ctx command.Context, param *params.ResetDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -434,7 +435,7 @@ func findDatabaseResetTargets(ctx Context, param *params.ResetDatabaseParam) ([]
 	return ids, nil
 }
 
-func findDatabaseWaitForBootTargets(ctx Context, param *params.WaitForBootDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseWaitForBootTargets(ctx command.Context, param *params.WaitForBootDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -492,7 +493,7 @@ func findDatabaseWaitForBootTargets(ctx Context, param *params.WaitForBootDataba
 	return ids, nil
 }
 
-func findDatabaseWaitForDownTargets(ctx Context, param *params.WaitForDownDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseWaitForDownTargets(ctx command.Context, param *params.WaitForDownDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -550,7 +551,7 @@ func findDatabaseWaitForDownTargets(ctx Context, param *params.WaitForDownDataba
 	return ids, nil
 }
 
-func findDatabaseBackupInfoTargets(ctx Context, param *params.BackupInfoDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseBackupInfoTargets(ctx command.Context, param *params.BackupInfoDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -611,7 +612,7 @@ func findDatabaseBackupInfoTargets(ctx Context, param *params.BackupInfoDatabase
 	return ids, nil
 }
 
-func findDatabaseBackupCreateTargets(ctx Context, param *params.BackupCreateDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseBackupCreateTargets(ctx command.Context, param *params.BackupCreateDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -657,7 +658,7 @@ func findDatabaseBackupCreateTargets(ctx Context, param *params.BackupCreateData
 	return ids, nil
 }
 
-func findDatabaseBackupRestoreTargets(ctx Context, param *params.BackupRestoreDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseBackupRestoreTargets(ctx command.Context, param *params.BackupRestoreDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -703,7 +704,7 @@ func findDatabaseBackupRestoreTargets(ctx Context, param *params.BackupRestoreDa
 	return ids, nil
 }
 
-func findDatabaseBackupLockTargets(ctx Context, param *params.BackupLockDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseBackupLockTargets(ctx command.Context, param *params.BackupLockDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -749,7 +750,7 @@ func findDatabaseBackupLockTargets(ctx Context, param *params.BackupLockDatabase
 	return ids, nil
 }
 
-func findDatabaseBackupUnlockTargets(ctx Context, param *params.BackupUnlockDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseBackupUnlockTargets(ctx command.Context, param *params.BackupUnlockDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -795,7 +796,7 @@ func findDatabaseBackupUnlockTargets(ctx Context, param *params.BackupUnlockData
 	return ids, nil
 }
 
-func findDatabaseBackupRemoveTargets(ctx Context, param *params.BackupRemoveDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseBackupRemoveTargets(ctx command.Context, param *params.BackupRemoveDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -841,7 +842,7 @@ func findDatabaseBackupRemoveTargets(ctx Context, param *params.BackupRemoveData
 	return ids, nil
 }
 
-func findDatabaseCloneTargets(ctx Context, param *params.CloneDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseCloneTargets(ctx command.Context, param *params.CloneDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -887,7 +888,7 @@ func findDatabaseCloneTargets(ctx Context, param *params.CloneDatabaseParam) ([]
 	return ids, nil
 }
 
-func findDatabaseReplicaCreateTargets(ctx Context, param *params.ReplicaCreateDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseReplicaCreateTargets(ctx command.Context, param *params.ReplicaCreateDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -933,7 +934,7 @@ func findDatabaseReplicaCreateTargets(ctx Context, param *params.ReplicaCreateDa
 	return ids, nil
 }
 
-func findDatabaseMonitorCPUTargets(ctx Context, param *params.MonitorCPUDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseMonitorCPUTargets(ctx command.Context, param *params.MonitorCPUDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -994,7 +995,7 @@ func findDatabaseMonitorCPUTargets(ctx Context, param *params.MonitorCPUDatabase
 	return ids, nil
 }
 
-func findDatabaseMonitorMemoryTargets(ctx Context, param *params.MonitorMemoryDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseMonitorMemoryTargets(ctx command.Context, param *params.MonitorMemoryDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -1055,7 +1056,7 @@ func findDatabaseMonitorMemoryTargets(ctx Context, param *params.MonitorMemoryDa
 	return ids, nil
 }
 
-func findDatabaseMonitorNicTargets(ctx Context, param *params.MonitorNicDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseMonitorNicTargets(ctx command.Context, param *params.MonitorNicDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -1116,7 +1117,7 @@ func findDatabaseMonitorNicTargets(ctx Context, param *params.MonitorNicDatabase
 	return ids, nil
 }
 
-func findDatabaseMonitorSystemDiskTargets(ctx Context, param *params.MonitorSystemDiskDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseMonitorSystemDiskTargets(ctx command.Context, param *params.MonitorSystemDiskDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -1177,7 +1178,7 @@ func findDatabaseMonitorSystemDiskTargets(ctx Context, param *params.MonitorSyst
 	return ids, nil
 }
 
-func findDatabaseMonitorBackupDiskTargets(ctx Context, param *params.MonitorBackupDiskDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseMonitorBackupDiskTargets(ctx command.Context, param *params.MonitorBackupDiskDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -1238,7 +1239,7 @@ func findDatabaseMonitorBackupDiskTargets(ctx Context, param *params.MonitorBack
 	return ids, nil
 }
 
-func findDatabaseMonitorSystemDiskSizeTargets(ctx Context, param *params.MonitorSystemDiskSizeDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseMonitorSystemDiskSizeTargets(ctx command.Context, param *params.MonitorSystemDiskSizeDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -1299,7 +1300,7 @@ func findDatabaseMonitorSystemDiskSizeTargets(ctx Context, param *params.Monitor
 	return ids, nil
 }
 
-func findDatabaseMonitorBackupDiskSizeTargets(ctx Context, param *params.MonitorBackupDiskSizeDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseMonitorBackupDiskSizeTargets(ctx command.Context, param *params.MonitorBackupDiskSizeDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database
@@ -1360,7 +1361,7 @@ func findDatabaseMonitorBackupDiskSizeTargets(ctx Context, param *params.Monitor
 	return ids, nil
 }
 
-func findDatabaseLogsTargets(ctx Context, param *params.LogsDatabaseParam) ([]sacloud.ID, error) {
+func findDatabaseLogsTargets(ctx command.Context, param *params.LogsDatabaseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Database

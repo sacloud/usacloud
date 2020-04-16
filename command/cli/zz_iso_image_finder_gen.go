@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findISOImageReadTargets(ctx Context, param *params.ReadISOImageParam) ([]sacloud.ID, error) {
+func findISOImageReadTargets(ctx command.Context, param *params.ReadISOImageParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().CDROM
@@ -86,7 +87,7 @@ func findISOImageReadTargets(ctx Context, param *params.ReadISOImageParam) ([]sa
 	return ids, nil
 }
 
-func findISOImageUpdateTargets(ctx Context, param *params.UpdateISOImageParam) ([]sacloud.ID, error) {
+func findISOImageUpdateTargets(ctx command.Context, param *params.UpdateISOImageParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().CDROM
@@ -144,7 +145,7 @@ func findISOImageUpdateTargets(ctx Context, param *params.UpdateISOImageParam) (
 	return ids, nil
 }
 
-func findISOImageDeleteTargets(ctx Context, param *params.DeleteISOImageParam) ([]sacloud.ID, error) {
+func findISOImageDeleteTargets(ctx command.Context, param *params.DeleteISOImageParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().CDROM
@@ -202,68 +203,7 @@ func findISOImageDeleteTargets(ctx Context, param *params.DeleteISOImageParam) (
 	return ids, nil
 }
 
-func findISOImageUploadTargets(ctx Context, param *params.UploadISOImageParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
-	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().CDROM
-
-	if len(args) == 0 {
-		if len(param.Selector) == 0 {
-			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
-		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
-		if err != nil {
-			return ids, fmt.Errorf("finding resource id is failed: %s", err)
-		}
-		for _, v := range res.CDROMs {
-			if utils.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
-			}
-		}
-		if len(ids) == 0 {
-			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
-		}
-	} else {
-		for _, arg := range args {
-			for _, a := range strings.Split(arg, "\n") {
-				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
-					ids = append(ids, id)
-				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
-					if err != nil {
-						return ids, fmt.Errorf("finding resource id is failed: %s", err)
-					}
-					if res.Count == 0 {
-						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
-					}
-					for _, v := range res.CDROMs {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
-						}
-					}
-				}
-			}
-
-		}
-
-	}
-
-	ids = utils.UniqIDs(ids)
-	if len(ids) == 0 {
-		return ids, fmt.Errorf("finding resource is is failed: not found")
-	}
-	if len(ids) != 1 {
-		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
-	}
-
-	return ids, nil
-}
-
-func findISOImageDownloadTargets(ctx Context, param *params.DownloadISOImageParam) ([]sacloud.ID, error) {
+func findISOImageUploadTargets(ctx command.Context, param *params.UploadISOImageParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().CDROM
@@ -324,7 +264,68 @@ func findISOImageDownloadTargets(ctx Context, param *params.DownloadISOImagePara
 	return ids, nil
 }
 
-func findISOImageFTPOpenTargets(ctx Context, param *params.FTPOpenISOImageParam) ([]sacloud.ID, error) {
+func findISOImageDownloadTargets(ctx command.Context, param *params.DownloadISOImageParam) ([]sacloud.ID, error) {
+	var ids []sacloud.ID
+	args := ctx.Args()
+	apiClient := ctx.GetAPIClient().CDROM
+
+	if len(args) == 0 {
+		if len(param.Selector) == 0 {
+			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
+		}
+		apiClient.Reset()
+		res, err := apiClient.Find()
+		if err != nil {
+			return ids, fmt.Errorf("finding resource id is failed: %s", err)
+		}
+		for _, v := range res.CDROMs {
+			if utils.HasTags(&v, param.Selector) {
+				ids = append(ids, v.GetID())
+			}
+		}
+		if len(ids) == 0 {
+			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
+		}
+	} else {
+		for _, arg := range args {
+			for _, a := range strings.Split(arg, "\n") {
+				idOrName := a
+				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+					ids = append(ids, id)
+				} else {
+					apiClient.Reset()
+					apiClient.SetFilterBy("Name", idOrName)
+					res, err := apiClient.Find()
+					if err != nil {
+						return ids, fmt.Errorf("finding resource id is failed: %s", err)
+					}
+					if res.Count == 0 {
+						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
+					}
+					for _, v := range res.CDROMs {
+						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+							ids = append(ids, v.GetID())
+						}
+					}
+				}
+			}
+
+		}
+
+	}
+
+	ids = utils.UniqIDs(ids)
+	if len(ids) == 0 {
+		return ids, fmt.Errorf("finding resource is is failed: not found")
+	}
+	if len(ids) != 1 {
+		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
+	}
+
+	return ids, nil
+}
+
+func findISOImageFTPOpenTargets(ctx command.Context, param *params.FTPOpenISOImageParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().CDROM
@@ -382,7 +383,7 @@ func findISOImageFTPOpenTargets(ctx Context, param *params.FTPOpenISOImageParam)
 	return ids, nil
 }
 
-func findISOImageFTPCloseTargets(ctx Context, param *params.FTPCloseISOImageParam) ([]sacloud.ID, error) {
+func findISOImageFTPCloseTargets(ctx command.Context, param *params.FTPCloseISOImageParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().CDROM

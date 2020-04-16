@@ -17,6 +17,7 @@
 package cli
 
 import (
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/spf13/cobra"
@@ -47,7 +48,7 @@ func billCsvCmd() *cobra.Command {
 			return billCsvParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, billCsvParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, billCsvParam)
 			if err != nil {
 				return err
 			}
@@ -90,7 +91,7 @@ func billListCmd() *cobra.Command {
 			return billListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, billListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, billListParam)
 			if err != nil {
 				return err
 			}

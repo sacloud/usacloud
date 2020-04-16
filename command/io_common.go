@@ -12,10 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package params
+// +build !wasm
 
-import "github.com/sacloud/usacloud/command"
+package command
 
-func isEmpty(v interface{}) bool {
-	return command.IsEmpty(v)
+import (
+	"io/ioutil"
+	"os"
+
+	"github.com/mattn/go-colorable"
+	"github.com/mattn/go-isatty"
+)
+
+func newIO() IO {
+	io := &cliIO{
+		in:       os.Stdin,
+		out:      colorable.NewColorableStdout(),
+		progress: colorable.NewColorableStderr(),
+		err:      colorable.NewColorableStderr(),
+	}
+	if !(isatty.IsTerminal(os.Stderr.Fd()) || isatty.IsCygwinTerminal(os.Stderr.Fd())) {
+		io.progress = ioutil.Discard
+	}
+	return io
 }

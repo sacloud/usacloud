@@ -53,7 +53,7 @@ func webAccelListCmd() *cobra.Command {
 			return webAccelListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, webAccelListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, webAccelListParam)
 			if err != nil {
 				return err
 			}
@@ -100,7 +100,7 @@ func webAccelReadCmd() *cobra.Command {
 			return webAccelReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, webAccelReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, webAccelReadParam)
 			if err != nil {
 				return err
 			}
@@ -170,7 +170,7 @@ func webAccelCertificateInfoCmd() *cobra.Command {
 			return webAccelCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, webAccelCertificateInfoParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, webAccelCertificateInfoParam)
 			if err != nil {
 				return err
 			}
@@ -240,7 +240,7 @@ func webAccelCertificateNewCmd() *cobra.Command {
 			return webAccelCertificateNewParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, webAccelCertificateNewParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, webAccelCertificateNewParam)
 			if err != nil {
 				return err
 			}
@@ -326,7 +326,7 @@ func webAccelCertificateUpdateCmd() *cobra.Command {
 			return webAccelCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, webAccelCertificateUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, webAccelCertificateUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -412,7 +412,7 @@ func webAccelDeleteCacheCmd() *cobra.Command {
 			return webAccelDeleteCacheParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, webAccelDeleteCacheParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, webAccelDeleteCacheParam)
 			if err != nil {
 				return err
 			}

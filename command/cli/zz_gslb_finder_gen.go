@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findGSLBServerInfoTargets(ctx Context, param *params.ServerInfoGSLBParam) ([]sacloud.ID, error) {
+func findGSLBServerInfoTargets(ctx command.Context, param *params.ServerInfoGSLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().GSLB
@@ -86,7 +87,7 @@ func findGSLBServerInfoTargets(ctx Context, param *params.ServerInfoGSLBParam) (
 	return ids, nil
 }
 
-func findGSLBServerAddTargets(ctx Context, param *params.ServerAddGSLBParam) ([]sacloud.ID, error) {
+func findGSLBServerAddTargets(ctx command.Context, param *params.ServerAddGSLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().GSLB
@@ -147,7 +148,7 @@ func findGSLBServerAddTargets(ctx Context, param *params.ServerAddGSLBParam) ([]
 	return ids, nil
 }
 
-func findGSLBReadTargets(ctx Context, param *params.ReadGSLBParam) ([]sacloud.ID, error) {
+func findGSLBReadTargets(ctx command.Context, param *params.ReadGSLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().GSLB
@@ -208,7 +209,7 @@ func findGSLBReadTargets(ctx Context, param *params.ReadGSLBParam) ([]sacloud.ID
 	return ids, nil
 }
 
-func findGSLBServerUpdateTargets(ctx Context, param *params.ServerUpdateGSLBParam) ([]sacloud.ID, error) {
+func findGSLBServerUpdateTargets(ctx command.Context, param *params.ServerUpdateGSLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().GSLB
@@ -269,7 +270,7 @@ func findGSLBServerUpdateTargets(ctx Context, param *params.ServerUpdateGSLBPara
 	return ids, nil
 }
 
-func findGSLBServerDeleteTargets(ctx Context, param *params.ServerDeleteGSLBParam) ([]sacloud.ID, error) {
+func findGSLBServerDeleteTargets(ctx command.Context, param *params.ServerDeleteGSLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().GSLB
@@ -330,7 +331,7 @@ func findGSLBServerDeleteTargets(ctx Context, param *params.ServerDeleteGSLBPara
 	return ids, nil
 }
 
-func findGSLBUpdateTargets(ctx Context, param *params.UpdateGSLBParam) ([]sacloud.ID, error) {
+func findGSLBUpdateTargets(ctx command.Context, param *params.UpdateGSLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().GSLB
@@ -388,7 +389,7 @@ func findGSLBUpdateTargets(ctx Context, param *params.UpdateGSLBParam) ([]saclou
 	return ids, nil
 }
 
-func findGSLBDeleteTargets(ctx Context, param *params.DeleteGSLBParam) ([]sacloud.ID, error) {
+func findGSLBDeleteTargets(ctx command.Context, param *params.DeleteGSLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().GSLB

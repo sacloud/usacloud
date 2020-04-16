@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findMobileGatewayReadTargets(ctx Context, param *params.ReadMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayReadTargets(ctx command.Context, param *params.ReadMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -86,7 +87,7 @@ func findMobileGatewayReadTargets(ctx Context, param *params.ReadMobileGatewayPa
 	return ids, nil
 }
 
-func findMobileGatewayUpdateTargets(ctx Context, param *params.UpdateMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayUpdateTargets(ctx command.Context, param *params.UpdateMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -144,7 +145,7 @@ func findMobileGatewayUpdateTargets(ctx Context, param *params.UpdateMobileGatew
 	return ids, nil
 }
 
-func findMobileGatewayDeleteTargets(ctx Context, param *params.DeleteMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayDeleteTargets(ctx command.Context, param *params.DeleteMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -202,7 +203,7 @@ func findMobileGatewayDeleteTargets(ctx Context, param *params.DeleteMobileGatew
 	return ids, nil
 }
 
-func findMobileGatewayBootTargets(ctx Context, param *params.BootMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayBootTargets(ctx command.Context, param *params.BootMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -260,7 +261,7 @@ func findMobileGatewayBootTargets(ctx Context, param *params.BootMobileGatewayPa
 	return ids, nil
 }
 
-func findMobileGatewayShutdownTargets(ctx Context, param *params.ShutdownMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayShutdownTargets(ctx command.Context, param *params.ShutdownMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -318,7 +319,7 @@ func findMobileGatewayShutdownTargets(ctx Context, param *params.ShutdownMobileG
 	return ids, nil
 }
 
-func findMobileGatewayShutdownForceTargets(ctx Context, param *params.ShutdownForceMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayShutdownForceTargets(ctx command.Context, param *params.ShutdownForceMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -376,7 +377,7 @@ func findMobileGatewayShutdownForceTargets(ctx Context, param *params.ShutdownFo
 	return ids, nil
 }
 
-func findMobileGatewayResetTargets(ctx Context, param *params.ResetMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayResetTargets(ctx command.Context, param *params.ResetMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -434,7 +435,7 @@ func findMobileGatewayResetTargets(ctx Context, param *params.ResetMobileGateway
 	return ids, nil
 }
 
-func findMobileGatewayWaitForBootTargets(ctx Context, param *params.WaitForBootMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayWaitForBootTargets(ctx command.Context, param *params.WaitForBootMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -492,7 +493,7 @@ func findMobileGatewayWaitForBootTargets(ctx Context, param *params.WaitForBootM
 	return ids, nil
 }
 
-func findMobileGatewayWaitForDownTargets(ctx Context, param *params.WaitForDownMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayWaitForDownTargets(ctx command.Context, param *params.WaitForDownMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -550,68 +551,7 @@ func findMobileGatewayWaitForDownTargets(ctx Context, param *params.WaitForDownM
 	return ids, nil
 }
 
-func findMobileGatewayInterfaceInfoTargets(ctx Context, param *params.InterfaceInfoMobileGatewayParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
-	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().MobileGateway
-
-	if len(args) == 0 {
-		if len(param.Selector) == 0 {
-			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
-		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
-		if err != nil {
-			return ids, fmt.Errorf("finding resource id is failed: %s", err)
-		}
-		for _, v := range res.MobileGateways {
-			if utils.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
-			}
-		}
-		if len(ids) == 0 {
-			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
-		}
-	} else {
-		for _, arg := range args {
-			for _, a := range strings.Split(arg, "\n") {
-				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
-					ids = append(ids, id)
-				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
-					if err != nil {
-						return ids, fmt.Errorf("finding resource id is failed: %s", err)
-					}
-					if res.Count == 0 {
-						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
-					}
-					for _, v := range res.MobileGateways {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
-						}
-					}
-				}
-			}
-
-		}
-
-	}
-
-	ids = utils.UniqIDs(ids)
-	if len(ids) == 0 {
-		return ids, fmt.Errorf("finding resource is is failed: not found")
-	}
-	if len(ids) != 1 {
-		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
-	}
-
-	return ids, nil
-}
-
-func findMobileGatewayInterfaceConnectTargets(ctx Context, param *params.InterfaceConnectMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayInterfaceInfoTargets(ctx command.Context, param *params.InterfaceInfoMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -672,7 +612,7 @@ func findMobileGatewayInterfaceConnectTargets(ctx Context, param *params.Interfa
 	return ids, nil
 }
 
-func findMobileGatewayInterfaceUpdateTargets(ctx Context, param *params.InterfaceUpdateMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayInterfaceConnectTargets(ctx command.Context, param *params.InterfaceConnectMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -733,7 +673,7 @@ func findMobileGatewayInterfaceUpdateTargets(ctx Context, param *params.Interfac
 	return ids, nil
 }
 
-func findMobileGatewayInterfaceDisconnectTargets(ctx Context, param *params.InterfaceDisconnectMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayInterfaceUpdateTargets(ctx command.Context, param *params.InterfaceUpdateMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -794,7 +734,7 @@ func findMobileGatewayInterfaceDisconnectTargets(ctx Context, param *params.Inte
 	return ids, nil
 }
 
-func findMobileGatewayTrafficControlInfoTargets(ctx Context, param *params.TrafficControlInfoMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayInterfaceDisconnectTargets(ctx command.Context, param *params.InterfaceDisconnectMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -855,181 +795,7 @@ func findMobileGatewayTrafficControlInfoTargets(ctx Context, param *params.Traff
 	return ids, nil
 }
 
-func findMobileGatewayTrafficControlEnableTargets(ctx Context, param *params.TrafficControlEnableMobileGatewayParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
-	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().MobileGateway
-
-	if len(args) == 0 {
-		if len(param.Selector) == 0 {
-			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
-		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
-		if err != nil {
-			return ids, fmt.Errorf("finding resource id is failed: %s", err)
-		}
-		for _, v := range res.MobileGateways {
-			if utils.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
-			}
-		}
-		if len(ids) == 0 {
-			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
-		}
-	} else {
-		for _, arg := range args {
-			for _, a := range strings.Split(arg, "\n") {
-				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
-					ids = append(ids, id)
-				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
-					if err != nil {
-						return ids, fmt.Errorf("finding resource id is failed: %s", err)
-					}
-					if res.Count == 0 {
-						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
-					}
-					for _, v := range res.MobileGateways {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
-						}
-					}
-				}
-			}
-
-		}
-
-	}
-
-	ids = utils.UniqIDs(ids)
-	if len(ids) == 0 {
-		return ids, fmt.Errorf("finding resource is is failed: not found")
-	}
-
-	return ids, nil
-}
-
-func findMobileGatewayTrafficControlUpdateTargets(ctx Context, param *params.TrafficControlUpdateMobileGatewayParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
-	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().MobileGateway
-
-	if len(args) == 0 {
-		if len(param.Selector) == 0 {
-			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
-		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
-		if err != nil {
-			return ids, fmt.Errorf("finding resource id is failed: %s", err)
-		}
-		for _, v := range res.MobileGateways {
-			if utils.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
-			}
-		}
-		if len(ids) == 0 {
-			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
-		}
-	} else {
-		for _, arg := range args {
-			for _, a := range strings.Split(arg, "\n") {
-				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
-					ids = append(ids, id)
-				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
-					if err != nil {
-						return ids, fmt.Errorf("finding resource id is failed: %s", err)
-					}
-					if res.Count == 0 {
-						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
-					}
-					for _, v := range res.MobileGateways {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
-						}
-					}
-				}
-			}
-
-		}
-
-	}
-
-	ids = utils.UniqIDs(ids)
-	if len(ids) == 0 {
-		return ids, fmt.Errorf("finding resource is is failed: not found")
-	}
-
-	return ids, nil
-}
-
-func findMobileGatewayTrafficControlDisableTargets(ctx Context, param *params.TrafficControlDisableMobileGatewayParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
-	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().MobileGateway
-
-	if len(args) == 0 {
-		if len(param.Selector) == 0 {
-			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
-		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
-		if err != nil {
-			return ids, fmt.Errorf("finding resource id is failed: %s", err)
-		}
-		for _, v := range res.MobileGateways {
-			if utils.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
-			}
-		}
-		if len(ids) == 0 {
-			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
-		}
-	} else {
-		for _, arg := range args {
-			for _, a := range strings.Split(arg, "\n") {
-				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
-					ids = append(ids, id)
-				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
-					if err != nil {
-						return ids, fmt.Errorf("finding resource id is failed: %s", err)
-					}
-					if res.Count == 0 {
-						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
-					}
-					for _, v := range res.MobileGateways {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
-						}
-					}
-				}
-			}
-
-		}
-
-	}
-
-	ids = utils.UniqIDs(ids)
-	if len(ids) == 0 {
-		return ids, fmt.Errorf("finding resource is is failed: not found")
-	}
-
-	return ids, nil
-}
-
-func findMobileGatewayStaticRouteInfoTargets(ctx Context, param *params.StaticRouteInfoMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayTrafficControlInfoTargets(ctx command.Context, param *params.TrafficControlInfoMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -1090,7 +856,181 @@ func findMobileGatewayStaticRouteInfoTargets(ctx Context, param *params.StaticRo
 	return ids, nil
 }
 
-func findMobileGatewayStaticRouteAddTargets(ctx Context, param *params.StaticRouteAddMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayTrafficControlEnableTargets(ctx command.Context, param *params.TrafficControlEnableMobileGatewayParam) ([]sacloud.ID, error) {
+	var ids []sacloud.ID
+	args := ctx.Args()
+	apiClient := ctx.GetAPIClient().MobileGateway
+
+	if len(args) == 0 {
+		if len(param.Selector) == 0 {
+			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
+		}
+		apiClient.Reset()
+		res, err := apiClient.Find()
+		if err != nil {
+			return ids, fmt.Errorf("finding resource id is failed: %s", err)
+		}
+		for _, v := range res.MobileGateways {
+			if utils.HasTags(&v, param.Selector) {
+				ids = append(ids, v.GetID())
+			}
+		}
+		if len(ids) == 0 {
+			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
+		}
+	} else {
+		for _, arg := range args {
+			for _, a := range strings.Split(arg, "\n") {
+				idOrName := a
+				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+					ids = append(ids, id)
+				} else {
+					apiClient.Reset()
+					apiClient.SetFilterBy("Name", idOrName)
+					res, err := apiClient.Find()
+					if err != nil {
+						return ids, fmt.Errorf("finding resource id is failed: %s", err)
+					}
+					if res.Count == 0 {
+						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
+					}
+					for _, v := range res.MobileGateways {
+						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+							ids = append(ids, v.GetID())
+						}
+					}
+				}
+			}
+
+		}
+
+	}
+
+	ids = utils.UniqIDs(ids)
+	if len(ids) == 0 {
+		return ids, fmt.Errorf("finding resource is is failed: not found")
+	}
+
+	return ids, nil
+}
+
+func findMobileGatewayTrafficControlUpdateTargets(ctx command.Context, param *params.TrafficControlUpdateMobileGatewayParam) ([]sacloud.ID, error) {
+	var ids []sacloud.ID
+	args := ctx.Args()
+	apiClient := ctx.GetAPIClient().MobileGateway
+
+	if len(args) == 0 {
+		if len(param.Selector) == 0 {
+			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
+		}
+		apiClient.Reset()
+		res, err := apiClient.Find()
+		if err != nil {
+			return ids, fmt.Errorf("finding resource id is failed: %s", err)
+		}
+		for _, v := range res.MobileGateways {
+			if utils.HasTags(&v, param.Selector) {
+				ids = append(ids, v.GetID())
+			}
+		}
+		if len(ids) == 0 {
+			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
+		}
+	} else {
+		for _, arg := range args {
+			for _, a := range strings.Split(arg, "\n") {
+				idOrName := a
+				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+					ids = append(ids, id)
+				} else {
+					apiClient.Reset()
+					apiClient.SetFilterBy("Name", idOrName)
+					res, err := apiClient.Find()
+					if err != nil {
+						return ids, fmt.Errorf("finding resource id is failed: %s", err)
+					}
+					if res.Count == 0 {
+						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
+					}
+					for _, v := range res.MobileGateways {
+						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+							ids = append(ids, v.GetID())
+						}
+					}
+				}
+			}
+
+		}
+
+	}
+
+	ids = utils.UniqIDs(ids)
+	if len(ids) == 0 {
+		return ids, fmt.Errorf("finding resource is is failed: not found")
+	}
+
+	return ids, nil
+}
+
+func findMobileGatewayTrafficControlDisableTargets(ctx command.Context, param *params.TrafficControlDisableMobileGatewayParam) ([]sacloud.ID, error) {
+	var ids []sacloud.ID
+	args := ctx.Args()
+	apiClient := ctx.GetAPIClient().MobileGateway
+
+	if len(args) == 0 {
+		if len(param.Selector) == 0 {
+			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
+		}
+		apiClient.Reset()
+		res, err := apiClient.Find()
+		if err != nil {
+			return ids, fmt.Errorf("finding resource id is failed: %s", err)
+		}
+		for _, v := range res.MobileGateways {
+			if utils.HasTags(&v, param.Selector) {
+				ids = append(ids, v.GetID())
+			}
+		}
+		if len(ids) == 0 {
+			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
+		}
+	} else {
+		for _, arg := range args {
+			for _, a := range strings.Split(arg, "\n") {
+				idOrName := a
+				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+					ids = append(ids, id)
+				} else {
+					apiClient.Reset()
+					apiClient.SetFilterBy("Name", idOrName)
+					res, err := apiClient.Find()
+					if err != nil {
+						return ids, fmt.Errorf("finding resource id is failed: %s", err)
+					}
+					if res.Count == 0 {
+						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
+					}
+					for _, v := range res.MobileGateways {
+						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+							ids = append(ids, v.GetID())
+						}
+					}
+				}
+			}
+
+		}
+
+	}
+
+	ids = utils.UniqIDs(ids)
+	if len(ids) == 0 {
+		return ids, fmt.Errorf("finding resource is is failed: not found")
+	}
+
+	return ids, nil
+}
+
+func findMobileGatewayStaticRouteInfoTargets(ctx command.Context, param *params.StaticRouteInfoMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -1151,7 +1091,7 @@ func findMobileGatewayStaticRouteAddTargets(ctx Context, param *params.StaticRou
 	return ids, nil
 }
 
-func findMobileGatewayStaticRouteUpdateTargets(ctx Context, param *params.StaticRouteUpdateMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayStaticRouteAddTargets(ctx command.Context, param *params.StaticRouteAddMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -1212,7 +1152,7 @@ func findMobileGatewayStaticRouteUpdateTargets(ctx Context, param *params.Static
 	return ids, nil
 }
 
-func findMobileGatewayStaticRouteDeleteTargets(ctx Context, param *params.StaticRouteDeleteMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayStaticRouteUpdateTargets(ctx command.Context, param *params.StaticRouteUpdateMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -1273,7 +1213,7 @@ func findMobileGatewayStaticRouteDeleteTargets(ctx Context, param *params.Static
 	return ids, nil
 }
 
-func findMobileGatewaySIMInfoTargets(ctx Context, param *params.SIMInfoMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayStaticRouteDeleteTargets(ctx command.Context, param *params.StaticRouteDeleteMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -1334,7 +1274,7 @@ func findMobileGatewaySIMInfoTargets(ctx Context, param *params.SIMInfoMobileGat
 	return ids, nil
 }
 
-func findMobileGatewaySIMAddTargets(ctx Context, param *params.SIMAddMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewaySIMInfoTargets(ctx command.Context, param *params.SIMInfoMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -1395,7 +1335,7 @@ func findMobileGatewaySIMAddTargets(ctx Context, param *params.SIMAddMobileGatew
 	return ids, nil
 }
 
-func findMobileGatewaySIMUpdateTargets(ctx Context, param *params.SIMUpdateMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewaySIMAddTargets(ctx command.Context, param *params.SIMAddMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -1456,7 +1396,7 @@ func findMobileGatewaySIMUpdateTargets(ctx Context, param *params.SIMUpdateMobil
 	return ids, nil
 }
 
-func findMobileGatewaySIMDeleteTargets(ctx Context, param *params.SIMDeleteMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewaySIMUpdateTargets(ctx command.Context, param *params.SIMUpdateMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -1517,7 +1457,7 @@ func findMobileGatewaySIMDeleteTargets(ctx Context, param *params.SIMDeleteMobil
 	return ids, nil
 }
 
-func findMobileGatewaySIMRouteInfoTargets(ctx Context, param *params.SIMRouteInfoMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewaySIMDeleteTargets(ctx command.Context, param *params.SIMDeleteMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -1578,7 +1518,7 @@ func findMobileGatewaySIMRouteInfoTargets(ctx Context, param *params.SIMRouteInf
 	return ids, nil
 }
 
-func findMobileGatewaySIMRouteAddTargets(ctx Context, param *params.SIMRouteAddMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewaySIMRouteInfoTargets(ctx command.Context, param *params.SIMRouteInfoMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -1639,7 +1579,7 @@ func findMobileGatewaySIMRouteAddTargets(ctx Context, param *params.SIMRouteAddM
 	return ids, nil
 }
 
-func findMobileGatewaySIMRouteUpdateTargets(ctx Context, param *params.SIMRouteUpdateMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewaySIMRouteAddTargets(ctx command.Context, param *params.SIMRouteAddMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -1700,7 +1640,7 @@ func findMobileGatewaySIMRouteUpdateTargets(ctx Context, param *params.SIMRouteU
 	return ids, nil
 }
 
-func findMobileGatewaySIMRouteDeleteTargets(ctx Context, param *params.SIMRouteDeleteMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewaySIMRouteUpdateTargets(ctx command.Context, param *params.SIMRouteUpdateMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -1761,7 +1701,7 @@ func findMobileGatewaySIMRouteDeleteTargets(ctx Context, param *params.SIMRouteD
 	return ids, nil
 }
 
-func findMobileGatewayDNSUpdateTargets(ctx Context, param *params.DNSUpdateMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewaySIMRouteDeleteTargets(ctx command.Context, param *params.SIMRouteDeleteMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway
@@ -1822,7 +1762,68 @@ func findMobileGatewayDNSUpdateTargets(ctx Context, param *params.DNSUpdateMobil
 	return ids, nil
 }
 
-func findMobileGatewayLogsTargets(ctx Context, param *params.LogsMobileGatewayParam) ([]sacloud.ID, error) {
+func findMobileGatewayDNSUpdateTargets(ctx command.Context, param *params.DNSUpdateMobileGatewayParam) ([]sacloud.ID, error) {
+	var ids []sacloud.ID
+	args := ctx.Args()
+	apiClient := ctx.GetAPIClient().MobileGateway
+
+	if len(args) == 0 {
+		if len(param.Selector) == 0 {
+			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
+		}
+		apiClient.Reset()
+		res, err := apiClient.Find()
+		if err != nil {
+			return ids, fmt.Errorf("finding resource id is failed: %s", err)
+		}
+		for _, v := range res.MobileGateways {
+			if utils.HasTags(&v, param.Selector) {
+				ids = append(ids, v.GetID())
+			}
+		}
+		if len(ids) == 0 {
+			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
+		}
+	} else {
+		for _, arg := range args {
+			for _, a := range strings.Split(arg, "\n") {
+				idOrName := a
+				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+					ids = append(ids, id)
+				} else {
+					apiClient.Reset()
+					apiClient.SetFilterBy("Name", idOrName)
+					res, err := apiClient.Find()
+					if err != nil {
+						return ids, fmt.Errorf("finding resource id is failed: %s", err)
+					}
+					if res.Count == 0 {
+						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
+					}
+					for _, v := range res.MobileGateways {
+						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+							ids = append(ids, v.GetID())
+						}
+					}
+				}
+			}
+
+		}
+
+	}
+
+	ids = utils.UniqIDs(ids)
+	if len(ids) == 0 {
+		return ids, fmt.Errorf("finding resource is is failed: not found")
+	}
+	if len(ids) != 1 {
+		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
+	}
+
+	return ids, nil
+}
+
+func findMobileGatewayLogsTargets(ctx command.Context, param *params.LogsMobileGatewayParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().MobileGateway

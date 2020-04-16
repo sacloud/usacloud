@@ -20,6 +20,7 @@ import (
 	"errors"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -51,7 +52,7 @@ func regionListCmd() *cobra.Command {
 			return regionListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, regionListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, regionListParam)
 			if err != nil {
 				return err
 			}
@@ -103,7 +104,7 @@ func regionReadCmd() *cobra.Command {
 			return regionReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, regionReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, regionReadParam)
 			if err != nil {
 				return err
 			}

@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findPacketFilterReadTargets(ctx Context, param *params.ReadPacketFilterParam) ([]sacloud.ID, error) {
+func findPacketFilterReadTargets(ctx command.Context, param *params.ReadPacketFilterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().PacketFilter
@@ -71,7 +72,7 @@ func findPacketFilterReadTargets(ctx Context, param *params.ReadPacketFilterPara
 	return ids, nil
 }
 
-func findPacketFilterUpdateTargets(ctx Context, param *params.UpdatePacketFilterParam) ([]sacloud.ID, error) {
+func findPacketFilterUpdateTargets(ctx command.Context, param *params.UpdatePacketFilterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().PacketFilter
@@ -114,7 +115,7 @@ func findPacketFilterUpdateTargets(ctx Context, param *params.UpdatePacketFilter
 	return ids, nil
 }
 
-func findPacketFilterDeleteTargets(ctx Context, param *params.DeletePacketFilterParam) ([]sacloud.ID, error) {
+func findPacketFilterDeleteTargets(ctx command.Context, param *params.DeletePacketFilterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().PacketFilter
@@ -157,7 +158,7 @@ func findPacketFilterDeleteTargets(ctx Context, param *params.DeletePacketFilter
 	return ids, nil
 }
 
-func findPacketFilterRuleInfoTargets(ctx Context, param *params.RuleInfoPacketFilterParam) ([]sacloud.ID, error) {
+func findPacketFilterRuleInfoTargets(ctx command.Context, param *params.RuleInfoPacketFilterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().PacketFilter
@@ -200,53 +201,7 @@ func findPacketFilterRuleInfoTargets(ctx Context, param *params.RuleInfoPacketFi
 	return ids, nil
 }
 
-func findPacketFilterRuleAddTargets(ctx Context, param *params.RuleAddPacketFilterParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
-	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().PacketFilter
-
-	if len(args) == 0 {
-		return ids, fmt.Errorf("ID or Name argument is required")
-	} else {
-		for _, arg := range args {
-			for _, a := range strings.Split(arg, "\n") {
-				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
-					ids = append(ids, id)
-				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
-					if err != nil {
-						return ids, fmt.Errorf("finding resource id is failed: %s", err)
-					}
-					if res.Count == 0 {
-						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
-					}
-					for _, v := range res.PacketFilters {
-
-						ids = append(ids, v.GetID())
-
-					}
-				}
-			}
-
-		}
-
-	}
-
-	ids = utils.UniqIDs(ids)
-	if len(ids) == 0 {
-		return ids, fmt.Errorf("finding resource is is failed: not found")
-	}
-	if len(ids) != 1 {
-		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
-	}
-
-	return ids, nil
-}
-
-func findPacketFilterRuleUpdateTargets(ctx Context, param *params.RuleUpdatePacketFilterParam) ([]sacloud.ID, error) {
+func findPacketFilterRuleAddTargets(ctx command.Context, param *params.RuleAddPacketFilterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().PacketFilter
@@ -292,7 +247,7 @@ func findPacketFilterRuleUpdateTargets(ctx Context, param *params.RuleUpdatePack
 	return ids, nil
 }
 
-func findPacketFilterRuleDeleteTargets(ctx Context, param *params.RuleDeletePacketFilterParam) ([]sacloud.ID, error) {
+func findPacketFilterRuleUpdateTargets(ctx command.Context, param *params.RuleUpdatePacketFilterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().PacketFilter
@@ -338,7 +293,7 @@ func findPacketFilterRuleDeleteTargets(ctx Context, param *params.RuleDeletePack
 	return ids, nil
 }
 
-func findPacketFilterInterfaceConnectTargets(ctx Context, param *params.InterfaceConnectPacketFilterParam) ([]sacloud.ID, error) {
+func findPacketFilterRuleDeleteTargets(ctx command.Context, param *params.RuleDeletePacketFilterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().PacketFilter
@@ -384,7 +339,53 @@ func findPacketFilterInterfaceConnectTargets(ctx Context, param *params.Interfac
 	return ids, nil
 }
 
-func findPacketFilterInterfaceDisconnectTargets(ctx Context, param *params.InterfaceDisconnectPacketFilterParam) ([]sacloud.ID, error) {
+func findPacketFilterInterfaceConnectTargets(ctx command.Context, param *params.InterfaceConnectPacketFilterParam) ([]sacloud.ID, error) {
+	var ids []sacloud.ID
+	args := ctx.Args()
+	apiClient := ctx.GetAPIClient().PacketFilter
+
+	if len(args) == 0 {
+		return ids, fmt.Errorf("ID or Name argument is required")
+	} else {
+		for _, arg := range args {
+			for _, a := range strings.Split(arg, "\n") {
+				idOrName := a
+				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+					ids = append(ids, id)
+				} else {
+					apiClient.Reset()
+					apiClient.SetFilterBy("Name", idOrName)
+					res, err := apiClient.Find()
+					if err != nil {
+						return ids, fmt.Errorf("finding resource id is failed: %s", err)
+					}
+					if res.Count == 0 {
+						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
+					}
+					for _, v := range res.PacketFilters {
+
+						ids = append(ids, v.GetID())
+
+					}
+				}
+			}
+
+		}
+
+	}
+
+	ids = utils.UniqIDs(ids)
+	if len(ids) == 0 {
+		return ids, fmt.Errorf("finding resource is is failed: not found")
+	}
+	if len(ids) != 1 {
+		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
+	}
+
+	return ids, nil
+}
+
+func findPacketFilterInterfaceDisconnectTargets(ctx command.Context, param *params.InterfaceDisconnectPacketFilterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().PacketFilter

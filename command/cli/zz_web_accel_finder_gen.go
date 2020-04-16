@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findWebAccelReadTargets(ctx Context, param *params.ReadWebAccelParam) ([]sacloud.ID, error) {
+func findWebAccelReadTargets(ctx command.Context, param *params.ReadWebAccelParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().WebAccel
@@ -86,7 +87,7 @@ func findWebAccelReadTargets(ctx Context, param *params.ReadWebAccelParam) ([]sa
 	return ids, nil
 }
 
-func findWebAccelCertificateInfoTargets(ctx Context, param *params.CertificateInfoWebAccelParam) ([]sacloud.ID, error) {
+func findWebAccelCertificateInfoTargets(ctx command.Context, param *params.CertificateInfoWebAccelParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().WebAccel
@@ -147,7 +148,7 @@ func findWebAccelCertificateInfoTargets(ctx Context, param *params.CertificateIn
 	return ids, nil
 }
 
-func findWebAccelCertificateNewTargets(ctx Context, param *params.CertificateNewWebAccelParam) ([]sacloud.ID, error) {
+func findWebAccelCertificateNewTargets(ctx command.Context, param *params.CertificateNewWebAccelParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().WebAccel
@@ -208,7 +209,7 @@ func findWebAccelCertificateNewTargets(ctx Context, param *params.CertificateNew
 	return ids, nil
 }
 
-func findWebAccelCertificateUpdateTargets(ctx Context, param *params.CertificateUpdateWebAccelParam) ([]sacloud.ID, error) {
+func findWebAccelCertificateUpdateTargets(ctx command.Context, param *params.CertificateUpdateWebAccelParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().WebAccel

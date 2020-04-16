@@ -54,7 +54,7 @@ func simListCmd() *cobra.Command {
 			return simListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simListParam)
 			if err != nil {
 				return err
 			}
@@ -107,7 +107,7 @@ func simCreateCmd() *cobra.Command {
 			return simCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simCreateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simCreateParam)
 			if err != nil {
 				return err
 			}
@@ -175,7 +175,7 @@ func simReadCmd() *cobra.Command {
 			return simReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simReadParam)
 			if err != nil {
 				return err
 			}
@@ -245,7 +245,7 @@ func simUpdateCmd() *cobra.Command {
 			return simUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -331,7 +331,7 @@ func simDeleteCmd() *cobra.Command {
 			return simDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -407,7 +407,7 @@ func simCarrierInfoCmd() *cobra.Command {
 			return simCarrierInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simCarrierInfoParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simCarrierInfoParam)
 			if err != nil {
 				return err
 			}
@@ -477,7 +477,7 @@ func simCarrierUpdateCmd() *cobra.Command {
 			return simCarrierUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simCarrierUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simCarrierUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -553,7 +553,7 @@ func simActivateCmd() *cobra.Command {
 			return simActivateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simActivateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simActivateParam)
 			if err != nil {
 				return err
 			}
@@ -628,7 +628,7 @@ func simDeactivateCmd() *cobra.Command {
 			return simDeactivateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simDeactivateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simDeactivateParam)
 			if err != nil {
 				return err
 			}
@@ -703,7 +703,7 @@ func simImeiLockCmd() *cobra.Command {
 			return simImeiLockParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simImeiLockParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simImeiLockParam)
 			if err != nil {
 				return err
 			}
@@ -779,7 +779,7 @@ func simIpAddCmd() *cobra.Command {
 			return simIpAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simIpAddParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simIpAddParam)
 			if err != nil {
 				return err
 			}
@@ -855,7 +855,7 @@ func simImeiUnlockCmd() *cobra.Command {
 			return simImeiUnlockParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simImeiUnlockParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simImeiUnlockParam)
 			if err != nil {
 				return err
 			}
@@ -930,7 +930,7 @@ func simIpDeleteCmd() *cobra.Command {
 			return simIpDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simIpDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simIpDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -1005,7 +1005,7 @@ func simLogsCmd() *cobra.Command {
 			return simLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simLogsParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simLogsParam)
 			if err != nil {
 				return err
 			}
@@ -1077,7 +1077,7 @@ func simMonitorCmd() *cobra.Command {
 			return simMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simMonitorParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simMonitorParam)
 			if err != nil {
 				return err
 			}

@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findSimpleMonitorReadTargets(ctx Context, param *params.ReadSimpleMonitorParam) ([]sacloud.ID, error) {
+func findSimpleMonitorReadTargets(ctx command.Context, param *params.ReadSimpleMonitorParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().SimpleMonitor
@@ -86,7 +87,7 @@ func findSimpleMonitorReadTargets(ctx Context, param *params.ReadSimpleMonitorPa
 	return ids, nil
 }
 
-func findSimpleMonitorUpdateTargets(ctx Context, param *params.UpdateSimpleMonitorParam) ([]sacloud.ID, error) {
+func findSimpleMonitorUpdateTargets(ctx command.Context, param *params.UpdateSimpleMonitorParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().SimpleMonitor
@@ -144,7 +145,7 @@ func findSimpleMonitorUpdateTargets(ctx Context, param *params.UpdateSimpleMonit
 	return ids, nil
 }
 
-func findSimpleMonitorDeleteTargets(ctx Context, param *params.DeleteSimpleMonitorParam) ([]sacloud.ID, error) {
+func findSimpleMonitorDeleteTargets(ctx command.Context, param *params.DeleteSimpleMonitorParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().SimpleMonitor
@@ -202,7 +203,7 @@ func findSimpleMonitorDeleteTargets(ctx Context, param *params.DeleteSimpleMonit
 	return ids, nil
 }
 
-func findSimpleMonitorHealthTargets(ctx Context, param *params.HealthSimpleMonitorParam) ([]sacloud.ID, error) {
+func findSimpleMonitorHealthTargets(ctx command.Context, param *params.HealthSimpleMonitorParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().SimpleMonitor

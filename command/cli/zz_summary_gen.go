@@ -17,6 +17,7 @@
 package cli
 
 import (
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/spf13/cobra"
@@ -47,7 +48,7 @@ func summaryShowCmd() *cobra.Command {
 			return summaryShowParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, summaryShowParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, summaryShowParam)
 			if err != nil {
 				return err
 			}

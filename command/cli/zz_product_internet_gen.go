@@ -20,6 +20,7 @@ import (
 	"errors"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -51,7 +52,7 @@ func productInternetListCmd() *cobra.Command {
 			return productInternetListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, productInternetListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, productInternetListParam)
 			if err != nil {
 				return err
 			}
@@ -103,7 +104,7 @@ func productInternetReadCmd() *cobra.Command {
 			return productInternetReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, productInternetReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, productInternetReadParam)
 			if err != nil {
 				return err
 			}

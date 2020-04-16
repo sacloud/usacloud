@@ -54,7 +54,7 @@ func simpleMonitorListCmd() *cobra.Command {
 			return simpleMonitorListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simpleMonitorListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simpleMonitorListParam)
 			if err != nil {
 				return err
 			}
@@ -108,7 +108,7 @@ func simpleMonitorCreateCmd() *cobra.Command {
 			return simpleMonitorCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simpleMonitorCreateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simpleMonitorCreateParam)
 			if err != nil {
 				return err
 			}
@@ -188,7 +188,7 @@ func simpleMonitorReadCmd() *cobra.Command {
 			return simpleMonitorReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simpleMonitorReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simpleMonitorReadParam)
 			if err != nil {
 				return err
 			}
@@ -258,7 +258,7 @@ func simpleMonitorUpdateCmd() *cobra.Command {
 			return simpleMonitorUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simpleMonitorUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simpleMonitorUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -360,7 +360,7 @@ func simpleMonitorDeleteCmd() *cobra.Command {
 			return simpleMonitorDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simpleMonitorDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simpleMonitorDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -442,7 +442,7 @@ func simpleMonitorHealthCmd() *cobra.Command {
 			return simpleMonitorHealthParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, simpleMonitorHealthParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, simpleMonitorHealthParam)
 			if err != nil {
 				return err
 			}

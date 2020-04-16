@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findStartupScriptReadTargets(ctx Context, param *params.ReadStartupScriptParam) ([]sacloud.ID, error) {
+func findStartupScriptReadTargets(ctx command.Context, param *params.ReadStartupScriptParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Note
@@ -86,7 +87,7 @@ func findStartupScriptReadTargets(ctx Context, param *params.ReadStartupScriptPa
 	return ids, nil
 }
 
-func findStartupScriptUpdateTargets(ctx Context, param *params.UpdateStartupScriptParam) ([]sacloud.ID, error) {
+func findStartupScriptUpdateTargets(ctx command.Context, param *params.UpdateStartupScriptParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Note
@@ -144,7 +145,7 @@ func findStartupScriptUpdateTargets(ctx Context, param *params.UpdateStartupScri
 	return ids, nil
 }
 
-func findStartupScriptDeleteTargets(ctx Context, param *params.DeleteStartupScriptParam) ([]sacloud.ID, error) {
+func findStartupScriptDeleteTargets(ctx command.Context, param *params.DeleteStartupScriptParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Note

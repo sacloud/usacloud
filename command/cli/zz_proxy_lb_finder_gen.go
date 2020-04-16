@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findProxyLBReadTargets(ctx Context, param *params.ReadProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBReadTargets(ctx command.Context, param *params.ReadProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -86,7 +87,7 @@ func findProxyLBReadTargets(ctx Context, param *params.ReadProxyLBParam) ([]sacl
 	return ids, nil
 }
 
-func findProxyLBUpdateTargets(ctx Context, param *params.UpdateProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBUpdateTargets(ctx command.Context, param *params.UpdateProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -144,7 +145,7 @@ func findProxyLBUpdateTargets(ctx Context, param *params.UpdateProxyLBParam) ([]
 	return ids, nil
 }
 
-func findProxyLBDeleteTargets(ctx Context, param *params.DeleteProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBDeleteTargets(ctx command.Context, param *params.DeleteProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -202,7 +203,7 @@ func findProxyLBDeleteTargets(ctx Context, param *params.DeleteProxyLBParam) ([]
 	return ids, nil
 }
 
-func findProxyLBPlanChangeTargets(ctx Context, param *params.PlanChangeProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBPlanChangeTargets(ctx command.Context, param *params.PlanChangeProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -260,68 +261,7 @@ func findProxyLBPlanChangeTargets(ctx Context, param *params.PlanChangeProxyLBPa
 	return ids, nil
 }
 
-func findProxyLBBindPortInfoTargets(ctx Context, param *params.BindPortInfoProxyLBParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
-	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().ProxyLB
-
-	if len(args) == 0 {
-		if len(param.Selector) == 0 {
-			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
-		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
-		if err != nil {
-			return ids, fmt.Errorf("finding resource id is failed: %s", err)
-		}
-		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
-			}
-		}
-		if len(ids) == 0 {
-			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
-		}
-	} else {
-		for _, arg := range args {
-			for _, a := range strings.Split(arg, "\n") {
-				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
-					ids = append(ids, id)
-				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
-					if err != nil {
-						return ids, fmt.Errorf("finding resource id is failed: %s", err)
-					}
-					if res.Count == 0 {
-						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
-					}
-					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
-						}
-					}
-				}
-			}
-
-		}
-
-	}
-
-	ids = utils.UniqIDs(ids)
-	if len(ids) == 0 {
-		return ids, fmt.Errorf("finding resource is is failed: not found")
-	}
-	if len(ids) != 1 {
-		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
-	}
-
-	return ids, nil
-}
-
-func findProxyLBBindPortAddTargets(ctx Context, param *params.BindPortAddProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBBindPortInfoTargets(ctx command.Context, param *params.BindPortInfoProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -382,7 +322,7 @@ func findProxyLBBindPortAddTargets(ctx Context, param *params.BindPortAddProxyLB
 	return ids, nil
 }
 
-func findProxyLBBindPortUpdateTargets(ctx Context, param *params.BindPortUpdateProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBBindPortAddTargets(ctx command.Context, param *params.BindPortAddProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -443,7 +383,7 @@ func findProxyLBBindPortUpdateTargets(ctx Context, param *params.BindPortUpdateP
 	return ids, nil
 }
 
-func findProxyLBBindPortDeleteTargets(ctx Context, param *params.BindPortDeleteProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBBindPortUpdateTargets(ctx command.Context, param *params.BindPortUpdateProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -504,7 +444,7 @@ func findProxyLBBindPortDeleteTargets(ctx Context, param *params.BindPortDeleteP
 	return ids, nil
 }
 
-func findProxyLBResponseHeaderInfoTargets(ctx Context, param *params.ResponseHeaderInfoProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBBindPortDeleteTargets(ctx command.Context, param *params.BindPortDeleteProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -565,7 +505,7 @@ func findProxyLBResponseHeaderInfoTargets(ctx Context, param *params.ResponseHea
 	return ids, nil
 }
 
-func findProxyLBResponseHeaderAddTargets(ctx Context, param *params.ResponseHeaderAddProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBResponseHeaderInfoTargets(ctx command.Context, param *params.ResponseHeaderInfoProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -626,7 +566,7 @@ func findProxyLBResponseHeaderAddTargets(ctx Context, param *params.ResponseHead
 	return ids, nil
 }
 
-func findProxyLBResponseHeaderUpdateTargets(ctx Context, param *params.ResponseHeaderUpdateProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBResponseHeaderAddTargets(ctx command.Context, param *params.ResponseHeaderAddProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -687,7 +627,7 @@ func findProxyLBResponseHeaderUpdateTargets(ctx Context, param *params.ResponseH
 	return ids, nil
 }
 
-func findProxyLBResponseHeaderDeleteTargets(ctx Context, param *params.ResponseHeaderDeleteProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBResponseHeaderUpdateTargets(ctx command.Context, param *params.ResponseHeaderUpdateProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -748,7 +688,7 @@ func findProxyLBResponseHeaderDeleteTargets(ctx Context, param *params.ResponseH
 	return ids, nil
 }
 
-func findProxyLBACMEInfoTargets(ctx Context, param *params.ACMEInfoProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBResponseHeaderDeleteTargets(ctx command.Context, param *params.ResponseHeaderDeleteProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -809,7 +749,7 @@ func findProxyLBACMEInfoTargets(ctx Context, param *params.ACMEInfoProxyLBParam)
 	return ids, nil
 }
 
-func findProxyLBACMESettingTargets(ctx Context, param *params.ACMESettingProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBACMEInfoTargets(ctx command.Context, param *params.ACMEInfoProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -870,7 +810,7 @@ func findProxyLBACMESettingTargets(ctx Context, param *params.ACMESettingProxyLB
 	return ids, nil
 }
 
-func findProxyLBACMERenewTargets(ctx Context, param *params.ACMERenewProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBACMESettingTargets(ctx command.Context, param *params.ACMESettingProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -931,7 +871,7 @@ func findProxyLBACMERenewTargets(ctx Context, param *params.ACMERenewProxyLBPara
 	return ids, nil
 }
 
-func findProxyLBServerInfoTargets(ctx Context, param *params.ServerInfoProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBACMERenewTargets(ctx command.Context, param *params.ACMERenewProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -992,7 +932,7 @@ func findProxyLBServerInfoTargets(ctx Context, param *params.ServerInfoProxyLBPa
 	return ids, nil
 }
 
-func findProxyLBServerAddTargets(ctx Context, param *params.ServerAddProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBServerInfoTargets(ctx command.Context, param *params.ServerInfoProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -1053,7 +993,7 @@ func findProxyLBServerAddTargets(ctx Context, param *params.ServerAddProxyLBPara
 	return ids, nil
 }
 
-func findProxyLBServerUpdateTargets(ctx Context, param *params.ServerUpdateProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBServerAddTargets(ctx command.Context, param *params.ServerAddProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -1114,7 +1054,7 @@ func findProxyLBServerUpdateTargets(ctx Context, param *params.ServerUpdateProxy
 	return ids, nil
 }
 
-func findProxyLBServerDeleteTargets(ctx Context, param *params.ServerDeleteProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBServerUpdateTargets(ctx command.Context, param *params.ServerUpdateProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -1175,7 +1115,7 @@ func findProxyLBServerDeleteTargets(ctx Context, param *params.ServerDeleteProxy
 	return ids, nil
 }
 
-func findProxyLBCertificateInfoTargets(ctx Context, param *params.CertificateInfoProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBServerDeleteTargets(ctx command.Context, param *params.ServerDeleteProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -1236,7 +1176,7 @@ func findProxyLBCertificateInfoTargets(ctx Context, param *params.CertificateInf
 	return ids, nil
 }
 
-func findProxyLBCertificateAddTargets(ctx Context, param *params.CertificateAddProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBCertificateInfoTargets(ctx command.Context, param *params.CertificateInfoProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -1297,7 +1237,7 @@ func findProxyLBCertificateAddTargets(ctx Context, param *params.CertificateAddP
 	return ids, nil
 }
 
-func findProxyLBCertificateUpdateTargets(ctx Context, param *params.CertificateUpdateProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBCertificateAddTargets(ctx command.Context, param *params.CertificateAddProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -1358,7 +1298,7 @@ func findProxyLBCertificateUpdateTargets(ctx Context, param *params.CertificateU
 	return ids, nil
 }
 
-func findProxyLBCertificateDeleteTargets(ctx Context, param *params.CertificateDeleteProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBCertificateUpdateTargets(ctx command.Context, param *params.CertificateUpdateProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB
@@ -1419,7 +1359,68 @@ func findProxyLBCertificateDeleteTargets(ctx Context, param *params.CertificateD
 	return ids, nil
 }
 
-func findProxyLBMonitorTargets(ctx Context, param *params.MonitorProxyLBParam) ([]sacloud.ID, error) {
+func findProxyLBCertificateDeleteTargets(ctx command.Context, param *params.CertificateDeleteProxyLBParam) ([]sacloud.ID, error) {
+	var ids []sacloud.ID
+	args := ctx.Args()
+	apiClient := ctx.GetAPIClient().ProxyLB
+
+	if len(args) == 0 {
+		if len(param.Selector) == 0 {
+			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
+		}
+		apiClient.Reset()
+		res, err := apiClient.Find()
+		if err != nil {
+			return ids, fmt.Errorf("finding resource id is failed: %s", err)
+		}
+		for _, v := range res.CommonServiceProxyLBItems {
+			if utils.HasTags(&v, param.Selector) {
+				ids = append(ids, v.GetID())
+			}
+		}
+		if len(ids) == 0 {
+			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
+		}
+	} else {
+		for _, arg := range args {
+			for _, a := range strings.Split(arg, "\n") {
+				idOrName := a
+				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+					ids = append(ids, id)
+				} else {
+					apiClient.Reset()
+					apiClient.SetFilterBy("Name", idOrName)
+					res, err := apiClient.Find()
+					if err != nil {
+						return ids, fmt.Errorf("finding resource id is failed: %s", err)
+					}
+					if res.Count == 0 {
+						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
+					}
+					for _, v := range res.CommonServiceProxyLBItems {
+						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+							ids = append(ids, v.GetID())
+						}
+					}
+				}
+			}
+
+		}
+
+	}
+
+	ids = utils.UniqIDs(ids)
+	if len(ids) == 0 {
+		return ids, fmt.Errorf("finding resource is is failed: not found")
+	}
+	if len(ids) != 1 {
+		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
+	}
+
+	return ids, nil
+}
+
+func findProxyLBMonitorTargets(ctx command.Context, param *params.MonitorProxyLBParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().ProxyLB

@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/go-jmespath"
 	"github.com/sacloud/usacloud/output"
+	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/sacloud/usacloud/schema"
 )
 
@@ -29,7 +30,7 @@ func ValidateInStrValues(fieldName string, object interface{}, allowValues ...st
 }
 
 func ValidateRequired(fieldName string, object interface{}) []error {
-	if IsEmpty(object) {
+	if utils.IsEmpty(object) {
 		return []error{fmt.Errorf("%q: is required", fieldName)}
 	}
 	return []error{}
@@ -40,7 +41,7 @@ func ValidateSakuraID(fieldName string, object interface{}) []error {
 }
 
 func ValidateSetProhibited(fieldName string, object interface{}) []error {
-	if !IsEmpty(object) {
+	if !utils.IsEmpty(object) {
 		return []error{fmt.Errorf("%q: can't set on current context", fieldName)}
 	}
 	return []error{}
@@ -60,9 +61,9 @@ func ValidateExistsFileOrStdIn(fieldName string, object interface{}) []error {
 
 func ValidateConflicts(fieldName string, object interface{}, values map[string]interface{}) []error {
 
-	if !IsEmpty(object) {
+	if !utils.IsEmpty(object) {
 		for _, v := range values {
-			if !IsEmpty(v) {
+			if !utils.IsEmpty(v) {
 				keys := []string{}
 				for k := range values {
 					keys = append(keys, fmt.Sprintf("%q", k))
@@ -77,9 +78,9 @@ func ValidateConflicts(fieldName string, object interface{}, values map[string]i
 
 func ValidateConflictValues(fieldName string, object interface{}, values map[string]interface{}) []error {
 
-	if !IsEmpty(object) {
+	if !utils.IsEmpty(object) {
 		for _, v := range values {
-			if !IsEmpty(v) {
+			if !utils.IsEmpty(v) {
 				keys := []string{}
 				for k := range values {
 					keys = append(keys, fmt.Sprintf("%q", k))

@@ -17,6 +17,7 @@
 package cli
 
 import (
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/spf13/cobra"
@@ -47,7 +48,7 @@ func selfInfoCmd() *cobra.Command {
 			return selfInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, selfInfoParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, selfInfoParam)
 			if err != nil {
 				return err
 			}

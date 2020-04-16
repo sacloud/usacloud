@@ -20,6 +20,7 @@ import (
 	"errors"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -51,7 +52,7 @@ func productLicenseListCmd() *cobra.Command {
 			return productLicenseListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, productLicenseListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, productLicenseListParam)
 			if err != nil {
 				return err
 			}
@@ -103,7 +104,7 @@ func productLicenseReadCmd() *cobra.Command {
 			return productLicenseReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, productLicenseReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, productLicenseReadParam)
 			if err != nil {
 				return err
 			}

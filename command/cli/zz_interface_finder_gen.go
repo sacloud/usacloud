@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findInterfacePacketFilterConnectTargets(ctx Context, param *params.PacketFilterConnectInterfaceParam) ([]sacloud.ID, error) {
+func findInterfacePacketFilterConnectTargets(ctx command.Context, param *params.PacketFilterConnectInterfaceParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Interface
@@ -68,7 +69,7 @@ func findInterfacePacketFilterConnectTargets(ctx Context, param *params.PacketFi
 	return ids, nil
 }
 
-func findInterfacePacketFilterDisconnectTargets(ctx Context, param *params.PacketFilterDisconnectInterfaceParam) ([]sacloud.ID, error) {
+func findInterfacePacketFilterDisconnectTargets(ctx command.Context, param *params.PacketFilterDisconnectInterfaceParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Interface
@@ -111,7 +112,7 @@ func findInterfacePacketFilterDisconnectTargets(ctx Context, param *params.Packe
 	return ids, nil
 }
 
-func findInterfaceReadTargets(ctx Context, param *params.ReadInterfaceParam) ([]sacloud.ID, error) {
+func findInterfaceReadTargets(ctx command.Context, param *params.ReadInterfaceParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Interface
@@ -157,7 +158,7 @@ func findInterfaceReadTargets(ctx Context, param *params.ReadInterfaceParam) ([]
 	return ids, nil
 }
 
-func findInterfaceUpdateTargets(ctx Context, param *params.UpdateInterfaceParam) ([]sacloud.ID, error) {
+func findInterfaceUpdateTargets(ctx command.Context, param *params.UpdateInterfaceParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Interface
@@ -200,7 +201,7 @@ func findInterfaceUpdateTargets(ctx Context, param *params.UpdateInterfaceParam)
 	return ids, nil
 }
 
-func findInterfaceDeleteTargets(ctx Context, param *params.DeleteInterfaceParam) ([]sacloud.ID, error) {
+func findInterfaceDeleteTargets(ctx command.Context, param *params.DeleteInterfaceParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Interface

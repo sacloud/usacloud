@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findDNSRecordInfoTargets(ctx Context, param *params.RecordInfoDNSParam) ([]sacloud.ID, error) {
+func findDNSRecordInfoTargets(ctx command.Context, param *params.RecordInfoDNSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().DNS
@@ -86,7 +87,7 @@ func findDNSRecordInfoTargets(ctx Context, param *params.RecordInfoDNSParam) ([]
 	return ids, nil
 }
 
-func findDNSRecordBulkUpdateTargets(ctx Context, param *params.RecordBulkUpdateDNSParam) ([]sacloud.ID, error) {
+func findDNSRecordBulkUpdateTargets(ctx command.Context, param *params.RecordBulkUpdateDNSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().DNS
@@ -147,7 +148,7 @@ func findDNSRecordBulkUpdateTargets(ctx Context, param *params.RecordBulkUpdateD
 	return ids, nil
 }
 
-func findDNSRecordAddTargets(ctx Context, param *params.RecordAddDNSParam) ([]sacloud.ID, error) {
+func findDNSRecordAddTargets(ctx command.Context, param *params.RecordAddDNSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().DNS
@@ -208,7 +209,7 @@ func findDNSRecordAddTargets(ctx Context, param *params.RecordAddDNSParam) ([]sa
 	return ids, nil
 }
 
-func findDNSReadTargets(ctx Context, param *params.ReadDNSParam) ([]sacloud.ID, error) {
+func findDNSReadTargets(ctx command.Context, param *params.ReadDNSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().DNS
@@ -269,7 +270,7 @@ func findDNSReadTargets(ctx Context, param *params.ReadDNSParam) ([]sacloud.ID, 
 	return ids, nil
 }
 
-func findDNSRecordUpdateTargets(ctx Context, param *params.RecordUpdateDNSParam) ([]sacloud.ID, error) {
+func findDNSRecordUpdateTargets(ctx command.Context, param *params.RecordUpdateDNSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().DNS
@@ -330,7 +331,7 @@ func findDNSRecordUpdateTargets(ctx Context, param *params.RecordUpdateDNSParam)
 	return ids, nil
 }
 
-func findDNSRecordDeleteTargets(ctx Context, param *params.RecordDeleteDNSParam) ([]sacloud.ID, error) {
+func findDNSRecordDeleteTargets(ctx command.Context, param *params.RecordDeleteDNSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().DNS
@@ -391,7 +392,7 @@ func findDNSRecordDeleteTargets(ctx Context, param *params.RecordDeleteDNSParam)
 	return ids, nil
 }
 
-func findDNSUpdateTargets(ctx Context, param *params.UpdateDNSParam) ([]sacloud.ID, error) {
+func findDNSUpdateTargets(ctx command.Context, param *params.UpdateDNSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().DNS
@@ -449,7 +450,7 @@ func findDNSUpdateTargets(ctx Context, param *params.UpdateDNSParam) ([]sacloud.
 	return ids, nil
 }
 
-func findDNSDeleteTargets(ctx Context, param *params.DeleteDNSParam) ([]sacloud.ID, error) {
+func findDNSDeleteTargets(ctx command.Context, param *params.DeleteDNSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().DNS

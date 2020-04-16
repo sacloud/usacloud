@@ -12,41 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cli
+// +build wasm
+
+package command
 
 import (
-	"io"
 	"os"
+
+	"github.com/mattn/go-colorable"
 )
 
-// IO .
-type IO interface {
-	In() *os.File
-	Out() io.Writer
-	Progress() io.Writer
-	Err() io.Writer
-}
-
-// cliIO CLIの扱うIO
-type cliIO struct {
-	in       *os.File
-	out      io.Writer
-	progress io.Writer
-	err      io.Writer
-}
-
-func (io *cliIO) In() *os.File {
-	return io.in
-}
-
-func (io *cliIO) Out() io.Writer {
-	return io.out
-}
-
-func (io *cliIO) Progress() io.Writer {
-	return io.progress
-}
-
-func (io *cliIO) Err() io.Writer {
-	return io.err
+func newIO() IO {
+	return &cliIO{
+		in:       os.Stdin,
+		out:      colorable.NewColorableStdout(),
+		progress: colorable.NewColorableStderr(),
+		err:      colorable.NewColorableStderr(),
+	}
 }

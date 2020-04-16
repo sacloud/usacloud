@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findAutoBackupReadTargets(ctx Context, param *params.ReadAutoBackupParam) ([]sacloud.ID, error) {
+func findAutoBackupReadTargets(ctx command.Context, param *params.ReadAutoBackupParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().AutoBackup
@@ -86,7 +87,7 @@ func findAutoBackupReadTargets(ctx Context, param *params.ReadAutoBackupParam) (
 	return ids, nil
 }
 
-func findAutoBackupUpdateTargets(ctx Context, param *params.UpdateAutoBackupParam) ([]sacloud.ID, error) {
+func findAutoBackupUpdateTargets(ctx command.Context, param *params.UpdateAutoBackupParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().AutoBackup
@@ -144,7 +145,7 @@ func findAutoBackupUpdateTargets(ctx Context, param *params.UpdateAutoBackupPara
 	return ids, nil
 }
 
-func findAutoBackupDeleteTargets(ctx Context, param *params.DeleteAutoBackupParam) ([]sacloud.ID, error) {
+func findAutoBackupDeleteTargets(ctx command.Context, param *params.DeleteAutoBackupParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().AutoBackup

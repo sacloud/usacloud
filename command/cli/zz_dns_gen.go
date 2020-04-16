@@ -54,7 +54,7 @@ func dnsListCmd() *cobra.Command {
 			return dnsListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, dnsListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, dnsListParam)
 			if err != nil {
 				return err
 			}
@@ -107,7 +107,7 @@ func dnsRecordInfoCmd() *cobra.Command {
 			return dnsRecordInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, dnsRecordInfoParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, dnsRecordInfoParam)
 			if err != nil {
 				return err
 			}
@@ -179,7 +179,7 @@ func dnsRecordBulkUpdateCmd() *cobra.Command {
 			return dnsRecordBulkUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, dnsRecordBulkUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, dnsRecordBulkUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -263,7 +263,7 @@ func dnsCreateCmd() *cobra.Command {
 			return dnsCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, dnsCreateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, dnsCreateParam)
 			if err != nil {
 				return err
 			}
@@ -326,7 +326,7 @@ func dnsRecordAddCmd() *cobra.Command {
 			return dnsRecordAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, dnsRecordAddParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, dnsRecordAddParam)
 			if err != nil {
 				return err
 			}
@@ -417,7 +417,7 @@ func dnsReadCmd() *cobra.Command {
 			return dnsReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, dnsReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, dnsReadParam)
 			if err != nil {
 				return err
 			}
@@ -487,7 +487,7 @@ func dnsRecordUpdateCmd() *cobra.Command {
 			return dnsRecordUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, dnsRecordUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, dnsRecordUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -579,7 +579,7 @@ func dnsRecordDeleteCmd() *cobra.Command {
 			return dnsRecordDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, dnsRecordDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, dnsRecordDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -662,7 +662,7 @@ func dnsUpdateCmd() *cobra.Command {
 			return dnsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, dnsUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, dnsUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -747,7 +747,7 @@ func dnsDeleteCmd() *cobra.Command {
 			return dnsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, dnsDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, dnsDeleteParam)
 			if err != nil {
 				return err
 			}

@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findBridgeReadTargets(ctx Context, param *params.ReadBridgeParam) ([]sacloud.ID, error) {
+func findBridgeReadTargets(ctx command.Context, param *params.ReadBridgeParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Bridge
@@ -71,7 +72,7 @@ func findBridgeReadTargets(ctx Context, param *params.ReadBridgeParam) ([]saclou
 	return ids, nil
 }
 
-func findBridgeUpdateTargets(ctx Context, param *params.UpdateBridgeParam) ([]sacloud.ID, error) {
+func findBridgeUpdateTargets(ctx command.Context, param *params.UpdateBridgeParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Bridge
@@ -114,7 +115,7 @@ func findBridgeUpdateTargets(ctx Context, param *params.UpdateBridgeParam) ([]sa
 	return ids, nil
 }
 
-func findBridgeDeleteTargets(ctx Context, param *params.DeleteBridgeParam) ([]sacloud.ID, error) {
+func findBridgeDeleteTargets(ctx command.Context, param *params.DeleteBridgeParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Bridge

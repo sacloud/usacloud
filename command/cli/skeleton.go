@@ -17,6 +17,8 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/sacloud/usacloud/command"
 )
 
 type skeletonHandler interface {
@@ -24,7 +26,7 @@ type skeletonHandler interface {
 	FillValueToSkeleton()
 }
 
-func generateSkeleton(ctx Context, params interface{}) error {
+func generateSkeleton(ctx command.Context, params interface{}) error {
 	v, ok := params.(skeletonHandler)
 	if !ok {
 		return nil

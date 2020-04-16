@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findVPCRouterReadTargets(ctx Context, param *params.ReadVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterReadTargets(ctx command.Context, param *params.ReadVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -86,7 +87,7 @@ func findVPCRouterReadTargets(ctx Context, param *params.ReadVPCRouterParam) ([]
 	return ids, nil
 }
 
-func findVPCRouterUpdateTargets(ctx Context, param *params.UpdateVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterUpdateTargets(ctx command.Context, param *params.UpdateVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -144,7 +145,7 @@ func findVPCRouterUpdateTargets(ctx Context, param *params.UpdateVPCRouterParam)
 	return ids, nil
 }
 
-func findVPCRouterDeleteTargets(ctx Context, param *params.DeleteVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterDeleteTargets(ctx command.Context, param *params.DeleteVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -202,7 +203,7 @@ func findVPCRouterDeleteTargets(ctx Context, param *params.DeleteVPCRouterParam)
 	return ids, nil
 }
 
-func findVPCRouterBootTargets(ctx Context, param *params.BootVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterBootTargets(ctx command.Context, param *params.BootVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -260,7 +261,7 @@ func findVPCRouterBootTargets(ctx Context, param *params.BootVPCRouterParam) ([]
 	return ids, nil
 }
 
-func findVPCRouterShutdownTargets(ctx Context, param *params.ShutdownVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterShutdownTargets(ctx command.Context, param *params.ShutdownVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -318,7 +319,7 @@ func findVPCRouterShutdownTargets(ctx Context, param *params.ShutdownVPCRouterPa
 	return ids, nil
 }
 
-func findVPCRouterShutdownForceTargets(ctx Context, param *params.ShutdownForceVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterShutdownForceTargets(ctx command.Context, param *params.ShutdownForceVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -376,7 +377,7 @@ func findVPCRouterShutdownForceTargets(ctx Context, param *params.ShutdownForceV
 	return ids, nil
 }
 
-func findVPCRouterResetTargets(ctx Context, param *params.ResetVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterResetTargets(ctx command.Context, param *params.ResetVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -434,7 +435,7 @@ func findVPCRouterResetTargets(ctx Context, param *params.ResetVPCRouterParam) (
 	return ids, nil
 }
 
-func findVPCRouterWaitForBootTargets(ctx Context, param *params.WaitForBootVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterWaitForBootTargets(ctx command.Context, param *params.WaitForBootVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -492,7 +493,7 @@ func findVPCRouterWaitForBootTargets(ctx Context, param *params.WaitForBootVPCRo
 	return ids, nil
 }
 
-func findVPCRouterWaitForDownTargets(ctx Context, param *params.WaitForDownVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterWaitForDownTargets(ctx command.Context, param *params.WaitForDownVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -550,68 +551,7 @@ func findVPCRouterWaitForDownTargets(ctx Context, param *params.WaitForDownVPCRo
 	return ids, nil
 }
 
-func findVPCRouterEnableInternetConnectionTargets(ctx Context, param *params.EnableInternetConnectionVPCRouterParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
-	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().VPCRouter
-
-	if len(args) == 0 {
-		if len(param.Selector) == 0 {
-			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
-		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
-		if err != nil {
-			return ids, fmt.Errorf("finding resource id is failed: %s", err)
-		}
-		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
-			}
-		}
-		if len(ids) == 0 {
-			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
-		}
-	} else {
-		for _, arg := range args {
-			for _, a := range strings.Split(arg, "\n") {
-				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
-					ids = append(ids, id)
-				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
-					if err != nil {
-						return ids, fmt.Errorf("finding resource id is failed: %s", err)
-					}
-					if res.Count == 0 {
-						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
-					}
-					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
-						}
-					}
-				}
-			}
-
-		}
-
-	}
-
-	ids = utils.UniqIDs(ids)
-	if len(ids) == 0 {
-		return ids, fmt.Errorf("finding resource is is failed: not found")
-	}
-	if len(ids) != 1 {
-		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
-	}
-
-	return ids, nil
-}
-
-func findVPCRouterDisableInternetConnectionTargets(ctx Context, param *params.DisableInternetConnectionVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterEnableInternetConnectionTargets(ctx command.Context, param *params.EnableInternetConnectionVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -672,7 +612,7 @@ func findVPCRouterDisableInternetConnectionTargets(ctx Context, param *params.Di
 	return ids, nil
 }
 
-func findVPCRouterInterfaceInfoTargets(ctx Context, param *params.InterfaceInfoVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterDisableInternetConnectionTargets(ctx command.Context, param *params.DisableInternetConnectionVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -733,7 +673,7 @@ func findVPCRouterInterfaceInfoTargets(ctx Context, param *params.InterfaceInfoV
 	return ids, nil
 }
 
-func findVPCRouterInterfaceConnectTargets(ctx Context, param *params.InterfaceConnectVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterInterfaceInfoTargets(ctx command.Context, param *params.InterfaceInfoVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -794,7 +734,7 @@ func findVPCRouterInterfaceConnectTargets(ctx Context, param *params.InterfaceCo
 	return ids, nil
 }
 
-func findVPCRouterInterfaceUpdateTargets(ctx Context, param *params.InterfaceUpdateVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterInterfaceConnectTargets(ctx command.Context, param *params.InterfaceConnectVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -855,7 +795,7 @@ func findVPCRouterInterfaceUpdateTargets(ctx Context, param *params.InterfaceUpd
 	return ids, nil
 }
 
-func findVPCRouterInterfaceDisconnectTargets(ctx Context, param *params.InterfaceDisconnectVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterInterfaceUpdateTargets(ctx command.Context, param *params.InterfaceUpdateVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -916,7 +856,7 @@ func findVPCRouterInterfaceDisconnectTargets(ctx Context, param *params.Interfac
 	return ids, nil
 }
 
-func findVPCRouterStaticNatInfoTargets(ctx Context, param *params.StaticNatInfoVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterInterfaceDisconnectTargets(ctx command.Context, param *params.InterfaceDisconnectVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -977,7 +917,7 @@ func findVPCRouterStaticNatInfoTargets(ctx Context, param *params.StaticNatInfoV
 	return ids, nil
 }
 
-func findVPCRouterStaticNatAddTargets(ctx Context, param *params.StaticNatAddVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterStaticNatInfoTargets(ctx command.Context, param *params.StaticNatInfoVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1038,7 +978,7 @@ func findVPCRouterStaticNatAddTargets(ctx Context, param *params.StaticNatAddVPC
 	return ids, nil
 }
 
-func findVPCRouterStaticNatUpdateTargets(ctx Context, param *params.StaticNatUpdateVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterStaticNatAddTargets(ctx command.Context, param *params.StaticNatAddVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1099,7 +1039,7 @@ func findVPCRouterStaticNatUpdateTargets(ctx Context, param *params.StaticNatUpd
 	return ids, nil
 }
 
-func findVPCRouterStaticNatDeleteTargets(ctx Context, param *params.StaticNatDeleteVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterStaticNatUpdateTargets(ctx command.Context, param *params.StaticNatUpdateVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1160,7 +1100,7 @@ func findVPCRouterStaticNatDeleteTargets(ctx Context, param *params.StaticNatDel
 	return ids, nil
 }
 
-func findVPCRouterPortForwardingInfoTargets(ctx Context, param *params.PortForwardingInfoVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterStaticNatDeleteTargets(ctx command.Context, param *params.StaticNatDeleteVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1221,7 +1161,7 @@ func findVPCRouterPortForwardingInfoTargets(ctx Context, param *params.PortForwa
 	return ids, nil
 }
 
-func findVPCRouterPortForwardingAddTargets(ctx Context, param *params.PortForwardingAddVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterPortForwardingInfoTargets(ctx command.Context, param *params.PortForwardingInfoVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1282,7 +1222,7 @@ func findVPCRouterPortForwardingAddTargets(ctx Context, param *params.PortForwar
 	return ids, nil
 }
 
-func findVPCRouterPortForwardingUpdateTargets(ctx Context, param *params.PortForwardingUpdateVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterPortForwardingAddTargets(ctx command.Context, param *params.PortForwardingAddVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1343,7 +1283,7 @@ func findVPCRouterPortForwardingUpdateTargets(ctx Context, param *params.PortFor
 	return ids, nil
 }
 
-func findVPCRouterPortForwardingDeleteTargets(ctx Context, param *params.PortForwardingDeleteVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterPortForwardingUpdateTargets(ctx command.Context, param *params.PortForwardingUpdateVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1404,7 +1344,7 @@ func findVPCRouterPortForwardingDeleteTargets(ctx Context, param *params.PortFor
 	return ids, nil
 }
 
-func findVPCRouterFirewallInfoTargets(ctx Context, param *params.FirewallInfoVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterPortForwardingDeleteTargets(ctx command.Context, param *params.PortForwardingDeleteVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1465,7 +1405,7 @@ func findVPCRouterFirewallInfoTargets(ctx Context, param *params.FirewallInfoVPC
 	return ids, nil
 }
 
-func findVPCRouterFirewallAddTargets(ctx Context, param *params.FirewallAddVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterFirewallInfoTargets(ctx command.Context, param *params.FirewallInfoVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1526,7 +1466,7 @@ func findVPCRouterFirewallAddTargets(ctx Context, param *params.FirewallAddVPCRo
 	return ids, nil
 }
 
-func findVPCRouterFirewallUpdateTargets(ctx Context, param *params.FirewallUpdateVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterFirewallAddTargets(ctx command.Context, param *params.FirewallAddVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1587,7 +1527,7 @@ func findVPCRouterFirewallUpdateTargets(ctx Context, param *params.FirewallUpdat
 	return ids, nil
 }
 
-func findVPCRouterFirewallDeleteTargets(ctx Context, param *params.FirewallDeleteVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterFirewallUpdateTargets(ctx command.Context, param *params.FirewallUpdateVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1648,7 +1588,7 @@ func findVPCRouterFirewallDeleteTargets(ctx Context, param *params.FirewallDelet
 	return ids, nil
 }
 
-func findVPCRouterDhcpServerInfoTargets(ctx Context, param *params.DhcpServerInfoVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterFirewallDeleteTargets(ctx command.Context, param *params.FirewallDeleteVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1709,7 +1649,7 @@ func findVPCRouterDhcpServerInfoTargets(ctx Context, param *params.DhcpServerInf
 	return ids, nil
 }
 
-func findVPCRouterDhcpServerAddTargets(ctx Context, param *params.DhcpServerAddVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterDhcpServerInfoTargets(ctx command.Context, param *params.DhcpServerInfoVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1770,7 +1710,7 @@ func findVPCRouterDhcpServerAddTargets(ctx Context, param *params.DhcpServerAddV
 	return ids, nil
 }
 
-func findVPCRouterDhcpServerUpdateTargets(ctx Context, param *params.DhcpServerUpdateVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterDhcpServerAddTargets(ctx command.Context, param *params.DhcpServerAddVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1831,7 +1771,7 @@ func findVPCRouterDhcpServerUpdateTargets(ctx Context, param *params.DhcpServerU
 	return ids, nil
 }
 
-func findVPCRouterDhcpServerDeleteTargets(ctx Context, param *params.DhcpServerDeleteVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterDhcpServerUpdateTargets(ctx command.Context, param *params.DhcpServerUpdateVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1892,7 +1832,7 @@ func findVPCRouterDhcpServerDeleteTargets(ctx Context, param *params.DhcpServerD
 	return ids, nil
 }
 
-func findVPCRouterDhcpStaticMappingInfoTargets(ctx Context, param *params.DhcpStaticMappingInfoVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterDhcpServerDeleteTargets(ctx command.Context, param *params.DhcpServerDeleteVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -1953,7 +1893,7 @@ func findVPCRouterDhcpStaticMappingInfoTargets(ctx Context, param *params.DhcpSt
 	return ids, nil
 }
 
-func findVPCRouterDhcpStaticMappingAddTargets(ctx Context, param *params.DhcpStaticMappingAddVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterDhcpStaticMappingInfoTargets(ctx command.Context, param *params.DhcpStaticMappingInfoVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2014,7 +1954,7 @@ func findVPCRouterDhcpStaticMappingAddTargets(ctx Context, param *params.DhcpSta
 	return ids, nil
 }
 
-func findVPCRouterDhcpStaticMappingUpdateTargets(ctx Context, param *params.DhcpStaticMappingUpdateVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterDhcpStaticMappingAddTargets(ctx command.Context, param *params.DhcpStaticMappingAddVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2075,7 +2015,7 @@ func findVPCRouterDhcpStaticMappingUpdateTargets(ctx Context, param *params.Dhcp
 	return ids, nil
 }
 
-func findVPCRouterDhcpStaticMappingDeleteTargets(ctx Context, param *params.DhcpStaticMappingDeleteVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterDhcpStaticMappingUpdateTargets(ctx command.Context, param *params.DhcpStaticMappingUpdateVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2136,7 +2076,7 @@ func findVPCRouterDhcpStaticMappingDeleteTargets(ctx Context, param *params.Dhcp
 	return ids, nil
 }
 
-func findVPCRouterPptpServerInfoTargets(ctx Context, param *params.PptpServerInfoVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterDhcpStaticMappingDeleteTargets(ctx command.Context, param *params.DhcpStaticMappingDeleteVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2197,7 +2137,7 @@ func findVPCRouterPptpServerInfoTargets(ctx Context, param *params.PptpServerInf
 	return ids, nil
 }
 
-func findVPCRouterPptpServerUpdateTargets(ctx Context, param *params.PptpServerUpdateVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterPptpServerInfoTargets(ctx command.Context, param *params.PptpServerInfoVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2258,7 +2198,7 @@ func findVPCRouterPptpServerUpdateTargets(ctx Context, param *params.PptpServerU
 	return ids, nil
 }
 
-func findVPCRouterL2TPServerInfoTargets(ctx Context, param *params.L2TPServerInfoVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterPptpServerUpdateTargets(ctx command.Context, param *params.PptpServerUpdateVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2319,7 +2259,7 @@ func findVPCRouterL2TPServerInfoTargets(ctx Context, param *params.L2TPServerInf
 	return ids, nil
 }
 
-func findVPCRouterL2TPServerUpdateTargets(ctx Context, param *params.L2TPServerUpdateVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterL2TPServerInfoTargets(ctx command.Context, param *params.L2TPServerInfoVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2380,7 +2320,7 @@ func findVPCRouterL2TPServerUpdateTargets(ctx Context, param *params.L2TPServerU
 	return ids, nil
 }
 
-func findVPCRouterUserInfoTargets(ctx Context, param *params.UserInfoVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterL2TPServerUpdateTargets(ctx command.Context, param *params.L2TPServerUpdateVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2441,7 +2381,7 @@ func findVPCRouterUserInfoTargets(ctx Context, param *params.UserInfoVPCRouterPa
 	return ids, nil
 }
 
-func findVPCRouterUserAddTargets(ctx Context, param *params.UserAddVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterUserInfoTargets(ctx command.Context, param *params.UserInfoVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2502,7 +2442,7 @@ func findVPCRouterUserAddTargets(ctx Context, param *params.UserAddVPCRouterPara
 	return ids, nil
 }
 
-func findVPCRouterUserUpdateTargets(ctx Context, param *params.UserUpdateVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterUserAddTargets(ctx command.Context, param *params.UserAddVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2563,7 +2503,7 @@ func findVPCRouterUserUpdateTargets(ctx Context, param *params.UserUpdateVPCRout
 	return ids, nil
 }
 
-func findVPCRouterUserDeleteTargets(ctx Context, param *params.UserDeleteVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterUserUpdateTargets(ctx command.Context, param *params.UserUpdateVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2624,7 +2564,7 @@ func findVPCRouterUserDeleteTargets(ctx Context, param *params.UserDeleteVPCRout
 	return ids, nil
 }
 
-func findVPCRouterSiteToSiteVPNInfoTargets(ctx Context, param *params.SiteToSiteVPNInfoVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterUserDeleteTargets(ctx command.Context, param *params.UserDeleteVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2685,7 +2625,7 @@ func findVPCRouterSiteToSiteVPNInfoTargets(ctx Context, param *params.SiteToSite
 	return ids, nil
 }
 
-func findVPCRouterSiteToSiteVPNAddTargets(ctx Context, param *params.SiteToSiteVPNAddVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterSiteToSiteVPNInfoTargets(ctx command.Context, param *params.SiteToSiteVPNInfoVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2746,7 +2686,7 @@ func findVPCRouterSiteToSiteVPNAddTargets(ctx Context, param *params.SiteToSiteV
 	return ids, nil
 }
 
-func findVPCRouterSiteToSiteVPNUpdateTargets(ctx Context, param *params.SiteToSiteVPNUpdateVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterSiteToSiteVPNAddTargets(ctx command.Context, param *params.SiteToSiteVPNAddVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2807,7 +2747,7 @@ func findVPCRouterSiteToSiteVPNUpdateTargets(ctx Context, param *params.SiteToSi
 	return ids, nil
 }
 
-func findVPCRouterSiteToSiteVPNDeleteTargets(ctx Context, param *params.SiteToSiteVPNDeleteVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterSiteToSiteVPNUpdateTargets(ctx command.Context, param *params.SiteToSiteVPNUpdateVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2868,7 +2808,7 @@ func findVPCRouterSiteToSiteVPNDeleteTargets(ctx Context, param *params.SiteToSi
 	return ids, nil
 }
 
-func findVPCRouterSiteToSiteVPNPeersTargets(ctx Context, param *params.SiteToSiteVPNPeersVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterSiteToSiteVPNDeleteTargets(ctx command.Context, param *params.SiteToSiteVPNDeleteVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2929,7 +2869,7 @@ func findVPCRouterSiteToSiteVPNPeersTargets(ctx Context, param *params.SiteToSit
 	return ids, nil
 }
 
-func findVPCRouterStaticRouteInfoTargets(ctx Context, param *params.StaticRouteInfoVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterSiteToSiteVPNPeersTargets(ctx command.Context, param *params.SiteToSiteVPNPeersVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -2990,7 +2930,7 @@ func findVPCRouterStaticRouteInfoTargets(ctx Context, param *params.StaticRouteI
 	return ids, nil
 }
 
-func findVPCRouterStaticRouteAddTargets(ctx Context, param *params.StaticRouteAddVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterStaticRouteInfoTargets(ctx command.Context, param *params.StaticRouteInfoVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -3051,7 +2991,7 @@ func findVPCRouterStaticRouteAddTargets(ctx Context, param *params.StaticRouteAd
 	return ids, nil
 }
 
-func findVPCRouterStaticRouteUpdateTargets(ctx Context, param *params.StaticRouteUpdateVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterStaticRouteAddTargets(ctx command.Context, param *params.StaticRouteAddVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -3112,7 +3052,7 @@ func findVPCRouterStaticRouteUpdateTargets(ctx Context, param *params.StaticRout
 	return ids, nil
 }
 
-func findVPCRouterStaticRouteDeleteTargets(ctx Context, param *params.StaticRouteDeleteVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterStaticRouteUpdateTargets(ctx command.Context, param *params.StaticRouteUpdateVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -3173,7 +3113,7 @@ func findVPCRouterStaticRouteDeleteTargets(ctx Context, param *params.StaticRout
 	return ids, nil
 }
 
-func findVPCRouterMonitorTargets(ctx Context, param *params.MonitorVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterStaticRouteDeleteTargets(ctx command.Context, param *params.StaticRouteDeleteVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter
@@ -3234,7 +3174,68 @@ func findVPCRouterMonitorTargets(ctx Context, param *params.MonitorVPCRouterPara
 	return ids, nil
 }
 
-func findVPCRouterLogsTargets(ctx Context, param *params.LogsVPCRouterParam) ([]sacloud.ID, error) {
+func findVPCRouterMonitorTargets(ctx command.Context, param *params.MonitorVPCRouterParam) ([]sacloud.ID, error) {
+	var ids []sacloud.ID
+	args := ctx.Args()
+	apiClient := ctx.GetAPIClient().VPCRouter
+
+	if len(args) == 0 {
+		if len(param.Selector) == 0 {
+			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
+		}
+		apiClient.Reset()
+		res, err := apiClient.Find()
+		if err != nil {
+			return ids, fmt.Errorf("finding resource id is failed: %s", err)
+		}
+		for _, v := range res.VPCRouters {
+			if utils.HasTags(&v, param.Selector) {
+				ids = append(ids, v.GetID())
+			}
+		}
+		if len(ids) == 0 {
+			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
+		}
+	} else {
+		for _, arg := range args {
+			for _, a := range strings.Split(arg, "\n") {
+				idOrName := a
+				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+					ids = append(ids, id)
+				} else {
+					apiClient.Reset()
+					apiClient.SetFilterBy("Name", idOrName)
+					res, err := apiClient.Find()
+					if err != nil {
+						return ids, fmt.Errorf("finding resource id is failed: %s", err)
+					}
+					if res.Count == 0 {
+						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
+					}
+					for _, v := range res.VPCRouters {
+						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+							ids = append(ids, v.GetID())
+						}
+					}
+				}
+			}
+
+		}
+
+	}
+
+	ids = utils.UniqIDs(ids)
+	if len(ids) == 0 {
+		return ids, fmt.Errorf("finding resource is is failed: not found")
+	}
+	if len(ids) != 1 {
+		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
+	}
+
+	return ids, nil
+}
+
+func findVPCRouterLogsTargets(ctx command.Context, param *params.LogsVPCRouterParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().VPCRouter

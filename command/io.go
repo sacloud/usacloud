@@ -12,27 +12,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// +build !wasm
-
-package cli
+package command
 
 import (
-	"io/ioutil"
+	"io"
 	"os"
-
-	"github.com/mattn/go-colorable"
-	"github.com/mattn/go-isatty"
 )
 
-func newIO() IO {
-	io := &cliIO{
-		in:       os.Stdin,
-		out:      colorable.NewColorableStdout(),
-		progress: colorable.NewColorableStderr(),
-		err:      colorable.NewColorableStderr(),
-	}
-	if !(isatty.IsTerminal(os.Stderr.Fd()) || isatty.IsCygwinTerminal(os.Stderr.Fd())) {
-		io.progress = ioutil.Discard
-	}
-	return io
+// IO .
+type IO interface {
+	In() *os.File
+	Out() io.Writer
+	Progress() io.Writer
+	Err() io.Writer
+}
+
+// cliIO CLIの扱うIO
+type cliIO struct {
+	in       *os.File
+	out      io.Writer
+	progress io.Writer
+	err      io.Writer
+}
+
+func (io *cliIO) In() *os.File {
+	return io.in
+}
+
+func (io *cliIO) Out() io.Writer {
+	return io.out
+}
+
+func (io *cliIO) Progress() io.Writer {
+	return io.progress
+}
+
+func (io *cliIO) Err() io.Writer {
+	return io.err
 }

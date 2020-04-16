@@ -54,7 +54,7 @@ func autoBackupListCmd() *cobra.Command {
 			return autoBackupListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, autoBackupListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, autoBackupListParam)
 			if err != nil {
 				return err
 			}
@@ -107,7 +107,7 @@ func autoBackupCreateCmd() *cobra.Command {
 			return autoBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, autoBackupCreateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, autoBackupCreateParam)
 			if err != nil {
 				return err
 			}
@@ -173,7 +173,7 @@ func autoBackupReadCmd() *cobra.Command {
 			return autoBackupReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, autoBackupReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, autoBackupReadParam)
 			if err != nil {
 				return err
 			}
@@ -243,7 +243,7 @@ func autoBackupUpdateCmd() *cobra.Command {
 			return autoBackupUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, autoBackupUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, autoBackupUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -331,7 +331,7 @@ func autoBackupDeleteCmd() *cobra.Command {
 			return autoBackupDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, autoBackupDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, autoBackupDeleteParam)
 			if err != nil {
 				return err
 			}

@@ -19,6 +19,7 @@ package cli
 import (
 	"errors"
 
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -51,7 +52,7 @@ func objectStorageListCmd() *cobra.Command {
 			return objectStorageListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, objectStorageListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, objectStorageListParam)
 			if err != nil {
 				return err
 			}
@@ -101,7 +102,7 @@ func objectStoragePutCmd() *cobra.Command {
 			return objectStoragePutParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, objectStoragePutParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, objectStoragePutParam)
 			if err != nil {
 				return err
 			}
@@ -158,7 +159,7 @@ func objectStorageGetCmd() *cobra.Command {
 			return objectStorageGetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, objectStorageGetParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, objectStorageGetParam)
 			if err != nil {
 				return err
 			}
@@ -202,7 +203,7 @@ func objectStorageDeleteCmd() *cobra.Command {
 			return objectStorageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, objectStorageDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, objectStorageDeleteParam)
 			if err != nil {
 				return err
 			}

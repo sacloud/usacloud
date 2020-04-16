@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findNFSReadTargets(ctx Context, param *params.ReadNFSParam) ([]sacloud.ID, error) {
+func findNFSReadTargets(ctx command.Context, param *params.ReadNFSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().NFS
@@ -86,7 +87,7 @@ func findNFSReadTargets(ctx Context, param *params.ReadNFSParam) ([]sacloud.ID, 
 	return ids, nil
 }
 
-func findNFSUpdateTargets(ctx Context, param *params.UpdateNFSParam) ([]sacloud.ID, error) {
+func findNFSUpdateTargets(ctx command.Context, param *params.UpdateNFSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().NFS
@@ -144,7 +145,7 @@ func findNFSUpdateTargets(ctx Context, param *params.UpdateNFSParam) ([]sacloud.
 	return ids, nil
 }
 
-func findNFSDeleteTargets(ctx Context, param *params.DeleteNFSParam) ([]sacloud.ID, error) {
+func findNFSDeleteTargets(ctx command.Context, param *params.DeleteNFSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().NFS
@@ -202,7 +203,7 @@ func findNFSDeleteTargets(ctx Context, param *params.DeleteNFSParam) ([]sacloud.
 	return ids, nil
 }
 
-func findNFSBootTargets(ctx Context, param *params.BootNFSParam) ([]sacloud.ID, error) {
+func findNFSBootTargets(ctx command.Context, param *params.BootNFSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().NFS
@@ -260,7 +261,7 @@ func findNFSBootTargets(ctx Context, param *params.BootNFSParam) ([]sacloud.ID, 
 	return ids, nil
 }
 
-func findNFSShutdownTargets(ctx Context, param *params.ShutdownNFSParam) ([]sacloud.ID, error) {
+func findNFSShutdownTargets(ctx command.Context, param *params.ShutdownNFSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().NFS
@@ -318,7 +319,7 @@ func findNFSShutdownTargets(ctx Context, param *params.ShutdownNFSParam) ([]sacl
 	return ids, nil
 }
 
-func findNFSShutdownForceTargets(ctx Context, param *params.ShutdownForceNFSParam) ([]sacloud.ID, error) {
+func findNFSShutdownForceTargets(ctx command.Context, param *params.ShutdownForceNFSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().NFS
@@ -376,7 +377,7 @@ func findNFSShutdownForceTargets(ctx Context, param *params.ShutdownForceNFSPara
 	return ids, nil
 }
 
-func findNFSResetTargets(ctx Context, param *params.ResetNFSParam) ([]sacloud.ID, error) {
+func findNFSResetTargets(ctx command.Context, param *params.ResetNFSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().NFS
@@ -434,7 +435,7 @@ func findNFSResetTargets(ctx Context, param *params.ResetNFSParam) ([]sacloud.ID
 	return ids, nil
 }
 
-func findNFSWaitForBootTargets(ctx Context, param *params.WaitForBootNFSParam) ([]sacloud.ID, error) {
+func findNFSWaitForBootTargets(ctx command.Context, param *params.WaitForBootNFSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().NFS
@@ -492,7 +493,7 @@ func findNFSWaitForBootTargets(ctx Context, param *params.WaitForBootNFSParam) (
 	return ids, nil
 }
 
-func findNFSWaitForDownTargets(ctx Context, param *params.WaitForDownNFSParam) ([]sacloud.ID, error) {
+func findNFSWaitForDownTargets(ctx command.Context, param *params.WaitForDownNFSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().NFS
@@ -550,7 +551,7 @@ func findNFSWaitForDownTargets(ctx Context, param *params.WaitForDownNFSParam) (
 	return ids, nil
 }
 
-func findNFSMonitorNicTargets(ctx Context, param *params.MonitorNicNFSParam) ([]sacloud.ID, error) {
+func findNFSMonitorNicTargets(ctx command.Context, param *params.MonitorNicNFSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().NFS
@@ -611,7 +612,7 @@ func findNFSMonitorNicTargets(ctx Context, param *params.MonitorNicNFSParam) ([]
 	return ids, nil
 }
 
-func findNFSMonitorFreeDiskSizeTargets(ctx Context, param *params.MonitorFreeDiskSizeNFSParam) ([]sacloud.ID, error) {
+func findNFSMonitorFreeDiskSizeTargets(ctx command.Context, param *params.MonitorFreeDiskSizeNFSParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().NFS

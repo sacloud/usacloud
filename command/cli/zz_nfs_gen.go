@@ -54,7 +54,7 @@ func nfsListCmd() *cobra.Command {
 			return nfsListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, nfsListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, nfsListParam)
 			if err != nil {
 				return err
 			}
@@ -107,7 +107,7 @@ func nfsCreateCmd() *cobra.Command {
 			return nfsCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, nfsCreateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, nfsCreateParam)
 			if err != nil {
 				return err
 			}
@@ -176,7 +176,7 @@ func nfsReadCmd() *cobra.Command {
 			return nfsReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, nfsReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, nfsReadParam)
 			if err != nil {
 				return err
 			}
@@ -246,7 +246,7 @@ func nfsUpdateCmd() *cobra.Command {
 			return nfsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, nfsUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, nfsUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -332,7 +332,7 @@ func nfsDeleteCmd() *cobra.Command {
 			return nfsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, nfsDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, nfsDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -415,7 +415,7 @@ func nfsBootCmd() *cobra.Command {
 			return nfsBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, nfsBootParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, nfsBootParam)
 			if err != nil {
 				return err
 			}
@@ -490,7 +490,7 @@ func nfsShutdownCmd() *cobra.Command {
 			return nfsShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, nfsShutdownParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, nfsShutdownParam)
 			if err != nil {
 				return err
 			}
@@ -565,7 +565,7 @@ func nfsShutdownForceCmd() *cobra.Command {
 			return nfsShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, nfsShutdownForceParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, nfsShutdownForceParam)
 			if err != nil {
 				return err
 			}
@@ -640,7 +640,7 @@ func nfsResetCmd() *cobra.Command {
 			return nfsResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, nfsResetParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, nfsResetParam)
 			if err != nil {
 				return err
 			}
@@ -715,7 +715,7 @@ func nfsWaitForBootCmd() *cobra.Command {
 			return nfsWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, nfsWaitForBootParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, nfsWaitForBootParam)
 			if err != nil {
 				return err
 			}
@@ -778,7 +778,7 @@ func nfsWaitForDownCmd() *cobra.Command {
 			return nfsWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, nfsWaitForDownParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, nfsWaitForDownParam)
 			if err != nil {
 				return err
 			}
@@ -841,7 +841,7 @@ func nfsMonitorNicCmd() *cobra.Command {
 			return nfsMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, nfsMonitorNicParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, nfsMonitorNicParam)
 			if err != nil {
 				return err
 			}
@@ -914,7 +914,7 @@ func nfsMonitorFreeDiskSizeCmd() *cobra.Command {
 			return nfsMonitorFreeDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, nfsMonitorFreeDiskSizeParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, nfsMonitorFreeDiskSizeParam)
 			if err != nil {
 				return err
 			}

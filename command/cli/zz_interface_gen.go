@@ -54,7 +54,7 @@ func interfaceListCmd() *cobra.Command {
 			return interfaceListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, interfaceListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, interfaceListParam)
 			if err != nil {
 				return err
 			}
@@ -106,7 +106,7 @@ func interfacePacketFilterConnectCmd() *cobra.Command {
 			return interfacePacketFilterConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, interfacePacketFilterConnectParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, interfacePacketFilterConnectParam)
 			if err != nil {
 				return err
 			}
@@ -181,7 +181,7 @@ func interfaceCreateCmd() *cobra.Command {
 			return interfaceCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, interfaceCreateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, interfaceCreateParam)
 			if err != nil {
 				return err
 			}
@@ -241,7 +241,7 @@ func interfacePacketFilterDisconnectCmd() *cobra.Command {
 			return interfacePacketFilterDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, interfacePacketFilterDisconnectParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, interfacePacketFilterDisconnectParam)
 			if err != nil {
 				return err
 			}
@@ -316,7 +316,7 @@ func interfaceReadCmd() *cobra.Command {
 			return interfaceReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, interfaceReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, interfaceReadParam)
 			if err != nil {
 				return err
 			}
@@ -385,7 +385,7 @@ func interfaceUpdateCmd() *cobra.Command {
 			return interfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, interfaceUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, interfaceUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -467,7 +467,7 @@ func interfaceDeleteCmd() *cobra.Command {
 			return interfaceDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, interfaceDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, interfaceDeleteParam)
 			if err != nil {
 				return err
 			}

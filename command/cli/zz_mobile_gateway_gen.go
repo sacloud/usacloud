@@ -54,7 +54,7 @@ func mobileGatewayListCmd() *cobra.Command {
 			return mobileGatewayListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayListParam)
 			if err != nil {
 				return err
 			}
@@ -107,7 +107,7 @@ func mobileGatewayCreateCmd() *cobra.Command {
 			return mobileGatewayCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayCreateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayCreateParam)
 			if err != nil {
 				return err
 			}
@@ -171,7 +171,7 @@ func mobileGatewayReadCmd() *cobra.Command {
 			return mobileGatewayReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayReadParam)
 			if err != nil {
 				return err
 			}
@@ -241,7 +241,7 @@ func mobileGatewayUpdateCmd() *cobra.Command {
 			return mobileGatewayUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -328,7 +328,7 @@ func mobileGatewayDeleteCmd() *cobra.Command {
 			return mobileGatewayDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -411,7 +411,7 @@ func mobileGatewayBootCmd() *cobra.Command {
 			return mobileGatewayBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayBootParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayBootParam)
 			if err != nil {
 				return err
 			}
@@ -486,7 +486,7 @@ func mobileGatewayShutdownCmd() *cobra.Command {
 			return mobileGatewayShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayShutdownParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayShutdownParam)
 			if err != nil {
 				return err
 			}
@@ -561,7 +561,7 @@ func mobileGatewayShutdownForceCmd() *cobra.Command {
 			return mobileGatewayShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayShutdownForceParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayShutdownForceParam)
 			if err != nil {
 				return err
 			}
@@ -636,7 +636,7 @@ func mobileGatewayResetCmd() *cobra.Command {
 			return mobileGatewayResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayResetParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayResetParam)
 			if err != nil {
 				return err
 			}
@@ -711,7 +711,7 @@ func mobileGatewayWaitForBootCmd() *cobra.Command {
 			return mobileGatewayWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayWaitForBootParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayWaitForBootParam)
 			if err != nil {
 				return err
 			}
@@ -774,7 +774,7 @@ func mobileGatewayWaitForDownCmd() *cobra.Command {
 			return mobileGatewayWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayWaitForDownParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayWaitForDownParam)
 			if err != nil {
 				return err
 			}
@@ -837,7 +837,7 @@ func mobileGatewayInterfaceInfoCmd() *cobra.Command {
 			return mobileGatewayInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayInterfaceInfoParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayInterfaceInfoParam)
 			if err != nil {
 				return err
 			}
@@ -907,7 +907,7 @@ func mobileGatewayInterfaceConnectCmd() *cobra.Command {
 			return mobileGatewayInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayInterfaceConnectParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayInterfaceConnectParam)
 			if err != nil {
 				return err
 			}
@@ -985,7 +985,7 @@ func mobileGatewayInterfaceUpdateCmd() *cobra.Command {
 			return mobileGatewayInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayInterfaceUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayInterfaceUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -1062,7 +1062,7 @@ func mobileGatewayInterfaceDisconnectCmd() *cobra.Command {
 			return mobileGatewayInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayInterfaceDisconnectParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayInterfaceDisconnectParam)
 			if err != nil {
 				return err
 			}
@@ -1137,7 +1137,7 @@ func mobileGatewayTrafficControlInfoCmd() *cobra.Command {
 			return mobileGatewayTrafficControlInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayTrafficControlInfoParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayTrafficControlInfoParam)
 			if err != nil {
 				return err
 			}
@@ -1207,7 +1207,7 @@ func mobileGatewayTrafficControlEnableCmd() *cobra.Command {
 			return mobileGatewayTrafficControlEnableParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayTrafficControlEnableParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayTrafficControlEnableParam)
 			if err != nil {
 				return err
 			}
@@ -1287,7 +1287,7 @@ func mobileGatewayTrafficControlUpdateCmd() *cobra.Command {
 			return mobileGatewayTrafficControlUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayTrafficControlUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayTrafficControlUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -1367,7 +1367,7 @@ func mobileGatewayTrafficControlDisableCmd() *cobra.Command {
 			return mobileGatewayTrafficControlDisableParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayTrafficControlDisableParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayTrafficControlDisableParam)
 			if err != nil {
 				return err
 			}
@@ -1442,7 +1442,7 @@ func mobileGatewayStaticRouteInfoCmd() *cobra.Command {
 			return mobileGatewayStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayStaticRouteInfoParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayStaticRouteInfoParam)
 			if err != nil {
 				return err
 			}
@@ -1512,7 +1512,7 @@ func mobileGatewayStaticRouteAddCmd() *cobra.Command {
 			return mobileGatewayStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayStaticRouteAddParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayStaticRouteAddParam)
 			if err != nil {
 				return err
 			}
@@ -1589,7 +1589,7 @@ func mobileGatewayStaticRouteUpdateCmd() *cobra.Command {
 			return mobileGatewayStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayStaticRouteUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayStaticRouteUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -1667,7 +1667,7 @@ func mobileGatewayStaticRouteDeleteCmd() *cobra.Command {
 			return mobileGatewayStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayStaticRouteDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayStaticRouteDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -1743,7 +1743,7 @@ func mobileGatewaySIMInfoCmd() *cobra.Command {
 			return mobileGatewaySIMInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMInfoParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewaySIMInfoParam)
 			if err != nil {
 				return err
 			}
@@ -1813,7 +1813,7 @@ func mobileGatewaySIMAddCmd() *cobra.Command {
 			return mobileGatewaySIMAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMAddParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewaySIMAddParam)
 			if err != nil {
 				return err
 			}
@@ -1890,7 +1890,7 @@ func mobileGatewaySIMUpdateCmd() *cobra.Command {
 			return mobileGatewaySIMUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewaySIMUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -1967,7 +1967,7 @@ func mobileGatewaySIMDeleteCmd() *cobra.Command {
 			return mobileGatewaySIMDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewaySIMDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -2043,7 +2043,7 @@ func mobileGatewaySIMRouteInfoCmd() *cobra.Command {
 			return mobileGatewaySIMRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMRouteInfoParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewaySIMRouteInfoParam)
 			if err != nil {
 				return err
 			}
@@ -2113,7 +2113,7 @@ func mobileGatewaySIMRouteAddCmd() *cobra.Command {
 			return mobileGatewaySIMRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMRouteAddParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewaySIMRouteAddParam)
 			if err != nil {
 				return err
 			}
@@ -2190,7 +2190,7 @@ func mobileGatewaySIMRouteUpdateCmd() *cobra.Command {
 			return mobileGatewaySIMRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMRouteUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewaySIMRouteUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -2268,7 +2268,7 @@ func mobileGatewaySIMRouteDeleteCmd() *cobra.Command {
 			return mobileGatewaySIMRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewaySIMRouteDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewaySIMRouteDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -2344,7 +2344,7 @@ func mobileGatewayDNSUpdateCmd() *cobra.Command {
 			return mobileGatewayDNSUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayDNSUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayDNSUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -2421,7 +2421,7 @@ func mobileGatewayLogsCmd() *cobra.Command {
 			return mobileGatewayLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, mobileGatewayLogsParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, mobileGatewayLogsParam)
 			if err != nil {
 				return err
 			}

@@ -54,7 +54,7 @@ func loadBalancerListCmd() *cobra.Command {
 			return loadBalancerListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerListParam)
 			if err != nil {
 				return err
 			}
@@ -107,7 +107,7 @@ func loadBalancerCreateCmd() *cobra.Command {
 			return loadBalancerCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerCreateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerCreateParam)
 			if err != nil {
 				return err
 			}
@@ -178,7 +178,7 @@ func loadBalancerReadCmd() *cobra.Command {
 			return loadBalancerReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerReadParam)
 			if err != nil {
 				return err
 			}
@@ -248,7 +248,7 @@ func loadBalancerUpdateCmd() *cobra.Command {
 			return loadBalancerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -334,7 +334,7 @@ func loadBalancerDeleteCmd() *cobra.Command {
 			return loadBalancerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -417,7 +417,7 @@ func loadBalancerBootCmd() *cobra.Command {
 			return loadBalancerBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerBootParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerBootParam)
 			if err != nil {
 				return err
 			}
@@ -492,7 +492,7 @@ func loadBalancerShutdownCmd() *cobra.Command {
 			return loadBalancerShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerShutdownParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerShutdownParam)
 			if err != nil {
 				return err
 			}
@@ -567,7 +567,7 @@ func loadBalancerShutdownForceCmd() *cobra.Command {
 			return loadBalancerShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerShutdownForceParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerShutdownForceParam)
 			if err != nil {
 				return err
 			}
@@ -642,7 +642,7 @@ func loadBalancerResetCmd() *cobra.Command {
 			return loadBalancerResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerResetParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerResetParam)
 			if err != nil {
 				return err
 			}
@@ -717,7 +717,7 @@ func loadBalancerWaitForBootCmd() *cobra.Command {
 			return loadBalancerWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerWaitForBootParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerWaitForBootParam)
 			if err != nil {
 				return err
 			}
@@ -780,7 +780,7 @@ func loadBalancerWaitForDownCmd() *cobra.Command {
 			return loadBalancerWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerWaitForDownParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerWaitForDownParam)
 			if err != nil {
 				return err
 			}
@@ -843,7 +843,7 @@ func loadBalancerVipInfoCmd() *cobra.Command {
 			return loadBalancerVipInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerVipInfoParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerVipInfoParam)
 			if err != nil {
 				return err
 			}
@@ -913,7 +913,7 @@ func loadBalancerVipAddCmd() *cobra.Command {
 			return loadBalancerVipAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerVipAddParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerVipAddParam)
 			if err != nil {
 				return err
 			}
@@ -993,7 +993,7 @@ func loadBalancerVipUpdateCmd() *cobra.Command {
 			return loadBalancerVipUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerVipUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerVipUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -1074,7 +1074,7 @@ func loadBalancerVipDeleteCmd() *cobra.Command {
 			return loadBalancerVipDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerVipDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerVipDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -1150,7 +1150,7 @@ func loadBalancerServerInfoCmd() *cobra.Command {
 			return loadBalancerServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerServerInfoParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerServerInfoParam)
 			if err != nil {
 				return err
 			}
@@ -1223,7 +1223,7 @@ func loadBalancerServerAddCmd() *cobra.Command {
 			return loadBalancerServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerServerAddParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerServerAddParam)
 			if err != nil {
 				return err
 			}
@@ -1306,7 +1306,7 @@ func loadBalancerServerUpdateCmd() *cobra.Command {
 			return loadBalancerServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerServerUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerServerUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -1389,7 +1389,7 @@ func loadBalancerServerDeleteCmd() *cobra.Command {
 			return loadBalancerServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerServerDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerServerDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -1468,7 +1468,7 @@ func loadBalancerMonitorCmd() *cobra.Command {
 			return loadBalancerMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, loadBalancerMonitorParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, loadBalancerMonitorParam)
 			if err != nil {
 				return err
 			}

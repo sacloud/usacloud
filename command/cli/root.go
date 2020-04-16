@@ -17,9 +17,9 @@ package cli
 import (
 	"os"
 
-	"github.com/spf13/pflag"
-
+	"github.com/sacloud/usacloud/command"
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 )
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -45,5 +45,5 @@ func init() {
 	rootCmd.Flags().SortFlags = false
 	rootCmd.PersistentFlags().SortFlags = false
 
-	initGlobalFlags(globalFlags())
+	command.InitGlobalFlags(globalFlags())
 }

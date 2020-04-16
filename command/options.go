@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cli
+package command
 
 import (
 	"fmt"
@@ -39,7 +39,7 @@ type CLIOptions struct {
 	NoColor bool
 }
 
-func initGlobalFlags(flags *pflag.FlagSet) {
+func InitGlobalFlags(flags *pflag.FlagSet) {
 	initCredentialFlags(flags)
 	initOutputFlags(flags)
 	initDebugFlags(flags)

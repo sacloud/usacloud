@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findPrivateHostReadTargets(ctx Context, param *params.ReadPrivateHostParam) ([]sacloud.ID, error) {
+func findPrivateHostReadTargets(ctx command.Context, param *params.ReadPrivateHostParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().PrivateHost
@@ -86,7 +87,7 @@ func findPrivateHostReadTargets(ctx Context, param *params.ReadPrivateHostParam)
 	return ids, nil
 }
 
-func findPrivateHostUpdateTargets(ctx Context, param *params.UpdatePrivateHostParam) ([]sacloud.ID, error) {
+func findPrivateHostUpdateTargets(ctx command.Context, param *params.UpdatePrivateHostParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().PrivateHost
@@ -144,7 +145,7 @@ func findPrivateHostUpdateTargets(ctx Context, param *params.UpdatePrivateHostPa
 	return ids, nil
 }
 
-func findPrivateHostDeleteTargets(ctx Context, param *params.DeletePrivateHostParam) ([]sacloud.ID, error) {
+func findPrivateHostDeleteTargets(ctx command.Context, param *params.DeletePrivateHostParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().PrivateHost
@@ -202,68 +203,7 @@ func findPrivateHostDeleteTargets(ctx Context, param *params.DeletePrivateHostPa
 	return ids, nil
 }
 
-func findPrivateHostServerInfoTargets(ctx Context, param *params.ServerInfoPrivateHostParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
-	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().PrivateHost
-
-	if len(args) == 0 {
-		if len(param.Selector) == 0 {
-			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
-		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
-		if err != nil {
-			return ids, fmt.Errorf("finding resource id is failed: %s", err)
-		}
-		for _, v := range res.PrivateHosts {
-			if utils.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
-			}
-		}
-		if len(ids) == 0 {
-			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
-		}
-	} else {
-		for _, arg := range args {
-			for _, a := range strings.Split(arg, "\n") {
-				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
-					ids = append(ids, id)
-				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
-					if err != nil {
-						return ids, fmt.Errorf("finding resource id is failed: %s", err)
-					}
-					if res.Count == 0 {
-						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
-					}
-					for _, v := range res.PrivateHosts {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
-						}
-					}
-				}
-			}
-
-		}
-
-	}
-
-	ids = utils.UniqIDs(ids)
-	if len(ids) == 0 {
-		return ids, fmt.Errorf("finding resource is is failed: not found")
-	}
-	if len(ids) != 1 {
-		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
-	}
-
-	return ids, nil
-}
-
-func findPrivateHostServerAddTargets(ctx Context, param *params.ServerAddPrivateHostParam) ([]sacloud.ID, error) {
+func findPrivateHostServerInfoTargets(ctx command.Context, param *params.ServerInfoPrivateHostParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().PrivateHost
@@ -324,7 +264,68 @@ func findPrivateHostServerAddTargets(ctx Context, param *params.ServerAddPrivate
 	return ids, nil
 }
 
-func findPrivateHostServerDeleteTargets(ctx Context, param *params.ServerDeletePrivateHostParam) ([]sacloud.ID, error) {
+func findPrivateHostServerAddTargets(ctx command.Context, param *params.ServerAddPrivateHostParam) ([]sacloud.ID, error) {
+	var ids []sacloud.ID
+	args := ctx.Args()
+	apiClient := ctx.GetAPIClient().PrivateHost
+
+	if len(args) == 0 {
+		if len(param.Selector) == 0 {
+			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
+		}
+		apiClient.Reset()
+		res, err := apiClient.Find()
+		if err != nil {
+			return ids, fmt.Errorf("finding resource id is failed: %s", err)
+		}
+		for _, v := range res.PrivateHosts {
+			if utils.HasTags(&v, param.Selector) {
+				ids = append(ids, v.GetID())
+			}
+		}
+		if len(ids) == 0 {
+			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
+		}
+	} else {
+		for _, arg := range args {
+			for _, a := range strings.Split(arg, "\n") {
+				idOrName := a
+				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+					ids = append(ids, id)
+				} else {
+					apiClient.Reset()
+					apiClient.SetFilterBy("Name", idOrName)
+					res, err := apiClient.Find()
+					if err != nil {
+						return ids, fmt.Errorf("finding resource id is failed: %s", err)
+					}
+					if res.Count == 0 {
+						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
+					}
+					for _, v := range res.PrivateHosts {
+						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+							ids = append(ids, v.GetID())
+						}
+					}
+				}
+			}
+
+		}
+
+	}
+
+	ids = utils.UniqIDs(ids)
+	if len(ids) == 0 {
+		return ids, fmt.Errorf("finding resource is is failed: not found")
+	}
+	if len(ids) != 1 {
+		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
+	}
+
+	return ids, nil
+}
+
+func findPrivateHostServerDeleteTargets(ctx command.Context, param *params.ServerDeletePrivateHostParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().PrivateHost

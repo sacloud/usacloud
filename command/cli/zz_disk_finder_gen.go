@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findDiskReadTargets(ctx Context, param *params.ReadDiskParam) ([]sacloud.ID, error) {
+func findDiskReadTargets(ctx command.Context, param *params.ReadDiskParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Disk
@@ -86,7 +87,7 @@ func findDiskReadTargets(ctx Context, param *params.ReadDiskParam) ([]sacloud.ID
 	return ids, nil
 }
 
-func findDiskUpdateTargets(ctx Context, param *params.UpdateDiskParam) ([]sacloud.ID, error) {
+func findDiskUpdateTargets(ctx command.Context, param *params.UpdateDiskParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Disk
@@ -144,7 +145,7 @@ func findDiskUpdateTargets(ctx Context, param *params.UpdateDiskParam) ([]saclou
 	return ids, nil
 }
 
-func findDiskDeleteTargets(ctx Context, param *params.DeleteDiskParam) ([]sacloud.ID, error) {
+func findDiskDeleteTargets(ctx command.Context, param *params.DeleteDiskParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Disk
@@ -202,7 +203,7 @@ func findDiskDeleteTargets(ctx Context, param *params.DeleteDiskParam) ([]saclou
 	return ids, nil
 }
 
-func findDiskEditTargets(ctx Context, param *params.EditDiskParam) ([]sacloud.ID, error) {
+func findDiskEditTargets(ctx command.Context, param *params.EditDiskParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Disk
@@ -260,7 +261,7 @@ func findDiskEditTargets(ctx Context, param *params.EditDiskParam) ([]sacloud.ID
 	return ids, nil
 }
 
-func findDiskResizePartitionTargets(ctx Context, param *params.ResizePartitionDiskParam) ([]sacloud.ID, error) {
+func findDiskResizePartitionTargets(ctx command.Context, param *params.ResizePartitionDiskParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Disk
@@ -318,7 +319,7 @@ func findDiskResizePartitionTargets(ctx Context, param *params.ResizePartitionDi
 	return ids, nil
 }
 
-func findDiskReinstallFromArchiveTargets(ctx Context, param *params.ReinstallFromArchiveDiskParam) ([]sacloud.ID, error) {
+func findDiskReinstallFromArchiveTargets(ctx command.Context, param *params.ReinstallFromArchiveDiskParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Disk
@@ -376,7 +377,7 @@ func findDiskReinstallFromArchiveTargets(ctx Context, param *params.ReinstallFro
 	return ids, nil
 }
 
-func findDiskReinstallFromDiskTargets(ctx Context, param *params.ReinstallFromDiskDiskParam) ([]sacloud.ID, error) {
+func findDiskReinstallFromDiskTargets(ctx command.Context, param *params.ReinstallFromDiskDiskParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Disk
@@ -434,7 +435,7 @@ func findDiskReinstallFromDiskTargets(ctx Context, param *params.ReinstallFromDi
 	return ids, nil
 }
 
-func findDiskReinstallToBlankTargets(ctx Context, param *params.ReinstallToBlankDiskParam) ([]sacloud.ID, error) {
+func findDiskReinstallToBlankTargets(ctx command.Context, param *params.ReinstallToBlankDiskParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Disk
@@ -492,7 +493,7 @@ func findDiskReinstallToBlankTargets(ctx Context, param *params.ReinstallToBlank
 	return ids, nil
 }
 
-func findDiskServerConnectTargets(ctx Context, param *params.ServerConnectDiskParam) ([]sacloud.ID, error) {
+func findDiskServerConnectTargets(ctx command.Context, param *params.ServerConnectDiskParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Disk
@@ -550,7 +551,7 @@ func findDiskServerConnectTargets(ctx Context, param *params.ServerConnectDiskPa
 	return ids, nil
 }
 
-func findDiskServerDisconnectTargets(ctx Context, param *params.ServerDisconnectDiskParam) ([]sacloud.ID, error) {
+func findDiskServerDisconnectTargets(ctx command.Context, param *params.ServerDisconnectDiskParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Disk
@@ -608,7 +609,7 @@ func findDiskServerDisconnectTargets(ctx Context, param *params.ServerDisconnect
 	return ids, nil
 }
 
-func findDiskMonitorTargets(ctx Context, param *params.MonitorDiskParam) ([]sacloud.ID, error) {
+func findDiskMonitorTargets(ctx command.Context, param *params.MonitorDiskParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Disk
@@ -669,7 +670,7 @@ func findDiskMonitorTargets(ctx Context, param *params.MonitorDiskParam) ([]sacl
 	return ids, nil
 }
 
-func findDiskWaitForCopyTargets(ctx Context, param *params.WaitForCopyDiskParam) ([]sacloud.ID, error) {
+func findDiskWaitForCopyTargets(ctx command.Context, param *params.WaitForCopyDiskParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Disk

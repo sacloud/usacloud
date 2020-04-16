@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findLicenseReadTargets(ctx Context, param *params.ReadLicenseParam) ([]sacloud.ID, error) {
+func findLicenseReadTargets(ctx command.Context, param *params.ReadLicenseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().License
@@ -71,7 +72,7 @@ func findLicenseReadTargets(ctx Context, param *params.ReadLicenseParam) ([]sacl
 	return ids, nil
 }
 
-func findLicenseUpdateTargets(ctx Context, param *params.UpdateLicenseParam) ([]sacloud.ID, error) {
+func findLicenseUpdateTargets(ctx command.Context, param *params.UpdateLicenseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().License
@@ -114,7 +115,7 @@ func findLicenseUpdateTargets(ctx Context, param *params.UpdateLicenseParam) ([]
 	return ids, nil
 }
 
-func findLicenseDeleteTargets(ctx Context, param *params.DeleteLicenseParam) ([]sacloud.ID, error) {
+func findLicenseDeleteTargets(ctx command.Context, param *params.DeleteLicenseParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().License

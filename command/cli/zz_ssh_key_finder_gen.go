@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findSSHKeyReadTargets(ctx Context, param *params.ReadSSHKeyParam) ([]sacloud.ID, error) {
+func findSSHKeyReadTargets(ctx command.Context, param *params.ReadSSHKeyParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().SSHKey
@@ -71,7 +72,7 @@ func findSSHKeyReadTargets(ctx Context, param *params.ReadSSHKeyParam) ([]saclou
 	return ids, nil
 }
 
-func findSSHKeyUpdateTargets(ctx Context, param *params.UpdateSSHKeyParam) ([]sacloud.ID, error) {
+func findSSHKeyUpdateTargets(ctx command.Context, param *params.UpdateSSHKeyParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().SSHKey
@@ -114,7 +115,7 @@ func findSSHKeyUpdateTargets(ctx Context, param *params.UpdateSSHKeyParam) ([]sa
 	return ids, nil
 }
 
-func findSSHKeyDeleteTargets(ctx Context, param *params.DeleteSSHKeyParam) ([]sacloud.ID, error) {
+func findSSHKeyDeleteTargets(ctx command.Context, param *params.DeleteSSHKeyParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().SSHKey

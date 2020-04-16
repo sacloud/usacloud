@@ -21,11 +21,12 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
-func findArchiveReadTargets(ctx Context, param *params.ReadArchiveParam) ([]sacloud.ID, error) {
+func findArchiveReadTargets(ctx command.Context, param *params.ReadArchiveParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Archive
@@ -86,7 +87,7 @@ func findArchiveReadTargets(ctx Context, param *params.ReadArchiveParam) ([]sacl
 	return ids, nil
 }
 
-func findArchiveUpdateTargets(ctx Context, param *params.UpdateArchiveParam) ([]sacloud.ID, error) {
+func findArchiveUpdateTargets(ctx command.Context, param *params.UpdateArchiveParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Archive
@@ -144,7 +145,7 @@ func findArchiveUpdateTargets(ctx Context, param *params.UpdateArchiveParam) ([]
 	return ids, nil
 }
 
-func findArchiveDeleteTargets(ctx Context, param *params.DeleteArchiveParam) ([]sacloud.ID, error) {
+func findArchiveDeleteTargets(ctx command.Context, param *params.DeleteArchiveParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Archive
@@ -202,68 +203,7 @@ func findArchiveDeleteTargets(ctx Context, param *params.DeleteArchiveParam) ([]
 	return ids, nil
 }
 
-func findArchiveUploadTargets(ctx Context, param *params.UploadArchiveParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
-	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Archive
-
-	if len(args) == 0 {
-		if len(param.Selector) == 0 {
-			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
-		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
-		if err != nil {
-			return ids, fmt.Errorf("finding resource id is failed: %s", err)
-		}
-		for _, v := range res.Archives {
-			if utils.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
-			}
-		}
-		if len(ids) == 0 {
-			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
-		}
-	} else {
-		for _, arg := range args {
-			for _, a := range strings.Split(arg, "\n") {
-				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
-					ids = append(ids, id)
-				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
-					if err != nil {
-						return ids, fmt.Errorf("finding resource id is failed: %s", err)
-					}
-					if res.Count == 0 {
-						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
-					}
-					for _, v := range res.Archives {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
-						}
-					}
-				}
-			}
-
-		}
-
-	}
-
-	ids = utils.UniqIDs(ids)
-	if len(ids) == 0 {
-		return ids, fmt.Errorf("finding resource is is failed: not found")
-	}
-	if len(ids) != 1 {
-		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
-	}
-
-	return ids, nil
-}
-
-func findArchiveDownloadTargets(ctx Context, param *params.DownloadArchiveParam) ([]sacloud.ID, error) {
+func findArchiveUploadTargets(ctx command.Context, param *params.UploadArchiveParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Archive
@@ -324,7 +264,68 @@ func findArchiveDownloadTargets(ctx Context, param *params.DownloadArchiveParam)
 	return ids, nil
 }
 
-func findArchiveFTPOpenTargets(ctx Context, param *params.FTPOpenArchiveParam) ([]sacloud.ID, error) {
+func findArchiveDownloadTargets(ctx command.Context, param *params.DownloadArchiveParam) ([]sacloud.ID, error) {
+	var ids []sacloud.ID
+	args := ctx.Args()
+	apiClient := ctx.GetAPIClient().Archive
+
+	if len(args) == 0 {
+		if len(param.Selector) == 0 {
+			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
+		}
+		apiClient.Reset()
+		res, err := apiClient.Find()
+		if err != nil {
+			return ids, fmt.Errorf("finding resource id is failed: %s", err)
+		}
+		for _, v := range res.Archives {
+			if utils.HasTags(&v, param.Selector) {
+				ids = append(ids, v.GetID())
+			}
+		}
+		if len(ids) == 0 {
+			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
+		}
+	} else {
+		for _, arg := range args {
+			for _, a := range strings.Split(arg, "\n") {
+				idOrName := a
+				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+					ids = append(ids, id)
+				} else {
+					apiClient.Reset()
+					apiClient.SetFilterBy("Name", idOrName)
+					res, err := apiClient.Find()
+					if err != nil {
+						return ids, fmt.Errorf("finding resource id is failed: %s", err)
+					}
+					if res.Count == 0 {
+						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
+					}
+					for _, v := range res.Archives {
+						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+							ids = append(ids, v.GetID())
+						}
+					}
+				}
+			}
+
+		}
+
+	}
+
+	ids = utils.UniqIDs(ids)
+	if len(ids) == 0 {
+		return ids, fmt.Errorf("finding resource is is failed: not found")
+	}
+	if len(ids) != 1 {
+		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
+	}
+
+	return ids, nil
+}
+
+func findArchiveFTPOpenTargets(ctx command.Context, param *params.FTPOpenArchiveParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Archive
@@ -382,7 +383,7 @@ func findArchiveFTPOpenTargets(ctx Context, param *params.FTPOpenArchiveParam) (
 	return ids, nil
 }
 
-func findArchiveFTPCloseTargets(ctx Context, param *params.FTPCloseArchiveParam) ([]sacloud.ID, error) {
+func findArchiveFTPCloseTargets(ctx command.Context, param *params.FTPCloseArchiveParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Archive
@@ -440,7 +441,7 @@ func findArchiveFTPCloseTargets(ctx Context, param *params.FTPCloseArchiveParam)
 	return ids, nil
 }
 
-func findArchiveWaitForCopyTargets(ctx Context, param *params.WaitForCopyArchiveParam) ([]sacloud.ID, error) {
+func findArchiveWaitForCopyTargets(ctx command.Context, param *params.WaitForCopyArchiveParam) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().Archive

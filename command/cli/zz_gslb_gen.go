@@ -54,7 +54,7 @@ func gslbListCmd() *cobra.Command {
 			return gslbListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, gslbListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, gslbListParam)
 			if err != nil {
 				return err
 			}
@@ -107,7 +107,7 @@ func gslbServerInfoCmd() *cobra.Command {
 			return gslbServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, gslbServerInfoParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, gslbServerInfoParam)
 			if err != nil {
 				return err
 			}
@@ -177,7 +177,7 @@ func gslbCreateCmd() *cobra.Command {
 			return gslbCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, gslbCreateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, gslbCreateParam)
 			if err != nil {
 				return err
 			}
@@ -248,7 +248,7 @@ func gslbServerAddCmd() *cobra.Command {
 			return gslbServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, gslbServerAddParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, gslbServerAddParam)
 			if err != nil {
 				return err
 			}
@@ -333,7 +333,7 @@ func gslbReadCmd() *cobra.Command {
 			return gslbReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, gslbReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, gslbReadParam)
 			if err != nil {
 				return err
 			}
@@ -403,7 +403,7 @@ func gslbServerUpdateCmd() *cobra.Command {
 			return gslbServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, gslbServerUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, gslbServerUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -489,7 +489,7 @@ func gslbServerDeleteCmd() *cobra.Command {
 			return gslbServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, gslbServerDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, gslbServerDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -572,7 +572,7 @@ func gslbUpdateCmd() *cobra.Command {
 			return gslbUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, gslbUpdateParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, gslbUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -666,7 +666,7 @@ func gslbDeleteCmd() *cobra.Command {
 			return gslbDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, gslbDeleteParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, gslbDeleteParam)
 			if err != nil {
 				return err
 			}

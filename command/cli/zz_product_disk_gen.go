@@ -20,6 +20,7 @@ import (
 	"errors"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/funcs"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -51,7 +52,7 @@ func productDiskListCmd() *cobra.Command {
 			return productDiskListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, productDiskListParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, productDiskListParam)
 			if err != nil {
 				return err
 			}
@@ -103,7 +104,7 @@ func productDiskReadCmd() *cobra.Command {
 			return productDiskReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := newCLIContext(globalFlags(), args, productDiskReadParam)
+			ctx, err := command.NewCLIContext(globalFlags(), args, productDiskReadParam)
 			if err != nil {
 				return err
 			}

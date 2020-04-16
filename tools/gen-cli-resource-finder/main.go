@@ -75,12 +75,13 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
 {{ range .Commands }}{{ if .MultipleArgToIdParams }}
-func {{ .ArgToIdFunc }}(ctx Context, param *params.{{.InputParameterTypeName}}) ([]sacloud.ID, error) {
+func {{ .ArgToIdFunc }}(ctx command.Context, param *params.{{.InputParameterTypeName}}) ([]sacloud.ID, error) {
 	var ids []sacloud.ID
 	args := ctx.Args()
 	apiClient := ctx.GetAPIClient().{{.TargetAPIName}}
