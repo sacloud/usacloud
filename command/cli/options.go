@@ -58,7 +58,7 @@ func initOutputFlags(fs *pflag.FlagSet) {
 }
 
 func initDebugFlags(fs *pflag.FlagSet) {
-	fs.StringP("trace", "", "", "enable trace logs for API calling")
+	fs.BoolP("trace", "", false, "enable trace logs for API calling")
 	fs.BoolP("fake", "", false, "enable fake API driver")
 	fs.StringP("fake-store", "", "", "path to file store used by the fake API driver")
 }
@@ -153,12 +153,14 @@ func (o *CLIOptions) loadFromFlags(flags *pflag.FlagSet, io IO) {
 		o.NoColor = v
 	}
 	if flags.Changed("trace") {
-		v, err := flags.GetString("trace")
+		v, err := flags.GetBool("trace")
 		if err != nil {
 			fmt.Fprintf(out, "[WARN] reading value of %q flag is failed: %s", "trace", err) // nolint
 			return
 		}
-		o.TraceMode = v
+		if v {
+			o.TraceMode = "all"
+		}
 	}
 	if flags.Changed("fake") {
 		v, err := flags.GetBool("fake")
