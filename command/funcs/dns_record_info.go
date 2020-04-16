@@ -31,7 +31,7 @@ func DNSRecordInfo(ctx command.Context, params *params.RecordInfoDNSParam) error
 	}
 
 	if len(p.Settings.DNS.ResourceRecordSets) == 0 {
-		fmt.Fprintf(command.GlobalOption.Err, "DNS zone don't have any records\n")
+		fmt.Fprintf(ctx.IO().Err(), "DNS zone don't have any records\n")
 		return nil
 	}
 

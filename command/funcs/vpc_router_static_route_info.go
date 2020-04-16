@@ -31,7 +31,7 @@ func VPCRouterStaticRouteInfo(ctx command.Context, params *params.StaticRouteInf
 	}
 
 	if !p.HasStaticRoutes() {
-		fmt.Fprintf(command.GlobalOption.Err, "VPCRouter[%d] don't have any static-routes\n", params.Id)
+		fmt.Fprintf(ctx.IO().Err(), "VPCRouter[%d] don't have any static-routes\n", params.Id)
 		return nil
 	}
 

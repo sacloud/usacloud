@@ -34,7 +34,7 @@ func MobileGatewayReset(ctx command.Context, params *params.ResetMobileGatewayPa
 	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still resetting[ID:%d]...", params.Id),
 		fmt.Sprintf("Reset mobile-gateway[ID:%d]", params.Id),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			_, err := api.RebootForce(params.Id)

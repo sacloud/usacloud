@@ -31,7 +31,7 @@ func VPCRouterStaticNatInfo(ctx command.Context, params *params.StaticNatInfoVPC
 	}
 
 	if !p.HasStaticNAT() {
-		fmt.Fprintf(command.GlobalOption.Err, "VPCRouter[%d] don't have any static NAT settings\n", params.Id)
+		fmt.Fprintf(ctx.IO().Err(), "VPCRouter[%d] don't have any static NAT settings\n", params.Id)
 		return nil
 	}
 

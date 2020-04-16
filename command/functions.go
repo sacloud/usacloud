@@ -16,9 +16,11 @@ package command
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/pkg/utils"
 )
 
 func FlattenErrors(errors []error) error {
@@ -41,21 +43,8 @@ func FlattenErrorsWithPrefix(errors []error, pref string) error {
 
 }
 
-func StringIDs(ids []sacloud.ID) []string {
-	var strIDs []string
-
-	for _, v := range ids {
-		if v != 0 {
-			strIDs = append(strIDs, v.String())
-		}
-	}
-
-	return strIDs
-}
-
-func Confirm(msg string) bool {
-
-	fi, err := GlobalOption.In.Stat()
+func Confirm(in *os.File, msg string) bool {
+	fi, err := in.Stat()
 	if err != nil {
 		panic(err)
 	}
@@ -65,18 +54,18 @@ func Confirm(msg string) bool {
 	fmt.Printf("\n%s(y/n) [n]: ", msg)
 
 	var input string
-	fmt.Fscanln(GlobalOption.In, &input)
+	fmt.Fscanln(in, &input)
 	return input == "y" || input == "yes"
 }
 
-func ConfirmContinue(target string, ids ...sacloud.ID) bool {
+func ConfirmContinue(in *os.File, target string, ids ...sacloud.ID) bool {
 	if len(ids) == 0 {
-		return Confirm(fmt.Sprintf("Are you sure you want to %s?", target))
+		return Confirm(in, fmt.Sprintf("Are you sure you want to %s?", target))
 	}
 
-	strIDs := StringIDs(ids)
+	strIDs := utils.StringIDs(ids)
 	msg := fmt.Sprintf("Target resource IDs => [\n\t%s\n]", strings.Join(strIDs, ",\n\t"))
-	return Confirm(fmt.Sprintf("%s\nAre you sure you want to %s?", msg, target))
+	return Confirm(in, fmt.Sprintf("%s\nAre you sure you want to %s?", msg, target))
 }
 
 func IsSetOr(ctx Context, targetes ...string) bool {

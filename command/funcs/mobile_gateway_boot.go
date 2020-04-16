@@ -38,7 +38,7 @@ func MobileGatewayBoot(ctx command.Context, params *params.BootMobileGatewayPara
 	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still booting[ID:%d]...", params.Id),
 		fmt.Sprintf("Boot mobile-gateway[ID:%d]", params.Id),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			_, err := api.Boot(params.Id)

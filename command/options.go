@@ -28,6 +28,8 @@ import (
 	"github.com/spf13/pflag"
 )
 
+var GlobalOption *CLIOptions
+
 // CLIOptions CLIオプション
 type CLIOptions struct {
 	profile.ConfigValue

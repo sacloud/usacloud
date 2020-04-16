@@ -86,7 +86,7 @@ func DatabaseReplicaCreate(ctx command.Context, params *params.ReplicaCreateData
 	err = internal.ExecWithProgress(
 		fmt.Sprintf("Still creating[ID:%d]...", res.ID),
 		fmt.Sprintf("Create replica database[ID:%d]", res.ID),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			err := api.SleepWhileCopying(res.ID, client.DefaultTimeoutDuration, 20)

@@ -57,7 +57,7 @@ func SummaryShow(ctx command.Context, params *params.ShowSummaryParam) error {
 	err := internal.ExecWithProgress(
 		"Still calculating...",
 		"Calculate resource count",
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 
 			// do count & build result

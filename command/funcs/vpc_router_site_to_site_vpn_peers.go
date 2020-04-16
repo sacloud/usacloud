@@ -31,7 +31,7 @@ func VPCRouterSiteToSiteVPNPeers(ctx command.Context, params *params.SiteToSiteV
 	}
 
 	if !p.HasSiteToSiteIPsecVPN() {
-		fmt.Fprintf(command.GlobalOption.Err, "VPCRouter[%d] don't have any site-to-site IPSec VPN settings\n", params.Id)
+		fmt.Fprintf(ctx.IO().Err(), "VPCRouter[%d] don't have any site-to-site IPSec VPN settings\n", params.Id)
 		return nil
 	}
 

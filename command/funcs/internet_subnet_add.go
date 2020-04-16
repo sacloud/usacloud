@@ -35,7 +35,7 @@ func InternetSubnetAdd(ctx command.Context, params *params.SubnetAddInternetPara
 	err := internal.ExecWithProgress(
 		"Still creating...",
 		"Add subnet",
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			subnet, err := api.AddSubnet(params.Id, params.NwMasklen, params.NextHop)
 			if err != nil {

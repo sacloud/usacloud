@@ -89,7 +89,7 @@ func ServerSSHExec(ctx command.Context, params *params.SSHExecServerParam) error
 		Host:           ip,
 		Port:           params.Port,
 		PrivateKeyPath: keyPath,
-		Out:            command.GlobalOption.Progress,
+		Out:            ctx.IO().Progress(),
 		Quiet:          params.Quiet,
 	}
 	conn, err := server.CreateSSHClient(sshParam)
@@ -114,11 +114,11 @@ func ServerSSHExec(ctx command.Context, params *params.SSHExecServerParam) error
 	}
 
 	if !params.Quiet {
-		printer.Fprintf(command.GlobalOption.Progress, color.New(color.FgHiGreen), "=== start | %s ===\n", displayName)
+		printer.Fprintf(ctx.IO().Progress(), color.New(color.FgHiGreen), "=== start | %s ===\n", displayName)
 	}
 	err = session.Run(strings.Join(args, " "))
 	if !params.Quiet {
-		printer.Fprintf(command.GlobalOption.Progress, color.New(color.FgHiGreen), "=== end | %s ===\n", displayName)
+		printer.Fprintf(ctx.IO().Progress(), color.New(color.FgHiGreen), "=== end | %s ===\n", displayName)
 	}
 
 	if err != nil {

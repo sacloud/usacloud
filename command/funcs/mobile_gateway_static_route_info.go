@@ -31,7 +31,7 @@ func MobileGatewayStaticRouteInfo(ctx command.Context, params *params.StaticRout
 	}
 
 	if !p.HasStaticRoutes() {
-		fmt.Fprintf(command.GlobalOption.Err, "MobileGateway[%d] don't have any static-routes\n", params.Id)
+		fmt.Fprintf(ctx.IO().Err(), "MobileGateway[%d] don't have any static-routes\n", params.Id)
 		return nil
 	}
 

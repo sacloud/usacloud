@@ -32,11 +32,11 @@ func DatabaseBackupRestore(ctx command.Context, params *params.BackupRestoreData
 	}
 
 	if !info.IsUp() {
-		fmt.Fprintf(command.GlobalOption.Err, "Databaes is not running\n")
+		fmt.Fprintf(ctx.IO().Err(), "Databaes is not running\n")
 		return nil
 	}
 	if !hasDatabaseBackup(info) {
-		fmt.Fprintf(command.GlobalOption.Err, "There is no backup in the database\n")
+		fmt.Fprintf(ctx.IO().Err(), "There is no backup in the database\n")
 		return nil
 	}
 	// index
@@ -48,7 +48,7 @@ func DatabaseBackupRestore(ctx command.Context, params *params.BackupRestoreData
 	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still restoring from backup[ID:%d:%s]...", params.Id, backupID),
 		fmt.Sprintf("Restore Database[ID:%d]", params.Id),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			_, err := api.Restore(params.Id, backupID)

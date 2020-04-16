@@ -32,7 +32,7 @@ func VPCRouterFirewallInfo(ctx command.Context, params *params.FirewallInfoVPCRo
 	}
 
 	if !p.HasFirewall() {
-		fmt.Fprintf(command.GlobalOption.Err, "VPCRouter[%d] don't have any firewall rules\n", params.Id)
+		fmt.Fprintf(ctx.IO().Err(), "VPCRouter[%d] don't have any firewall rules\n", params.Id)
 		return nil
 	}
 
@@ -45,7 +45,7 @@ func VPCRouterFirewallInfo(ctx command.Context, params *params.FirewallInfoVPCRo
 	}
 
 	if len(ruleList) == 0 {
-		fmt.Fprintf(command.GlobalOption.Err, "VPCRouter don't have any firewall(%s) rules\n", params.Direction)
+		fmt.Fprintf(ctx.IO().Err(), "VPCRouter don't have any firewall(%s) rules\n", params.Direction)
 		return nil
 	}
 

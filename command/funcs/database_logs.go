@@ -33,7 +33,7 @@ func DatabaseLogs(ctx command.Context, params *params.LogsDatabaseParam) error {
 	// validate params
 	if params.Follow {
 		if params.LogName == "all" {
-			fmt.Fprintf(command.GlobalOption.Err, "[WARN] -f/--follow option can not use with --log-name=%q, ignored", "all")
+			fmt.Fprintf(ctx.IO().Err(), "[WARN] -f/--follow option can not use with --log-name=%q, ignored", "all")
 			params.Follow = false
 		}
 		if params.ListLogNames {
@@ -41,11 +41,11 @@ func DatabaseLogs(ctx command.Context, params *params.LogsDatabaseParam) error {
 		}
 	}
 	if ctx.IsSet("refresh-interval") && params.LogName == "all" {
-		fmt.Fprintf(command.GlobalOption.Err, "[WARN] --refresh-interval option can not use with --log-name=%q, ignored", "all")
+		fmt.Fprintf(ctx.IO().Err(), "[WARN] --refresh-interval option can not use with --log-name=%q, ignored", "all")
 	}
 
 	logBuf := internal.NewHashQueue(500)
-	out := command.GlobalOption.Out
+	out := ctx.IO().Out()
 
 	for {
 		// call Read(id)
@@ -55,7 +55,7 @@ func DatabaseLogs(ctx command.Context, params *params.LogsDatabaseParam) error {
 		}
 
 		if !res.IsUp() {
-			fmt.Fprintf(command.GlobalOption.Progress, "Database[%d] is not running\n", params.Id)
+			fmt.Fprintf(ctx.IO().Progress(), "Database[%d] is not running\n", params.Id)
 		} else {
 
 			if params.ListLogNames {

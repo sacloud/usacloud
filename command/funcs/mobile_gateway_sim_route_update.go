@@ -37,7 +37,7 @@ func MobileGatewaySIMRouteUpdate(ctx command.Context, params *params.SIMRouteUpd
 	}
 
 	if len(routes) == 0 {
-		fmt.Fprintf(command.GlobalOption.Err, "MobileGateway[%d] don't have any SIM routes\n", params.Id)
+		fmt.Fprintf(ctx.IO().Err(), "MobileGateway[%d] don't have any SIM routes\n", params.Id)
 		return nil
 	}
 

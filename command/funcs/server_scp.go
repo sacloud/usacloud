@@ -113,7 +113,7 @@ func ServerScp(ctx command.Context, params *params.ScpServerParam) error {
 		Host:           ip,
 		Port:           params.Port,
 		PrivateKeyPath: keyPath,
-		Out:            command.GlobalOption.Progress,
+		Out:            ctx.IO().Progress(),
 		Quiet:          params.Quiet,
 	}
 	conn, err := server.CreateSSHClient(sshParam)
@@ -143,7 +143,7 @@ func ServerScp(ctx command.Context, params *params.ScpServerParam) error {
 			localPath = filepath.Clean(localPath)
 			err := scpClient.SendDir(localPath, remotePath, func(parentDir string, info os.FileInfo) (bool, error) {
 				if !info.IsDir() {
-					fmt.Fprintf(command.GlobalOption.Progress, "copy: %s\n", filepath.Join(parentDir, info.Name()))
+					fmt.Fprintf(ctx.IO().Progress(), "copy: %s\n", filepath.Join(parentDir, info.Name()))
 				}
 				return true, nil
 			})
@@ -154,7 +154,7 @@ func ServerScp(ctx command.Context, params *params.ScpServerParam) error {
 			if strings.HasSuffix(remotePath, "/") {
 				remotePath = fmt.Sprintf("%s%s", remotePath, filepath.Base(localPath))
 			}
-			fmt.Fprintf(command.GlobalOption.Progress, "copy: %s\n", localPath)
+			fmt.Fprintf(ctx.IO().Progress(), "copy: %s\n", localPath)
 			err := scpClient.SendFile(localPath, remotePath)
 			if err != nil {
 				return fmt.Errorf("ServerScp is failed: %s", err)
@@ -174,7 +174,7 @@ func ServerScp(ctx command.Context, params *params.ScpServerParam) error {
 		// first, try copy file
 		err = scpClient.ReceiveFile(remotePath, localPath)
 		if err == nil {
-			fmt.Fprintf(command.GlobalOption.Progress, "copy: %s\n", localPath)
+			fmt.Fprintf(ctx.IO().Progress(), "copy: %s\n", localPath)
 		} else {
 			if !params.Recursive {
 				return fmt.Errorf("%q isn't readable file or is a directory. try use -r or --recursive flag", remotePath)
@@ -183,7 +183,7 @@ func ServerScp(ctx command.Context, params *params.ScpServerParam) error {
 			// next , try copy directory
 			err := scpClient.ReceiveDir(remotePath, localPath, func(parentDir string, info os.FileInfo) (bool, error) {
 				if !info.IsDir() {
-					fmt.Fprintf(command.GlobalOption.Progress, "copy: %s\n", filepath.Join(parentDir, info.Name()))
+					fmt.Fprintf(ctx.IO().Progress(), "copy: %s\n", filepath.Join(parentDir, info.Name()))
 				}
 				return true, nil
 			})

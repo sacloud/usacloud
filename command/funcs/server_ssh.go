@@ -88,7 +88,7 @@ func ServerSSH(ctx command.Context, params *params.SSHServerParam) error {
 
 	// output connect info
 	if !params.Quiet {
-		fmt.Fprintf(command.GlobalOption.Progress, "connecting server...\n\tcommand: ssh %s \n", strings.Join(args, " "))
+		fmt.Fprintf(ctx.IO().Progress(), "connecting server...\n\tcommand: ssh %s \n", strings.Join(args, " "))
 	}
 
 	cmd := exec.Command("ssh", args...)

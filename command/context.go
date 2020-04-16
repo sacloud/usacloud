@@ -89,6 +89,9 @@ func NewCLIContext(globalFlags *pflag.FlagSet, args []string, parameter interfac
 		return nil, err
 	}
 
+	// TODO あとでグローバル変数を消す
+	GlobalOption = option
+
 	return &cliContext{
 		parentCtx:     ctx,
 		option:        option,

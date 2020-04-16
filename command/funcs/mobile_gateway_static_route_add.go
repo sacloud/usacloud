@@ -31,7 +31,7 @@ func MobileGatewayStaticRouteAdd(ctx command.Context, params *params.StaticRoute
 	}
 
 	if _, exists := p.Settings.MobileGateway.FindStaticRoute(params.Prefix, params.NextHop); exists != nil {
-		fmt.Fprintf(command.GlobalOption.Out, "StaticRoute[%s -> %s] already exists", params.Prefix, params.NextHop)
+		fmt.Fprintf(ctx.IO().Out(), "StaticRoute[%s -> %s] already exists", params.Prefix, params.NextHop)
 		return nil
 	}
 

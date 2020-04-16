@@ -42,7 +42,7 @@ func ServerVncSnapshot(ctx command.Context, params *params.VncSnapshotServerPara
 		err := internal.ExecWithProgress(
 			fmt.Sprintf("Still booting[ID:%d]...", params.Id),
 			fmt.Sprintf("Connect to server[ID:%d]", params.Id),
-			command.GlobalOption.Progress,
+			ctx.IO().Progress(),
 			func(compChan chan bool, errChan chan error) {
 				// call manipurate functions
 				err := api.SleepUntilUp(params.Id, client.DefaultTimeoutDuration)
@@ -85,7 +85,7 @@ func ServerVncSnapshot(ctx command.Context, params *params.VncSnapshotServerPara
 		return fmt.Errorf("ServerVncSnapshot is failed: %s", err)
 	}
 
-	out := command.GlobalOption.Err
+	out := ctx.IO().Err()
 	fmt.Fprintln(out, "Snapshot created:", filename)
 
 	return nil

@@ -52,7 +52,7 @@ func DiskCreate(ctx command.Context, params *params.CreateDiskParam) error {
 	err = internal.ExecWithProgress(
 		"Still creating...",
 		"Create disk",
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			// call Create(id)
 			res, err = api.Create(p)

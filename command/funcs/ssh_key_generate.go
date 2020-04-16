@@ -57,7 +57,7 @@ func SSHKeyGenerate(ctx command.Context, params *params.GenerateSSHKeyParam) err
 
 	if params.PrivateKeyOutput == "" {
 		// output privatekey to os.StdOut
-		fmt.Fprintf(command.GlobalOption.Out, sshPrivateKeyStdOutFormat, key.PrivateKey)
+		fmt.Fprintf(ctx.IO().Out(), sshPrivateKeyStdOutFormat, key.PrivateKey)
 	}
 
 	return err

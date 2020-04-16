@@ -33,7 +33,7 @@ func VPCRouterDhcpServerInfo(ctx command.Context, params *params.DhcpServerInfoV
 	}
 
 	if !p.HasDHCPServer() {
-		fmt.Fprintf(command.GlobalOption.Err, "VPCRouter[%d] don't have any DHCP servers\n", params.Id)
+		fmt.Fprintf(ctx.IO().Err(), "VPCRouter[%d] don't have any DHCP servers\n", params.Id)
 		return nil
 	}
 

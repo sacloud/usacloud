@@ -38,7 +38,7 @@ func VPCRouterDelete(ctx command.Context, params *params.DeleteVPCRouterParam) e
 			err = internal.ExecWithProgress(
 				fmt.Sprintf("Still waiting for delete[ID:%d]...", params.Id),
 				fmt.Sprintf("Delete vpc-router[ID:%d]", params.Id),
-				command.GlobalOption.Progress,
+				ctx.IO().Progress(),
 				func(compChan chan bool, errChan chan error) {
 					// call manipurate functions
 					var err error

@@ -27,6 +27,6 @@ func SelfInfo(ctx command.Context, params *params.InfoSelfParam) error {
 	if err != nil {
 		return fmt.Errorf("SelfInfo is failed: %s", err)
 	}
-	fmt.Fprint(command.GlobalOption.Out, id)
+	fmt.Fprint(ctx.IO().Out(), id)
 	return nil
 }

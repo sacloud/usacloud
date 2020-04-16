@@ -73,7 +73,7 @@ func ArchiveCreate(ctx command.Context, params *params.CreateArchiveParam) error
 		err = internal.ExecWithProgress(
 			fmt.Sprintf("Still uploading[ID:%d]...", res.ID),
 			fmt.Sprintf("Upload archive[ID:%d]", res.ID),
-			command.GlobalOption.Progress,
+			ctx.IO().Progress(),
 			func(compChan chan bool, errChan chan error) {
 
 				file, df, err := fileOrStdin(params.GetArchiveFile())
@@ -111,7 +111,7 @@ func ArchiveCreate(ctx command.Context, params *params.CreateArchiveParam) error
 		err := internal.ExecWithProgress(
 			fmt.Sprintf("Still copying[ID:%d]...", res.ID),
 			fmt.Sprintf("Copy archive[ID:%d]", res.ID),
-			command.GlobalOption.Progress,
+			ctx.IO().Progress(),
 			func(compChan chan bool, errChan chan error) {
 				err = api.SleepWhileCopying(res.ID, client.DefaultTimeoutDuration)
 				if err != nil {

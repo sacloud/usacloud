@@ -81,13 +81,13 @@ func ObjectStorageGet(ctx command.Context, params *params.GetObjectStorageParam)
 		if filePath == "" {
 			return fmt.Errorf("<local file/directory> arg is required if it is not a single file download")
 		}
-		return objectStorageGetRecursive(path, path, filePath, params.Recursive, bucket)
+		return objectStorageGetRecursive(ctx, path, path, filePath, params.Recursive, bucket)
 	}
 	// path is file
-	return objectStorageGet(path, filePath, bucket)
+	return objectStorageGet(ctx, path, filePath, bucket)
 }
 
-func objectStorageGetRecursive(remoteBase, remotePath, localBase string, rec bool, bucket *s3.Bucket) error {
+func objectStorageGetRecursive(ctx command.Context, remoteBase, remotePath, localBase string, rec bool, bucket *s3.Bucket) error {
 
 	// base: dir1/ , remote: dir1/dir2 -> [localPath]/dir2/
 	dirTokens := []string{localBase}
@@ -111,7 +111,7 @@ func objectStorageGetRecursive(remoteBase, remotePath, localBase string, rec boo
 	// first, download files
 	for _, content := range res.Contents {
 		name := path.Base(content.Key)
-		err := objectStorageGet(content.Key, filepath.Join(localPath, name), bucket)
+		err := objectStorageGet(ctx, content.Key, filepath.Join(localPath, name), bucket)
 		if err != nil {
 			return err
 		}
@@ -123,7 +123,7 @@ func objectStorageGetRecursive(remoteBase, remotePath, localBase string, rec boo
 
 	// next, download each dir
 	for _, pref := range res.CommonPrefixes {
-		err := objectStorageGetRecursive(remoteBase, pref, localBase, rec, bucket)
+		err := objectStorageGetRecursive(ctx, remoteBase, pref, localBase, rec, bucket)
 		if err != nil {
 			return nil
 		}
@@ -132,7 +132,7 @@ func objectStorageGetRecursive(remoteBase, remotePath, localBase string, rec boo
 	return nil
 }
 
-func objectStorageGet(remotePath, localPath string, bucket *s3.Bucket) error {
+func objectStorageGet(ctx command.Context, remotePath, localPath string, bucket *s3.Bucket) error {
 
 	// get key
 	data, err := bucket.Get(remotePath)
@@ -143,7 +143,7 @@ func objectStorageGet(remotePath, localPath string, bucket *s3.Bucket) error {
 	// write
 	var w io.Writer
 	if localPath == "" {
-		w = command.GlobalOption.Out
+		w = ctx.IO().Out()
 	} else {
 		f, err := os.Create(localPath)
 		if err != nil {

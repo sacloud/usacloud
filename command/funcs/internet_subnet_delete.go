@@ -34,7 +34,7 @@ func InternetSubnetDelete(ctx command.Context, params *params.SubnetDeleteIntern
 	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still deleting[ID:%d]...", params.SubnetId),
 		fmt.Sprintf("Delete subnet[ID:%d]", params.SubnetId),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			_, err := api.DeleteSubnet(params.Id, params.SubnetId)
 			if err != nil {

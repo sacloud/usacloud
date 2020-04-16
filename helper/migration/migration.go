@@ -56,11 +56,11 @@ func getOldConfigPath() (string, error) {
 }
 
 func confirmMigrate() bool {
-	return command.Confirm(confirmMigrateMsg)
+	return command.Confirm(os.Stdin, confirmMigrateMsg) // TODO ビルドを通すための仮実装
 }
 
 func confirmOverwrite(configFilePath string) bool {
-	return command.Confirm(fmt.Sprintf(confirmOverwriteMsg, configFilePath))
+	return command.Confirm(os.Stdin, fmt.Sprintf(confirmOverwriteMsg, configFilePath)) // TODO ビルドを通すための仮実装
 }
 
 func CheckConfigVersion() error {
@@ -71,7 +71,7 @@ func CheckConfigVersion() error {
 
 	// exists?
 	if _, err := os.Stat(src); err == nil {
-		fmt.Fprintf(command.GlobalOption.Err, migrateInfoMsg, src)
+		fmt.Fprintf(os.Stdout, migrateInfoMsg, src) // TODO ビルドを通すための仮実装
 	}
 
 	return nil
@@ -119,6 +119,6 @@ func MigrateConfig() error {
 		return fmt.Errorf("Migrating [%q] to [%q] is failed: %s", src, dest, err)
 	}
 
-	printer.Fprintf(command.GlobalOption.Out, color.New(color.FgGreen), "\nMigrated: [%q] to [%q]\n", src, dest)
+	printer.Fprintf(os.Stdout, color.New(color.FgGreen), "\nMigrated: [%q] to [%q]\n", src, dest) // TODO ビルドを通すための仮実装
 	return nil
 }

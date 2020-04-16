@@ -91,7 +91,7 @@ func DatabaseClone(ctx command.Context, params *params.CloneDatabaseParam) error
 	err = internal.ExecWithProgress(
 		fmt.Sprintf("Still cloning[ID:%d]...", res.ID),
 		fmt.Sprintf("Clone database[ID:%d]", res.ID),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			err := api.SleepWhileCopying(res.ID, client.DefaultTimeoutDuration, 20)

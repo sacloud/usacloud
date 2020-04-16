@@ -38,7 +38,7 @@ func MobileGatewayShutdown(ctx command.Context, params *params.ShutdownMobileGat
 	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still waiting for Shutdown[ID:%d]...", params.Id),
 		fmt.Sprintf("Shutdown mobile-gateway[ID:%d]", params.Id),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			var err error

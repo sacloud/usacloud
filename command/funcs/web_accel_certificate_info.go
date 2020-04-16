@@ -31,7 +31,7 @@ func WebAccelCertificateInfo(ctx command.Context, params *params.CertificateInfo
 	}
 
 	if p == nil {
-		fmt.Fprintf(command.GlobalOption.Err, "Result is empty\n")
+		fmt.Fprintf(ctx.IO().Err(), "Result is empty\n")
 		return nil
 	}
 

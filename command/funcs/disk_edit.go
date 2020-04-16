@@ -21,6 +21,7 @@ import (
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
+	"github.com/sacloud/usacloud/pkg/utils"
 )
 
 func DiskEdit(ctx command.Context, params *params.EditDiskParam) error {
@@ -33,7 +34,7 @@ func DiskEdit(ctx command.Context, params *params.EditDiskParam) error {
 	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still editing[ID:%d]...", params.Id),
 		fmt.Sprintf("Edit disk[ID:%d]", params.Id),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			_, err := api.Config(params.Id, p)
@@ -74,13 +75,13 @@ func buildDiskEditValue(ctx command.Context, params *params.EditDiskParam) *sacl
 		p.SetPassword(params.Password)
 	}
 	if ctx.IsSet("ssh-key-ids") {
-		p.SetSSHKeys(command.StringIDs(params.SSHKeyIds))
+		p.SetSSHKeys(utils.StringIDs(params.SSHKeyIds))
 	}
 	if ctx.IsSet("disable-password-auth") {
 		p.SetDisablePWAuth(params.DisablePasswordAuth)
 	}
 	if ctx.IsSet("startup-script-ids") {
-		p.SetNotes(command.StringIDs(params.StartupScriptIds))
+		p.SetNotes(utils.StringIDs(params.StartupScriptIds))
 	}
 	if ctx.IsSet("ipaddress") {
 		p.SetUserIPAddress(params.Ipaddress)

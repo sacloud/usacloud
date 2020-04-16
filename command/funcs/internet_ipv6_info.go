@@ -37,7 +37,7 @@ func InternetIPv6Info(ctx command.Context, params *params.IPv6InfoInternetParam)
 	}
 
 	if len(sw.IPv6Nets) == 0 {
-		fmt.Fprintln(command.GlobalOption.Err, "IPv6 is disabled on this resource")
+		fmt.Fprintln(ctx.IO().Err(), "IPv6 is disabled on this resource")
 		return nil
 	}
 

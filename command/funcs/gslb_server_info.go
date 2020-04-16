@@ -31,7 +31,7 @@ func GSLBServerInfo(ctx command.Context, params *params.ServerInfoGSLBParam) err
 	}
 
 	if len(p.Settings.GSLB.Servers) == 0 {
-		fmt.Fprintf(command.GlobalOption.Err, "GSLB don't have any servers\n")
+		fmt.Fprintf(ctx.IO().Err(), "GSLB don't have any servers\n")
 		return nil
 	}
 

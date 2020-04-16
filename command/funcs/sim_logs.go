@@ -34,7 +34,7 @@ func SIMLogs(ctx command.Context, params *params.LogsSIMParam) error {
 	}
 
 	logBuf := internal.NewHashQueue(500)
-	out := command.GlobalOption.Out
+	out := ctx.IO().Out()
 
 	if params.Follow {
 		for {
@@ -64,7 +64,7 @@ func SIMLogs(ctx command.Context, params *params.LogsSIMParam) error {
 		}
 
 		if len(logs) == 0 {
-			fmt.Fprintf(command.GlobalOption.Err, "Result is empty\n")
+			fmt.Fprintf(ctx.IO().Err(), "Result is empty\n")
 			return nil
 		}
 

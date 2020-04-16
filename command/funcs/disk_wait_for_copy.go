@@ -35,7 +35,7 @@ func DiskWaitForCopy(ctx command.Context, params *params.WaitForCopyDiskParam) e
 	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still copying[ID:%d]...", params.Id),
 		fmt.Sprintf("Copy disk[ID:%d]", params.Id),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			err := api.SleepWhileCopying(p.ID, client.DefaultTimeoutDuration)
 			if err != nil {

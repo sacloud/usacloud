@@ -39,7 +39,7 @@ func ServerVncSend(ctx command.Context, params *params.VncSendServerParam) error
 		err := internal.ExecWithProgress(
 			fmt.Sprintf("Still booting[ID:%d]...", params.Id),
 			fmt.Sprintf("Connect to server[ID:%d]", params.Id),
-			command.GlobalOption.Progress,
+			ctx.IO().Progress(),
 			func(compChan chan bool, errChan chan error) {
 				// call manipurate functions
 				err := api.SleepUntilUp(params.Id, client.DefaultTimeoutDuration)
@@ -77,7 +77,7 @@ func ServerVncSend(ctx command.Context, params *params.VncSendServerParam) error
 	option := server.NewSendCommandOption()
 	option.UseUSKeyboard = params.UseUsKeyboard
 	option.Debug = params.Debug
-	option.ProgressWriter = command.GlobalOption.Progress
+	option.ProgressWriter = ctx.IO().Progress()
 
 	// VNCProxy(call sacloud API)
 	vncProxyInfo, e := api.GetVNCProxy(params.Id)

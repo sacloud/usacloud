@@ -34,7 +34,8 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 		DefaultOutputType: params.DefaultOutputType,
 	}
 	needAsk := inputParams.IsEmpty()
-	out := command.GlobalOption.Out
+	in := ctx.IO().In()
+	out := ctx.IO().Out()
 
 	// load current config file
 	profileName := ""
@@ -71,7 +72,7 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 		// if token is exists on config file , confirm whether to change value
 		doChange := true
 		if exists {
-			doChange = command.ConfirmContinue("change token setting")
+			doChange = command.ConfirmContinue(in, "change token setting")
 		} else {
 			fmt.Fprintf(out, "\n")
 		}
@@ -80,7 +81,7 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 			// read input
 			var input string
 			fmt.Fprintf(out, "\t%s: ", "Enter token")
-			fmt.Fscanln(command.GlobalOption.In, &input)
+			fmt.Fscanln(in, &input)
 			inputParams.AccessToken = input
 		} else {
 			inputParams.AccessToken = conf.AccessToken
@@ -106,7 +107,7 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 		// if secret is exists on config file , confirm whether to change value
 		doChange := true
 		if exists {
-			doChange = command.ConfirmContinue("change secret setting")
+			doChange = command.ConfirmContinue(in, "change secret setting")
 		} else {
 			fmt.Fprintf(out, "\n")
 		}
@@ -115,7 +116,7 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 			// read input
 			var input string
 			fmt.Fprintf(out, "\t%s: ", "Enter secret")
-			fmt.Fscanln(command.GlobalOption.In, &input)
+			fmt.Fscanln(in, &input)
 			inputParams.AccessTokenSecret = input
 		} else {
 			inputParams.AccessTokenSecret = conf.AccessTokenSecret
@@ -141,7 +142,7 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 		// if secret is exists on config file , confirm whether to change value
 		doChange := true
 		if exists {
-			doChange = command.ConfirmContinue("change zone setting")
+			doChange = command.ConfirmContinue(in, "change zone setting")
 		} else {
 			fmt.Fprintf(out, "\n")
 		}
@@ -151,7 +152,7 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 			var input string
 			for {
 				fmt.Fprintf(out, "\n\t%s[%s]: ", "Enter zone", strings.Join(define.AllowZones, "/"))
-				fmt.Fscanln(command.GlobalOption.In, &input)
+				fmt.Fscanln(in, &input)
 
 				if errs := validateInStrValues("", input, define.AllowZones...); len(errs) == 0 {
 					break
@@ -184,7 +185,7 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 		// if value is exists on config file , confirm whether to change value
 		doChange := true
 		if exists {
-			doChange = command.ConfirmContinue("change output setting")
+			doChange = command.ConfirmContinue(in, "change output setting")
 		} else {
 			fmt.Fprintf(out, "\n")
 		}
@@ -194,7 +195,7 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 			var input string
 			for {
 				fmt.Fprintf(out, "\n\t%s[%s]: ", "Enter default-output-type", strings.Join(define.AllowOutputTypes, "/"))
-				fmt.Fscanln(command.GlobalOption.In, &input)
+				fmt.Fscanln(in, &input)
 
 				if errs := validateInStrValues("", input, define.AllowOutputTypes...); len(errs) == 0 {
 					break

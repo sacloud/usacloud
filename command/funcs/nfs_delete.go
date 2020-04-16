@@ -38,7 +38,7 @@ func NFSDelete(ctx command.Context, params *params.DeleteNFSParam) error {
 			err = internal.ExecWithProgress(
 				fmt.Sprintf("Still waiting for delete[ID:%d]...", params.Id),
 				fmt.Sprintf("Delete nfs[ID:%d]", params.Id),
-				command.GlobalOption.Progress,
+				ctx.IO().Progress(),
 				func(compChan chan bool, errChan chan error) {
 					// call manipurate functions
 					var err error

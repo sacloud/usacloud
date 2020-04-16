@@ -31,7 +31,7 @@ func VPCRouterDhcpStaticMappingInfo(ctx command.Context, params *params.DhcpStat
 	}
 
 	if !p.HasDHCPStaticMapping() {
-		fmt.Fprintf(command.GlobalOption.Err, "VPCRouter[%d] don't have any DHCP static mappings\n", params.Id)
+		fmt.Fprintf(ctx.IO().Err(), "VPCRouter[%d] don't have any DHCP static mappings\n", params.Id)
 		return nil
 	}
 

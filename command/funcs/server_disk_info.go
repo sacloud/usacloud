@@ -32,7 +32,7 @@ func ServerDiskInfo(ctx command.Context, params *params.DiskInfoServerParam) err
 
 	disks := p.GetDisks()
 	if len(disks) == 0 {
-		fmt.Fprintf(command.GlobalOption.Err, "Server don't have any disks\n")
+		fmt.Fprintf(ctx.IO().Err(), "Server don't have any disks\n")
 		return nil
 	}
 

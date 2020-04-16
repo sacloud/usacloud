@@ -41,7 +41,7 @@ func MobileGatewaySIMRouteAdd(ctx command.Context, params *params.SIMRouteAddMob
 	}
 
 	if _, exists := routes.FindSIMRoute(params.SIM, params.Prefix); exists != nil {
-		fmt.Fprintf(command.GlobalOption.Out, "SIM Route[%s -> %d] already exists", params.Prefix, params.SIM)
+		fmt.Fprintf(ctx.IO().Out(), "SIM Route[%s -> %d] already exists", params.Prefix, params.SIM)
 		return nil
 	}
 

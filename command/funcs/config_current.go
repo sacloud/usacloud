@@ -29,6 +29,6 @@ func ConfigCurrent(ctx command.Context, params *params.CurrentConfigParam) error
 		return fmt.Errorf("ConfigCurrent is failed: %s", err)
 	}
 
-	fmt.Fprintf(command.GlobalOption.Out, "%s\n", p)
+	fmt.Fprintf(ctx.IO().Out(), "%s\n", p)
 	return nil
 }

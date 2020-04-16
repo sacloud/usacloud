@@ -31,7 +31,7 @@ func VPCRouterPortForwardingInfo(ctx command.Context, params *params.PortForward
 	}
 
 	if !p.HasPortForwarding() {
-		fmt.Fprintf(command.GlobalOption.Err, "VPCRouter[%d] don't have any port-forwarding settings\n", params.Id)
+		fmt.Fprintf(ctx.IO().Err(), "VPCRouter[%d] don't have any port-forwarding settings\n", params.Id)
 		return nil
 	}
 

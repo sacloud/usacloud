@@ -24,7 +24,6 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/command"
 )
 
 func setSortBy(target sortable, key string) {
@@ -140,7 +139,7 @@ func parseDateTimeString(strDateTime string) time.Time {
 
 func fileOrStdin(path string) (file *os.File, deferFunc func(), err error) {
 	if path == "" || path == "-" {
-		file = command.GlobalOption.In
+		file = os.Stdin // TODO ビルドを通すための仮実装
 		deferFunc = func() {}
 	} else {
 		file, err = os.Open(path)

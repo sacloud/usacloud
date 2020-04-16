@@ -48,7 +48,7 @@ func ISOImageCreate(ctx command.Context, params *params.CreateISOImageParam) err
 	err = internal.ExecWithProgress(
 		fmt.Sprintf("Still uploading[ID:%d]...", res.ID),
 		fmt.Sprintf("Upload iso-image[ID:%d]", res.ID),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 
 			file, df, err := fileOrStdin(params.GetISOFile())

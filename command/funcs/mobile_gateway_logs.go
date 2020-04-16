@@ -36,7 +36,7 @@ func MobileGatewayLogs(ctx command.Context, params *params.LogsMobileGatewayPara
 	}
 
 	logBuf := internal.NewHashQueue(500)
-	out := command.GlobalOption.Out
+	out := ctx.IO().Out()
 
 	if params.Follow {
 		for {
@@ -66,7 +66,7 @@ func MobileGatewayLogs(ctx command.Context, params *params.LogsMobileGatewayPara
 		}
 
 		if len(logs) == 0 {
-			fmt.Fprintf(command.GlobalOption.Err, "Result is empty\n")
+			fmt.Fprintf(ctx.IO().Err(), "Result is empty\n")
 			return nil
 		}
 

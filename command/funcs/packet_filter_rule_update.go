@@ -31,7 +31,7 @@ func PacketFilterRuleUpdate(ctx command.Context, params *params.RuleUpdatePacket
 	}
 
 	if len(p.Expression) == 0 {
-		fmt.Fprintf(command.GlobalOption.Err, "PacketFilter1 don't have any rules\n")
+		fmt.Fprintf(ctx.IO().Err(), "PacketFilter1 don't have any rules\n")
 		return nil
 	}
 

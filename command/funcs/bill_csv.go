@@ -62,7 +62,7 @@ func BillCsv(ctx command.Context, params *params.CsvBillParam) error {
 		return fmt.Errorf("BillCsv is failed: %s", err)
 	}
 
-	var out = command.GlobalOption.Out
+	var out = ctx.IO().Out()
 	if params.BillOutput != "" {
 		file, err := os.Create(params.BillOutput)
 		if err != nil {

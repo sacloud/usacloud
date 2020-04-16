@@ -56,7 +56,7 @@ func MobileGatewayCreate(ctx command.Context, params *params.CreateMobileGateway
 	err = internal.ExecWithProgress(
 		fmt.Sprintf("Still creating..."),
 		fmt.Sprintf("Create mobile-gateway"),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			// call Create(id)

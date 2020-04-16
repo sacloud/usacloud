@@ -29,7 +29,7 @@ func ConfigList(ctx command.Context, params *params.ListConfigParam) error {
 	}
 
 	for _, p := range profiles {
-		fmt.Fprintln(command.GlobalOption.Out, p)
+		fmt.Fprintln(ctx.IO().Out(), p)
 	}
 	return nil
 }

@@ -33,7 +33,7 @@ func LoadBalancerVipInfo(ctx command.Context, params *params.VipInfoLoadBalancer
 
 	vips := p.Settings.LoadBalancer
 	if len(vips) == 0 {
-		fmt.Fprintf(command.GlobalOption.Err, "LoadBalancer don't have any VIPs\n")
+		fmt.Fprintf(ctx.IO().Err(), "LoadBalancer don't have any VIPs\n")
 		return nil
 	}
 

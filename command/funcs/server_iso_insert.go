@@ -34,7 +34,7 @@ func ServerISOInsert(ctx command.Context, params *usacloud_params.ISOInsertServe
 	}
 
 	if p.Instance.CDROM != nil && p.Instance.CDROM.ID != sacloud.EmptyID {
-		fmt.Fprint(command.GlobalOption.Err, "ISOImage is already inserted to server\n")
+		fmt.Fprint(ctx.IO().Err(), "ISOImage is already inserted to server\n")
 		return nil
 	}
 
@@ -63,7 +63,7 @@ func ServerISOInsert(ctx command.Context, params *usacloud_params.ISOInsertServe
 		err = internal.ExecWithProgress(
 			fmt.Sprintf("Still uploading[ID:%d]...", params.Id),
 			fmt.Sprintf("Upload iso-image[ID:%d]", params.Id),
-			command.GlobalOption.Progress,
+			ctx.IO().Progress(),
 			func(compChan chan bool, errChan chan error) {
 
 				file, df, err := fileOrStdin(params.GetISOFile())

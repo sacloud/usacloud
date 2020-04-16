@@ -50,7 +50,7 @@ func ServerRemoteDesktopInfo(ctx command.Context, params *params.RemoteDesktopIn
 		IPAddress: ip,
 	}
 
-	fmt.Fprint(command.GlobalOption.Out, rdpClient.RDPFileContent())
+	fmt.Fprint(ctx.IO().Out(), rdpClient.RDPFileContent())
 	return nil
 
 }

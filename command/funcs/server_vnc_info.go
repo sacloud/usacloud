@@ -37,7 +37,7 @@ func ServerVncInfo(ctx command.Context, params *params.VncInfoServerParam) error
 		err := internal.ExecWithProgress(
 			fmt.Sprintf("Still booting[ID:%d]...", params.Id),
 			fmt.Sprintf("Connect to server[ID:%d]", params.Id),
-			command.GlobalOption.Progress,
+			ctx.IO().Progress(),
 			func(compChan chan bool, errChan chan error) {
 				// call manipurate functions
 				err := api.SleepUntilUp(params.Id, client.DefaultTimeoutDuration)

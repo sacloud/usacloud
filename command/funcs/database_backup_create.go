@@ -32,14 +32,14 @@ func DatabaseBackupCreate(ctx command.Context, params *params.BackupCreateDataba
 	}
 
 	if !info.IsUp() {
-		fmt.Fprintf(command.GlobalOption.Err, "Databaes is not running\n")
+		fmt.Fprintf(ctx.IO().Err(), "Databaes is not running\n")
 		return nil
 	}
 
 	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still creating backup[ID:%d]...", params.Id),
 		fmt.Sprintf("Backup Database[ID:%d]", params.Id),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			_, err := api.Backup(params.Id)

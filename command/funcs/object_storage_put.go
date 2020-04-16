@@ -57,7 +57,7 @@ func ObjectStoragePut(ctx command.Context, params *params.PutObjectStorageParam)
 				return fmt.Errorf("--recursie can't be used with STDIN")
 			}
 			// validate stdin
-			fi, err := command.GlobalOption.In.Stat()
+			fi, err := os.Stdin.Stat() // TODO ビルドを通すための仮実装
 			if err != nil {
 				return fmt.Errorf("STDIN Stat() is failed: %s", err)
 			}
@@ -111,7 +111,7 @@ func ObjectStoragePut(ctx command.Context, params *params.PutObjectStorageParam)
 
 	if useStdIn {
 		putFunc = func() error {
-			return objectStoragePutReaderMultiNonSeeker(destPath, command.GlobalOption.In, bucket, params.ContentType)
+			return objectStoragePutReaderMultiNonSeeker(destPath, ctx.IO().In(), bucket, params.ContentType)
 		}
 	} else {
 		if srcInfo.IsDir() {
@@ -133,7 +133,7 @@ func ObjectStoragePut(ctx command.Context, params *params.PutObjectStorageParam)
 	return internal.ExecWithProgress(
 		fmt.Sprintf("Still uploading[%q]...", progressLabel),
 		fmt.Sprintf("Upload [%q]", progressLabel),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			if err := putFunc(); err != nil {
 				errChan <- err

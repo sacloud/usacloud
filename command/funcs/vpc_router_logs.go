@@ -33,15 +33,15 @@ func VPCRouterLogs(ctx command.Context, params *params.LogsVPCRouterParam) error
 
 	// validate params
 	if params.Follow && params.LogName == "all" {
-		fmt.Fprintf(command.GlobalOption.Err, "[WARN] -f/--follow option can not use with --log-name=%q, ignored", "all")
+		fmt.Fprintf(ctx.IO().Err(), "[WARN] -f/--follow option can not use with --log-name=%q, ignored", "all")
 		params.Follow = false
 	}
 	if ctx.IsSet("refresh-interval") && params.LogName == "all" {
-		fmt.Fprintf(command.GlobalOption.Err, "[WARN] --refresh-interval option can not use with --log-name=%q, ignored", "all")
+		fmt.Fprintf(ctx.IO().Err(), "[WARN] --refresh-interval option can not use with --log-name=%q, ignored", "all")
 	}
 
 	logBuf := internal.NewHashQueue(500)
-	out := command.GlobalOption.Out
+	out := ctx.IO().Out()
 
 	if params.ListLogNames {
 		for _, name := range define.AllowVPCRouterLogNames {

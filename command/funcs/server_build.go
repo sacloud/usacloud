@@ -265,7 +265,7 @@ func handleDiskEvents(sb serverBuilder, ctx command.Context, params *params.Buil
 		progCreate := internal.NewProgress(
 			"Still creating disk...",
 			"Create disk",
-			command.GlobalOption.Progress)
+			ctx.IO().Progress())
 		sb.SetDiskEventHandler(builder.DiskBuildOnCreateDiskBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCreate.Start()
 		})
@@ -277,7 +277,7 @@ func handleDiskEvents(sb serverBuilder, ctx command.Context, params *params.Buil
 		progCleanupNotes := internal.NewProgress(
 			"Still cleaning StartupScript...",
 			"Cleanup StartupScript",
-			command.GlobalOption.Progress)
+			ctx.IO().Progress())
 		sb.SetDiskEventHandler(builder.DiskBuildOnCleanupNoteBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCleanupNotes.Start()
 		})
@@ -289,7 +289,7 @@ func handleDiskEvents(sb serverBuilder, ctx command.Context, params *params.Buil
 		progCleanupSSHKey := internal.NewProgress(
 			"Still cleaning SSHKey...",
 			"Cleanup SSHKey",
-			command.GlobalOption.Progress)
+			ctx.IO().Progress())
 		sb.SetDiskEventHandler(builder.DiskBuildOnCleanupSSHKeyBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCleanupSSHKey.Start()
 		})
@@ -307,7 +307,7 @@ func handleServerEvents(sb serverBuilder, ctx command.Context, params *params.Bu
 		progCreate := internal.NewProgress(
 			"Still creating server...",
 			"Create server",
-			command.GlobalOption.Progress)
+			ctx.IO().Progress())
 
 		sb.SetEventHandler(builder.ServerBuildOnCreateServerBefore, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
 			progCreate.Start()
@@ -319,7 +319,7 @@ func handleServerEvents(sb serverBuilder, ctx command.Context, params *params.Bu
 		progBoot := internal.NewProgress(
 			"Still booting server...",
 			"Boot server",
-			command.GlobalOption.Progress)
+			ctx.IO().Progress())
 
 		sb.SetEventHandler(builder.ServerBuildOnBootBefore, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
 			progBoot.Start()

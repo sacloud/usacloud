@@ -37,7 +37,7 @@ func InternetIPv6Enable(ctx command.Context, params *params.IPv6EnableInternetPa
 	}
 
 	if len(sw.IPv6Nets) > 0 {
-		fmt.Fprintln(command.GlobalOption.Err, "IPv6 is already enabled on this resource")
+		fmt.Fprintln(ctx.IO().Err(), "IPv6 is already enabled on this resource")
 		return nil
 	}
 

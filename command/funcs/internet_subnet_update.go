@@ -35,7 +35,7 @@ func InternetSubnetUpdate(ctx command.Context, params *params.SubnetUpdateIntern
 	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still updating[ID:%d]...", params.SubnetId),
 		fmt.Sprintf("Update subnet[ID:%d]", params.SubnetId),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			subnet, err := api.UpdateSubnet(params.Id, params.SubnetId, params.NextHop)
 			if err != nil {

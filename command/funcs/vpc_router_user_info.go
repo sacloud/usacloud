@@ -31,7 +31,7 @@ func VPCRouterUserInfo(ctx command.Context, params *params.UserInfoVPCRouterPara
 	}
 
 	if !p.HasRemoteAccessUsers() {
-		fmt.Fprintf(command.GlobalOption.Err, "VPCRouter[%d] don't have any remote-access users\n", params.Id)
+		fmt.Fprintf(ctx.IO().Err(), "VPCRouter[%d] don't have any remote-access users\n", params.Id)
 		return nil
 	}
 

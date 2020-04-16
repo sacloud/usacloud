@@ -32,7 +32,7 @@ func ServerISOInfo(ctx command.Context, params *params.ISOInfoServerParam) error
 	}
 
 	if p.Instance.CDROM == nil || p.Instance.CDROM.ID == sacloud.EmptyID {
-		fmt.Fprintf(command.GlobalOption.Err, "ISOImage isnot inserted to server\n")
+		fmt.Fprintf(ctx.IO().Err(), "ISOImage isnot inserted to server\n")
 		return nil
 	}
 

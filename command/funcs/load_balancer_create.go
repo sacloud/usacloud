@@ -82,7 +82,7 @@ func LoadBalancerCreate(ctx command.Context, params *params.CreateLoadBalancerPa
 	err = internal.ExecWithProgress(
 		fmt.Sprintf("Still creating[ID:%d]...", res.ID),
 		fmt.Sprintf("Create load-balancer[ID:%d]", res.ID),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			err := api.SleepWhileCopying(res.ID, client.DefaultTimeoutDuration, 20)

@@ -38,7 +38,7 @@ func VPCRouterWaitForDown(ctx command.Context, params *params.WaitForDownVPCRout
 	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still waiting for Shutdown[ID:%d]...", params.Id),
 		fmt.Sprintf("Shutdown vpc-router[ID:%d]", params.Id),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			err := api.SleepUntilDown(params.Id, client.DefaultTimeoutDuration)

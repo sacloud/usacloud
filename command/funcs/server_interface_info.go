@@ -32,7 +32,7 @@ func ServerInterfaceInfo(ctx command.Context, params *params.InterfaceInfoServer
 
 	interfaces := p.GetInterfaces()
 	if len(interfaces) == 0 {
-		fmt.Fprintf(command.GlobalOption.Err, "Server don't have any interfaces\n")
+		fmt.Fprintf(ctx.IO().Err(), "Server don't have any interfaces\n")
 		return nil
 	}
 

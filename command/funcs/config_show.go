@@ -40,7 +40,7 @@ func ConfigShow(ctx command.Context, params *params.ShowConfigParam) error {
 		return err
 	}
 
-	out := command.GlobalOption.Out
+	out := ctx.IO().Out()
 	fmt.Fprintf(out, "\n")
 	fmt.Fprintf(out, "token               = %s\n", conf.AccessToken)
 	fmt.Fprintf(out, "secret              = %s\n", conf.AccessTokenSecret)

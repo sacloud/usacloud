@@ -31,11 +31,11 @@ func DatabaseBackupUnlock(ctx command.Context, params *params.BackupUnlockDataba
 	}
 
 	if !info.IsUp() {
-		fmt.Fprintf(command.GlobalOption.Err, "Databaes is not running\n")
+		fmt.Fprintf(ctx.IO().Err(), "Databaes is not running\n")
 		return nil
 	}
 	if !hasDatabaseBackup(info) {
-		fmt.Fprintf(command.GlobalOption.Err, "There is no backup in the database\n")
+		fmt.Fprintf(ctx.IO().Err(), "There is no backup in the database\n")
 		return nil
 	}
 	// index

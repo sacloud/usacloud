@@ -44,7 +44,7 @@ func ArchiveUpload(ctx command.Context, params *params.UploadArchiveParam) error
 	err = internal.ExecWithProgress(
 		fmt.Sprintf("Still uploading[ID:%d]...", params.Id),
 		fmt.Sprintf("Upload archive[ID:%d]", params.Id),
-		command.GlobalOption.Progress,
+		ctx.IO().Progress(),
 		func(compChan chan bool, errChan chan error) {
 			file, df, err := fileOrStdin(params.GetArchiveFile())
 			if err != nil {

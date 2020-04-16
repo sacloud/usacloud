@@ -35,6 +35,6 @@ func ConfigUse(ctx command.Context, params *params.UseConfigParam) error {
 		return err
 	}
 
-	printer.Fprintf(command.GlobalOption.Out, color.New(color.FgHiGreen), "\nCurrent profile: %q\n", profileName)
+	printer.Fprintf(ctx.IO().Out(), color.New(color.FgHiGreen), "\nCurrent profile: %q\n", profileName)
 	return nil
 }
