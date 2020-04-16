@@ -27,12 +27,6 @@ import (
 )
 
 type GenerateContext struct {
-	// for v0
-	R           string
-	C           string
-	P           string
-	ResourceDef map[string]*schema.Resource
-	// for v1
 	Resources            []*Resource
 	CategorizedResources []*CategorizedResources
 }
@@ -43,9 +37,7 @@ type CategorizedResources struct {
 }
 
 func NewGenerateContext() *GenerateContext {
-	ctx := &GenerateContext{
-		ResourceDef: define.Resources,
-	}
+	ctx := &GenerateContext{}
 	for rn, r := range define.Resources {
 		ctx.Resources = append(ctx.Resources, NewResource(rn, r))
 	}
