@@ -14,8 +14,8 @@
 
 package main
 
-import "github.com/sacloud/usacloud/command/cli"
+import "github.com/sacloud/usacloud/pkg/cmd"
 
 func main() {
-	cli.Execute()
+	cmd.Execute()
 }

@@ -27,10 +27,10 @@ export GOPROXY=https://proxy.golang.org
 
 .PHONY: build-envs
 build-envs:
-	$(eval CURRENT_VERSION ?= $(shell gobump show -r version/))
+	$(eval CURRENT_VERSION ?= $(shell gobump show -r pkg/version/))
 	$(eval BUILD_LDFLAGS := "-s -w \
-           -X github.com/sacloud/usacloud/version.Revision=`git rev-parse --short HEAD` \
-           -X github.com/sacloud/usacloud/version.Version=$(CURRENT_VERSION)")
+           -X github.com/sacloud/usacloud/pkg/version.Revision=`git rev-parse --short HEAD` \
+           -X github.com/sacloud/usacloud/pkg/version.Version=$(CURRENT_VERSION)")
 
 .PHONY: default
 default: test build
@@ -45,11 +45,7 @@ clean:
 
 .PHONY: clean-all
 clean-all:
-	rm -Rf bin/* ; rm -Rf tools/bin/* ; rm -f command/*_gen.go; \
-	rm -f command/cli/*_gen.go \
-	rm -f command/funcs/*_gen.go \
-	rm -f command/params/*_gen.go
-
+	rm -Rf bin/* ; rm -Rf tools/bin/* ; rm -f pkg/*/*_gen.go
 
 .PHONY: tools
 tools:
@@ -59,14 +55,12 @@ tools:
 	GO111MODULE=off go get github.com/sacloud/addlicense
 
 .PHONY: gen
-gen: command/*/*_gen.go set-license fmt goimports
+gen: pkg/*/*_gen.go set-license fmt goimports
 
 .PHONY: gen-force
-gen-force: clean-all _gen-force set-license fmt goimports
-_gen-force: 
-	go generate ./...
+gen-force: clean-all gen
 
-command/*/*_gen.go: define/*.go tools/gen-*/*.go tools/*.go
+pkg/*/*_gen.go: pkg/define/*.go tools/gen-*/*.go tools/*.go
 	go generate ./...
 
 .PHONY: build build-x build-darwin build-windows build-linux
@@ -180,11 +174,8 @@ bump-minor:
 bump-major:
 	gobump major -w
 
-version:
-	gobump show
-
 git-tag:
-	git tag v`gobump show -r`
+	git tag v`gobump show -r pkg/version`
 
 set-license:
 	@addlicense -c $(AUTHOR) -y $(COPYRIGHT_YEAR) $(COPYRIGHT_FILES)

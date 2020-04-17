@@ -20,7 +20,7 @@ import (
 
 	"github.com/sacloud/usacloud/pkg/utils"
 
-	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/pkg/schema"
 )
 
 // Command コード生成時に利用するコマンド定義

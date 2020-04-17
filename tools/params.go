@@ -22,7 +22,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 
-	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/pkg/schema"
 )
 
 // Parameter コード生成時に利用するパラメータ定義

@@ -23,13 +23,13 @@ import (
 	"path/filepath"
 	"text/template"
 
-	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/tools"
 	"github.com/sacloud/usacloud/tools/gen-command-funcs/internal"
 )
 
 var (
-	destination = "src/github.com/sacloud/usacloud/command/funcs"
+	destination = "src/github.com/sacloud/usacloud/pkg/funcs"
 	ctx         = tools.NewGenerateContext()
 )
 
@@ -107,12 +107,12 @@ package funcs
 
 import (
     "fmt"
-    "github.com/sacloud/usacloud/command"
-    "github.com/sacloud/usacloud/command/params"
+    "github.com/sacloud/usacloud/pkg/cli"
+    "github.com/sacloud/usacloud/pkg/params"
     "github.com/sacloud/usacloud/pkg/utils"
 )
 
-func {{.FuncName}}(ctx command.Context, params *params.{{.ParamName}}) error {
+func {{.FuncName}}(ctx cli.Context, params *params.{{.ParamName}}) error {
     {{.Action}}
 }
 `

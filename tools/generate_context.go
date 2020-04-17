@@ -20,10 +20,9 @@ import (
 	"path/filepath"
 	"sort"
 
-	"github.com/sacloud/usacloud/version"
-
-	"github.com/sacloud/usacloud/define"
-	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/schema"
+	"github.com/sacloud/usacloud/pkg/version"
 )
 
 type GenerateContext struct {

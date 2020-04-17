@@ -28,7 +28,7 @@ import (
 )
 
 var (
-	destination = "src/github.com/sacloud/usacloud/command/params"
+	destination = "src/github.com/sacloud/usacloud/pkg/params"
 	ctx         = tools.NewGenerateContext()
 )
 
@@ -96,9 +96,9 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/define"
-	"github.com/sacloud/usacloud/schema"
-	"github.com/sacloud/usacloud/output"
+	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/schema"
+	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/sacloud/usacloud/pkg/validation"
 )
