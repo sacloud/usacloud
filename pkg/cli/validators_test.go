@@ -297,6 +297,8 @@ func TestValidateOutputOption(t *testing.T) {
 
 	// do table-driven test
 	for _, expect := range expects {
+		// TODO グローバルオプションの扱いが確定したら修正する
+		GlobalOption = &CLIOptions{}
 		t.Run(expect.testName, func(t *testing.T) {
 			if expect.option.defaultOutputType == "" {
 				GlobalOption.DefaultOutputType = "table"

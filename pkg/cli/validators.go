@@ -132,7 +132,7 @@ func ValidateBetween(fieldName string, object interface{}, min int, max int) []e
 
 func ValidateOutputOption(o output.Option) []error {
 
-	//defaultOutputType := GlobalOption.DefaultOutputType // TODO グローバルオプションの扱いが確定したら修正する
+	defaultOutputType := GlobalOption.DefaultOutputType
 	outputType := o.GetOutputType()
 	columns := o.GetColumn()
 	format := o.GetFormat()
@@ -150,19 +150,18 @@ func ValidateOutputOption(o output.Option) []error {
 		return []error{fmt.Errorf("%q: can't set with --query-file", "--query")}
 	}
 
-	// TODO グローバルオプションの扱いが確定したら修正する
 	// format(or format-file) with output-type
-	//if outputType != defaultOutputType {
-	//	cannotWith := map[string]string{
-	//		"--format":      format,
-	//		"--format-file": formatFile,
-	//	}
-	//	for k, v := range cannotWith {
-	//		if v != "" {
-	//			return []error{fmt.Errorf("%q: can't set with --output-type", k)}
-	//		}
-	//	}
-	//}
+	if outputType != defaultOutputType {
+		cannotWith := map[string]string{
+			"--format":      format,
+			"--format-file": formatFile,
+		}
+		for k, v := range cannotWith {
+			if v != "" {
+				return []error{fmt.Errorf("%q: can't set with --output-type", k)}
+			}
+		}
+	}
 
 	// format-file is exists?
 	if formatFile != "" {
@@ -184,11 +183,10 @@ func ValidateOutputOption(o output.Option) []error {
 			}
 		}
 
-		// TODO グローバルオプションの扱いが確定したら修正する
-		//// quiet with output-type
-		//if outputType != defaultOutputType {
-		//	return []error{fmt.Errorf("%q: can't set with %s", "--quiet", outputType)}
-		//}
+		// quiet with output-type
+		if outputType != defaultOutputType {
+			return []error{fmt.Errorf("%q: can't set with %s", "--quiet", outputType)}
+		}
 	}
 
 	// columns only allow when outputType is tsv/csv
