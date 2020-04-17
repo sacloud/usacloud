@@ -22,7 +22,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 
-	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/pkg/schema"
 )
 
 // Parameter コード生成時に利用するパラメータ定義
@@ -55,6 +55,10 @@ func (p *Parameter) LongAliases() []string {
 
 func (p *Parameter) FlagName() string {
 	return ToDashedName(p.Name)
+}
+
+func (p *Parameter) FieldName() string {
+	return ToCamelCaseName(p.Name)
 }
 
 func (p *Parameter) FlagNameWithDash() string {
@@ -185,10 +189,6 @@ func (p *Parameter) DefaultValueOnSource() string {
 	default:
 		panic("unsupported type")
 	}
-}
-
-func (p *Parameter) FieldName() string {
-	return ToCamelCaseName(p.Name)
 }
 
 func (p *Parameter) FieldTypeName() string {
@@ -356,4 +356,20 @@ func (p *Parameter) ValidatorStatements() string {
 	}
 
 	return validatorBuf.String()
+}
+
+func (p *Parameter) SetterFuncName() string {
+	n := p.DestinationProp
+	if n == "" {
+		n = fmt.Sprintf("Set%s", ToCamelCaseName(p.Name))
+	}
+	return n
+}
+
+func (p *Parameter) DestinationName() string {
+	n := p.DestinationProp
+	if n == "" {
+		n = ToCamelCaseName(p.Name)
+	}
+	return n
 }

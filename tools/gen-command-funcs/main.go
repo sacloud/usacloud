@@ -23,13 +23,13 @@ import (
 	"path/filepath"
 	"text/template"
 
-	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/tools"
 	"github.com/sacloud/usacloud/tools/gen-command-funcs/internal"
 )
 
 var (
-	destination = "src/github.com/sacloud/usacloud/command/funcs"
+	destination = "src/github.com/sacloud/usacloud/pkg/funcs"
 	ctx         = tools.NewGenerateContext()
 )
 
@@ -44,8 +44,7 @@ func main() {
 	log.SetFlags(0)
 	log.SetPrefix("gen-command-funcs: ")
 
-	for k, r := range ctx.ResourceDef {
-		ctx.R = k
+	for _, r := range ctx.Resources {
 		err := generateResource(r)
 		if err != nil {
 			log.Fatalf("writing output: %s", err)
@@ -53,14 +52,10 @@ func main() {
 	}
 }
 
-func generateResource(resource *schema.Resource) error {
+func generateResource(resource *tools.Resource) error {
 
 	// build commands
-	for _, comm := range resource.SortedCommands() {
-		c := comm.Command
-		k := comm.CommandKey
-
-		ctx.C = k
+	for _, c := range resource.Commands {
 		src, err := generateCommands(c)
 
 		if err != nil {
@@ -69,7 +64,7 @@ func generateResource(resource *schema.Resource) error {
 
 		// Write to file.
 		// like 'switch_command_list.go'
-		baseName := ctx.CommandFileName(c.UseCustomCommand)
+		baseName := c.CommandFileName()
 		outputName := filepath.Join(ctx.Gopath(), destination, baseName)
 
 		// target file is exist?
@@ -86,7 +81,7 @@ func generateResource(resource *schema.Resource) error {
 	return nil
 }
 
-func generateCommands(command *schema.Command) (string, error) {
+func generateCommands(command *tools.Command) (string, error) {
 	b := bytes.NewBufferString("")
 	t := template.New("c")
 	template.Must(t.Parse(commandTemplate))
@@ -97,8 +92,8 @@ func generateCommands(command *schema.Command) (string, error) {
 	}
 
 	err = t.Execute(b, map[string]interface{}{
-		"FuncName":             ctx.CommandFuncName(),
-		"ParamName":            ctx.InputModelTypeName(),
+		"FuncName":             command.FuncName(),
+		"ParamName":            command.InputModelTypeName(),
 		"Action":               action,
 		"NeedDonotEditComment": !command.UseCustomCommand,
 	})
@@ -112,16 +107,17 @@ package funcs
 
 import (
     "fmt"
-    "github.com/sacloud/usacloud/command"
-    "github.com/sacloud/usacloud/command/params"
+    "github.com/sacloud/usacloud/pkg/cli"
+    "github.com/sacloud/usacloud/pkg/params"
+    "github.com/sacloud/usacloud/pkg/utils"
 )
 
-func {{.FuncName}}(ctx command.Context, params *params.{{.ParamName}}) error {
+func {{.FuncName}}(ctx cli.Context, params *params.{{.ParamName}}) error {
     {{.Action}}
 }
 `
 
-func generateAction(command *schema.Command) (string, error) {
+func generateAction(command *tools.Command) (string, error) {
 
 	var res string
 	var err error

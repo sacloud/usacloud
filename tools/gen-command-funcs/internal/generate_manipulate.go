@@ -18,11 +18,10 @@ import (
 	"bytes"
 	"text/template"
 
-	"github.com/sacloud/usacloud/schema"
 	"github.com/sacloud/usacloud/tools"
 )
 
-func GenerateManipulateCommand(ctx *tools.GenerateContext, command *schema.Command) (string, error) {
+func GenerateManipulateCommand(ctx *tools.GenerateContext, command *tools.Command) (string, error) {
 	b := bytes.NewBufferString("")
 	t := template.New("c")
 	template.Must(t.Parse(manipulateCommandTemplate))
@@ -33,9 +32,9 @@ func GenerateManipulateCommand(ctx *tools.GenerateContext, command *schema.Comma
 	}
 
 	err = t.Execute(b, map[string]interface{}{
-		"ResourceName":    ctx.CommandResourceName(),
+		"ResourceName":    command.ResourceName(),
 		"SetParamActions": setParamActions,
-		"FuncName":        ctx.CommandFuncName(),
+		"FuncName":        command.FuncName(),
 	})
 	return b.String(), err
 }

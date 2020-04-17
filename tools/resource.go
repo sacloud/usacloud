@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/pkg/schema"
 )
 
 // Resource コード生成時に利用するリソース定義
