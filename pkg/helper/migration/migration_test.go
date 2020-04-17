@@ -19,16 +19,11 @@ import (
 	"os"
 	"testing"
 
-	"github.com/sacloud/usacloud/pkg/cli"
-
 	"github.com/sacloud/usacloud/pkg/profile"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestMigrateConfig(t *testing.T) {
-	// TODO グローバルオプションの扱いが確定したら修正する
-	cli.GlobalOption = &cli.CLIOptions{}
-
 	initFunc := func() func() {
 		confirmMigrateFunc = func() bool { return true }
 		confirmOverwriteFunc = func(s string) bool { return true }

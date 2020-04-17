@@ -57,6 +57,7 @@ func ArchiveDownload(ctx cli.Context, params *params.DownloadArchiveParam) error
 		fmt.Sprintf("Still downloading[ID:%d]...", params.Id),
 		fmt.Sprintf("Download archive[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			path := params.FileDestination
 			if path == "" || path == "-" {

@@ -113,6 +113,7 @@ func ServerSSHExec(ctx cli.Context, params *params.SSHExecServerParam) error {
 		args = append(args, ctx.Args()[1:]...)
 	}
 
+	printer := printer.Printer{NoColor: ctx.Option().NoColor}
 	if !params.Quiet {
 		printer.Fprintf(ctx.IO().Progress(), color.New(color.FgHiGreen), "=== start | %s ===\n", displayName)
 	}

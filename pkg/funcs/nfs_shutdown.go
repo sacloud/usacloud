@@ -39,6 +39,7 @@ func NFSShutdown(ctx cli.Context, params *params.ShutdownNFSParam) error {
 		fmt.Sprintf("Still waiting for Shutdown[ID:%d]...", params.Id),
 		fmt.Sprintf("Shutdown nfs[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			var err error

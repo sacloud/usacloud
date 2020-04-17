@@ -12,26 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cli
+package flags
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"strconv"
 	"strings"
 
+	"github.com/sacloud/usacloud/pkg/utils"
+
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/profile"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/utils"
 	"github.com/sacloud/usacloud/pkg/validation"
 	"github.com/spf13/pflag"
 )
 
-var GlobalOption *CLIOptions
-
-// CLIOptions CLIオプション
-type CLIOptions struct {
+// Flags CLI全コマンドが利用するフラグ
+type Flags struct {
 	profile.ConfigValue
 	// Profile プロファイル名
 	Profile string
@@ -41,10 +41,19 @@ type CLIOptions struct {
 	NoColor bool
 }
 
+// InitGlobalFlags 指定のFlagSetにフラグを登録する
 func InitGlobalFlags(flags *pflag.FlagSet) {
 	initCredentialFlags(flags)
 	initOutputFlags(flags)
 	initDebugFlags(flags)
+}
+
+// LoadFlags 指定のフラグセットからフラグを読み取り*Flagsを組み立てて返す
+func LoadFlags(flags *pflag.FlagSet, errW io.Writer) (*Flags, error) {
+	o := &Flags{}
+	o.loadGlobalFlags(flags, errW)
+
+	return o, utils.FlattenErrors(o.Validate(true))
 }
 
 func initCredentialFlags(fs *pflag.FlagSet) {
@@ -65,27 +74,20 @@ func initDebugFlags(fs *pflag.FlagSet) {
 	fs.StringP("fake-store", "", "", "path to file store used by the fake API driver")
 }
 
-func initCLIOptions(flags *pflag.FlagSet, io IO) (*CLIOptions, error) {
-	o := &CLIOptions{}
-	o.loadGlobalFlags(flags, io)
-
-	return o, utils.FlattenErrors(o.Validate(true))
-}
-
-func (o *CLIOptions) loadGlobalFlags(flags *pflag.FlagSet, io IO) {
+func (o *Flags) loadGlobalFlags(flags *pflag.FlagSet, errW io.Writer) {
 	o.loadFromEnv()
-	o.loadFromProfile(io)
-	o.loadFromFlags(flags, io)
+	o.loadFromProfile(errW)
+	o.loadFromFlags(flags, errW)
 	o.fillDefaults()
 }
 
-func (o *CLIOptions) fillDefaults() {
+func (o *Flags) fillDefaults() {
 	if len(o.Zones) == 0 {
 		o.Zones = sacloud.SakuraCloudZones
 	}
 }
 
-func (o *CLIOptions) loadFromEnv() {
+func (o *Flags) loadFromEnv() {
 	o.Profile = stringFromEnv("SAKURACLOUD_PROFILE", "default")
 	o.AccessToken = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN", "")
 	o.AccessTokenSecret = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN_SECRET", "")
@@ -103,21 +105,20 @@ func (o *CLIOptions) loadFromEnv() {
 	o.FakeStorePath = stringFromEnv("SAKURACLOUD_FAKE_STORE_PATH", "")
 }
 
-func (o *CLIOptions) loadFromProfile(io IO) {
+func (o *Flags) loadFromProfile(errW io.Writer) {
 	if o.Profile != "" {
 		if err := profile.Load(o.Profile, o); err != nil {
-			fmt.Fprintf(io.Err(), "[WARN] loading profile %q is failed: %s", o.Profile, err) // nolint
+			fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", o.Profile, err) // nolint
 			return
 		}
 	}
 }
 
-func (o *CLIOptions) loadFromFlags(flags *pflag.FlagSet, io IO) {
-	out := io.Err()
+func (o *Flags) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("token") {
 		v, err := flags.GetString("token")
 		if err != nil {
-			fmt.Fprintf(out, "[WARN] reading value of %q flag is failed: %s", "token", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "token", err) // nolint
 			return
 		}
 		o.AccessToken = v
@@ -125,7 +126,7 @@ func (o *CLIOptions) loadFromFlags(flags *pflag.FlagSet, io IO) {
 	if flags.Changed("secret") {
 		v, err := flags.GetString("secret")
 		if err != nil {
-			fmt.Fprintf(out, "[WARN] reading value of %q flag is failed: %s", "secret", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "secret", err) // nolint
 			return
 		}
 		o.AccessTokenSecret = v
@@ -133,7 +134,7 @@ func (o *CLIOptions) loadFromFlags(flags *pflag.FlagSet, io IO) {
 	if flags.Changed("zone") {
 		v, err := flags.GetString("zone")
 		if err != nil {
-			fmt.Fprintf(out, "[WARN] reading value of %q flag is failed: %s", "zone", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "zone", err) // nolint
 			return
 		}
 		o.Zone = v
@@ -141,7 +142,7 @@ func (o *CLIOptions) loadFromFlags(flags *pflag.FlagSet, io IO) {
 	if flags.Changed("zones") {
 		v, err := flags.GetStringSlice("zones")
 		if err != nil {
-			fmt.Fprintf(out, "[WARN] reading value of %q flag is failed: %s", "zones", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "zones", err) // nolint
 			return
 		}
 		o.Zones = v
@@ -149,7 +150,7 @@ func (o *CLIOptions) loadFromFlags(flags *pflag.FlagSet, io IO) {
 	if flags.Changed("no-color") {
 		v, err := flags.GetBool("no-color")
 		if err != nil {
-			fmt.Fprintf(out, "[WARN] reading value of %q flag is failed: %s", "no-color", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "no-color", err) // nolint
 			return
 		}
 		o.NoColor = v
@@ -157,7 +158,7 @@ func (o *CLIOptions) loadFromFlags(flags *pflag.FlagSet, io IO) {
 	if flags.Changed("trace") {
 		v, err := flags.GetBool("trace")
 		if err != nil {
-			fmt.Fprintf(out, "[WARN] reading value of %q flag is failed: %s", "trace", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "trace", err) // nolint
 			return
 		}
 		if v {
@@ -167,7 +168,7 @@ func (o *CLIOptions) loadFromFlags(flags *pflag.FlagSet, io IO) {
 	if flags.Changed("fake") {
 		v, err := flags.GetBool("fake")
 		if err != nil {
-			fmt.Fprintf(out, "[WARN] reading value of %q flag is failed: %s", "fake", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "fake", err) // nolint
 			return
 		}
 		o.FakeMode = v
@@ -175,7 +176,7 @@ func (o *CLIOptions) loadFromFlags(flags *pflag.FlagSet, io IO) {
 	if flags.Changed("fake-store") {
 		v, err := flags.GetString("fake-store")
 		if err != nil {
-			fmt.Fprintf(out, "[WARN] reading value of %q flag is failed: %s", "fake-store", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "fake-store", err) // nolint
 			return
 		}
 		o.FakeStorePath = v
@@ -214,7 +215,7 @@ func intFromEnv(key string, defaultValue int) int {
 	return int(i)
 }
 
-func (o *CLIOptions) Validate(skipCred bool) []error {
+func (o *Flags) Validate(skipCred bool) []error {
 	var errs []error
 
 	if !skipCred {

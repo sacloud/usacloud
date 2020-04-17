@@ -50,12 +50,12 @@ func simpleMonitorListCmd() *cobra.Command {
 		Short:        "List SimpleMonitor",
 		Long:         `List SimpleMonitor`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simpleMonitorListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simpleMonitorListParam)
 			if err != nil {
+				return err
+			}
+			if err := simpleMonitorListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -104,12 +104,12 @@ func simpleMonitorCreateCmd() *cobra.Command {
 		Short:        "Create SimpleMonitor",
 		Long:         `Create SimpleMonitor`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simpleMonitorCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simpleMonitorCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := simpleMonitorCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -184,12 +184,12 @@ func simpleMonitorReadCmd() *cobra.Command {
 		Short:        "Read SimpleMonitor",
 		Long:         `Read SimpleMonitor`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simpleMonitorReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simpleMonitorReadParam)
 			if err != nil {
+				return err
+			}
+			if err := simpleMonitorReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -254,12 +254,12 @@ func simpleMonitorUpdateCmd() *cobra.Command {
 		Short:        "Update SimpleMonitor",
 		Long:         `Update SimpleMonitor`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simpleMonitorUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simpleMonitorUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := simpleMonitorUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -356,12 +356,12 @@ func simpleMonitorDeleteCmd() *cobra.Command {
 		Short:        "Delete SimpleMonitor",
 		Long:         `Delete SimpleMonitor`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simpleMonitorDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simpleMonitorDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := simpleMonitorDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -438,12 +438,12 @@ func simpleMonitorHealthCmd() *cobra.Command {
 		Short:        "Health SimpleMonitor",
 		Long:         `Health SimpleMonitor`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simpleMonitorHealthParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simpleMonitorHealthParam)
 			if err != nil {
+				return err
+			}
+			if err := simpleMonitorHealthParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

@@ -50,12 +50,12 @@ func diskListCmd() *cobra.Command {
 		Short:        "List Disk",
 		Long:         `List Disk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, diskListParam)
 			if err != nil {
+				return err
+			}
+			if err := diskListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -107,12 +107,12 @@ func diskCreateCmd() *cobra.Command {
 		Short:        "Create Disk",
 		Long:         `Create Disk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, diskCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := diskCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -176,12 +176,12 @@ func diskReadCmd() *cobra.Command {
 		Short:        "Read Disk",
 		Long:         `Read Disk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, diskReadParam)
 			if err != nil {
+				return err
+			}
+			if err := diskReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -246,12 +246,12 @@ func diskUpdateCmd() *cobra.Command {
 		Short:        "Update Disk",
 		Long:         `Update Disk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, diskUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := diskUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -333,12 +333,12 @@ func diskDeleteCmd() *cobra.Command {
 		Short:        "Delete Disk",
 		Long:         `Delete Disk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, diskDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := diskDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -415,12 +415,12 @@ func diskEditCmd() *cobra.Command {
 		Short:        "Edit Disk",
 		Long:         `Edit Disk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskEditParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, diskEditParam)
 			if err != nil {
+				return err
+			}
+			if err := diskEditParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -505,12 +505,12 @@ func diskResizePartitionCmd() *cobra.Command {
 		Short:        "ResizePartition Disk",
 		Long:         `ResizePartition Disk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskResizePartitionParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, diskResizePartitionParam)
 			if err != nil {
+				return err
+			}
+			if err := diskResizePartitionParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -587,12 +587,12 @@ func diskReinstallFromArchiveCmd() *cobra.Command {
 		Short:        "ReinstallFromArchive Disk",
 		Long:         `ReinstallFromArchive Disk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskReinstallFromArchiveParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, diskReinstallFromArchiveParam)
 			if err != nil {
+				return err
+			}
+			if err := diskReinstallFromArchiveParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -664,12 +664,12 @@ func diskReinstallFromDiskCmd() *cobra.Command {
 		Short:        "ReinstallFromDisk Disk",
 		Long:         `ReinstallFromDisk Disk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskReinstallFromDiskParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, diskReinstallFromDiskParam)
 			if err != nil {
+				return err
+			}
+			if err := diskReinstallFromDiskParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -741,12 +741,12 @@ func diskReinstallToBlankCmd() *cobra.Command {
 		Short:        "ReinstallToBlank Disk",
 		Long:         `ReinstallToBlank Disk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskReinstallToBlankParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, diskReinstallToBlankParam)
 			if err != nil {
+				return err
+			}
+			if err := diskReinstallToBlankParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -817,12 +817,12 @@ func diskServerConnectCmd() *cobra.Command {
 		Short:        "ServerConnect Disk",
 		Long:         `ServerConnect Disk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskServerConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, diskServerConnectParam)
 			if err != nil {
+				return err
+			}
+			if err := diskServerConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -893,12 +893,12 @@ func diskServerDisconnectCmd() *cobra.Command {
 		Short:        "ServerDisconnect Disk",
 		Long:         `ServerDisconnect Disk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskServerDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, diskServerDisconnectParam)
 			if err != nil {
+				return err
+			}
+			if err := diskServerDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -968,12 +968,12 @@ func diskMonitorCmd() *cobra.Command {
 		Short:        "Monitor Disk",
 		Long:         `Monitor Disk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, diskMonitorParam)
 			if err != nil {
+				return err
+			}
+			if err := diskMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1041,12 +1041,12 @@ func diskWaitForCopyCmd() *cobra.Command {
 		Short:        "WaitForCopy Disk",
 		Long:         `WaitForCopy Disk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return diskWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, diskWaitForCopyParam)
 			if err != nil {
+				return err
+			}
+			if err := diskWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

@@ -134,6 +134,7 @@ func ObjectStoragePut(ctx cli.Context, params *params.PutObjectStorageParam) err
 		fmt.Sprintf("Still uploading[%q]...", progressLabel),
 		fmt.Sprintf("Upload [%q]", progressLabel),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			if err := putFunc(); err != nil {
 				errChan <- err

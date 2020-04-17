@@ -28,6 +28,7 @@ var mutex = sync.Mutex{}
 
 type ProgressWriter struct {
 	out         io.Writer
+	printer     *printer.Printer
 	msgProgress string
 	msgStart    string
 	msgComplete string
@@ -39,9 +40,10 @@ type ProgressWriter struct {
 	wg          sync.WaitGroup
 }
 
-func NewProgress(msgProgress, msgPrefix string, out io.Writer) *ProgressWriter {
+func NewProgress(msgProgress, msgPrefix string, out io.Writer, noColor bool) *ProgressWriter {
 	return &ProgressWriter{
 		out:         out,
+		printer:     &printer.Printer{NoColor: noColor},
 		msgProgress: msgProgress,
 		msgStart:    fmt.Sprintf("%s is started...", msgPrefix),
 		msgComplete: fmt.Sprintf("%s is finished", msgPrefix),
@@ -54,8 +56,8 @@ func NewProgress(msgProgress, msgPrefix string, out io.Writer) *ProgressWriter {
 
 type ProgressWriterFunc func(chan bool, chan error)
 
-func ExecWithProgress(msgProgress, msgPrefix string, out io.Writer, f ProgressWriterFunc) error {
-	spinner := NewProgress(msgProgress, msgPrefix, out)
+func ExecWithProgress(msgProgress, msgPrefix string, out io.Writer, noColor bool, f ProgressWriterFunc) error {
+	spinner := NewProgress(msgProgress, msgPrefix, out, noColor)
 	compChan := make(chan bool)
 	errChan := make(chan error)
 
@@ -116,5 +118,5 @@ func (s *ProgressWriter) Fail(err error) {
 func (s *ProgressWriter) print(clr *color.Color, msg string) {
 	mutex.Lock()
 	defer mutex.Unlock()
-	printer.Fprint(s.out, clr, msg)
+	s.printer.Fprint(s.out, clr, msg)
 }

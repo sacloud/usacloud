@@ -50,12 +50,12 @@ func licenseListCmd() *cobra.Command {
 		Short:        "List License",
 		Long:         `List License`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return licenseListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, licenseListParam)
 			if err != nil {
+				return err
+			}
+			if err := licenseListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -102,12 +102,12 @@ func licenseCreateCmd() *cobra.Command {
 		Short:        "Create License",
 		Long:         `Create License`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return licenseCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, licenseCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := licenseCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -163,12 +163,12 @@ func licenseReadCmd() *cobra.Command {
 		Short:        "Read License",
 		Long:         `Read License`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return licenseReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, licenseReadParam)
 			if err != nil {
+				return err
+			}
+			if err := licenseReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -232,12 +232,12 @@ func licenseUpdateCmd() *cobra.Command {
 		Short:        "Update License",
 		Long:         `Update License`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return licenseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, licenseUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := licenseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -314,12 +314,12 @@ func licenseDeleteCmd() *cobra.Command {
 		Short:        "Delete License",
 		Long:         `Delete License`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return licenseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, licenseDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := licenseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

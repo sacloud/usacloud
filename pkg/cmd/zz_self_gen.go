@@ -44,12 +44,12 @@ func selfInfoCmd() *cobra.Command {
 		Short:        "Info Self (default)",
 		Long:         `Info Self (default)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return selfInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, selfInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := selfInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

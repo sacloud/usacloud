@@ -49,12 +49,12 @@ func webAccelListCmd() *cobra.Command {
 		Short:        "List WebAccel",
 		Long:         `List WebAccel`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return webAccelListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, webAccelListParam)
 			if err != nil {
+				return err
+			}
+			if err := webAccelListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -96,12 +96,12 @@ func webAccelReadCmd() *cobra.Command {
 		Short:        "Read WebAccel",
 		Long:         `Read WebAccel`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return webAccelReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, webAccelReadParam)
 			if err != nil {
+				return err
+			}
+			if err := webAccelReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -166,12 +166,12 @@ func webAccelCertificateInfoCmd() *cobra.Command {
 		Short:        "CertificateInfo WebAccel",
 		Long:         `CertificateInfo WebAccel`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return webAccelCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, webAccelCertificateInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := webAccelCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -236,12 +236,12 @@ func webAccelCertificateNewCmd() *cobra.Command {
 		Short:        "CertificateNew WebAccel",
 		Long:         `CertificateNew WebAccel`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return webAccelCertificateNewParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, webAccelCertificateNewParam)
 			if err != nil {
+				return err
+			}
+			if err := webAccelCertificateNewParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -322,12 +322,12 @@ func webAccelCertificateUpdateCmd() *cobra.Command {
 		Short:        "CertificateUpdate WebAccel",
 		Long:         `CertificateUpdate WebAccel`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return webAccelCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, webAccelCertificateUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := webAccelCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -408,12 +408,12 @@ func webAccelDeleteCacheCmd() *cobra.Command {
 		Short:        "DeleteCache WebAccel",
 		Long:         `DeleteCache WebAccel`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return webAccelDeleteCacheParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, webAccelDeleteCacheParam)
 			if err != nil {
+				return err
+			}
+			if err := webAccelDeleteCacheParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

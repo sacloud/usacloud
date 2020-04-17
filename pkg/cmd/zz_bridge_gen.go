@@ -50,12 +50,12 @@ func bridgeListCmd() *cobra.Command {
 		Short:        "List Bridge",
 		Long:         `List Bridge`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return bridgeListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, bridgeListParam)
 			if err != nil {
+				return err
+			}
+			if err := bridgeListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -102,12 +102,12 @@ func bridgeCreateCmd() *cobra.Command {
 		Short:        "Create Bridge",
 		Long:         `Create Bridge`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return bridgeCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, bridgeCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := bridgeCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -163,12 +163,12 @@ func bridgeReadCmd() *cobra.Command {
 		Short:        "Read Bridge",
 		Long:         `Read Bridge`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return bridgeReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, bridgeReadParam)
 			if err != nil {
+				return err
+			}
+			if err := bridgeReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -232,12 +232,12 @@ func bridgeUpdateCmd() *cobra.Command {
 		Short:        "Update Bridge",
 		Long:         `Update Bridge`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return bridgeUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, bridgeUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := bridgeUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -315,12 +315,12 @@ func bridgeDeleteCmd() *cobra.Command {
 		Short:        "Delete Bridge",
 		Long:         `Delete Bridge`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return bridgeDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, bridgeDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := bridgeDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

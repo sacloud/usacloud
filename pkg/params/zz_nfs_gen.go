@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -48,7 +49,8 @@ type ListNFSParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListNFSParam return new ListNFSParam
@@ -57,8 +59,9 @@ func NewListNFSParam() *ListNFSParam {
 }
 
 // Initialize init ListNFSParam
-func (p *ListNFSParam) Initialize(in Input, args []string) error {
+func (p *ListNFSParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -182,7 +185,7 @@ func (p *ListNFSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -399,7 +402,8 @@ type CreateNFSParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateNFSParam return new CreateNFSParam
@@ -409,8 +413,9 @@ func NewCreateNFSParam() *CreateNFSParam {
 }
 
 // Initialize init CreateNFSParam
-func (p *CreateNFSParam) Initialize(in Input, args []string) error {
+func (p *CreateNFSParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -636,7 +641,7 @@ func (p *CreateNFSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -879,7 +884,8 @@ type ReadNFSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadNFSParam return new ReadNFSParam
@@ -888,8 +894,9 @@ func NewReadNFSParam() *ReadNFSParam {
 }
 
 // Initialize init ReadNFSParam
-func (p *ReadNFSParam) Initialize(in Input, args []string) error {
+func (p *ReadNFSParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -974,7 +981,7 @@ func (p *ReadNFSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1159,7 +1166,8 @@ type UpdateNFSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateNFSParam return new UpdateNFSParam
@@ -1168,8 +1176,9 @@ func NewUpdateNFSParam() *UpdateNFSParam {
 }
 
 // Initialize init UpdateNFSParam
-func (p *UpdateNFSParam) Initialize(in Input, args []string) error {
+func (p *UpdateNFSParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1301,7 +1310,7 @@ func (p *UpdateNFSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1518,7 +1527,8 @@ type DeleteNFSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteNFSParam return new DeleteNFSParam
@@ -1527,8 +1537,9 @@ func NewDeleteNFSParam() *DeleteNFSParam {
 }
 
 // Initialize init DeleteNFSParam
-func (p *DeleteNFSParam) Initialize(in Input, args []string) error {
+func (p *DeleteNFSParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1619,7 +1630,7 @@ func (p *DeleteNFSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1807,7 +1818,8 @@ type BootNFSParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewBootNFSParam return new BootNFSParam
@@ -1816,8 +1828,9 @@ func NewBootNFSParam() *BootNFSParam {
 }
 
 // Initialize init BootNFSParam
-func (p *BootNFSParam) Initialize(in Input, args []string) error {
+func (p *BootNFSParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2002,7 +2015,8 @@ type ShutdownNFSParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewShutdownNFSParam return new ShutdownNFSParam
@@ -2011,8 +2025,9 @@ func NewShutdownNFSParam() *ShutdownNFSParam {
 }
 
 // Initialize init ShutdownNFSParam
-func (p *ShutdownNFSParam) Initialize(in Input, args []string) error {
+func (p *ShutdownNFSParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2197,7 +2212,8 @@ type ShutdownForceNFSParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewShutdownForceNFSParam return new ShutdownForceNFSParam
@@ -2206,8 +2222,9 @@ func NewShutdownForceNFSParam() *ShutdownForceNFSParam {
 }
 
 // Initialize init ShutdownForceNFSParam
-func (p *ShutdownForceNFSParam) Initialize(in Input, args []string) error {
+func (p *ShutdownForceNFSParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2392,7 +2409,8 @@ type ResetNFSParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewResetNFSParam return new ResetNFSParam
@@ -2401,8 +2419,9 @@ func NewResetNFSParam() *ResetNFSParam {
 }
 
 // Initialize init ResetNFSParam
-func (p *ResetNFSParam) Initialize(in Input, args []string) error {
+func (p *ResetNFSParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2586,7 +2605,8 @@ type WaitForBootNFSParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewWaitForBootNFSParam return new WaitForBootNFSParam
@@ -2595,8 +2615,9 @@ func NewWaitForBootNFSParam() *WaitForBootNFSParam {
 }
 
 // Initialize init WaitForBootNFSParam
-func (p *WaitForBootNFSParam) Initialize(in Input, args []string) error {
+func (p *WaitForBootNFSParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2770,7 +2791,8 @@ type WaitForDownNFSParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewWaitForDownNFSParam return new WaitForDownNFSParam
@@ -2779,8 +2801,9 @@ func NewWaitForDownNFSParam() *WaitForDownNFSParam {
 }
 
 // Initialize init WaitForDownNFSParam
-func (p *WaitForDownNFSParam) Initialize(in Input, args []string) error {
+func (p *WaitForDownNFSParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2964,7 +2987,8 @@ type MonitorNicNFSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewMonitorNicNFSParam return new MonitorNicNFSParam
@@ -2974,8 +2998,9 @@ func NewMonitorNicNFSParam() *MonitorNicNFSParam {
 }
 
 // Initialize init MonitorNicNFSParam
-func (p *MonitorNicNFSParam) Initialize(in Input, args []string) error {
+func (p *MonitorNicNFSParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3093,7 +3118,7 @@ func (p *MonitorNicNFSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3297,7 +3322,8 @@ type MonitorFreeDiskSizeNFSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewMonitorFreeDiskSizeNFSParam return new MonitorFreeDiskSizeNFSParam
@@ -3307,8 +3333,9 @@ func NewMonitorFreeDiskSizeNFSParam() *MonitorFreeDiskSizeNFSParam {
 }
 
 // Initialize init MonitorFreeDiskSizeNFSParam
-func (p *MonitorFreeDiskSizeNFSParam) Initialize(in Input, args []string) error {
+func (p *MonitorFreeDiskSizeNFSParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3426,7 +3453,7 @@ func (p *MonitorFreeDiskSizeNFSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

@@ -139,6 +139,7 @@ func VPCRouterInterfaceUpdate(ctx cli.Context, params *params.InterfaceUpdateVPC
 			fmt.Sprintf("Still waiting for reboot[ID:%d]...", params.Id),
 			fmt.Sprintf("Connecting interface to switch[ID:%d]", params.Id),
 			ctx.IO().Progress(),
+			ctx.Option().NoColor,
 			func(compChan chan bool, errChan chan error) {
 				// call manipurate functions
 				var err error

@@ -48,12 +48,12 @@ func productServerListCmd() *cobra.Command {
 		Short:        "List ProductServer (default)",
 		Long:         `List ProductServer (default)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productServerListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, productServerListParam)
 			if err != nil {
+				return err
+			}
+			if err := productServerListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -100,12 +100,12 @@ func productServerReadCmd() *cobra.Command {
 		Short:        "Read ProductServer",
 		Long:         `Read ProductServer`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productServerReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, productServerReadParam)
 			if err != nil {
+				return err
+			}
+			if err := productServerReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

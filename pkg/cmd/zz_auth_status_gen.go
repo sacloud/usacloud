@@ -44,12 +44,12 @@ func authStatusShowCmd() *cobra.Command {
 		Short:        "Show AuthStatus (default)",
 		Long:         `Show AuthStatus (default)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return authStatusShowParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, authStatusShowParam)
 			if err != nil {
+				return err
+			}
+			if err := authStatusShowParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

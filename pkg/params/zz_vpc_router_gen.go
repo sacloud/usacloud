@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -48,7 +49,8 @@ type ListVPCRouterParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListVPCRouterParam return new ListVPCRouterParam
@@ -57,8 +59,9 @@ func NewListVPCRouterParam() *ListVPCRouterParam {
 }
 
 // Initialize init ListVPCRouterParam
-func (p *ListVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *ListVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -182,7 +185,7 @@ func (p *ListVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -401,7 +404,8 @@ type CreateVPCRouterParam struct {
 	Query                     string
 	QueryFile                 string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateVPCRouterParam return new CreateVPCRouterParam
@@ -411,8 +415,9 @@ func NewCreateVPCRouterParam() *CreateVPCRouterParam {
 }
 
 // Initialize init CreateVPCRouterParam
-func (p *CreateVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *CreateVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -616,7 +621,7 @@ func (p *CreateVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -873,7 +878,8 @@ type ReadVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadVPCRouterParam return new ReadVPCRouterParam
@@ -882,8 +888,9 @@ func NewReadVPCRouterParam() *ReadVPCRouterParam {
 }
 
 // Initialize init ReadVPCRouterParam
-func (p *ReadVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *ReadVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -968,7 +975,7 @@ func (p *ReadVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1155,7 +1162,8 @@ type UpdateVPCRouterParam struct {
 	QueryFile          string
 	Id                 sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateVPCRouterParam return new UpdateVPCRouterParam
@@ -1164,8 +1172,9 @@ func NewUpdateVPCRouterParam() *UpdateVPCRouterParam {
 }
 
 // Initialize init UpdateVPCRouterParam
-func (p *UpdateVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *UpdateVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1311,7 +1320,7 @@ func (p *UpdateVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1542,7 +1551,8 @@ type DeleteVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteVPCRouterParam return new DeleteVPCRouterParam
@@ -1551,8 +1561,9 @@ func NewDeleteVPCRouterParam() *DeleteVPCRouterParam {
 }
 
 // Initialize init DeleteVPCRouterParam
-func (p *DeleteVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *DeleteVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1643,7 +1654,7 @@ func (p *DeleteVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1831,7 +1842,8 @@ type BootVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewBootVPCRouterParam return new BootVPCRouterParam
@@ -1840,8 +1852,9 @@ func NewBootVPCRouterParam() *BootVPCRouterParam {
 }
 
 // Initialize init BootVPCRouterParam
-func (p *BootVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *BootVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2026,7 +2039,8 @@ type ShutdownVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewShutdownVPCRouterParam return new ShutdownVPCRouterParam
@@ -2035,8 +2049,9 @@ func NewShutdownVPCRouterParam() *ShutdownVPCRouterParam {
 }
 
 // Initialize init ShutdownVPCRouterParam
-func (p *ShutdownVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *ShutdownVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2221,7 +2236,8 @@ type ShutdownForceVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewShutdownForceVPCRouterParam return new ShutdownForceVPCRouterParam
@@ -2230,8 +2246,9 @@ func NewShutdownForceVPCRouterParam() *ShutdownForceVPCRouterParam {
 }
 
 // Initialize init ShutdownForceVPCRouterParam
-func (p *ShutdownForceVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *ShutdownForceVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2416,7 +2433,8 @@ type ResetVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewResetVPCRouterParam return new ResetVPCRouterParam
@@ -2425,8 +2443,9 @@ func NewResetVPCRouterParam() *ResetVPCRouterParam {
 }
 
 // Initialize init ResetVPCRouterParam
-func (p *ResetVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *ResetVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2610,7 +2629,8 @@ type WaitForBootVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewWaitForBootVPCRouterParam return new WaitForBootVPCRouterParam
@@ -2619,8 +2639,9 @@ func NewWaitForBootVPCRouterParam() *WaitForBootVPCRouterParam {
 }
 
 // Initialize init WaitForBootVPCRouterParam
-func (p *WaitForBootVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *WaitForBootVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2794,7 +2815,8 @@ type WaitForDownVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewWaitForDownVPCRouterParam return new WaitForDownVPCRouterParam
@@ -2803,8 +2825,9 @@ func NewWaitForDownVPCRouterParam() *WaitForDownVPCRouterParam {
 }
 
 // Initialize init WaitForDownVPCRouterParam
-func (p *WaitForDownVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *WaitForDownVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2979,7 +3002,8 @@ type EnableInternetConnectionVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewEnableInternetConnectionVPCRouterParam return new EnableInternetConnectionVPCRouterParam
@@ -2988,8 +3012,9 @@ func NewEnableInternetConnectionVPCRouterParam() *EnableInternetConnectionVPCRou
 }
 
 // Initialize init EnableInternetConnectionVPCRouterParam
-func (p *EnableInternetConnectionVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *EnableInternetConnectionVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3174,7 +3199,8 @@ type DisableInternetConnectionVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDisableInternetConnectionVPCRouterParam return new DisableInternetConnectionVPCRouterParam
@@ -3183,8 +3209,9 @@ func NewDisableInternetConnectionVPCRouterParam() *DisableInternetConnectionVPCR
 }
 
 // Initialize init DisableInternetConnectionVPCRouterParam
-func (p *DisableInternetConnectionVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *DisableInternetConnectionVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3375,7 +3402,8 @@ type InterfaceInfoVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewInterfaceInfoVPCRouterParam return new InterfaceInfoVPCRouterParam
@@ -3384,8 +3412,9 @@ func NewInterfaceInfoVPCRouterParam() *InterfaceInfoVPCRouterParam {
 }
 
 // Initialize init InterfaceInfoVPCRouterParam
-func (p *InterfaceInfoVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *InterfaceInfoVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3470,7 +3499,7 @@ func (p *InterfaceInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3651,7 +3680,8 @@ type InterfaceConnectVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewInterfaceConnectVPCRouterParam return new InterfaceConnectVPCRouterParam
@@ -3661,8 +3691,9 @@ func NewInterfaceConnectVPCRouterParam() *InterfaceConnectVPCRouterParam {
 }
 
 // Initialize init InterfaceConnectVPCRouterParam
-func (p *InterfaceConnectVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *InterfaceConnectVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3994,7 +4025,8 @@ type InterfaceUpdateVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewInterfaceUpdateVPCRouterParam return new InterfaceUpdateVPCRouterParam
@@ -4004,8 +4036,9 @@ func NewInterfaceUpdateVPCRouterParam() *InterfaceUpdateVPCRouterParam {
 }
 
 // Initialize init InterfaceUpdateVPCRouterParam
-func (p *InterfaceUpdateVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *InterfaceUpdateVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4335,7 +4368,8 @@ type InterfaceDisconnectVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewInterfaceDisconnectVPCRouterParam return new InterfaceDisconnectVPCRouterParam
@@ -4344,8 +4378,9 @@ func NewInterfaceDisconnectVPCRouterParam() *InterfaceDisconnectVPCRouterParam {
 }
 
 // Initialize init InterfaceDisconnectVPCRouterParam
-func (p *InterfaceDisconnectVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *InterfaceDisconnectVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4571,7 +4606,8 @@ type StaticNatInfoVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewStaticNatInfoVPCRouterParam return new StaticNatInfoVPCRouterParam
@@ -4580,8 +4616,9 @@ func NewStaticNatInfoVPCRouterParam() *StaticNatInfoVPCRouterParam {
 }
 
 // Initialize init StaticNatInfoVPCRouterParam
-func (p *StaticNatInfoVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *StaticNatInfoVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4666,7 +4703,7 @@ func (p *StaticNatInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4843,7 +4880,8 @@ type StaticNatAddVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewStaticNatAddVPCRouterParam return new StaticNatAddVPCRouterParam
@@ -4852,8 +4890,9 @@ func NewStaticNatAddVPCRouterParam() *StaticNatAddVPCRouterParam {
 }
 
 // Initialize init StaticNatAddVPCRouterParam
-func (p *StaticNatAddVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *StaticNatAddVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5110,7 +5149,8 @@ type StaticNatUpdateVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewStaticNatUpdateVPCRouterParam return new StaticNatUpdateVPCRouterParam
@@ -5119,8 +5159,9 @@ func NewStaticNatUpdateVPCRouterParam() *StaticNatUpdateVPCRouterParam {
 }
 
 // Initialize init StaticNatUpdateVPCRouterParam
-func (p *StaticNatUpdateVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *StaticNatUpdateVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5378,7 +5419,8 @@ type StaticNatDeleteVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewStaticNatDeleteVPCRouterParam return new StaticNatDeleteVPCRouterParam
@@ -5387,8 +5429,9 @@ func NewStaticNatDeleteVPCRouterParam() *StaticNatDeleteVPCRouterParam {
 }
 
 // Initialize init StaticNatDeleteVPCRouterParam
-func (p *StaticNatDeleteVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *StaticNatDeleteVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5597,7 +5640,8 @@ type PortForwardingInfoVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewPortForwardingInfoVPCRouterParam return new PortForwardingInfoVPCRouterParam
@@ -5606,8 +5650,9 @@ func NewPortForwardingInfoVPCRouterParam() *PortForwardingInfoVPCRouterParam {
 }
 
 // Initialize init PortForwardingInfoVPCRouterParam
-func (p *PortForwardingInfoVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *PortForwardingInfoVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5692,7 +5737,7 @@ func (p *PortForwardingInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5871,7 +5916,8 @@ type PortForwardingAddVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewPortForwardingAddVPCRouterParam return new PortForwardingAddVPCRouterParam
@@ -5880,8 +5926,9 @@ func NewPortForwardingAddVPCRouterParam() *PortForwardingAddVPCRouterParam {
 }
 
 // Initialize init PortForwardingAddVPCRouterParam
-func (p *PortForwardingAddVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *PortForwardingAddVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6190,7 +6237,8 @@ type PortForwardingUpdateVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewPortForwardingUpdateVPCRouterParam return new PortForwardingUpdateVPCRouterParam
@@ -6199,8 +6247,9 @@ func NewPortForwardingUpdateVPCRouterParam() *PortForwardingUpdateVPCRouterParam
 }
 
 // Initialize init PortForwardingUpdateVPCRouterParam
-func (p *PortForwardingUpdateVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *PortForwardingUpdateVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6494,7 +6543,8 @@ type PortForwardingDeleteVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewPortForwardingDeleteVPCRouterParam return new PortForwardingDeleteVPCRouterParam
@@ -6503,8 +6553,9 @@ func NewPortForwardingDeleteVPCRouterParam() *PortForwardingDeleteVPCRouterParam
 }
 
 // Initialize init PortForwardingDeleteVPCRouterParam
-func (p *PortForwardingDeleteVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *PortForwardingDeleteVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6715,7 +6766,8 @@ type FirewallInfoVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewFirewallInfoVPCRouterParam return new FirewallInfoVPCRouterParam
@@ -6725,8 +6777,9 @@ func NewFirewallInfoVPCRouterParam() *FirewallInfoVPCRouterParam {
 }
 
 // Initialize init FirewallInfoVPCRouterParam
-func (p *FirewallInfoVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *FirewallInfoVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6840,7 +6893,7 @@ func (p *FirewallInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -7038,7 +7091,8 @@ type FirewallAddVPCRouterParam struct {
 	GenerateSkeleton   bool
 	Id                 sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewFirewallAddVPCRouterParam return new FirewallAddVPCRouterParam
@@ -7048,8 +7102,9 @@ func NewFirewallAddVPCRouterParam() *FirewallAddVPCRouterParam {
 }
 
 // Initialize init FirewallAddVPCRouterParam
-func (p *FirewallAddVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *FirewallAddVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7438,7 +7493,8 @@ type FirewallUpdateVPCRouterParam struct {
 	GenerateSkeleton   bool
 	Id                 sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewFirewallUpdateVPCRouterParam return new FirewallUpdateVPCRouterParam
@@ -7448,8 +7504,9 @@ func NewFirewallUpdateVPCRouterParam() *FirewallUpdateVPCRouterParam {
 }
 
 // Initialize init FirewallUpdateVPCRouterParam
-func (p *FirewallUpdateVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *FirewallUpdateVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7834,7 +7891,8 @@ type FirewallDeleteVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewFirewallDeleteVPCRouterParam return new FirewallDeleteVPCRouterParam
@@ -7844,8 +7902,9 @@ func NewFirewallDeleteVPCRouterParam() *FirewallDeleteVPCRouterParam {
 }
 
 // Initialize init FirewallDeleteVPCRouterParam
-func (p *FirewallDeleteVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *FirewallDeleteVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -8097,7 +8156,8 @@ type DhcpServerInfoVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDhcpServerInfoVPCRouterParam return new DhcpServerInfoVPCRouterParam
@@ -8106,8 +8166,9 @@ func NewDhcpServerInfoVPCRouterParam() *DhcpServerInfoVPCRouterParam {
 }
 
 // Initialize init DhcpServerInfoVPCRouterParam
-func (p *DhcpServerInfoVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *DhcpServerInfoVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -8192,7 +8253,7 @@ func (p *DhcpServerInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -8370,7 +8431,8 @@ type DhcpServerAddVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDhcpServerAddVPCRouterParam return new DhcpServerAddVPCRouterParam
@@ -8379,8 +8441,9 @@ func NewDhcpServerAddVPCRouterParam() *DhcpServerAddVPCRouterParam {
 }
 
 // Initialize init DhcpServerAddVPCRouterParam
-func (p *DhcpServerAddVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *DhcpServerAddVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -8662,7 +8725,8 @@ type DhcpServerUpdateVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDhcpServerUpdateVPCRouterParam return new DhcpServerUpdateVPCRouterParam
@@ -8671,8 +8735,9 @@ func NewDhcpServerUpdateVPCRouterParam() *DhcpServerUpdateVPCRouterParam {
 }
 
 // Initialize init DhcpServerUpdateVPCRouterParam
-func (p *DhcpServerUpdateVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *DhcpServerUpdateVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -8937,7 +9002,8 @@ type DhcpServerDeleteVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDhcpServerDeleteVPCRouterParam return new DhcpServerDeleteVPCRouterParam
@@ -8946,8 +9012,9 @@ func NewDhcpServerDeleteVPCRouterParam() *DhcpServerDeleteVPCRouterParam {
 }
 
 // Initialize init DhcpServerDeleteVPCRouterParam
-func (p *DhcpServerDeleteVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *DhcpServerDeleteVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -9163,7 +9230,8 @@ type DhcpStaticMappingInfoVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDhcpStaticMappingInfoVPCRouterParam return new DhcpStaticMappingInfoVPCRouterParam
@@ -9172,8 +9240,9 @@ func NewDhcpStaticMappingInfoVPCRouterParam() *DhcpStaticMappingInfoVPCRouterPar
 }
 
 // Initialize init DhcpStaticMappingInfoVPCRouterParam
-func (p *DhcpStaticMappingInfoVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *DhcpStaticMappingInfoVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -9258,7 +9327,7 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -9434,7 +9503,8 @@ type DhcpStaticMappingAddVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDhcpStaticMappingAddVPCRouterParam return new DhcpStaticMappingAddVPCRouterParam
@@ -9443,8 +9513,9 @@ func NewDhcpStaticMappingAddVPCRouterParam() *DhcpStaticMappingAddVPCRouterParam
 }
 
 // Initialize init DhcpStaticMappingAddVPCRouterParam
-func (p *DhcpStaticMappingAddVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *DhcpStaticMappingAddVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -9682,7 +9753,8 @@ type DhcpStaticMappingUpdateVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDhcpStaticMappingUpdateVPCRouterParam return new DhcpStaticMappingUpdateVPCRouterParam
@@ -9691,8 +9763,9 @@ func NewDhcpStaticMappingUpdateVPCRouterParam() *DhcpStaticMappingUpdateVPCRoute
 }
 
 // Initialize init DhcpStaticMappingUpdateVPCRouterParam
-func (p *DhcpStaticMappingUpdateVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *DhcpStaticMappingUpdateVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -9932,7 +10005,8 @@ type DhcpStaticMappingDeleteVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDhcpStaticMappingDeleteVPCRouterParam return new DhcpStaticMappingDeleteVPCRouterParam
@@ -9941,8 +10015,9 @@ func NewDhcpStaticMappingDeleteVPCRouterParam() *DhcpStaticMappingDeleteVPCRoute
 }
 
 // Initialize init DhcpStaticMappingDeleteVPCRouterParam
-func (p *DhcpStaticMappingDeleteVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *DhcpStaticMappingDeleteVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -10151,7 +10226,8 @@ type PptpServerInfoVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewPptpServerInfoVPCRouterParam return new PptpServerInfoVPCRouterParam
@@ -10160,8 +10236,9 @@ func NewPptpServerInfoVPCRouterParam() *PptpServerInfoVPCRouterParam {
 }
 
 // Initialize init PptpServerInfoVPCRouterParam
-func (p *PptpServerInfoVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *PptpServerInfoVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -10246,7 +10323,7 @@ func (p *PptpServerInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -10423,7 +10500,8 @@ type PptpServerUpdateVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewPptpServerUpdateVPCRouterParam return new PptpServerUpdateVPCRouterParam
@@ -10432,8 +10510,9 @@ func NewPptpServerUpdateVPCRouterParam() *PptpServerUpdateVPCRouterParam {
 }
 
 // Initialize init PptpServerUpdateVPCRouterParam
-func (p *PptpServerUpdateVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *PptpServerUpdateVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -10670,7 +10749,8 @@ type L2TPServerInfoVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewL2TPServerInfoVPCRouterParam return new L2TPServerInfoVPCRouterParam
@@ -10679,8 +10759,9 @@ func NewL2TPServerInfoVPCRouterParam() *L2TPServerInfoVPCRouterParam {
 }
 
 // Initialize init L2TPServerInfoVPCRouterParam
-func (p *L2TPServerInfoVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *L2TPServerInfoVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -10765,7 +10846,7 @@ func (p *L2TPServerInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -10943,7 +11024,8 @@ type L2TPServerUpdateVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewL2TPServerUpdateVPCRouterParam return new L2TPServerUpdateVPCRouterParam
@@ -10952,8 +11034,9 @@ func NewL2TPServerUpdateVPCRouterParam() *L2TPServerUpdateVPCRouterParam {
 }
 
 // Initialize init L2TPServerUpdateVPCRouterParam
-func (p *L2TPServerUpdateVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *L2TPServerUpdateVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -11208,7 +11291,8 @@ type UserInfoVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUserInfoVPCRouterParam return new UserInfoVPCRouterParam
@@ -11217,8 +11301,9 @@ func NewUserInfoVPCRouterParam() *UserInfoVPCRouterParam {
 }
 
 // Initialize init UserInfoVPCRouterParam
-func (p *UserInfoVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *UserInfoVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -11303,7 +11388,7 @@ func (p *UserInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -11479,7 +11564,8 @@ type UserAddVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUserAddVPCRouterParam return new UserAddVPCRouterParam
@@ -11488,8 +11574,9 @@ func NewUserAddVPCRouterParam() *UserAddVPCRouterParam {
 }
 
 // Initialize init UserAddVPCRouterParam
-func (p *UserAddVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *UserAddVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -11727,7 +11814,8 @@ type UserUpdateVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUserUpdateVPCRouterParam return new UserUpdateVPCRouterParam
@@ -11736,8 +11824,9 @@ func NewUserUpdateVPCRouterParam() *UserUpdateVPCRouterParam {
 }
 
 // Initialize init UserUpdateVPCRouterParam
-func (p *UserUpdateVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *UserUpdateVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -11977,7 +12066,8 @@ type UserDeleteVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUserDeleteVPCRouterParam return new UserDeleteVPCRouterParam
@@ -11986,8 +12076,9 @@ func NewUserDeleteVPCRouterParam() *UserDeleteVPCRouterParam {
 }
 
 // Initialize init UserDeleteVPCRouterParam
-func (p *UserDeleteVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *UserDeleteVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -12196,7 +12287,8 @@ type SiteToSiteVPNInfoVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewSiteToSiteVPNInfoVPCRouterParam return new SiteToSiteVPNInfoVPCRouterParam
@@ -12205,8 +12297,9 @@ func NewSiteToSiteVPNInfoVPCRouterParam() *SiteToSiteVPNInfoVPCRouterParam {
 }
 
 // Initialize init SiteToSiteVPNInfoVPCRouterParam
-func (p *SiteToSiteVPNInfoVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *SiteToSiteVPNInfoVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -12291,7 +12384,7 @@ func (p *SiteToSiteVPNInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -12470,7 +12563,8 @@ type SiteToSiteVPNAddVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewSiteToSiteVPNAddVPCRouterParam return new SiteToSiteVPNAddVPCRouterParam
@@ -12479,8 +12573,9 @@ func NewSiteToSiteVPNAddVPCRouterParam() *SiteToSiteVPNAddVPCRouterParam {
 }
 
 // Initialize init SiteToSiteVPNAddVPCRouterParam
-func (p *SiteToSiteVPNAddVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *SiteToSiteVPNAddVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -12789,7 +12884,8 @@ type SiteToSiteVPNUpdateVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewSiteToSiteVPNUpdateVPCRouterParam return new SiteToSiteVPNUpdateVPCRouterParam
@@ -12798,8 +12894,9 @@ func NewSiteToSiteVPNUpdateVPCRouterParam() *SiteToSiteVPNUpdateVPCRouterParam {
 }
 
 // Initialize init SiteToSiteVPNUpdateVPCRouterParam
-func (p *SiteToSiteVPNUpdateVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *SiteToSiteVPNUpdateVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -13085,7 +13182,8 @@ type SiteToSiteVPNDeleteVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewSiteToSiteVPNDeleteVPCRouterParam return new SiteToSiteVPNDeleteVPCRouterParam
@@ -13094,8 +13192,9 @@ func NewSiteToSiteVPNDeleteVPCRouterParam() *SiteToSiteVPNDeleteVPCRouterParam {
 }
 
 // Initialize init SiteToSiteVPNDeleteVPCRouterParam
-func (p *SiteToSiteVPNDeleteVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *SiteToSiteVPNDeleteVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -13304,7 +13403,8 @@ type SiteToSiteVPNPeersVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewSiteToSiteVPNPeersVPCRouterParam return new SiteToSiteVPNPeersVPCRouterParam
@@ -13313,8 +13413,9 @@ func NewSiteToSiteVPNPeersVPCRouterParam() *SiteToSiteVPNPeersVPCRouterParam {
 }
 
 // Initialize init SiteToSiteVPNPeersVPCRouterParam
-func (p *SiteToSiteVPNPeersVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *SiteToSiteVPNPeersVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -13399,7 +13500,7 @@ func (p *SiteToSiteVPNPeersVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -13579,7 +13680,8 @@ type StaticRouteInfoVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewStaticRouteInfoVPCRouterParam return new StaticRouteInfoVPCRouterParam
@@ -13588,8 +13690,9 @@ func NewStaticRouteInfoVPCRouterParam() *StaticRouteInfoVPCRouterParam {
 }
 
 // Initialize init StaticRouteInfoVPCRouterParam
-func (p *StaticRouteInfoVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *StaticRouteInfoVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -13674,7 +13777,7 @@ func (p *StaticRouteInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -13850,7 +13953,8 @@ type StaticRouteAddVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewStaticRouteAddVPCRouterParam return new StaticRouteAddVPCRouterParam
@@ -13859,8 +13963,9 @@ func NewStaticRouteAddVPCRouterParam() *StaticRouteAddVPCRouterParam {
 }
 
 // Initialize init StaticRouteAddVPCRouterParam
-func (p *StaticRouteAddVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *StaticRouteAddVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -14098,7 +14203,8 @@ type StaticRouteUpdateVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewStaticRouteUpdateVPCRouterParam return new StaticRouteUpdateVPCRouterParam
@@ -14107,8 +14213,9 @@ func NewStaticRouteUpdateVPCRouterParam() *StaticRouteUpdateVPCRouterParam {
 }
 
 // Initialize init StaticRouteUpdateVPCRouterParam
-func (p *StaticRouteUpdateVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *StaticRouteUpdateVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -14348,7 +14455,8 @@ type StaticRouteDeleteVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewStaticRouteDeleteVPCRouterParam return new StaticRouteDeleteVPCRouterParam
@@ -14357,8 +14465,9 @@ func NewStaticRouteDeleteVPCRouterParam() *StaticRouteDeleteVPCRouterParam {
 }
 
 // Initialize init StaticRouteDeleteVPCRouterParam
-func (p *StaticRouteDeleteVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *StaticRouteDeleteVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -14571,7 +14680,8 @@ type MonitorVPCRouterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewMonitorVPCRouterParam return new MonitorVPCRouterParam
@@ -14581,8 +14691,9 @@ func NewMonitorVPCRouterParam() *MonitorVPCRouterParam {
 }
 
 // Initialize init MonitorVPCRouterParam
-func (p *MonitorVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *MonitorVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -14718,7 +14829,7 @@ func (p *MonitorVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -14923,7 +15034,8 @@ type LogsVPCRouterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewLogsVPCRouterParam return new LogsVPCRouterParam
@@ -14933,8 +15045,9 @@ func NewLogsVPCRouterParam() *LogsVPCRouterParam {
 }
 
 // Initialize init LogsVPCRouterParam
-func (p *LogsVPCRouterParam) Initialize(in Input, args []string) error {
+func (p *LogsVPCRouterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}

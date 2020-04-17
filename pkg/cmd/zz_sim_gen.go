@@ -50,12 +50,12 @@ func simListCmd() *cobra.Command {
 		Short:        "List SIM",
 		Long:         `List SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simListParam)
 			if err != nil {
+				return err
+			}
+			if err := simListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -103,12 +103,12 @@ func simCreateCmd() *cobra.Command {
 		Short:        "Create SIM",
 		Long:         `Create SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := simCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -171,12 +171,12 @@ func simReadCmd() *cobra.Command {
 		Short:        "Read SIM",
 		Long:         `Read SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simReadParam)
 			if err != nil {
+				return err
+			}
+			if err := simReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -241,12 +241,12 @@ func simUpdateCmd() *cobra.Command {
 		Short:        "Update SIM",
 		Long:         `Update SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := simUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -327,12 +327,12 @@ func simDeleteCmd() *cobra.Command {
 		Short:        "Delete SIM",
 		Long:         `Delete SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := simDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -403,12 +403,12 @@ func simCarrierInfoCmd() *cobra.Command {
 		Short:        "CarrierInfo SIM",
 		Long:         `CarrierInfo SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simCarrierInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simCarrierInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := simCarrierInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -473,12 +473,12 @@ func simCarrierUpdateCmd() *cobra.Command {
 		Short:        "CarrierUpdate SIM",
 		Long:         `CarrierUpdate SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simCarrierUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simCarrierUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := simCarrierUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -549,12 +549,12 @@ func simActivateCmd() *cobra.Command {
 		Short:        "Activate SIM",
 		Long:         `Activate SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simActivateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simActivateParam)
 			if err != nil {
+				return err
+			}
+			if err := simActivateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -624,12 +624,12 @@ func simDeactivateCmd() *cobra.Command {
 		Short:        "Deactivate SIM",
 		Long:         `Deactivate SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simDeactivateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simDeactivateParam)
 			if err != nil {
+				return err
+			}
+			if err := simDeactivateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -699,12 +699,12 @@ func simImeiLockCmd() *cobra.Command {
 		Short:        "ImeiLock SIM",
 		Long:         `ImeiLock SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simImeiLockParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simImeiLockParam)
 			if err != nil {
+				return err
+			}
+			if err := simImeiLockParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -775,12 +775,12 @@ func simIpAddCmd() *cobra.Command {
 		Short:        "IpAdd SIM",
 		Long:         `IpAdd SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simIpAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simIpAddParam)
 			if err != nil {
+				return err
+			}
+			if err := simIpAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -851,12 +851,12 @@ func simImeiUnlockCmd() *cobra.Command {
 		Short:        "ImeiUnlock SIM",
 		Long:         `ImeiUnlock SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simImeiUnlockParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simImeiUnlockParam)
 			if err != nil {
+				return err
+			}
+			if err := simImeiUnlockParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -926,12 +926,12 @@ func simIpDeleteCmd() *cobra.Command {
 		Short:        "IpDelete SIM",
 		Long:         `IpDelete SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simIpDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simIpDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := simIpDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1001,12 +1001,12 @@ func simLogsCmd() *cobra.Command {
 		Short:        "Logs SIM",
 		Long:         `Logs SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simLogsParam)
 			if err != nil {
+				return err
+			}
+			if err := simLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1073,12 +1073,12 @@ func simMonitorCmd() *cobra.Command {
 		Short:        "Monitor SIM",
 		Long:         `Monitor SIM`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return simMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, simMonitorParam)
 			if err != nil {
+				return err
+			}
+			if err := simMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

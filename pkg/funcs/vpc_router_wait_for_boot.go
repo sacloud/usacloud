@@ -39,6 +39,7 @@ func VPCRouterWaitForBoot(ctx cli.Context, params *params.WaitForBootVPCRouterPa
 		fmt.Sprintf("Still booting[ID:%d]...", params.Id),
 		fmt.Sprintf("Boot vpc-router[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			err := api.SleepUntilUp(params.Id, client.DefaultTimeoutDuration)

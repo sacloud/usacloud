@@ -35,6 +35,7 @@ func DiskReinstallFromArchive(ctx cli.Context, params *params.ReinstallFromArchi
 		fmt.Sprintf("Still installing[ID:%d]...", params.Id),
 		fmt.Sprintf("Reinstall disk[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			_, err := api.ReinstallFromArchive(params.Id, params.SourceArchiveId, params.DistantFrom...)
 			if err != nil {

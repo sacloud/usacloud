@@ -49,6 +49,7 @@ func DatabaseBackupRestore(ctx cli.Context, params *params.BackupRestoreDatabase
 		fmt.Sprintf("Still restoring from backup[ID:%d:%s]...", params.Id, backupID),
 		fmt.Sprintf("Restore Database[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			_, err := api.Restore(params.Id, backupID)

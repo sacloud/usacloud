@@ -50,12 +50,12 @@ func serverListCmd() *cobra.Command {
 		Short:        "List Server",
 		Long:         `List Server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverListParam)
 			if err != nil {
+				return err
+			}
+			if err := serverListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -103,12 +103,12 @@ func serverBuildCmd() *cobra.Command {
 		Short:        "Build Server",
 		Long:         `Build Server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverBuildParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverBuildParam)
 			if err != nil {
+				return err
+			}
+			if err := serverBuildParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -204,12 +204,12 @@ func serverReadCmd() *cobra.Command {
 		Short:        "Read Server",
 		Long:         `Read Server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverReadParam)
 			if err != nil {
+				return err
+			}
+			if err := serverReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -274,12 +274,12 @@ func serverUpdateCmd() *cobra.Command {
 		Short:        "Update Server",
 		Long:         `Update Server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := serverUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -361,12 +361,12 @@ func serverDeleteCmd() *cobra.Command {
 		Short:        "Delete Server",
 		Long:         `Delete Server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := serverDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -445,12 +445,12 @@ func serverPlanChangeCmd() *cobra.Command {
 		Short:        "Change server plan(core/memory)",
 		Long:         `Change server plan(core/memory)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverPlanChangeParam)
 			if err != nil {
+				return err
+			}
+			if err := serverPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -530,12 +530,12 @@ func serverBootCmd() *cobra.Command {
 		Short:        "Boot Server",
 		Long:         `Boot Server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverBootParam)
 			if err != nil {
+				return err
+			}
+			if err := serverBootParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -605,12 +605,12 @@ func serverShutdownCmd() *cobra.Command {
 		Short:        "Shutdown Server",
 		Long:         `Shutdown Server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverShutdownParam)
 			if err != nil {
+				return err
+			}
+			if err := serverShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -680,12 +680,12 @@ func serverShutdownForceCmd() *cobra.Command {
 		Short:        "ShutdownForce Server",
 		Long:         `ShutdownForce Server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverShutdownForceParam)
 			if err != nil {
+				return err
+			}
+			if err := serverShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -755,12 +755,12 @@ func serverResetCmd() *cobra.Command {
 		Short:        "Reset Server",
 		Long:         `Reset Server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverResetParam)
 			if err != nil {
+				return err
+			}
+			if err := serverResetParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -830,12 +830,12 @@ func serverWaitForBootCmd() *cobra.Command {
 		Short:        "Wait until boot is completed",
 		Long:         `Wait until boot is completed`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverWaitForBootParam)
 			if err != nil {
+				return err
+			}
+			if err := serverWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -893,12 +893,12 @@ func serverWaitForDownCmd() *cobra.Command {
 		Short:        "Wait until shutdown is completed",
 		Long:         `Wait until shutdown is completed`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverWaitForDownParam)
 			if err != nil {
+				return err
+			}
+			if err := serverWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -956,12 +956,12 @@ func serverSSHCmd() *cobra.Command {
 		Short:        "Connect to server by SSH",
 		Long:         `Connect to server by SSH`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverSSHParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverSSHParam)
 			if err != nil {
+				return err
+			}
+			if err := serverSSHParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1024,12 +1024,12 @@ func serverSSHExecCmd() *cobra.Command {
 		Short:        "Execute command on server connected by SSH",
 		Long:         `Execute command on server connected by SSH`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverSSHExecParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverSSHExecParam)
 			if err != nil {
+				return err
+			}
+			if err := serverSSHExecParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1091,12 +1091,12 @@ func serverScpCmd() *cobra.Command {
 		Short:        "Copy files/directories by SSH",
 		Long:         `Copy files/directories by SSH`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverScpParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverScpParam)
 			if err != nil {
+				return err
+			}
+			if err := serverScpParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1149,12 +1149,12 @@ func serverVncCmd() *cobra.Command {
 		Short:        "Open VNC client using the OS's default application",
 		Long:         `Open VNC client using the OS's default application`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverVncParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverVncParam)
 			if err != nil {
+				return err
+			}
+			if err := serverVncParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1213,12 +1213,12 @@ func serverVncInfoCmd() *cobra.Command {
 		Short:        "Show VNC proxy information",
 		Long:         `Show VNC proxy information`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverVncInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverVncInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := serverVncInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1284,12 +1284,12 @@ func serverVncSendCmd() *cobra.Command {
 		Short:        "Send keys over VNC connection",
 		Long:         `Send keys over VNC connection`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverVncSendParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverVncSendParam)
 			if err != nil {
+				return err
+			}
+			if err := serverVncSendParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1371,12 +1371,12 @@ func serverVncSnapshotCmd() *cobra.Command {
 		Short:        "Capture VNC snapshot",
 		Long:         `Capture VNC snapshot`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverVncSnapshotParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverVncSnapshotParam)
 			if err != nil {
+				return err
+			}
+			if err := serverVncSnapshotParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1455,12 +1455,12 @@ func serverRemoteDesktopCmd() *cobra.Command {
 		Short:        "Open RDP client using the OS's default application",
 		Long:         `Open RDP client using the OS's default application`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverRemoteDesktopParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverRemoteDesktopParam)
 			if err != nil {
+				return err
+			}
+			if err := serverRemoteDesktopParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1520,12 +1520,12 @@ func serverRemoteDesktopInfoCmd() *cobra.Command {
 		Short:        "Show RDP information(.rdp)",
 		Long:         `Show RDP information(.rdp)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverRemoteDesktopInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverRemoteDesktopInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := serverRemoteDesktopInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1592,12 +1592,12 @@ func serverDiskInfoCmd() *cobra.Command {
 		Short:        "Show information of disk(s) connected to server",
 		Long:         `Show information of disk(s) connected to server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverDiskInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverDiskInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := serverDiskInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1662,12 +1662,12 @@ func serverDiskConnectCmd() *cobra.Command {
 		Short:        "Connect disk to server",
 		Long:         `Connect disk to server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverDiskConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverDiskConnectParam)
 			if err != nil {
+				return err
+			}
+			if err := serverDiskConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1738,12 +1738,12 @@ func serverDiskDisconnectCmd() *cobra.Command {
 		Short:        "Disconnect disk from server",
 		Long:         `Disconnect disk from server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverDiskDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverDiskDisconnectParam)
 			if err != nil {
+				return err
+			}
+			if err := serverDiskDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1814,12 +1814,12 @@ func serverInterfaceInfoCmd() *cobra.Command {
 		Short:        "Show information of NIC(s) connected to server",
 		Long:         `Show information of NIC(s) connected to server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverInterfaceInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := serverInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1884,12 +1884,12 @@ func serverInterfaceAddForInternetCmd() *cobra.Command {
 		Short:        "Create and connect NIC connected to the internet",
 		Long:         `Create and connect NIC connected to the internet`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverInterfaceAddForInternetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverInterfaceAddForInternetParam)
 			if err != nil {
+				return err
+			}
+			if err := serverInterfaceAddForInternetParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1960,12 +1960,12 @@ func serverInterfaceAddForRouterCmd() *cobra.Command {
 		Short:        "Create and connect NIC connected to the router",
 		Long:         `Create and connect NIC connected to the router`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverInterfaceAddForRouterParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverInterfaceAddForRouterParam)
 			if err != nil {
+				return err
+			}
+			if err := serverInterfaceAddForRouterParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2040,12 +2040,12 @@ func serverInterfaceAddForSwitchCmd() *cobra.Command {
 		Short:        "Create and connect NIC connected to the switch",
 		Long:         `Create and connect NIC connected to the switch`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverInterfaceAddForSwitchParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverInterfaceAddForSwitchParam)
 			if err != nil {
+				return err
+			}
+			if err := serverInterfaceAddForSwitchParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2120,12 +2120,12 @@ func serverInterfaceAddDisconnectedCmd() *cobra.Command {
 		Short:        "Create and connect a disconnected NIC",
 		Long:         `Create and connect a disconnected NIC`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverInterfaceAddDisconnectedParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverInterfaceAddDisconnectedParam)
 			if err != nil {
+				return err
+			}
+			if err := serverInterfaceAddDisconnectedParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2195,12 +2195,12 @@ func serverISOInfoCmd() *cobra.Command {
 		Short:        "Show information of ISO-Image inserted to server",
 		Long:         `Show information of ISO-Image inserted to server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverISOInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverISOInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := serverISOInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2265,12 +2265,12 @@ func serverISOInsertCmd() *cobra.Command {
 		Short:        "Insert ISO-Image to server",
 		Long:         `Insert ISO-Image to server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverISOInsertParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverISOInsertParam)
 			if err != nil {
+				return err
+			}
+			if err := serverISOInsertParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2347,12 +2347,12 @@ func serverISOEjectCmd() *cobra.Command {
 		Short:        "Eject ISO-Image from server",
 		Long:         `Eject ISO-Image from server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverISOEjectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverISOEjectParam)
 			if err != nil {
+				return err
+			}
+			if err := serverISOEjectParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2422,12 +2422,12 @@ func serverMonitorCPUCmd() *cobra.Command {
 		Short:        "Collect CPU monitor values",
 		Long:         `Collect CPU monitor values`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverMonitorCPUParam)
 			if err != nil {
+				return err
+			}
+			if err := serverMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2495,12 +2495,12 @@ func serverMonitorNicCmd() *cobra.Command {
 		Short:        "Collect NIC(s) monitor values",
 		Long:         `Collect NIC(s) monitor values`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverMonitorNicParam)
 			if err != nil {
+				return err
+			}
+			if err := serverMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2569,12 +2569,12 @@ func serverMonitorDiskCmd() *cobra.Command {
 		Short:        "Collect Disk(s) monitor values",
 		Long:         `Collect Disk(s) monitor values`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverMonitorDiskParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverMonitorDiskParam)
 			if err != nil {
+				return err
+			}
+			if err := serverMonitorDiskParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2643,12 +2643,12 @@ func serverMaintenanceInfoCmd() *cobra.Command {
 		Short:        "MaintenanceInfo Server",
 		Long:         `MaintenanceInfo Server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return serverMaintenanceInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, serverMaintenanceInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := serverMaintenanceInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

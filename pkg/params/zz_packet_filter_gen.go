@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -47,7 +48,8 @@ type ListPacketFilterParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListPacketFilterParam return new ListPacketFilterParam
@@ -56,8 +58,9 @@ func NewListPacketFilterParam() *ListPacketFilterParam {
 }
 
 // Initialize init ListPacketFilterParam
-func (p *ListPacketFilterParam) Initialize(in Input, args []string) error {
+func (p *ListPacketFilterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -170,7 +173,7 @@ func (p *ListPacketFilterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -372,7 +375,8 @@ type CreatePacketFilterParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreatePacketFilterParam return new CreatePacketFilterParam
@@ -381,8 +385,9 @@ func NewCreatePacketFilterParam() *CreatePacketFilterParam {
 }
 
 // Initialize init CreatePacketFilterParam
-func (p *CreatePacketFilterParam) Initialize(in Input, args []string) error {
+func (p *CreatePacketFilterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -485,7 +490,7 @@ func (p *CreatePacketFilterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -671,7 +676,8 @@ type ReadPacketFilterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadPacketFilterParam return new ReadPacketFilterParam
@@ -680,8 +686,9 @@ func NewReadPacketFilterParam() *ReadPacketFilterParam {
 }
 
 // Initialize init ReadPacketFilterParam
-func (p *ReadPacketFilterParam) Initialize(in Input, args []string) error {
+func (p *ReadPacketFilterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -763,7 +770,7 @@ func (p *ReadPacketFilterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -938,7 +945,8 @@ type UpdatePacketFilterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdatePacketFilterParam return new UpdatePacketFilterParam
@@ -947,8 +955,9 @@ func NewUpdatePacketFilterParam() *UpdatePacketFilterParam {
 }
 
 // Initialize init UpdatePacketFilterParam
-func (p *UpdatePacketFilterParam) Initialize(in Input, args []string) error {
+func (p *UpdatePacketFilterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1055,7 +1064,7 @@ func (p *UpdatePacketFilterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1249,7 +1258,8 @@ type DeletePacketFilterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeletePacketFilterParam return new DeletePacketFilterParam
@@ -1258,8 +1268,9 @@ func NewDeletePacketFilterParam() *DeletePacketFilterParam {
 }
 
 // Initialize init DeletePacketFilterParam
-func (p *DeletePacketFilterParam) Initialize(in Input, args []string) error {
+func (p *DeletePacketFilterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1344,7 +1355,7 @@ func (p *DeletePacketFilterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1523,7 +1534,8 @@ type RuleInfoPacketFilterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewRuleInfoPacketFilterParam return new RuleInfoPacketFilterParam
@@ -1532,8 +1544,9 @@ func NewRuleInfoPacketFilterParam() *RuleInfoPacketFilterParam {
 }
 
 // Initialize init RuleInfoPacketFilterParam
-func (p *RuleInfoPacketFilterParam) Initialize(in Input, args []string) error {
+func (p *RuleInfoPacketFilterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1615,7 +1628,7 @@ func (p *RuleInfoPacketFilterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1795,7 +1808,8 @@ type RuleAddPacketFilterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewRuleAddPacketFilterParam return new RuleAddPacketFilterParam
@@ -1805,8 +1819,9 @@ func NewRuleAddPacketFilterParam() *RuleAddPacketFilterParam {
 }
 
 // Initialize init RuleAddPacketFilterParam
-func (p *RuleAddPacketFilterParam) Initialize(in Input, args []string) error {
+func (p *RuleAddPacketFilterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1960,7 +1975,7 @@ func (p *RuleAddPacketFilterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2196,7 +2211,8 @@ type RuleUpdatePacketFilterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewRuleUpdatePacketFilterParam return new RuleUpdatePacketFilterParam
@@ -2205,8 +2221,9 @@ func NewRuleUpdatePacketFilterParam() *RuleUpdatePacketFilterParam {
 }
 
 // Initialize init RuleUpdatePacketFilterParam
-func (p *RuleUpdatePacketFilterParam) Initialize(in Input, args []string) error {
+func (p *RuleUpdatePacketFilterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2368,7 +2385,7 @@ func (p *RuleUpdatePacketFilterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2598,7 +2615,8 @@ type RuleDeletePacketFilterParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewRuleDeletePacketFilterParam return new RuleDeletePacketFilterParam
@@ -2607,8 +2625,9 @@ func NewRuleDeletePacketFilterParam() *RuleDeletePacketFilterParam {
 }
 
 // Initialize init RuleDeletePacketFilterParam
-func (p *RuleDeletePacketFilterParam) Initialize(in Input, args []string) error {
+func (p *RuleDeletePacketFilterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2704,7 +2723,7 @@ func (p *RuleDeletePacketFilterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2885,7 +2904,8 @@ type InterfaceConnectPacketFilterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewInterfaceConnectPacketFilterParam return new InterfaceConnectPacketFilterParam
@@ -2894,8 +2914,9 @@ func NewInterfaceConnectPacketFilterParam() *InterfaceConnectPacketFilterParam {
 }
 
 // Initialize init InterfaceConnectPacketFilterParam
-func (p *InterfaceConnectPacketFilterParam) Initialize(in Input, args []string) error {
+func (p *InterfaceConnectPacketFilterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3095,7 +3116,8 @@ type InterfaceDisconnectPacketFilterParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewInterfaceDisconnectPacketFilterParam return new InterfaceDisconnectPacketFilterParam
@@ -3104,8 +3126,9 @@ func NewInterfaceDisconnectPacketFilterParam() *InterfaceDisconnectPacketFilterP
 }
 
 // Initialize init InterfaceDisconnectPacketFilterParam
-func (p *InterfaceDisconnectPacketFilterParam) Initialize(in Input, args []string) error {
+func (p *InterfaceDisconnectPacketFilterParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}

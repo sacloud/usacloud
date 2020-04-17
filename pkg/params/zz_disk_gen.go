@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -52,7 +53,8 @@ type ListDiskParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListDiskParam return new ListDiskParam
@@ -61,8 +63,9 @@ func NewListDiskParam() *ListDiskParam {
 }
 
 // Initialize init ListDiskParam
-func (p *ListDiskParam) Initialize(in Input, args []string) error {
+func (p *ListDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -222,7 +225,7 @@ func (p *ListDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -467,7 +470,8 @@ type CreateDiskParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateDiskParam return new CreateDiskParam
@@ -477,8 +481,9 @@ func NewCreateDiskParam() *CreateDiskParam {
 }
 
 // Initialize init CreateDiskParam
-func (p *CreateDiskParam) Initialize(in Input, args []string) error {
+func (p *CreateDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -708,7 +713,7 @@ func (p *CreateDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -951,7 +956,8 @@ type ReadDiskParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadDiskParam return new ReadDiskParam
@@ -960,8 +966,9 @@ func NewReadDiskParam() *ReadDiskParam {
 }
 
 // Initialize init ReadDiskParam
-func (p *ReadDiskParam) Initialize(in Input, args []string) error {
+func (p *ReadDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1046,7 +1053,7 @@ func (p *ReadDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1232,7 +1239,8 @@ type UpdateDiskParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateDiskParam return new UpdateDiskParam
@@ -1241,8 +1249,9 @@ func NewUpdateDiskParam() *UpdateDiskParam {
 }
 
 // Initialize init UpdateDiskParam
-func (p *UpdateDiskParam) Initialize(in Input, args []string) error {
+func (p *UpdateDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1385,7 +1394,7 @@ func (p *UpdateDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1608,7 +1617,8 @@ type DeleteDiskParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteDiskParam return new DeleteDiskParam
@@ -1617,8 +1627,9 @@ func NewDeleteDiskParam() *DeleteDiskParam {
 }
 
 // Initialize init DeleteDiskParam
-func (p *DeleteDiskParam) Initialize(in Input, args []string) error {
+func (p *DeleteDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1706,7 +1717,7 @@ func (p *DeleteDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1902,7 +1913,8 @@ type EditDiskParam struct {
 	QueryFile           string
 	Id                  sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewEditDiskParam return new EditDiskParam
@@ -1912,8 +1924,9 @@ func NewEditDiskParam() *EditDiskParam {
 }
 
 // Initialize init EditDiskParam
-func (p *EditDiskParam) Initialize(in Input, args []string) error {
+func (p *EditDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2049,7 +2062,7 @@ func (p *EditDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2293,7 +2306,8 @@ type ResizePartitionDiskParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewResizePartitionDiskParam return new ResizePartitionDiskParam
@@ -2302,8 +2316,9 @@ func NewResizePartitionDiskParam() *ResizePartitionDiskParam {
 }
 
 // Initialize init ResizePartitionDiskParam
-func (p *ResizePartitionDiskParam) Initialize(in Input, args []string) error {
+func (p *ResizePartitionDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2391,7 +2406,7 @@ func (p *ResizePartitionDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2574,7 +2589,8 @@ type ReinstallFromArchiveDiskParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReinstallFromArchiveDiskParam return new ReinstallFromArchiveDiskParam
@@ -2583,8 +2599,9 @@ func NewReinstallFromArchiveDiskParam() *ReinstallFromArchiveDiskParam {
 }
 
 // Initialize init ReinstallFromArchiveDiskParam
-func (p *ReinstallFromArchiveDiskParam) Initialize(in Input, args []string) error {
+func (p *ReinstallFromArchiveDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2814,7 +2831,8 @@ type ReinstallFromDiskDiskParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReinstallFromDiskDiskParam return new ReinstallFromDiskDiskParam
@@ -2823,8 +2841,9 @@ func NewReinstallFromDiskDiskParam() *ReinstallFromDiskDiskParam {
 }
 
 // Initialize init ReinstallFromDiskDiskParam
-func (p *ReinstallFromDiskDiskParam) Initialize(in Input, args []string) error {
+func (p *ReinstallFromDiskDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3053,7 +3072,8 @@ type ReinstallToBlankDiskParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReinstallToBlankDiskParam return new ReinstallToBlankDiskParam
@@ -3062,8 +3082,9 @@ func NewReinstallToBlankDiskParam() *ReinstallToBlankDiskParam {
 }
 
 // Initialize init ReinstallToBlankDiskParam
-func (p *ReinstallToBlankDiskParam) Initialize(in Input, args []string) error {
+func (p *ReinstallToBlankDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3267,7 +3288,8 @@ type ServerConnectDiskParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewServerConnectDiskParam return new ServerConnectDiskParam
@@ -3276,8 +3298,9 @@ func NewServerConnectDiskParam() *ServerConnectDiskParam {
 }
 
 // Initialize init ServerConnectDiskParam
-func (p *ServerConnectDiskParam) Initialize(in Input, args []string) error {
+func (p *ServerConnectDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3487,7 +3510,8 @@ type ServerDisconnectDiskParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewServerDisconnectDiskParam return new ServerDisconnectDiskParam
@@ -3496,8 +3520,9 @@ func NewServerDisconnectDiskParam() *ServerDisconnectDiskParam {
 }
 
 // Initialize init ServerDisconnectDiskParam
-func (p *ServerDisconnectDiskParam) Initialize(in Input, args []string) error {
+func (p *ServerDisconnectDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3691,7 +3716,8 @@ type MonitorDiskParam struct {
 	KeyFormat         string
 	Start             string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewMonitorDiskParam return new MonitorDiskParam
@@ -3701,8 +3727,9 @@ func NewMonitorDiskParam() *MonitorDiskParam {
 }
 
 // Initialize init MonitorDiskParam
-func (p *MonitorDiskParam) Initialize(in Input, args []string) error {
+func (p *MonitorDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3820,7 +3847,7 @@ func (p *MonitorDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4014,7 +4041,8 @@ type WaitForCopyDiskParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewWaitForCopyDiskParam return new WaitForCopyDiskParam
@@ -4023,8 +4051,9 @@ func NewWaitForCopyDiskParam() *WaitForCopyDiskParam {
 }
 
 // Initialize init WaitForCopyDiskParam
-func (p *WaitForCopyDiskParam) Initialize(in Input, args []string) error {
+func (p *WaitForCopyDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}

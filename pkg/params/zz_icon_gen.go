@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -49,7 +50,8 @@ type ListIconParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListIconParam return new ListIconParam
@@ -58,8 +60,9 @@ func NewListIconParam() *ListIconParam {
 }
 
 // Initialize init ListIconParam
-func (p *ListIconParam) Initialize(in Input, args []string) error {
+func (p *ListIconParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -194,7 +197,7 @@ func (p *ListIconParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -411,7 +414,8 @@ type CreateIconParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateIconParam return new CreateIconParam
@@ -420,8 +424,9 @@ func NewCreateIconParam() *CreateIconParam {
 }
 
 // Initialize init CreateIconParam
-func (p *CreateIconParam) Initialize(in Input, args []string) error {
+func (p *CreateIconParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -542,7 +547,7 @@ func (p *CreateIconParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -736,7 +741,8 @@ type ReadIconParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadIconParam return new ReadIconParam
@@ -745,8 +751,9 @@ func NewReadIconParam() *ReadIconParam {
 }
 
 // Initialize init ReadIconParam
-func (p *ReadIconParam) Initialize(in Input, args []string) error {
+func (p *ReadIconParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -831,7 +838,7 @@ func (p *ReadIconParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1014,7 +1021,8 @@ type UpdateIconParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateIconParam return new UpdateIconParam
@@ -1023,8 +1031,9 @@ func NewUpdateIconParam() *UpdateIconParam {
 }
 
 // Initialize init UpdateIconParam
-func (p *UpdateIconParam) Initialize(in Input, args []string) error {
+func (p *UpdateIconParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1134,7 +1143,7 @@ func (p *UpdateIconParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1336,7 +1345,8 @@ type DeleteIconParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteIconParam return new DeleteIconParam
@@ -1345,8 +1355,9 @@ func NewDeleteIconParam() *DeleteIconParam {
 }
 
 // Initialize init DeleteIconParam
-func (p *DeleteIconParam) Initialize(in Input, args []string) error {
+func (p *DeleteIconParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1434,7 +1445,7 @@ func (p *DeleteIconParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

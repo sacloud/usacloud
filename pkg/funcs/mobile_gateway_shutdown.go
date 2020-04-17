@@ -39,6 +39,7 @@ func MobileGatewayShutdown(ctx cli.Context, params *params.ShutdownMobileGateway
 		fmt.Sprintf("Still waiting for Shutdown[ID:%d]...", params.Id),
 		fmt.Sprintf("Shutdown mobile-gateway[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			var err error

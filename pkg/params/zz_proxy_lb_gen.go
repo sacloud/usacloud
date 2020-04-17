@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -48,7 +49,8 @@ type ListProxyLBParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListProxyLBParam return new ListProxyLBParam
@@ -57,8 +59,9 @@ func NewListProxyLBParam() *ListProxyLBParam {
 }
 
 // Initialize init ListProxyLBParam
-func (p *ListProxyLBParam) Initialize(in Input, args []string) error {
+func (p *ListProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -182,7 +185,7 @@ func (p *ListProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -402,7 +405,8 @@ type CreateProxyLBParam struct {
 	Query                string
 	QueryFile            string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateProxyLBParam return new CreateProxyLBParam
@@ -412,8 +416,9 @@ func NewCreateProxyLBParam() *CreateProxyLBParam {
 }
 
 // Initialize init CreateProxyLBParam
-func (p *CreateProxyLBParam) Initialize(in Input, args []string) error {
+func (p *CreateProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -619,7 +624,7 @@ func (p *CreateProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -883,7 +888,8 @@ type ReadProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadProxyLBParam return new ReadProxyLBParam
@@ -892,8 +898,9 @@ func NewReadProxyLBParam() *ReadProxyLBParam {
 }
 
 // Initialize init ReadProxyLBParam
-func (p *ReadProxyLBParam) Initialize(in Input, args []string) error {
+func (p *ReadProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -978,7 +985,7 @@ func (p *ReadProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1171,7 +1178,8 @@ type UpdateProxyLBParam struct {
 	QueryFile            string
 	Id                   sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateProxyLBParam return new UpdateProxyLBParam
@@ -1181,8 +1189,9 @@ func NewUpdateProxyLBParam() *UpdateProxyLBParam {
 }
 
 // Initialize init UpdateProxyLBParam
-func (p *UpdateProxyLBParam) Initialize(in Input, args []string) error {
+func (p *UpdateProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1370,7 +1379,7 @@ func (p *UpdateProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1642,7 +1651,8 @@ type DeleteProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteProxyLBParam return new DeleteProxyLBParam
@@ -1651,8 +1661,9 @@ func NewDeleteProxyLBParam() *DeleteProxyLBParam {
 }
 
 // Initialize init DeleteProxyLBParam
-func (p *DeleteProxyLBParam) Initialize(in Input, args []string) error {
+func (p *DeleteProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1740,7 +1751,7 @@ func (p *DeleteProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1929,7 +1940,8 @@ type PlanChangeProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewPlanChangeProxyLBParam return new PlanChangeProxyLBParam
@@ -1938,8 +1950,9 @@ func NewPlanChangeProxyLBParam() *PlanChangeProxyLBParam {
 }
 
 // Initialize init PlanChangeProxyLBParam
-func (p *PlanChangeProxyLBParam) Initialize(in Input, args []string) error {
+func (p *PlanChangeProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2045,7 +2058,7 @@ func (p *PlanChangeProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2239,7 +2252,8 @@ type BindPortInfoProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewBindPortInfoProxyLBParam return new BindPortInfoProxyLBParam
@@ -2248,8 +2262,9 @@ func NewBindPortInfoProxyLBParam() *BindPortInfoProxyLBParam {
 }
 
 // Initialize init BindPortInfoProxyLBParam
-func (p *BindPortInfoProxyLBParam) Initialize(in Input, args []string) error {
+func (p *BindPortInfoProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2334,7 +2349,7 @@ func (p *BindPortInfoProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2519,7 +2534,8 @@ type BindPortAddProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewBindPortAddProxyLBParam return new BindPortAddProxyLBParam
@@ -2528,8 +2544,9 @@ func NewBindPortAddProxyLBParam() *BindPortAddProxyLBParam {
 }
 
 // Initialize init BindPortAddProxyLBParam
-func (p *BindPortAddProxyLBParam) Initialize(in Input, args []string) error {
+func (p *BindPortAddProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2659,7 +2676,7 @@ func (p *BindPortAddProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2880,7 +2897,8 @@ type BindPortUpdateProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewBindPortUpdateProxyLBParam return new BindPortUpdateProxyLBParam
@@ -2889,8 +2907,9 @@ func NewBindPortUpdateProxyLBParam() *BindPortUpdateProxyLBParam {
 }
 
 // Initialize init BindPortUpdateProxyLBParam
-func (p *BindPortUpdateProxyLBParam) Initialize(in Input, args []string) error {
+func (p *BindPortUpdateProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3017,7 +3036,7 @@ func (p *BindPortUpdateProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3241,7 +3260,8 @@ type BindPortDeleteProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewBindPortDeleteProxyLBParam return new BindPortDeleteProxyLBParam
@@ -3250,8 +3270,9 @@ func NewBindPortDeleteProxyLBParam() *BindPortDeleteProxyLBParam {
 }
 
 // Initialize init BindPortDeleteProxyLBParam
-func (p *BindPortDeleteProxyLBParam) Initialize(in Input, args []string) error {
+func (p *BindPortDeleteProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3350,7 +3371,7 @@ func (p *BindPortDeleteProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3545,7 +3566,8 @@ type ResponseHeaderInfoProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewResponseHeaderInfoProxyLBParam return new ResponseHeaderInfoProxyLBParam
@@ -3554,8 +3576,9 @@ func NewResponseHeaderInfoProxyLBParam() *ResponseHeaderInfoProxyLBParam {
 }
 
 // Initialize init ResponseHeaderInfoProxyLBParam
-func (p *ResponseHeaderInfoProxyLBParam) Initialize(in Input, args []string) error {
+func (p *ResponseHeaderInfoProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3651,7 +3674,7 @@ func (p *ResponseHeaderInfoProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3842,7 +3865,8 @@ type ResponseHeaderAddProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewResponseHeaderAddProxyLBParam return new ResponseHeaderAddProxyLBParam
@@ -3851,8 +3875,9 @@ func NewResponseHeaderAddProxyLBParam() *ResponseHeaderAddProxyLBParam {
 }
 
 // Initialize init ResponseHeaderAddProxyLBParam
-func (p *ResponseHeaderAddProxyLBParam) Initialize(in Input, args []string) error {
+func (p *ResponseHeaderAddProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3973,7 +3998,7 @@ func (p *ResponseHeaderAddProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4186,7 +4211,8 @@ type ResponseHeaderUpdateProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewResponseHeaderUpdateProxyLBParam return new ResponseHeaderUpdateProxyLBParam
@@ -4195,8 +4221,9 @@ func NewResponseHeaderUpdateProxyLBParam() *ResponseHeaderUpdateProxyLBParam {
 }
 
 // Initialize init ResponseHeaderUpdateProxyLBParam
-func (p *ResponseHeaderUpdateProxyLBParam) Initialize(in Input, args []string) error {
+func (p *ResponseHeaderUpdateProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4312,7 +4339,7 @@ func (p *ResponseHeaderUpdateProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4530,7 +4557,8 @@ type ResponseHeaderDeleteProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewResponseHeaderDeleteProxyLBParam return new ResponseHeaderDeleteProxyLBParam
@@ -4539,8 +4567,9 @@ func NewResponseHeaderDeleteProxyLBParam() *ResponseHeaderDeleteProxyLBParam {
 }
 
 // Initialize init ResponseHeaderDeleteProxyLBParam
-func (p *ResponseHeaderDeleteProxyLBParam) Initialize(in Input, args []string) error {
+func (p *ResponseHeaderDeleteProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4650,7 +4679,7 @@ func (p *ResponseHeaderDeleteProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4851,7 +4880,8 @@ type ACMEInfoProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewACMEInfoProxyLBParam return new ACMEInfoProxyLBParam
@@ -4860,8 +4890,9 @@ func NewACMEInfoProxyLBParam() *ACMEInfoProxyLBParam {
 }
 
 // Initialize init ACMEInfoProxyLBParam
-func (p *ACMEInfoProxyLBParam) Initialize(in Input, args []string) error {
+func (p *ACMEInfoProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4946,7 +4977,7 @@ func (p *ACMEInfoProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5130,7 +5161,8 @@ type ACMESettingProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewACMESettingProxyLBParam return new ACMESettingProxyLBParam
@@ -5139,8 +5171,9 @@ func NewACMESettingProxyLBParam() *ACMESettingProxyLBParam {
 }
 
 // Initialize init ACMESettingProxyLBParam
-func (p *ACMESettingProxyLBParam) Initialize(in Input, args []string) error {
+func (p *ACMESettingProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5237,7 +5270,7 @@ func (p *ACMESettingProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5439,7 +5472,8 @@ type ACMERenewProxyLBParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewACMERenewProxyLBParam return new ACMERenewProxyLBParam
@@ -5448,8 +5482,9 @@ func NewACMERenewProxyLBParam() *ACMERenewProxyLBParam {
 }
 
 // Initialize init ACMERenewProxyLBParam
-func (p *ACMERenewProxyLBParam) Initialize(in Input, args []string) error {
+func (p *ACMERenewProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5640,7 +5675,8 @@ type ServerInfoProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewServerInfoProxyLBParam return new ServerInfoProxyLBParam
@@ -5649,8 +5685,9 @@ func NewServerInfoProxyLBParam() *ServerInfoProxyLBParam {
 }
 
 // Initialize init ServerInfoProxyLBParam
-func (p *ServerInfoProxyLBParam) Initialize(in Input, args []string) error {
+func (p *ServerInfoProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5735,7 +5772,7 @@ func (p *ServerInfoProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5919,7 +5956,8 @@ type ServerAddProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewServerAddProxyLBParam return new ServerAddProxyLBParam
@@ -5928,8 +5966,9 @@ func NewServerAddProxyLBParam() *ServerAddProxyLBParam {
 }
 
 // Initialize init ServerAddProxyLBParam
-func (p *ServerAddProxyLBParam) Initialize(in Input, args []string) error {
+func (p *ServerAddProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6056,7 +6095,7 @@ func (p *ServerAddProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6269,7 +6308,8 @@ type ServerUpdateProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewServerUpdateProxyLBParam return new ServerUpdateProxyLBParam
@@ -6278,8 +6318,9 @@ func NewServerUpdateProxyLBParam() *ServerUpdateProxyLBParam {
 }
 
 // Initialize init ServerUpdateProxyLBParam
-func (p *ServerUpdateProxyLBParam) Initialize(in Input, args []string) error {
+func (p *ServerUpdateProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6403,7 +6444,7 @@ func (p *ServerUpdateProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6620,7 +6661,8 @@ type ServerDeleteProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewServerDeleteProxyLBParam return new ServerDeleteProxyLBParam
@@ -6629,8 +6671,9 @@ func NewServerDeleteProxyLBParam() *ServerDeleteProxyLBParam {
 }
 
 // Initialize init ServerDeleteProxyLBParam
-func (p *ServerDeleteProxyLBParam) Initialize(in Input, args []string) error {
+func (p *ServerDeleteProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6729,7 +6772,7 @@ func (p *ServerDeleteProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6923,7 +6966,8 @@ type CertificateInfoProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCertificateInfoProxyLBParam return new CertificateInfoProxyLBParam
@@ -6932,8 +6976,9 @@ func NewCertificateInfoProxyLBParam() *CertificateInfoProxyLBParam {
 }
 
 // Initialize init CertificateInfoProxyLBParam
-func (p *CertificateInfoProxyLBParam) Initialize(in Input, args []string) error {
+func (p *CertificateInfoProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7018,7 +7063,7 @@ func (p *CertificateInfoProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -7202,7 +7247,8 @@ type CertificateAddProxyLBParam struct {
 	QueryFile               string
 	Id                      sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCertificateAddProxyLBParam return new CertificateAddProxyLBParam
@@ -7211,8 +7257,9 @@ func NewCertificateAddProxyLBParam() *CertificateAddProxyLBParam {
 }
 
 // Initialize init CertificateAddProxyLBParam
-func (p *CertificateAddProxyLBParam) Initialize(in Input, args []string) error {
+func (p *CertificateAddProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7325,7 +7372,7 @@ func (p *CertificateAddProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -7537,7 +7584,8 @@ type CertificateUpdateProxyLBParam struct {
 	QueryFile               string
 	Id                      sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCertificateUpdateProxyLBParam return new CertificateUpdateProxyLBParam
@@ -7546,8 +7594,9 @@ func NewCertificateUpdateProxyLBParam() *CertificateUpdateProxyLBParam {
 }
 
 // Initialize init CertificateUpdateProxyLBParam
-func (p *CertificateUpdateProxyLBParam) Initialize(in Input, args []string) error {
+func (p *CertificateUpdateProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7644,7 +7693,7 @@ func (p *CertificateUpdateProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -7853,7 +7902,8 @@ type CertificateDeleteProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCertificateDeleteProxyLBParam return new CertificateDeleteProxyLBParam
@@ -7862,8 +7912,9 @@ func NewCertificateDeleteProxyLBParam() *CertificateDeleteProxyLBParam {
 }
 
 // Initialize init CertificateDeleteProxyLBParam
-func (p *CertificateDeleteProxyLBParam) Initialize(in Input, args []string) error {
+func (p *CertificateDeleteProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7951,7 +8002,7 @@ func (p *CertificateDeleteProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -8141,7 +8192,8 @@ type MonitorProxyLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewMonitorProxyLBParam return new MonitorProxyLBParam
@@ -8151,8 +8203,9 @@ func NewMonitorProxyLBParam() *MonitorProxyLBParam {
 }
 
 // Initialize init MonitorProxyLBParam
-func (p *MonitorProxyLBParam) Initialize(in Input, args []string) error {
+func (p *MonitorProxyLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -8270,7 +8323,7 @@ func (p *MonitorProxyLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

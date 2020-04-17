@@ -48,12 +48,12 @@ func productDiskListCmd() *cobra.Command {
 		Short:        "List ProductDisk (default)",
 		Long:         `List ProductDisk (default)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productDiskListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, productDiskListParam)
 			if err != nil {
+				return err
+			}
+			if err := productDiskListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -100,12 +100,12 @@ func productDiskReadCmd() *cobra.Command {
 		Short:        "Read ProductDisk",
 		Long:         `Read ProductDisk`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productDiskReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, productDiskReadParam)
 			if err != nil {
+				return err
+			}
+			if err := productDiskReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

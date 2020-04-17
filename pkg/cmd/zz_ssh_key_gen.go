@@ -50,12 +50,12 @@ func sshKeyListCmd() *cobra.Command {
 		Short:        "List SSHKey",
 		Long:         `List SSHKey`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return sshKeyListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, sshKeyListParam)
 			if err != nil {
+				return err
+			}
+			if err := sshKeyListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -102,12 +102,12 @@ func sshKeyCreateCmd() *cobra.Command {
 		Short:        "Create SSHKey",
 		Long:         `Create SSHKey`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return sshKeyCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, sshKeyCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := sshKeyCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -165,12 +165,12 @@ func sshKeyReadCmd() *cobra.Command {
 		Short:        "Read SSHKey",
 		Long:         `Read SSHKey`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return sshKeyReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, sshKeyReadParam)
 			if err != nil {
+				return err
+			}
+			if err := sshKeyReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -234,12 +234,12 @@ func sshKeyUpdateCmd() *cobra.Command {
 		Short:        "Update SSHKey",
 		Long:         `Update SSHKey`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return sshKeyUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, sshKeyUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := sshKeyUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -317,12 +317,12 @@ func sshKeyDeleteCmd() *cobra.Command {
 		Short:        "Delete SSHKey",
 		Long:         `Delete SSHKey`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return sshKeyDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, sshKeyDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := sshKeyDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -398,12 +398,12 @@ func sshKeyGenerateCmd() *cobra.Command {
 		Short:        "Generate SSHKey",
 		Long:         `Generate SSHKey`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return sshKeyGenerateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, sshKeyGenerateParam)
 			if err != nil {
+				return err
+			}
+			if err := sshKeyGenerateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -50,7 +51,8 @@ type ListStartupScriptParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListStartupScriptParam return new ListStartupScriptParam
@@ -59,8 +61,9 @@ func NewListStartupScriptParam() *ListStartupScriptParam {
 }
 
 // Initialize init ListStartupScriptParam
-func (p *ListStartupScriptParam) Initialize(in Input, args []string) error {
+func (p *ListStartupScriptParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -198,7 +201,7 @@ func (p *ListStartupScriptParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -425,7 +428,8 @@ type CreateStartupScriptParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateStartupScriptParam return new CreateStartupScriptParam
@@ -435,8 +439,9 @@ func NewCreateStartupScriptParam() *CreateStartupScriptParam {
 }
 
 // Initialize init CreateStartupScriptParam
-func (p *CreateStartupScriptParam) Initialize(in Input, args []string) error {
+func (p *CreateStartupScriptParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -592,7 +597,7 @@ func (p *CreateStartupScriptParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -807,7 +812,8 @@ type ReadStartupScriptParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadStartupScriptParam return new ReadStartupScriptParam
@@ -816,8 +822,9 @@ func NewReadStartupScriptParam() *ReadStartupScriptParam {
 }
 
 // Initialize init ReadStartupScriptParam
-func (p *ReadStartupScriptParam) Initialize(in Input, args []string) error {
+func (p *ReadStartupScriptParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -902,7 +909,7 @@ func (p *ReadStartupScriptParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1089,7 +1096,8 @@ type UpdateStartupScriptParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateStartupScriptParam return new UpdateStartupScriptParam
@@ -1098,8 +1106,9 @@ func NewUpdateStartupScriptParam() *UpdateStartupScriptParam {
 }
 
 // Initialize init UpdateStartupScriptParam
-func (p *UpdateStartupScriptParam) Initialize(in Input, args []string) error {
+func (p *UpdateStartupScriptParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1255,7 +1264,7 @@ func (p *UpdateStartupScriptParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1485,7 +1494,8 @@ type DeleteStartupScriptParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteStartupScriptParam return new DeleteStartupScriptParam
@@ -1494,8 +1504,9 @@ func NewDeleteStartupScriptParam() *DeleteStartupScriptParam {
 }
 
 // Initialize init DeleteStartupScriptParam
-func (p *DeleteStartupScriptParam) Initialize(in Input, args []string) error {
+func (p *DeleteStartupScriptParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1583,7 +1594,7 @@ func (p *DeleteStartupScriptParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

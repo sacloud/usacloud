@@ -41,6 +41,7 @@ func ServerDelete(ctx cli.Context, params *params.DeleteServerParam) error {
 				fmt.Sprintf("Still waiting for Delete[ID:%d]...", params.Id),
 				fmt.Sprintf("Delete server[ID:%d]", params.Id),
 				ctx.IO().Progress(),
+				ctx.Option().NoColor,
 				func(compChan chan bool, errChan chan error) {
 					// call manipurate functions
 					var err error

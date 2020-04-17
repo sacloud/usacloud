@@ -24,24 +24,22 @@ import (
 	"time"
 
 	"github.com/fatih/color"
-
-	"github.com/sacloud/libsacloud/api"
-
-	"github.com/spf13/pflag"
-
 	libsacloudv1 "github.com/sacloud/libsacloud"
+	"github.com/sacloud/libsacloud/api"
 	libsacloudv2 "github.com/sacloud/libsacloud/v2"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/fake"
 	"github.com/sacloud/libsacloud/v2/sacloud/trace"
 	"github.com/sacloud/libsacloud/v2/utils/builder"
 	"github.com/sacloud/libsacloud/v2/utils/setup"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/version"
+	"github.com/spf13/pflag"
 )
 
 type Context interface {
-	Option() *CLIOptions
+	Option() *flags.Flags
 	Output() output.Output
 	Client() sacloud.APICaller
 	Zone() string
@@ -60,7 +58,7 @@ type Context interface {
 
 type cliContext struct {
 	parentCtx     context.Context
-	option        *CLIOptions
+	option        *flags.Flags
 	output        output.Output
 	cliIO         IO
 	args          []string
@@ -84,13 +82,10 @@ func NewCLIContext(globalFlags *pflag.FlagSet, args []string, parameter interfac
 
 	io := newIO()
 
-	option, err := initCLIOptions(globalFlags, io)
+	option, err := flags.LoadFlags(globalFlags, io.Err())
 	if err != nil {
 		return nil, err
 	}
-
-	// TODO あとでグローバル変数を消す
-	GlobalOption = option
 
 	return &cliContext{
 		parentCtx:     ctx,
@@ -106,7 +101,7 @@ func (c *cliContext) IO() IO {
 	return c.cliIO
 }
 
-func (c *cliContext) Option() *CLIOptions {
+func (c *cliContext) Option() *flags.Flags {
 	return c.option
 }
 

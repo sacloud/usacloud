@@ -50,12 +50,12 @@ func gslbListCmd() *cobra.Command {
 		Short:        "List GSLB",
 		Long:         `List GSLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, gslbListParam)
 			if err != nil {
+				return err
+			}
+			if err := gslbListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -103,12 +103,12 @@ func gslbServerInfoCmd() *cobra.Command {
 		Short:        "ServerInfo GSLB",
 		Long:         `ServerInfo GSLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, gslbServerInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := gslbServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -173,12 +173,12 @@ func gslbCreateCmd() *cobra.Command {
 		Short:        "Create GSLB",
 		Long:         `Create GSLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, gslbCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := gslbCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -244,12 +244,12 @@ func gslbServerAddCmd() *cobra.Command {
 		Short:        "ServerAdd GSLB",
 		Long:         `ServerAdd GSLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, gslbServerAddParam)
 			if err != nil {
+				return err
+			}
+			if err := gslbServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -329,12 +329,12 @@ func gslbReadCmd() *cobra.Command {
 		Short:        "Read GSLB",
 		Long:         `Read GSLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, gslbReadParam)
 			if err != nil {
+				return err
+			}
+			if err := gslbReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -399,12 +399,12 @@ func gslbServerUpdateCmd() *cobra.Command {
 		Short:        "ServerUpdate GSLB",
 		Long:         `ServerUpdate GSLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, gslbServerUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := gslbServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -485,12 +485,12 @@ func gslbServerDeleteCmd() *cobra.Command {
 		Short:        "ServerDelete GSLB",
 		Long:         `ServerDelete GSLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, gslbServerDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := gslbServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -568,12 +568,12 @@ func gslbUpdateCmd() *cobra.Command {
 		Short:        "Update GSLB",
 		Long:         `Update GSLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, gslbUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := gslbUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -662,12 +662,12 @@ func gslbDeleteCmd() *cobra.Command {
 		Short:        "Delete GSLB",
 		Long:         `Delete GSLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return gslbDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, gslbDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := gslbDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

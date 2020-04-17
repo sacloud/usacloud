@@ -64,6 +64,7 @@ func ServerISOInsert(ctx cli.Context, params *usacloud_params.ISOInsertServerPar
 			fmt.Sprintf("Still uploading[ID:%d]...", params.Id),
 			fmt.Sprintf("Upload iso-image[ID:%d]", params.Id),
 			ctx.IO().Progress(),
+			ctx.Option().NoColor,
 			func(compChan chan bool, errChan chan error) {
 
 				file, df, err := fileOrStdin(params.GetISOFile())

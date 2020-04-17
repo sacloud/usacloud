@@ -50,12 +50,12 @@ func privateHostListCmd() *cobra.Command {
 		Short:        "List PrivateHost",
 		Long:         `List PrivateHost`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, privateHostListParam)
 			if err != nil {
+				return err
+			}
+			if err := privateHostListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -103,12 +103,12 @@ func privateHostCreateCmd() *cobra.Command {
 		Short:        "Create PrivateHost",
 		Long:         `Create PrivateHost`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, privateHostCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := privateHostCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -166,12 +166,12 @@ func privateHostReadCmd() *cobra.Command {
 		Short:        "Read PrivateHost",
 		Long:         `Read PrivateHost`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, privateHostReadParam)
 			if err != nil {
+				return err
+			}
+			if err := privateHostReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -236,12 +236,12 @@ func privateHostUpdateCmd() *cobra.Command {
 		Short:        "Update PrivateHost",
 		Long:         `Update PrivateHost`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, privateHostUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := privateHostUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -322,12 +322,12 @@ func privateHostDeleteCmd() *cobra.Command {
 		Short:        "Delete PrivateHost",
 		Long:         `Delete PrivateHost`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, privateHostDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := privateHostDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -404,12 +404,12 @@ func privateHostServerInfoCmd() *cobra.Command {
 		Short:        "ServerInfo PrivateHost",
 		Long:         `ServerInfo PrivateHost`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, privateHostServerInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := privateHostServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -474,12 +474,12 @@ func privateHostServerAddCmd() *cobra.Command {
 		Short:        "ServerAdd PrivateHost",
 		Long:         `ServerAdd PrivateHost`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, privateHostServerAddParam)
 			if err != nil {
+				return err
+			}
+			if err := privateHostServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -557,12 +557,12 @@ func privateHostServerDeleteCmd() *cobra.Command {
 		Short:        "ServerDelete PrivateHost",
 		Long:         `ServerDelete PrivateHost`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return privateHostServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, privateHostServerDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := privateHostServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

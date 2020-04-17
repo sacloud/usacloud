@@ -19,6 +19,7 @@ package cli
 import (
 	"testing"
 
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -298,15 +299,15 @@ func TestValidateOutputOption(t *testing.T) {
 	// do table-driven test
 	for _, expect := range expects {
 		// TODO グローバルオプションの扱いが確定したら修正する
-		GlobalOption = &CLIOptions{}
+		options := &flags.Flags{}
 		t.Run(expect.testName, func(t *testing.T) {
 			if expect.option.defaultOutputType == "" {
-				GlobalOption.DefaultOutputType = "table"
+				options.DefaultOutputType = "table"
 			} else {
-				GlobalOption.DefaultOutputType = expect.option.defaultOutputType
+				options.DefaultOutputType = expect.option.defaultOutputType
 			}
 
-			res := ValidateOutputOption(expect.option)
+			res := ValidateOutputOption(expect.option, options.DefaultOutputType)
 			assert.Equal(t, expect.expect, len(res) == 0)
 		})
 	}

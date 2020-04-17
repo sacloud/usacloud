@@ -19,12 +19,15 @@ import (
 	"io"
 
 	"github.com/fatih/color"
-	"github.com/sacloud/usacloud/pkg/cli"
 )
 
+type Printer struct {
+	NoColor bool
+}
+
 // Fprint is delegates to *color.Color or fmt depending on command.GlobalOption.NoColor flag
-func Fprint(w io.Writer, c *color.Color, a ...interface{}) {
-	if cli.GlobalOption.NoColor {
+func (p *Printer) Fprint(w io.Writer, c *color.Color, a ...interface{}) {
+	if p.NoColor {
 		fmt.Fprint(w, a...)
 	} else {
 		c.Fprint(w, a...)
@@ -32,8 +35,8 @@ func Fprint(w io.Writer, c *color.Color, a ...interface{}) {
 }
 
 // Fprintf is delegates to *color.Color or fmt depending on command.GlobalOption.NoColor flag
-func Fprintf(w io.Writer, c *color.Color, format string, a ...interface{}) {
-	if cli.GlobalOption.NoColor {
+func (p *Printer) Fprintf(w io.Writer, c *color.Color, format string, a ...interface{}) {
+	if p.NoColor {
 		fmt.Fprintf(w, format, a...)
 	} else {
 		c.Fprintf(w, format, a...)

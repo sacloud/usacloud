@@ -50,12 +50,12 @@ func iconListCmd() *cobra.Command {
 		Short:        "List Icon",
 		Long:         `List Icon`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return iconListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, iconListParam)
 			if err != nil {
+				return err
+			}
+			if err := iconListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -104,12 +104,12 @@ func iconCreateCmd() *cobra.Command {
 		Short:        "Create Icon",
 		Long:         `Create Icon`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return iconCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, iconCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := iconCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -166,12 +166,12 @@ func iconReadCmd() *cobra.Command {
 		Short:        "Read Icon",
 		Long:         `Read Icon`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return iconReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, iconReadParam)
 			if err != nil {
+				return err
+			}
+			if err := iconReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -236,12 +236,12 @@ func iconUpdateCmd() *cobra.Command {
 		Short:        "Update Icon",
 		Long:         `Update Icon`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return iconUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, iconUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := iconUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -320,12 +320,12 @@ func iconDeleteCmd() *cobra.Command {
 		Short:        "Delete Icon",
 		Long:         `Delete Icon`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return iconDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, iconDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := iconDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

@@ -57,6 +57,7 @@ func ISOImageDownload(ctx cli.Context, params *params.DownloadISOImageParam) err
 		fmt.Sprintf("Still downloading[ID:%d]...", params.Id),
 		fmt.Sprintf("Download iso-image[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			path := params.FileDestination
 			if path == "" || path == "-" {

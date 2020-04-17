@@ -35,6 +35,7 @@ func ServerReset(ctx cli.Context, params *params.ResetServerParam) error {
 		fmt.Sprintf("Still resetting[ID:%d]...", params.Id),
 		fmt.Sprintf("Reset server[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			_, err := api.RebootForce(params.Id)

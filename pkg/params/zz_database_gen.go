@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -48,7 +49,8 @@ type ListDatabaseParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListDatabaseParam return new ListDatabaseParam
@@ -57,8 +59,9 @@ func NewListDatabaseParam() *ListDatabaseParam {
 }
 
 // Initialize init ListDatabaseParam
-func (p *ListDatabaseParam) Initialize(in Input, args []string) error {
+func (p *ListDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -182,7 +185,7 @@ func (p *ListDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -408,7 +411,8 @@ type CreateDatabaseParam struct {
 	Query               string
 	QueryFile           string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateDatabaseParam return new CreateDatabaseParam
@@ -418,8 +422,9 @@ func NewCreateDatabaseParam() *CreateDatabaseParam {
 }
 
 // Initialize init CreateDatabaseParam
-func (p *CreateDatabaseParam) Initialize(in Input, args []string) error {
+func (p *CreateDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -749,7 +754,7 @@ func (p *CreateDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1055,7 +1060,8 @@ type ReadDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadDatabaseParam return new ReadDatabaseParam
@@ -1064,8 +1070,9 @@ func NewReadDatabaseParam() *ReadDatabaseParam {
 }
 
 // Initialize init ReadDatabaseParam
-func (p *ReadDatabaseParam) Initialize(in Input, args []string) error {
+func (p *ReadDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1150,7 +1157,7 @@ func (p *ReadDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1344,7 +1351,8 @@ type UpdateDatabaseParam struct {
 	QueryFile           string
 	Id                  sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateDatabaseParam return new UpdateDatabaseParam
@@ -1354,8 +1362,9 @@ func NewUpdateDatabaseParam() *UpdateDatabaseParam {
 }
 
 // Initialize init UpdateDatabaseParam
-func (p *UpdateDatabaseParam) Initialize(in Input, args []string) error {
+func (p *UpdateDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1562,7 +1571,7 @@ func (p *UpdateDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1842,7 +1851,8 @@ type DeleteDatabaseParam struct {
 	Force             bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteDatabaseParam return new DeleteDatabaseParam
@@ -1851,8 +1861,9 @@ func NewDeleteDatabaseParam() *DeleteDatabaseParam {
 }
 
 // Initialize init DeleteDatabaseParam
-func (p *DeleteDatabaseParam) Initialize(in Input, args []string) error {
+func (p *DeleteDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1943,7 +1954,7 @@ func (p *DeleteDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2131,7 +2142,8 @@ type BootDatabaseParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewBootDatabaseParam return new BootDatabaseParam
@@ -2140,8 +2152,9 @@ func NewBootDatabaseParam() *BootDatabaseParam {
 }
 
 // Initialize init BootDatabaseParam
-func (p *BootDatabaseParam) Initialize(in Input, args []string) error {
+func (p *BootDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2326,7 +2339,8 @@ type ShutdownDatabaseParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewShutdownDatabaseParam return new ShutdownDatabaseParam
@@ -2335,8 +2349,9 @@ func NewShutdownDatabaseParam() *ShutdownDatabaseParam {
 }
 
 // Initialize init ShutdownDatabaseParam
-func (p *ShutdownDatabaseParam) Initialize(in Input, args []string) error {
+func (p *ShutdownDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2521,7 +2536,8 @@ type ShutdownForceDatabaseParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewShutdownForceDatabaseParam return new ShutdownForceDatabaseParam
@@ -2530,8 +2546,9 @@ func NewShutdownForceDatabaseParam() *ShutdownForceDatabaseParam {
 }
 
 // Initialize init ShutdownForceDatabaseParam
-func (p *ShutdownForceDatabaseParam) Initialize(in Input, args []string) error {
+func (p *ShutdownForceDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2716,7 +2733,8 @@ type ResetDatabaseParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewResetDatabaseParam return new ResetDatabaseParam
@@ -2725,8 +2743,9 @@ func NewResetDatabaseParam() *ResetDatabaseParam {
 }
 
 // Initialize init ResetDatabaseParam
-func (p *ResetDatabaseParam) Initialize(in Input, args []string) error {
+func (p *ResetDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2910,7 +2929,8 @@ type WaitForBootDatabaseParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewWaitForBootDatabaseParam return new WaitForBootDatabaseParam
@@ -2919,8 +2939,9 @@ func NewWaitForBootDatabaseParam() *WaitForBootDatabaseParam {
 }
 
 // Initialize init WaitForBootDatabaseParam
-func (p *WaitForBootDatabaseParam) Initialize(in Input, args []string) error {
+func (p *WaitForBootDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3094,7 +3115,8 @@ type WaitForDownDatabaseParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewWaitForDownDatabaseParam return new WaitForDownDatabaseParam
@@ -3103,8 +3125,9 @@ func NewWaitForDownDatabaseParam() *WaitForDownDatabaseParam {
 }
 
 // Initialize init WaitForDownDatabaseParam
-func (p *WaitForDownDatabaseParam) Initialize(in Input, args []string) error {
+func (p *WaitForDownDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3285,7 +3308,8 @@ type BackupInfoDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewBackupInfoDatabaseParam return new BackupInfoDatabaseParam
@@ -3294,8 +3318,9 @@ func NewBackupInfoDatabaseParam() *BackupInfoDatabaseParam {
 }
 
 // Initialize init BackupInfoDatabaseParam
-func (p *BackupInfoDatabaseParam) Initialize(in Input, args []string) error {
+func (p *BackupInfoDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3380,7 +3405,7 @@ func (p *BackupInfoDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3560,7 +3585,8 @@ type BackupCreateDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewBackupCreateDatabaseParam return new BackupCreateDatabaseParam
@@ -3569,8 +3595,9 @@ func NewBackupCreateDatabaseParam() *BackupCreateDatabaseParam {
 }
 
 // Initialize init BackupCreateDatabaseParam
-func (p *BackupCreateDatabaseParam) Initialize(in Input, args []string) error {
+func (p *BackupCreateDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3655,7 +3682,7 @@ func (p *BackupCreateDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3836,7 +3863,8 @@ type BackupRestoreDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewBackupRestoreDatabaseParam return new BackupRestoreDatabaseParam
@@ -3845,8 +3873,9 @@ func NewBackupRestoreDatabaseParam() *BackupRestoreDatabaseParam {
 }
 
 // Initialize init BackupRestoreDatabaseParam
-func (p *BackupRestoreDatabaseParam) Initialize(in Input, args []string) error {
+func (p *BackupRestoreDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3949,7 +3978,7 @@ func (p *BackupRestoreDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4137,7 +4166,8 @@ type BackupLockDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewBackupLockDatabaseParam return new BackupLockDatabaseParam
@@ -4146,8 +4176,9 @@ func NewBackupLockDatabaseParam() *BackupLockDatabaseParam {
 }
 
 // Initialize init BackupLockDatabaseParam
-func (p *BackupLockDatabaseParam) Initialize(in Input, args []string) error {
+func (p *BackupLockDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4250,7 +4281,7 @@ func (p *BackupLockDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4438,7 +4469,8 @@ type BackupUnlockDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewBackupUnlockDatabaseParam return new BackupUnlockDatabaseParam
@@ -4447,8 +4479,9 @@ func NewBackupUnlockDatabaseParam() *BackupUnlockDatabaseParam {
 }
 
 // Initialize init BackupUnlockDatabaseParam
-func (p *BackupUnlockDatabaseParam) Initialize(in Input, args []string) error {
+func (p *BackupUnlockDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4551,7 +4584,7 @@ func (p *BackupUnlockDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4739,7 +4772,8 @@ type BackupRemoveDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewBackupRemoveDatabaseParam return new BackupRemoveDatabaseParam
@@ -4748,8 +4782,9 @@ func NewBackupRemoveDatabaseParam() *BackupRemoveDatabaseParam {
 }
 
 // Initialize init BackupRemoveDatabaseParam
-func (p *BackupRemoveDatabaseParam) Initialize(in Input, args []string) error {
+func (p *BackupRemoveDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4852,7 +4887,7 @@ func (p *BackupRemoveDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5055,7 +5090,8 @@ type CloneDatabaseParam struct {
 	QueryFile           string
 	Id                  sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCloneDatabaseParam return new CloneDatabaseParam
@@ -5065,8 +5101,9 @@ func NewCloneDatabaseParam() *CloneDatabaseParam {
 }
 
 // Initialize init CloneDatabaseParam
-func (p *CloneDatabaseParam) Initialize(in Input, args []string) error {
+func (p *CloneDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5332,7 +5369,7 @@ func (p *CloneDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5632,7 +5669,8 @@ type ReplicaCreateDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReplicaCreateDatabaseParam return new ReplicaCreateDatabaseParam
@@ -5641,8 +5679,9 @@ func NewReplicaCreateDatabaseParam() *ReplicaCreateDatabaseParam {
 }
 
 // Initialize init ReplicaCreateDatabaseParam
-func (p *ReplicaCreateDatabaseParam) Initialize(in Input, args []string) error {
+func (p *ReplicaCreateDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5829,7 +5868,7 @@ func (p *ReplicaCreateDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6068,7 +6107,8 @@ type MonitorCPUDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewMonitorCPUDatabaseParam return new MonitorCPUDatabaseParam
@@ -6078,8 +6118,9 @@ func NewMonitorCPUDatabaseParam() *MonitorCPUDatabaseParam {
 }
 
 // Initialize init MonitorCPUDatabaseParam
-func (p *MonitorCPUDatabaseParam) Initialize(in Input, args []string) error {
+func (p *MonitorCPUDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6197,7 +6238,7 @@ func (p *MonitorCPUDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6401,7 +6442,8 @@ type MonitorMemoryDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewMonitorMemoryDatabaseParam return new MonitorMemoryDatabaseParam
@@ -6411,8 +6453,9 @@ func NewMonitorMemoryDatabaseParam() *MonitorMemoryDatabaseParam {
 }
 
 // Initialize init MonitorMemoryDatabaseParam
-func (p *MonitorMemoryDatabaseParam) Initialize(in Input, args []string) error {
+func (p *MonitorMemoryDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6530,7 +6573,7 @@ func (p *MonitorMemoryDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6734,7 +6777,8 @@ type MonitorNicDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewMonitorNicDatabaseParam return new MonitorNicDatabaseParam
@@ -6744,8 +6788,9 @@ func NewMonitorNicDatabaseParam() *MonitorNicDatabaseParam {
 }
 
 // Initialize init MonitorNicDatabaseParam
-func (p *MonitorNicDatabaseParam) Initialize(in Input, args []string) error {
+func (p *MonitorNicDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6863,7 +6908,7 @@ func (p *MonitorNicDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -7067,7 +7112,8 @@ type MonitorSystemDiskDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewMonitorSystemDiskDatabaseParam return new MonitorSystemDiskDatabaseParam
@@ -7077,8 +7123,9 @@ func NewMonitorSystemDiskDatabaseParam() *MonitorSystemDiskDatabaseParam {
 }
 
 // Initialize init MonitorSystemDiskDatabaseParam
-func (p *MonitorSystemDiskDatabaseParam) Initialize(in Input, args []string) error {
+func (p *MonitorSystemDiskDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7196,7 +7243,7 @@ func (p *MonitorSystemDiskDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -7400,7 +7447,8 @@ type MonitorBackupDiskDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewMonitorBackupDiskDatabaseParam return new MonitorBackupDiskDatabaseParam
@@ -7410,8 +7458,9 @@ func NewMonitorBackupDiskDatabaseParam() *MonitorBackupDiskDatabaseParam {
 }
 
 // Initialize init MonitorBackupDiskDatabaseParam
-func (p *MonitorBackupDiskDatabaseParam) Initialize(in Input, args []string) error {
+func (p *MonitorBackupDiskDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7529,7 +7578,7 @@ func (p *MonitorBackupDiskDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -7733,7 +7782,8 @@ type MonitorSystemDiskSizeDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewMonitorSystemDiskSizeDatabaseParam return new MonitorSystemDiskSizeDatabaseParam
@@ -7743,8 +7793,9 @@ func NewMonitorSystemDiskSizeDatabaseParam() *MonitorSystemDiskSizeDatabaseParam
 }
 
 // Initialize init MonitorSystemDiskSizeDatabaseParam
-func (p *MonitorSystemDiskSizeDatabaseParam) Initialize(in Input, args []string) error {
+func (p *MonitorSystemDiskSizeDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7862,7 +7913,7 @@ func (p *MonitorSystemDiskSizeDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -8066,7 +8117,8 @@ type MonitorBackupDiskSizeDatabaseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewMonitorBackupDiskSizeDatabaseParam return new MonitorBackupDiskSizeDatabaseParam
@@ -8076,8 +8128,9 @@ func NewMonitorBackupDiskSizeDatabaseParam() *MonitorBackupDiskSizeDatabaseParam
 }
 
 // Initialize init MonitorBackupDiskSizeDatabaseParam
-func (p *MonitorBackupDiskSizeDatabaseParam) Initialize(in Input, args []string) error {
+func (p *MonitorBackupDiskSizeDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -8195,7 +8248,7 @@ func (p *MonitorBackupDiskSizeDatabaseParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -8393,7 +8446,8 @@ type LogsDatabaseParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewLogsDatabaseParam return new LogsDatabaseParam
@@ -8403,8 +8457,9 @@ func NewLogsDatabaseParam() *LogsDatabaseParam {
 }
 
 // Initialize init LogsDatabaseParam
-func (p *LogsDatabaseParam) Initialize(in Input, args []string) error {
+func (p *LogsDatabaseParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}

@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -47,7 +48,8 @@ type ListIPv4Param struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListIPv4Param return new ListIPv4Param
@@ -56,8 +58,9 @@ func NewListIPv4Param() *ListIPv4Param {
 }
 
 // Initialize init ListIPv4Param
-func (p *ListIPv4Param) Initialize(in Input, args []string) error {
+func (p *ListIPv4Param) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -170,7 +173,7 @@ func (p *ListIPv4Param) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -371,7 +374,8 @@ type PtrAddIPv4Param struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewPtrAddIPv4Param return new PtrAddIPv4Param
@@ -380,8 +384,9 @@ func NewPtrAddIPv4Param() *PtrAddIPv4Param {
 }
 
 // Initialize init PtrAddIPv4Param
-func (p *PtrAddIPv4Param) Initialize(in Input, args []string) error {
+func (p *PtrAddIPv4Param) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -466,7 +471,7 @@ func (p *PtrAddIPv4Param) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -644,7 +649,8 @@ type PtrReadIPv4Param struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewPtrReadIPv4Param return new PtrReadIPv4Param
@@ -653,8 +659,9 @@ func NewPtrReadIPv4Param() *PtrReadIPv4Param {
 }
 
 // Initialize init PtrReadIPv4Param
-func (p *PtrReadIPv4Param) Initialize(in Input, args []string) error {
+func (p *PtrReadIPv4Param) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -725,7 +732,7 @@ func (p *PtrReadIPv4Param) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -891,7 +898,8 @@ type PtrUpdateIPv4Param struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewPtrUpdateIPv4Param return new PtrUpdateIPv4Param
@@ -900,8 +908,9 @@ func NewPtrUpdateIPv4Param() *PtrUpdateIPv4Param {
 }
 
 // Initialize init PtrUpdateIPv4Param
-func (p *PtrUpdateIPv4Param) Initialize(in Input, args []string) error {
+func (p *PtrUpdateIPv4Param) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -986,7 +995,7 @@ func (p *PtrUpdateIPv4Param) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1165,7 +1174,8 @@ type PtrDeleteIPv4Param struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewPtrDeleteIPv4Param return new PtrDeleteIPv4Param
@@ -1174,8 +1184,9 @@ func NewPtrDeleteIPv4Param() *PtrDeleteIPv4Param {
 }
 
 // Initialize init PtrDeleteIPv4Param
-func (p *PtrDeleteIPv4Param) Initialize(in Input, args []string) error {
+func (p *PtrDeleteIPv4Param) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1249,7 +1260,7 @@ func (p *PtrDeleteIPv4Param) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

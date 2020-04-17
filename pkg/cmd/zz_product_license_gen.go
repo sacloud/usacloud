@@ -48,12 +48,12 @@ func productLicenseListCmd() *cobra.Command {
 		Short:        "List ProductLicense (default)",
 		Long:         `List ProductLicense (default)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productLicenseListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, productLicenseListParam)
 			if err != nil {
+				return err
+			}
+			if err := productLicenseListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -100,12 +100,12 @@ func productLicenseReadCmd() *cobra.Command {
 		Short:        "Read ProductLicense",
 		Long:         `Read ProductLicense`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productLicenseReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, productLicenseReadParam)
 			if err != nil {
+				return err
+			}
+			if err := productLicenseReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

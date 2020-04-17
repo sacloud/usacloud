@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -33,7 +34,8 @@ type CurrentConfigParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCurrentConfigParam return new CurrentConfigParam
@@ -42,8 +44,9 @@ func NewCurrentConfigParam() *CurrentConfigParam {
 }
 
 // Initialize init CurrentConfigParam
-func (p *CurrentConfigParam) Initialize(in Input, args []string) error {
+func (p *CurrentConfigParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -188,7 +191,8 @@ type DeleteConfigParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteConfigParam return new DeleteConfigParam
@@ -197,8 +201,9 @@ func NewDeleteConfigParam() *DeleteConfigParam {
 }
 
 // Initialize init DeleteConfigParam
-func (p *DeleteConfigParam) Initialize(in Input, args []string) error {
+func (p *DeleteConfigParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -356,7 +361,8 @@ type EditConfigParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewEditConfigParam return new EditConfigParam
@@ -365,8 +371,9 @@ func NewEditConfigParam() *EditConfigParam {
 }
 
 // Initialize init EditConfigParam
-func (p *EditConfigParam) Initialize(in Input, args []string) error {
+func (p *EditConfigParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -566,7 +573,8 @@ type ListConfigParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListConfigParam return new ListConfigParam
@@ -575,8 +583,9 @@ func NewListConfigParam() *ListConfigParam {
 }
 
 // Initialize init ListConfigParam
-func (p *ListConfigParam) Initialize(in Input, args []string) error {
+func (p *ListConfigParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -720,7 +729,8 @@ type MigrateConfigParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewMigrateConfigParam return new MigrateConfigParam
@@ -729,8 +739,9 @@ func NewMigrateConfigParam() *MigrateConfigParam {
 }
 
 // Initialize init MigrateConfigParam
-func (p *MigrateConfigParam) Initialize(in Input, args []string) error {
+func (p *MigrateConfigParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -874,7 +885,8 @@ type ShowConfigParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewShowConfigParam return new ShowConfigParam
@@ -883,8 +895,9 @@ func NewShowConfigParam() *ShowConfigParam {
 }
 
 // Initialize init ShowConfigParam
-func (p *ShowConfigParam) Initialize(in Input, args []string) error {
+func (p *ShowConfigParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1028,7 +1041,8 @@ type UseConfigParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUseConfigParam return new UseConfigParam
@@ -1037,8 +1051,9 @@ func NewUseConfigParam() *UseConfigParam {
 }
 
 // Initialize init UseConfigParam
-func (p *UseConfigParam) Initialize(in Input, args []string) error {
+func (p *UseConfigParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}

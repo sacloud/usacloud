@@ -49,12 +49,12 @@ func ipv4ListCmd() *cobra.Command {
 		Short:        "List IPv4",
 		Long:         `List IPv4`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return ipv4ListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, ipv4ListParam)
 			if err != nil {
+				return err
+			}
+			if err := ipv4ListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -101,12 +101,12 @@ func ipv4PtrAddCmd() *cobra.Command {
 		Short:        "PtrAdd IPv4",
 		Long:         `PtrAdd IPv4`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return ipv4PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, ipv4PtrAddParam)
 			if err != nil {
+				return err
+			}
+			if err := ipv4PtrAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -161,12 +161,12 @@ func ipv4PtrReadCmd() *cobra.Command {
 		Short:        "PtrRead IPv4",
 		Long:         `PtrRead IPv4`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return ipv4PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, ipv4PtrReadParam)
 			if err != nil {
+				return err
+			}
+			if err := ipv4PtrReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -208,12 +208,12 @@ func ipv4PtrUpdateCmd() *cobra.Command {
 		Short:        "PtrUpdate IPv4",
 		Long:         `PtrUpdate IPv4`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return ipv4PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, ipv4PtrUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := ipv4PtrUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -268,12 +268,12 @@ func ipv4PtrDeleteCmd() *cobra.Command {
 		Short:        "PtrDelete IPv4",
 		Long:         `PtrDelete IPv4`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return ipv4PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, ipv4PtrDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := ipv4PtrDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

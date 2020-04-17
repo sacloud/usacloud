@@ -265,7 +265,8 @@ func handleDiskEvents(sb serverBuilder, ctx cli.Context, params *params.BuildSer
 		progCreate := internal.NewProgress(
 			"Still creating disk...",
 			"Create disk",
-			ctx.IO().Progress())
+			ctx.IO().Progress(),
+			ctx.Option().NoColor)
 		sb.SetDiskEventHandler(builder.DiskBuildOnCreateDiskBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCreate.Start()
 		})
@@ -277,7 +278,8 @@ func handleDiskEvents(sb serverBuilder, ctx cli.Context, params *params.BuildSer
 		progCleanupNotes := internal.NewProgress(
 			"Still cleaning StartupScript...",
 			"Cleanup StartupScript",
-			ctx.IO().Progress())
+			ctx.IO().Progress(),
+			ctx.Option().NoColor)
 		sb.SetDiskEventHandler(builder.DiskBuildOnCleanupNoteBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCleanupNotes.Start()
 		})
@@ -289,7 +291,8 @@ func handleDiskEvents(sb serverBuilder, ctx cli.Context, params *params.BuildSer
 		progCleanupSSHKey := internal.NewProgress(
 			"Still cleaning SSHKey...",
 			"Cleanup SSHKey",
-			ctx.IO().Progress())
+			ctx.IO().Progress(),
+			ctx.Option().NoColor)
 		sb.SetDiskEventHandler(builder.DiskBuildOnCleanupSSHKeyBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCleanupSSHKey.Start()
 		})
@@ -307,7 +310,8 @@ func handleServerEvents(sb serverBuilder, ctx cli.Context, params *params.BuildS
 		progCreate := internal.NewProgress(
 			"Still creating server...",
 			"Create server",
-			ctx.IO().Progress())
+			ctx.IO().Progress(),
+			ctx.Option().NoColor)
 
 		sb.SetEventHandler(builder.ServerBuildOnCreateServerBefore, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
 			progCreate.Start()
@@ -319,7 +323,8 @@ func handleServerEvents(sb serverBuilder, ctx cli.Context, params *params.BuildS
 		progBoot := internal.NewProgress(
 			"Still booting server...",
 			"Boot server",
-			ctx.IO().Progress())
+			ctx.IO().Progress(),
+			ctx.Option().NoColor)
 
 		sb.SetEventHandler(builder.ServerBuildOnBootBefore, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
 			progBoot.Start()

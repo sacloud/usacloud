@@ -22,7 +22,6 @@ import (
 	"github.com/fatih/color"
 	"github.com/mitchellh/go-homedir"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/helper/printer"
 	"github.com/sacloud/usacloud/pkg/profile"
 )
 
@@ -119,6 +118,6 @@ func MigrateConfig() error {
 		return fmt.Errorf("Migrating [%q] to [%q] is failed: %s", src, dest, err)
 	}
 
-	printer.Fprintf(os.Stdout, color.New(color.FgGreen), "\nMigrated: [%q] to [%q]\n", src, dest) // TODO ビルドを通すための仮実装
+	color.New(color.FgGreen).Fprintf(os.Stdout, "\nMigrated: [%q] to [%q]\n", src, dest) // TODO ビルドを通すための仮実装(os.Stdoutで良いか?)
 	return nil
 }

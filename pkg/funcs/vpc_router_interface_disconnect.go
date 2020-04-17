@@ -52,6 +52,7 @@ func VPCRouterInterfaceDisconnect(ctx cli.Context, params *params.InterfaceDisco
 			fmt.Sprintf("Still waiting for reboot[ID:%d]...", params.Id),
 			fmt.Sprintf("Disconnecting interface to switch[ID:%d]", params.Id),
 			ctx.IO().Progress(),
+			ctx.Option().NoColor,
 			func(compChan chan bool, errChan chan error) {
 				// call manipurate functions
 				var err error

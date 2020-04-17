@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -41,7 +42,8 @@ type ListCouponParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListCouponParam return new ListCouponParam
@@ -50,8 +52,9 @@ func NewListCouponParam() *ListCouponParam {
 }
 
 // Initialize init ListCouponParam
-func (p *ListCouponParam) Initialize(in Input, args []string) error {
+func (p *ListCouponParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -125,7 +128,7 @@ func (p *ListCouponParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

@@ -48,12 +48,12 @@ func productInternetListCmd() *cobra.Command {
 		Short:        "List ProductInternet (default)",
 		Long:         `List ProductInternet (default)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productInternetListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, productInternetListParam)
 			if err != nil {
+				return err
+			}
+			if err := productInternetListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -100,12 +100,12 @@ func productInternetReadCmd() *cobra.Command {
 		Short:        "Read ProductInternet",
 		Long:         `Read ProductInternet`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return productInternetReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, productInternetReadParam)
 			if err != nil {
+				return err
+			}
+			if err := productInternetReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

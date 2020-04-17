@@ -50,12 +50,12 @@ func autoBackupListCmd() *cobra.Command {
 		Short:        "List AutoBackup",
 		Long:         `List AutoBackup`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return autoBackupListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, autoBackupListParam)
 			if err != nil {
+				return err
+			}
+			if err := autoBackupListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -103,12 +103,12 @@ func autoBackupCreateCmd() *cobra.Command {
 		Short:        "Create AutoBackup",
 		Long:         `Create AutoBackup`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return autoBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, autoBackupCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := autoBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -169,12 +169,12 @@ func autoBackupReadCmd() *cobra.Command {
 		Short:        "Read AutoBackup",
 		Long:         `Read AutoBackup`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return autoBackupReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, autoBackupReadParam)
 			if err != nil {
+				return err
+			}
+			if err := autoBackupReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -239,12 +239,12 @@ func autoBackupUpdateCmd() *cobra.Command {
 		Short:        "Update AutoBackup",
 		Long:         `Update AutoBackup`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return autoBackupUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, autoBackupUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := autoBackupUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -327,12 +327,12 @@ func autoBackupDeleteCmd() *cobra.Command {
 		Short:        "Delete AutoBackup",
 		Long:         `Delete AutoBackup`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return autoBackupDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, autoBackupDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := autoBackupDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

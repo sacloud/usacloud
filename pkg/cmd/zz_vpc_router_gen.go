@@ -50,12 +50,12 @@ func vpcRouterListCmd() *cobra.Command {
 		Short:        "List VPCRouter",
 		Long:         `List VPCRouter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterListParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -103,12 +103,12 @@ func vpcRouterCreateCmd() *cobra.Command {
 		Short:        "Create VPCRouter",
 		Long:         `Create VPCRouter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -174,12 +174,12 @@ func vpcRouterReadCmd() *cobra.Command {
 		Short:        "Read VPCRouter",
 		Long:         `Read VPCRouter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterReadParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -244,12 +244,12 @@ func vpcRouterUpdateCmd() *cobra.Command {
 		Short:        "Update VPCRouter",
 		Long:         `Update VPCRouter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -332,12 +332,12 @@ func vpcRouterDeleteCmd() *cobra.Command {
 		Short:        "Delete VPCRouter",
 		Long:         `Delete VPCRouter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -415,12 +415,12 @@ func vpcRouterBootCmd() *cobra.Command {
 		Short:        "Boot VPCRouter",
 		Long:         `Boot VPCRouter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterBootParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterBootParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -490,12 +490,12 @@ func vpcRouterShutdownCmd() *cobra.Command {
 		Short:        "Shutdown VPCRouter",
 		Long:         `Shutdown VPCRouter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterShutdownParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -565,12 +565,12 @@ func vpcRouterShutdownForceCmd() *cobra.Command {
 		Short:        "ShutdownForce VPCRouter",
 		Long:         `ShutdownForce VPCRouter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterShutdownForceParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -640,12 +640,12 @@ func vpcRouterResetCmd() *cobra.Command {
 		Short:        "Reset VPCRouter",
 		Long:         `Reset VPCRouter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterResetParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterResetParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -715,12 +715,12 @@ func vpcRouterWaitForBootCmd() *cobra.Command {
 		Short:        "Wait until boot is completed",
 		Long:         `Wait until boot is completed`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterWaitForBootParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -778,12 +778,12 @@ func vpcRouterWaitForDownCmd() *cobra.Command {
 		Short:        "Wait until shutdown is completed",
 		Long:         `Wait until shutdown is completed`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterWaitForDownParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -841,12 +841,12 @@ func vpcRouterEnableInternetConnectionCmd() *cobra.Command {
 		Short:        "Enable internet connection from VPCRouter",
 		Long:         `Enable internet connection from VPCRouter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterEnableInternetConnectionParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterEnableInternetConnectionParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterEnableInternetConnectionParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -916,12 +916,12 @@ func vpcRouterDisableInternetConnectionCmd() *cobra.Command {
 		Short:        "Enable internet connection from VPCRouter",
 		Long:         `Enable internet connection from VPCRouter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDisableInternetConnectionParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterDisableInternetConnectionParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterDisableInternetConnectionParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -991,12 +991,12 @@ func vpcRouterInterfaceInfoCmd() *cobra.Command {
 		Short:        "Show information of NIC(s) connected to vpc-router",
 		Long:         `Show information of NIC(s) connected to vpc-router`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterInterfaceInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterInterfaceInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1061,12 +1061,12 @@ func vpcRouterInterfaceConnectCmd() *cobra.Command {
 		Short:        "Connected to switch",
 		Long:         `Connected to switch`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterInterfaceConnectParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1143,12 +1143,12 @@ func vpcRouterInterfaceUpdateCmd() *cobra.Command {
 		Short:        "Update interface",
 		Long:         `Update interface`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterInterfaceUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterInterfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1226,12 +1226,12 @@ func vpcRouterInterfaceDisconnectCmd() *cobra.Command {
 		Short:        "Disconnected to switch",
 		Long:         `Disconnected to switch`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterInterfaceDisconnectParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1303,12 +1303,12 @@ func vpcRouterStaticNatInfoCmd() *cobra.Command {
 		Short:        "Show information of static NAT settings",
 		Long:         `Show information of static NAT settings`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticNatInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterStaticNatInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterStaticNatInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1373,12 +1373,12 @@ func vpcRouterStaticNatAddCmd() *cobra.Command {
 		Short:        "Add static NAT",
 		Long:         `Add static NAT`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticNatAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterStaticNatAddParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterStaticNatAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1451,12 +1451,12 @@ func vpcRouterStaticNatUpdateCmd() *cobra.Command {
 		Short:        "Update static NAT",
 		Long:         `Update static NAT`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticNatUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterStaticNatUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterStaticNatUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1530,12 +1530,12 @@ func vpcRouterStaticNatDeleteCmd() *cobra.Command {
 		Short:        "Delete static NAT",
 		Long:         `Delete static NAT`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticNatDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterStaticNatDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterStaticNatDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1606,12 +1606,12 @@ func vpcRouterPortForwardingInfoCmd() *cobra.Command {
 		Short:        "Show information of port-forwarding settings",
 		Long:         `Show information of port-forwarding settings`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterPortForwardingInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterPortForwardingInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterPortForwardingInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1676,12 +1676,12 @@ func vpcRouterPortForwardingAddCmd() *cobra.Command {
 		Short:        "Add port forwarding",
 		Long:         `Add port forwarding`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterPortForwardingAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterPortForwardingAddParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterPortForwardingAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1756,12 +1756,12 @@ func vpcRouterPortForwardingUpdateCmd() *cobra.Command {
 		Short:        "Update port forwarding",
 		Long:         `Update port forwarding`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterPortForwardingUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterPortForwardingUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterPortForwardingUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1837,12 +1837,12 @@ func vpcRouterPortForwardingDeleteCmd() *cobra.Command {
 		Short:        "Delete port forwarding",
 		Long:         `Delete port forwarding`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterPortForwardingDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterPortForwardingDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterPortForwardingDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1913,12 +1913,12 @@ func vpcRouterFirewallInfoCmd() *cobra.Command {
 		Short:        "Show information of firewall rules",
 		Long:         `Show information of firewall rules`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterFirewallInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterFirewallInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterFirewallInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1985,12 +1985,12 @@ func vpcRouterFirewallAddCmd() *cobra.Command {
 		Short:        "Add firewall rule",
 		Long:         `Add firewall rule`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterFirewallAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterFirewallAddParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterFirewallAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2070,12 +2070,12 @@ func vpcRouterFirewallUpdateCmd() *cobra.Command {
 		Short:        "Update firewall rule",
 		Long:         `Update firewall rule`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterFirewallUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterFirewallUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterFirewallUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2156,12 +2156,12 @@ func vpcRouterFirewallDeleteCmd() *cobra.Command {
 		Short:        "Delete firewall rule",
 		Long:         `Delete firewall rule`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterFirewallDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterFirewallDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterFirewallDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2234,12 +2234,12 @@ func vpcRouterDhcpServerInfoCmd() *cobra.Command {
 		Short:        "Show information of DHCP servers",
 		Long:         `Show information of DHCP servers`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterDhcpServerInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterDhcpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2304,12 +2304,12 @@ func vpcRouterDhcpServerAddCmd() *cobra.Command {
 		Short:        "Add DHCP server",
 		Long:         `Add DHCP server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterDhcpServerAddParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterDhcpServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2383,12 +2383,12 @@ func vpcRouterDhcpServerUpdateCmd() *cobra.Command {
 		Short:        "Update DHCP server",
 		Long:         `Update DHCP server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterDhcpServerUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterDhcpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2462,12 +2462,12 @@ func vpcRouterDhcpServerDeleteCmd() *cobra.Command {
 		Short:        "Delete DHCP server",
 		Long:         `Delete DHCP server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterDhcpServerDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterDhcpServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2538,12 +2538,12 @@ func vpcRouterDhcpStaticMappingInfoCmd() *cobra.Command {
 		Short:        "Show information of DHCP static mapping",
 		Long:         `Show information of DHCP static mapping`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpStaticMappingInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterDhcpStaticMappingInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterDhcpStaticMappingInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2608,12 +2608,12 @@ func vpcRouterDhcpStaticMappingAddCmd() *cobra.Command {
 		Short:        "Add DHCP static mapping",
 		Long:         `Add DHCP static mapping`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpStaticMappingAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterDhcpStaticMappingAddParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterDhcpStaticMappingAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2685,12 +2685,12 @@ func vpcRouterDhcpStaticMappingUpdateCmd() *cobra.Command {
 		Short:        "Update DHCP static mapping",
 		Long:         `Update DHCP static mapping`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpStaticMappingUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterDhcpStaticMappingUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterDhcpStaticMappingUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2763,12 +2763,12 @@ func vpcRouterDhcpStaticMappingDeleteCmd() *cobra.Command {
 		Short:        "Delete DHCP static mapping",
 		Long:         `Delete DHCP static mapping`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterDhcpStaticMappingDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterDhcpStaticMappingDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterDhcpStaticMappingDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2839,12 +2839,12 @@ func vpcRouterPptpServerInfoCmd() *cobra.Command {
 		Short:        "Show information of PPTP server",
 		Long:         `Show information of PPTP server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterPptpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterPptpServerInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterPptpServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2909,12 +2909,12 @@ func vpcRouterPptpServerUpdateCmd() *cobra.Command {
 		Short:        "Update PPTP server setting",
 		Long:         `Update PPTP server setting`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterPptpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterPptpServerUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterPptpServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2987,12 +2987,12 @@ func vpcRouterL2TPServerInfoCmd() *cobra.Command {
 		Short:        "Show information of L2TP/IPSec server",
 		Long:         `Show information of L2TP/IPSec server`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterL2TPServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterL2TPServerInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterL2TPServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -3057,12 +3057,12 @@ func vpcRouterL2TPServerUpdateCmd() *cobra.Command {
 		Short:        "Update L2TP/IPSec server setting",
 		Long:         `Update L2TP/IPSec server setting`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterL2TPServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterL2TPServerUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterL2TPServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -3136,12 +3136,12 @@ func vpcRouterUserInfoCmd() *cobra.Command {
 		Short:        "Show information of remote-access users",
 		Long:         `Show information of remote-access users`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterUserInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterUserInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterUserInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -3206,12 +3206,12 @@ func vpcRouterUserAddCmd() *cobra.Command {
 		Short:        "Add remote-access user",
 		Long:         `Add remote-access user`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterUserAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterUserAddParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterUserAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -3283,12 +3283,12 @@ func vpcRouterUserUpdateCmd() *cobra.Command {
 		Short:        "Update remote-access user",
 		Long:         `Update remote-access user`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterUserUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterUserUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterUserUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -3361,12 +3361,12 @@ func vpcRouterUserDeleteCmd() *cobra.Command {
 		Short:        "Delete remote-access user",
 		Long:         `Delete remote-access user`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterUserDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterUserDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterUserDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -3437,12 +3437,12 @@ func vpcRouterSiteToSiteVPNInfoCmd() *cobra.Command {
 		Short:        "Show information of site-to-site IPSec VPN settings",
 		Long:         `Show information of site-to-site IPSec VPN settings`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterSiteToSiteVPNInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterSiteToSiteVPNInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterSiteToSiteVPNInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -3507,12 +3507,12 @@ func vpcRouterSiteToSiteVPNAddCmd() *cobra.Command {
 		Short:        "Add site-to-site IPSec VPN setting",
 		Long:         `Add site-to-site IPSec VPN setting`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterSiteToSiteVPNAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterSiteToSiteVPNAddParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterSiteToSiteVPNAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -3587,12 +3587,12 @@ func vpcRouterSiteToSiteVPNUpdateCmd() *cobra.Command {
 		Short:        "Update site-to-site IPSec VPN setting",
 		Long:         `Update site-to-site IPSec VPN setting`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterSiteToSiteVPNUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterSiteToSiteVPNUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterSiteToSiteVPNUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -3668,12 +3668,12 @@ func vpcRouterSiteToSiteVPNDeleteCmd() *cobra.Command {
 		Short:        "Delete site-to-site IPSec VPN setting",
 		Long:         `Delete site-to-site IPSec VPN setting`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterSiteToSiteVPNDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterSiteToSiteVPNDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterSiteToSiteVPNDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -3744,12 +3744,12 @@ func vpcRouterSiteToSiteVPNPeersCmd() *cobra.Command {
 		Short:        "Show status of site-to-site IPSec VPN peers",
 		Long:         `Show status of site-to-site IPSec VPN peers`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterSiteToSiteVPNPeersParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterSiteToSiteVPNPeersParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterSiteToSiteVPNPeersParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -3814,12 +3814,12 @@ func vpcRouterStaticRouteInfoCmd() *cobra.Command {
 		Short:        "Show information of static-routes",
 		Long:         `Show information of static-routes`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterStaticRouteInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterStaticRouteInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -3884,12 +3884,12 @@ func vpcRouterStaticRouteAddCmd() *cobra.Command {
 		Short:        "Add static-route",
 		Long:         `Add static-route`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterStaticRouteAddParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterStaticRouteAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -3961,12 +3961,12 @@ func vpcRouterStaticRouteUpdateCmd() *cobra.Command {
 		Short:        "Update static-route",
 		Long:         `Update static-route`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterStaticRouteUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterStaticRouteUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -4039,12 +4039,12 @@ func vpcRouterStaticRouteDeleteCmd() *cobra.Command {
 		Short:        "Delete static-route",
 		Long:         `Delete static-route`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterStaticRouteDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterStaticRouteDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -4115,12 +4115,12 @@ func vpcRouterMonitorCmd() *cobra.Command {
 		Short:        "Monitor VPCRouter",
 		Long:         `Monitor VPCRouter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterMonitorParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -4189,12 +4189,12 @@ func vpcRouterLogsCmd() *cobra.Command {
 		Short:        "Logs VPCRouter",
 		Long:         `Logs VPCRouter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return vpcRouterLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, vpcRouterLogsParam)
 			if err != nil {
+				return err
+			}
+			if err := vpcRouterLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

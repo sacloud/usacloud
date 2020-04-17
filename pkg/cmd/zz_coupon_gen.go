@@ -44,12 +44,12 @@ func couponListCmd() *cobra.Command {
 		Short:        "List Coupon (default)",
 		Long:         `List Coupon (default)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return couponListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, couponListParam)
 			if err != nil {
+				return err
+			}
+			if err := couponListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

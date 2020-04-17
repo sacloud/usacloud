@@ -53,6 +53,7 @@ func DiskCreate(ctx cli.Context, params *params.CreateDiskParam) error {
 		"Still creating...",
 		"Create disk",
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call Create(id)
 			res, err = api.Create(p)

@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -47,7 +48,8 @@ type ListSSHKeyParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListSSHKeyParam return new ListSSHKeyParam
@@ -56,8 +58,9 @@ func NewListSSHKeyParam() *ListSSHKeyParam {
 }
 
 // Initialize init ListSSHKeyParam
-func (p *ListSSHKeyParam) Initialize(in Input, args []string) error {
+func (p *ListSSHKeyParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -170,7 +173,7 @@ func (p *ListSSHKeyParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -374,7 +377,8 @@ type CreateSSHKeyParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateSSHKeyParam return new CreateSSHKeyParam
@@ -383,8 +387,9 @@ func NewCreateSSHKeyParam() *CreateSSHKeyParam {
 }
 
 // Initialize init CreateSSHKeyParam
-func (p *CreateSSHKeyParam) Initialize(in Input, args []string) error {
+func (p *CreateSSHKeyParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -511,7 +516,7 @@ func (p *CreateSSHKeyParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -711,7 +716,8 @@ type ReadSSHKeyParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadSSHKeyParam return new ReadSSHKeyParam
@@ -720,8 +726,9 @@ func NewReadSSHKeyParam() *ReadSSHKeyParam {
 }
 
 // Initialize init ReadSSHKeyParam
-func (p *ReadSSHKeyParam) Initialize(in Input, args []string) error {
+func (p *ReadSSHKeyParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -803,7 +810,7 @@ func (p *ReadSSHKeyParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -978,7 +985,8 @@ type UpdateSSHKeyParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateSSHKeyParam return new UpdateSSHKeyParam
@@ -987,8 +995,9 @@ func NewUpdateSSHKeyParam() *UpdateSSHKeyParam {
 }
 
 // Initialize init UpdateSSHKeyParam
-func (p *UpdateSSHKeyParam) Initialize(in Input, args []string) error {
+func (p *UpdateSSHKeyParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1095,7 +1104,7 @@ func (p *UpdateSSHKeyParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1289,7 +1298,8 @@ type DeleteSSHKeyParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteSSHKeyParam return new DeleteSSHKeyParam
@@ -1298,8 +1308,9 @@ func NewDeleteSSHKeyParam() *DeleteSSHKeyParam {
 }
 
 // Initialize init DeleteSSHKeyParam
-func (p *DeleteSSHKeyParam) Initialize(in Input, args []string) error {
+func (p *DeleteSSHKeyParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1384,7 +1395,7 @@ func (p *DeleteSSHKeyParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1567,7 +1578,8 @@ type GenerateSSHKeyParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewGenerateSSHKeyParam return new GenerateSSHKeyParam
@@ -1576,8 +1588,9 @@ func NewGenerateSSHKeyParam() *GenerateSSHKeyParam {
 }
 
 // Initialize init GenerateSSHKeyParam
-func (p *GenerateSSHKeyParam) Initialize(in Input, args []string) error {
+func (p *GenerateSSHKeyParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1694,7 +1707,7 @@ func (p *GenerateSSHKeyParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

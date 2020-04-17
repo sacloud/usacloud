@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -48,7 +49,8 @@ type ListGSLBParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListGSLBParam return new ListGSLBParam
@@ -57,8 +59,9 @@ func NewListGSLBParam() *ListGSLBParam {
 }
 
 // Initialize init ListGSLBParam
-func (p *ListGSLBParam) Initialize(in Input, args []string) error {
+func (p *ListGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -182,7 +185,7 @@ func (p *ListGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -390,7 +393,8 @@ type ServerInfoGSLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewServerInfoGSLBParam return new ServerInfoGSLBParam
@@ -399,8 +403,9 @@ func NewServerInfoGSLBParam() *ServerInfoGSLBParam {
 }
 
 // Initialize init ServerInfoGSLBParam
-func (p *ServerInfoGSLBParam) Initialize(in Input, args []string) error {
+func (p *ServerInfoGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -485,7 +490,7 @@ func (p *ServerInfoGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -676,7 +681,8 @@ type CreateGSLBParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateGSLBParam return new CreateGSLBParam
@@ -686,8 +692,9 @@ func NewCreateGSLBParam() *CreateGSLBParam {
 }
 
 // Initialize init CreateGSLBParam
-func (p *CreateGSLBParam) Initialize(in Input, args []string) error {
+func (p *CreateGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -874,7 +881,7 @@ func (p *CreateGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1135,7 +1142,8 @@ type ServerAddGSLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewServerAddGSLBParam return new ServerAddGSLBParam
@@ -1144,8 +1152,9 @@ func NewServerAddGSLBParam() *ServerAddGSLBParam {
 }
 
 // Initialize init ServerAddGSLBParam
-func (p *ServerAddGSLBParam) Initialize(in Input, args []string) error {
+func (p *ServerAddGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1258,7 +1267,7 @@ func (p *ServerAddGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1466,7 +1475,8 @@ type ReadGSLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadGSLBParam return new ReadGSLBParam
@@ -1475,8 +1485,9 @@ func NewReadGSLBParam() *ReadGSLBParam {
 }
 
 // Initialize init ReadGSLBParam
-func (p *ReadGSLBParam) Initialize(in Input, args []string) error {
+func (p *ReadGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1561,7 +1572,7 @@ func (p *ReadGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1746,7 +1757,8 @@ type ServerUpdateGSLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewServerUpdateGSLBParam return new ServerUpdateGSLBParam
@@ -1755,8 +1767,9 @@ func NewServerUpdateGSLBParam() *ServerUpdateGSLBParam {
 }
 
 // Initialize init ServerUpdateGSLBParam
-func (p *ServerUpdateGSLBParam) Initialize(in Input, args []string) error {
+func (p *ServerUpdateGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1880,7 +1893,7 @@ func (p *ServerUpdateGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2097,7 +2110,8 @@ type ServerDeleteGSLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewServerDeleteGSLBParam return new ServerDeleteGSLBParam
@@ -2106,8 +2120,9 @@ func NewServerDeleteGSLBParam() *ServerDeleteGSLBParam {
 }
 
 // Initialize init ServerDeleteGSLBParam
-func (p *ServerDeleteGSLBParam) Initialize(in Input, args []string) error {
+func (p *ServerDeleteGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2206,7 +2221,7 @@ func (p *ServerDeleteGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2413,7 +2428,8 @@ type UpdateGSLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateGSLBParam return new UpdateGSLBParam
@@ -2422,8 +2438,9 @@ func NewUpdateGSLBParam() *UpdateGSLBParam {
 }
 
 // Initialize init UpdateGSLBParam
-func (p *UpdateGSLBParam) Initialize(in Input, args []string) error {
+func (p *UpdateGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2603,7 +2620,7 @@ func (p *UpdateGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2875,7 +2892,8 @@ type DeleteGSLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteGSLBParam return new DeleteGSLBParam
@@ -2884,8 +2902,9 @@ func NewDeleteGSLBParam() *DeleteGSLBParam {
 }
 
 // Initialize init DeleteGSLBParam
-func (p *DeleteGSLBParam) Initialize(in Input, args []string) error {
+func (p *DeleteGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2973,7 +2992,7 @@ func (p *DeleteGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
