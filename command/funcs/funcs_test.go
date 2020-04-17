@@ -15,10 +15,11 @@
 package funcs
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"testing"
+
+	"github.com/spf13/pflag"
 
 	"github.com/sacloud/usacloud/command"
 )
@@ -44,12 +45,16 @@ func TestMain(m *testing.M) {
 		zone = "tk1v"
 	}
 
-	command.GlobalOption.AccessToken = accessToken
-	command.GlobalOption.AccessTokenSecret = accessTokenSecret
-	command.GlobalOption.Zone = zone
+	fs := pflag.NewFlagSet("test", pflag.ExitOnError)
+	fs.String("token", accessToken, "")
+	fs.String("secret", accessTokenSecret, "")
+	fs.String("zone", zone, "")
 
-	dummyContext = command.NewContext(&dummyFlagContext{}, []string{}, nil)
-	dummyContext.GetAPIClient().UserAgent = fmt.Sprintf("usacloud-unit-test")
+	ctx, err := command.NewCLIContext(fs, []string{}, nil)
+	if err != nil {
+		panic(err)
+	}
+	dummyContext = ctx
 
 	ret := m.Run()
 	os.Exit(ret)
