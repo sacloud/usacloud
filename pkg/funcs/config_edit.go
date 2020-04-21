@@ -36,6 +36,7 @@ func ConfigEdit(ctx cli.Context, params *params.EditConfigParam) error {
 	needAsk := inputParams.IsEmpty()
 	in := ctx.IO().In()
 	out := ctx.IO().Out()
+	printer := printer.Printer{NoColor: ctx.Option().NoColor}
 
 	// load current config file
 	profileName := ""

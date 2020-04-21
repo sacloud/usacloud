@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -47,7 +48,8 @@ type ListInterfaceParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListInterfaceParam return new ListInterfaceParam
@@ -56,8 +58,9 @@ func NewListInterfaceParam() *ListInterfaceParam {
 }
 
 // Initialize init ListInterfaceParam
-func (p *ListInterfaceParam) Initialize(in Input, args []string) error {
+func (p *ListInterfaceParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -170,7 +173,7 @@ func (p *ListInterfaceParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -365,7 +368,8 @@ type PacketFilterConnectInterfaceParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewPacketFilterConnectInterfaceParam return new PacketFilterConnectInterfaceParam
@@ -374,8 +378,9 @@ func NewPacketFilterConnectInterfaceParam() *PacketFilterConnectInterfaceParam {
 }
 
 // Initialize init PacketFilterConnectInterfaceParam
-func (p *PacketFilterConnectInterfaceParam) Initialize(in Input, args []string) error {
+func (p *PacketFilterConnectInterfaceParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -581,7 +586,8 @@ type CreateInterfaceParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateInterfaceParam return new CreateInterfaceParam
@@ -590,8 +596,9 @@ func NewCreateInterfaceParam() *CreateInterfaceParam {
 }
 
 // Initialize init CreateInterfaceParam
-func (p *CreateInterfaceParam) Initialize(in Input, args []string) error {
+func (p *CreateInterfaceParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -683,7 +690,7 @@ func (p *CreateInterfaceParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -857,7 +864,8 @@ type PacketFilterDisconnectInterfaceParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewPacketFilterDisconnectInterfaceParam return new PacketFilterDisconnectInterfaceParam
@@ -866,8 +874,9 @@ func NewPacketFilterDisconnectInterfaceParam() *PacketFilterDisconnectInterfaceP
 }
 
 // Initialize init PacketFilterDisconnectInterfaceParam
-func (p *PacketFilterDisconnectInterfaceParam) Initialize(in Input, args []string) error {
+func (p *PacketFilterDisconnectInterfaceParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1072,7 +1081,8 @@ type ReadInterfaceParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadInterfaceParam return new ReadInterfaceParam
@@ -1081,8 +1091,9 @@ func NewReadInterfaceParam() *ReadInterfaceParam {
 }
 
 // Initialize init ReadInterfaceParam
-func (p *ReadInterfaceParam) Initialize(in Input, args []string) error {
+func (p *ReadInterfaceParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1164,7 +1175,7 @@ func (p *ReadInterfaceParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1338,7 +1349,8 @@ type UpdateInterfaceParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateInterfaceParam return new UpdateInterfaceParam
@@ -1347,8 +1359,9 @@ func NewUpdateInterfaceParam() *UpdateInterfaceParam {
 }
 
 // Initialize init UpdateInterfaceParam
-func (p *UpdateInterfaceParam) Initialize(in Input, args []string) error {
+func (p *UpdateInterfaceParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1444,7 +1457,7 @@ func (p *UpdateInterfaceParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1631,7 +1644,8 @@ type DeleteInterfaceParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteInterfaceParam return new DeleteInterfaceParam
@@ -1640,8 +1654,9 @@ func NewDeleteInterfaceParam() *DeleteInterfaceParam {
 }
 
 // Initialize init DeleteInterfaceParam
-func (p *DeleteInterfaceParam) Initialize(in Input, args []string) error {
+func (p *DeleteInterfaceParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1726,7 +1741,7 @@ func (p *DeleteInterfaceParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

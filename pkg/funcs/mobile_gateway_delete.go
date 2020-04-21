@@ -39,6 +39,7 @@ func MobileGatewayDelete(ctx cli.Context, params *params.DeleteMobileGatewayPara
 				fmt.Sprintf("Still waiting for delete[ID:%d]...", params.Id),
 				fmt.Sprintf("Delete mobile-gateway[ID:%d]", params.Id),
 				ctx.IO().Progress(),
+				ctx.Option().NoColor,
 				func(compChan chan bool, errChan chan error) {
 					// call manipurate functions
 					var err error

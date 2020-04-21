@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -49,7 +50,8 @@ type ListISOImageParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListISOImageParam return new ListISOImageParam
@@ -58,8 +60,9 @@ func NewListISOImageParam() *ListISOImageParam {
 }
 
 // Initialize init ListISOImageParam
-func (p *ListISOImageParam) Initialize(in Input, args []string) error {
+func (p *ListISOImageParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -194,7 +197,7 @@ func (p *ListISOImageParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -414,7 +417,8 @@ type CreateISOImageParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateISOImageParam return new CreateISOImageParam
@@ -424,8 +428,9 @@ func NewCreateISOImageParam() *CreateISOImageParam {
 }
 
 // Initialize init CreateISOImageParam
-func (p *CreateISOImageParam) Initialize(in Input, args []string) error {
+func (p *CreateISOImageParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -579,7 +584,7 @@ func (p *CreateISOImageParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -794,7 +799,8 @@ type ReadISOImageParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadISOImageParam return new ReadISOImageParam
@@ -803,8 +809,9 @@ func NewReadISOImageParam() *ReadISOImageParam {
 }
 
 // Initialize init ReadISOImageParam
-func (p *ReadISOImageParam) Initialize(in Input, args []string) error {
+func (p *ReadISOImageParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -889,7 +896,7 @@ func (p *ReadISOImageParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1074,7 +1081,8 @@ type UpdateISOImageParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateISOImageParam return new UpdateISOImageParam
@@ -1083,8 +1091,9 @@ func NewUpdateISOImageParam() *UpdateISOImageParam {
 }
 
 // Initialize init UpdateISOImageParam
-func (p *UpdateISOImageParam) Initialize(in Input, args []string) error {
+func (p *UpdateISOImageParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1216,7 +1225,7 @@ func (p *UpdateISOImageParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1432,7 +1441,8 @@ type DeleteISOImageParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteISOImageParam return new DeleteISOImageParam
@@ -1441,8 +1451,9 @@ func NewDeleteISOImageParam() *DeleteISOImageParam {
 }
 
 // Initialize init DeleteISOImageParam
-func (p *DeleteISOImageParam) Initialize(in Input, args []string) error {
+func (p *DeleteISOImageParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1530,7 +1541,7 @@ func (p *DeleteISOImageParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1719,7 +1730,8 @@ type UploadISOImageParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUploadISOImageParam return new UploadISOImageParam
@@ -1728,8 +1740,9 @@ func NewUploadISOImageParam() *UploadISOImageParam {
 }
 
 // Initialize init UploadISOImageParam
-func (p *UploadISOImageParam) Initialize(in Input, args []string) error {
+func (p *UploadISOImageParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1828,7 +1841,7 @@ func (p *UploadISOImageParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2017,7 +2030,8 @@ type DownloadISOImageParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDownloadISOImageParam return new DownloadISOImageParam
@@ -2026,8 +2040,9 @@ func NewDownloadISOImageParam() *DownloadISOImageParam {
 }
 
 // Initialize init DownloadISOImageParam
-func (p *DownloadISOImageParam) Initialize(in Input, args []string) error {
+func (p *DownloadISOImageParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2229,7 +2244,8 @@ type FTPOpenISOImageParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewFTPOpenISOImageParam return new FTPOpenISOImageParam
@@ -2238,8 +2254,9 @@ func NewFTPOpenISOImageParam() *FTPOpenISOImageParam {
 }
 
 // Initialize init FTPOpenISOImageParam
-func (p *FTPOpenISOImageParam) Initialize(in Input, args []string) error {
+func (p *FTPOpenISOImageParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2327,7 +2344,7 @@ func (p *FTPOpenISOImageParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2508,7 +2525,8 @@ type FTPCloseISOImageParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewFTPCloseISOImageParam return new FTPCloseISOImageParam
@@ -2517,8 +2535,9 @@ func NewFTPCloseISOImageParam() *FTPCloseISOImageParam {
 }
 
 // Initialize init FTPCloseISOImageParam
-func (p *FTPCloseISOImageParam) Initialize(in Input, args []string) error {
+func (p *FTPCloseISOImageParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}

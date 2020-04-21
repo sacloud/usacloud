@@ -46,6 +46,7 @@ func DatabaseLogs(ctx cli.Context, params *params.LogsDatabaseParam) error {
 
 	logBuf := internal.NewHashQueue(500)
 	out := ctx.IO().Out()
+	printer := printer.Printer{NoColor: ctx.Option().NoColor}
 
 	for {
 		// call Read(id)

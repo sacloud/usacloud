@@ -35,6 +35,7 @@ func InternetSubnetDelete(ctx cli.Context, params *params.SubnetDeleteInternetPa
 		fmt.Sprintf("Still deleting[ID:%d]...", params.SubnetId),
 		fmt.Sprintf("Delete subnet[ID:%d]", params.SubnetId),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			_, err := api.DeleteSubnet(params.Id, params.SubnetId)
 			if err != nil {

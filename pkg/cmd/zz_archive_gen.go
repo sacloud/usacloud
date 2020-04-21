@@ -50,12 +50,12 @@ func archiveListCmd() *cobra.Command {
 		Short:        "List Archive",
 		Long:         `List Archive`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveListParam)
 			if err != nil {
+				return err
+			}
+			if err := archiveListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -106,12 +106,12 @@ func archiveCreateCmd() *cobra.Command {
 		Short:        "Create Archive",
 		Long:         `Create Archive`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := archiveCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -173,12 +173,12 @@ func archiveReadCmd() *cobra.Command {
 		Short:        "Read Archive",
 		Long:         `Read Archive`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveReadParam)
 			if err != nil {
+				return err
+			}
+			if err := archiveReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -243,12 +243,12 @@ func archiveUpdateCmd() *cobra.Command {
 		Short:        "Update Archive",
 		Long:         `Update Archive`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := archiveUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -329,12 +329,12 @@ func archiveDeleteCmd() *cobra.Command {
 		Short:        "Delete Archive",
 		Long:         `Delete Archive`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := archiveDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -411,12 +411,12 @@ func archiveUploadCmd() *cobra.Command {
 		Short:        "Upload Archive",
 		Long:         `Upload Archive`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveUploadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveUploadParam)
 			if err != nil {
+				return err
+			}
+			if err := archiveUploadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -494,12 +494,12 @@ func archiveDownloadCmd() *cobra.Command {
 		Short:        "Download Archive",
 		Long:         `Download Archive`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveDownloadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveDownloadParam)
 			if err != nil {
+				return err
+			}
+			if err := archiveDownloadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -570,12 +570,12 @@ func archiveFTPOpenCmd() *cobra.Command {
 		Short:        "FTPOpen Archive",
 		Long:         `FTPOpen Archive`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveFTPOpenParam)
 			if err != nil {
+				return err
+			}
+			if err := archiveFTPOpenParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -652,12 +652,12 @@ func archiveFTPCloseCmd() *cobra.Command {
 		Short:        "FTPClose Archive",
 		Long:         `FTPClose Archive`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveFTPCloseParam)
 			if err != nil {
+				return err
+			}
+			if err := archiveFTPCloseParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -727,12 +727,12 @@ func archiveWaitForCopyCmd() *cobra.Command {
 		Short:        "WaitForCopy Archive",
 		Long:         `WaitForCopy Archive`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return archiveWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveWaitForCopyParam)
 			if err != nil {
+				return err
+			}
+			if err := archiveWaitForCopyParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

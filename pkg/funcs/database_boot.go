@@ -39,6 +39,7 @@ func DatabaseBoot(ctx cli.Context, params *params.BootDatabaseParam) error {
 		fmt.Sprintf("Still booting[ID:%d]...", params.Id),
 		fmt.Sprintf("Boot database[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			_, err := api.Boot(params.Id)

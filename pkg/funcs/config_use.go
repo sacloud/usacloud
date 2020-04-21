@@ -19,7 +19,6 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/helper/printer"
 	"github.com/sacloud/usacloud/pkg/params"
 	"github.com/sacloud/usacloud/pkg/profile"
 )
@@ -35,6 +34,6 @@ func ConfigUse(ctx cli.Context, params *params.UseConfigParam) error {
 		return err
 	}
 
-	printer.Fprintf(ctx.IO().Out(), color.New(color.FgHiGreen), "\nCurrent profile: %q\n", profileName)
+	color.New(color.FgHiGreen).Fprintf(ctx.IO().Out(), "\nCurrent profile: %q\n", profileName)
 	return nil
 }

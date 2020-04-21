@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -37,7 +38,8 @@ type CsvBillParam struct {
 	BillOutput        string
 	BillId            sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCsvBillParam return new CsvBillParam
@@ -46,8 +48,9 @@ func NewCsvBillParam() *CsvBillParam {
 }
 
 // Initialize init CsvBillParam
-func (p *CsvBillParam) Initialize(in Input, args []string) error {
+func (p *CsvBillParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -238,7 +241,8 @@ type ListBillParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListBillParam return new ListBillParam
@@ -247,8 +251,9 @@ func NewListBillParam() *ListBillParam {
 }
 
 // Initialize init ListBillParam
-func (p *ListBillParam) Initialize(in Input, args []string) error {
+func (p *ListBillParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -341,7 +346,7 @@ func (p *ListBillParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

@@ -45,6 +45,7 @@ func ArchiveUpload(ctx cli.Context, params *params.UploadArchiveParam) error {
 		fmt.Sprintf("Still uploading[ID:%d]...", params.Id),
 		fmt.Sprintf("Upload archive[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			file, df, err := fileOrStdin(params.GetArchiveFile())
 			if err != nil {

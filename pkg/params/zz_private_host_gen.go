@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -48,7 +49,8 @@ type ListPrivateHostParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListPrivateHostParam return new ListPrivateHostParam
@@ -57,8 +59,9 @@ func NewListPrivateHostParam() *ListPrivateHostParam {
 }
 
 // Initialize init ListPrivateHostParam
-func (p *ListPrivateHostParam) Initialize(in Input, args []string) error {
+func (p *ListPrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -182,7 +185,7 @@ func (p *ListPrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -393,7 +396,8 @@ type CreatePrivateHostParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreatePrivateHostParam return new CreatePrivateHostParam
@@ -402,8 +406,9 @@ func NewCreatePrivateHostParam() *CreatePrivateHostParam {
 }
 
 // Initialize init CreatePrivateHostParam
-func (p *CreatePrivateHostParam) Initialize(in Input, args []string) error {
+func (p *CreatePrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -528,7 +533,7 @@ func (p *CreatePrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -729,7 +734,8 @@ type ReadPrivateHostParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadPrivateHostParam return new ReadPrivateHostParam
@@ -738,8 +744,9 @@ func NewReadPrivateHostParam() *ReadPrivateHostParam {
 }
 
 // Initialize init ReadPrivateHostParam
-func (p *ReadPrivateHostParam) Initialize(in Input, args []string) error {
+func (p *ReadPrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -824,7 +831,7 @@ func (p *ReadPrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1009,7 +1016,8 @@ type UpdatePrivateHostParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdatePrivateHostParam return new UpdatePrivateHostParam
@@ -1018,8 +1026,9 @@ func NewUpdatePrivateHostParam() *UpdatePrivateHostParam {
 }
 
 // Initialize init UpdatePrivateHostParam
-func (p *UpdatePrivateHostParam) Initialize(in Input, args []string) error {
+func (p *UpdatePrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1151,7 +1160,7 @@ func (p *UpdatePrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1367,7 +1376,8 @@ type DeletePrivateHostParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeletePrivateHostParam return new DeletePrivateHostParam
@@ -1376,8 +1386,9 @@ func NewDeletePrivateHostParam() *DeletePrivateHostParam {
 }
 
 // Initialize init DeletePrivateHostParam
-func (p *DeletePrivateHostParam) Initialize(in Input, args []string) error {
+func (p *DeletePrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1465,7 +1476,7 @@ func (p *DeletePrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1652,7 +1663,8 @@ type ServerInfoPrivateHostParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewServerInfoPrivateHostParam return new ServerInfoPrivateHostParam
@@ -1661,8 +1673,9 @@ func NewServerInfoPrivateHostParam() *ServerInfoPrivateHostParam {
 }
 
 // Initialize init ServerInfoPrivateHostParam
-func (p *ServerInfoPrivateHostParam) Initialize(in Input, args []string) error {
+func (p *ServerInfoPrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1747,7 +1760,7 @@ func (p *ServerInfoPrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1929,7 +1942,8 @@ type ServerAddPrivateHostParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewServerAddPrivateHostParam return new ServerAddPrivateHostParam
@@ -1938,8 +1952,9 @@ func NewServerAddPrivateHostParam() *ServerAddPrivateHostParam {
 }
 
 // Initialize init ServerAddPrivateHostParam
-func (p *ServerAddPrivateHostParam) Initialize(in Input, args []string) error {
+func (p *ServerAddPrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2045,7 +2060,7 @@ func (p *ServerAddPrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2241,7 +2256,8 @@ type ServerDeletePrivateHostParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewServerDeletePrivateHostParam return new ServerDeletePrivateHostParam
@@ -2250,8 +2266,9 @@ func NewServerDeletePrivateHostParam() *ServerDeletePrivateHostParam {
 }
 
 // Initialize init ServerDeletePrivateHostParam
-func (p *ServerDeletePrivateHostParam) Initialize(in Input, args []string) error {
+func (p *ServerDeletePrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2357,7 +2374,7 @@ func (p *ServerDeletePrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

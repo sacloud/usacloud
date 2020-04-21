@@ -50,12 +50,12 @@ func interfaceListCmd() *cobra.Command {
 		Short:        "List Interface",
 		Long:         `List Interface`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return interfaceListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, interfaceListParam)
 			if err != nil {
+				return err
+			}
+			if err := interfaceListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -102,12 +102,12 @@ func interfacePacketFilterConnectCmd() *cobra.Command {
 		Short:        "PacketFilterConnect Interface",
 		Long:         `PacketFilterConnect Interface`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return interfacePacketFilterConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, interfacePacketFilterConnectParam)
 			if err != nil {
+				return err
+			}
+			if err := interfacePacketFilterConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -177,12 +177,12 @@ func interfaceCreateCmd() *cobra.Command {
 		Short:        "Create Interface",
 		Long:         `Create Interface`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return interfaceCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, interfaceCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := interfaceCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -237,12 +237,12 @@ func interfacePacketFilterDisconnectCmd() *cobra.Command {
 		Short:        "PacketFilterDisconnect Interface",
 		Long:         `PacketFilterDisconnect Interface`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return interfacePacketFilterDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, interfacePacketFilterDisconnectParam)
 			if err != nil {
+				return err
+			}
+			if err := interfacePacketFilterDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -312,12 +312,12 @@ func interfaceReadCmd() *cobra.Command {
 		Short:        "Read Interface",
 		Long:         `Read Interface`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return interfaceReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, interfaceReadParam)
 			if err != nil {
+				return err
+			}
+			if err := interfaceReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -381,12 +381,12 @@ func interfaceUpdateCmd() *cobra.Command {
 		Short:        "Update Interface",
 		Long:         `Update Interface`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return interfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, interfaceUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := interfaceUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -463,12 +463,12 @@ func interfaceDeleteCmd() *cobra.Command {
 		Short:        "Delete Interface",
 		Long:         `Delete Interface`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return interfaceDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, interfaceDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := interfaceDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

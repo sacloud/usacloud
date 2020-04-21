@@ -50,12 +50,12 @@ func nfsListCmd() *cobra.Command {
 		Short:        "List NFS",
 		Long:         `List NFS`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, nfsListParam)
 			if err != nil {
+				return err
+			}
+			if err := nfsListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -103,12 +103,12 @@ func nfsCreateCmd() *cobra.Command {
 		Short:        "Create NFS",
 		Long:         `Create NFS`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, nfsCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := nfsCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -172,12 +172,12 @@ func nfsReadCmd() *cobra.Command {
 		Short:        "Read NFS",
 		Long:         `Read NFS`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, nfsReadParam)
 			if err != nil {
+				return err
+			}
+			if err := nfsReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -242,12 +242,12 @@ func nfsUpdateCmd() *cobra.Command {
 		Short:        "Update NFS",
 		Long:         `Update NFS`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, nfsUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := nfsUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -328,12 +328,12 @@ func nfsDeleteCmd() *cobra.Command {
 		Short:        "Delete NFS",
 		Long:         `Delete NFS`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, nfsDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := nfsDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -411,12 +411,12 @@ func nfsBootCmd() *cobra.Command {
 		Short:        "Boot NFS",
 		Long:         `Boot NFS`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, nfsBootParam)
 			if err != nil {
+				return err
+			}
+			if err := nfsBootParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -486,12 +486,12 @@ func nfsShutdownCmd() *cobra.Command {
 		Short:        "Shutdown NFS",
 		Long:         `Shutdown NFS`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, nfsShutdownParam)
 			if err != nil {
+				return err
+			}
+			if err := nfsShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -561,12 +561,12 @@ func nfsShutdownForceCmd() *cobra.Command {
 		Short:        "ShutdownForce NFS",
 		Long:         `ShutdownForce NFS`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, nfsShutdownForceParam)
 			if err != nil {
+				return err
+			}
+			if err := nfsShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -636,12 +636,12 @@ func nfsResetCmd() *cobra.Command {
 		Short:        "Reset NFS",
 		Long:         `Reset NFS`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, nfsResetParam)
 			if err != nil {
+				return err
+			}
+			if err := nfsResetParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -711,12 +711,12 @@ func nfsWaitForBootCmd() *cobra.Command {
 		Short:        "Wait until boot is completed",
 		Long:         `Wait until boot is completed`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, nfsWaitForBootParam)
 			if err != nil {
+				return err
+			}
+			if err := nfsWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -774,12 +774,12 @@ func nfsWaitForDownCmd() *cobra.Command {
 		Short:        "Wait until shutdown is completed",
 		Long:         `Wait until shutdown is completed`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, nfsWaitForDownParam)
 			if err != nil {
+				return err
+			}
+			if err := nfsWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -837,12 +837,12 @@ func nfsMonitorNicCmd() *cobra.Command {
 		Short:        "Collect NIC(s) monitor values",
 		Long:         `Collect NIC(s) monitor values`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, nfsMonitorNicParam)
 			if err != nil {
+				return err
+			}
+			if err := nfsMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -910,12 +910,12 @@ func nfsMonitorFreeDiskSizeCmd() *cobra.Command {
 		Short:        "Collect system-disk monitor values(IO)",
 		Long:         `Collect system-disk monitor values(IO)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return nfsMonitorFreeDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, nfsMonitorFreeDiskSizeParam)
 			if err != nil {
+				return err
+			}
+			if err := nfsMonitorFreeDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

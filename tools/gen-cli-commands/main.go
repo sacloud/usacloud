@@ -108,12 +108,12 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 		Short: "{{ .Usage }}",
 		Long: ` + "`{{ .Usage }}`" + `,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return {{ .InputParameterVariable }}.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, {{ .InputParameterVariable }})
 			if err != nil {
+				return err
+			}
+			if err := {{ .InputParameterVariable }}.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

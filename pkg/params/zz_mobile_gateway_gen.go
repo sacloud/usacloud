@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -48,7 +49,8 @@ type ListMobileGatewayParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListMobileGatewayParam return new ListMobileGatewayParam
@@ -57,8 +59,9 @@ func NewListMobileGatewayParam() *ListMobileGatewayParam {
 }
 
 // Initialize init ListMobileGatewayParam
-func (p *ListMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *ListMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -182,7 +185,7 @@ func (p *ListMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -394,7 +397,8 @@ type CreateMobileGatewayParam struct {
 	Query              string
 	QueryFile          string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateMobileGatewayParam return new CreateMobileGatewayParam
@@ -403,8 +407,9 @@ func NewCreateMobileGatewayParam() *CreateMobileGatewayParam {
 }
 
 // Initialize init CreateMobileGatewayParam
-func (p *CreateMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *CreateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -532,7 +537,7 @@ func (p *CreateMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -740,7 +745,8 @@ type ReadMobileGatewayParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadMobileGatewayParam return new ReadMobileGatewayParam
@@ -749,8 +755,9 @@ func NewReadMobileGatewayParam() *ReadMobileGatewayParam {
 }
 
 // Initialize init ReadMobileGatewayParam
-func (p *ReadMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *ReadMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -835,7 +842,7 @@ func (p *ReadMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1021,7 +1028,8 @@ type UpdateMobileGatewayParam struct {
 	QueryFile          string
 	Id                 sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateMobileGatewayParam return new UpdateMobileGatewayParam
@@ -1030,8 +1038,9 @@ func NewUpdateMobileGatewayParam() *UpdateMobileGatewayParam {
 }
 
 // Initialize init UpdateMobileGatewayParam
-func (p *UpdateMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *UpdateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1166,7 +1175,7 @@ func (p *UpdateMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1390,7 +1399,8 @@ type DeleteMobileGatewayParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteMobileGatewayParam return new DeleteMobileGatewayParam
@@ -1399,8 +1409,9 @@ func NewDeleteMobileGatewayParam() *DeleteMobileGatewayParam {
 }
 
 // Initialize init DeleteMobileGatewayParam
-func (p *DeleteMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *DeleteMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1491,7 +1502,7 @@ func (p *DeleteMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1679,7 +1690,8 @@ type BootMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewBootMobileGatewayParam return new BootMobileGatewayParam
@@ -1688,8 +1700,9 @@ func NewBootMobileGatewayParam() *BootMobileGatewayParam {
 }
 
 // Initialize init BootMobileGatewayParam
-func (p *BootMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *BootMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1874,7 +1887,8 @@ type ShutdownMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewShutdownMobileGatewayParam return new ShutdownMobileGatewayParam
@@ -1883,8 +1897,9 @@ func NewShutdownMobileGatewayParam() *ShutdownMobileGatewayParam {
 }
 
 // Initialize init ShutdownMobileGatewayParam
-func (p *ShutdownMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *ShutdownMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2069,7 +2084,8 @@ type ShutdownForceMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewShutdownForceMobileGatewayParam return new ShutdownForceMobileGatewayParam
@@ -2078,8 +2094,9 @@ func NewShutdownForceMobileGatewayParam() *ShutdownForceMobileGatewayParam {
 }
 
 // Initialize init ShutdownForceMobileGatewayParam
-func (p *ShutdownForceMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *ShutdownForceMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2264,7 +2281,8 @@ type ResetMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewResetMobileGatewayParam return new ResetMobileGatewayParam
@@ -2273,8 +2291,9 @@ func NewResetMobileGatewayParam() *ResetMobileGatewayParam {
 }
 
 // Initialize init ResetMobileGatewayParam
-func (p *ResetMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *ResetMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2458,7 +2477,8 @@ type WaitForBootMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewWaitForBootMobileGatewayParam return new WaitForBootMobileGatewayParam
@@ -2467,8 +2487,9 @@ func NewWaitForBootMobileGatewayParam() *WaitForBootMobileGatewayParam {
 }
 
 // Initialize init WaitForBootMobileGatewayParam
-func (p *WaitForBootMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *WaitForBootMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2642,7 +2663,8 @@ type WaitForDownMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewWaitForDownMobileGatewayParam return new WaitForDownMobileGatewayParam
@@ -2651,8 +2673,9 @@ func NewWaitForDownMobileGatewayParam() *WaitForDownMobileGatewayParam {
 }
 
 // Initialize init WaitForDownMobileGatewayParam
-func (p *WaitForDownMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *WaitForDownMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2833,7 +2856,8 @@ type InterfaceInfoMobileGatewayParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewInterfaceInfoMobileGatewayParam return new InterfaceInfoMobileGatewayParam
@@ -2842,8 +2866,9 @@ func NewInterfaceInfoMobileGatewayParam() *InterfaceInfoMobileGatewayParam {
 }
 
 // Initialize init InterfaceInfoMobileGatewayParam
-func (p *InterfaceInfoMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *InterfaceInfoMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2928,7 +2953,7 @@ func (p *InterfaceInfoMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3105,7 +3130,8 @@ type InterfaceConnectMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewInterfaceConnectMobileGatewayParam return new InterfaceConnectMobileGatewayParam
@@ -3115,8 +3141,9 @@ func NewInterfaceConnectMobileGatewayParam() *InterfaceConnectMobileGatewayParam
 }
 
 // Initialize init InterfaceConnectMobileGatewayParam
-func (p *InterfaceConnectMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *InterfaceConnectMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3371,7 +3398,8 @@ type InterfaceUpdateMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewInterfaceUpdateMobileGatewayParam return new InterfaceUpdateMobileGatewayParam
@@ -3381,8 +3409,9 @@ func NewInterfaceUpdateMobileGatewayParam() *InterfaceUpdateMobileGatewayParam {
 }
 
 // Initialize init InterfaceUpdateMobileGatewayParam
-func (p *InterfaceUpdateMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *InterfaceUpdateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3603,7 +3632,8 @@ type InterfaceDisconnectMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewInterfaceDisconnectMobileGatewayParam return new InterfaceDisconnectMobileGatewayParam
@@ -3612,8 +3642,9 @@ func NewInterfaceDisconnectMobileGatewayParam() *InterfaceDisconnectMobileGatewa
 }
 
 // Initialize init InterfaceDisconnectMobileGatewayParam
-func (p *InterfaceDisconnectMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *InterfaceDisconnectMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3804,7 +3835,8 @@ type TrafficControlInfoMobileGatewayParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewTrafficControlInfoMobileGatewayParam return new TrafficControlInfoMobileGatewayParam
@@ -3813,8 +3845,9 @@ func NewTrafficControlInfoMobileGatewayParam() *TrafficControlInfoMobileGatewayP
 }
 
 // Initialize init TrafficControlInfoMobileGatewayParam
-func (p *TrafficControlInfoMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *TrafficControlInfoMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3899,7 +3932,7 @@ func (p *TrafficControlInfoMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4078,7 +4111,8 @@ type TrafficControlEnableMobileGatewayParam struct {
 	GenerateSkeleton   bool
 	Id                 sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewTrafficControlEnableMobileGatewayParam return new TrafficControlEnableMobileGatewayParam
@@ -4088,8 +4122,9 @@ func NewTrafficControlEnableMobileGatewayParam() *TrafficControlEnableMobileGate
 }
 
 // Initialize init TrafficControlEnableMobileGatewayParam
-func (p *TrafficControlEnableMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *TrafficControlEnableMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4360,7 +4395,8 @@ type TrafficControlUpdateMobileGatewayParam struct {
 	GenerateSkeleton   bool
 	Id                 sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewTrafficControlUpdateMobileGatewayParam return new TrafficControlUpdateMobileGatewayParam
@@ -4369,8 +4405,9 @@ func NewTrafficControlUpdateMobileGatewayParam() *TrafficControlUpdateMobileGate
 }
 
 // Initialize init TrafficControlUpdateMobileGatewayParam
-func (p *TrafficControlUpdateMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *TrafficControlUpdateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4629,7 +4666,8 @@ type TrafficControlDisableMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewTrafficControlDisableMobileGatewayParam return new TrafficControlDisableMobileGatewayParam
@@ -4638,8 +4676,9 @@ func NewTrafficControlDisableMobileGatewayParam() *TrafficControlDisableMobileGa
 }
 
 // Initialize init TrafficControlDisableMobileGatewayParam
-func (p *TrafficControlDisableMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *TrafficControlDisableMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4830,7 +4869,8 @@ type StaticRouteInfoMobileGatewayParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewStaticRouteInfoMobileGatewayParam return new StaticRouteInfoMobileGatewayParam
@@ -4839,8 +4879,9 @@ func NewStaticRouteInfoMobileGatewayParam() *StaticRouteInfoMobileGatewayParam {
 }
 
 // Initialize init StaticRouteInfoMobileGatewayParam
-func (p *StaticRouteInfoMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *StaticRouteInfoMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4925,7 +4966,7 @@ func (p *StaticRouteInfoMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5101,7 +5142,8 @@ type StaticRouteAddMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewStaticRouteAddMobileGatewayParam return new StaticRouteAddMobileGatewayParam
@@ -5110,8 +5152,9 @@ func NewStaticRouteAddMobileGatewayParam() *StaticRouteAddMobileGatewayParam {
 }
 
 // Initialize init StaticRouteAddMobileGatewayParam
-func (p *StaticRouteAddMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *StaticRouteAddMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5349,7 +5392,8 @@ type StaticRouteUpdateMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewStaticRouteUpdateMobileGatewayParam return new StaticRouteUpdateMobileGatewayParam
@@ -5358,8 +5402,9 @@ func NewStaticRouteUpdateMobileGatewayParam() *StaticRouteUpdateMobileGatewayPar
 }
 
 // Initialize init StaticRouteUpdateMobileGatewayParam
-func (p *StaticRouteUpdateMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *StaticRouteUpdateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5599,7 +5644,8 @@ type StaticRouteDeleteMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewStaticRouteDeleteMobileGatewayParam return new StaticRouteDeleteMobileGatewayParam
@@ -5608,8 +5654,9 @@ func NewStaticRouteDeleteMobileGatewayParam() *StaticRouteDeleteMobileGatewayPar
 }
 
 // Initialize init StaticRouteDeleteMobileGatewayParam
-func (p *StaticRouteDeleteMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *StaticRouteDeleteMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5818,7 +5865,8 @@ type SIMInfoMobileGatewayParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewSIMInfoMobileGatewayParam return new SIMInfoMobileGatewayParam
@@ -5827,8 +5875,9 @@ func NewSIMInfoMobileGatewayParam() *SIMInfoMobileGatewayParam {
 }
 
 // Initialize init SIMInfoMobileGatewayParam
-func (p *SIMInfoMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *SIMInfoMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5913,7 +5962,7 @@ func (p *SIMInfoMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6089,7 +6138,8 @@ type SIMAddMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewSIMAddMobileGatewayParam return new SIMAddMobileGatewayParam
@@ -6098,8 +6148,9 @@ func NewSIMAddMobileGatewayParam() *SIMAddMobileGatewayParam {
 }
 
 // Initialize init SIMAddMobileGatewayParam
-func (p *SIMAddMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *SIMAddMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6336,7 +6387,8 @@ type SIMUpdateMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewSIMUpdateMobileGatewayParam return new SIMUpdateMobileGatewayParam
@@ -6345,8 +6397,9 @@ func NewSIMUpdateMobileGatewayParam() *SIMUpdateMobileGatewayParam {
 }
 
 // Initialize init SIMUpdateMobileGatewayParam
-func (p *SIMUpdateMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *SIMUpdateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6575,7 +6628,8 @@ type SIMDeleteMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewSIMDeleteMobileGatewayParam return new SIMDeleteMobileGatewayParam
@@ -6584,8 +6638,9 @@ func NewSIMDeleteMobileGatewayParam() *SIMDeleteMobileGatewayParam {
 }
 
 // Initialize init SIMDeleteMobileGatewayParam
-func (p *SIMDeleteMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *SIMDeleteMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6801,7 +6856,8 @@ type SIMRouteInfoMobileGatewayParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewSIMRouteInfoMobileGatewayParam return new SIMRouteInfoMobileGatewayParam
@@ -6810,8 +6866,9 @@ func NewSIMRouteInfoMobileGatewayParam() *SIMRouteInfoMobileGatewayParam {
 }
 
 // Initialize init SIMRouteInfoMobileGatewayParam
-func (p *SIMRouteInfoMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *SIMRouteInfoMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6896,7 +6953,7 @@ func (p *SIMRouteInfoMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -7072,7 +7129,8 @@ type SIMRouteAddMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewSIMRouteAddMobileGatewayParam return new SIMRouteAddMobileGatewayParam
@@ -7081,8 +7139,9 @@ func NewSIMRouteAddMobileGatewayParam() *SIMRouteAddMobileGatewayParam {
 }
 
 // Initialize init SIMRouteAddMobileGatewayParam
-func (p *SIMRouteAddMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *SIMRouteAddMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7320,7 +7379,8 @@ type SIMRouteUpdateMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewSIMRouteUpdateMobileGatewayParam return new SIMRouteUpdateMobileGatewayParam
@@ -7329,8 +7389,9 @@ func NewSIMRouteUpdateMobileGatewayParam() *SIMRouteUpdateMobileGatewayParam {
 }
 
 // Initialize init SIMRouteUpdateMobileGatewayParam
-func (p *SIMRouteUpdateMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *SIMRouteUpdateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7570,7 +7631,8 @@ type SIMRouteDeleteMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewSIMRouteDeleteMobileGatewayParam return new SIMRouteDeleteMobileGatewayParam
@@ -7579,8 +7641,9 @@ func NewSIMRouteDeleteMobileGatewayParam() *SIMRouteDeleteMobileGatewayParam {
 }
 
 // Initialize init SIMRouteDeleteMobileGatewayParam
-func (p *SIMRouteDeleteMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *SIMRouteDeleteMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7785,7 +7848,8 @@ type DNSUpdateMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDNSUpdateMobileGatewayParam return new DNSUpdateMobileGatewayParam
@@ -7794,8 +7858,9 @@ func NewDNSUpdateMobileGatewayParam() *DNSUpdateMobileGatewayParam {
 }
 
 // Initialize init DNSUpdateMobileGatewayParam
-func (p *DNSUpdateMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *DNSUpdateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -8031,7 +8096,8 @@ type LogsMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewLogsMobileGatewayParam return new LogsMobileGatewayParam
@@ -8041,8 +8107,9 @@ func NewLogsMobileGatewayParam() *LogsMobileGatewayParam {
 }
 
 // Initialize init LogsMobileGatewayParam
-func (p *LogsMobileGatewayParam) Initialize(in Input, args []string) error {
+func (p *LogsMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}

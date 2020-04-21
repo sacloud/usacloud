@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -51,7 +52,8 @@ type ListArchiveParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListArchiveParam return new ListArchiveParam
@@ -60,8 +62,9 @@ func NewListArchiveParam() *ListArchiveParam {
 }
 
 // Initialize init ListArchiveParam
-func (p *ListArchiveParam) Initialize(in Input, args []string) error {
+func (p *ListArchiveParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -218,7 +221,7 @@ func (p *ListArchiveParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -454,7 +457,8 @@ type CreateArchiveParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateArchiveParam return new CreateArchiveParam
@@ -463,8 +467,9 @@ func NewCreateArchiveParam() *CreateArchiveParam {
 }
 
 // Initialize init CreateArchiveParam
-func (p *CreateArchiveParam) Initialize(in Input, args []string) error {
+func (p *CreateArchiveParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -675,7 +680,7 @@ func (p *CreateArchiveParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -904,7 +909,8 @@ type ReadArchiveParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadArchiveParam return new ReadArchiveParam
@@ -913,8 +919,9 @@ func NewReadArchiveParam() *ReadArchiveParam {
 }
 
 // Initialize init ReadArchiveParam
-func (p *ReadArchiveParam) Initialize(in Input, args []string) error {
+func (p *ReadArchiveParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -999,7 +1006,7 @@ func (p *ReadArchiveParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1184,7 +1191,8 @@ type UpdateArchiveParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateArchiveParam return new UpdateArchiveParam
@@ -1193,8 +1201,9 @@ func NewUpdateArchiveParam() *UpdateArchiveParam {
 }
 
 // Initialize init UpdateArchiveParam
-func (p *UpdateArchiveParam) Initialize(in Input, args []string) error {
+func (p *UpdateArchiveParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1326,7 +1335,7 @@ func (p *UpdateArchiveParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1542,7 +1551,8 @@ type DeleteArchiveParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteArchiveParam return new DeleteArchiveParam
@@ -1551,8 +1561,9 @@ func NewDeleteArchiveParam() *DeleteArchiveParam {
 }
 
 // Initialize init DeleteArchiveParam
-func (p *DeleteArchiveParam) Initialize(in Input, args []string) error {
+func (p *DeleteArchiveParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1640,7 +1651,7 @@ func (p *DeleteArchiveParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1829,7 +1840,8 @@ type UploadArchiveParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUploadArchiveParam return new UploadArchiveParam
@@ -1838,8 +1850,9 @@ func NewUploadArchiveParam() *UploadArchiveParam {
 }
 
 // Initialize init UploadArchiveParam
-func (p *UploadArchiveParam) Initialize(in Input, args []string) error {
+func (p *UploadArchiveParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1938,7 +1951,7 @@ func (p *UploadArchiveParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2127,7 +2140,8 @@ type DownloadArchiveParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDownloadArchiveParam return new DownloadArchiveParam
@@ -2136,8 +2150,9 @@ func NewDownloadArchiveParam() *DownloadArchiveParam {
 }
 
 // Initialize init DownloadArchiveParam
-func (p *DownloadArchiveParam) Initialize(in Input, args []string) error {
+func (p *DownloadArchiveParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2339,7 +2354,8 @@ type FTPOpenArchiveParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewFTPOpenArchiveParam return new FTPOpenArchiveParam
@@ -2348,8 +2364,9 @@ func NewFTPOpenArchiveParam() *FTPOpenArchiveParam {
 }
 
 // Initialize init FTPOpenArchiveParam
-func (p *FTPOpenArchiveParam) Initialize(in Input, args []string) error {
+func (p *FTPOpenArchiveParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2437,7 +2454,7 @@ func (p *FTPOpenArchiveParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2618,7 +2635,8 @@ type FTPCloseArchiveParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewFTPCloseArchiveParam return new FTPCloseArchiveParam
@@ -2627,8 +2645,9 @@ func NewFTPCloseArchiveParam() *FTPCloseArchiveParam {
 }
 
 // Initialize init FTPCloseArchiveParam
-func (p *FTPCloseArchiveParam) Initialize(in Input, args []string) error {
+func (p *FTPCloseArchiveParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2812,7 +2831,8 @@ type WaitForCopyArchiveParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewWaitForCopyArchiveParam return new WaitForCopyArchiveParam
@@ -2821,8 +2841,9 @@ func NewWaitForCopyArchiveParam() *WaitForCopyArchiveParam {
 }
 
 // Initialize init WaitForCopyArchiveParam
-func (p *WaitForCopyArchiveParam) Initialize(in Input, args []string) error {
+func (p *WaitForCopyArchiveParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}

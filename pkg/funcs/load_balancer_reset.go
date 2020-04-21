@@ -35,6 +35,7 @@ func LoadBalancerReset(ctx cli.Context, params *params.ResetLoadBalancerParam) e
 		fmt.Sprintf("Still resetting[ID:%d]...", params.Id),
 		fmt.Sprintf("Reset load-balancer[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			_, err := api.RebootForce(params.Id)

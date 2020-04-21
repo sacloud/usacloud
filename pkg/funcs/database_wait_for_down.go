@@ -39,6 +39,7 @@ func DatabaseWaitForDown(ctx cli.Context, params *params.WaitForDownDatabasePara
 		fmt.Sprintf("Still waiting for Shutdown[ID:%d]...", params.Id),
 		fmt.Sprintf("Shutdown database[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			err := api.SleepUntilDown(params.Id, client.DefaultTimeoutDuration)

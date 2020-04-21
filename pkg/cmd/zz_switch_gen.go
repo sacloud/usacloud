@@ -50,12 +50,12 @@ func switchListCmd() *cobra.Command {
 		Short:        "List Switch",
 		Long:         `List Switch`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return switchListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, switchListParam)
 			if err != nil {
+				return err
+			}
+			if err := switchListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -103,12 +103,12 @@ func switchCreateCmd() *cobra.Command {
 		Short:        "Create Switch",
 		Long:         `Create Switch`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return switchCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, switchCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := switchCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -166,12 +166,12 @@ func switchReadCmd() *cobra.Command {
 		Short:        "Read Switch",
 		Long:         `Read Switch`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return switchReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, switchReadParam)
 			if err != nil {
+				return err
+			}
+			if err := switchReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -236,12 +236,12 @@ func switchUpdateCmd() *cobra.Command {
 		Short:        "Update Switch",
 		Long:         `Update Switch`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return switchUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, switchUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := switchUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -322,12 +322,12 @@ func switchDeleteCmd() *cobra.Command {
 		Short:        "Delete Switch",
 		Long:         `Delete Switch`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return switchDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, switchDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := switchDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -404,12 +404,12 @@ func switchBridgeConnectCmd() *cobra.Command {
 		Short:        "BridgeConnect Switch",
 		Long:         `BridgeConnect Switch`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return switchBridgeConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, switchBridgeConnectParam)
 			if err != nil {
+				return err
+			}
+			if err := switchBridgeConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -480,12 +480,12 @@ func switchBridgeDisconnectCmd() *cobra.Command {
 		Short:        "BridgeDisconnect Switch",
 		Long:         `BridgeDisconnect Switch`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return switchBridgeDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, switchBridgeDisconnectParam)
 			if err != nil {
+				return err
+			}
+			if err := switchBridgeDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

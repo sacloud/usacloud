@@ -22,6 +22,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -48,7 +49,8 @@ type ListZoneParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListZoneParam return new ListZoneParam
@@ -57,8 +59,9 @@ func NewListZoneParam() *ListZoneParam {
 }
 
 // Initialize init ListZoneParam
-func (p *ListZoneParam) Initialize(in Input, args []string) error {
+func (p *ListZoneParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -171,7 +174,7 @@ func (p *ListZoneParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -372,7 +375,8 @@ type ReadZoneParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadZoneParam return new ReadZoneParam
@@ -381,8 +385,9 @@ func NewReadZoneParam() *ReadZoneParam {
 }
 
 // Initialize init ReadZoneParam
-func (p *ReadZoneParam) Initialize(in Input, args []string) error {
+func (p *ReadZoneParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 
 	if len(args) == 0 {
 		return fmt.Errorf("argument <ID> is required")
@@ -482,7 +487,7 @@ func (p *ReadZoneParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

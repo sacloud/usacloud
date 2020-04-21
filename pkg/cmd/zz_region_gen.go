@@ -48,12 +48,12 @@ func regionListCmd() *cobra.Command {
 		Short:        "List Region (default)",
 		Long:         `List Region (default)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return regionListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, regionListParam)
 			if err != nil {
+				return err
+			}
+			if err := regionListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -100,12 +100,12 @@ func regionReadCmd() *cobra.Command {
 		Short:        "Read Region",
 		Long:         `Read Region`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return regionReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, regionReadParam)
 			if err != nil {
+				return err
+			}
+			if err := regionReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

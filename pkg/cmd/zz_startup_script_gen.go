@@ -50,12 +50,12 @@ func startupScriptListCmd() *cobra.Command {
 		Short:        "List StartupScript",
 		Long:         `List StartupScript`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return startupScriptListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, startupScriptListParam)
 			if err != nil {
+				return err
+			}
+			if err := startupScriptListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -105,12 +105,12 @@ func startupScriptCreateCmd() *cobra.Command {
 		Short:        "Create StartupScript",
 		Long:         `Create StartupScript`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return startupScriptCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, startupScriptCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := startupScriptCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -170,12 +170,12 @@ func startupScriptReadCmd() *cobra.Command {
 		Short:        "Read StartupScript",
 		Long:         `Read StartupScript`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return startupScriptReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, startupScriptReadParam)
 			if err != nil {
+				return err
+			}
+			if err := startupScriptReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -240,12 +240,12 @@ func startupScriptUpdateCmd() *cobra.Command {
 		Short:        "Update StartupScript",
 		Long:         `Update StartupScript`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return startupScriptUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, startupScriptUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := startupScriptUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -328,12 +328,12 @@ func startupScriptDeleteCmd() *cobra.Command {
 		Short:        "Delete StartupScript",
 		Long:         `Delete StartupScript`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return startupScriptDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, startupScriptDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := startupScriptDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

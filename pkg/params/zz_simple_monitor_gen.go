@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -49,7 +50,8 @@ type ListSimpleMonitorParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListSimpleMonitorParam return new ListSimpleMonitorParam
@@ -58,8 +60,9 @@ func NewListSimpleMonitorParam() *ListSimpleMonitorParam {
 }
 
 // Initialize init ListSimpleMonitorParam
-func (p *ListSimpleMonitorParam) Initialize(in Input, args []string) error {
+func (p *ListSimpleMonitorParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -194,7 +197,7 @@ func (p *ListSimpleMonitorParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -429,7 +432,8 @@ type CreateSimpleMonitorParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateSimpleMonitorParam return new CreateSimpleMonitorParam
@@ -439,8 +443,9 @@ func NewCreateSimpleMonitorParam() *CreateSimpleMonitorParam {
 }
 
 // Initialize init CreateSimpleMonitorParam
-func (p *CreateSimpleMonitorParam) Initialize(in Input, args []string) error {
+func (p *CreateSimpleMonitorParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -671,7 +676,7 @@ func (p *CreateSimpleMonitorParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -991,7 +996,8 @@ type ReadSimpleMonitorParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadSimpleMonitorParam return new ReadSimpleMonitorParam
@@ -1000,8 +1006,9 @@ func NewReadSimpleMonitorParam() *ReadSimpleMonitorParam {
 }
 
 // Initialize init ReadSimpleMonitorParam
-func (p *ReadSimpleMonitorParam) Initialize(in Input, args []string) error {
+func (p *ReadSimpleMonitorParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1086,7 +1093,7 @@ func (p *ReadSimpleMonitorParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1287,7 +1294,8 @@ type UpdateSimpleMonitorParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateSimpleMonitorParam return new UpdateSimpleMonitorParam
@@ -1297,8 +1305,9 @@ func NewUpdateSimpleMonitorParam() *UpdateSimpleMonitorParam {
 }
 
 // Initialize init UpdateSimpleMonitorParam
-func (p *UpdateSimpleMonitorParam) Initialize(in Input, args []string) error {
+func (p *UpdateSimpleMonitorParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1518,7 +1527,7 @@ func (p *UpdateSimpleMonitorParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1846,7 +1855,8 @@ type DeleteSimpleMonitorParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteSimpleMonitorParam return new DeleteSimpleMonitorParam
@@ -1855,8 +1865,9 @@ func NewDeleteSimpleMonitorParam() *DeleteSimpleMonitorParam {
 }
 
 // Initialize init DeleteSimpleMonitorParam
-func (p *DeleteSimpleMonitorParam) Initialize(in Input, args []string) error {
+func (p *DeleteSimpleMonitorParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1944,7 +1955,7 @@ func (p *DeleteSimpleMonitorParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2131,7 +2142,8 @@ type HealthSimpleMonitorParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewHealthSimpleMonitorParam return new HealthSimpleMonitorParam
@@ -2140,8 +2152,9 @@ func NewHealthSimpleMonitorParam() *HealthSimpleMonitorParam {
 }
 
 // Initialize init HealthSimpleMonitorParam
-func (p *HealthSimpleMonitorParam) Initialize(in Input, args []string) error {
+func (p *HealthSimpleMonitorParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2226,7 +2239,7 @@ func (p *HealthSimpleMonitorParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

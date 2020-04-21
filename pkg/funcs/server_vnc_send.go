@@ -40,6 +40,7 @@ func ServerVncSend(ctx cli.Context, params *params.VncSendServerParam) error {
 			fmt.Sprintf("Still booting[ID:%d]...", params.Id),
 			fmt.Sprintf("Connect to server[ID:%d]", params.Id),
 			ctx.IO().Progress(),
+			ctx.Option().NoColor,
 			func(compChan chan bool, errChan chan error) {
 				// call manipurate functions
 				err := api.SleepUntilUp(params.Id, client.DefaultTimeoutDuration)

@@ -47,12 +47,12 @@ func configCurrentCmd() *cobra.Command {
 		Short:        "Current Config",
 		Long:         `Current Config`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return configCurrentParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, configCurrentParam)
 			if err != nil {
+				return err
+			}
+			if err := configCurrentParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -87,12 +87,12 @@ func configDeleteCmd() *cobra.Command {
 		Short:        "Delete Config",
 		Long:         `Delete Config`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return configDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, configDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := configDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -139,12 +139,12 @@ func configEditCmd() *cobra.Command {
 		Short:        "Edit Config (default)",
 		Long:         `Edit Config (default)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return configEditParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, configEditParam)
 			if err != nil {
+				return err
+			}
+			if err := configEditParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -183,12 +183,12 @@ func configListCmd() *cobra.Command {
 		Short:        "List Config",
 		Long:         `List Config`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return configListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, configListParam)
 			if err != nil {
+				return err
+			}
+			if err := configListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -223,12 +223,12 @@ func configMigrateCmd() *cobra.Command {
 		Short:        "Migrate Config",
 		Long:         `Migrate Config`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return configMigrateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, configMigrateParam)
 			if err != nil {
+				return err
+			}
+			if err := configMigrateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -263,12 +263,12 @@ func configShowCmd() *cobra.Command {
 		Short:        "Show Config",
 		Long:         `Show Config`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return configShowParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, configShowParam)
 			if err != nil {
+				return err
+			}
+			if err := configShowParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -303,12 +303,12 @@ func configUseCmd() *cobra.Command {
 		Short:        "Use Config",
 		Long:         `Use Config`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return configUseParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, configUseParam)
 			if err != nil {
+				return err
+			}
+			if err := configUseParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

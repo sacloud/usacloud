@@ -39,6 +39,7 @@ func LoadBalancerShutdownForce(ctx cli.Context, params *params.ShutdownForceLoad
 		fmt.Sprintf("Still waiting for Shutdown[ID:%d]...", params.Id),
 		fmt.Sprintf("Shutdown load-balancer[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			var err error

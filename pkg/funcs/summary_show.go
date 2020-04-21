@@ -58,6 +58,7 @@ func SummaryShow(ctx cli.Context, params *params.ShowSummaryParam) error {
 		"Still calculating...",
 		"Calculate resource count",
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 
 			// do count & build result

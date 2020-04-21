@@ -44,12 +44,12 @@ func billCsvCmd() *cobra.Command {
 		Short:        "Csv Bill",
 		Long:         `Csv Bill`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return billCsvParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, billCsvParam)
 			if err != nil {
+				return err
+			}
+			if err := billCsvParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -87,12 +87,12 @@ func billListCmd() *cobra.Command {
 		Short:        "List Bill (default)",
 		Long:         `List Bill (default)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return billListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, billListParam)
 			if err != nil {
+				return err
+			}
+			if err := billListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

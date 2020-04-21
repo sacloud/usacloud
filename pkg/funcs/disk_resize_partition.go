@@ -32,6 +32,7 @@ func DiskResizePartition(ctx cli.Context, params *params.ResizePartitionDiskPara
 		fmt.Sprintf("Still resizing[ID:%d]...", params.Id),
 		fmt.Sprintf("Resize-Partition disk[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			_, err := api.ResizePartitionBackground(params.Id)

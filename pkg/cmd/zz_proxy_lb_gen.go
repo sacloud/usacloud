@@ -50,12 +50,12 @@ func proxyLBListCmd() *cobra.Command {
 		Short:        "List ProxyLB",
 		Long:         `List ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBListParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -103,12 +103,12 @@ func proxyLBCreateCmd() *cobra.Command {
 		Short:        "Create ProxyLB",
 		Long:         `Create ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -175,12 +175,12 @@ func proxyLBReadCmd() *cobra.Command {
 		Short:        "Read ProxyLB",
 		Long:         `Read ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBReadParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -245,12 +245,12 @@ func proxyLBUpdateCmd() *cobra.Command {
 		Short:        "Update ProxyLB",
 		Long:         `Update ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -339,12 +339,12 @@ func proxyLBDeleteCmd() *cobra.Command {
 		Short:        "Delete ProxyLB",
 		Long:         `Delete ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -421,12 +421,12 @@ func proxyLBPlanChangeCmd() *cobra.Command {
 		Short:        "Change ProxyLB plan",
 		Long:         `Change ProxyLB plan`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBPlanChangeParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBPlanChangeParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -504,12 +504,12 @@ func proxyLBBindPortInfoCmd() *cobra.Command {
 		Short:        "BindPortInfo ProxyLB",
 		Long:         `BindPortInfo ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBBindPortInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBBindPortInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBBindPortInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -574,12 +574,12 @@ func proxyLBBindPortAddCmd() *cobra.Command {
 		Short:        "BindPortAdd ProxyLB",
 		Long:         `BindPortAdd ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBBindPortAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBBindPortAddParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBBindPortAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -660,12 +660,12 @@ func proxyLBBindPortUpdateCmd() *cobra.Command {
 		Short:        "BindPortUpdate ProxyLB",
 		Long:         `BindPortUpdate ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBBindPortUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBBindPortUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBBindPortUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -747,12 +747,12 @@ func proxyLBBindPortDeleteCmd() *cobra.Command {
 		Short:        "BindPortDelete ProxyLB",
 		Long:         `BindPortDelete ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBBindPortDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBBindPortDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBBindPortDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -830,12 +830,12 @@ func proxyLBResponseHeaderInfoCmd() *cobra.Command {
 		Short:        "ResponseHeaderInfo ProxyLB",
 		Long:         `ResponseHeaderInfo ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBResponseHeaderInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBResponseHeaderInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBResponseHeaderInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -901,12 +901,12 @@ func proxyLBResponseHeaderAddCmd() *cobra.Command {
 		Short:        "ResponseHeaderAdd ProxyLB",
 		Long:         `ResponseHeaderAdd ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBResponseHeaderAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBResponseHeaderAddParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBResponseHeaderAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -986,12 +986,12 @@ func proxyLBResponseHeaderUpdateCmd() *cobra.Command {
 		Short:        "ResponseHeaderUpdate ProxyLB",
 		Long:         `ResponseHeaderUpdate ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBResponseHeaderUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBResponseHeaderUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBResponseHeaderUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1072,12 +1072,12 @@ func proxyLBResponseHeaderDeleteCmd() *cobra.Command {
 		Short:        "ResponseHeaderDelete ProxyLB",
 		Long:         `ResponseHeaderDelete ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBResponseHeaderDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBResponseHeaderDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBResponseHeaderDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1156,12 +1156,12 @@ func proxyLBACMEInfoCmd() *cobra.Command {
 		Short:        "ACMEInfo ProxyLB",
 		Long:         `ACMEInfo ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBACMEInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBACMEInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBACMEInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1226,12 +1226,12 @@ func proxyLBACMESettingCmd() *cobra.Command {
 		Short:        "ACMESetting ProxyLB",
 		Long:         `ACMESetting ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBACMESettingParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBACMESettingParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBACMESettingParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1311,12 +1311,12 @@ func proxyLBACMERenewCmd() *cobra.Command {
 		Short:        "ACMERenew ProxyLB",
 		Long:         `ACMERenew ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBACMERenewParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBACMERenewParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBACMERenewParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1386,12 +1386,12 @@ func proxyLBServerInfoCmd() *cobra.Command {
 		Short:        "ServerInfo ProxyLB",
 		Long:         `ServerInfo ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBServerInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBServerInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1456,12 +1456,12 @@ func proxyLBServerAddCmd() *cobra.Command {
 		Short:        "ServerAdd ProxyLB",
 		Long:         `ServerAdd ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBServerAddParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBServerAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1541,12 +1541,12 @@ func proxyLBServerUpdateCmd() *cobra.Command {
 		Short:        "ServerUpdate ProxyLB",
 		Long:         `ServerUpdate ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBServerUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBServerUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1627,12 +1627,12 @@ func proxyLBServerDeleteCmd() *cobra.Command {
 		Short:        "ServerDelete ProxyLB",
 		Long:         `ServerDelete ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBServerDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBServerDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1710,12 +1710,12 @@ func proxyLBCertificateInfoCmd() *cobra.Command {
 		Short:        "CertificateInfo ProxyLB",
 		Long:         `CertificateInfo ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBCertificateInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBCertificateInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1780,12 +1780,12 @@ func proxyLBCertificateAddCmd() *cobra.Command {
 		Short:        "CertificateAdd ProxyLB",
 		Long:         `CertificateAdd ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBCertificateAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBCertificateAddParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBCertificateAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1865,12 +1865,12 @@ func proxyLBCertificateUpdateCmd() *cobra.Command {
 		Short:        "CertificateUpdate ProxyLB",
 		Long:         `CertificateUpdate ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBCertificateUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBCertificateUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1950,12 +1950,12 @@ func proxyLBCertificateDeleteCmd() *cobra.Command {
 		Short:        "CertificateDelete ProxyLB",
 		Long:         `CertificateDelete ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBCertificateDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBCertificateDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBCertificateDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2032,12 +2032,12 @@ func proxyLBMonitorCmd() *cobra.Command {
 		Short:        "Monitor ProxyLB",
 		Long:         `Monitor ProxyLB`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return proxyLBMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, proxyLBMonitorParam)
 			if err != nil {
+				return err
+			}
+			if err := proxyLBMonitorParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

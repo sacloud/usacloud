@@ -21,6 +21,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -47,7 +48,8 @@ type ListBridgeParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewListBridgeParam return new ListBridgeParam
@@ -56,8 +58,9 @@ func NewListBridgeParam() *ListBridgeParam {
 }
 
 // Initialize init ListBridgeParam
-func (p *ListBridgeParam) Initialize(in Input, args []string) error {
+func (p *ListBridgeParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -170,7 +173,7 @@ func (p *ListBridgeParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -372,7 +375,8 @@ type CreateBridgeParam struct {
 	Query             string
 	QueryFile         string
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewCreateBridgeParam return new CreateBridgeParam
@@ -381,8 +385,9 @@ func NewCreateBridgeParam() *CreateBridgeParam {
 }
 
 // Initialize init CreateBridgeParam
-func (p *CreateBridgeParam) Initialize(in Input, args []string) error {
+func (p *CreateBridgeParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -485,7 +490,7 @@ func (p *CreateBridgeParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -671,7 +676,8 @@ type ReadBridgeParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewReadBridgeParam return new ReadBridgeParam
@@ -680,8 +686,9 @@ func NewReadBridgeParam() *ReadBridgeParam {
 }
 
 // Initialize init ReadBridgeParam
-func (p *ReadBridgeParam) Initialize(in Input, args []string) error {
+func (p *ReadBridgeParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -763,7 +770,7 @@ func (p *ReadBridgeParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -938,7 +945,8 @@ type UpdateBridgeParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewUpdateBridgeParam return new UpdateBridgeParam
@@ -947,8 +955,9 @@ func NewUpdateBridgeParam() *UpdateBridgeParam {
 }
 
 // Initialize init UpdateBridgeParam
-func (p *UpdateBridgeParam) Initialize(in Input, args []string) error {
+func (p *UpdateBridgeParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1055,7 +1064,7 @@ func (p *UpdateBridgeParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1249,7 +1258,8 @@ type DeleteBridgeParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	input Input
+	options *flags.Flags
+	input   Input
 }
 
 // NewDeleteBridgeParam return new DeleteBridgeParam
@@ -1258,8 +1268,9 @@ func NewDeleteBridgeParam() *DeleteBridgeParam {
 }
 
 // Initialize init DeleteBridgeParam
-func (p *DeleteBridgeParam) Initialize(in Input, args []string) error {
+func (p *DeleteBridgeParam) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1344,7 +1355,7 @@ func (p *DeleteBridgeParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

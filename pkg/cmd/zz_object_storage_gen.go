@@ -48,12 +48,12 @@ func objectStorageListCmd() *cobra.Command {
 		Short:        "List ObjectStorage",
 		Long:         `List ObjectStorage`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return objectStorageListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, objectStorageListParam)
 			if err != nil {
+				return err
+			}
+			if err := objectStorageListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -98,12 +98,12 @@ func objectStoragePutCmd() *cobra.Command {
 		Short:        "Put ObjectStorage",
 		Long:         `Put ObjectStorage`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return objectStoragePutParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, objectStoragePutParam)
 			if err != nil {
+				return err
+			}
+			if err := objectStoragePutParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -155,12 +155,12 @@ func objectStorageGetCmd() *cobra.Command {
 		Short:        "Get ObjectStorage",
 		Long:         `Get ObjectStorage`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return objectStorageGetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, objectStorageGetParam)
 			if err != nil {
+				return err
+			}
+			if err := objectStorageGetParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -199,12 +199,12 @@ func objectStorageDeleteCmd() *cobra.Command {
 		Short:        "Delete ObjectStorage",
 		Long:         `Delete ObjectStorage`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return objectStorageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, objectStorageDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := objectStorageDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

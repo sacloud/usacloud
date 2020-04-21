@@ -57,6 +57,7 @@ func MobileGatewayCreate(ctx cli.Context, params *params.CreateMobileGatewayPara
 		fmt.Sprintf("Still creating..."),
 		fmt.Sprintf("Create mobile-gateway"),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			// call Create(id)

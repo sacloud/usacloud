@@ -97,6 +97,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/utils"
@@ -110,6 +111,7 @@ type {{.InputParameterTypeName}} struct {
 	{{ range .Params -}}
 	{{.FieldName}} {{.FieldTypeName}} {{.FieldTag}}
 	{{ end }}
+	options *flags.Flags
 	input Input
 }
 
@@ -121,8 +123,9 @@ func New{{.InputParameterTypeName}}() *{{.InputParameterTypeName}}{
 }
 
 // Initialize init {{.InputParameterTypeName}}
-func (p *{{.InputParameterTypeName}}) Initialize(in Input, args []string) error {
+func (p *{{.InputParameterTypeName}}) Initialize(in Input, args []string, options *flags.Flags) error {
 	p.input = in
+	p.options = options
 	{{ if .SingleArgToIdParam }}
 	if len(args) == 0 {
 		return fmt.Errorf("argument <ID> is required")
@@ -172,7 +175,7 @@ func (p *{{.InputParameterTypeName}}) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p)
+		errs := validateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors , errs...)
 		}

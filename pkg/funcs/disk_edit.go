@@ -35,6 +35,7 @@ func DiskEdit(ctx cli.Context, params *params.EditDiskParam) error {
 		fmt.Sprintf("Still editing[ID:%d]...", params.Id),
 		fmt.Sprintf("Edit disk[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			_, err := api.Config(params.Id, p)

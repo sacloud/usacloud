@@ -35,6 +35,7 @@ func DiskReinstallToBlank(ctx cli.Context, params *params.ReinstallToBlankDiskPa
 		fmt.Sprintf("Still installing[ID:%d]...", params.Id),
 		fmt.Sprintf("Reinstall disk[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			_, err := api.ReinstallFromBlank(params.Id, p.SizeMB)
 			if err != nil {

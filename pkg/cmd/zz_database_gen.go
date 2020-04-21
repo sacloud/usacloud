@@ -50,12 +50,12 @@ func databaseListCmd() *cobra.Command {
 		Short:        "List Database",
 		Long:         `List Database`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseListParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -103,12 +103,12 @@ func databaseCreateCmd() *cobra.Command {
 		Short:        "Create Database",
 		Long:         `Create Database`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -181,12 +181,12 @@ func databaseReadCmd() *cobra.Command {
 		Short:        "Read Database",
 		Long:         `Read Database`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseReadParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -251,12 +251,12 @@ func databaseUpdateCmd() *cobra.Command {
 		Short:        "Update Database",
 		Long:         `Update Database`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -346,12 +346,12 @@ func databaseDeleteCmd() *cobra.Command {
 		Short:        "Delete Database",
 		Long:         `Delete Database`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -429,12 +429,12 @@ func databaseBootCmd() *cobra.Command {
 		Short:        "Boot Database",
 		Long:         `Boot Database`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseBootParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseBootParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -504,12 +504,12 @@ func databaseShutdownCmd() *cobra.Command {
 		Short:        "Shutdown Database",
 		Long:         `Shutdown Database`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseShutdownParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseShutdownParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -579,12 +579,12 @@ func databaseShutdownForceCmd() *cobra.Command {
 		Short:        "ShutdownForce Database",
 		Long:         `ShutdownForce Database`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseShutdownForceParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseShutdownForceParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -654,12 +654,12 @@ func databaseResetCmd() *cobra.Command {
 		Short:        "Reset Database",
 		Long:         `Reset Database`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseResetParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseResetParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseResetParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -729,12 +729,12 @@ func databaseWaitForBootCmd() *cobra.Command {
 		Short:        "Wait until boot is completed",
 		Long:         `Wait until boot is completed`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseWaitForBootParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseWaitForBootParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -792,12 +792,12 @@ func databaseWaitForDownCmd() *cobra.Command {
 		Short:        "Wait until shutdown is completed",
 		Long:         `Wait until shutdown is completed`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseWaitForDownParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseWaitForDownParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -855,12 +855,12 @@ func databaseBackupInfoCmd() *cobra.Command {
 		Short:        "Show information of backup",
 		Long:         `Show information of backup`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseBackupInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseBackupInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseBackupInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -925,12 +925,12 @@ func databaseBackupCreateCmd() *cobra.Command {
 		Short:        "Make new database backup",
 		Long:         `Make new database backup`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseBackupCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseBackupCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1006,12 +1006,12 @@ func databaseBackupRestoreCmd() *cobra.Command {
 		Short:        "Restore database from backup",
 		Long:         `Restore database from backup`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseBackupRestoreParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseBackupRestoreParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseBackupRestoreParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1088,12 +1088,12 @@ func databaseBackupLockCmd() *cobra.Command {
 		Short:        "Lock backup",
 		Long:         `Lock backup`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseBackupLockParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseBackupLockParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseBackupLockParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1170,12 +1170,12 @@ func databaseBackupUnlockCmd() *cobra.Command {
 		Short:        "Unlock backup",
 		Long:         `Unlock backup`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseBackupUnlockParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseBackupUnlockParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseBackupUnlockParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1252,12 +1252,12 @@ func databaseBackupRemoveCmd() *cobra.Command {
 		Short:        "Remove backup",
 		Long:         `Remove backup`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseBackupRemoveParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseBackupRemoveParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseBackupRemoveParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1334,12 +1334,12 @@ func databaseCloneCmd() *cobra.Command {
 		Short:        "Create clone instance",
 		Long:         `Create clone instance`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseCloneParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseCloneParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseCloneParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1431,12 +1431,12 @@ func databaseReplicaCreateCmd() *cobra.Command {
 		Short:        "Create replication slave instance",
 		Long:         `Create replication slave instance`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseReplicaCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseReplicaCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseReplicaCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1520,12 +1520,12 @@ func databaseMonitorCPUCmd() *cobra.Command {
 		Short:        "Collect CPU monitor values",
 		Long:         `Collect CPU monitor values`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseMonitorCPUParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseMonitorCPUParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1593,12 +1593,12 @@ func databaseMonitorMemoryCmd() *cobra.Command {
 		Short:        "Collect memory monitor values",
 		Long:         `Collect memory monitor values`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseMonitorMemoryParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseMonitorMemoryParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseMonitorMemoryParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1666,12 +1666,12 @@ func databaseMonitorNicCmd() *cobra.Command {
 		Short:        "Collect NIC(s) monitor values",
 		Long:         `Collect NIC(s) monitor values`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseMonitorNicParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseMonitorNicParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1739,12 +1739,12 @@ func databaseMonitorSystemDiskCmd() *cobra.Command {
 		Short:        "Collect system-disk monitor values(IO)",
 		Long:         `Collect system-disk monitor values(IO)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseMonitorSystemDiskParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseMonitorSystemDiskParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseMonitorSystemDiskParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1812,12 +1812,12 @@ func databaseMonitorBackupDiskCmd() *cobra.Command {
 		Short:        "Collect backup-disk monitor values(IO)",
 		Long:         `Collect backup-disk monitor values(IO)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseMonitorBackupDiskParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseMonitorBackupDiskParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseMonitorBackupDiskParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1885,12 +1885,12 @@ func databaseMonitorSystemDiskSizeCmd() *cobra.Command {
 		Short:        "Collect system-disk monitor values(usage)",
 		Long:         `Collect system-disk monitor values(usage)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseMonitorSystemDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseMonitorSystemDiskSizeParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseMonitorSystemDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -1958,12 +1958,12 @@ func databaseMonitorBackupDiskSizeCmd() *cobra.Command {
 		Short:        "Collect backup-disk monitor values(usage)",
 		Long:         `Collect backup-disk monitor values(usage)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseMonitorBackupDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseMonitorBackupDiskSizeParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseMonitorBackupDiskSizeParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -2031,12 +2031,12 @@ func databaseLogsCmd() *cobra.Command {
 		Short:        "Logs Database",
 		Long:         `Logs Database`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return databaseLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseLogsParam)
 			if err != nil {
+				return err
+			}
+			if err := databaseLogsParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

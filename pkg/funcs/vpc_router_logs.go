@@ -71,6 +71,7 @@ func VPCRouterLogs(ctx cli.Context, params *params.LogsVPCRouterParam) error {
 			logs["firewall-receive"] = res.FirewallReceiveLogs
 		}
 
+		printer := printer.Printer{NoColor: ctx.Option().NoColor}
 		for key, lines := range logs {
 			if params.LogName == "all" {
 				printer.Fprintf(out, color.New(color.FgHiGreen), "\n==> [%s]:start\n", key)

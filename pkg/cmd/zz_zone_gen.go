@@ -48,12 +48,12 @@ func zoneListCmd() *cobra.Command {
 		Short:        "List Zone (default)",
 		Long:         `List Zone (default)`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return zoneListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, zoneListParam)
 			if err != nil {
+				return err
+			}
+			if err := zoneListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -100,12 +100,12 @@ func zoneReadCmd() *cobra.Command {
 		Short:        "Read Zone",
 		Long:         `Read Zone`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return zoneReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, zoneReadParam)
 			if err != nil {
+				return err
+			}
+			if err := zoneReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

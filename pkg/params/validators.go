@@ -27,6 +27,6 @@ func validateRequired(fieldName string, object interface{}) []error {
 	return cli.ValidateRequired(fieldName, object)
 }
 
-func validateOutputOption(o output.Option) []error {
-	return cli.ValidateOutputOption(o)
+func validateOutputOption(o output.Option, defaultOutputType string) []error {
+	return cli.ValidateOutputOption(o, defaultOutputType)
 }

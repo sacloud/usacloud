@@ -50,12 +50,12 @@ func packetFilterListCmd() *cobra.Command {
 		Short:        "List PacketFilter",
 		Long:         `List PacketFilter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterListParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, packetFilterListParam)
 			if err != nil {
+				return err
+			}
+			if err := packetFilterListParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -102,12 +102,12 @@ func packetFilterCreateCmd() *cobra.Command {
 		Short:        "Create PacketFilter",
 		Long:         `Create PacketFilter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, packetFilterCreateParam)
 			if err != nil {
+				return err
+			}
+			if err := packetFilterCreateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -163,12 +163,12 @@ func packetFilterReadCmd() *cobra.Command {
 		Short:        "Read PacketFilter",
 		Long:         `Read PacketFilter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterReadParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, packetFilterReadParam)
 			if err != nil {
+				return err
+			}
+			if err := packetFilterReadParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -232,12 +232,12 @@ func packetFilterUpdateCmd() *cobra.Command {
 		Short:        "Update PacketFilter",
 		Long:         `Update PacketFilter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, packetFilterUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := packetFilterUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -315,12 +315,12 @@ func packetFilterDeleteCmd() *cobra.Command {
 		Short:        "Delete PacketFilter",
 		Long:         `Delete PacketFilter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, packetFilterDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := packetFilterDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -396,12 +396,12 @@ func packetFilterRuleInfoCmd() *cobra.Command {
 		Short:        "RuleInfo PacketFilter",
 		Long:         `RuleInfo PacketFilter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterRuleInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, packetFilterRuleInfoParam)
 			if err != nil {
+				return err
+			}
+			if err := packetFilterRuleInfoParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -465,12 +465,12 @@ func packetFilterRuleAddCmd() *cobra.Command {
 		Short:        "RuleAdd PacketFilter",
 		Long:         `RuleAdd PacketFilter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterRuleAddParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, packetFilterRuleAddParam)
 			if err != nil {
+				return err
+			}
+			if err := packetFilterRuleAddParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -553,12 +553,12 @@ func packetFilterRuleUpdateCmd() *cobra.Command {
 		Short:        "RuleUpdate PacketFilter",
 		Long:         `RuleUpdate PacketFilter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterRuleUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, packetFilterRuleUpdateParam)
 			if err != nil {
+				return err
+			}
+			if err := packetFilterRuleUpdateParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -641,12 +641,12 @@ func packetFilterRuleDeleteCmd() *cobra.Command {
 		Short:        "RuleDelete PacketFilter",
 		Long:         `RuleDelete PacketFilter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterRuleDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, packetFilterRuleDeleteParam)
 			if err != nil {
+				return err
+			}
+			if err := packetFilterRuleDeleteParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -723,12 +723,12 @@ func packetFilterInterfaceConnectCmd() *cobra.Command {
 		Short:        "InterfaceConnect PacketFilter",
 		Long:         `InterfaceConnect PacketFilter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, packetFilterInterfaceConnectParam)
 			if err != nil {
+				return err
+			}
+			if err := packetFilterInterfaceConnectParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 
@@ -798,12 +798,12 @@ func packetFilterInterfaceDisconnectCmd() *cobra.Command {
 		Short:        "InterfaceDisconnect PacketFilter",
 		Long:         `InterfaceDisconnect PacketFilter`,
 		SilenceUsage: true,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return packetFilterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			ctx, err := cli.NewCLIContext(globalFlags(), args, packetFilterInterfaceDisconnectParam)
 			if err != nil {
+				return err
+			}
+			if err := packetFilterInterfaceDisconnectParam.Initialize(newParamsAdapter(cmd.Flags()), args, ctx.Option()); err != nil {
 				return err
 			}
 

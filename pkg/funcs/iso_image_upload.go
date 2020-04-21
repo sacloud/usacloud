@@ -44,6 +44,7 @@ func ISOImageUpload(ctx cli.Context, params *params.UploadISOImageParam) error {
 		fmt.Sprintf("Still uploading[ID:%d]...", params.Id),
 		fmt.Sprintf("Upload iso-image[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 
 			file, df, err := fileOrStdin(params.GetISOFile())

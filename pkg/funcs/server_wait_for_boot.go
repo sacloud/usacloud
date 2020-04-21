@@ -39,6 +39,7 @@ func ServerWaitForBoot(ctx cli.Context, params *params.WaitForBootServerParam) e
 		fmt.Sprintf("Still booting[ID:%d]...", params.Id),
 		fmt.Sprintf("Boot server[ID:%d]", params.Id),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			err := api.SleepUntilUp(params.Id, client.DefaultTimeoutDuration)

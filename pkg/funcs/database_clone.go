@@ -92,6 +92,7 @@ func DatabaseClone(ctx cli.Context, params *params.CloneDatabaseParam) error {
 		fmt.Sprintf("Still cloning[ID:%d]...", res.ID),
 		fmt.Sprintf("Clone database[ID:%d]", res.ID),
 		ctx.IO().Progress(),
+		ctx.Option().NoColor,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
 			err := api.SleepWhileCopying(res.ID, client.DefaultTimeoutDuration, 20)
