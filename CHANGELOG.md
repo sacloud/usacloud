@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.32.3 (2020-04-21)
+
+* Install gnupg2 when running install script on Ubuntu/Debian #517 (yamamoto-febc)
+
+
 ## 0.32.2 (2020-03-05)
 
 * Fix validator - use sacloud.ID#IsEmpty for validate the conflistWith rule #495 (yamamoto-febc)

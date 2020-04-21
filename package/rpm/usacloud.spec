@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Apr 21 2020 <sacloud.users@gmail.com> - 0.32.3-1
+- Install gnupg2 when running install script on Ubuntu/Debian (by yamamoto-febc)
+
 * Thu Mar 05 2020 <sacloud.users@gmail.com> - 0.32.2-1
 - Fix validator - use sacloud.ID#IsEmpty for validate the conflistWith rule (by yamamoto-febc)
 
