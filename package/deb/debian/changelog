@@ -1,3 +1,10 @@
+usacloud (0.32.3-1) stable; urgency=low
+
+  * Install gnupg2 when running install script on Ubuntu/Debian (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/517>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Tue, 21 Apr 2020 06:51:56 +0000
+
 usacloud (0.32.2-1) stable; urgency=low
 
   * Fix validator - use sacloud.ID#IsEmpty for validate the conflistWith rule (by yamamoto-febc)
