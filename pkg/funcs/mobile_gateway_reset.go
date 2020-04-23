@@ -19,7 +19,7 @@ import (
 
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/util/progress"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func MobileGatewayReset(ctx cli.Context, params *params.ResetMobileGatewayParam) error {

@@ -20,7 +20,7 @@ import (
 	"github.com/sacloud/libsacloud/utils/server"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/util/progress"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func ServerVnc(ctx cli.Context, params *params.VncServerParam) error {

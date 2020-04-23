@@ -19,7 +19,7 @@ import (
 
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/util/progress"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func NFSShutdown(ctx cli.Context, params *params.ShutdownNFSParam) error {

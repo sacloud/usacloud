@@ -29,7 +29,7 @@ import (
 	"github.com/mitchellh/goamz/s3"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/util/progress"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func ObjectStoragePut(ctx cli.Context, params *params.PutObjectStorageParam) error {
