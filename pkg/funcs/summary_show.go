@@ -22,7 +22,7 @@ import (
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/helper/mutexkv"
+	"github.com/sacloud/usacloud/pkg/mutexkv"
 	"github.com/sacloud/usacloud/pkg/params"
 	"github.com/sacloud/usacloud/pkg/util/progress"
 )
