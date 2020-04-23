@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func VPCRouterBoot(ctx cli.Context, params *params.BootVPCRouterParam) error {
@@ -35,7 +35,7 @@ func VPCRouterBoot(ctx cli.Context, params *params.BootVPCRouterParam) error {
 		return nil // already booted.
 	}
 
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still booting[ID:%d]...", params.Id),
 		fmt.Sprintf("Boot vpc-router[ID:%d]", params.Id),
 		ctx.IO().Progress(),

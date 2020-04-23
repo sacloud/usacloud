@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func VPCRouterReset(ctx cli.Context, params *params.ResetVPCRouterParam) error {
@@ -31,7 +31,7 @@ func VPCRouterReset(ctx cli.Context, params *params.ResetVPCRouterParam) error {
 		return fmt.Errorf("VPCRouterReset is failed: %s", e)
 	}
 
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still resetting[ID:%d]...", params.Id),
 		fmt.Sprintf("Reset vpc-router[ID:%d]", params.Id),
 		ctx.IO().Progress(),

@@ -19,8 +19,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 	"github.com/sacloud/usacloud/pkg/utils"
 )
 
@@ -31,7 +31,7 @@ func DiskEdit(ctx cli.Context, params *params.EditDiskParam) error {
 	p := buildDiskEditValue(ctx, params)
 
 	// wait for copy with progress
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still editing[ID:%d]...", params.Id),
 		fmt.Sprintf("Edit disk[ID:%d]", params.Id),
 		ctx.IO().Progress(),

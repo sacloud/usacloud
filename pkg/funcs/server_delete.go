@@ -20,8 +20,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func ServerDelete(ctx cli.Context, params *params.DeleteServerParam) error {
@@ -37,7 +37,7 @@ func ServerDelete(ctx cli.Context, params *params.DeleteServerParam) error {
 	if p.IsUp() {
 		if params.Force {
 
-			err := internal.ExecWithProgress(
+			err := progress.ExecWithProgress(
 				fmt.Sprintf("Still waiting for Delete[ID:%d]...", params.Id),
 				fmt.Sprintf("Delete server[ID:%d]", params.Id),
 				ctx.IO().Progress(),

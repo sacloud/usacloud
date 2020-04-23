@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func DatabaseBackupRestore(ctx cli.Context, params *params.BackupRestoreDatabaseParam) error {
@@ -45,7 +45,7 @@ func DatabaseBackupRestore(ctx cli.Context, params *params.BackupRestoreDatabase
 	}
 
 	backupID := info.DBConf.Backup.History[params.Index-1].ID()
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still restoring from backup[ID:%d:%s]...", params.Id, backupID),
 		fmt.Sprintf("Restore Database[ID:%d]", params.Id),
 		ctx.IO().Progress(),

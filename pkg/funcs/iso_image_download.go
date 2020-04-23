@@ -20,8 +20,8 @@ import (
 
 	"github.com/sacloud/ftps"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func ISOImageDownload(ctx cli.Context, params *params.DownloadISOImageParam) error {
@@ -53,7 +53,7 @@ func ISOImageDownload(ctx cli.Context, params *params.DownloadISOImageParam) err
 	// download
 	ftpsClient := ftps.NewClient(res.User, res.Password, res.HostName)
 
-	err = internal.ExecWithProgress(
+	err = progress.ExecWithProgress(
 		fmt.Sprintf("Still downloading[ID:%d]...", params.Id),
 		fmt.Sprintf("Download iso-image[ID:%d]", params.Id),
 		ctx.IO().Progress(),

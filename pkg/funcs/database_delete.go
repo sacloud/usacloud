@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func DatabaseDelete(ctx cli.Context, params *params.DeleteDatabaseParam) error {
@@ -34,7 +34,7 @@ func DatabaseDelete(ctx cli.Context, params *params.DeleteDatabaseParam) error {
 	if p.IsUp() {
 		if params.Force {
 
-			err = internal.ExecWithProgress(
+			err = progress.ExecWithProgress(
 				fmt.Sprintf("Still waiting for delete[ID:%d]...", params.Id),
 				fmt.Sprintf("Delete database[ID:%d]", params.Id),
 				ctx.IO().Progress(),

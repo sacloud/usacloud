@@ -19,8 +19,8 @@ import (
 
 	"github.com/sacloud/ftps"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func ArchiveCreate(ctx cli.Context, params *params.CreateArchiveParam) error {
@@ -70,7 +70,7 @@ func ArchiveCreate(ctx cli.Context, params *params.CreateArchiveParam) error {
 		// upload
 		ftpsClient := ftps.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
 
-		err = internal.ExecWithProgress(
+		err = progress.ExecWithProgress(
 			fmt.Sprintf("Still uploading[ID:%d]...", res.ID),
 			fmt.Sprintf("Upload archive[ID:%d]", res.ID),
 			ctx.IO().Progress(),
@@ -109,7 +109,7 @@ func ArchiveCreate(ctx cli.Context, params *params.CreateArchiveParam) error {
 		}
 	} else {
 		// wait for copy with progress
-		err := internal.ExecWithProgress(
+		err := progress.ExecWithProgress(
 			fmt.Sprintf("Still copying[ID:%d]...", res.ID),
 			fmt.Sprintf("Copy archive[ID:%d]", res.ID),
 			ctx.IO().Progress(),

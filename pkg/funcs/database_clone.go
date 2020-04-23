@@ -19,8 +19,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func DatabaseClone(ctx cli.Context, params *params.CloneDatabaseParam) error {
@@ -88,7 +88,7 @@ func DatabaseClone(ctx cli.Context, params *params.CloneDatabaseParam) error {
 	}
 
 	// wait for boot
-	err = internal.ExecWithProgress(
+	err = progress.ExecWithProgress(
 		fmt.Sprintf("Still cloning[ID:%d]...", res.ID),
 		fmt.Sprintf("Clone database[ID:%d]", res.ID),
 		ctx.IO().Progress(),

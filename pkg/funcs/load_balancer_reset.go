@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func LoadBalancerReset(ctx cli.Context, params *params.ResetLoadBalancerParam) error {
@@ -31,7 +31,7 @@ func LoadBalancerReset(ctx cli.Context, params *params.ResetLoadBalancerParam) e
 		return fmt.Errorf("LoadBalancerReset is failed: %s", e)
 	}
 
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still resetting[ID:%d]...", params.Id),
 		fmt.Sprintf("Reset load-balancer[ID:%d]", params.Id),
 		ctx.IO().Progress(),

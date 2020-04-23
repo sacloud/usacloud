@@ -19,8 +19,8 @@ import (
 	"strconv"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func VPCRouterInterfaceConnect(ctx cli.Context, params *params.InterfaceConnectVPCRouterParam) error {
@@ -81,7 +81,7 @@ func VPCRouterInterfaceConnect(ctx cli.Context, params *params.InterfaceConnectV
 	}
 
 	if params.WithReboot && p.IsUp() {
-		err = internal.ExecWithProgress(
+		err = progress.ExecWithProgress(
 			fmt.Sprintf("Still waiting for reboot[ID:%d]...", params.Id),
 			fmt.Sprintf("Connecting interface to switch[ID:%d]", params.Id),
 			ctx.IO().Progress(),

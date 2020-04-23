@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func DatabaseBoot(ctx cli.Context, params *params.BootDatabaseParam) error {
@@ -35,7 +35,7 @@ func DatabaseBoot(ctx cli.Context, params *params.BootDatabaseParam) error {
 		return nil // already booted.
 	}
 
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still booting[ID:%d]...", params.Id),
 		fmt.Sprintf("Boot database[ID:%d]", params.Id),
 		ctx.IO().Progress(),

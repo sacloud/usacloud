@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package internal
+package progress
 
 import (
 	"fmt"
@@ -60,6 +60,8 @@ func ExecWithProgress(msgProgress, msgPrefix string, out io.Writer, noColor bool
 	spinner := NewProgress(msgProgress, msgPrefix, out, noColor)
 	compChan := make(chan bool)
 	errChan := make(chan error)
+
+	// TODO closeを呼ぶ
 
 	go func() {
 		spinner.Start()

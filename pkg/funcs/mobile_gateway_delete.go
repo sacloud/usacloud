@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func MobileGatewayDelete(ctx cli.Context, params *params.DeleteMobileGatewayParam) error {
@@ -35,7 +35,7 @@ func MobileGatewayDelete(ctx cli.Context, params *params.DeleteMobileGatewayPara
 	if p.IsUp() {
 		if params.Force {
 
-			err = internal.ExecWithProgress(
+			err = progress.ExecWithProgress(
 				fmt.Sprintf("Still waiting for delete[ID:%d]...", params.Id),
 				fmt.Sprintf("Delete mobile-gateway[ID:%d]", params.Id),
 				ctx.IO().Progress(),

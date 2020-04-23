@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func LoadBalancerDelete(ctx cli.Context, params *params.DeleteLoadBalancerParam) error {
@@ -35,7 +35,7 @@ func LoadBalancerDelete(ctx cli.Context, params *params.DeleteLoadBalancerParam)
 	if p.IsUp() {
 		if params.Force {
 
-			err = internal.ExecWithProgress(
+			err = progress.ExecWithProgress(
 				fmt.Sprintf("Still waiting for delete[ID:%d]...", params.Id),
 				fmt.Sprintf("Delete load-balancer[ID:%d]", params.Id),
 				ctx.IO().Progress(),
