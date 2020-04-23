@@ -19,6 +19,7 @@ package params
 import (
 	"io"
 
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/define"
 	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -122,7 +123,7 @@ func (p *ListObjectStorageParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -130,7 +131,7 @@ func (p *ListObjectStorageParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -152,7 +153,7 @@ func (p *ListObjectStorageParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -403,7 +404,7 @@ func (p *PutObjectStorageParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -411,7 +412,7 @@ func (p *PutObjectStorageParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -633,7 +634,7 @@ func (p *GetObjectStorageParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -641,7 +642,7 @@ func (p *GetObjectStorageParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -853,7 +854,7 @@ func (p *DeleteObjectStorageParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -861,7 +862,7 @@ func (p *DeleteObjectStorageParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)

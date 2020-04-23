@@ -20,6 +20,7 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/define"
 	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -185,7 +186,7 @@ func (p *ListVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -513,7 +514,7 @@ func (p *CreateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--plan", p.Plan)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -536,7 +537,7 @@ func (p *CreateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--vrid", p.Vrid)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -568,7 +569,7 @@ func (p *CreateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -621,7 +622,7 @@ func (p *CreateVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -953,7 +954,7 @@ func (p *ReadVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -975,7 +976,7 @@ func (p *ReadVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1298,7 +1299,7 @@ func (p *UpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1320,7 +1321,7 @@ func (p *UpdateVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1632,7 +1633,7 @@ func (p *DeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1654,7 +1655,7 @@ func (p *DeleteVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1899,7 +1900,7 @@ func (p *BootVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2096,7 +2097,7 @@ func (p *ShutdownVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2293,7 +2294,7 @@ func (p *ShutdownForceVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2490,7 +2491,7 @@ func (p *ResetVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2683,7 +2684,7 @@ func (p *WaitForBootVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2869,7 +2870,7 @@ func (p *WaitForDownVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3059,7 +3060,7 @@ func (p *EnableInternetConnectionVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3256,7 +3257,7 @@ func (p *DisableInternetConnectionVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3477,7 +3478,7 @@ func (p *InterfaceInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3499,7 +3500,7 @@ func (p *InterfaceInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3759,7 +3760,7 @@ func (p *InterfaceConnectVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3774,7 +3775,7 @@ func (p *InterfaceConnectVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--ipaddress", p.Ipaddress)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3797,7 +3798,7 @@ func (p *InterfaceConnectVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--switch-id", p.SwitchId)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3828,7 +3829,7 @@ func (p *InterfaceConnectVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4107,7 +4108,7 @@ func (p *InterfaceUpdateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4170,7 +4171,7 @@ func (p *InterfaceUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4431,7 +4432,7 @@ func (p *InterfaceDisconnectVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4446,7 +4447,7 @@ func (p *InterfaceDisconnectVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4681,7 +4682,7 @@ func (p *StaticNatInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4703,7 +4704,7 @@ func (p *StaticNatInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4946,7 +4947,7 @@ func (p *StaticNatAddVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--global", p.Global)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4961,7 +4962,7 @@ func (p *StaticNatAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--private", p.Private)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4984,7 +4985,7 @@ func (p *StaticNatAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5218,7 +5219,7 @@ func (p *StaticNatUpdateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5250,7 +5251,7 @@ func (p *StaticNatUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5479,7 +5480,7 @@ func (p *StaticNatDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5487,7 +5488,7 @@ func (p *StaticNatDeleteVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5715,7 +5716,7 @@ func (p *PortForwardingInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5737,7 +5738,7 @@ func (p *PortForwardingInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5988,7 +5989,7 @@ func (p *PortForwardingAddVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--protocol", p.Protocol)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6003,7 +6004,7 @@ func (p *PortForwardingAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--global-port", p.GlobalPort)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6018,7 +6019,7 @@ func (p *PortForwardingAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--private-ipaddress", p.PrivateIpaddress)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6033,7 +6034,7 @@ func (p *PortForwardingAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--private-port", p.PrivatePort)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6056,7 +6057,7 @@ func (p *PortForwardingAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6312,7 +6313,7 @@ func (p *PortForwardingUpdateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6360,7 +6361,7 @@ func (p *PortForwardingUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6603,7 +6604,7 @@ func (p *PortForwardingDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6611,7 +6612,7 @@ func (p *PortForwardingDeleteVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6856,7 +6857,7 @@ func (p *FirewallInfoVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--direction", p.Direction)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6871,7 +6872,7 @@ func (p *FirewallInfoVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6893,7 +6894,7 @@ func (p *FirewallInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -7187,7 +7188,7 @@ func (p *FirewallAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--direction", p.Direction)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7202,7 +7203,7 @@ func (p *FirewallAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--protocol", p.Protocol)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7249,7 +7250,7 @@ func (p *FirewallAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--action", p.Action)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7272,7 +7273,7 @@ func (p *FirewallAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7592,7 +7593,7 @@ func (p *FirewallUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--direction", p.Direction)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7607,7 +7608,7 @@ func (p *FirewallUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7671,7 +7672,7 @@ func (p *FirewallUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7966,7 +7967,7 @@ func (p *FirewallDeleteVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--direction", p.Direction)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7981,7 +7982,7 @@ func (p *FirewallDeleteVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7989,7 +7990,7 @@ func (p *FirewallDeleteVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -8231,7 +8232,7 @@ func (p *DhcpServerInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -8253,7 +8254,7 @@ func (p *DhcpServerInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -8500,7 +8501,7 @@ func (p *DhcpServerAddVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -8515,7 +8516,7 @@ func (p *DhcpServerAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--range-start", p.RangeStart)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -8530,7 +8531,7 @@ func (p *DhcpServerAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--range-stop", p.RangeStop)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -8553,7 +8554,7 @@ func (p *DhcpServerAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -8794,7 +8795,7 @@ func (p *DhcpServerUpdateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -8833,7 +8834,7 @@ func (p *DhcpServerUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -9062,7 +9063,7 @@ func (p *DhcpServerDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -9077,7 +9078,7 @@ func (p *DhcpServerDeleteVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -9305,7 +9306,7 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -9327,7 +9328,7 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -9566,7 +9567,7 @@ func (p *DhcpStaticMappingAddVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--macaddress", p.Macaddress)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -9581,7 +9582,7 @@ func (p *DhcpStaticMappingAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--ipaddress", p.Ipaddress)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -9596,7 +9597,7 @@ func (p *DhcpStaticMappingAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -9819,7 +9820,7 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -9843,7 +9844,7 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -10065,7 +10066,7 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -10073,7 +10074,7 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -10301,7 +10302,7 @@ func (p *PptpServerInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -10323,7 +10324,7 @@ func (p *PptpServerInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -10582,7 +10583,7 @@ func (p *PptpServerUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -10824,7 +10825,7 @@ func (p *L2TPServerInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -10846,7 +10847,7 @@ func (p *L2TPServerInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -11117,7 +11118,7 @@ func (p *L2TPServerUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -11366,7 +11367,7 @@ func (p *UserInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -11388,7 +11389,7 @@ func (p *UserInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -11627,7 +11628,7 @@ func (p *UserAddVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--username", p.Username)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -11642,7 +11643,7 @@ func (p *UserAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--password", p.Password)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -11657,7 +11658,7 @@ func (p *UserAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -11880,7 +11881,7 @@ func (p *UserUpdateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -11904,7 +11905,7 @@ func (p *UserUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -12126,7 +12127,7 @@ func (p *UserDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -12134,7 +12135,7 @@ func (p *UserDeleteVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -12362,7 +12363,7 @@ func (p *SiteToSiteVPNInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -12384,7 +12385,7 @@ func (p *SiteToSiteVPNInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -12635,7 +12636,7 @@ func (p *SiteToSiteVPNAddVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--peer", p.Peer)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -12650,7 +12651,7 @@ func (p *SiteToSiteVPNAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--remote-id", p.RemoteId)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -12658,7 +12659,7 @@ func (p *SiteToSiteVPNAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--pre-shared-secret", p.PreSharedSecret)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -12673,7 +12674,7 @@ func (p *SiteToSiteVPNAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--routes", p.Routes)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -12688,7 +12689,7 @@ func (p *SiteToSiteVPNAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--local-prefix", p.LocalPrefix)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -12703,7 +12704,7 @@ func (p *SiteToSiteVPNAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -12959,7 +12960,7 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -12999,7 +13000,7 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -13242,7 +13243,7 @@ func (p *SiteToSiteVPNDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -13250,7 +13251,7 @@ func (p *SiteToSiteVPNDeleteVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -13478,7 +13479,7 @@ func (p *SiteToSiteVPNPeersVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -13500,7 +13501,7 @@ func (p *SiteToSiteVPNPeersVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -13755,7 +13756,7 @@ func (p *StaticRouteInfoVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -13777,7 +13778,7 @@ func (p *StaticRouteInfoVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -14016,7 +14017,7 @@ func (p *StaticRouteAddVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--prefix", p.Prefix)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -14031,7 +14032,7 @@ func (p *StaticRouteAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--next-hop", p.NextHop)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -14046,7 +14047,7 @@ func (p *StaticRouteAddVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -14269,7 +14270,7 @@ func (p *StaticRouteUpdateVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -14293,7 +14294,7 @@ func (p *StaticRouteUpdateVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -14515,7 +14516,7 @@ func (p *StaticRouteDeleteVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -14523,7 +14524,7 @@ func (p *StaticRouteDeleteVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -14768,7 +14769,7 @@ func (p *MonitorVPCRouterParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -14799,7 +14800,7 @@ func (p *MonitorVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--key-format", p.KeyFormat)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -14807,7 +14808,7 @@ func (p *MonitorVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -14829,7 +14830,7 @@ func (p *MonitorVPCRouterParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -15117,7 +15118,7 @@ func (p *LogsVPCRouterParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)

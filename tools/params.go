@@ -284,7 +284,7 @@ func (p *Parameter) ValidatorStatements() string {
 
 	// required validator
 	if p.Required {
-		validatorName := "validateRequired"
+		validatorName := "cli.ValidateRequired"
 		err = commonTmpl.Execute(validatorBuf, map[string]interface{}{
 			"FlagName":     p.FlagNameWithDash(),
 			"Name":         p.FieldName(),
@@ -297,7 +297,7 @@ func (p *Parameter) ValidatorStatements() string {
 
 	// sakuraID(number-only,12 digit) validator
 	if p.SakuraID {
-		validatorName := "validateSakuraID"
+		validatorName := "cli.ValidateSakuraID"
 		err = commonTmpl.Execute(validatorBuf, map[string]interface{}{
 			"FlagName":     p.FlagNameWithDash(),
 			"Name":         p.FieldName(),
