@@ -17,7 +17,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/sacloud/usacloud/pkg/flags"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -45,5 +45,5 @@ func init() {
 	rootCmd.Flags().SortFlags = false
 	rootCmd.PersistentFlags().SortFlags = false
 
-	flags.InitGlobalFlags(globalFlags())
+	config.InitConfig(globalFlags())
 }

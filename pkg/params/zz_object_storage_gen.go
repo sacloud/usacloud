@@ -20,8 +20,8 @@ import (
 	"io"
 
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -45,8 +45,8 @@ type ListObjectStorageParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListObjectStorageParam return new ListObjectStorageParam
@@ -55,9 +55,9 @@ func NewListObjectStorageParam() *ListObjectStorageParam {
 }
 
 // Initialize init ListObjectStorageParam
-func (p *ListObjectStorageParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListObjectStorageParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -153,7 +153,7 @@ func (p *ListObjectStorageParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -337,8 +337,8 @@ type PutObjectStorageParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewPutObjectStorageParam return new PutObjectStorageParam
@@ -348,9 +348,9 @@ func NewPutObjectStorageParam() *PutObjectStorageParam {
 }
 
 // Initialize init PutObjectStorageParam
-func (p *PutObjectStorageParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *PutObjectStorageParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -574,8 +574,8 @@ type GetObjectStorageParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewGetObjectStorageParam return new GetObjectStorageParam
@@ -584,9 +584,9 @@ func NewGetObjectStorageParam() *GetObjectStorageParam {
 }
 
 // Initialize init GetObjectStorageParam
-func (p *GetObjectStorageParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *GetObjectStorageParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -791,8 +791,8 @@ type DeleteObjectStorageParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteObjectStorageParam return new DeleteObjectStorageParam
@@ -801,9 +801,9 @@ func NewDeleteObjectStorageParam() *DeleteObjectStorageParam {
 }
 
 // Initialize init DeleteObjectStorageParam
-func (p *DeleteObjectStorageParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteObjectStorageParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}

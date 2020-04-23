@@ -19,8 +19,8 @@ package params
 import (
 	"io"
 
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -34,8 +34,8 @@ type InfoSelfParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewInfoSelfParam return new InfoSelfParam
@@ -44,9 +44,9 @@ func NewInfoSelfParam() *InfoSelfParam {
 }
 
 // Initialize init InfoSelfParam
-func (p *InfoSelfParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *InfoSelfParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}

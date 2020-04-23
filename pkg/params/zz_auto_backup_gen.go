@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -50,8 +50,8 @@ type ListAutoBackupParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListAutoBackupParam return new ListAutoBackupParam
@@ -60,9 +60,9 @@ func NewListAutoBackupParam() *ListAutoBackupParam {
 }
 
 // Initialize init ListAutoBackupParam
-func (p *ListAutoBackupParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListAutoBackupParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -186,7 +186,7 @@ func (p *ListAutoBackupParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -400,8 +400,8 @@ type CreateAutoBackupParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreateAutoBackupParam return new CreateAutoBackupParam
@@ -411,9 +411,9 @@ func NewCreateAutoBackupParam() *CreateAutoBackupParam {
 }
 
 // Initialize init CreateAutoBackupParam
-func (p *CreateAutoBackupParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreateAutoBackupParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -592,7 +592,7 @@ func (p *CreateAutoBackupParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -814,8 +814,8 @@ type ReadAutoBackupParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadAutoBackupParam return new ReadAutoBackupParam
@@ -824,9 +824,9 @@ func NewReadAutoBackupParam() *ReadAutoBackupParam {
 }
 
 // Initialize init ReadAutoBackupParam
-func (p *ReadAutoBackupParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadAutoBackupParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -911,7 +911,7 @@ func (p *ReadAutoBackupParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1098,8 +1098,8 @@ type UpdateAutoBackupParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateAutoBackupParam return new UpdateAutoBackupParam
@@ -1108,9 +1108,9 @@ func NewUpdateAutoBackupParam() *UpdateAutoBackupParam {
 }
 
 // Initialize init UpdateAutoBackupParam
-func (p *UpdateAutoBackupParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateAutoBackupParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1264,7 +1264,7 @@ func (p *UpdateAutoBackupParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1494,8 +1494,8 @@ type DeleteAutoBackupParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteAutoBackupParam return new DeleteAutoBackupParam
@@ -1504,9 +1504,9 @@ func NewDeleteAutoBackupParam() *DeleteAutoBackupParam {
 }
 
 // Initialize init DeleteAutoBackupParam
-func (p *DeleteAutoBackupParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteAutoBackupParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1594,7 +1594,7 @@ func (p *DeleteAutoBackupParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

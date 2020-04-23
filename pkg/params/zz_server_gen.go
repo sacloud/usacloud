@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -50,8 +50,8 @@ type ListServerParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListServerParam return new ListServerParam
@@ -60,9 +60,9 @@ func NewListServerParam() *ListServerParam {
 }
 
 // Initialize init ListServerParam
-func (p *ListServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -186,7 +186,7 @@ func (p *ListServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -435,8 +435,8 @@ type BuildServerParam struct {
 	UsKeyboard              bool
 	DisableBootAfterCreate  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewBuildServerParam return new BuildServerParam
@@ -446,9 +446,9 @@ func NewBuildServerParam() *BuildServerParam {
 }
 
 // Initialize init BuildServerParam
-func (p *BuildServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *BuildServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -909,7 +909,7 @@ func (p *BuildServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1376,8 +1376,8 @@ type ReadServerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadServerParam return new ReadServerParam
@@ -1386,9 +1386,9 @@ func NewReadServerParam() *ReadServerParam {
 }
 
 // Initialize init ReadServerParam
-func (p *ReadServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1473,7 +1473,7 @@ func (p *ReadServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1659,8 +1659,8 @@ type UpdateServerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateServerParam return new UpdateServerParam
@@ -1670,9 +1670,9 @@ func NewUpdateServerParam() *UpdateServerParam {
 }
 
 // Initialize init UpdateServerParam
-func (p *UpdateServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1815,7 +1815,7 @@ func (p *UpdateServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2040,8 +2040,8 @@ type DeleteServerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteServerParam return new DeleteServerParam
@@ -2050,9 +2050,9 @@ func NewDeleteServerParam() *DeleteServerParam {
 }
 
 // Initialize init DeleteServerParam
-func (p *DeleteServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2146,7 +2146,7 @@ func (p *DeleteServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2351,8 +2351,8 @@ type PlanChangeServerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewPlanChangeServerParam return new PlanChangeServerParam
@@ -2362,9 +2362,9 @@ func NewPlanChangeServerParam() *PlanChangeServerParam {
 }
 
 // Initialize init PlanChangeServerParam
-func (p *PlanChangeServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *PlanChangeServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2485,7 +2485,7 @@ func (p *PlanChangeServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2687,8 +2687,8 @@ type BootServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewBootServerParam return new BootServerParam
@@ -2697,9 +2697,9 @@ func NewBootServerParam() *BootServerParam {
 }
 
 // Initialize init BootServerParam
-func (p *BootServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *BootServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2884,8 +2884,8 @@ type ShutdownServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewShutdownServerParam return new ShutdownServerParam
@@ -2894,9 +2894,9 @@ func NewShutdownServerParam() *ShutdownServerParam {
 }
 
 // Initialize init ShutdownServerParam
-func (p *ShutdownServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ShutdownServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3081,8 +3081,8 @@ type ShutdownForceServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewShutdownForceServerParam return new ShutdownForceServerParam
@@ -3091,9 +3091,9 @@ func NewShutdownForceServerParam() *ShutdownForceServerParam {
 }
 
 // Initialize init ShutdownForceServerParam
-func (p *ShutdownForceServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ShutdownForceServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3278,8 +3278,8 @@ type ResetServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewResetServerParam return new ResetServerParam
@@ -3288,9 +3288,9 @@ func NewResetServerParam() *ResetServerParam {
 }
 
 // Initialize init ResetServerParam
-func (p *ResetServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ResetServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3474,8 +3474,8 @@ type WaitForBootServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewWaitForBootServerParam return new WaitForBootServerParam
@@ -3484,9 +3484,9 @@ func NewWaitForBootServerParam() *WaitForBootServerParam {
 }
 
 // Initialize init WaitForBootServerParam
-func (p *WaitForBootServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *WaitForBootServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3660,8 +3660,8 @@ type WaitForDownServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewWaitForDownServerParam return new WaitForDownServerParam
@@ -3670,9 +3670,9 @@ func NewWaitForDownServerParam() *WaitForDownServerParam {
 }
 
 // Initialize init WaitForDownServerParam
-func (p *WaitForDownServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *WaitForDownServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3851,8 +3851,8 @@ type SSHServerParam struct {
 	Quiet             bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewSSHServerParam return new SSHServerParam
@@ -3862,9 +3862,9 @@ func NewSSHServerParam() *SSHServerParam {
 }
 
 // Initialize init SSHServerParam
-func (p *SSHServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *SSHServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4108,8 +4108,8 @@ type SSHExecServerParam struct {
 	Quiet             bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewSSHExecServerParam return new SSHExecServerParam
@@ -4119,9 +4119,9 @@ func NewSSHExecServerParam() *SSHExecServerParam {
 }
 
 // Initialize init SSHExecServerParam
-func (p *SSHExecServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *SSHExecServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4356,8 +4356,8 @@ type ScpServerParam struct {
 	GenerateSkeleton  bool
 	Quiet             bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewScpServerParam return new ScpServerParam
@@ -4367,9 +4367,9 @@ func NewScpServerParam() *ScpServerParam {
 }
 
 // Initialize init ScpServerParam
-func (p *ScpServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ScpServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4602,8 +4602,8 @@ type VncServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewVncServerParam return new VncServerParam
@@ -4612,9 +4612,9 @@ func NewVncServerParam() *VncServerParam {
 }
 
 // Initialize init VncServerParam
-func (p *VncServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *VncServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4806,8 +4806,8 @@ type VncInfoServerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewVncInfoServerParam return new VncInfoServerParam
@@ -4816,9 +4816,9 @@ func NewVncInfoServerParam() *VncInfoServerParam {
 }
 
 // Initialize init VncInfoServerParam
-func (p *VncInfoServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *VncInfoServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4906,7 +4906,7 @@ func (p *VncInfoServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5099,8 +5099,8 @@ type VncSendServerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewVncSendServerParam return new VncSendServerParam
@@ -5109,9 +5109,9 @@ func NewVncSendServerParam() *VncSendServerParam {
 }
 
 // Initialize init VncSendServerParam
-func (p *VncSendServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *VncSendServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5232,7 +5232,7 @@ func (p *VncSendServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5457,8 +5457,8 @@ type VncSnapshotServerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewVncSnapshotServerParam return new VncSnapshotServerParam
@@ -5467,9 +5467,9 @@ func NewVncSnapshotServerParam() *VncSnapshotServerParam {
 }
 
 // Initialize init VncSnapshotServerParam
-func (p *VncSnapshotServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *VncSnapshotServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5563,7 +5563,7 @@ func (p *VncSnapshotServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5759,8 +5759,8 @@ type RemoteDesktopServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewRemoteDesktopServerParam return new RemoteDesktopServerParam
@@ -5770,9 +5770,9 @@ func NewRemoteDesktopServerParam() *RemoteDesktopServerParam {
 }
 
 // Initialize init RemoteDesktopServerParam
-func (p *RemoteDesktopServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *RemoteDesktopServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5991,8 +5991,8 @@ type RemoteDesktopInfoServerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewRemoteDesktopInfoServerParam return new RemoteDesktopInfoServerParam
@@ -6002,9 +6002,9 @@ func NewRemoteDesktopInfoServerParam() *RemoteDesktopInfoServerParam {
 }
 
 // Initialize init RemoteDesktopInfoServerParam
-func (p *RemoteDesktopInfoServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *RemoteDesktopInfoServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6111,7 +6111,7 @@ func (p *RemoteDesktopInfoServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6305,8 +6305,8 @@ type DiskInfoServerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDiskInfoServerParam return new DiskInfoServerParam
@@ -6315,9 +6315,9 @@ func NewDiskInfoServerParam() *DiskInfoServerParam {
 }
 
 // Initialize init DiskInfoServerParam
-func (p *DiskInfoServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DiskInfoServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6402,7 +6402,7 @@ func (p *DiskInfoServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6577,8 +6577,8 @@ type DiskConnectServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDiskConnectServerParam return new DiskConnectServerParam
@@ -6587,9 +6587,9 @@ func NewDiskConnectServerParam() *DiskConnectServerParam {
 }
 
 // Initialize init DiskConnectServerParam
-func (p *DiskConnectServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DiskConnectServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6800,8 +6800,8 @@ type DiskDisconnectServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDiskDisconnectServerParam return new DiskDisconnectServerParam
@@ -6810,9 +6810,9 @@ func NewDiskDisconnectServerParam() *DiskDisconnectServerParam {
 }
 
 // Initialize init DiskDisconnectServerParam
-func (p *DiskDisconnectServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DiskDisconnectServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7028,8 +7028,8 @@ type InterfaceInfoServerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewInterfaceInfoServerParam return new InterfaceInfoServerParam
@@ -7038,9 +7038,9 @@ func NewInterfaceInfoServerParam() *InterfaceInfoServerParam {
 }
 
 // Initialize init InterfaceInfoServerParam
-func (p *InterfaceInfoServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *InterfaceInfoServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7125,7 +7125,7 @@ func (p *InterfaceInfoServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -7300,8 +7300,8 @@ type InterfaceAddForInternetServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewInterfaceAddForInternetServerParam return new InterfaceAddForInternetServerParam
@@ -7310,9 +7310,9 @@ func NewInterfaceAddForInternetServerParam() *InterfaceAddForInternetServerParam
 }
 
 // Initialize init InterfaceAddForInternetServerParam
-func (p *InterfaceAddForInternetServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *InterfaceAddForInternetServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7512,8 +7512,8 @@ type InterfaceAddForRouterServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewInterfaceAddForRouterServerParam return new InterfaceAddForRouterServerParam
@@ -7523,9 +7523,9 @@ func NewInterfaceAddForRouterServerParam() *InterfaceAddForRouterServerParam {
 }
 
 // Initialize init InterfaceAddForRouterServerParam
-func (p *InterfaceAddForRouterServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *InterfaceAddForRouterServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7804,8 +7804,8 @@ type InterfaceAddForSwitchServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewInterfaceAddForSwitchServerParam return new InterfaceAddForSwitchServerParam
@@ -7815,9 +7815,9 @@ func NewInterfaceAddForSwitchServerParam() *InterfaceAddForSwitchServerParam {
 }
 
 // Initialize init InterfaceAddForSwitchServerParam
-func (p *InterfaceAddForSwitchServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *InterfaceAddForSwitchServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -8091,8 +8091,8 @@ type InterfaceAddDisconnectedServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewInterfaceAddDisconnectedServerParam return new InterfaceAddDisconnectedServerParam
@@ -8101,9 +8101,9 @@ func NewInterfaceAddDisconnectedServerParam() *InterfaceAddDisconnectedServerPar
 }
 
 // Initialize init InterfaceAddDisconnectedServerParam
-func (p *InterfaceAddDisconnectedServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *InterfaceAddDisconnectedServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -8294,8 +8294,8 @@ type ISOInfoServerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewISOInfoServerParam return new ISOInfoServerParam
@@ -8304,9 +8304,9 @@ func NewISOInfoServerParam() *ISOInfoServerParam {
 }
 
 // Initialize init ISOInfoServerParam
-func (p *ISOInfoServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ISOInfoServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -8391,7 +8391,7 @@ func (p *ISOInfoServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -8572,8 +8572,8 @@ type ISOInsertServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewISOInsertServerParam return new ISOInsertServerParam
@@ -8583,9 +8583,9 @@ func NewISOInsertServerParam() *ISOInsertServerParam {
 }
 
 // Initialize init ISOInsertServerParam
-func (p *ISOInsertServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ISOInsertServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -8888,8 +8888,8 @@ type ISOEjectServerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewISOEjectServerParam return new ISOEjectServerParam
@@ -8898,9 +8898,9 @@ func NewISOEjectServerParam() *ISOEjectServerParam {
 }
 
 // Initialize init ISOEjectServerParam
-func (p *ISOEjectServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ISOEjectServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -9094,8 +9094,8 @@ type MonitorCPUServerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewMonitorCPUServerParam return new MonitorCPUServerParam
@@ -9105,9 +9105,9 @@ func NewMonitorCPUServerParam() *MonitorCPUServerParam {
 }
 
 // Initialize init MonitorCPUServerParam
-func (p *MonitorCPUServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *MonitorCPUServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -9225,7 +9225,7 @@ func (p *MonitorCPUServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -9430,8 +9430,8 @@ type MonitorNicServerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewMonitorNicServerParam return new MonitorNicServerParam
@@ -9441,9 +9441,9 @@ func NewMonitorNicServerParam() *MonitorNicServerParam {
 }
 
 // Initialize init MonitorNicServerParam
-func (p *MonitorNicServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *MonitorNicServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -9564,7 +9564,7 @@ func (p *MonitorNicServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -9776,8 +9776,8 @@ type MonitorDiskServerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewMonitorDiskServerParam return new MonitorDiskServerParam
@@ -9787,9 +9787,9 @@ func NewMonitorDiskServerParam() *MonitorDiskServerParam {
 }
 
 // Initialize init MonitorDiskServerParam
-func (p *MonitorDiskServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *MonitorDiskServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -9910,7 +9910,7 @@ func (p *MonitorDiskServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -10116,8 +10116,8 @@ type MaintenanceInfoServerParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewMaintenanceInfoServerParam return new MaintenanceInfoServerParam
@@ -10126,9 +10126,9 @@ func NewMaintenanceInfoServerParam() *MaintenanceInfoServerParam {
 }
 
 // Initialize init MaintenanceInfoServerParam
-func (p *MaintenanceInfoServerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *MaintenanceInfoServerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -10199,7 +10199,7 @@ func (p *MaintenanceInfoServerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

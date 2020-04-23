@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -50,8 +50,8 @@ type ListDNSParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListDNSParam return new ListDNSParam
@@ -60,9 +60,9 @@ func NewListDNSParam() *ListDNSParam {
 }
 
 // Initialize init ListDNSParam
-func (p *ListDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -186,7 +186,7 @@ func (p *ListDNSParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -396,8 +396,8 @@ type RecordInfoDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewRecordInfoDNSParam return new RecordInfoDNSParam
@@ -406,9 +406,9 @@ func NewRecordInfoDNSParam() *RecordInfoDNSParam {
 }
 
 // Initialize init RecordInfoDNSParam
-func (p *RecordInfoDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *RecordInfoDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -515,7 +515,7 @@ func (p *RecordInfoDNSParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -712,8 +712,8 @@ type RecordBulkUpdateDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewRecordBulkUpdateDNSParam return new RecordBulkUpdateDNSParam
@@ -723,9 +723,9 @@ func NewRecordBulkUpdateDNSParam() *RecordBulkUpdateDNSParam {
 }
 
 // Initialize init RecordBulkUpdateDNSParam
-func (p *RecordBulkUpdateDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *RecordBulkUpdateDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -849,7 +849,7 @@ func (p *RecordBulkUpdateDNSParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1053,8 +1053,8 @@ type CreateDNSParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreateDNSParam return new CreateDNSParam
@@ -1063,9 +1063,9 @@ func NewCreateDNSParam() *CreateDNSParam {
 }
 
 // Initialize init CreateDNSParam
-func (p *CreateDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreateDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1190,7 +1190,7 @@ func (p *CreateDNSParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1401,8 +1401,8 @@ type RecordAddDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewRecordAddDNSParam return new RecordAddDNSParam
@@ -1412,9 +1412,9 @@ func NewRecordAddDNSParam() *RecordAddDNSParam {
 }
 
 // Initialize init RecordAddDNSParam
-func (p *RecordAddDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *RecordAddDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1607,7 +1607,7 @@ func (p *RecordAddDNSParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1857,8 +1857,8 @@ type ReadDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadDNSParam return new ReadDNSParam
@@ -1867,9 +1867,9 @@ func NewReadDNSParam() *ReadDNSParam {
 }
 
 // Initialize init ReadDNSParam
-func (p *ReadDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1954,7 +1954,7 @@ func (p *ReadDNSParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2145,8 +2145,8 @@ type RecordUpdateDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewRecordUpdateDNSParam return new RecordUpdateDNSParam
@@ -2155,9 +2155,9 @@ func NewRecordUpdateDNSParam() *RecordUpdateDNSParam {
 }
 
 // Initialize init RecordUpdateDNSParam
-func (p *RecordUpdateDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *RecordUpdateDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2347,7 +2347,7 @@ func (p *RecordUpdateDNSParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2606,8 +2606,8 @@ type RecordDeleteDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewRecordDeleteDNSParam return new RecordDeleteDNSParam
@@ -2616,9 +2616,9 @@ func NewRecordDeleteDNSParam() *RecordDeleteDNSParam {
 }
 
 // Initialize init RecordDeleteDNSParam
-func (p *RecordDeleteDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *RecordDeleteDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2717,7 +2717,7 @@ func (p *RecordDeleteDNSParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2915,8 +2915,8 @@ type UpdateDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateDNSParam return new UpdateDNSParam
@@ -2925,9 +2925,9 @@ func NewUpdateDNSParam() *UpdateDNSParam {
 }
 
 // Initialize init UpdateDNSParam
-func (p *UpdateDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3048,7 +3048,7 @@ func (p *UpdateDNSParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3257,8 +3257,8 @@ type DeleteDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteDNSParam return new DeleteDNSParam
@@ -3267,9 +3267,9 @@ func NewDeleteDNSParam() *DeleteDNSParam {
 }
 
 // Initialize init DeleteDNSParam
-func (p *DeleteDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3357,7 +3357,7 @@ func (p *DeleteDNSParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

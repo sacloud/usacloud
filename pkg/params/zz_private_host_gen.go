@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -50,8 +50,8 @@ type ListPrivateHostParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListPrivateHostParam return new ListPrivateHostParam
@@ -60,9 +60,9 @@ func NewListPrivateHostParam() *ListPrivateHostParam {
 }
 
 // Initialize init ListPrivateHostParam
-func (p *ListPrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListPrivateHostParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -186,7 +186,7 @@ func (p *ListPrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -397,8 +397,8 @@ type CreatePrivateHostParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreatePrivateHostParam return new CreatePrivateHostParam
@@ -407,9 +407,9 @@ func NewCreatePrivateHostParam() *CreatePrivateHostParam {
 }
 
 // Initialize init CreatePrivateHostParam
-func (p *CreatePrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreatePrivateHostParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -534,7 +534,7 @@ func (p *CreatePrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -735,8 +735,8 @@ type ReadPrivateHostParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadPrivateHostParam return new ReadPrivateHostParam
@@ -745,9 +745,9 @@ func NewReadPrivateHostParam() *ReadPrivateHostParam {
 }
 
 // Initialize init ReadPrivateHostParam
-func (p *ReadPrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadPrivateHostParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -832,7 +832,7 @@ func (p *ReadPrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1017,8 +1017,8 @@ type UpdatePrivateHostParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdatePrivateHostParam return new UpdatePrivateHostParam
@@ -1027,9 +1027,9 @@ func NewUpdatePrivateHostParam() *UpdatePrivateHostParam {
 }
 
 // Initialize init UpdatePrivateHostParam
-func (p *UpdatePrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdatePrivateHostParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1161,7 +1161,7 @@ func (p *UpdatePrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1377,8 +1377,8 @@ type DeletePrivateHostParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeletePrivateHostParam return new DeletePrivateHostParam
@@ -1387,9 +1387,9 @@ func NewDeletePrivateHostParam() *DeletePrivateHostParam {
 }
 
 // Initialize init DeletePrivateHostParam
-func (p *DeletePrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeletePrivateHostParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1477,7 +1477,7 @@ func (p *DeletePrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1664,8 +1664,8 @@ type ServerInfoPrivateHostParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewServerInfoPrivateHostParam return new ServerInfoPrivateHostParam
@@ -1674,9 +1674,9 @@ func NewServerInfoPrivateHostParam() *ServerInfoPrivateHostParam {
 }
 
 // Initialize init ServerInfoPrivateHostParam
-func (p *ServerInfoPrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ServerInfoPrivateHostParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1761,7 +1761,7 @@ func (p *ServerInfoPrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1943,8 +1943,8 @@ type ServerAddPrivateHostParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewServerAddPrivateHostParam return new ServerAddPrivateHostParam
@@ -1953,9 +1953,9 @@ func NewServerAddPrivateHostParam() *ServerAddPrivateHostParam {
 }
 
 // Initialize init ServerAddPrivateHostParam
-func (p *ServerAddPrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ServerAddPrivateHostParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2061,7 +2061,7 @@ func (p *ServerAddPrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2257,8 +2257,8 @@ type ServerDeletePrivateHostParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewServerDeletePrivateHostParam return new ServerDeletePrivateHostParam
@@ -2267,9 +2267,9 @@ func NewServerDeletePrivateHostParam() *ServerDeletePrivateHostParam {
 }
 
 // Initialize init ServerDeletePrivateHostParam
-func (p *ServerDeletePrivateHostParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ServerDeletePrivateHostParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2375,7 +2375,7 @@ func (p *ServerDeletePrivateHostParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

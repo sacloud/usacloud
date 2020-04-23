@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -50,8 +50,8 @@ type ListInternetParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListInternetParam return new ListInternetParam
@@ -60,9 +60,9 @@ func NewListInternetParam() *ListInternetParam {
 }
 
 // Initialize init ListInternetParam
-func (p *ListInternetParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListInternetParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -186,7 +186,7 @@ func (p *ListInternetParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -399,8 +399,8 @@ type CreateInternetParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreateInternetParam return new CreateInternetParam
@@ -410,9 +410,9 @@ func NewCreateInternetParam() *CreateInternetParam {
 }
 
 // Initialize init CreateInternetParam
-func (p *CreateInternetParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreateInternetParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -573,7 +573,7 @@ func (p *CreateInternetParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -788,8 +788,8 @@ type ReadInternetParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadInternetParam return new ReadInternetParam
@@ -798,9 +798,9 @@ func NewReadInternetParam() *ReadInternetParam {
 }
 
 // Initialize init ReadInternetParam
-func (p *ReadInternetParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadInternetParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -885,7 +885,7 @@ func (p *ReadInternetParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1071,8 +1071,8 @@ type UpdateInternetParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateInternetParam return new UpdateInternetParam
@@ -1081,9 +1081,9 @@ func NewUpdateInternetParam() *UpdateInternetParam {
 }
 
 // Initialize init UpdateInternetParam
-func (p *UpdateInternetParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateInternetParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1226,7 +1226,7 @@ func (p *UpdateInternetParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1449,8 +1449,8 @@ type DeleteInternetParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteInternetParam return new DeleteInternetParam
@@ -1459,9 +1459,9 @@ func NewDeleteInternetParam() *DeleteInternetParam {
 }
 
 // Initialize init DeleteInternetParam
-func (p *DeleteInternetParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteInternetParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1549,7 +1549,7 @@ func (p *DeleteInternetParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1738,8 +1738,8 @@ type UpdateBandwidthInternetParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateBandwidthInternetParam return new UpdateBandwidthInternetParam
@@ -1749,9 +1749,9 @@ func NewUpdateBandwidthInternetParam() *UpdateBandwidthInternetParam {
 }
 
 // Initialize init UpdateBandwidthInternetParam
-func (p *UpdateBandwidthInternetParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateBandwidthInternetParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1857,7 +1857,7 @@ func (p *UpdateBandwidthInternetParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2051,8 +2051,8 @@ type SubnetInfoInternetParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewSubnetInfoInternetParam return new SubnetInfoInternetParam
@@ -2061,9 +2061,9 @@ func NewSubnetInfoInternetParam() *SubnetInfoInternetParam {
 }
 
 // Initialize init SubnetInfoInternetParam
-func (p *SubnetInfoInternetParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *SubnetInfoInternetParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2148,7 +2148,7 @@ func (p *SubnetInfoInternetParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2331,8 +2331,8 @@ type SubnetAddInternetParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewSubnetAddInternetParam return new SubnetAddInternetParam
@@ -2342,9 +2342,9 @@ func NewSubnetAddInternetParam() *SubnetAddInternetParam {
 }
 
 // Initialize init SubnetAddInternetParam
-func (p *SubnetAddInternetParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *SubnetAddInternetParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2468,7 +2468,7 @@ func (p *SubnetAddInternetParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2664,8 +2664,8 @@ type SubnetDeleteInternetParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewSubnetDeleteInternetParam return new SubnetDeleteInternetParam
@@ -2674,9 +2674,9 @@ func NewSubnetDeleteInternetParam() *SubnetDeleteInternetParam {
 }
 
 // Initialize init SubnetDeleteInternetParam
-func (p *SubnetDeleteInternetParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *SubnetDeleteInternetParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2888,8 +2888,8 @@ type SubnetUpdateInternetParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewSubnetUpdateInternetParam return new SubnetUpdateInternetParam
@@ -2898,9 +2898,9 @@ func NewSubnetUpdateInternetParam() *SubnetUpdateInternetParam {
 }
 
 // Initialize init SubnetUpdateInternetParam
-func (p *SubnetUpdateInternetParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *SubnetUpdateInternetParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3017,7 +3017,7 @@ func (p *SubnetUpdateInternetParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3218,8 +3218,8 @@ type IPv6InfoInternetParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewIPv6InfoInternetParam return new IPv6InfoInternetParam
@@ -3228,9 +3228,9 @@ func NewIPv6InfoInternetParam() *IPv6InfoInternetParam {
 }
 
 // Initialize init IPv6InfoInternetParam
-func (p *IPv6InfoInternetParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *IPv6InfoInternetParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3315,7 +3315,7 @@ func (p *IPv6InfoInternetParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3496,8 +3496,8 @@ type IPv6EnableInternetParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewIPv6EnableInternetParam return new IPv6EnableInternetParam
@@ -3506,9 +3506,9 @@ func NewIPv6EnableInternetParam() *IPv6EnableInternetParam {
 }
 
 // Initialize init IPv6EnableInternetParam
-func (p *IPv6EnableInternetParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *IPv6EnableInternetParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3596,7 +3596,7 @@ func (p *IPv6EnableInternetParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3777,8 +3777,8 @@ type IPv6DisableInternetParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewIPv6DisableInternetParam return new IPv6DisableInternetParam
@@ -3787,9 +3787,9 @@ func NewIPv6DisableInternetParam() *IPv6DisableInternetParam {
 }
 
 // Initialize init IPv6DisableInternetParam
-func (p *IPv6DisableInternetParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *IPv6DisableInternetParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3983,8 +3983,8 @@ type MonitorInternetParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewMonitorInternetParam return new MonitorInternetParam
@@ -3994,9 +3994,9 @@ func NewMonitorInternetParam() *MonitorInternetParam {
 }
 
 // Initialize init MonitorInternetParam
-func (p *MonitorInternetParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *MonitorInternetParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4114,7 +4114,7 @@ func (p *MonitorInternetParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

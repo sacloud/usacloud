@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -49,8 +49,8 @@ type ListBridgeParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListBridgeParam return new ListBridgeParam
@@ -59,9 +59,9 @@ func NewListBridgeParam() *ListBridgeParam {
 }
 
 // Initialize init ListBridgeParam
-func (p *ListBridgeParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListBridgeParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -174,7 +174,7 @@ func (p *ListBridgeParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -376,8 +376,8 @@ type CreateBridgeParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreateBridgeParam return new CreateBridgeParam
@@ -386,9 +386,9 @@ func NewCreateBridgeParam() *CreateBridgeParam {
 }
 
 // Initialize init CreateBridgeParam
-func (p *CreateBridgeParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreateBridgeParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -491,7 +491,7 @@ func (p *CreateBridgeParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -677,8 +677,8 @@ type ReadBridgeParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadBridgeParam return new ReadBridgeParam
@@ -687,9 +687,9 @@ func NewReadBridgeParam() *ReadBridgeParam {
 }
 
 // Initialize init ReadBridgeParam
-func (p *ReadBridgeParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadBridgeParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -771,7 +771,7 @@ func (p *ReadBridgeParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -946,8 +946,8 @@ type UpdateBridgeParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateBridgeParam return new UpdateBridgeParam
@@ -956,9 +956,9 @@ func NewUpdateBridgeParam() *UpdateBridgeParam {
 }
 
 // Initialize init UpdateBridgeParam
-func (p *UpdateBridgeParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateBridgeParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1065,7 +1065,7 @@ func (p *UpdateBridgeParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1259,8 +1259,8 @@ type DeleteBridgeParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteBridgeParam return new DeleteBridgeParam
@@ -1269,9 +1269,9 @@ func NewDeleteBridgeParam() *DeleteBridgeParam {
 }
 
 // Initialize init DeleteBridgeParam
-func (p *DeleteBridgeParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteBridgeParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1356,7 +1356,7 @@ func (p *DeleteBridgeParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

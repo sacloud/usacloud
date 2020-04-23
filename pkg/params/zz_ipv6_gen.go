@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -51,8 +51,8 @@ type ListIPv6Param struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListIPv6Param return new ListIPv6Param
@@ -61,9 +61,9 @@ func NewListIPv6Param() *ListIPv6Param {
 }
 
 // Initialize init ListIPv6Param
-func (p *ListIPv6Param) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListIPv6Param) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -198,7 +198,7 @@ func (p *ListIPv6Param) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -413,8 +413,8 @@ type PtrAddIPv6Param struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewPtrAddIPv6Param return new PtrAddIPv6Param
@@ -423,9 +423,9 @@ func NewPtrAddIPv6Param() *PtrAddIPv6Param {
 }
 
 // Initialize init PtrAddIPv6Param
-func (p *PtrAddIPv6Param) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *PtrAddIPv6Param) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -510,7 +510,7 @@ func (p *PtrAddIPv6Param) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -688,8 +688,8 @@ type PtrReadIPv6Param struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewPtrReadIPv6Param return new PtrReadIPv6Param
@@ -698,9 +698,9 @@ func NewPtrReadIPv6Param() *PtrReadIPv6Param {
 }
 
 // Initialize init PtrReadIPv6Param
-func (p *PtrReadIPv6Param) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *PtrReadIPv6Param) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -771,7 +771,7 @@ func (p *PtrReadIPv6Param) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -937,8 +937,8 @@ type PtrUpdateIPv6Param struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewPtrUpdateIPv6Param return new PtrUpdateIPv6Param
@@ -947,9 +947,9 @@ func NewPtrUpdateIPv6Param() *PtrUpdateIPv6Param {
 }
 
 // Initialize init PtrUpdateIPv6Param
-func (p *PtrUpdateIPv6Param) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *PtrUpdateIPv6Param) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1034,7 +1034,7 @@ func (p *PtrUpdateIPv6Param) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1213,8 +1213,8 @@ type PtrDeleteIPv6Param struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewPtrDeleteIPv6Param return new PtrDeleteIPv6Param
@@ -1223,9 +1223,9 @@ func NewPtrDeleteIPv6Param() *PtrDeleteIPv6Param {
 }
 
 // Initialize init PtrDeleteIPv6Param
-func (p *PtrDeleteIPv6Param) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *PtrDeleteIPv6Param) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1299,7 +1299,7 @@ func (p *PtrDeleteIPv6Param) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -51,8 +51,8 @@ type ListSimpleMonitorParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListSimpleMonitorParam return new ListSimpleMonitorParam
@@ -61,9 +61,9 @@ func NewListSimpleMonitorParam() *ListSimpleMonitorParam {
 }
 
 // Initialize init ListSimpleMonitorParam
-func (p *ListSimpleMonitorParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListSimpleMonitorParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -198,7 +198,7 @@ func (p *ListSimpleMonitorParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -433,8 +433,8 @@ type CreateSimpleMonitorParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreateSimpleMonitorParam return new CreateSimpleMonitorParam
@@ -444,9 +444,9 @@ func NewCreateSimpleMonitorParam() *CreateSimpleMonitorParam {
 }
 
 // Initialize init CreateSimpleMonitorParam
-func (p *CreateSimpleMonitorParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreateSimpleMonitorParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -677,7 +677,7 @@ func (p *CreateSimpleMonitorParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -997,8 +997,8 @@ type ReadSimpleMonitorParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadSimpleMonitorParam return new ReadSimpleMonitorParam
@@ -1007,9 +1007,9 @@ func NewReadSimpleMonitorParam() *ReadSimpleMonitorParam {
 }
 
 // Initialize init ReadSimpleMonitorParam
-func (p *ReadSimpleMonitorParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadSimpleMonitorParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1094,7 +1094,7 @@ func (p *ReadSimpleMonitorParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1295,8 +1295,8 @@ type UpdateSimpleMonitorParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateSimpleMonitorParam return new UpdateSimpleMonitorParam
@@ -1306,9 +1306,9 @@ func NewUpdateSimpleMonitorParam() *UpdateSimpleMonitorParam {
 }
 
 // Initialize init UpdateSimpleMonitorParam
-func (p *UpdateSimpleMonitorParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateSimpleMonitorParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1528,7 +1528,7 @@ func (p *UpdateSimpleMonitorParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1856,8 +1856,8 @@ type DeleteSimpleMonitorParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteSimpleMonitorParam return new DeleteSimpleMonitorParam
@@ -1866,9 +1866,9 @@ func NewDeleteSimpleMonitorParam() *DeleteSimpleMonitorParam {
 }
 
 // Initialize init DeleteSimpleMonitorParam
-func (p *DeleteSimpleMonitorParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteSimpleMonitorParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1956,7 +1956,7 @@ func (p *DeleteSimpleMonitorParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2143,8 +2143,8 @@ type HealthSimpleMonitorParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewHealthSimpleMonitorParam return new HealthSimpleMonitorParam
@@ -2153,9 +2153,9 @@ func NewHealthSimpleMonitorParam() *HealthSimpleMonitorParam {
 }
 
 // Initialize init HealthSimpleMonitorParam
-func (p *HealthSimpleMonitorParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *HealthSimpleMonitorParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2240,7 +2240,7 @@ func (p *HealthSimpleMonitorParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

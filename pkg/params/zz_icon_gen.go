@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -51,8 +51,8 @@ type ListIconParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListIconParam return new ListIconParam
@@ -61,9 +61,9 @@ func NewListIconParam() *ListIconParam {
 }
 
 // Initialize init ListIconParam
-func (p *ListIconParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListIconParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -198,7 +198,7 @@ func (p *ListIconParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -415,8 +415,8 @@ type CreateIconParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreateIconParam return new CreateIconParam
@@ -425,9 +425,9 @@ func NewCreateIconParam() *CreateIconParam {
 }
 
 // Initialize init CreateIconParam
-func (p *CreateIconParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreateIconParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -548,7 +548,7 @@ func (p *CreateIconParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -742,8 +742,8 @@ type ReadIconParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadIconParam return new ReadIconParam
@@ -752,9 +752,9 @@ func NewReadIconParam() *ReadIconParam {
 }
 
 // Initialize init ReadIconParam
-func (p *ReadIconParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadIconParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -839,7 +839,7 @@ func (p *ReadIconParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1022,8 +1022,8 @@ type UpdateIconParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateIconParam return new UpdateIconParam
@@ -1032,9 +1032,9 @@ func NewUpdateIconParam() *UpdateIconParam {
 }
 
 // Initialize init UpdateIconParam
-func (p *UpdateIconParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateIconParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1144,7 +1144,7 @@ func (p *UpdateIconParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1346,8 +1346,8 @@ type DeleteIconParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteIconParam return new DeleteIconParam
@@ -1356,9 +1356,9 @@ func NewDeleteIconParam() *DeleteIconParam {
 }
 
 // Initialize init DeleteIconParam
-func (p *DeleteIconParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteIconParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1446,7 +1446,7 @@ func (p *DeleteIconParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

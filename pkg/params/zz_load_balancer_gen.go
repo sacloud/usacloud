@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -50,8 +50,8 @@ type ListLoadBalancerParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListLoadBalancerParam return new ListLoadBalancerParam
@@ -60,9 +60,9 @@ func NewListLoadBalancerParam() *ListLoadBalancerParam {
 }
 
 // Initialize init ListLoadBalancerParam
-func (p *ListLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -186,7 +186,7 @@ func (p *ListLoadBalancerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -405,8 +405,8 @@ type CreateLoadBalancerParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreateLoadBalancerParam return new CreateLoadBalancerParam
@@ -416,9 +416,9 @@ func NewCreateLoadBalancerParam() *CreateLoadBalancerParam {
 }
 
 // Initialize init CreateLoadBalancerParam
-func (p *CreateLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreateLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -644,7 +644,7 @@ func (p *CreateLoadBalancerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -901,8 +901,8 @@ type ReadLoadBalancerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadLoadBalancerParam return new ReadLoadBalancerParam
@@ -911,9 +911,9 @@ func NewReadLoadBalancerParam() *ReadLoadBalancerParam {
 }
 
 // Initialize init ReadLoadBalancerParam
-func (p *ReadLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -998,7 +998,7 @@ func (p *ReadLoadBalancerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1183,8 +1183,8 @@ type UpdateLoadBalancerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateLoadBalancerParam return new UpdateLoadBalancerParam
@@ -1193,9 +1193,9 @@ func NewUpdateLoadBalancerParam() *UpdateLoadBalancerParam {
 }
 
 // Initialize init UpdateLoadBalancerParam
-func (p *UpdateLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1327,7 +1327,7 @@ func (p *UpdateLoadBalancerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1544,8 +1544,8 @@ type DeleteLoadBalancerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteLoadBalancerParam return new DeleteLoadBalancerParam
@@ -1554,9 +1554,9 @@ func NewDeleteLoadBalancerParam() *DeleteLoadBalancerParam {
 }
 
 // Initialize init DeleteLoadBalancerParam
-func (p *DeleteLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1647,7 +1647,7 @@ func (p *DeleteLoadBalancerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1835,8 +1835,8 @@ type BootLoadBalancerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewBootLoadBalancerParam return new BootLoadBalancerParam
@@ -1845,9 +1845,9 @@ func NewBootLoadBalancerParam() *BootLoadBalancerParam {
 }
 
 // Initialize init BootLoadBalancerParam
-func (p *BootLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *BootLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2032,8 +2032,8 @@ type ShutdownLoadBalancerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewShutdownLoadBalancerParam return new ShutdownLoadBalancerParam
@@ -2042,9 +2042,9 @@ func NewShutdownLoadBalancerParam() *ShutdownLoadBalancerParam {
 }
 
 // Initialize init ShutdownLoadBalancerParam
-func (p *ShutdownLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ShutdownLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2229,8 +2229,8 @@ type ShutdownForceLoadBalancerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewShutdownForceLoadBalancerParam return new ShutdownForceLoadBalancerParam
@@ -2239,9 +2239,9 @@ func NewShutdownForceLoadBalancerParam() *ShutdownForceLoadBalancerParam {
 }
 
 // Initialize init ShutdownForceLoadBalancerParam
-func (p *ShutdownForceLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ShutdownForceLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2426,8 +2426,8 @@ type ResetLoadBalancerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewResetLoadBalancerParam return new ResetLoadBalancerParam
@@ -2436,9 +2436,9 @@ func NewResetLoadBalancerParam() *ResetLoadBalancerParam {
 }
 
 // Initialize init ResetLoadBalancerParam
-func (p *ResetLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ResetLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2622,8 +2622,8 @@ type WaitForBootLoadBalancerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewWaitForBootLoadBalancerParam return new WaitForBootLoadBalancerParam
@@ -2632,9 +2632,9 @@ func NewWaitForBootLoadBalancerParam() *WaitForBootLoadBalancerParam {
 }
 
 // Initialize init WaitForBootLoadBalancerParam
-func (p *WaitForBootLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *WaitForBootLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2808,8 +2808,8 @@ type WaitForDownLoadBalancerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewWaitForDownLoadBalancerParam return new WaitForDownLoadBalancerParam
@@ -2818,9 +2818,9 @@ func NewWaitForDownLoadBalancerParam() *WaitForDownLoadBalancerParam {
 }
 
 // Initialize init WaitForDownLoadBalancerParam
-func (p *WaitForDownLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *WaitForDownLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3001,8 +3001,8 @@ type VipInfoLoadBalancerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewVipInfoLoadBalancerParam return new VipInfoLoadBalancerParam
@@ -3011,9 +3011,9 @@ func NewVipInfoLoadBalancerParam() *VipInfoLoadBalancerParam {
 }
 
 // Initialize init VipInfoLoadBalancerParam
-func (p *VipInfoLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *VipInfoLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3098,7 +3098,7 @@ func (p *VipInfoLoadBalancerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3277,8 +3277,8 @@ type VipAddLoadBalancerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewVipAddLoadBalancerParam return new VipAddLoadBalancerParam
@@ -3288,9 +3288,9 @@ func NewVipAddLoadBalancerParam() *VipAddLoadBalancerParam {
 }
 
 // Initialize init VipAddLoadBalancerParam
-func (p *VipAddLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *VipAddLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3577,8 +3577,8 @@ type VipUpdateLoadBalancerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewVipUpdateLoadBalancerParam return new VipUpdateLoadBalancerParam
@@ -3588,9 +3588,9 @@ func NewVipUpdateLoadBalancerParam() *VipUpdateLoadBalancerParam {
 }
 
 // Initialize init VipUpdateLoadBalancerParam
-func (p *VipUpdateLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *VipUpdateLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3876,8 +3876,8 @@ type VipDeleteLoadBalancerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewVipDeleteLoadBalancerParam return new VipDeleteLoadBalancerParam
@@ -3886,9 +3886,9 @@ func NewVipDeleteLoadBalancerParam() *VipDeleteLoadBalancerParam {
 }
 
 // Initialize init VipDeleteLoadBalancerParam
-func (p *VipDeleteLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *VipDeleteLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4100,8 +4100,8 @@ type ServerInfoLoadBalancerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewServerInfoLoadBalancerParam return new ServerInfoLoadBalancerParam
@@ -4110,9 +4110,9 @@ func NewServerInfoLoadBalancerParam() *ServerInfoLoadBalancerParam {
 }
 
 // Initialize init ServerInfoLoadBalancerParam
-func (p *ServerInfoLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ServerInfoLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4251,7 +4251,7 @@ func (p *ServerInfoLoadBalancerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4454,8 +4454,8 @@ type ServerAddLoadBalancerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewServerAddLoadBalancerParam return new ServerAddLoadBalancerParam
@@ -4465,9 +4465,9 @@ func NewServerAddLoadBalancerParam() *ServerAddLoadBalancerParam {
 }
 
 // Initialize init ServerAddLoadBalancerParam
-func (p *ServerAddLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ServerAddLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4815,8 +4815,8 @@ type ServerUpdateLoadBalancerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewServerUpdateLoadBalancerParam return new ServerUpdateLoadBalancerParam
@@ -4825,9 +4825,9 @@ func NewServerUpdateLoadBalancerParam() *ServerUpdateLoadBalancerParam {
 }
 
 // Initialize init ServerUpdateLoadBalancerParam
-func (p *ServerUpdateLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ServerUpdateLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5164,8 +5164,8 @@ type ServerDeleteLoadBalancerParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewServerDeleteLoadBalancerParam return new ServerDeleteLoadBalancerParam
@@ -5174,9 +5174,9 @@ func NewServerDeleteLoadBalancerParam() *ServerDeleteLoadBalancerParam {
 }
 
 // Initialize init ServerDeleteLoadBalancerParam
-func (p *ServerDeleteLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ServerDeleteLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5470,8 +5470,8 @@ type MonitorLoadBalancerParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewMonitorLoadBalancerParam return new MonitorLoadBalancerParam
@@ -5481,9 +5481,9 @@ func NewMonitorLoadBalancerParam() *MonitorLoadBalancerParam {
 }
 
 // Initialize init MonitorLoadBalancerParam
-func (p *MonitorLoadBalancerParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *MonitorLoadBalancerParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5601,7 +5601,7 @@ func (p *MonitorLoadBalancerParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -50,8 +50,8 @@ type ListSwitchParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListSwitchParam return new ListSwitchParam
@@ -60,9 +60,9 @@ func NewListSwitchParam() *ListSwitchParam {
 }
 
 // Initialize init ListSwitchParam
-func (p *ListSwitchParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListSwitchParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -186,7 +186,7 @@ func (p *ListSwitchParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -397,8 +397,8 @@ type CreateSwitchParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreateSwitchParam return new CreateSwitchParam
@@ -407,9 +407,9 @@ func NewCreateSwitchParam() *CreateSwitchParam {
 }
 
 // Initialize init CreateSwitchParam
-func (p *CreateSwitchParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreateSwitchParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -534,7 +534,7 @@ func (p *CreateSwitchParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -735,8 +735,8 @@ type ReadSwitchParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadSwitchParam return new ReadSwitchParam
@@ -745,9 +745,9 @@ func NewReadSwitchParam() *ReadSwitchParam {
 }
 
 // Initialize init ReadSwitchParam
-func (p *ReadSwitchParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadSwitchParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -832,7 +832,7 @@ func (p *ReadSwitchParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1017,8 +1017,8 @@ type UpdateSwitchParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateSwitchParam return new UpdateSwitchParam
@@ -1027,9 +1027,9 @@ func NewUpdateSwitchParam() *UpdateSwitchParam {
 }
 
 // Initialize init UpdateSwitchParam
-func (p *UpdateSwitchParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateSwitchParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1161,7 +1161,7 @@ func (p *UpdateSwitchParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1377,8 +1377,8 @@ type DeleteSwitchParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteSwitchParam return new DeleteSwitchParam
@@ -1387,9 +1387,9 @@ func NewDeleteSwitchParam() *DeleteSwitchParam {
 }
 
 // Initialize init DeleteSwitchParam
-func (p *DeleteSwitchParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteSwitchParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1477,7 +1477,7 @@ func (p *DeleteSwitchParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1659,8 +1659,8 @@ type BridgeConnectSwitchParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewBridgeConnectSwitchParam return new BridgeConnectSwitchParam
@@ -1669,9 +1669,9 @@ func NewBridgeConnectSwitchParam() *BridgeConnectSwitchParam {
 }
 
 // Initialize init BridgeConnectSwitchParam
-func (p *BridgeConnectSwitchParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *BridgeConnectSwitchParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1881,8 +1881,8 @@ type BridgeDisconnectSwitchParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewBridgeDisconnectSwitchParam return new BridgeDisconnectSwitchParam
@@ -1891,9 +1891,9 @@ func NewBridgeDisconnectSwitchParam() *BridgeDisconnectSwitchParam {
 }
 
 // Initialize init BridgeDisconnectSwitchParam
-func (p *BridgeDisconnectSwitchParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *BridgeDisconnectSwitchParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}

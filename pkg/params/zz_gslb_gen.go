@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -50,8 +50,8 @@ type ListGSLBParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListGSLBParam return new ListGSLBParam
@@ -60,9 +60,9 @@ func NewListGSLBParam() *ListGSLBParam {
 }
 
 // Initialize init ListGSLBParam
-func (p *ListGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListGSLBParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -186,7 +186,7 @@ func (p *ListGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -394,8 +394,8 @@ type ServerInfoGSLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewServerInfoGSLBParam return new ServerInfoGSLBParam
@@ -404,9 +404,9 @@ func NewServerInfoGSLBParam() *ServerInfoGSLBParam {
 }
 
 // Initialize init ServerInfoGSLBParam
-func (p *ServerInfoGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ServerInfoGSLBParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -491,7 +491,7 @@ func (p *ServerInfoGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -682,8 +682,8 @@ type CreateGSLBParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreateGSLBParam return new CreateGSLBParam
@@ -693,9 +693,9 @@ func NewCreateGSLBParam() *CreateGSLBParam {
 }
 
 // Initialize init CreateGSLBParam
-func (p *CreateGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreateGSLBParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -882,7 +882,7 @@ func (p *CreateGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1143,8 +1143,8 @@ type ServerAddGSLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewServerAddGSLBParam return new ServerAddGSLBParam
@@ -1153,9 +1153,9 @@ func NewServerAddGSLBParam() *ServerAddGSLBParam {
 }
 
 // Initialize init ServerAddGSLBParam
-func (p *ServerAddGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ServerAddGSLBParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1268,7 +1268,7 @@ func (p *ServerAddGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1476,8 +1476,8 @@ type ReadGSLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadGSLBParam return new ReadGSLBParam
@@ -1486,9 +1486,9 @@ func NewReadGSLBParam() *ReadGSLBParam {
 }
 
 // Initialize init ReadGSLBParam
-func (p *ReadGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadGSLBParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1573,7 +1573,7 @@ func (p *ReadGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1758,8 +1758,8 @@ type ServerUpdateGSLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewServerUpdateGSLBParam return new ServerUpdateGSLBParam
@@ -1768,9 +1768,9 @@ func NewServerUpdateGSLBParam() *ServerUpdateGSLBParam {
 }
 
 // Initialize init ServerUpdateGSLBParam
-func (p *ServerUpdateGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ServerUpdateGSLBParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1894,7 +1894,7 @@ func (p *ServerUpdateGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2111,8 +2111,8 @@ type ServerDeleteGSLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewServerDeleteGSLBParam return new ServerDeleteGSLBParam
@@ -2121,9 +2121,9 @@ func NewServerDeleteGSLBParam() *ServerDeleteGSLBParam {
 }
 
 // Initialize init ServerDeleteGSLBParam
-func (p *ServerDeleteGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ServerDeleteGSLBParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2222,7 +2222,7 @@ func (p *ServerDeleteGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2429,8 +2429,8 @@ type UpdateGSLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateGSLBParam return new UpdateGSLBParam
@@ -2439,9 +2439,9 @@ func NewUpdateGSLBParam() *UpdateGSLBParam {
 }
 
 // Initialize init UpdateGSLBParam
-func (p *UpdateGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateGSLBParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2621,7 +2621,7 @@ func (p *UpdateGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2893,8 +2893,8 @@ type DeleteGSLBParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteGSLBParam return new DeleteGSLBParam
@@ -2903,9 +2903,9 @@ func NewDeleteGSLBParam() *DeleteGSLBParam {
 }
 
 // Initialize init DeleteGSLBParam
-func (p *DeleteGSLBParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteGSLBParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2993,7 +2993,7 @@ func (p *DeleteGSLBParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

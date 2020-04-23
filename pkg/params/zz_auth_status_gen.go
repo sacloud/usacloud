@@ -20,8 +20,8 @@ import (
 	"io"
 
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -42,8 +42,8 @@ type ShowAuthStatusParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewShowAuthStatusParam return new ShowAuthStatusParam
@@ -52,9 +52,9 @@ func NewShowAuthStatusParam() *ShowAuthStatusParam {
 }
 
 // Initialize init ShowAuthStatusParam
-func (p *ShowAuthStatusParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ShowAuthStatusParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -125,7 +125,7 @@ func (p *ShowAuthStatusParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

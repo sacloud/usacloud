@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -44,8 +44,8 @@ type ListWebAccelParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListWebAccelParam return new ListWebAccelParam
@@ -54,9 +54,9 @@ func NewListWebAccelParam() *ListWebAccelParam {
 }
 
 // Initialize init ListWebAccelParam
-func (p *ListWebAccelParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListWebAccelParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -127,7 +127,7 @@ func (p *ListWebAccelParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -293,8 +293,8 @@ type ReadWebAccelParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadWebAccelParam return new ReadWebAccelParam
@@ -303,9 +303,9 @@ func NewReadWebAccelParam() *ReadWebAccelParam {
 }
 
 // Initialize init ReadWebAccelParam
-func (p *ReadWebAccelParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadWebAccelParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -390,7 +390,7 @@ func (p *ReadWebAccelParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -570,8 +570,8 @@ type CertificateInfoWebAccelParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCertificateInfoWebAccelParam return new CertificateInfoWebAccelParam
@@ -580,9 +580,9 @@ func NewCertificateInfoWebAccelParam() *CertificateInfoWebAccelParam {
 }
 
 // Initialize init CertificateInfoWebAccelParam
-func (p *CertificateInfoWebAccelParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CertificateInfoWebAccelParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -667,7 +667,7 @@ func (p *CertificateInfoWebAccelParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -852,8 +852,8 @@ type CertificateNewWebAccelParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCertificateNewWebAccelParam return new CertificateNewWebAccelParam
@@ -862,9 +862,9 @@ func NewCertificateNewWebAccelParam() *CertificateNewWebAccelParam {
 }
 
 // Initialize init CertificateNewWebAccelParam
-func (p *CertificateNewWebAccelParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CertificateNewWebAccelParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1000,7 +1000,7 @@ func (p *CertificateNewWebAccelParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1220,8 +1220,8 @@ type CertificateUpdateWebAccelParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCertificateUpdateWebAccelParam return new CertificateUpdateWebAccelParam
@@ -1230,9 +1230,9 @@ func NewCertificateUpdateWebAccelParam() *CertificateUpdateWebAccelParam {
 }
 
 // Initialize init CertificateUpdateWebAccelParam
-func (p *CertificateUpdateWebAccelParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CertificateUpdateWebAccelParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1368,7 +1368,7 @@ func (p *CertificateUpdateWebAccelParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1582,8 +1582,8 @@ type DeleteCacheWebAccelParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteCacheWebAccelParam return new DeleteCacheWebAccelParam
@@ -1592,9 +1592,9 @@ func NewDeleteCacheWebAccelParam() *DeleteCacheWebAccelParam {
 }
 
 // Initialize init DeleteCacheWebAccelParam
-func (p *DeleteCacheWebAccelParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteCacheWebAccelParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1668,7 +1668,7 @@ func (p *DeleteCacheWebAccelParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

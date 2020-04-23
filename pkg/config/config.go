@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package flags
+package config
 
 import (
 	"fmt"
@@ -30,8 +30,8 @@ import (
 	"github.com/spf13/pflag"
 )
 
-// Flags CLI全コマンドが利用するフラグ
-type Flags struct {
+// Config CLI全コマンドが利用するフラグ
+type Config struct {
 	profile.ConfigValue
 	// Profile プロファイル名
 	Profile string
@@ -41,22 +41,22 @@ type Flags struct {
 	NoColor bool
 }
 
-// InitGlobalFlags 指定のFlagSetにフラグを登録する
-func InitGlobalFlags(flags *pflag.FlagSet) {
-	initCredentialFlags(flags)
-	initOutputFlags(flags)
-	initDebugFlags(flags)
+// InitConfig 指定のFlagSetにConfigへ値を設定するためのフラグを登録する
+func InitConfig(flags *pflag.FlagSet) {
+	initCredentialConfig(flags)
+	initOutputConfig(flags)
+	initDebugConfig(flags)
 }
 
-// LoadFlags 指定のフラグセットからフラグを読み取り*Flagsを組み立てて返す
-func LoadFlags(flags *pflag.FlagSet, errW io.Writer) (*Flags, error) {
-	o := &Flags{}
-	o.loadGlobalFlags(flags, errW)
+// LoadConfigValue 指定のフラグセットからフラグを読み取り*Flagsを組み立てて返す
+func LoadConfigValue(flags *pflag.FlagSet, errW io.Writer) (*Config, error) {
+	o := &Config{}
+	o.loadConfig(flags, errW)
 
 	return o, util.FlattenErrors(o.Validate(true))
 }
 
-func initCredentialFlags(fs *pflag.FlagSet) {
+func initCredentialConfig(fs *pflag.FlagSet) {
 	fs.StringP("profile", "", "default", "the name of saved credentials")
 	fs.StringP("token", "", "", "the API token used when calling SAKURA Cloud API")
 	fs.StringP("secret", "", "", "the API secret used when calling SAKURA Cloud API")
@@ -64,30 +64,30 @@ func initCredentialFlags(fs *pflag.FlagSet) {
 	fs.StringSliceP("zones", "", []string{}, "permitted zone names")
 }
 
-func initOutputFlags(fs *pflag.FlagSet) {
+func initOutputConfig(fs *pflag.FlagSet) {
 	fs.BoolP("no-color", "", false, "disable ANSI color output")
 }
 
-func initDebugFlags(fs *pflag.FlagSet) {
+func initDebugConfig(fs *pflag.FlagSet) {
 	fs.BoolP("trace", "", false, "enable trace logs for API calling")
 	fs.BoolP("fake", "", false, "enable fake API driver")
 	fs.StringP("fake-store", "", "", "path to file store used by the fake API driver")
 }
 
-func (o *Flags) loadGlobalFlags(flags *pflag.FlagSet, errW io.Writer) {
+func (o *Config) loadConfig(flags *pflag.FlagSet, errW io.Writer) {
 	o.loadFromEnv()
 	o.loadFromProfile(errW)
 	o.loadFromFlags(flags, errW)
 	o.fillDefaults()
 }
 
-func (o *Flags) fillDefaults() {
+func (o *Config) fillDefaults() {
 	if len(o.Zones) == 0 {
 		o.Zones = sacloud.SakuraCloudZones
 	}
 }
 
-func (o *Flags) loadFromEnv() {
+func (o *Config) loadFromEnv() {
 	o.Profile = stringFromEnv("SAKURACLOUD_PROFILE", "default")
 	o.AccessToken = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN", "")
 	o.AccessTokenSecret = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN_SECRET", "")
@@ -105,7 +105,7 @@ func (o *Flags) loadFromEnv() {
 	o.FakeStorePath = stringFromEnv("SAKURACLOUD_FAKE_STORE_PATH", "")
 }
 
-func (o *Flags) loadFromProfile(errW io.Writer) {
+func (o *Config) loadFromProfile(errW io.Writer) {
 	if o.Profile != "" {
 		if err := profile.Load(o.Profile, o); err != nil {
 			fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", o.Profile, err) // nolint
@@ -114,7 +114,7 @@ func (o *Flags) loadFromProfile(errW io.Writer) {
 	}
 }
 
-func (o *Flags) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
+func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("token") {
 		v, err := flags.GetString("token")
 		if err != nil {
@@ -215,7 +215,7 @@ func intFromEnv(key string, defaultValue int) int {
 	return int(i)
 }
 
-func (o *Flags) Validate(skipCred bool) []error {
+func (o *Config) Validate(skipCred bool) []error {
 	var errs []error
 
 	if !skipCred {

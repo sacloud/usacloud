@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -50,8 +50,8 @@ type ListSIMParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListSIMParam return new ListSIMParam
@@ -60,9 +60,9 @@ func NewListSIMParam() *ListSIMParam {
 }
 
 // Initialize init ListSIMParam
-func (p *ListSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -186,7 +186,7 @@ func (p *ListSIMParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -402,8 +402,8 @@ type CreateSIMParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreateSIMParam return new CreateSIMParam
@@ -412,9 +412,9 @@ func NewCreateSIMParam() *CreateSIMParam {
 }
 
 // Initialize init CreateSIMParam
-func (p *CreateSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreateSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -591,7 +591,7 @@ func (p *CreateSIMParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -827,8 +827,8 @@ type ReadSIMParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadSIMParam return new ReadSIMParam
@@ -837,9 +837,9 @@ func NewReadSIMParam() *ReadSIMParam {
 }
 
 // Initialize init ReadSIMParam
-func (p *ReadSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -924,7 +924,7 @@ func (p *ReadSIMParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1109,8 +1109,8 @@ type UpdateSIMParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateSIMParam return new UpdateSIMParam
@@ -1119,9 +1119,9 @@ func NewUpdateSIMParam() *UpdateSIMParam {
 }
 
 // Initialize init UpdateSIMParam
-func (p *UpdateSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1253,7 +1253,7 @@ func (p *UpdateSIMParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1463,8 +1463,8 @@ type DeleteSIMParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteSIMParam return new DeleteSIMParam
@@ -1473,9 +1473,9 @@ func NewDeleteSIMParam() *DeleteSIMParam {
 }
 
 // Initialize init DeleteSIMParam
-func (p *DeleteSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1676,8 +1676,8 @@ type CarrierInfoSIMParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCarrierInfoSIMParam return new CarrierInfoSIMParam
@@ -1686,9 +1686,9 @@ func NewCarrierInfoSIMParam() *CarrierInfoSIMParam {
 }
 
 // Initialize init CarrierInfoSIMParam
-func (p *CarrierInfoSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CarrierInfoSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1773,7 +1773,7 @@ func (p *CarrierInfoSIMParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1948,8 +1948,8 @@ type CarrierUpdateSIMParam struct {
 	Id                sacloud.ID
 	Carrier           []string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCarrierUpdateSIMParam return new CarrierUpdateSIMParam
@@ -1958,9 +1958,9 @@ func NewCarrierUpdateSIMParam() *CarrierUpdateSIMParam {
 }
 
 // Initialize init CarrierUpdateSIMParam
-func (p *CarrierUpdateSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CarrierUpdateSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2176,8 +2176,8 @@ type ActivateSIMParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewActivateSIMParam return new ActivateSIMParam
@@ -2186,9 +2186,9 @@ func NewActivateSIMParam() *ActivateSIMParam {
 }
 
 // Initialize init ActivateSIMParam
-func (p *ActivateSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ActivateSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2373,8 +2373,8 @@ type DeactivateSIMParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeactivateSIMParam return new DeactivateSIMParam
@@ -2383,9 +2383,9 @@ func NewDeactivateSIMParam() *DeactivateSIMParam {
 }
 
 // Initialize init DeactivateSIMParam
-func (p *DeactivateSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeactivateSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2571,8 +2571,8 @@ type ImeiLockSIMParam struct {
 	Id                sacloud.ID
 	Imei              string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewImeiLockSIMParam return new ImeiLockSIMParam
@@ -2581,9 +2581,9 @@ func NewImeiLockSIMParam() *ImeiLockSIMParam {
 }
 
 // Initialize init ImeiLockSIMParam
-func (p *ImeiLockSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ImeiLockSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2787,8 +2787,8 @@ type IpAddSIMParam struct {
 	Id                sacloud.ID
 	Ip                string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewIpAddSIMParam return new IpAddSIMParam
@@ -2797,9 +2797,9 @@ func NewIpAddSIMParam() *IpAddSIMParam {
 }
 
 // Initialize init IpAddSIMParam
-func (p *IpAddSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *IpAddSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3009,8 +3009,8 @@ type ImeiUnlockSIMParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewImeiUnlockSIMParam return new ImeiUnlockSIMParam
@@ -3019,9 +3019,9 @@ func NewImeiUnlockSIMParam() *ImeiUnlockSIMParam {
 }
 
 // Initialize init ImeiUnlockSIMParam
-func (p *ImeiUnlockSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ImeiUnlockSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3206,8 +3206,8 @@ type IpDeleteSIMParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewIpDeleteSIMParam return new IpDeleteSIMParam
@@ -3216,9 +3216,9 @@ func NewIpDeleteSIMParam() *IpDeleteSIMParam {
 }
 
 // Initialize init IpDeleteSIMParam
-func (p *IpDeleteSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *IpDeleteSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3411,8 +3411,8 @@ type LogsSIMParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewLogsSIMParam return new LogsSIMParam
@@ -3422,9 +3422,9 @@ func NewLogsSIMParam() *LogsSIMParam {
 }
 
 // Initialize init LogsSIMParam
-func (p *LogsSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *LogsSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3523,7 +3523,7 @@ func (p *LogsSIMParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3720,8 +3720,8 @@ type MonitorSIMParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewMonitorSIMParam return new MonitorSIMParam
@@ -3731,9 +3731,9 @@ func NewMonitorSIMParam() *MonitorSIMParam {
 }
 
 // Initialize init MonitorSIMParam
-func (p *MonitorSIMParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *MonitorSIMParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3851,7 +3851,7 @@ func (p *MonitorSIMParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

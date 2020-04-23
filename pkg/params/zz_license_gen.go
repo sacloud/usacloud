@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -49,8 +49,8 @@ type ListLicenseParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListLicenseParam return new ListLicenseParam
@@ -59,9 +59,9 @@ func NewListLicenseParam() *ListLicenseParam {
 }
 
 // Initialize init ListLicenseParam
-func (p *ListLicenseParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListLicenseParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -174,7 +174,7 @@ func (p *ListLicenseParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -376,8 +376,8 @@ type CreateLicenseParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreateLicenseParam return new CreateLicenseParam
@@ -386,9 +386,9 @@ func NewCreateLicenseParam() *CreateLicenseParam {
 }
 
 // Initialize init CreateLicenseParam
-func (p *CreateLicenseParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreateLicenseParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -483,7 +483,7 @@ func (p *CreateLicenseParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -669,8 +669,8 @@ type ReadLicenseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadLicenseParam return new ReadLicenseParam
@@ -679,9 +679,9 @@ func NewReadLicenseParam() *ReadLicenseParam {
 }
 
 // Initialize init ReadLicenseParam
-func (p *ReadLicenseParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadLicenseParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -763,7 +763,7 @@ func (p *ReadLicenseParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -937,8 +937,8 @@ type UpdateLicenseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateLicenseParam return new UpdateLicenseParam
@@ -947,9 +947,9 @@ func NewUpdateLicenseParam() *UpdateLicenseParam {
 }
 
 // Initialize init UpdateLicenseParam
-func (p *UpdateLicenseParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateLicenseParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1045,7 +1045,7 @@ func (p *UpdateLicenseParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1232,8 +1232,8 @@ type DeleteLicenseParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteLicenseParam return new DeleteLicenseParam
@@ -1242,9 +1242,9 @@ func NewDeleteLicenseParam() *DeleteLicenseParam {
 }
 
 // Initialize init DeleteLicenseParam
-func (p *DeleteLicenseParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteLicenseParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1329,7 +1329,7 @@ func (p *DeleteLicenseParam) validate() error {
 		}
 	}
 	{
-		errs := cli.ValidateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
