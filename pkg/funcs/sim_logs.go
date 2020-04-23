@@ -21,7 +21,7 @@ import (
 
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/queue"
+	"github.com/sacloud/usacloud/pkg/util/queue"
 )
 
 func SIMLogs(ctx cli.Context, params *params.LogsSIMParam) error {
