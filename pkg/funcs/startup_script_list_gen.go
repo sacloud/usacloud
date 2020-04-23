@@ -21,7 +21,7 @@ import (
 
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func StartupScriptList(ctx cli.Context, params *params.ListStartupScriptParam) error {
@@ -31,29 +31,29 @@ func StartupScriptList(ctx cli.Context, params *params.ListStartupScriptParam) e
 
 	finder.SetEmpty()
 
-	if !utils.IsEmpty(params.Name) {
+	if !util.IsEmpty(params.Name) {
 		for _, v := range params.Name {
 			finder.SetFilterBy("Name", v)
 		}
 	}
-	if !utils.IsEmpty(params.Id) {
+	if !util.IsEmpty(params.Id) {
 		for _, v := range params.Id {
 			finder.SetFilterMultiBy("ID", v)
 		}
 	}
-	if !utils.IsEmpty(params.Scope) {
+	if !util.IsEmpty(params.Scope) {
 		finder.SetFilterBy("Scope", params.Scope)
 	}
-	if !utils.IsEmpty(params.Class) {
+	if !util.IsEmpty(params.Class) {
 		finder.SetFilterBy("Class", params.Class)
 	}
-	if !utils.IsEmpty(params.From) {
+	if !util.IsEmpty(params.From) {
 		finder.SetOffset(params.From)
 	}
-	if !utils.IsEmpty(params.Max) {
+	if !util.IsEmpty(params.Max) {
 		finder.SetLimit(params.Max)
 	}
-	if !utils.IsEmpty(params.Sort) {
+	if !util.IsEmpty(params.Sort) {
 		for _, v := range params.Sort {
 			setSortBy(finder, v)
 		}

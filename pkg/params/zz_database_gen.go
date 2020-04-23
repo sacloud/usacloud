@@ -24,7 +24,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/sacloud/usacloud/pkg/validation"
 )
 
@@ -75,58 +75,58 @@ func (p *ListDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ListDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.From) {
+	if util.IsEmpty(p.From) {
 		p.From = 0
 	}
-	if utils.IsEmpty(p.Max) {
+	if util.IsEmpty(p.Max) {
 		p.Max = 0
 	}
-	if utils.IsEmpty(p.Sort) {
+	if util.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -190,7 +190,7 @@ func (p *ListDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ListDatabaseParam) ResourceDef() *schema.Resource {
@@ -438,100 +438,100 @@ func (p *CreateDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CreateDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.SwitchId) {
+	if util.IsEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Plan) {
+	if util.IsEmpty(p.Plan) {
 		p.Plan = 0
 	}
-	if utils.IsEmpty(p.Database) {
+	if util.IsEmpty(p.Database) {
 		p.Database = ""
 	}
-	if utils.IsEmpty(p.Username) {
+	if util.IsEmpty(p.Username) {
 		p.Username = ""
 	}
-	if utils.IsEmpty(p.Password) {
+	if util.IsEmpty(p.Password) {
 		p.Password = ""
 	}
-	if utils.IsEmpty(p.ReplicaUserPassword) {
+	if util.IsEmpty(p.ReplicaUserPassword) {
 		p.ReplicaUserPassword = ""
 	}
-	if utils.IsEmpty(p.SourceNetworks) {
+	if util.IsEmpty(p.SourceNetworks) {
 		p.SourceNetworks = []string{""}
 	}
-	if utils.IsEmpty(p.EnableWebUi) {
+	if util.IsEmpty(p.EnableWebUi) {
 		p.EnableWebUi = false
 	}
-	if utils.IsEmpty(p.EnableBackup) {
+	if util.IsEmpty(p.EnableBackup) {
 		p.EnableBackup = false
 	}
-	if utils.IsEmpty(p.BackupWeekdays) {
+	if util.IsEmpty(p.BackupWeekdays) {
 		p.BackupWeekdays = []string{""}
 	}
-	if utils.IsEmpty(p.BackupTime) {
+	if util.IsEmpty(p.BackupTime) {
 		p.BackupTime = ""
 	}
-	if utils.IsEmpty(p.Port) {
+	if util.IsEmpty(p.Port) {
 		p.Port = 0
 	}
-	if utils.IsEmpty(p.Ipaddress1) {
+	if util.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
 	}
-	if utils.IsEmpty(p.NwMaskLen) {
+	if util.IsEmpty(p.NwMaskLen) {
 		p.NwMaskLen = 0
 	}
-	if utils.IsEmpty(p.DefaultRoute) {
+	if util.IsEmpty(p.DefaultRoute) {
 		p.DefaultRoute = ""
 	}
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
+	if util.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -759,7 +759,7 @@ func (p *CreateDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *CreateDatabaseParam) ResourceDef() *schema.Resource {
@@ -1086,46 +1086,46 @@ func (p *ReadDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReadDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1162,7 +1162,7 @@ func (p *ReadDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ReadDatabaseParam) ResourceDef() *schema.Resource {
@@ -1378,88 +1378,88 @@ func (p *UpdateDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *UpdateDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Password) {
+	if util.IsEmpty(p.Password) {
 		p.Password = ""
 	}
-	if utils.IsEmpty(p.ReplicaUserPassword) {
+	if util.IsEmpty(p.ReplicaUserPassword) {
 		p.ReplicaUserPassword = ""
 	}
-	if utils.IsEmpty(p.EnableReplication) {
+	if util.IsEmpty(p.EnableReplication) {
 		p.EnableReplication = false
 	}
-	if utils.IsEmpty(p.Port) {
+	if util.IsEmpty(p.Port) {
 		p.Port = 0
 	}
-	if utils.IsEmpty(p.SourceNetworks) {
+	if util.IsEmpty(p.SourceNetworks) {
 		p.SourceNetworks = []string{""}
 	}
-	if utils.IsEmpty(p.EnableWebUi) {
+	if util.IsEmpty(p.EnableWebUi) {
 		p.EnableWebUi = false
 	}
-	if utils.IsEmpty(p.EnableBackup) {
+	if util.IsEmpty(p.EnableBackup) {
 		p.EnableBackup = false
 	}
-	if utils.IsEmpty(p.BackupWeekdays) {
+	if util.IsEmpty(p.BackupWeekdays) {
 		p.BackupWeekdays = []string{""}
 	}
-	if utils.IsEmpty(p.BackupTime) {
+	if util.IsEmpty(p.BackupTime) {
 		p.BackupTime = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
+	if util.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1576,7 +1576,7 @@ func (p *UpdateDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *UpdateDatabaseParam) ResourceDef() *schema.Resource {
@@ -1877,52 +1877,52 @@ func (p *DeleteDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DeleteDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Force) {
+	if util.IsEmpty(p.Force) {
 		p.Force = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1959,7 +1959,7 @@ func (p *DeleteDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DeleteDatabaseParam) ResourceDef() *schema.Resource {
@@ -2168,28 +2168,28 @@ func (p *BootDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *BootDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2212,7 +2212,7 @@ func (p *BootDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *BootDatabaseParam) ResourceDef() *schema.Resource {
@@ -2365,28 +2365,28 @@ func (p *ShutdownDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ShutdownDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2409,7 +2409,7 @@ func (p *ShutdownDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ShutdownDatabaseParam) ResourceDef() *schema.Resource {
@@ -2562,28 +2562,28 @@ func (p *ShutdownForceDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ShutdownForceDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2606,7 +2606,7 @@ func (p *ShutdownForceDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ShutdownForceDatabaseParam) ResourceDef() *schema.Resource {
@@ -2759,28 +2759,28 @@ func (p *ResetDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ResetDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2803,7 +2803,7 @@ func (p *ResetDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ResetDatabaseParam) ResourceDef() *schema.Resource {
@@ -2955,25 +2955,25 @@ func (p *WaitForBootDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *WaitForBootDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2996,7 +2996,7 @@ func (p *WaitForBootDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *WaitForBootDatabaseParam) ResourceDef() *schema.Resource {
@@ -3141,25 +3141,25 @@ func (p *WaitForDownDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *WaitForDownDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3182,7 +3182,7 @@ func (p *WaitForDownDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *WaitForDownDatabaseParam) ResourceDef() *schema.Resource {
@@ -3334,46 +3334,46 @@ func (p *BackupInfoDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *BackupInfoDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3410,7 +3410,7 @@ func (p *BackupInfoDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *BackupInfoDatabaseParam) ResourceDef() *schema.Resource {
@@ -3611,46 +3611,46 @@ func (p *BackupCreateDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *BackupCreateDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3687,7 +3687,7 @@ func (p *BackupCreateDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *BackupCreateDatabaseParam) ResourceDef() *schema.Resource {
@@ -3889,49 +3889,49 @@ func (p *BackupRestoreDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *BackupRestoreDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3983,7 +3983,7 @@ func (p *BackupRestoreDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *BackupRestoreDatabaseParam) ResourceDef() *schema.Resource {
@@ -4192,49 +4192,49 @@ func (p *BackupLockDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *BackupLockDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -4286,7 +4286,7 @@ func (p *BackupLockDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *BackupLockDatabaseParam) ResourceDef() *schema.Resource {
@@ -4495,49 +4495,49 @@ func (p *BackupUnlockDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *BackupUnlockDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -4589,7 +4589,7 @@ func (p *BackupUnlockDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *BackupUnlockDatabaseParam) ResourceDef() *schema.Resource {
@@ -4798,49 +4798,49 @@ func (p *BackupRemoveDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *BackupRemoveDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -4892,7 +4892,7 @@ func (p *BackupRemoveDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *BackupRemoveDatabaseParam) ResourceDef() *schema.Resource {
@@ -5117,94 +5117,94 @@ func (p *CloneDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CloneDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Port) {
+	if util.IsEmpty(p.Port) {
 		p.Port = 0
 	}
-	if utils.IsEmpty(p.SwitchId) {
+	if util.IsEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Ipaddress1) {
+	if util.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
 	}
-	if utils.IsEmpty(p.Plan) {
+	if util.IsEmpty(p.Plan) {
 		p.Plan = 0
 	}
-	if utils.IsEmpty(p.NwMaskLen) {
+	if util.IsEmpty(p.NwMaskLen) {
 		p.NwMaskLen = 0
 	}
-	if utils.IsEmpty(p.DefaultRoute) {
+	if util.IsEmpty(p.DefaultRoute) {
 		p.DefaultRoute = ""
 	}
-	if utils.IsEmpty(p.ReplicaUserPassword) {
+	if util.IsEmpty(p.ReplicaUserPassword) {
 		p.ReplicaUserPassword = ""
 	}
-	if utils.IsEmpty(p.SourceNetworks) {
+	if util.IsEmpty(p.SourceNetworks) {
 		p.SourceNetworks = []string{""}
 	}
-	if utils.IsEmpty(p.EnableWebUi) {
+	if util.IsEmpty(p.EnableWebUi) {
 		p.EnableWebUi = false
 	}
-	if utils.IsEmpty(p.EnableBackup) {
+	if util.IsEmpty(p.EnableBackup) {
 		p.EnableBackup = false
 	}
-	if utils.IsEmpty(p.BackupWeekdays) {
+	if util.IsEmpty(p.BackupWeekdays) {
 		p.BackupWeekdays = []string{""}
 	}
-	if utils.IsEmpty(p.BackupTime) {
+	if util.IsEmpty(p.BackupTime) {
 		p.BackupTime = ""
 	}
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
+	if util.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -5374,7 +5374,7 @@ func (p *CloneDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *CloneDatabaseParam) ResourceDef() *schema.Resource {
@@ -5695,70 +5695,70 @@ func (p *ReplicaCreateDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReplicaCreateDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.SwitchId) {
+	if util.IsEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Ipaddress1) {
+	if util.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
 	}
-	if utils.IsEmpty(p.NwMaskLen) {
+	if util.IsEmpty(p.NwMaskLen) {
 		p.NwMaskLen = 0
 	}
-	if utils.IsEmpty(p.DefaultRoute) {
+	if util.IsEmpty(p.DefaultRoute) {
 		p.DefaultRoute = ""
 	}
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
+	if util.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -5873,7 +5873,7 @@ func (p *ReplicaCreateDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ReplicaCreateDatabaseParam) ResourceDef() *schema.Resource {
@@ -6134,55 +6134,55 @@ func (p *MonitorCPUDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *MonitorCPUDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Start) {
+	if util.IsEmpty(p.Start) {
 		p.Start = ""
 	}
-	if utils.IsEmpty(p.End) {
+	if util.IsEmpty(p.End) {
 		p.End = ""
 	}
-	if utils.IsEmpty(p.KeyFormat) {
+	if util.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -6243,7 +6243,7 @@ func (p *MonitorCPUDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *MonitorCPUDatabaseParam) ResourceDef() *schema.Resource {
@@ -6469,55 +6469,55 @@ func (p *MonitorMemoryDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *MonitorMemoryDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Start) {
+	if util.IsEmpty(p.Start) {
 		p.Start = ""
 	}
-	if utils.IsEmpty(p.End) {
+	if util.IsEmpty(p.End) {
 		p.End = ""
 	}
-	if utils.IsEmpty(p.KeyFormat) {
+	if util.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -6578,7 +6578,7 @@ func (p *MonitorMemoryDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *MonitorMemoryDatabaseParam) ResourceDef() *schema.Resource {
@@ -6804,55 +6804,55 @@ func (p *MonitorNicDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *MonitorNicDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Start) {
+	if util.IsEmpty(p.Start) {
 		p.Start = ""
 	}
-	if utils.IsEmpty(p.End) {
+	if util.IsEmpty(p.End) {
 		p.End = ""
 	}
-	if utils.IsEmpty(p.KeyFormat) {
+	if util.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -6913,7 +6913,7 @@ func (p *MonitorNicDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *MonitorNicDatabaseParam) ResourceDef() *schema.Resource {
@@ -7139,55 +7139,55 @@ func (p *MonitorSystemDiskDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *MonitorSystemDiskDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Start) {
+	if util.IsEmpty(p.Start) {
 		p.Start = ""
 	}
-	if utils.IsEmpty(p.End) {
+	if util.IsEmpty(p.End) {
 		p.End = ""
 	}
-	if utils.IsEmpty(p.KeyFormat) {
+	if util.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -7248,7 +7248,7 @@ func (p *MonitorSystemDiskDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *MonitorSystemDiskDatabaseParam) ResourceDef() *schema.Resource {
@@ -7474,55 +7474,55 @@ func (p *MonitorBackupDiskDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *MonitorBackupDiskDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Start) {
+	if util.IsEmpty(p.Start) {
 		p.Start = ""
 	}
-	if utils.IsEmpty(p.End) {
+	if util.IsEmpty(p.End) {
 		p.End = ""
 	}
-	if utils.IsEmpty(p.KeyFormat) {
+	if util.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -7583,7 +7583,7 @@ func (p *MonitorBackupDiskDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *MonitorBackupDiskDatabaseParam) ResourceDef() *schema.Resource {
@@ -7809,55 +7809,55 @@ func (p *MonitorSystemDiskSizeDatabaseParam) WriteSkeleton(writer io.Writer) err
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *MonitorSystemDiskSizeDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Start) {
+	if util.IsEmpty(p.Start) {
 		p.Start = ""
 	}
-	if utils.IsEmpty(p.End) {
+	if util.IsEmpty(p.End) {
 		p.End = ""
 	}
-	if utils.IsEmpty(p.KeyFormat) {
+	if util.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -7918,7 +7918,7 @@ func (p *MonitorSystemDiskSizeDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *MonitorSystemDiskSizeDatabaseParam) ResourceDef() *schema.Resource {
@@ -8144,55 +8144,55 @@ func (p *MonitorBackupDiskSizeDatabaseParam) WriteSkeleton(writer io.Writer) err
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *MonitorBackupDiskSizeDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Start) {
+	if util.IsEmpty(p.Start) {
 		p.Start = ""
 	}
-	if utils.IsEmpty(p.End) {
+	if util.IsEmpty(p.End) {
 		p.End = ""
 	}
-	if utils.IsEmpty(p.KeyFormat) {
+	if util.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -8253,7 +8253,7 @@ func (p *MonitorBackupDiskSizeDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *MonitorBackupDiskSizeDatabaseParam) ResourceDef() *schema.Resource {
@@ -8473,37 +8473,37 @@ func (p *LogsDatabaseParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *LogsDatabaseParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.LogName) {
+	if util.IsEmpty(p.LogName) {
 		p.LogName = ""
 	}
-	if utils.IsEmpty(p.Follow) {
+	if util.IsEmpty(p.Follow) {
 		p.Follow = false
 	}
-	if utils.IsEmpty(p.RefreshInterval) {
+	if util.IsEmpty(p.RefreshInterval) {
 		p.RefreshInterval = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.ListLogNames) {
+	if util.IsEmpty(p.ListLogNames) {
 		p.ListLogNames = false
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -8534,7 +8534,7 @@ func (p *LogsDatabaseParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *LogsDatabaseParam) ResourceDef() *schema.Resource {

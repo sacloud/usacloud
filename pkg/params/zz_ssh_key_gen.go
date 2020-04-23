@@ -24,7 +24,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/sacloud/usacloud/pkg/validation"
 )
 
@@ -74,55 +74,55 @@ func (p *ListSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ListSSHKeyParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.From) {
+	if util.IsEmpty(p.From) {
 		p.From = 0
 	}
-	if utils.IsEmpty(p.Max) {
+	if util.IsEmpty(p.Max) {
 		p.Max = 0
 	}
-	if utils.IsEmpty(p.Sort) {
+	if util.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -178,7 +178,7 @@ func (p *ListSSHKeyParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ListSSHKeyParam) ResourceDef() *schema.Resource {
@@ -403,55 +403,55 @@ func (p *CreateSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CreateSSHKeyParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.PublicKey) {
+	if util.IsEmpty(p.PublicKey) {
 		p.PublicKey = ""
 	}
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.PublicKeyContent) {
+	if util.IsEmpty(p.PublicKeyContent) {
 		p.PublicKeyContent = ""
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -521,7 +521,7 @@ func (p *CreateSSHKeyParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *CreateSSHKeyParam) ResourceDef() *schema.Resource {
@@ -742,43 +742,43 @@ func (p *ReadSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReadSSHKeyParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -815,7 +815,7 @@ func (p *ReadSSHKeyParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ReadSSHKeyParam) ResourceDef() *schema.Resource {
@@ -1011,52 +1011,52 @@ func (p *UpdateSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *UpdateSSHKeyParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1109,7 +1109,7 @@ func (p *UpdateSSHKeyParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *UpdateSSHKeyParam) ResourceDef() *schema.Resource {
@@ -1324,46 +1324,46 @@ func (p *DeleteSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DeleteSSHKeyParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1400,7 +1400,7 @@ func (p *DeleteSSHKeyParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DeleteSSHKeyParam) ResourceDef() *schema.Resource {
@@ -1604,55 +1604,55 @@ func (p *GenerateSSHKeyParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *GenerateSSHKeyParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.PassPhrase) {
+	if util.IsEmpty(p.PassPhrase) {
 		p.PassPhrase = ""
 	}
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.PrivateKeyOutput) {
+	if util.IsEmpty(p.PrivateKeyOutput) {
 		p.PrivateKeyOutput = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -1712,7 +1712,7 @@ func (p *GenerateSSHKeyParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *GenerateSSHKeyParam) ResourceDef() *schema.Resource {

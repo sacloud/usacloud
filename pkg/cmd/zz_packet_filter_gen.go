@@ -24,7 +24,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/funcs"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -120,10 +120,10 @@ func packetFilterCreateCmd() *cobra.Command {
 
 			// confirm
 			if !packetFilterCreateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
@@ -256,10 +256,10 @@ func packetFilterUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !packetFilterUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -339,10 +339,10 @@ func packetFilterDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !packetFilterDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -489,10 +489,10 @@ func packetFilterRuleAddCmd() *cobra.Command {
 
 			// confirm
 			if !packetFilterRuleAddParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("rule-add", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("rule-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -577,10 +577,10 @@ func packetFilterRuleUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !packetFilterRuleUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("rule-update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("rule-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -665,10 +665,10 @@ func packetFilterRuleDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !packetFilterRuleDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete rule", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("delete rule", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -747,10 +747,10 @@ func packetFilterInterfaceConnectCmd() *cobra.Command {
 
 			// confirm
 			if !packetFilterInterfaceConnectParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -822,10 +822,10 @@ func packetFilterInterfaceDisconnectCmd() *cobra.Command {
 
 			// confirm
 			if !packetFilterInterfaceDisconnectParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}

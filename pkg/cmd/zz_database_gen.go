@@ -24,7 +24,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/funcs"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -121,10 +121,10 @@ func databaseCreateCmd() *cobra.Command {
 
 			// confirm
 			if !databaseCreateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
@@ -275,10 +275,10 @@ func databaseUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !databaseUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -370,10 +370,10 @@ func databaseDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !databaseDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -453,10 +453,10 @@ func databaseBootCmd() *cobra.Command {
 
 			// confirm
 			if !databaseBootParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -528,10 +528,10 @@ func databaseShutdownCmd() *cobra.Command {
 
 			// confirm
 			if !databaseShutdownParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -603,10 +603,10 @@ func databaseShutdownForceCmd() *cobra.Command {
 
 			// confirm
 			if !databaseShutdownForceParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -678,10 +678,10 @@ func databaseResetCmd() *cobra.Command {
 
 			// confirm
 			if !databaseResetParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -949,10 +949,10 @@ func databaseBackupCreateCmd() *cobra.Command {
 
 			// confirm
 			if !databaseBackupCreateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("backup-create", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("backup-create", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1030,10 +1030,10 @@ func databaseBackupRestoreCmd() *cobra.Command {
 
 			// confirm
 			if !databaseBackupRestoreParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("backup-restore", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("backup-restore", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1112,10 +1112,10 @@ func databaseBackupLockCmd() *cobra.Command {
 
 			// confirm
 			if !databaseBackupLockParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("backup-lock", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("backup-lock", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1194,10 +1194,10 @@ func databaseBackupUnlockCmd() *cobra.Command {
 
 			// confirm
 			if !databaseBackupUnlockParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("backup-unlock", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("backup-unlock", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1276,10 +1276,10 @@ func databaseBackupRemoveCmd() *cobra.Command {
 
 			// confirm
 			if !databaseBackupRemoveParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("backup-remove", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("backup-remove", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1358,10 +1358,10 @@ func databaseCloneCmd() *cobra.Command {
 
 			// confirm
 			if !databaseCloneParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("clone", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("clone", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1455,10 +1455,10 @@ func databaseReplicaCreateCmd() *cobra.Command {
 
 			// confirm
 			if !databaseReplicaCreateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("replica-create", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("replica-create", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}

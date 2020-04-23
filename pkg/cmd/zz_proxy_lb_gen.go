@@ -24,7 +24,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/funcs"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -121,10 +121,10 @@ func proxyLBCreateCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBCreateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
@@ -269,10 +269,10 @@ func proxyLBUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -363,10 +363,10 @@ func proxyLBDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -445,10 +445,10 @@ func proxyLBPlanChangeCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBPlanChangeParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("plan-change", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("plan-change", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -598,10 +598,10 @@ func proxyLBBindPortAddCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBBindPortAddParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("bind-port-add", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("bind-port-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -684,10 +684,10 @@ func proxyLBBindPortUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBBindPortUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("bind-port-update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("bind-port-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -771,10 +771,10 @@ func proxyLBBindPortDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBBindPortDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete bind-port", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("delete bind-port", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -925,10 +925,10 @@ func proxyLBResponseHeaderAddCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBResponseHeaderAddParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("response-header-add", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("response-header-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1010,10 +1010,10 @@ func proxyLBResponseHeaderUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBResponseHeaderUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("response-header-update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("response-header-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1096,10 +1096,10 @@ func proxyLBResponseHeaderDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBResponseHeaderDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete response-header", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("delete response-header", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1250,10 +1250,10 @@ func proxyLBACMESettingCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBACMESettingParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("acme-setting", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("acme-setting", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1335,10 +1335,10 @@ func proxyLBACMERenewCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBACMERenewParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("acme-renew", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("acme-renew", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1480,10 +1480,10 @@ func proxyLBServerAddCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBServerAddParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-add", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("server-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1565,10 +1565,10 @@ func proxyLBServerUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBServerUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("server-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1651,10 +1651,10 @@ func proxyLBServerDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBServerDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete server", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("delete server", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1804,10 +1804,10 @@ func proxyLBCertificateAddCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBCertificateAddParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("certificate-add", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("certificate-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1889,10 +1889,10 @@ func proxyLBCertificateUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBCertificateUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("certificate-update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("certificate-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1974,10 +1974,10 @@ func proxyLBCertificateDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !proxyLBCertificateDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete certificate", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("delete certificate", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}

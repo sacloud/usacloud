@@ -22,7 +22,7 @@ import (
 	"github.com/sacloud/go-jmespath"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func ValidateInStrValues(fieldName string, object interface{}, allowValues ...string) []error {
@@ -30,7 +30,7 @@ func ValidateInStrValues(fieldName string, object interface{}, allowValues ...st
 }
 
 func ValidateRequired(fieldName string, object interface{}) []error {
-	if utils.IsEmpty(object) {
+	if util.IsEmpty(object) {
 		return []error{fmt.Errorf("%q: is required", fieldName)}
 	}
 	return []error{}
@@ -41,7 +41,7 @@ func ValidateSakuraID(fieldName string, object interface{}) []error {
 }
 
 func ValidateSetProhibited(fieldName string, object interface{}) []error {
-	if !utils.IsEmpty(object) {
+	if !util.IsEmpty(object) {
 		return []error{fmt.Errorf("%q: can't set on current context", fieldName)}
 	}
 	return []error{}
@@ -61,9 +61,9 @@ func ValidateExistsFileOrStdIn(fieldName string, object interface{}) []error {
 
 func ValidateConflicts(fieldName string, object interface{}, values map[string]interface{}) []error {
 
-	if !utils.IsEmpty(object) {
+	if !util.IsEmpty(object) {
 		for _, v := range values {
-			if !utils.IsEmpty(v) {
+			if !util.IsEmpty(v) {
 				keys := []string{}
 				for k := range values {
 					keys = append(keys, fmt.Sprintf("%q", k))
@@ -78,9 +78,9 @@ func ValidateConflicts(fieldName string, object interface{}, values map[string]i
 
 func ValidateConflictValues(fieldName string, object interface{}, values map[string]interface{}) []error {
 
-	if !utils.IsEmpty(object) {
+	if !util.IsEmpty(object) {
 		for _, v := range values {
-			if !utils.IsEmpty(v) {
+			if !util.IsEmpty(v) {
 				keys := []string{}
 				for k := range values {
 					keys = append(keys, fmt.Sprintf("%q", k))

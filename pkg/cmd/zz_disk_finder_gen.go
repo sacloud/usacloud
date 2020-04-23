@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func findDiskReadTargets(ctx cli.Context, param *params.ReadDiskParam) ([]sacloud.ID, error) {
@@ -41,7 +41,7 @@ func findDiskReadTargets(ctx cli.Context, param *params.ReadDiskParam) ([]saclou
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -65,7 +65,7 @@ func findDiskReadTargets(ctx cli.Context, param *params.ReadDiskParam) ([]saclou
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.Disks {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -76,7 +76,7 @@ func findDiskReadTargets(ctx cli.Context, param *params.ReadDiskParam) ([]saclou
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -102,7 +102,7 @@ func findDiskUpdateTargets(ctx cli.Context, param *params.UpdateDiskParam) ([]sa
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -126,7 +126,7 @@ func findDiskUpdateTargets(ctx cli.Context, param *params.UpdateDiskParam) ([]sa
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.Disks {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -137,7 +137,7 @@ func findDiskUpdateTargets(ctx cli.Context, param *params.UpdateDiskParam) ([]sa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -160,7 +160,7 @@ func findDiskDeleteTargets(ctx cli.Context, param *params.DeleteDiskParam) ([]sa
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -184,7 +184,7 @@ func findDiskDeleteTargets(ctx cli.Context, param *params.DeleteDiskParam) ([]sa
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.Disks {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -195,7 +195,7 @@ func findDiskDeleteTargets(ctx cli.Context, param *params.DeleteDiskParam) ([]sa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -218,7 +218,7 @@ func findDiskEditTargets(ctx cli.Context, param *params.EditDiskParam) ([]saclou
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -242,7 +242,7 @@ func findDiskEditTargets(ctx cli.Context, param *params.EditDiskParam) ([]saclou
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.Disks {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -253,7 +253,7 @@ func findDiskEditTargets(ctx cli.Context, param *params.EditDiskParam) ([]saclou
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -276,7 +276,7 @@ func findDiskResizePartitionTargets(ctx cli.Context, param *params.ResizePartiti
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -300,7 +300,7 @@ func findDiskResizePartitionTargets(ctx cli.Context, param *params.ResizePartiti
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.Disks {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -311,7 +311,7 @@ func findDiskResizePartitionTargets(ctx cli.Context, param *params.ResizePartiti
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -334,7 +334,7 @@ func findDiskReinstallFromArchiveTargets(ctx cli.Context, param *params.Reinstal
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -358,7 +358,7 @@ func findDiskReinstallFromArchiveTargets(ctx cli.Context, param *params.Reinstal
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.Disks {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -369,7 +369,7 @@ func findDiskReinstallFromArchiveTargets(ctx cli.Context, param *params.Reinstal
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -392,7 +392,7 @@ func findDiskReinstallFromDiskTargets(ctx cli.Context, param *params.ReinstallFr
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -416,7 +416,7 @@ func findDiskReinstallFromDiskTargets(ctx cli.Context, param *params.ReinstallFr
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.Disks {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -427,7 +427,7 @@ func findDiskReinstallFromDiskTargets(ctx cli.Context, param *params.ReinstallFr
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -450,7 +450,7 @@ func findDiskReinstallToBlankTargets(ctx cli.Context, param *params.ReinstallToB
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -474,7 +474,7 @@ func findDiskReinstallToBlankTargets(ctx cli.Context, param *params.ReinstallToB
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.Disks {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -485,7 +485,7 @@ func findDiskReinstallToBlankTargets(ctx cli.Context, param *params.ReinstallToB
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -508,7 +508,7 @@ func findDiskServerConnectTargets(ctx cli.Context, param *params.ServerConnectDi
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -532,7 +532,7 @@ func findDiskServerConnectTargets(ctx cli.Context, param *params.ServerConnectDi
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.Disks {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -543,7 +543,7 @@ func findDiskServerConnectTargets(ctx cli.Context, param *params.ServerConnectDi
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -566,7 +566,7 @@ func findDiskServerDisconnectTargets(ctx cli.Context, param *params.ServerDiscon
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -590,7 +590,7 @@ func findDiskServerDisconnectTargets(ctx cli.Context, param *params.ServerDiscon
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.Disks {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -601,7 +601,7 @@ func findDiskServerDisconnectTargets(ctx cli.Context, param *params.ServerDiscon
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -624,7 +624,7 @@ func findDiskMonitorTargets(ctx cli.Context, param *params.MonitorDiskParam) ([]
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -648,7 +648,7 @@ func findDiskMonitorTargets(ctx cli.Context, param *params.MonitorDiskParam) ([]
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.Disks {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -659,7 +659,7 @@ func findDiskMonitorTargets(ctx cli.Context, param *params.MonitorDiskParam) ([]
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -685,7 +685,7 @@ func findDiskWaitForCopyTargets(ctx cli.Context, param *params.WaitForCopyDiskPa
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -709,7 +709,7 @@ func findDiskWaitForCopyTargets(ctx cli.Context, param *params.WaitForCopyDiskPa
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.Disks {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -720,7 +720,7 @@ func findDiskWaitForCopyTargets(ctx cli.Context, param *params.WaitForCopyDiskPa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}

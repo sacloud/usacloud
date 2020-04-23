@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func findNFSReadTargets(ctx cli.Context, param *params.ReadNFSParam) ([]sacloud.ID, error) {
@@ -41,7 +41,7 @@ func findNFSReadTargets(ctx cli.Context, param *params.ReadNFSParam) ([]sacloud.
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.NFS {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -65,7 +65,7 @@ func findNFSReadTargets(ctx cli.Context, param *params.ReadNFSParam) ([]sacloud.
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.NFS {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -76,7 +76,7 @@ func findNFSReadTargets(ctx cli.Context, param *params.ReadNFSParam) ([]sacloud.
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -102,7 +102,7 @@ func findNFSUpdateTargets(ctx cli.Context, param *params.UpdateNFSParam) ([]sacl
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.NFS {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -126,7 +126,7 @@ func findNFSUpdateTargets(ctx cli.Context, param *params.UpdateNFSParam) ([]sacl
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.NFS {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -137,7 +137,7 @@ func findNFSUpdateTargets(ctx cli.Context, param *params.UpdateNFSParam) ([]sacl
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -160,7 +160,7 @@ func findNFSDeleteTargets(ctx cli.Context, param *params.DeleteNFSParam) ([]sacl
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.NFS {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -184,7 +184,7 @@ func findNFSDeleteTargets(ctx cli.Context, param *params.DeleteNFSParam) ([]sacl
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.NFS {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -195,7 +195,7 @@ func findNFSDeleteTargets(ctx cli.Context, param *params.DeleteNFSParam) ([]sacl
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -218,7 +218,7 @@ func findNFSBootTargets(ctx cli.Context, param *params.BootNFSParam) ([]sacloud.
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.NFS {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -242,7 +242,7 @@ func findNFSBootTargets(ctx cli.Context, param *params.BootNFSParam) ([]sacloud.
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.NFS {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -253,7 +253,7 @@ func findNFSBootTargets(ctx cli.Context, param *params.BootNFSParam) ([]sacloud.
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -276,7 +276,7 @@ func findNFSShutdownTargets(ctx cli.Context, param *params.ShutdownNFSParam) ([]
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.NFS {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -300,7 +300,7 @@ func findNFSShutdownTargets(ctx cli.Context, param *params.ShutdownNFSParam) ([]
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.NFS {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -311,7 +311,7 @@ func findNFSShutdownTargets(ctx cli.Context, param *params.ShutdownNFSParam) ([]
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -334,7 +334,7 @@ func findNFSShutdownForceTargets(ctx cli.Context, param *params.ShutdownForceNFS
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.NFS {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -358,7 +358,7 @@ func findNFSShutdownForceTargets(ctx cli.Context, param *params.ShutdownForceNFS
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.NFS {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -369,7 +369,7 @@ func findNFSShutdownForceTargets(ctx cli.Context, param *params.ShutdownForceNFS
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -392,7 +392,7 @@ func findNFSResetTargets(ctx cli.Context, param *params.ResetNFSParam) ([]saclou
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.NFS {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -416,7 +416,7 @@ func findNFSResetTargets(ctx cli.Context, param *params.ResetNFSParam) ([]saclou
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.NFS {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -427,7 +427,7 @@ func findNFSResetTargets(ctx cli.Context, param *params.ResetNFSParam) ([]saclou
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -450,7 +450,7 @@ func findNFSWaitForBootTargets(ctx cli.Context, param *params.WaitForBootNFSPara
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.NFS {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -474,7 +474,7 @@ func findNFSWaitForBootTargets(ctx cli.Context, param *params.WaitForBootNFSPara
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.NFS {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -485,7 +485,7 @@ func findNFSWaitForBootTargets(ctx cli.Context, param *params.WaitForBootNFSPara
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -508,7 +508,7 @@ func findNFSWaitForDownTargets(ctx cli.Context, param *params.WaitForDownNFSPara
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.NFS {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -532,7 +532,7 @@ func findNFSWaitForDownTargets(ctx cli.Context, param *params.WaitForDownNFSPara
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.NFS {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -543,7 +543,7 @@ func findNFSWaitForDownTargets(ctx cli.Context, param *params.WaitForDownNFSPara
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -566,7 +566,7 @@ func findNFSMonitorNicTargets(ctx cli.Context, param *params.MonitorNicNFSParam)
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.NFS {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -590,7 +590,7 @@ func findNFSMonitorNicTargets(ctx cli.Context, param *params.MonitorNicNFSParam)
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.NFS {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -601,7 +601,7 @@ func findNFSMonitorNicTargets(ctx cli.Context, param *params.MonitorNicNFSParam)
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -627,7 +627,7 @@ func findNFSMonitorFreeDiskSizeTargets(ctx cli.Context, param *params.MonitorFre
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.NFS {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -651,7 +651,7 @@ func findNFSMonitorFreeDiskSizeTargets(ctx cli.Context, param *params.MonitorFre
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.NFS {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -662,7 +662,7 @@ func findNFSMonitorFreeDiskSizeTargets(ctx cli.Context, param *params.MonitorFre
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}

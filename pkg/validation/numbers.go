@@ -17,12 +17,12 @@ package validation
 import (
 	"fmt"
 
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func IntBetween(fieldName string, object interface{}, min int, max int) []error {
 	// if target is empty, return OK(Use required attr if necessary)
-	if utils.IsEmpty(object) {
+	if util.IsEmpty(object) {
 		return []error{}
 	}
 
@@ -40,7 +40,7 @@ func IntBetween(fieldName string, object interface{}, min int, max int) []error 
 
 func Int64Between(fieldName string, object interface{}, min int64, max int64) []error {
 	// if target is empty, return OK(Use required attr if necessary)
-	if utils.IsEmpty(object) {
+	if util.IsEmpty(object) {
 		return []error{}
 	}
 

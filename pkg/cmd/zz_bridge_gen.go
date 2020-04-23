@@ -24,7 +24,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/funcs"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -120,10 +120,10 @@ func bridgeCreateCmd() *cobra.Command {
 
 			// confirm
 			if !bridgeCreateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
@@ -256,10 +256,10 @@ func bridgeUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !bridgeUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -339,10 +339,10 @@ func bridgeDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !bridgeDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}

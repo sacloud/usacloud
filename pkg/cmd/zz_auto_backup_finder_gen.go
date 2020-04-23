@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func findAutoBackupReadTargets(ctx cli.Context, param *params.ReadAutoBackupParam) ([]sacloud.ID, error) {
@@ -41,7 +41,7 @@ func findAutoBackupReadTargets(ctx cli.Context, param *params.ReadAutoBackupPara
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceAutoBackupItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -65,7 +65,7 @@ func findAutoBackupReadTargets(ctx cli.Context, param *params.ReadAutoBackupPara
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceAutoBackupItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -76,7 +76,7 @@ func findAutoBackupReadTargets(ctx cli.Context, param *params.ReadAutoBackupPara
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -102,7 +102,7 @@ func findAutoBackupUpdateTargets(ctx cli.Context, param *params.UpdateAutoBackup
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceAutoBackupItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -126,7 +126,7 @@ func findAutoBackupUpdateTargets(ctx cli.Context, param *params.UpdateAutoBackup
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceAutoBackupItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -137,7 +137,7 @@ func findAutoBackupUpdateTargets(ctx cli.Context, param *params.UpdateAutoBackup
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -160,7 +160,7 @@ func findAutoBackupDeleteTargets(ctx cli.Context, param *params.DeleteAutoBackup
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceAutoBackupItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -184,7 +184,7 @@ func findAutoBackupDeleteTargets(ctx cli.Context, param *params.DeleteAutoBackup
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceAutoBackupItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -195,7 +195,7 @@ func findAutoBackupDeleteTargets(ctx cli.Context, param *params.DeleteAutoBackup
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}

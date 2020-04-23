@@ -24,7 +24,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/sacloud/usacloud/pkg/validation"
 )
 
@@ -75,58 +75,58 @@ func (p *ListDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ListDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.From) {
+	if util.IsEmpty(p.From) {
 		p.From = 0
 	}
-	if utils.IsEmpty(p.Max) {
+	if util.IsEmpty(p.Max) {
 		p.Max = 0
 	}
-	if utils.IsEmpty(p.Sort) {
+	if util.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -190,7 +190,7 @@ func (p *ListDNSParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ListDNSParam) ResourceDef() *schema.Resource {
@@ -421,52 +421,52 @@ func (p *RecordInfoDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *RecordInfoDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Type) {
+	if util.IsEmpty(p.Type) {
 		p.Type = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -519,7 +519,7 @@ func (p *RecordInfoDNSParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *RecordInfoDNSParam) ResourceDef() *schema.Resource {
@@ -738,55 +738,55 @@ func (p *RecordBulkUpdateDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *RecordBulkUpdateDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.File) {
+	if util.IsEmpty(p.File) {
 		p.File = ""
 	}
-	if utils.IsEmpty(p.Mode) {
+	if util.IsEmpty(p.Mode) {
 		p.Mode = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -853,7 +853,7 @@ func (p *RecordBulkUpdateDNSParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *RecordBulkUpdateDNSParam) ResourceDef() *schema.Resource {
@@ -1078,55 +1078,55 @@ func (p *CreateDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CreateDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
+	if util.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -1194,7 +1194,7 @@ func (p *CreateDNSParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *CreateDNSParam) ResourceDef() *schema.Resource {
@@ -1427,76 +1427,76 @@ func (p *RecordAddDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *RecordAddDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Type) {
+	if util.IsEmpty(p.Type) {
 		p.Type = ""
 	}
-	if utils.IsEmpty(p.Value) {
+	if util.IsEmpty(p.Value) {
 		p.Value = ""
 	}
-	if utils.IsEmpty(p.Ttl) {
+	if util.IsEmpty(p.Ttl) {
 		p.Ttl = 0
 	}
-	if utils.IsEmpty(p.MxPriority) {
+	if util.IsEmpty(p.MxPriority) {
 		p.MxPriority = 0
 	}
-	if utils.IsEmpty(p.SrvPriority) {
+	if util.IsEmpty(p.SrvPriority) {
 		p.SrvPriority = 0
 	}
-	if utils.IsEmpty(p.SrvWeight) {
+	if util.IsEmpty(p.SrvWeight) {
 		p.SrvWeight = 0
 	}
-	if utils.IsEmpty(p.SrvPort) {
+	if util.IsEmpty(p.SrvPort) {
 		p.SrvPort = 0
 	}
-	if utils.IsEmpty(p.SrvTarget) {
+	if util.IsEmpty(p.SrvTarget) {
 		p.SrvTarget = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1611,7 +1611,7 @@ func (p *RecordAddDNSParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *RecordAddDNSParam) ResourceDef() *schema.Resource {
@@ -1882,46 +1882,46 @@ func (p *ReadDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReadDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1958,7 +1958,7 @@ func (p *ReadDNSParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ReadDNSParam) ResourceDef() *schema.Resource {
@@ -2170,79 +2170,79 @@ func (p *RecordUpdateDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *RecordUpdateDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Type) {
+	if util.IsEmpty(p.Type) {
 		p.Type = ""
 	}
-	if utils.IsEmpty(p.Value) {
+	if util.IsEmpty(p.Value) {
 		p.Value = ""
 	}
-	if utils.IsEmpty(p.Ttl) {
+	if util.IsEmpty(p.Ttl) {
 		p.Ttl = 0
 	}
-	if utils.IsEmpty(p.MxPriority) {
+	if util.IsEmpty(p.MxPriority) {
 		p.MxPriority = 0
 	}
-	if utils.IsEmpty(p.SrvPriority) {
+	if util.IsEmpty(p.SrvPriority) {
 		p.SrvPriority = 0
 	}
-	if utils.IsEmpty(p.SrvWeight) {
+	if util.IsEmpty(p.SrvWeight) {
 		p.SrvWeight = 0
 	}
-	if utils.IsEmpty(p.SrvPort) {
+	if util.IsEmpty(p.SrvPort) {
 		p.SrvPort = 0
 	}
-	if utils.IsEmpty(p.SrvTarget) {
+	if util.IsEmpty(p.SrvTarget) {
 		p.SrvTarget = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2351,7 +2351,7 @@ func (p *RecordUpdateDNSParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *RecordUpdateDNSParam) ResourceDef() *schema.Resource {
@@ -2631,52 +2631,52 @@ func (p *RecordDeleteDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *RecordDeleteDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2721,7 +2721,7 @@ func (p *RecordDeleteDNSParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *RecordDeleteDNSParam) ResourceDef() *schema.Resource {
@@ -2940,58 +2940,58 @@ func (p *UpdateDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *UpdateDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
+	if util.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3052,7 +3052,7 @@ func (p *UpdateDNSParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *UpdateDNSParam) ResourceDef() *schema.Resource {
@@ -3282,49 +3282,49 @@ func (p *DeleteDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DeleteDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3361,7 +3361,7 @@ func (p *DeleteDNSParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DeleteDNSParam) ResourceDef() *schema.Resource {

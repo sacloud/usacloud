@@ -100,7 +100,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/output"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/sacloud/usacloud/pkg/validation"
 )
 
@@ -149,7 +149,7 @@ func (p *{{.InputParameterTypeName}}) WriteSkeleton(writer io.Writer) error {
 // FillValueToSkeleton fills empty value to the parameter
 func (p *{{.InputParameterTypeName}}) FillValueToSkeleton() {
 	{{ range .Params -}}
-	if utils.IsEmpty(p.{{.FieldName}}){
+	if util.IsEmpty(p.{{.FieldName}}){
 		p.{{.FieldName}} = {{.SetEmptyStatement}}
 	}
 	{{ end }}
@@ -181,7 +181,7 @@ func (p *{{.InputParameterTypeName}}) validate() error {
 		}
 	}
 	{{ end -}}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *{{.InputParameterTypeName}}) ResourceDef() *schema.Resource {

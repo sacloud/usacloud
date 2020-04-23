@@ -24,7 +24,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/funcs"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -125,10 +125,10 @@ func diskCreateCmd() *cobra.Command {
 
 			// confirm
 			if !diskCreateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
@@ -270,10 +270,10 @@ func diskUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !diskUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -357,10 +357,10 @@ func diskDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !diskDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -439,10 +439,10 @@ func diskEditCmd() *cobra.Command {
 
 			// confirm
 			if !diskEditParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("edit", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("edit", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -529,10 +529,10 @@ func diskResizePartitionCmd() *cobra.Command {
 
 			// confirm
 			if !diskResizePartitionParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("resize-partition", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("resize-partition", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -611,10 +611,10 @@ func diskReinstallFromArchiveCmd() *cobra.Command {
 
 			// confirm
 			if !diskReinstallFromArchiveParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("re-install from archive", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("re-install from archive", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -688,10 +688,10 @@ func diskReinstallFromDiskCmd() *cobra.Command {
 
 			// confirm
 			if !diskReinstallFromDiskParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("re-install from disk", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("re-install from disk", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -765,10 +765,10 @@ func diskReinstallToBlankCmd() *cobra.Command {
 
 			// confirm
 			if !diskReinstallToBlankParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("re-install to blank", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("re-install to blank", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -841,10 +841,10 @@ func diskServerConnectCmd() *cobra.Command {
 
 			// confirm
 			if !diskServerConnectParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("server-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -917,10 +917,10 @@ func diskServerDisconnectCmd() *cobra.Command {
 
 			// confirm
 			if !diskServerDisconnectParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("server-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("server-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}

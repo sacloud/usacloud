@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/funcs"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -118,10 +118,10 @@ func regionReadCmd() *cobra.Command {
 
 			// confirm
 			if !regionReadParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("read", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}

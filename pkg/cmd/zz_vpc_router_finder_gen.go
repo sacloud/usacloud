@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func findVPCRouterReadTargets(ctx cli.Context, param *params.ReadVPCRouterParam) ([]sacloud.ID, error) {
@@ -41,7 +41,7 @@ func findVPCRouterReadTargets(ctx cli.Context, param *params.ReadVPCRouterParam)
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -65,7 +65,7 @@ func findVPCRouterReadTargets(ctx cli.Context, param *params.ReadVPCRouterParam)
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -76,7 +76,7 @@ func findVPCRouterReadTargets(ctx cli.Context, param *params.ReadVPCRouterParam)
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -102,7 +102,7 @@ func findVPCRouterUpdateTargets(ctx cli.Context, param *params.UpdateVPCRouterPa
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -126,7 +126,7 @@ func findVPCRouterUpdateTargets(ctx cli.Context, param *params.UpdateVPCRouterPa
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -137,7 +137,7 @@ func findVPCRouterUpdateTargets(ctx cli.Context, param *params.UpdateVPCRouterPa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -160,7 +160,7 @@ func findVPCRouterDeleteTargets(ctx cli.Context, param *params.DeleteVPCRouterPa
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -184,7 +184,7 @@ func findVPCRouterDeleteTargets(ctx cli.Context, param *params.DeleteVPCRouterPa
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -195,7 +195,7 @@ func findVPCRouterDeleteTargets(ctx cli.Context, param *params.DeleteVPCRouterPa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -218,7 +218,7 @@ func findVPCRouterBootTargets(ctx cli.Context, param *params.BootVPCRouterParam)
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -242,7 +242,7 @@ func findVPCRouterBootTargets(ctx cli.Context, param *params.BootVPCRouterParam)
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -253,7 +253,7 @@ func findVPCRouterBootTargets(ctx cli.Context, param *params.BootVPCRouterParam)
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -276,7 +276,7 @@ func findVPCRouterShutdownTargets(ctx cli.Context, param *params.ShutdownVPCRout
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -300,7 +300,7 @@ func findVPCRouterShutdownTargets(ctx cli.Context, param *params.ShutdownVPCRout
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -311,7 +311,7 @@ func findVPCRouterShutdownTargets(ctx cli.Context, param *params.ShutdownVPCRout
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -334,7 +334,7 @@ func findVPCRouterShutdownForceTargets(ctx cli.Context, param *params.ShutdownFo
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -358,7 +358,7 @@ func findVPCRouterShutdownForceTargets(ctx cli.Context, param *params.ShutdownFo
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -369,7 +369,7 @@ func findVPCRouterShutdownForceTargets(ctx cli.Context, param *params.ShutdownFo
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -392,7 +392,7 @@ func findVPCRouterResetTargets(ctx cli.Context, param *params.ResetVPCRouterPara
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -416,7 +416,7 @@ func findVPCRouterResetTargets(ctx cli.Context, param *params.ResetVPCRouterPara
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -427,7 +427,7 @@ func findVPCRouterResetTargets(ctx cli.Context, param *params.ResetVPCRouterPara
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -450,7 +450,7 @@ func findVPCRouterWaitForBootTargets(ctx cli.Context, param *params.WaitForBootV
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -474,7 +474,7 @@ func findVPCRouterWaitForBootTargets(ctx cli.Context, param *params.WaitForBootV
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -485,7 +485,7 @@ func findVPCRouterWaitForBootTargets(ctx cli.Context, param *params.WaitForBootV
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -508,7 +508,7 @@ func findVPCRouterWaitForDownTargets(ctx cli.Context, param *params.WaitForDownV
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -532,7 +532,7 @@ func findVPCRouterWaitForDownTargets(ctx cli.Context, param *params.WaitForDownV
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -543,7 +543,7 @@ func findVPCRouterWaitForDownTargets(ctx cli.Context, param *params.WaitForDownV
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -566,7 +566,7 @@ func findVPCRouterEnableInternetConnectionTargets(ctx cli.Context, param *params
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -590,7 +590,7 @@ func findVPCRouterEnableInternetConnectionTargets(ctx cli.Context, param *params
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -601,7 +601,7 @@ func findVPCRouterEnableInternetConnectionTargets(ctx cli.Context, param *params
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -627,7 +627,7 @@ func findVPCRouterDisableInternetConnectionTargets(ctx cli.Context, param *param
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -651,7 +651,7 @@ func findVPCRouterDisableInternetConnectionTargets(ctx cli.Context, param *param
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -662,7 +662,7 @@ func findVPCRouterDisableInternetConnectionTargets(ctx cli.Context, param *param
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -688,7 +688,7 @@ func findVPCRouterInterfaceInfoTargets(ctx cli.Context, param *params.InterfaceI
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -712,7 +712,7 @@ func findVPCRouterInterfaceInfoTargets(ctx cli.Context, param *params.InterfaceI
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -723,7 +723,7 @@ func findVPCRouterInterfaceInfoTargets(ctx cli.Context, param *params.InterfaceI
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -749,7 +749,7 @@ func findVPCRouterInterfaceConnectTargets(ctx cli.Context, param *params.Interfa
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -773,7 +773,7 @@ func findVPCRouterInterfaceConnectTargets(ctx cli.Context, param *params.Interfa
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -784,7 +784,7 @@ func findVPCRouterInterfaceConnectTargets(ctx cli.Context, param *params.Interfa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -810,7 +810,7 @@ func findVPCRouterInterfaceUpdateTargets(ctx cli.Context, param *params.Interfac
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -834,7 +834,7 @@ func findVPCRouterInterfaceUpdateTargets(ctx cli.Context, param *params.Interfac
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -845,7 +845,7 @@ func findVPCRouterInterfaceUpdateTargets(ctx cli.Context, param *params.Interfac
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -871,7 +871,7 @@ func findVPCRouterInterfaceDisconnectTargets(ctx cli.Context, param *params.Inte
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -895,7 +895,7 @@ func findVPCRouterInterfaceDisconnectTargets(ctx cli.Context, param *params.Inte
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -906,7 +906,7 @@ func findVPCRouterInterfaceDisconnectTargets(ctx cli.Context, param *params.Inte
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -932,7 +932,7 @@ func findVPCRouterStaticNatInfoTargets(ctx cli.Context, param *params.StaticNatI
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -956,7 +956,7 @@ func findVPCRouterStaticNatInfoTargets(ctx cli.Context, param *params.StaticNatI
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -967,7 +967,7 @@ func findVPCRouterStaticNatInfoTargets(ctx cli.Context, param *params.StaticNatI
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -993,7 +993,7 @@ func findVPCRouterStaticNatAddTargets(ctx cli.Context, param *params.StaticNatAd
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1017,7 +1017,7 @@ func findVPCRouterStaticNatAddTargets(ctx cli.Context, param *params.StaticNatAd
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1028,7 +1028,7 @@ func findVPCRouterStaticNatAddTargets(ctx cli.Context, param *params.StaticNatAd
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1054,7 +1054,7 @@ func findVPCRouterStaticNatUpdateTargets(ctx cli.Context, param *params.StaticNa
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1078,7 +1078,7 @@ func findVPCRouterStaticNatUpdateTargets(ctx cli.Context, param *params.StaticNa
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1089,7 +1089,7 @@ func findVPCRouterStaticNatUpdateTargets(ctx cli.Context, param *params.StaticNa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1115,7 +1115,7 @@ func findVPCRouterStaticNatDeleteTargets(ctx cli.Context, param *params.StaticNa
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1139,7 +1139,7 @@ func findVPCRouterStaticNatDeleteTargets(ctx cli.Context, param *params.StaticNa
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1150,7 +1150,7 @@ func findVPCRouterStaticNatDeleteTargets(ctx cli.Context, param *params.StaticNa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1176,7 +1176,7 @@ func findVPCRouterPortForwardingInfoTargets(ctx cli.Context, param *params.PortF
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1200,7 +1200,7 @@ func findVPCRouterPortForwardingInfoTargets(ctx cli.Context, param *params.PortF
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1211,7 +1211,7 @@ func findVPCRouterPortForwardingInfoTargets(ctx cli.Context, param *params.PortF
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1237,7 +1237,7 @@ func findVPCRouterPortForwardingAddTargets(ctx cli.Context, param *params.PortFo
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1261,7 +1261,7 @@ func findVPCRouterPortForwardingAddTargets(ctx cli.Context, param *params.PortFo
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1272,7 +1272,7 @@ func findVPCRouterPortForwardingAddTargets(ctx cli.Context, param *params.PortFo
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1298,7 +1298,7 @@ func findVPCRouterPortForwardingUpdateTargets(ctx cli.Context, param *params.Por
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1322,7 +1322,7 @@ func findVPCRouterPortForwardingUpdateTargets(ctx cli.Context, param *params.Por
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1333,7 +1333,7 @@ func findVPCRouterPortForwardingUpdateTargets(ctx cli.Context, param *params.Por
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1359,7 +1359,7 @@ func findVPCRouterPortForwardingDeleteTargets(ctx cli.Context, param *params.Por
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1383,7 +1383,7 @@ func findVPCRouterPortForwardingDeleteTargets(ctx cli.Context, param *params.Por
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1394,7 +1394,7 @@ func findVPCRouterPortForwardingDeleteTargets(ctx cli.Context, param *params.Por
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1420,7 +1420,7 @@ func findVPCRouterFirewallInfoTargets(ctx cli.Context, param *params.FirewallInf
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1444,7 +1444,7 @@ func findVPCRouterFirewallInfoTargets(ctx cli.Context, param *params.FirewallInf
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1455,7 +1455,7 @@ func findVPCRouterFirewallInfoTargets(ctx cli.Context, param *params.FirewallInf
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1481,7 +1481,7 @@ func findVPCRouterFirewallAddTargets(ctx cli.Context, param *params.FirewallAddV
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1505,7 +1505,7 @@ func findVPCRouterFirewallAddTargets(ctx cli.Context, param *params.FirewallAddV
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1516,7 +1516,7 @@ func findVPCRouterFirewallAddTargets(ctx cli.Context, param *params.FirewallAddV
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1542,7 +1542,7 @@ func findVPCRouterFirewallUpdateTargets(ctx cli.Context, param *params.FirewallU
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1566,7 +1566,7 @@ func findVPCRouterFirewallUpdateTargets(ctx cli.Context, param *params.FirewallU
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1577,7 +1577,7 @@ func findVPCRouterFirewallUpdateTargets(ctx cli.Context, param *params.FirewallU
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1603,7 +1603,7 @@ func findVPCRouterFirewallDeleteTargets(ctx cli.Context, param *params.FirewallD
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1627,7 +1627,7 @@ func findVPCRouterFirewallDeleteTargets(ctx cli.Context, param *params.FirewallD
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1638,7 +1638,7 @@ func findVPCRouterFirewallDeleteTargets(ctx cli.Context, param *params.FirewallD
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1664,7 +1664,7 @@ func findVPCRouterDhcpServerInfoTargets(ctx cli.Context, param *params.DhcpServe
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1688,7 +1688,7 @@ func findVPCRouterDhcpServerInfoTargets(ctx cli.Context, param *params.DhcpServe
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1699,7 +1699,7 @@ func findVPCRouterDhcpServerInfoTargets(ctx cli.Context, param *params.DhcpServe
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1725,7 +1725,7 @@ func findVPCRouterDhcpServerAddTargets(ctx cli.Context, param *params.DhcpServer
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1749,7 +1749,7 @@ func findVPCRouterDhcpServerAddTargets(ctx cli.Context, param *params.DhcpServer
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1760,7 +1760,7 @@ func findVPCRouterDhcpServerAddTargets(ctx cli.Context, param *params.DhcpServer
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1786,7 +1786,7 @@ func findVPCRouterDhcpServerUpdateTargets(ctx cli.Context, param *params.DhcpSer
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1810,7 +1810,7 @@ func findVPCRouterDhcpServerUpdateTargets(ctx cli.Context, param *params.DhcpSer
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1821,7 +1821,7 @@ func findVPCRouterDhcpServerUpdateTargets(ctx cli.Context, param *params.DhcpSer
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1847,7 +1847,7 @@ func findVPCRouterDhcpServerDeleteTargets(ctx cli.Context, param *params.DhcpSer
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1871,7 +1871,7 @@ func findVPCRouterDhcpServerDeleteTargets(ctx cli.Context, param *params.DhcpSer
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1882,7 +1882,7 @@ func findVPCRouterDhcpServerDeleteTargets(ctx cli.Context, param *params.DhcpSer
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1908,7 +1908,7 @@ func findVPCRouterDhcpStaticMappingInfoTargets(ctx cli.Context, param *params.Dh
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1932,7 +1932,7 @@ func findVPCRouterDhcpStaticMappingInfoTargets(ctx cli.Context, param *params.Dh
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1943,7 +1943,7 @@ func findVPCRouterDhcpStaticMappingInfoTargets(ctx cli.Context, param *params.Dh
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1969,7 +1969,7 @@ func findVPCRouterDhcpStaticMappingAddTargets(ctx cli.Context, param *params.Dhc
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1993,7 +1993,7 @@ func findVPCRouterDhcpStaticMappingAddTargets(ctx cli.Context, param *params.Dhc
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2004,7 +2004,7 @@ func findVPCRouterDhcpStaticMappingAddTargets(ctx cli.Context, param *params.Dhc
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2030,7 +2030,7 @@ func findVPCRouterDhcpStaticMappingUpdateTargets(ctx cli.Context, param *params.
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2054,7 +2054,7 @@ func findVPCRouterDhcpStaticMappingUpdateTargets(ctx cli.Context, param *params.
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2065,7 +2065,7 @@ func findVPCRouterDhcpStaticMappingUpdateTargets(ctx cli.Context, param *params.
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2091,7 +2091,7 @@ func findVPCRouterDhcpStaticMappingDeleteTargets(ctx cli.Context, param *params.
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2115,7 +2115,7 @@ func findVPCRouterDhcpStaticMappingDeleteTargets(ctx cli.Context, param *params.
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2126,7 +2126,7 @@ func findVPCRouterDhcpStaticMappingDeleteTargets(ctx cli.Context, param *params.
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2152,7 +2152,7 @@ func findVPCRouterPptpServerInfoTargets(ctx cli.Context, param *params.PptpServe
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2176,7 +2176,7 @@ func findVPCRouterPptpServerInfoTargets(ctx cli.Context, param *params.PptpServe
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2187,7 +2187,7 @@ func findVPCRouterPptpServerInfoTargets(ctx cli.Context, param *params.PptpServe
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2213,7 +2213,7 @@ func findVPCRouterPptpServerUpdateTargets(ctx cli.Context, param *params.PptpSer
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2237,7 +2237,7 @@ func findVPCRouterPptpServerUpdateTargets(ctx cli.Context, param *params.PptpSer
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2248,7 +2248,7 @@ func findVPCRouterPptpServerUpdateTargets(ctx cli.Context, param *params.PptpSer
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2274,7 +2274,7 @@ func findVPCRouterL2TPServerInfoTargets(ctx cli.Context, param *params.L2TPServe
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2298,7 +2298,7 @@ func findVPCRouterL2TPServerInfoTargets(ctx cli.Context, param *params.L2TPServe
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2309,7 +2309,7 @@ func findVPCRouterL2TPServerInfoTargets(ctx cli.Context, param *params.L2TPServe
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2335,7 +2335,7 @@ func findVPCRouterL2TPServerUpdateTargets(ctx cli.Context, param *params.L2TPSer
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2359,7 +2359,7 @@ func findVPCRouterL2TPServerUpdateTargets(ctx cli.Context, param *params.L2TPSer
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2370,7 +2370,7 @@ func findVPCRouterL2TPServerUpdateTargets(ctx cli.Context, param *params.L2TPSer
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2396,7 +2396,7 @@ func findVPCRouterUserInfoTargets(ctx cli.Context, param *params.UserInfoVPCRout
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2420,7 +2420,7 @@ func findVPCRouterUserInfoTargets(ctx cli.Context, param *params.UserInfoVPCRout
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2431,7 +2431,7 @@ func findVPCRouterUserInfoTargets(ctx cli.Context, param *params.UserInfoVPCRout
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2457,7 +2457,7 @@ func findVPCRouterUserAddTargets(ctx cli.Context, param *params.UserAddVPCRouter
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2481,7 +2481,7 @@ func findVPCRouterUserAddTargets(ctx cli.Context, param *params.UserAddVPCRouter
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2492,7 +2492,7 @@ func findVPCRouterUserAddTargets(ctx cli.Context, param *params.UserAddVPCRouter
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2518,7 +2518,7 @@ func findVPCRouterUserUpdateTargets(ctx cli.Context, param *params.UserUpdateVPC
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2542,7 +2542,7 @@ func findVPCRouterUserUpdateTargets(ctx cli.Context, param *params.UserUpdateVPC
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2553,7 +2553,7 @@ func findVPCRouterUserUpdateTargets(ctx cli.Context, param *params.UserUpdateVPC
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2579,7 +2579,7 @@ func findVPCRouterUserDeleteTargets(ctx cli.Context, param *params.UserDeleteVPC
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2603,7 +2603,7 @@ func findVPCRouterUserDeleteTargets(ctx cli.Context, param *params.UserDeleteVPC
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2614,7 +2614,7 @@ func findVPCRouterUserDeleteTargets(ctx cli.Context, param *params.UserDeleteVPC
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2640,7 +2640,7 @@ func findVPCRouterSiteToSiteVPNInfoTargets(ctx cli.Context, param *params.SiteTo
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2664,7 +2664,7 @@ func findVPCRouterSiteToSiteVPNInfoTargets(ctx cli.Context, param *params.SiteTo
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2675,7 +2675,7 @@ func findVPCRouterSiteToSiteVPNInfoTargets(ctx cli.Context, param *params.SiteTo
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2701,7 +2701,7 @@ func findVPCRouterSiteToSiteVPNAddTargets(ctx cli.Context, param *params.SiteToS
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2725,7 +2725,7 @@ func findVPCRouterSiteToSiteVPNAddTargets(ctx cli.Context, param *params.SiteToS
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2736,7 +2736,7 @@ func findVPCRouterSiteToSiteVPNAddTargets(ctx cli.Context, param *params.SiteToS
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2762,7 +2762,7 @@ func findVPCRouterSiteToSiteVPNUpdateTargets(ctx cli.Context, param *params.Site
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2786,7 +2786,7 @@ func findVPCRouterSiteToSiteVPNUpdateTargets(ctx cli.Context, param *params.Site
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2797,7 +2797,7 @@ func findVPCRouterSiteToSiteVPNUpdateTargets(ctx cli.Context, param *params.Site
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2823,7 +2823,7 @@ func findVPCRouterSiteToSiteVPNDeleteTargets(ctx cli.Context, param *params.Site
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2847,7 +2847,7 @@ func findVPCRouterSiteToSiteVPNDeleteTargets(ctx cli.Context, param *params.Site
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2858,7 +2858,7 @@ func findVPCRouterSiteToSiteVPNDeleteTargets(ctx cli.Context, param *params.Site
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2884,7 +2884,7 @@ func findVPCRouterSiteToSiteVPNPeersTargets(ctx cli.Context, param *params.SiteT
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2908,7 +2908,7 @@ func findVPCRouterSiteToSiteVPNPeersTargets(ctx cli.Context, param *params.SiteT
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2919,7 +2919,7 @@ func findVPCRouterSiteToSiteVPNPeersTargets(ctx cli.Context, param *params.SiteT
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -2945,7 +2945,7 @@ func findVPCRouterStaticRouteInfoTargets(ctx cli.Context, param *params.StaticRo
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -2969,7 +2969,7 @@ func findVPCRouterStaticRouteInfoTargets(ctx cli.Context, param *params.StaticRo
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -2980,7 +2980,7 @@ func findVPCRouterStaticRouteInfoTargets(ctx cli.Context, param *params.StaticRo
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -3006,7 +3006,7 @@ func findVPCRouterStaticRouteAddTargets(ctx cli.Context, param *params.StaticRou
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -3030,7 +3030,7 @@ func findVPCRouterStaticRouteAddTargets(ctx cli.Context, param *params.StaticRou
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -3041,7 +3041,7 @@ func findVPCRouterStaticRouteAddTargets(ctx cli.Context, param *params.StaticRou
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -3067,7 +3067,7 @@ func findVPCRouterStaticRouteUpdateTargets(ctx cli.Context, param *params.Static
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -3091,7 +3091,7 @@ func findVPCRouterStaticRouteUpdateTargets(ctx cli.Context, param *params.Static
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -3102,7 +3102,7 @@ func findVPCRouterStaticRouteUpdateTargets(ctx cli.Context, param *params.Static
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -3128,7 +3128,7 @@ func findVPCRouterStaticRouteDeleteTargets(ctx cli.Context, param *params.Static
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -3152,7 +3152,7 @@ func findVPCRouterStaticRouteDeleteTargets(ctx cli.Context, param *params.Static
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -3163,7 +3163,7 @@ func findVPCRouterStaticRouteDeleteTargets(ctx cli.Context, param *params.Static
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -3189,7 +3189,7 @@ func findVPCRouterMonitorTargets(ctx cli.Context, param *params.MonitorVPCRouter
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -3213,7 +3213,7 @@ func findVPCRouterMonitorTargets(ctx cli.Context, param *params.MonitorVPCRouter
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -3224,7 +3224,7 @@ func findVPCRouterMonitorTargets(ctx cli.Context, param *params.MonitorVPCRouter
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -3250,7 +3250,7 @@ func findVPCRouterLogsTargets(ctx cli.Context, param *params.LogsVPCRouterParam)
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.VPCRouters {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -3274,7 +3274,7 @@ func findVPCRouterLogsTargets(ctx cli.Context, param *params.LogsVPCRouterParam)
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.VPCRouters {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -3285,7 +3285,7 @@ func findVPCRouterLogsTargets(ctx cli.Context, param *params.LogsVPCRouterParam)
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}

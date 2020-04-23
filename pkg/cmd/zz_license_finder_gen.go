@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func findLicenseReadTargets(ctx cli.Context, param *params.ReadLicenseParam) ([]sacloud.ID, error) {
@@ -61,7 +61,7 @@ func findLicenseReadTargets(ctx cli.Context, param *params.ReadLicenseParam) ([]
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -107,7 +107,7 @@ func findLicenseUpdateTargets(ctx cli.Context, param *params.UpdateLicenseParam)
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -150,7 +150,7 @@ func findLicenseDeleteTargets(ctx cli.Context, param *params.DeleteLicenseParam)
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}

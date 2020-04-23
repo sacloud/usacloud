@@ -77,7 +77,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 {{ range .Commands }}{{ if .MultipleArgToIdParams }}
@@ -99,7 +99,7 @@ func {{ .ArgToIdFunc }}(ctx cli.Context, param *params.{{.InputParameterTypeName
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.{{.FindResultFieldName}} {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -128,7 +128,7 @@ func {{ .ArgToIdFunc }}(ctx cli.Context, param *params.{{.InputParameterTypeName
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.{{.FindResultFieldName}} {
-						{{ if not .NoSelector }}if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) { {{ end }}
+						{{ if not .NoSelector }}if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) { {{ end }}
 							ids = append(ids, v.GetID())
 						{{ if not .NoSelector }}} {{ end }}
 					}
@@ -139,7 +139,7 @@ func {{ .ArgToIdFunc }}(ctx cli.Context, param *params.{{.InputParameterTypeName
 		{{ end }}
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}

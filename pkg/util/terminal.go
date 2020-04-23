@@ -12,25 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package utils
+package util
 
-func HasTags(target interface{}, tags []string) bool {
-	type tagHandler interface {
-		HasTag(target string) bool
-	}
+import (
+	"os"
 
-	tagHolder, ok := target.(tagHandler)
-	if !ok {
-		return false
-	}
+	"github.com/mattn/go-isatty"
+)
 
-	// 完全一致 + AND条件
-	res := true
-	for _, p := range tags {
-		if !tagHolder.HasTag(p) {
-			res = false
-			break
-		}
+// IsTerminal 標準入力/出力が端末か判定する
+func IsTerminal() bool {
+	is := func(fd uintptr) bool {
+		return isatty.IsTerminal(fd) || isatty.IsCygwinTerminal(fd)
 	}
-	return res
+	return is(os.Stdin.Fd()) && is(os.Stdout.Fd())
 }

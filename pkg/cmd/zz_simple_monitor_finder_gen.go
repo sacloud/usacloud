@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func findSimpleMonitorReadTargets(ctx cli.Context, param *params.ReadSimpleMonitorParam) ([]sacloud.ID, error) {
@@ -41,7 +41,7 @@ func findSimpleMonitorReadTargets(ctx cli.Context, param *params.ReadSimpleMonit
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.SimpleMonitors {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -65,7 +65,7 @@ func findSimpleMonitorReadTargets(ctx cli.Context, param *params.ReadSimpleMonit
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.SimpleMonitors {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -76,7 +76,7 @@ func findSimpleMonitorReadTargets(ctx cli.Context, param *params.ReadSimpleMonit
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -102,7 +102,7 @@ func findSimpleMonitorUpdateTargets(ctx cli.Context, param *params.UpdateSimpleM
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.SimpleMonitors {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -126,7 +126,7 @@ func findSimpleMonitorUpdateTargets(ctx cli.Context, param *params.UpdateSimpleM
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.SimpleMonitors {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -137,7 +137,7 @@ func findSimpleMonitorUpdateTargets(ctx cli.Context, param *params.UpdateSimpleM
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -160,7 +160,7 @@ func findSimpleMonitorDeleteTargets(ctx cli.Context, param *params.DeleteSimpleM
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.SimpleMonitors {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -184,7 +184,7 @@ func findSimpleMonitorDeleteTargets(ctx cli.Context, param *params.DeleteSimpleM
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.SimpleMonitors {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -195,7 +195,7 @@ func findSimpleMonitorDeleteTargets(ctx cli.Context, param *params.DeleteSimpleM
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -218,7 +218,7 @@ func findSimpleMonitorHealthTargets(ctx cli.Context, param *params.HealthSimpleM
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.SimpleMonitors {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -242,7 +242,7 @@ func findSimpleMonitorHealthTargets(ctx cli.Context, param *params.HealthSimpleM
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.SimpleMonitors {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -253,7 +253,7 @@ func findSimpleMonitorHealthTargets(ctx cli.Context, param *params.HealthSimpleM
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}

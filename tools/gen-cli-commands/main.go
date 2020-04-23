@@ -77,7 +77,7 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -135,10 +135,10 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 			{{ if .NeedConfirm }}
 			// confirm
 			if !{{.InputParameterVariable}}.Assumeyes {
-				if !utils.IsTerminal(){
+				if !util.IsTerminal(){
 				    return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("{{.ConfirmMessage}}", ctx.IO().In(), ctx.IO().Out(){{ if .MultipleArgToIdParams }}, ids...{{ end }})
+				result, err := util.ConfirmContinue("{{.ConfirmMessage}}", ctx.IO().In(), ctx.IO().Out(){{ if .MultipleArgToIdParams }}, ids...{{ end }})
 				if err != nil || !result {
 					return err
 				}

@@ -21,7 +21,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
 	"github.com/sacloud/usacloud/pkg/progress"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func DiskEdit(ctx cli.Context, params *params.EditDiskParam) error {
@@ -76,13 +76,13 @@ func buildDiskEditValue(ctx cli.Context, params *params.EditDiskParam) *sacloud.
 		p.SetPassword(params.Password)
 	}
 	if ctx.IsSet("ssh-key-ids") {
-		p.SetSSHKeys(utils.StringIDs(params.SSHKeyIds))
+		p.SetSSHKeys(util.StringIDs(params.SSHKeyIds))
 	}
 	if ctx.IsSet("disable-password-auth") {
 		p.SetDisablePWAuth(params.DisablePasswordAuth)
 	}
 	if ctx.IsSet("startup-script-ids") {
-		p.SetNotes(utils.StringIDs(params.StartupScriptIds))
+		p.SetNotes(util.StringIDs(params.StartupScriptIds))
 	}
 	if ctx.IsSet("ipaddress") {
 		p.SetUserIPAddress(params.Ipaddress)

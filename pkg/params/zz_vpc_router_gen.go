@@ -24,7 +24,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/sacloud/usacloud/pkg/validation"
 )
 
@@ -75,58 +75,58 @@ func (p *ListVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ListVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.From) {
+	if util.IsEmpty(p.From) {
 		p.From = 0
 	}
-	if utils.IsEmpty(p.Max) {
+	if util.IsEmpty(p.Max) {
 		p.Max = 0
 	}
-	if utils.IsEmpty(p.Sort) {
+	if util.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -190,7 +190,7 @@ func (p *ListVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ListVPCRouterParam) ResourceDef() *schema.Resource {
@@ -431,79 +431,79 @@ func (p *CreateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CreateVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Plan) {
+	if util.IsEmpty(p.Plan) {
 		p.Plan = ""
 	}
-	if utils.IsEmpty(p.SwitchId) {
+	if util.IsEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Vrid) {
+	if util.IsEmpty(p.Vrid) {
 		p.Vrid = 0
 	}
-	if utils.IsEmpty(p.Vip) {
+	if util.IsEmpty(p.Vip) {
 		p.Vip = ""
 	}
-	if utils.IsEmpty(p.Ipaddress1) {
+	if util.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
 	}
-	if utils.IsEmpty(p.Ipaddress2) {
+	if util.IsEmpty(p.Ipaddress2) {
 		p.Ipaddress2 = ""
 	}
-	if utils.IsEmpty(p.DisableInternetConnection) {
+	if util.IsEmpty(p.DisableInternetConnection) {
 		p.DisableInternetConnection = false
 	}
-	if utils.IsEmpty(p.BootAfterCreate) {
+	if util.IsEmpty(p.BootAfterCreate) {
 		p.BootAfterCreate = false
 	}
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
+	if util.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -626,7 +626,7 @@ func (p *CreateVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *CreateVPCRouterParam) ResourceDef() *schema.Resource {
@@ -904,46 +904,46 @@ func (p *ReadVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReadVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -980,7 +980,7 @@ func (p *ReadVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ReadVPCRouterParam) ResourceDef() *schema.Resource {
@@ -1188,67 +1188,67 @@ func (p *UpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *UpdateVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.SyslogHost) {
+	if util.IsEmpty(p.SyslogHost) {
 		p.SyslogHost = ""
 	}
-	if utils.IsEmpty(p.InternetConnection) {
+	if util.IsEmpty(p.InternetConnection) {
 		p.InternetConnection = false
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
+	if util.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1325,7 +1325,7 @@ func (p *UpdateVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *UpdateVPCRouterParam) ResourceDef() *schema.Resource {
@@ -1577,52 +1577,52 @@ func (p *DeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DeleteVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Force) {
+	if util.IsEmpty(p.Force) {
 		p.Force = false
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1659,7 +1659,7 @@ func (p *DeleteVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DeleteVPCRouterParam) ResourceDef() *schema.Resource {
@@ -1868,28 +1868,28 @@ func (p *BootVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *BootVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1912,7 +1912,7 @@ func (p *BootVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *BootVPCRouterParam) ResourceDef() *schema.Resource {
@@ -2065,28 +2065,28 @@ func (p *ShutdownVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ShutdownVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2109,7 +2109,7 @@ func (p *ShutdownVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ShutdownVPCRouterParam) ResourceDef() *schema.Resource {
@@ -2262,28 +2262,28 @@ func (p *ShutdownForceVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ShutdownForceVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2306,7 +2306,7 @@ func (p *ShutdownForceVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ShutdownForceVPCRouterParam) ResourceDef() *schema.Resource {
@@ -2459,28 +2459,28 @@ func (p *ResetVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ResetVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2503,7 +2503,7 @@ func (p *ResetVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ResetVPCRouterParam) ResourceDef() *schema.Resource {
@@ -2655,25 +2655,25 @@ func (p *WaitForBootVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *WaitForBootVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2696,7 +2696,7 @@ func (p *WaitForBootVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *WaitForBootVPCRouterParam) ResourceDef() *schema.Resource {
@@ -2841,25 +2841,25 @@ func (p *WaitForDownVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *WaitForDownVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2882,7 +2882,7 @@ func (p *WaitForDownVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *WaitForDownVPCRouterParam) ResourceDef() *schema.Resource {
@@ -3028,28 +3028,28 @@ func (p *EnableInternetConnectionVPCRouterParam) WriteSkeleton(writer io.Writer)
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *EnableInternetConnectionVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3072,7 +3072,7 @@ func (p *EnableInternetConnectionVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *EnableInternetConnectionVPCRouterParam) ResourceDef() *schema.Resource {
@@ -3225,28 +3225,28 @@ func (p *DisableInternetConnectionVPCRouterParam) WriteSkeleton(writer io.Writer
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DisableInternetConnectionVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3269,7 +3269,7 @@ func (p *DisableInternetConnectionVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DisableInternetConnectionVPCRouterParam) ResourceDef() *schema.Resource {
@@ -3428,46 +3428,46 @@ func (p *InterfaceInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *InterfaceInfoVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3504,7 +3504,7 @@ func (p *InterfaceInfoVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *InterfaceInfoVPCRouterParam) ResourceDef() *schema.Resource {
@@ -3707,49 +3707,49 @@ func (p *InterfaceConnectVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *InterfaceConnectVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Interface) {
+	if util.IsEmpty(p.Interface) {
 		p.Interface = ""
 	}
-	if utils.IsEmpty(p.Ipaddress) {
+	if util.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
-	if utils.IsEmpty(p.WithReboot) {
+	if util.IsEmpty(p.WithReboot) {
 		p.WithReboot = false
 	}
-	if utils.IsEmpty(p.Ipaddress1) {
+	if util.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
 	}
-	if utils.IsEmpty(p.SwitchId) {
+	if util.IsEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Ipaddress2) {
+	if util.IsEmpty(p.Ipaddress2) {
 		p.Ipaddress2 = ""
 	}
-	if utils.IsEmpty(p.NwMasklen) {
+	if util.IsEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3841,7 +3841,7 @@ func (p *InterfaceConnectVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *InterfaceConnectVPCRouterParam) ResourceDef() *schema.Resource {
@@ -4052,52 +4052,52 @@ func (p *InterfaceUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *InterfaceUpdateVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Interface) {
+	if util.IsEmpty(p.Interface) {
 		p.Interface = ""
 	}
-	if utils.IsEmpty(p.Ipaddress) {
+	if util.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
-	if utils.IsEmpty(p.WithReboot) {
+	if util.IsEmpty(p.WithReboot) {
 		p.WithReboot = false
 	}
-	if utils.IsEmpty(p.Ipaddress1) {
+	if util.IsEmpty(p.Ipaddress1) {
 		p.Ipaddress1 = ""
 	}
-	if utils.IsEmpty(p.SwitchId) {
+	if util.IsEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Ipaddress2) {
+	if util.IsEmpty(p.Ipaddress2) {
 		p.Ipaddress2 = ""
 	}
-	if utils.IsEmpty(p.Alias) {
+	if util.IsEmpty(p.Alias) {
 		p.Alias = []string{""}
 	}
-	if utils.IsEmpty(p.NwMasklen) {
+	if util.IsEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -4183,7 +4183,7 @@ func (p *InterfaceUpdateVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *InterfaceUpdateVPCRouterParam) ResourceDef() *schema.Resource {
@@ -4394,34 +4394,34 @@ func (p *InterfaceDisconnectVPCRouterParam) WriteSkeleton(writer io.Writer) erro
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *InterfaceDisconnectVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Interface) {
+	if util.IsEmpty(p.Interface) {
 		p.Interface = ""
 	}
-	if utils.IsEmpty(p.WithReboot) {
+	if util.IsEmpty(p.WithReboot) {
 		p.WithReboot = false
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -4459,7 +4459,7 @@ func (p *InterfaceDisconnectVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *InterfaceDisconnectVPCRouterParam) ResourceDef() *schema.Resource {
@@ -4632,46 +4632,46 @@ func (p *StaticNatInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *StaticNatInfoVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -4708,7 +4708,7 @@ func (p *StaticNatInfoVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *StaticNatInfoVPCRouterParam) ResourceDef() *schema.Resource {
@@ -4906,37 +4906,37 @@ func (p *StaticNatAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *StaticNatAddVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Global) {
+	if util.IsEmpty(p.Global) {
 		p.Global = ""
 	}
-	if utils.IsEmpty(p.Private) {
+	if util.IsEmpty(p.Private) {
 		p.Private = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -4997,7 +4997,7 @@ func (p *StaticNatAddVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *StaticNatAddVPCRouterParam) ResourceDef() *schema.Resource {
@@ -5175,40 +5175,40 @@ func (p *StaticNatUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *StaticNatUpdateVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Global) {
+	if util.IsEmpty(p.Global) {
 		p.Global = ""
 	}
-	if utils.IsEmpty(p.Private) {
+	if util.IsEmpty(p.Private) {
 		p.Private = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -5263,7 +5263,7 @@ func (p *StaticNatUpdateVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *StaticNatUpdateVPCRouterParam) ResourceDef() *schema.Resource {
@@ -5445,31 +5445,31 @@ func (p *StaticNatDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *StaticNatDeleteVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -5500,7 +5500,7 @@ func (p *StaticNatDeleteVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *StaticNatDeleteVPCRouterParam) ResourceDef() *schema.Resource {
@@ -5666,46 +5666,46 @@ func (p *PortForwardingInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *PortForwardingInfoVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -5742,7 +5742,7 @@ func (p *PortForwardingInfoVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *PortForwardingInfoVPCRouterParam) ResourceDef() *schema.Resource {
@@ -5942,43 +5942,43 @@ func (p *PortForwardingAddVPCRouterParam) WriteSkeleton(writer io.Writer) error 
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *PortForwardingAddVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Protocol) {
+	if util.IsEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
-	if utils.IsEmpty(p.GlobalPort) {
+	if util.IsEmpty(p.GlobalPort) {
 		p.GlobalPort = 0
 	}
-	if utils.IsEmpty(p.PrivateIpaddress) {
+	if util.IsEmpty(p.PrivateIpaddress) {
 		p.PrivateIpaddress = ""
 	}
-	if utils.IsEmpty(p.PrivatePort) {
+	if util.IsEmpty(p.PrivatePort) {
 		p.PrivatePort = 0
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -6069,7 +6069,7 @@ func (p *PortForwardingAddVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *PortForwardingAddVPCRouterParam) ResourceDef() *schema.Resource {
@@ -6263,46 +6263,46 @@ func (p *PortForwardingUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) err
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *PortForwardingUpdateVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Protocol) {
+	if util.IsEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
-	if utils.IsEmpty(p.GlobalPort) {
+	if util.IsEmpty(p.GlobalPort) {
 		p.GlobalPort = 0
 	}
-	if utils.IsEmpty(p.PrivateIpaddress) {
+	if util.IsEmpty(p.PrivateIpaddress) {
 		p.PrivateIpaddress = ""
 	}
-	if utils.IsEmpty(p.PrivatePort) {
+	if util.IsEmpty(p.PrivatePort) {
 		p.PrivatePort = 0
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -6373,7 +6373,7 @@ func (p *PortForwardingUpdateVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *PortForwardingUpdateVPCRouterParam) ResourceDef() *schema.Resource {
@@ -6569,31 +6569,31 @@ func (p *PortForwardingDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) err
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *PortForwardingDeleteVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -6624,7 +6624,7 @@ func (p *PortForwardingDeleteVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *PortForwardingDeleteVPCRouterParam) ResourceDef() *schema.Resource {
@@ -6793,52 +6793,52 @@ func (p *FirewallInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *FirewallInfoVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Interface) {
+	if util.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
-	if utils.IsEmpty(p.Direction) {
+	if util.IsEmpty(p.Direction) {
 		p.Direction = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -6898,7 +6898,7 @@ func (p *FirewallInfoVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *FirewallInfoVPCRouterParam) ResourceDef() *schema.Resource {
@@ -7118,58 +7118,58 @@ func (p *FirewallAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *FirewallAddVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Interface) {
+	if util.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
-	if utils.IsEmpty(p.Direction) {
+	if util.IsEmpty(p.Direction) {
 		p.Direction = ""
 	}
-	if utils.IsEmpty(p.Protocol) {
+	if util.IsEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
-	if utils.IsEmpty(p.SourceNetwork) {
+	if util.IsEmpty(p.SourceNetwork) {
 		p.SourceNetwork = ""
 	}
-	if utils.IsEmpty(p.SourcePort) {
+	if util.IsEmpty(p.SourcePort) {
 		p.SourcePort = 0
 	}
-	if utils.IsEmpty(p.DestinationNetwork) {
+	if util.IsEmpty(p.DestinationNetwork) {
 		p.DestinationNetwork = ""
 	}
-	if utils.IsEmpty(p.DestinationPort) {
+	if util.IsEmpty(p.DestinationPort) {
 		p.DestinationPort = 0
 	}
-	if utils.IsEmpty(p.Action) {
+	if util.IsEmpty(p.Action) {
 		p.Action = ""
 	}
-	if utils.IsEmpty(p.EnableLogging) {
+	if util.IsEmpty(p.EnableLogging) {
 		p.EnableLogging = false
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -7285,7 +7285,7 @@ func (p *FirewallAddVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *FirewallAddVPCRouterParam) ResourceDef() *schema.Resource {
@@ -7520,61 +7520,61 @@ func (p *FirewallUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *FirewallUpdateVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Interface) {
+	if util.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
-	if utils.IsEmpty(p.Direction) {
+	if util.IsEmpty(p.Direction) {
 		p.Direction = ""
 	}
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Protocol) {
+	if util.IsEmpty(p.Protocol) {
 		p.Protocol = ""
 	}
-	if utils.IsEmpty(p.SourceNetwork) {
+	if util.IsEmpty(p.SourceNetwork) {
 		p.SourceNetwork = ""
 	}
-	if utils.IsEmpty(p.SourcePort) {
+	if util.IsEmpty(p.SourcePort) {
 		p.SourcePort = 0
 	}
-	if utils.IsEmpty(p.DestinationNetwork) {
+	if util.IsEmpty(p.DestinationNetwork) {
 		p.DestinationNetwork = ""
 	}
-	if utils.IsEmpty(p.DestinationPort) {
+	if util.IsEmpty(p.DestinationPort) {
 		p.DestinationPort = 0
 	}
-	if utils.IsEmpty(p.Action) {
+	if util.IsEmpty(p.Action) {
 		p.Action = ""
 	}
-	if utils.IsEmpty(p.EnableLogging) {
+	if util.IsEmpty(p.EnableLogging) {
 		p.EnableLogging = false
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -7684,7 +7684,7 @@ func (p *FirewallUpdateVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *FirewallUpdateVPCRouterParam) ResourceDef() *schema.Resource {
@@ -7918,37 +7918,37 @@ func (p *FirewallDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *FirewallDeleteVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Interface) {
+	if util.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
-	if utils.IsEmpty(p.Direction) {
+	if util.IsEmpty(p.Direction) {
 		p.Direction = ""
 	}
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -8002,7 +8002,7 @@ func (p *FirewallDeleteVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *FirewallDeleteVPCRouterParam) ResourceDef() *schema.Resource {
@@ -8182,46 +8182,46 @@ func (p *DhcpServerInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DhcpServerInfoVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -8258,7 +8258,7 @@ func (p *DhcpServerInfoVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DhcpServerInfoVPCRouterParam) ResourceDef() *schema.Resource {
@@ -8457,40 +8457,40 @@ func (p *DhcpServerAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DhcpServerAddVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Interface) {
+	if util.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
-	if utils.IsEmpty(p.RangeStart) {
+	if util.IsEmpty(p.RangeStart) {
 		p.RangeStart = ""
 	}
-	if utils.IsEmpty(p.RangeStop) {
+	if util.IsEmpty(p.RangeStop) {
 		p.RangeStop = ""
 	}
-	if utils.IsEmpty(p.DNSServers) {
+	if util.IsEmpty(p.DNSServers) {
 		p.DNSServers = []string{""}
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -8566,7 +8566,7 @@ func (p *DhcpServerAddVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DhcpServerAddVPCRouterParam) ResourceDef() *schema.Resource {
@@ -8751,40 +8751,40 @@ func (p *DhcpServerUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DhcpServerUpdateVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Interface) {
+	if util.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
-	if utils.IsEmpty(p.RangeStart) {
+	if util.IsEmpty(p.RangeStart) {
 		p.RangeStart = ""
 	}
-	if utils.IsEmpty(p.RangeStop) {
+	if util.IsEmpty(p.RangeStop) {
 		p.RangeStop = ""
 	}
-	if utils.IsEmpty(p.DNSServers) {
+	if util.IsEmpty(p.DNSServers) {
 		p.DNSServers = []string{""}
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -8846,7 +8846,7 @@ func (p *DhcpServerUpdateVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DhcpServerUpdateVPCRouterParam) ResourceDef() *schema.Resource {
@@ -9028,31 +9028,31 @@ func (p *DhcpServerDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DhcpServerDeleteVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Interface) {
+	if util.IsEmpty(p.Interface) {
 		p.Interface = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -9090,7 +9090,7 @@ func (p *DhcpServerDeleteVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DhcpServerDeleteVPCRouterParam) ResourceDef() *schema.Resource {
@@ -9256,46 +9256,46 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) WriteSkeleton(writer io.Writer) er
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DhcpStaticMappingInfoVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -9332,7 +9332,7 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DhcpStaticMappingInfoVPCRouterParam) ResourceDef() *schema.Resource {
@@ -9529,34 +9529,34 @@ func (p *DhcpStaticMappingAddVPCRouterParam) WriteSkeleton(writer io.Writer) err
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DhcpStaticMappingAddVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Macaddress) {
+	if util.IsEmpty(p.Macaddress) {
 		p.Macaddress = ""
 	}
-	if utils.IsEmpty(p.Ipaddress) {
+	if util.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -9609,7 +9609,7 @@ func (p *DhcpStaticMappingAddVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DhcpStaticMappingAddVPCRouterParam) ResourceDef() *schema.Resource {
@@ -9779,37 +9779,37 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) 
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DhcpStaticMappingUpdateVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Macaddress) {
+	if util.IsEmpty(p.Macaddress) {
 		p.Macaddress = ""
 	}
-	if utils.IsEmpty(p.Ipaddress) {
+	if util.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -9856,7 +9856,7 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DhcpStaticMappingUpdateVPCRouterParam) ResourceDef() *schema.Resource {
@@ -10031,31 +10031,31 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) 
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DhcpStaticMappingDeleteVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -10086,7 +10086,7 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DhcpStaticMappingDeleteVPCRouterParam) ResourceDef() *schema.Resource {
@@ -10252,46 +10252,46 @@ func (p *PptpServerInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *PptpServerInfoVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -10328,7 +10328,7 @@ func (p *PptpServerInfoVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *PptpServerInfoVPCRouterParam) ResourceDef() *schema.Resource {
@@ -10526,37 +10526,37 @@ func (p *PptpServerUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *PptpServerUpdateVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Disabled) {
+	if util.IsEmpty(p.Disabled) {
 		p.Disabled = false
 	}
-	if utils.IsEmpty(p.RangeStart) {
+	if util.IsEmpty(p.RangeStart) {
 		p.RangeStart = ""
 	}
-	if utils.IsEmpty(p.RangeStop) {
+	if util.IsEmpty(p.RangeStop) {
 		p.RangeStop = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -10595,7 +10595,7 @@ func (p *PptpServerUpdateVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *PptpServerUpdateVPCRouterParam) ResourceDef() *schema.Resource {
@@ -10775,46 +10775,46 @@ func (p *L2TPServerInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *L2TPServerInfoVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -10851,7 +10851,7 @@ func (p *L2TPServerInfoVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *L2TPServerInfoVPCRouterParam) ResourceDef() *schema.Resource {
@@ -11050,40 +11050,40 @@ func (p *L2TPServerUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *L2TPServerUpdateVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Disabled) {
+	if util.IsEmpty(p.Disabled) {
 		p.Disabled = false
 	}
-	if utils.IsEmpty(p.RangeStart) {
+	if util.IsEmpty(p.RangeStart) {
 		p.RangeStart = ""
 	}
-	if utils.IsEmpty(p.RangeStop) {
+	if util.IsEmpty(p.RangeStop) {
 		p.RangeStop = ""
 	}
-	if utils.IsEmpty(p.PreSharedSecret) {
+	if util.IsEmpty(p.PreSharedSecret) {
 		p.PreSharedSecret = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -11130,7 +11130,7 @@ func (p *L2TPServerUpdateVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *L2TPServerUpdateVPCRouterParam) ResourceDef() *schema.Resource {
@@ -11317,46 +11317,46 @@ func (p *UserInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *UserInfoVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -11393,7 +11393,7 @@ func (p *UserInfoVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *UserInfoVPCRouterParam) ResourceDef() *schema.Resource {
@@ -11590,34 +11590,34 @@ func (p *UserAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *UserAddVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Username) {
+	if util.IsEmpty(p.Username) {
 		p.Username = ""
 	}
-	if utils.IsEmpty(p.Password) {
+	if util.IsEmpty(p.Password) {
 		p.Password = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -11670,7 +11670,7 @@ func (p *UserAddVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *UserAddVPCRouterParam) ResourceDef() *schema.Resource {
@@ -11840,37 +11840,37 @@ func (p *UserUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *UserUpdateVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Username) {
+	if util.IsEmpty(p.Username) {
 		p.Username = ""
 	}
-	if utils.IsEmpty(p.Password) {
+	if util.IsEmpty(p.Password) {
 		p.Password = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -11917,7 +11917,7 @@ func (p *UserUpdateVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *UserUpdateVPCRouterParam) ResourceDef() *schema.Resource {
@@ -12092,31 +12092,31 @@ func (p *UserDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *UserDeleteVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -12147,7 +12147,7 @@ func (p *UserDeleteVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *UserDeleteVPCRouterParam) ResourceDef() *schema.Resource {
@@ -12313,46 +12313,46 @@ func (p *SiteToSiteVPNInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error 
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *SiteToSiteVPNInfoVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -12389,7 +12389,7 @@ func (p *SiteToSiteVPNInfoVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *SiteToSiteVPNInfoVPCRouterParam) ResourceDef() *schema.Resource {
@@ -12589,43 +12589,43 @@ func (p *SiteToSiteVPNAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *SiteToSiteVPNAddVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Peer) {
+	if util.IsEmpty(p.Peer) {
 		p.Peer = ""
 	}
-	if utils.IsEmpty(p.RemoteId) {
+	if util.IsEmpty(p.RemoteId) {
 		p.RemoteId = ""
 	}
-	if utils.IsEmpty(p.PreSharedSecret) {
+	if util.IsEmpty(p.PreSharedSecret) {
 		p.PreSharedSecret = ""
 	}
-	if utils.IsEmpty(p.Routes) {
+	if util.IsEmpty(p.Routes) {
 		p.Routes = []string{""}
 	}
-	if utils.IsEmpty(p.LocalPrefix) {
+	if util.IsEmpty(p.LocalPrefix) {
 		p.LocalPrefix = []string{""}
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -12716,7 +12716,7 @@ func (p *SiteToSiteVPNAddVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *SiteToSiteVPNAddVPCRouterParam) ResourceDef() *schema.Resource {
@@ -12910,46 +12910,46 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) erro
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *SiteToSiteVPNUpdateVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Peer) {
+	if util.IsEmpty(p.Peer) {
 		p.Peer = ""
 	}
-	if utils.IsEmpty(p.RemoteId) {
+	if util.IsEmpty(p.RemoteId) {
 		p.RemoteId = ""
 	}
-	if utils.IsEmpty(p.PreSharedSecret) {
+	if util.IsEmpty(p.PreSharedSecret) {
 		p.PreSharedSecret = ""
 	}
-	if utils.IsEmpty(p.Routes) {
+	if util.IsEmpty(p.Routes) {
 		p.Routes = []string{""}
 	}
-	if utils.IsEmpty(p.LocalPrefix) {
+	if util.IsEmpty(p.LocalPrefix) {
 		p.LocalPrefix = []string{""}
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -13012,7 +13012,7 @@ func (p *SiteToSiteVPNUpdateVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *SiteToSiteVPNUpdateVPCRouterParam) ResourceDef() *schema.Resource {
@@ -13208,31 +13208,31 @@ func (p *SiteToSiteVPNDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) erro
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *SiteToSiteVPNDeleteVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -13263,7 +13263,7 @@ func (p *SiteToSiteVPNDeleteVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *SiteToSiteVPNDeleteVPCRouterParam) ResourceDef() *schema.Resource {
@@ -13429,46 +13429,46 @@ func (p *SiteToSiteVPNPeersVPCRouterParam) WriteSkeleton(writer io.Writer) error
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *SiteToSiteVPNPeersVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -13505,7 +13505,7 @@ func (p *SiteToSiteVPNPeersVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *SiteToSiteVPNPeersVPCRouterParam) ResourceDef() *schema.Resource {
@@ -13706,46 +13706,46 @@ func (p *StaticRouteInfoVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *StaticRouteInfoVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -13782,7 +13782,7 @@ func (p *StaticRouteInfoVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *StaticRouteInfoVPCRouterParam) ResourceDef() *schema.Resource {
@@ -13979,34 +13979,34 @@ func (p *StaticRouteAddVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *StaticRouteAddVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Prefix) {
+	if util.IsEmpty(p.Prefix) {
 		p.Prefix = ""
 	}
-	if utils.IsEmpty(p.NextHop) {
+	if util.IsEmpty(p.NextHop) {
 		p.NextHop = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -14059,7 +14059,7 @@ func (p *StaticRouteAddVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *StaticRouteAddVPCRouterParam) ResourceDef() *schema.Resource {
@@ -14229,37 +14229,37 @@ func (p *StaticRouteUpdateVPCRouterParam) WriteSkeleton(writer io.Writer) error 
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *StaticRouteUpdateVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Prefix) {
+	if util.IsEmpty(p.Prefix) {
 		p.Prefix = ""
 	}
-	if utils.IsEmpty(p.NextHop) {
+	if util.IsEmpty(p.NextHop) {
 		p.NextHop = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -14306,7 +14306,7 @@ func (p *StaticRouteUpdateVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *StaticRouteUpdateVPCRouterParam) ResourceDef() *schema.Resource {
@@ -14481,31 +14481,31 @@ func (p *StaticRouteDeleteVPCRouterParam) WriteSkeleton(writer io.Writer) error 
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *StaticRouteDeleteVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -14536,7 +14536,7 @@ func (p *StaticRouteDeleteVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *StaticRouteDeleteVPCRouterParam) ResourceDef() *schema.Resource {
@@ -14707,58 +14707,58 @@ func (p *MonitorVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *MonitorVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Interface) {
+	if util.IsEmpty(p.Interface) {
 		p.Interface = ""
 	}
-	if utils.IsEmpty(p.Start) {
+	if util.IsEmpty(p.Start) {
 		p.Start = ""
 	}
-	if utils.IsEmpty(p.End) {
+	if util.IsEmpty(p.End) {
 		p.End = ""
 	}
-	if utils.IsEmpty(p.KeyFormat) {
+	if util.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -14834,7 +14834,7 @@ func (p *MonitorVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *MonitorVPCRouterParam) ResourceDef() *schema.Resource {
@@ -15061,37 +15061,37 @@ func (p *LogsVPCRouterParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *LogsVPCRouterParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.LogName) {
+	if util.IsEmpty(p.LogName) {
 		p.LogName = ""
 	}
-	if utils.IsEmpty(p.Follow) {
+	if util.IsEmpty(p.Follow) {
 		p.Follow = false
 	}
-	if utils.IsEmpty(p.RefreshInterval) {
+	if util.IsEmpty(p.RefreshInterval) {
 		p.RefreshInterval = 0
 	}
-	if utils.IsEmpty(p.ListLogNames) {
+	if util.IsEmpty(p.ListLogNames) {
 		p.ListLogNames = false
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -15130,7 +15130,7 @@ func (p *LogsVPCRouterParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *LogsVPCRouterParam) ResourceDef() *schema.Resource {

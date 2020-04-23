@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/funcs"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -260,10 +260,10 @@ func webAccelCertificateNewCmd() *cobra.Command {
 
 			// confirm
 			if !webAccelCertificateNewParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("certificate-new", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("certificate-new", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -346,10 +346,10 @@ func webAccelCertificateUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !webAccelCertificateUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("certificate-update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("certificate-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -426,10 +426,10 @@ func webAccelDeleteCacheCmd() *cobra.Command {
 
 			// confirm
 			if !webAccelDeleteCacheParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete-cache", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("delete-cache", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}

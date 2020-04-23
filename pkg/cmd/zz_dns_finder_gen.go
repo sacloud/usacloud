@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func findDNSRecordInfoTargets(ctx cli.Context, param *params.RecordInfoDNSParam) ([]sacloud.ID, error) {
@@ -41,7 +41,7 @@ func findDNSRecordInfoTargets(ctx cli.Context, param *params.RecordInfoDNSParam)
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceDNSItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -65,7 +65,7 @@ func findDNSRecordInfoTargets(ctx cli.Context, param *params.RecordInfoDNSParam)
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceDNSItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -76,7 +76,7 @@ func findDNSRecordInfoTargets(ctx cli.Context, param *params.RecordInfoDNSParam)
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -102,7 +102,7 @@ func findDNSRecordBulkUpdateTargets(ctx cli.Context, param *params.RecordBulkUpd
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceDNSItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -126,7 +126,7 @@ func findDNSRecordBulkUpdateTargets(ctx cli.Context, param *params.RecordBulkUpd
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceDNSItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -137,7 +137,7 @@ func findDNSRecordBulkUpdateTargets(ctx cli.Context, param *params.RecordBulkUpd
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -163,7 +163,7 @@ func findDNSRecordAddTargets(ctx cli.Context, param *params.RecordAddDNSParam) (
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceDNSItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -187,7 +187,7 @@ func findDNSRecordAddTargets(ctx cli.Context, param *params.RecordAddDNSParam) (
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceDNSItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -198,7 +198,7 @@ func findDNSRecordAddTargets(ctx cli.Context, param *params.RecordAddDNSParam) (
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -224,7 +224,7 @@ func findDNSReadTargets(ctx cli.Context, param *params.ReadDNSParam) ([]sacloud.
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceDNSItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -248,7 +248,7 @@ func findDNSReadTargets(ctx cli.Context, param *params.ReadDNSParam) ([]sacloud.
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceDNSItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -259,7 +259,7 @@ func findDNSReadTargets(ctx cli.Context, param *params.ReadDNSParam) ([]sacloud.
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -285,7 +285,7 @@ func findDNSRecordUpdateTargets(ctx cli.Context, param *params.RecordUpdateDNSPa
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceDNSItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -309,7 +309,7 @@ func findDNSRecordUpdateTargets(ctx cli.Context, param *params.RecordUpdateDNSPa
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceDNSItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -320,7 +320,7 @@ func findDNSRecordUpdateTargets(ctx cli.Context, param *params.RecordUpdateDNSPa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -346,7 +346,7 @@ func findDNSRecordDeleteTargets(ctx cli.Context, param *params.RecordDeleteDNSPa
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceDNSItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -370,7 +370,7 @@ func findDNSRecordDeleteTargets(ctx cli.Context, param *params.RecordDeleteDNSPa
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceDNSItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -381,7 +381,7 @@ func findDNSRecordDeleteTargets(ctx cli.Context, param *params.RecordDeleteDNSPa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -407,7 +407,7 @@ func findDNSUpdateTargets(ctx cli.Context, param *params.UpdateDNSParam) ([]sacl
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceDNSItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -431,7 +431,7 @@ func findDNSUpdateTargets(ctx cli.Context, param *params.UpdateDNSParam) ([]sacl
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceDNSItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -442,7 +442,7 @@ func findDNSUpdateTargets(ctx cli.Context, param *params.UpdateDNSParam) ([]sacl
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -465,7 +465,7 @@ func findDNSDeleteTargets(ctx cli.Context, param *params.DeleteDNSParam) ([]sacl
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceDNSItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -489,7 +489,7 @@ func findDNSDeleteTargets(ctx cli.Context, param *params.DeleteDNSParam) ([]sacl
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceDNSItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -500,7 +500,7 @@ func findDNSDeleteTargets(ctx cli.Context, param *params.DeleteDNSParam) ([]sacl
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}

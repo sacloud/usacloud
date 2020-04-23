@@ -22,7 +22,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/funcs"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -116,10 +116,10 @@ func objectStoragePutCmd() *cobra.Command {
 
 			// confirm
 			if !objectStoragePutParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("put", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("put", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
@@ -217,10 +217,10 @@ func objectStorageDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !objectStorageDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}

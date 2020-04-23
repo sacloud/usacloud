@@ -18,13 +18,13 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func ConflictsWith(fieldName string, object interface{}, values map[string]interface{}) []error {
-	if !utils.IsEmpty(object) {
+	if !util.IsEmpty(object) {
 		for _, v := range values {
-			if !utils.IsEmpty(v) {
+			if !util.IsEmpty(v) {
 				var keys []string
 				for k := range values {
 					keys = append(keys, fmt.Sprintf("%q", k))

@@ -18,14 +18,14 @@ import (
 	"fmt"
 
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func ValidID(fieldName string, object interface{}) []error {
 	var res []error
 
 	// if target is empty, return OK(Use required attr if necessary)
-	if utils.IsEmpty(object) {
+	if util.IsEmpty(object) {
 		return res
 	}
 

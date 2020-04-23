@@ -99,39 +99,39 @@ func generateFindSetParamActions(ctx *tools.GenerateContext, command *tools.Comm
 
 var findSetParamTemplates = map[schema.HandlerType]string{
 	schema.HandlerPathThrough: `
-	if !utils.IsEmpty(params.{{.ParamName}}) {
+	if !util.IsEmpty(params.{{.ParamName}}) {
 		finder.{{.SetterFuncName}}(params.{{.ParamName}})
 	}`,
 	schema.HandlerPathThroughEach: `
-	if !utils.IsEmpty(params.{{.ParamName}}) {
+	if !util.IsEmpty(params.{{.ParamName}}) {
 		for _ , v := range params.{{.ParamName}} {
 			finder.{{.SetterFuncName}}(v)
 		}
 	}`,
 	schema.HandlerSort: `
-	if !utils.IsEmpty(params.{{.ParamName}}) {
+	if !util.IsEmpty(params.{{.ParamName}}) {
 		for _ , v := range params.{{.ParamName}} {
 			setSortBy(finder , v)
 		}
 	}`,
 	schema.HandlerFilterBy: `
-	if !utils.IsEmpty(params.{{.ParamName}}) {
+	if !util.IsEmpty(params.{{.ParamName}}) {
 		finder.SetFilterBy("{{.ParamName}}", params.{{.ParamName}})
 	}`,
 	schema.HandlerAndParams: `
-	if !utils.IsEmpty(params.{{.ParamName}}) {
+	if !util.IsEmpty(params.{{.ParamName}}) {
 		for _ , v := range params.{{.ParamName}} {
 			finder.SetFilterMultiBy("{{.Destination}}", v)
 		}
 	}`,
 	schema.HandlerOrParams: `
-	if !utils.IsEmpty(params.{{.ParamName}}) {
+	if !util.IsEmpty(params.{{.ParamName}}) {
 		for _ , v := range params.{{.ParamName}} {
 			finder.SetFilterBy("{{.Destination}}", v)
 		}
 	}`,
 	schema.HandlerCustomFunc: `
-	if !utils.IsEmpty(params.{{.ParamName}}) {
+	if !util.IsEmpty(params.{{.ParamName}}) {
 		{{.CustomHandlerName}}("{{.ParamName}}" , params , finder)
 	}`,
 }

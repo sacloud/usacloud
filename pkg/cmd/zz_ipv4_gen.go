@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/funcs"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -119,10 +119,10 @@ func ipv4PtrAddCmd() *cobra.Command {
 
 			// confirm
 			if !ipv4PtrAddParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ptr-add", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("ptr-add", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
@@ -226,10 +226,10 @@ func ipv4PtrUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !ipv4PtrUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ptr-update", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("ptr-update", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
@@ -286,10 +286,10 @@ func ipv4PtrDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !ipv4PtrDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("ptr-delete", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("ptr-delete", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}

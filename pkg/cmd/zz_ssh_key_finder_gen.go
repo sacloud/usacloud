@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func findSSHKeyReadTargets(ctx cli.Context, param *params.ReadSSHKeyParam) ([]sacloud.ID, error) {
@@ -61,7 +61,7 @@ func findSSHKeyReadTargets(ctx cli.Context, param *params.ReadSSHKeyParam) ([]sa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -107,7 +107,7 @@ func findSSHKeyUpdateTargets(ctx cli.Context, param *params.UpdateSSHKeyParam) (
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -150,7 +150,7 @@ func findSSHKeyDeleteTargets(ctx cli.Context, param *params.DeleteSSHKeyParam) (
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}

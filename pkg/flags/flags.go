@@ -21,7 +21,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/profile"
@@ -53,7 +53,7 @@ func LoadFlags(flags *pflag.FlagSet, errW io.Writer) (*Flags, error) {
 	o := &Flags{}
 	o.loadGlobalFlags(flags, errW)
 
-	return o, utils.FlattenErrors(o.Validate(true))
+	return o, util.FlattenErrors(o.Validate(true))
 }
 
 func initCredentialFlags(fs *pflag.FlagSet) {

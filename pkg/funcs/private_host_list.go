@@ -20,7 +20,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func PrivateHostList(ctx cli.Context, params *params.ListPrivateHostParam) error {
@@ -30,23 +30,23 @@ func PrivateHostList(ctx cli.Context, params *params.ListPrivateHostParam) error
 
 	finder.SetEmpty()
 
-	if !utils.IsEmpty(params.Name) {
+	if !util.IsEmpty(params.Name) {
 		for _, v := range params.Name {
 			finder.SetFilterBy("Name", v)
 		}
 	}
-	if !utils.IsEmpty(params.Id) {
+	if !util.IsEmpty(params.Id) {
 		for _, v := range params.Id {
 			finder.SetFilterMultiBy("ID", v)
 		}
 	}
-	if !utils.IsEmpty(params.From) {
+	if !util.IsEmpty(params.From) {
 		finder.SetOffset(params.From)
 	}
-	if !utils.IsEmpty(params.Max) {
+	if !util.IsEmpty(params.Max) {
 		finder.SetLimit(params.Max)
 	}
-	if !utils.IsEmpty(params.Sort) {
+	if !util.IsEmpty(params.Sort) {
 		for _, v := range params.Sort {
 			setSortBy(finder, v)
 		}

@@ -12,18 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package utils
+package util
 
-import (
-	"os"
+import "github.com/sacloud/libsacloud/sacloud"
 
-	"github.com/mattn/go-isatty"
-)
-
-// IsTerminal 標準入力/出力が端末か判定する
-func IsTerminal() bool {
-	is := func(fd uintptr) bool {
-		return isatty.IsTerminal(fd) || isatty.IsCygwinTerminal(fd)
+func UniqIDs(elements []sacloud.ID) []sacloud.ID {
+	encountered := map[sacloud.ID]bool{}
+	result := []sacloud.ID{}
+	for v := range elements {
+		if !encountered[elements[v]] {
+			encountered[elements[v]] = true
+			result = append(result, elements[v])
+		}
 	}
-	return is(os.Stdin.Fd()) && is(os.Stdout.Fd())
+	return result
+}
+
+// StringIDs sacloud.IDスライスを文字列のスライスに変換する
+func StringIDs(ids []sacloud.ID) []string {
+	var strIDs []string
+
+	for _, v := range ids {
+		if v != 0 {
+			strIDs = append(strIDs, v.String())
+		}
+	}
+
+	return strIDs
 }

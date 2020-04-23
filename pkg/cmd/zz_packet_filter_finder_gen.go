@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func findPacketFilterReadTargets(ctx cli.Context, param *params.ReadPacketFilterParam) ([]sacloud.ID, error) {
@@ -61,7 +61,7 @@ func findPacketFilterReadTargets(ctx cli.Context, param *params.ReadPacketFilter
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -107,7 +107,7 @@ func findPacketFilterUpdateTargets(ctx cli.Context, param *params.UpdatePacketFi
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -150,7 +150,7 @@ func findPacketFilterDeleteTargets(ctx cli.Context, param *params.DeletePacketFi
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -193,7 +193,7 @@ func findPacketFilterRuleInfoTargets(ctx cli.Context, param *params.RuleInfoPack
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -236,7 +236,7 @@ func findPacketFilterRuleAddTargets(ctx cli.Context, param *params.RuleAddPacket
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -282,7 +282,7 @@ func findPacketFilterRuleUpdateTargets(ctx cli.Context, param *params.RuleUpdate
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -328,7 +328,7 @@ func findPacketFilterRuleDeleteTargets(ctx cli.Context, param *params.RuleDelete
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -374,7 +374,7 @@ func findPacketFilterInterfaceConnectTargets(ctx cli.Context, param *params.Inte
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -420,7 +420,7 @@ func findPacketFilterInterfaceDisconnectTargets(ctx cli.Context, param *params.I
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}

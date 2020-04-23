@@ -24,7 +24,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/funcs"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -121,10 +121,10 @@ func mobileGatewayCreateCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayCreateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
@@ -261,10 +261,10 @@ func mobileGatewayUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -348,10 +348,10 @@ func mobileGatewayDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -431,10 +431,10 @@ func mobileGatewayBootCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayBootParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -506,10 +506,10 @@ func mobileGatewayShutdownCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayShutdownParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -581,10 +581,10 @@ func mobileGatewayShutdownForceCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayShutdownForceParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -656,10 +656,10 @@ func mobileGatewayResetCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayResetParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -927,10 +927,10 @@ func mobileGatewayInterfaceConnectCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayInterfaceConnectParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("interface-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1005,10 +1005,10 @@ func mobileGatewayInterfaceUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayInterfaceUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("interface-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1082,10 +1082,10 @@ func mobileGatewayInterfaceDisconnectCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayInterfaceDisconnectParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("interface-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1227,10 +1227,10 @@ func mobileGatewayTrafficControlEnableCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayTrafficControlEnableParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("traffic-control-enable", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("traffic-control-enable", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1307,10 +1307,10 @@ func mobileGatewayTrafficControlUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayTrafficControlUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("traffic-control-update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("traffic-control-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1387,10 +1387,10 @@ func mobileGatewayTrafficControlDisableCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayTrafficControlDisableParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("traffic-control-disable", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("traffic-control-disable", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1532,10 +1532,10 @@ func mobileGatewayStaticRouteAddCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayStaticRouteAddParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("static-route-add", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("static-route-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1609,10 +1609,10 @@ func mobileGatewayStaticRouteUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayStaticRouteUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("static-route-update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("static-route-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1687,10 +1687,10 @@ func mobileGatewayStaticRouteDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayStaticRouteDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("static-route-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("static-route-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1833,10 +1833,10 @@ func mobileGatewaySIMAddCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewaySIMAddParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("sim-add", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("sim-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1910,10 +1910,10 @@ func mobileGatewaySIMUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewaySIMUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("sim-update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("sim-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1987,10 +1987,10 @@ func mobileGatewaySIMDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewaySIMDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("sim-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("sim-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -2133,10 +2133,10 @@ func mobileGatewaySIMRouteAddCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewaySIMRouteAddParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("sim-route-add", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("sim-route-add", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -2210,10 +2210,10 @@ func mobileGatewaySIMRouteUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewaySIMRouteUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("sim-route-update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("sim-route-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -2288,10 +2288,10 @@ func mobileGatewaySIMRouteDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewaySIMRouteDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("sim-route-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("sim-route-delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -2364,10 +2364,10 @@ func mobileGatewayDNSUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !mobileGatewayDNSUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("dns-update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("dns-update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
