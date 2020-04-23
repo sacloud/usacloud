@@ -24,7 +24,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/define"
 	"github.com/sacloud/usacloud/pkg/helper/mutexkv"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/progress"
+	"github.com/sacloud/usacloud/pkg/util/progress"
 )
 
 const SummaryAPIThrottleSize = 5

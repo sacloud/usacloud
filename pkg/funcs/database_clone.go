@@ -20,7 +20,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/progress"
+	"github.com/sacloud/usacloud/pkg/util/progress"
 )
 
 func DatabaseClone(ctx cli.Context, params *params.CloneDatabaseParam) error {

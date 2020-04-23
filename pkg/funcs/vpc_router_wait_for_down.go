@@ -19,7 +19,7 @@ import (
 
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/progress"
+	"github.com/sacloud/usacloud/pkg/util/progress"
 )
 
 func VPCRouterWaitForDown(ctx cli.Context, params *params.WaitForDownVPCRouterParam) error {

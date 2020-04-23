@@ -21,7 +21,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	usacloud_params "github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/progress"
+	"github.com/sacloud/usacloud/pkg/util/progress"
 )
 
 func ServerISOInsert(ctx cli.Context, params *usacloud_params.ISOInsertServerParam) error {
