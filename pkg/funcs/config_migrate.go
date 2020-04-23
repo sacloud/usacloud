@@ -16,7 +16,7 @@ package funcs
 
 import (
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/helper/migration"
+	"github.com/sacloud/usacloud/pkg/migration"
 	"github.com/sacloud/usacloud/pkg/params"
 )
 
