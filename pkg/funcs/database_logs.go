@@ -22,7 +22,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
 	"github.com/sacloud/usacloud/pkg/printer"
-	"github.com/sacloud/usacloud/pkg/util/queue"
+	"github.com/sacloud/usacloud/pkg/queue"
 )
 
 func DatabaseLogs(ctx cli.Context, params *params.LogsDatabaseParam) error {
