@@ -21,7 +21,7 @@ import (
 	"time"
 
 	"github.com/fatih/color"
-	"github.com/sacloud/usacloud/pkg/helper/printer"
+	"github.com/sacloud/usacloud/pkg/printer"
 )
 
 var mutex = sync.Mutex{}

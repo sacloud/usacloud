@@ -20,8 +20,8 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/helper/printer"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/printer"
 	"github.com/sacloud/usacloud/pkg/util/queue"
 )
 
