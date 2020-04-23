@@ -21,8 +21,8 @@ import (
 	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/helper/printer"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/queue"
 )
 
 func DatabaseLogs(ctx cli.Context, params *params.LogsDatabaseParam) error {
@@ -44,7 +44,7 @@ func DatabaseLogs(ctx cli.Context, params *params.LogsDatabaseParam) error {
 		fmt.Fprintf(ctx.IO().Err(), "[WARN] --refresh-interval option can not use with --log-name=%q, ignored", "all")
 	}
 
-	logBuf := internal.NewHashQueue(500)
+	logBuf := queue.NewHashQueue(500)
 	out := ctx.IO().Out()
 	printer := printer.Printer{NoColor: ctx.Option().NoColor}
 

@@ -20,8 +20,8 @@ import (
 	"time"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/queue"
 )
 
 func SIMLogs(ctx cli.Context, params *params.LogsSIMParam) error {
@@ -33,7 +33,7 @@ func SIMLogs(ctx cli.Context, params *params.LogsSIMParam) error {
 		return fmt.Errorf("SIMLogs is failed: %s", e)
 	}
 
-	logBuf := internal.NewHashQueue(500)
+	logBuf := queue.NewHashQueue(500)
 	out := ctx.IO().Out()
 
 	if params.Follow {
