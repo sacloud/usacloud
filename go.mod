@@ -11,7 +11,6 @@ require (
 	github.com/hnakamur/go-scp v0.0.0-20170731142846-05a5990ec145
 	github.com/hnakamur/go-sshd v0.0.0-20170228152141-dccc3399d26a // indirect
 	github.com/huandu/xstrings v1.3.0
-	github.com/imdario/mergo v0.3.6
 	github.com/kr/pty v1.1.3 // indirect
 	github.com/mattn/go-colorable v0.0.9
 	github.com/mattn/go-isatty v0.0.7
@@ -31,6 +30,5 @@ require (
 	github.com/stretchr/testify v1.3.0
 	github.com/vaughan0/go-ini v0.0.0-20130923145212-a98ad7ee00ec // indirect
 	golang.org/x/sys v0.0.0-20190416152802-12500544f89f // indirect
-	gopkg.in/urfave/cli.v2 v2.0.0-20170215051800-04b2f4ff79cf
 	launchpad.net/gocheck v0.0.0-20140225173054-000000000087 // indirect
 )

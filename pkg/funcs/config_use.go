@@ -18,9 +18,9 @@ import (
 	"fmt"
 
 	"github.com/fatih/color"
+	"github.com/sacloud/libsacloud/v2/sacloud/profile"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/profile"
 )
 
 func ConfigUse(ctx cli.Context, params *params.UseConfigParam) error {

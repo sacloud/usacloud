@@ -21,8 +21,8 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/mitchellh/go-homedir"
+	"github.com/sacloud/libsacloud/v2/sacloud/profile"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/profile"
 )
 
 const OldConfigFileName = ".usacloud_config"
@@ -93,7 +93,7 @@ func MigrateConfig() error {
 	}
 
 	// profile[default] exists?
-	dest, err := profile.GetConfigFilePath(profile.DefaultProfileName)
+	dest, err := profile.ConfigFilePath(profile.DefaultProfileName)
 	if err != nil {
 		return fmt.Errorf("Getting new config path is failed: %s", err)
 	}

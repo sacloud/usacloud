@@ -34,7 +34,7 @@ import (
 type Config struct {
 	profile.ConfigValue
 	// Profile プロファイル名
-	Profile string
+	Profile string `json:"-"`
 	// DefaultOutputType デフォルトアウトプットタイプ
 	DefaultOutputType string
 	// NoColor ANSIエスケープシーケンスによる色つけを無効化
@@ -72,6 +72,12 @@ func initDebugConfig(fs *pflag.FlagSet) {
 	fs.BoolP("trace", "", false, "enable trace logs for API calling")
 	fs.BoolP("fake", "", false, "enable fake API driver")
 	fs.StringP("fake-store", "", "", "path to file store used by the fake API driver")
+}
+
+func (o *Config) IsEmpty() bool {
+	return o.AccessToken == "" &&
+		o.AccessTokenSecret == "" &&
+		o.Zone == "" && o.DefaultOutputType == ""
 }
 
 func (o *Config) loadConfig(flags *pflag.FlagSet, errW io.Writer) {

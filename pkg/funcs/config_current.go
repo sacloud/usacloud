@@ -17,14 +17,14 @@ package funcs
 import (
 	"fmt"
 
+	"github.com/sacloud/libsacloud/v2/sacloud/profile"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/profile"
 )
 
 func ConfigCurrent(ctx cli.Context, params *params.CurrentConfigParam) error {
 
-	p, err := profile.GetCurrentName()
+	p, err := profile.CurrentName()
 	if err != nil {
 		return fmt.Errorf("ConfigCurrent is failed: %s", err)
 	}

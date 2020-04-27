@@ -19,7 +19,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/sacloud/usacloud/pkg/profile"
+	"github.com/sacloud/usacloud/pkg/config"
+
+	"github.com/sacloud/libsacloud/v2/sacloud/profile"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -46,7 +48,8 @@ func TestMigrateConfig(t *testing.T) {
 		err := MigrateConfig()
 		assert.NoError(t, err)
 
-		v, err := profile.LoadConfigFile(profile.DefaultProfileName)
+		v := &config.Config{}
+		err = profile.Load(profile.DefaultProfileName, v)
 		assert.NoError(t, err)
 
 		assert.EqualValues(t, "test-token", v.AccessToken)
@@ -82,7 +85,7 @@ func TestMigrateConfig(t *testing.T) {
 		assert.True(t, fileExists)
 
 		// dest isnot created
-		dest, err := profile.GetConfigFilePath(profile.DefaultProfileName)
+		dest, err := profile.ConfigFilePath(profile.DefaultProfileName)
 		assert.NoError(t, err)
 
 		fileExists = false
@@ -113,7 +116,8 @@ func TestMigrateConfig(t *testing.T) {
 		assert.True(t, fileExists)
 
 		// dest isnot changed
-		v, err := profile.LoadConfigFile(profile.DefaultProfileName)
+		v := &config.Config{}
+		err = profile.Load(profile.DefaultProfileName, v)
 		assert.NoError(t, err)
 		assert.EqualValues(t, "default-token", v.AccessToken)
 		assert.EqualValues(t, "default-secret", v.AccessTokenSecret)
@@ -140,7 +144,8 @@ func TestMigrateConfig(t *testing.T) {
 		assert.False(t, fileExists)
 
 		// dest isnot changed
-		v, err := profile.LoadConfigFile(profile.DefaultProfileName)
+		v := &config.Config{}
+		err = profile.Load(profile.DefaultProfileName, v)
 		assert.NoError(t, err)
 		assert.EqualValues(t, "test-token", v.AccessToken)
 		assert.EqualValues(t, "test-secret", v.AccessTokenSecret)
@@ -160,21 +165,23 @@ func createOldConfig() {
 }
 
 func createDefaultProfile() {
-	profile.SaveConfigFile(profile.DefaultProfileName, &profile.ConfigFileValue{
-		AccessToken:       "default-token",
-		AccessTokenSecret: "default-secret",
-		Zone:              "tk1v",
+	profile.Save(profile.DefaultProfileName, &config.Config{
+		ConfigValue: profile.ConfigValue{
+			AccessToken:       "default-token",
+			AccessTokenSecret: "default-secret",
+			Zone:              "tk1v",
+		},
 	})
 }
 
 func cleanupDefaultProfile() {
-	path, err := profile.GetConfigFilePath(profile.DefaultProfileName)
+	path, err := profile.ConfigFilePath(profile.DefaultProfileName)
 	if err != nil {
 		panic(err)
 	}
 
 	if _, err := os.Stat(path); err == nil {
-		if err := profile.RemoveConfigFile(profile.DefaultProfileName); err != nil {
+		if err := profile.Remove(profile.DefaultProfileName); err != nil {
 			panic(err)
 		}
 	}
