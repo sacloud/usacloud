@@ -20,10 +20,11 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/funcs"
+	"github.com/sacloud/usacloud/pkg/funcs/disk"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/term"
 	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
@@ -51,7 +52,7 @@ func diskListCmd() *cobra.Command {
 		Long:         `List Disk`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, diskListParam)
+			ctx, err := cli.NewCLIContext("disk", "list", globalFlags(), args, diskListParam)
 			if err != nil {
 				return err
 			}
@@ -66,14 +67,14 @@ func diskListCmd() *cobra.Command {
 				return generateSkeleton(ctx, diskListParam)
 			}
 
-			return funcs.DiskList(ctx, diskListParam)
+			return cli.WrapError(ctx, disk.List(ctx, diskListParam))
 
 		},
 	}
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&diskListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskListParam.Id), "id", "", "set filter by id(s)")
+	fs.VarP(newIDSliceValue([]types.ID{}, &diskListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringVarP(&diskListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
 	fs.StringSliceVarP(&diskListParam.Tags, "tags", "", []string{}, "set filter by tags(AND) (aliases: selector)")
 	fs.VarP(newIDValue(0, &diskListParam.SourceArchiveId), "source-archive-id", "", "set filter by source-archive-id")
@@ -82,9 +83,7 @@ func diskListCmd() *cobra.Command {
 	fs.IntVarP(&diskListParam.From, "from", "", 0, "set offset (aliases: offset)")
 	fs.IntVarP(&diskListParam.Max, "max", "", 0, "set limit (aliases: limit)")
 	fs.StringSliceVarP(&diskListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringVarP(&diskListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&diskListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&diskListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&diskListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -108,7 +107,7 @@ func diskCreateCmd() *cobra.Command {
 		Long:         `Create Disk`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, diskCreateParam)
+			ctx, err := cli.NewCLIContext("disk", "create", globalFlags(), args, diskCreateParam)
 			if err != nil {
 				return err
 			}
@@ -125,7 +124,7 @@ func diskCreateCmd() *cobra.Command {
 
 			// confirm
 			if !diskCreateParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
@@ -134,7 +133,7 @@ func diskCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.DiskCreate(ctx, diskCreateParam)
+			return cli.WrapError(ctx, disk.Create(ctx, diskCreateParam))
 
 		},
 	}
@@ -145,15 +144,13 @@ func diskCreateCmd() *cobra.Command {
 	fs.VarP(newIDValue(0, &diskCreateParam.SourceArchiveId), "source-archive-id", "", "set source disk ID")
 	fs.VarP(newIDValue(0, &diskCreateParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
 	fs.IntVarP(&diskCreateParam.Size, "size", "", 20, "set disk size(GB)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskCreateParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
+	fs.VarP(newIDSliceValue([]types.ID{}, &diskCreateParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
 	fs.StringVarP(&diskCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&diskCreateParam.Description, "description", "", "", "set resource description (aliases: desc)")
 	fs.StringSliceVarP(&diskCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &diskCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.BoolVarP(&diskCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&diskCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&diskCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&diskCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&diskCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -177,7 +174,7 @@ func diskReadCmd() *cobra.Command {
 		Long:         `Read Disk`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, diskReadParam)
+			ctx, err := cli.NewCLIContext("disk", "read", globalFlags(), args, diskReadParam)
 			if err != nil {
 				return err
 			}
@@ -203,14 +200,13 @@ func diskReadCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				diskReadParam.SetId(id)
-				go func(p *params.ReadDiskParam) {
-					err := funcs.DiskRead(ctx, p)
+				go func(ctx cli.Context, p *params.ReadDiskParam) {
+					err := cli.WrapError(ctx, disk.Read(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(diskReadParam)
+				}(ctx.WithID(id), diskReadParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -220,9 +216,7 @@ func diskReadCmd() *cobra.Command {
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&diskReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&diskReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&diskReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&diskReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&diskReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -247,7 +241,7 @@ func diskUpdateCmd() *cobra.Command {
 		Long:         `Update Disk`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, diskUpdateParam)
+			ctx, err := cli.NewCLIContext("disk", "update", globalFlags(), args, diskUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -270,7 +264,7 @@ func diskUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !diskUpdateParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -284,14 +278,13 @@ func diskUpdateCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				diskUpdateParam.SetId(id)
-				go func(p *params.UpdateDiskParam) {
-					err := funcs.DiskUpdate(ctx, p)
+				go func(ctx cli.Context, p *params.UpdateDiskParam) {
+					err := cli.WrapError(ctx, disk.Update(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(diskUpdateParam)
+				}(ctx.WithID(id), diskUpdateParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -307,9 +300,7 @@ func diskUpdateCmd() *cobra.Command {
 	fs.StringSliceVarP(&diskUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &diskUpdateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.BoolVarP(&diskUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&diskUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&diskUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&diskUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&diskUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -334,7 +325,7 @@ func diskDeleteCmd() *cobra.Command {
 		Long:         `Delete Disk`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, diskDeleteParam)
+			ctx, err := cli.NewCLIContext("disk", "delete", globalFlags(), args, diskDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -357,7 +348,7 @@ func diskDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !diskDeleteParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -371,14 +362,13 @@ func diskDeleteCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				diskDeleteParam.SetId(id)
-				go func(p *params.DeleteDiskParam) {
-					err := funcs.DiskDelete(ctx, p)
+				go func(ctx cli.Context, p *params.DeleteDiskParam) {
+					err := cli.WrapError(ctx, disk.Delete(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(diskDeleteParam)
+				}(ctx.WithID(id), diskDeleteParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -389,9 +379,7 @@ func diskDeleteCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&diskDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&diskDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&diskDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&diskDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&diskDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&diskDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -416,7 +404,7 @@ func diskEditCmd() *cobra.Command {
 		Long:         `Edit Disk`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, diskEditParam)
+			ctx, err := cli.NewCLIContext("disk", "edit", globalFlags(), args, diskEditParam)
 			if err != nil {
 				return err
 			}
@@ -439,7 +427,7 @@ func diskEditCmd() *cobra.Command {
 
 			// confirm
 			if !diskEditParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("edit", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -453,14 +441,13 @@ func diskEditCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				diskEditParam.SetId(id)
-				go func(p *params.EditDiskParam) {
-					err := funcs.DiskEdit(ctx, p)
+				go func(ctx cli.Context, p *params.EditDiskParam) {
+					err := cli.WrapError(ctx, disk.Edit(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(diskEditParam)
+				}(ctx.WithID(id), diskEditParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -471,17 +458,15 @@ func diskEditCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.StringVarP(&diskEditParam.Hostname, "hostname", "", "", "set hostname")
 	fs.StringVarP(&diskEditParam.Password, "password", "", "", "set password")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskEditParam.SSHKeyIds), "ssh-key-ids", "", "set ssh-key ID(s)")
+	fs.VarP(newIDSliceValue([]types.ID{}, &diskEditParam.SSHKeyIds), "ssh-key-ids", "", "set ssh-key ID(s)")
 	fs.BoolVarP(&diskEditParam.DisablePasswordAuth, "disable-password-auth", "", false, "disable password auth on SSH (aliases: disable-pw-auth)")
 	fs.StringVarP(&diskEditParam.Ipaddress, "ipaddress", "", "", "set ipaddress (aliases: ip)")
 	fs.StringVarP(&diskEditParam.DefaultRoute, "default-route", "", "", "set default gateway (aliases: gateway)")
 	fs.IntVarP(&diskEditParam.NwMasklen, "nw-masklen", "", 24, "set ipaddress  prefix (aliases: network-masklen)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskEditParam.StartupScriptIds), "startup-script-ids", "", "set startup-script ID(s) (aliases: note-ids)")
+	fs.VarP(newIDSliceValue([]types.ID{}, &diskEditParam.StartupScriptIds), "startup-script-ids", "", "set startup-script ID(s) (aliases: note-ids)")
 	fs.StringSliceVarP(&diskEditParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&diskEditParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&diskEditParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskEditParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&diskEditParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&diskEditParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskEditParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&diskEditParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -506,7 +491,7 @@ func diskResizePartitionCmd() *cobra.Command {
 		Long:         `ResizePartition Disk`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, diskResizePartitionParam)
+			ctx, err := cli.NewCLIContext("disk", "resize-partition", globalFlags(), args, diskResizePartitionParam)
 			if err != nil {
 				return err
 			}
@@ -529,7 +514,7 @@ func diskResizePartitionCmd() *cobra.Command {
 
 			// confirm
 			if !diskResizePartitionParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("resize-partition", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -543,14 +528,13 @@ func diskResizePartitionCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				diskResizePartitionParam.SetId(id)
-				go func(p *params.ResizePartitionDiskParam) {
-					err := funcs.DiskResizePartition(ctx, p)
+				go func(ctx cli.Context, p *params.ResizePartitionDiskParam) {
+					err := cli.WrapError(ctx, disk.ResizePartition(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(diskResizePartitionParam)
+				}(ctx.WithID(id), diskResizePartitionParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -561,9 +545,7 @@ func diskResizePartitionCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&diskResizePartitionParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&diskResizePartitionParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&diskResizePartitionParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskResizePartitionParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&diskResizePartitionParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&diskResizePartitionParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskResizePartitionParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&diskResizePartitionParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -588,7 +570,7 @@ func diskReinstallFromArchiveCmd() *cobra.Command {
 		Long:         `ReinstallFromArchive Disk`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, diskReinstallFromArchiveParam)
+			ctx, err := cli.NewCLIContext("disk", "reinstall-from-archive", globalFlags(), args, diskReinstallFromArchiveParam)
 			if err != nil {
 				return err
 			}
@@ -611,7 +593,7 @@ func diskReinstallFromArchiveCmd() *cobra.Command {
 
 			// confirm
 			if !diskReinstallFromArchiveParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("re-install from archive", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -625,14 +607,13 @@ func diskReinstallFromArchiveCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				diskReinstallFromArchiveParam.SetId(id)
-				go func(p *params.ReinstallFromArchiveDiskParam) {
-					err := funcs.DiskReinstallFromArchive(ctx, p)
+				go func(ctx cli.Context, p *params.ReinstallFromArchiveDiskParam) {
+					err := cli.WrapError(ctx, disk.ReinstallFromArchive(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(diskReinstallFromArchiveParam)
+				}(ctx.WithID(id), diskReinstallFromArchiveParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -642,12 +623,10 @@ func diskReinstallFromArchiveCmd() *cobra.Command {
 
 	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &diskReinstallFromArchiveParam.SourceArchiveId), "source-archive-id", "", "set source archive ID")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskReinstallFromArchiveParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
+	fs.VarP(newIDSliceValue([]types.ID{}, &diskReinstallFromArchiveParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
 	fs.StringSliceVarP(&diskReinstallFromArchiveParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&diskReinstallFromArchiveParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&diskReinstallFromArchiveParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskReinstallFromArchiveParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&diskReinstallFromArchiveParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&diskReinstallFromArchiveParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskReinstallFromArchiveParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskReinstallFromArchiveParam.Id), "id", "", "Set target ID")
@@ -665,7 +644,7 @@ func diskReinstallFromDiskCmd() *cobra.Command {
 		Long:         `ReinstallFromDisk Disk`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, diskReinstallFromDiskParam)
+			ctx, err := cli.NewCLIContext("disk", "reinstall-from-disk", globalFlags(), args, diskReinstallFromDiskParam)
 			if err != nil {
 				return err
 			}
@@ -688,7 +667,7 @@ func diskReinstallFromDiskCmd() *cobra.Command {
 
 			// confirm
 			if !diskReinstallFromDiskParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("re-install from disk", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -702,14 +681,13 @@ func diskReinstallFromDiskCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				diskReinstallFromDiskParam.SetId(id)
-				go func(p *params.ReinstallFromDiskDiskParam) {
-					err := funcs.DiskReinstallFromDisk(ctx, p)
+				go func(ctx cli.Context, p *params.ReinstallFromDiskDiskParam) {
+					err := cli.WrapError(ctx, disk.ReinstallFromDisk(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(diskReinstallFromDiskParam)
+				}(ctx.WithID(id), diskReinstallFromDiskParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -719,12 +697,10 @@ func diskReinstallFromDiskCmd() *cobra.Command {
 
 	fs := cmd.Flags()
 	fs.VarP(newIDValue(0, &diskReinstallFromDiskParam.SourceDiskId), "source-disk-id", "", "set source disk ID")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskReinstallFromDiskParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
+	fs.VarP(newIDSliceValue([]types.ID{}, &diskReinstallFromDiskParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
 	fs.StringSliceVarP(&diskReinstallFromDiskParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&diskReinstallFromDiskParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&diskReinstallFromDiskParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskReinstallFromDiskParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&diskReinstallFromDiskParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&diskReinstallFromDiskParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskReinstallFromDiskParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskReinstallFromDiskParam.Id), "id", "", "Set target ID")
@@ -742,7 +718,7 @@ func diskReinstallToBlankCmd() *cobra.Command {
 		Long:         `ReinstallToBlank Disk`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, diskReinstallToBlankParam)
+			ctx, err := cli.NewCLIContext("disk", "reinstall-to-blank", globalFlags(), args, diskReinstallToBlankParam)
 			if err != nil {
 				return err
 			}
@@ -765,7 +741,7 @@ func diskReinstallToBlankCmd() *cobra.Command {
 
 			// confirm
 			if !diskReinstallToBlankParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("re-install to blank", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -779,14 +755,13 @@ func diskReinstallToBlankCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				diskReinstallToBlankParam.SetId(id)
-				go func(p *params.ReinstallToBlankDiskParam) {
-					err := funcs.DiskReinstallToBlank(ctx, p)
+				go func(ctx cli.Context, p *params.ReinstallToBlankDiskParam) {
+					err := cli.WrapError(ctx, disk.ReinstallToBlank(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(diskReinstallToBlankParam)
+				}(ctx.WithID(id), diskReinstallToBlankParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -795,12 +770,10 @@ func diskReinstallToBlankCmd() *cobra.Command {
 	}
 
 	fs := cmd.Flags()
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &diskReinstallToBlankParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
+	fs.VarP(newIDSliceValue([]types.ID{}, &diskReinstallToBlankParam.DistantFrom), "distant-from", "", "set distant from disk IDs")
 	fs.StringSliceVarP(&diskReinstallToBlankParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&diskReinstallToBlankParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&diskReinstallToBlankParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskReinstallToBlankParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&diskReinstallToBlankParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&diskReinstallToBlankParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskReinstallToBlankParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskReinstallToBlankParam.Id), "id", "", "Set target ID")
@@ -818,7 +791,7 @@ func diskServerConnectCmd() *cobra.Command {
 		Long:         `ServerConnect Disk`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, diskServerConnectParam)
+			ctx, err := cli.NewCLIContext("disk", "server-connect", globalFlags(), args, diskServerConnectParam)
 			if err != nil {
 				return err
 			}
@@ -841,7 +814,7 @@ func diskServerConnectCmd() *cobra.Command {
 
 			// confirm
 			if !diskServerConnectParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("server-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -855,14 +828,13 @@ func diskServerConnectCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				diskServerConnectParam.SetId(id)
-				go func(p *params.ServerConnectDiskParam) {
-					err := funcs.DiskServerConnect(ctx, p)
+				go func(ctx cli.Context, p *params.ServerConnectDiskParam) {
+					err := cli.WrapError(ctx, disk.ServerConnect(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(diskServerConnectParam)
+				}(ctx.WithID(id), diskServerConnectParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -874,9 +846,7 @@ func diskServerConnectCmd() *cobra.Command {
 	fs.VarP(newIDValue(0, &diskServerConnectParam.ServerId), "server-id", "", "set target server ID")
 	fs.StringSliceVarP(&diskServerConnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&diskServerConnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&diskServerConnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskServerConnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&diskServerConnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&diskServerConnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskServerConnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskServerConnectParam.Id), "id", "", "Set target ID")
@@ -894,7 +864,7 @@ func diskServerDisconnectCmd() *cobra.Command {
 		Long:         `ServerDisconnect Disk`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, diskServerDisconnectParam)
+			ctx, err := cli.NewCLIContext("disk", "server-disconnect", globalFlags(), args, diskServerDisconnectParam)
 			if err != nil {
 				return err
 			}
@@ -917,7 +887,7 @@ func diskServerDisconnectCmd() *cobra.Command {
 
 			// confirm
 			if !diskServerDisconnectParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("server-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -931,14 +901,13 @@ func diskServerDisconnectCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				diskServerDisconnectParam.SetId(id)
-				go func(p *params.ServerDisconnectDiskParam) {
-					err := funcs.DiskServerDisconnect(ctx, p)
+				go func(ctx cli.Context, p *params.ServerDisconnectDiskParam) {
+					err := cli.WrapError(ctx, disk.ServerDisconnect(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(diskServerDisconnectParam)
+				}(ctx.WithID(id), diskServerDisconnectParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -949,9 +918,7 @@ func diskServerDisconnectCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&diskServerDisconnectParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&diskServerDisconnectParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&diskServerDisconnectParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskServerDisconnectParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&diskServerDisconnectParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&diskServerDisconnectParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskServerDisconnectParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskServerDisconnectParam.Id), "id", "", "Set target ID")
@@ -969,7 +936,7 @@ func diskMonitorCmd() *cobra.Command {
 		Long:         `Monitor Disk`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, diskMonitorParam)
+			ctx, err := cli.NewCLIContext("disk", "monitor", globalFlags(), args, diskMonitorParam)
 			if err != nil {
 				return err
 			}
@@ -995,14 +962,13 @@ func diskMonitorCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				diskMonitorParam.SetId(id)
-				go func(p *params.MonitorDiskParam) {
-					err := funcs.DiskMonitor(ctx, p)
+				go func(ctx cli.Context, p *params.MonitorDiskParam) {
+					err := cli.WrapError(ctx, disk.Monitor(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(diskMonitorParam)
+				}(ctx.WithID(id), diskMonitorParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -1012,9 +978,7 @@ func diskMonitorCmd() *cobra.Command {
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&diskMonitorParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&diskMonitorParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskMonitorParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&diskMonitorParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&diskMonitorParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskMonitorParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&diskMonitorParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -1042,7 +1006,7 @@ func diskWaitForCopyCmd() *cobra.Command {
 		Long:         `WaitForCopy Disk`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, diskWaitForCopyParam)
+			ctx, err := cli.NewCLIContext("disk", "wait-for-copy", globalFlags(), args, diskWaitForCopyParam)
 			if err != nil {
 				return err
 			}
@@ -1068,14 +1032,13 @@ func diskWaitForCopyCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				diskWaitForCopyParam.SetId(id)
-				go func(p *params.WaitForCopyDiskParam) {
-					err := funcs.DiskWaitForCopy(ctx, p)
+				go func(ctx cli.Context, p *params.WaitForCopyDiskParam) {
+					err := cli.WrapError(ctx, disk.WaitForCopy(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(diskWaitForCopyParam)
+				}(ctx.WithID(id), diskWaitForCopyParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -1085,9 +1048,7 @@ func diskWaitForCopyCmd() *cobra.Command {
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&diskWaitForCopyParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&diskWaitForCopyParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&diskWaitForCopyParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&diskWaitForCopyParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&diskWaitForCopyParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&diskWaitForCopyParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &diskWaitForCopyParam.Id), "id", "", "Set target ID")

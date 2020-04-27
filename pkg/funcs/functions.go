@@ -16,25 +16,12 @@ package funcs
 
 import (
 	"fmt"
-	"os"
 	"path/filepath"
-	"strings"
-	"time"
 
 	"github.com/mitchellh/go-homedir"
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/libsacloud/sacloud"
 )
-
-func setSortBy(target sortable, key string) {
-	reverse := strings.HasPrefix(key, "-")
-	key = strings.Replace(key, "-", "", -1)
-	target.SetSortBy(key, reverse)
-}
-
-type sortable interface {
-	SetSortBy(key string, reverse bool)
-}
 
 func getSSHPrivateKeyStorePath(serverID sacloud.ID) (string, error) {
 	homeDir, err := homedir.Dir()
@@ -117,38 +104,4 @@ func getSSHDefaultUserNameArchiveRec(client *api.Client, archiveID sacloud.ID) (
 	}
 	return "", nil
 
-}
-
-func parseDateTimeString(strDateTime string) time.Time {
-	allowDatetimeFormatList := []string{
-		time.RFC3339,
-	}
-
-	if strDateTime != "" {
-		for _, format := range allowDatetimeFormatList {
-			d, err := time.Parse(format, strDateTime)
-			if err == nil {
-				// success
-				return d
-			}
-		}
-	}
-
-	return time.Now()
-}
-
-func fileOrStdin(path string) (file *os.File, deferFunc func(), err error) {
-	if path == "" || path == "-" {
-		file = os.Stdin // TODO ビルドを通すための仮実装
-		deferFunc = func() {}
-	} else {
-		file, err = os.Open(path)
-		if err != nil {
-			return
-		}
-		deferFunc = func() {
-			file.Close()
-		}
-	}
-	return
 }

@@ -40,9 +40,7 @@ func billCsvFlagOrder(cmd *cobra.Command) []*flagSet {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -88,9 +86,7 @@ func billListFlagOrder(cmd *cobra.Command) []*flagSet {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{

@@ -20,29 +20,30 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/search"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
-func findAutoBackupReadTargets(ctx cli.Context, param *params.ReadAutoBackupParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findAutoBackupReadTargets(ctx cli.Context, param *params.ReadAutoBackupParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().AutoBackup
+	client := sacloud.NewAutoBackupOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
-		for _, v := range res.CommonServiceAutoBackupItems {
+		for _, v := range res.AutoBackups {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -52,21 +53,23 @@ func findAutoBackupReadTargets(ctx cli.Context, param *params.ReadAutoBackupPara
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
 					if res.Count == 0 {
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
-					for _, v := range res.CommonServiceAutoBackupItems {
+					for _, v := range res.AutoBackups {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -87,23 +90,22 @@ func findAutoBackupReadTargets(ctx cli.Context, param *params.ReadAutoBackupPara
 	return ids, nil
 }
 
-func findAutoBackupUpdateTargets(ctx cli.Context, param *params.UpdateAutoBackupParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findAutoBackupUpdateTargets(ctx cli.Context, param *params.UpdateAutoBackupParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().AutoBackup
+	client := sacloud.NewAutoBackupOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
-		for _, v := range res.CommonServiceAutoBackupItems {
+		for _, v := range res.AutoBackups {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -113,21 +115,23 @@ func findAutoBackupUpdateTargets(ctx cli.Context, param *params.UpdateAutoBackup
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
 					if res.Count == 0 {
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
-					for _, v := range res.CommonServiceAutoBackupItems {
+					for _, v := range res.AutoBackups {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -145,23 +149,22 @@ func findAutoBackupUpdateTargets(ctx cli.Context, param *params.UpdateAutoBackup
 	return ids, nil
 }
 
-func findAutoBackupDeleteTargets(ctx cli.Context, param *params.DeleteAutoBackupParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findAutoBackupDeleteTargets(ctx cli.Context, param *params.DeleteAutoBackupParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().AutoBackup
+	client := sacloud.NewAutoBackupOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
-		for _, v := range res.CommonServiceAutoBackupItems {
+		for _, v := range res.AutoBackups {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -171,21 +174,23 @@ func findAutoBackupDeleteTargets(ctx cli.Context, param *params.DeleteAutoBackup
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
 					if res.Count == 0 {
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
-					for _, v := range res.CommonServiceAutoBackupItems {
+					for _, v := range res.AutoBackups {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}

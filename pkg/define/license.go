@@ -73,6 +73,7 @@ func LicenseResource() *schema.Resource {
 		Commands:            commands,
 		ResourceCategory:    CategoryCommonItem,
 		ListResultFieldName: "Licenses",
+		IsGlobal:            true,
 	}
 }
 
@@ -109,7 +110,7 @@ func licenseCreateParam() map[string]*schema.Schema {
 		"license-info-id": {
 			Type:            schema.TypeId,
 			HandlerType:     schema.HandlerPathThrough,
-			DestinationProp: "SetLicenseInfoByID",
+			DestinationProp: "LicenseInfoID",
 			Description:     "set LicenseInfo ID",
 			Category:        "license",
 			Order:           10,

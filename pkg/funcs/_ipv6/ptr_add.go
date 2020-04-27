@@ -1,0 +1,50 @@
+// Copyright 2017-2020 The Usacloud Authors
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package ipv6
+
+import (
+	"fmt"
+
+	"github.com/sacloud/libsacloud/v2/sacloud"
+
+	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/params"
+)
+
+func PtrAdd(ctx cli.Context, params *params.PtrAddIPv6Param) error {
+	client := sacloud.NewIPv6AddrOp(ctx.Client())
+	targetIP, err := getIPv6AddrFromArgs(ctx.Args())
+	if err != nil {
+		return err
+	}
+
+	ip, err := client.Read(ctx, ctx.Zone(), targetIP)
+	if err != nil && !sacloud.IsNotFoundError(err) {
+		return fmt.Errorf("IPv6PtrAdd is failed: %s", err)
+	}
+	if ip != nil && ip.HostName != "" {
+		return fmt.Errorf("PTR record has already been set for IPAddress %q", targetIP)
+	}
+
+	ip, err = client.Create(ctx, ctx.Zone(), &sacloud.IPv6AddrCreateRequest{
+		IPv6Addr: targetIP,
+		HostName: params.Hostname,
+	})
+	if err != nil {
+		return fmt.Errorf("IPv6PtrAdd is failed: %s", err)
+	}
+
+	return ctx.Output().Print(ip)
+}

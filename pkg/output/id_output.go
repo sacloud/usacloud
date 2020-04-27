@@ -22,6 +22,7 @@ import (
 
 	"github.com/astaxie/flatmap"
 	"github.com/bitly/go-simplejson"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 type idOutput struct {
@@ -38,7 +39,8 @@ func NewIDOutput(out io.Writer, err io.Writer) Output {
 	}
 }
 
-func (o *idOutput) Print(targets ...interface{}) error {
+func (o *idOutput) Print(target interface{}) error {
+	targets := toSlice(target)
 	if o.Out == nil {
 		o.Out = os.Stdout
 	}
@@ -46,8 +48,8 @@ func (o *idOutput) Print(targets ...interface{}) error {
 		o.Err = os.Stderr
 	}
 
-	if len(targets) == 0 {
-		fmt.Fprintf(o.Err, "Result is empty\n")
+	if util.IsEmpty(targets) {
+		fmt.Fprintf(o.Err, "no results\n")
 		return nil
 	}
 
@@ -61,9 +63,7 @@ func (o *idOutput) Print(targets ...interface{}) error {
 	if err != nil {
 		return fmt.Errorf("FreeOutput:Print: create simplejson is failed: %s", err)
 	}
-	for i := range targets {
-
-		// interface{} -> map[string]interface{}
+	for i := 0; i < sliceLen(targets); i++ {
 		v := j.GetIndex(i)
 		mapValue, err := v.Map()
 		if err != nil {

@@ -23,6 +23,8 @@ import (
 	"os"
 	"text/template"
 
+	"github.com/sacloud/usacloud/pkg/util"
+
 	"github.com/bitly/go-simplejson"
 )
 
@@ -42,7 +44,8 @@ func NewFreeOutput(out io.Writer, err io.Writer, option Option) Output {
 	}
 }
 
-func (o *freeOutput) Print(targets ...interface{}) error {
+func (o *freeOutput) Print(target interface{}) error {
+	targets := toSlice(target)
 	if o.Out == nil {
 		o.Out = os.Stdout
 	}
@@ -50,8 +53,8 @@ func (o *freeOutput) Print(targets ...interface{}) error {
 		o.Err = os.Stderr
 	}
 
-	if len(targets) == 0 {
-		fmt.Fprintf(o.Err, "Result is empty\n")
+	if util.IsEmpty(targets) {
+		fmt.Fprintf(o.Err, "no results\n")
 		return nil
 	}
 
@@ -80,7 +83,7 @@ func (o *freeOutput) Print(targets ...interface{}) error {
 		return fmt.Errorf("Output format is invalid: %s", err)
 	}
 
-	for i := range targets {
+	for i := 0; i < sliceLen(targets); i++ {
 
 		// interface{} -> map[string]interface{}
 		v := j.GetIndex(i)

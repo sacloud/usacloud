@@ -45,7 +45,7 @@ func TestFreeOutput_Print(t *testing.T) {
 		&dummy{ID: 2},
 	}
 
-	err := o.Print(values...)
+	err := o.Print(values)
 
 	assert.NoError(t, err)
 	assert.Equal(t, testFreeOutputText, buf.String())

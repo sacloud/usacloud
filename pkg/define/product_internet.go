@@ -47,6 +47,7 @@ func ProductInternetResource() *schema.Resource {
 		Aliases:             []string{"internet-plan"},
 		ResourceCategory:    CategoryInformation,
 		ListResultFieldName: "InternetPlans",
+		AltResource:         "InternetPlan",
 	}
 }
 

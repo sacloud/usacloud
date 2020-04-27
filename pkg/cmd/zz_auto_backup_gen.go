@@ -20,10 +20,11 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/funcs"
+	"github.com/sacloud/usacloud/pkg/funcs/autobackup"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/term"
 	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
@@ -51,7 +52,7 @@ func autoBackupListCmd() *cobra.Command {
 		Long:         `List AutoBackup`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, autoBackupListParam)
+			ctx, err := cli.NewCLIContext("auto-backup", "list", globalFlags(), args, autoBackupListParam)
 			if err != nil {
 				return err
 			}
@@ -66,21 +67,19 @@ func autoBackupListCmd() *cobra.Command {
 				return generateSkeleton(ctx, autoBackupListParam)
 			}
 
-			return funcs.AutoBackupList(ctx, autoBackupListParam)
+			return cli.WrapError(ctx, autobackup.List(ctx, autoBackupListParam))
 
 		},
 	}
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&autoBackupListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &autoBackupListParam.Id), "id", "", "set filter by id(s)")
+	fs.VarP(newIDSliceValue([]types.ID{}, &autoBackupListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&autoBackupListParam.Tags, "tags", "", []string{}, "set filter by tags(AND) (aliases: selector)")
 	fs.IntVarP(&autoBackupListParam.From, "from", "", 0, "set offset (aliases: offset)")
 	fs.IntVarP(&autoBackupListParam.Max, "max", "", 0, "set limit (aliases: limit)")
 	fs.StringSliceVarP(&autoBackupListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringVarP(&autoBackupListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&autoBackupListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&autoBackupListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&autoBackupListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&autoBackupListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&autoBackupListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -104,7 +103,7 @@ func autoBackupCreateCmd() *cobra.Command {
 		Long:         `Create AutoBackup`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, autoBackupCreateParam)
+			ctx, err := cli.NewCLIContext("auto-backup", "create", globalFlags(), args, autoBackupCreateParam)
 			if err != nil {
 				return err
 			}
@@ -121,7 +120,7 @@ func autoBackupCreateCmd() *cobra.Command {
 
 			// confirm
 			if !autoBackupCreateParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
@@ -130,7 +129,7 @@ func autoBackupCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.AutoBackupCreate(ctx, autoBackupCreateParam)
+			return cli.WrapError(ctx, autobackup.Create(ctx, autoBackupCreateParam))
 
 		},
 	}
@@ -144,9 +143,7 @@ func autoBackupCreateCmd() *cobra.Command {
 	fs.StringSliceVarP(&autoBackupCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &autoBackupCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.BoolVarP(&autoBackupCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&autoBackupCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&autoBackupCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&autoBackupCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&autoBackupCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&autoBackupCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&autoBackupCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -170,7 +167,7 @@ func autoBackupReadCmd() *cobra.Command {
 		Long:         `Read AutoBackup`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, autoBackupReadParam)
+			ctx, err := cli.NewCLIContext("auto-backup", "read", globalFlags(), args, autoBackupReadParam)
 			if err != nil {
 				return err
 			}
@@ -196,14 +193,13 @@ func autoBackupReadCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				autoBackupReadParam.SetId(id)
-				go func(p *params.ReadAutoBackupParam) {
-					err := funcs.AutoBackupRead(ctx, p)
+				go func(ctx cli.Context, p *params.ReadAutoBackupParam) {
+					err := cli.WrapError(ctx, autobackup.Read(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(autoBackupReadParam)
+				}(ctx.WithID(id), autoBackupReadParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -213,9 +209,7 @@ func autoBackupReadCmd() *cobra.Command {
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&autoBackupReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&autoBackupReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&autoBackupReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&autoBackupReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&autoBackupReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&autoBackupReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&autoBackupReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -240,7 +234,7 @@ func autoBackupUpdateCmd() *cobra.Command {
 		Long:         `Update AutoBackup`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, autoBackupUpdateParam)
+			ctx, err := cli.NewCLIContext("auto-backup", "update", globalFlags(), args, autoBackupUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -263,7 +257,7 @@ func autoBackupUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !autoBackupUpdateParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -277,14 +271,13 @@ func autoBackupUpdateCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				autoBackupUpdateParam.SetId(id)
-				go func(p *params.UpdateAutoBackupParam) {
-					err := funcs.AutoBackupUpdate(ctx, p)
+				go func(ctx cli.Context, p *params.UpdateAutoBackupParam) {
+					err := cli.WrapError(ctx, autobackup.Update(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(autoBackupUpdateParam)
+				}(ctx.WithID(id), autoBackupUpdateParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -301,9 +294,7 @@ func autoBackupUpdateCmd() *cobra.Command {
 	fs.StringSliceVarP(&autoBackupUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &autoBackupUpdateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.BoolVarP(&autoBackupUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&autoBackupUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&autoBackupUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&autoBackupUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&autoBackupUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&autoBackupUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&autoBackupUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -328,7 +319,7 @@ func autoBackupDeleteCmd() *cobra.Command {
 		Long:         `Delete AutoBackup`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, autoBackupDeleteParam)
+			ctx, err := cli.NewCLIContext("auto-backup", "delete", globalFlags(), args, autoBackupDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -351,7 +342,7 @@ func autoBackupDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !autoBackupDeleteParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -365,14 +356,13 @@ func autoBackupDeleteCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				autoBackupDeleteParam.SetId(id)
-				go func(p *params.DeleteAutoBackupParam) {
-					err := funcs.AutoBackupDelete(ctx, p)
+				go func(ctx cli.Context, p *params.DeleteAutoBackupParam) {
+					err := cli.WrapError(ctx, autobackup.Delete(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(autoBackupDeleteParam)
+				}(ctx.WithID(id), autoBackupDeleteParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -383,9 +373,7 @@ func autoBackupDeleteCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&autoBackupDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&autoBackupDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&autoBackupDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&autoBackupDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&autoBackupDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&autoBackupDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&autoBackupDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&autoBackupDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")

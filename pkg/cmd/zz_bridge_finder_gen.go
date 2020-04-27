@@ -20,16 +20,18 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/search"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
-func findBridgeReadTargets(ctx cli.Context, param *params.ReadBridgeParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findBridgeReadTargets(ctx cli.Context, param *params.ReadBridgeParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Bridge
+	client := sacloud.NewBridgeOp(ctx.Client())
 
 	if len(args) == 0 {
 		return ids, fmt.Errorf("ID or Name argument is required")
@@ -37,12 +39,14 @@ func findBridgeReadTargets(ctx cli.Context, param *params.ReadBridgeParam) ([]sa
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -51,7 +55,7 @@ func findBridgeReadTargets(ctx cli.Context, param *params.ReadBridgeParam) ([]sa
 					}
 					for _, v := range res.Bridges {
 
-						ids = append(ids, v.GetID())
+						ids = append(ids, v.ID)
 
 					}
 				}
@@ -72,10 +76,10 @@ func findBridgeReadTargets(ctx cli.Context, param *params.ReadBridgeParam) ([]sa
 	return ids, nil
 }
 
-func findBridgeUpdateTargets(ctx cli.Context, param *params.UpdateBridgeParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findBridgeUpdateTargets(ctx cli.Context, param *params.UpdateBridgeParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Bridge
+	client := sacloud.NewBridgeOp(ctx.Client())
 
 	if len(args) == 0 {
 		return ids, fmt.Errorf("ID or Name argument is required")
@@ -83,12 +87,14 @@ func findBridgeUpdateTargets(ctx cli.Context, param *params.UpdateBridgeParam) (
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -97,7 +103,7 @@ func findBridgeUpdateTargets(ctx cli.Context, param *params.UpdateBridgeParam) (
 					}
 					for _, v := range res.Bridges {
 
-						ids = append(ids, v.GetID())
+						ids = append(ids, v.ID)
 
 					}
 				}
@@ -115,10 +121,10 @@ func findBridgeUpdateTargets(ctx cli.Context, param *params.UpdateBridgeParam) (
 	return ids, nil
 }
 
-func findBridgeDeleteTargets(ctx cli.Context, param *params.DeleteBridgeParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findBridgeDeleteTargets(ctx cli.Context, param *params.DeleteBridgeParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Bridge
+	client := sacloud.NewBridgeOp(ctx.Client())
 
 	if len(args) == 0 {
 		return ids, fmt.Errorf("ID or Name argument is required")
@@ -126,12 +132,14 @@ func findBridgeDeleteTargets(ctx cli.Context, param *params.DeleteBridgeParam) (
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -140,7 +148,7 @@ func findBridgeDeleteTargets(ctx cli.Context, param *params.DeleteBridgeParam) (
 					}
 					for _, v := range res.Bridges {
 
-						ids = append(ids, v.GetID())
+						ids = append(ids, v.ID)
 
 					}
 				}

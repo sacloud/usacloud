@@ -20,29 +20,30 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/search"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
-func findDatabaseReadTargets(ctx cli.Context, param *params.ReadDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseReadTargets(ctx cli.Context, param *params.ReadDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -52,12 +53,14 @@ func findDatabaseReadTargets(ctx cli.Context, param *params.ReadDatabaseParam) (
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -66,7 +69,7 @@ func findDatabaseReadTargets(ctx cli.Context, param *params.ReadDatabaseParam) (
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -87,23 +90,22 @@ func findDatabaseReadTargets(ctx cli.Context, param *params.ReadDatabaseParam) (
 	return ids, nil
 }
 
-func findDatabaseUpdateTargets(ctx cli.Context, param *params.UpdateDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseUpdateTargets(ctx cli.Context, param *params.UpdateDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -113,12 +115,14 @@ func findDatabaseUpdateTargets(ctx cli.Context, param *params.UpdateDatabasePara
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -127,7 +131,7 @@ func findDatabaseUpdateTargets(ctx cli.Context, param *params.UpdateDatabasePara
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -145,23 +149,22 @@ func findDatabaseUpdateTargets(ctx cli.Context, param *params.UpdateDatabasePara
 	return ids, nil
 }
 
-func findDatabaseDeleteTargets(ctx cli.Context, param *params.DeleteDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseDeleteTargets(ctx cli.Context, param *params.DeleteDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -171,12 +174,14 @@ func findDatabaseDeleteTargets(ctx cli.Context, param *params.DeleteDatabasePara
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -185,7 +190,7 @@ func findDatabaseDeleteTargets(ctx cli.Context, param *params.DeleteDatabasePara
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -203,23 +208,22 @@ func findDatabaseDeleteTargets(ctx cli.Context, param *params.DeleteDatabasePara
 	return ids, nil
 }
 
-func findDatabaseBootTargets(ctx cli.Context, param *params.BootDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseBootTargets(ctx cli.Context, param *params.BootDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -229,12 +233,14 @@ func findDatabaseBootTargets(ctx cli.Context, param *params.BootDatabaseParam) (
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -243,7 +249,7 @@ func findDatabaseBootTargets(ctx cli.Context, param *params.BootDatabaseParam) (
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -261,23 +267,22 @@ func findDatabaseBootTargets(ctx cli.Context, param *params.BootDatabaseParam) (
 	return ids, nil
 }
 
-func findDatabaseShutdownTargets(ctx cli.Context, param *params.ShutdownDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseShutdownTargets(ctx cli.Context, param *params.ShutdownDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -287,12 +292,14 @@ func findDatabaseShutdownTargets(ctx cli.Context, param *params.ShutdownDatabase
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -301,7 +308,7 @@ func findDatabaseShutdownTargets(ctx cli.Context, param *params.ShutdownDatabase
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -319,23 +326,22 @@ func findDatabaseShutdownTargets(ctx cli.Context, param *params.ShutdownDatabase
 	return ids, nil
 }
 
-func findDatabaseShutdownForceTargets(ctx cli.Context, param *params.ShutdownForceDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseShutdownForceTargets(ctx cli.Context, param *params.ShutdownForceDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -345,12 +351,14 @@ func findDatabaseShutdownForceTargets(ctx cli.Context, param *params.ShutdownFor
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -359,7 +367,7 @@ func findDatabaseShutdownForceTargets(ctx cli.Context, param *params.ShutdownFor
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -377,23 +385,22 @@ func findDatabaseShutdownForceTargets(ctx cli.Context, param *params.ShutdownFor
 	return ids, nil
 }
 
-func findDatabaseResetTargets(ctx cli.Context, param *params.ResetDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseResetTargets(ctx cli.Context, param *params.ResetDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -403,12 +410,14 @@ func findDatabaseResetTargets(ctx cli.Context, param *params.ResetDatabaseParam)
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -417,7 +426,7 @@ func findDatabaseResetTargets(ctx cli.Context, param *params.ResetDatabaseParam)
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -435,23 +444,22 @@ func findDatabaseResetTargets(ctx cli.Context, param *params.ResetDatabaseParam)
 	return ids, nil
 }
 
-func findDatabaseWaitForBootTargets(ctx cli.Context, param *params.WaitForBootDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseWaitForBootTargets(ctx cli.Context, param *params.WaitForBootDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -461,12 +469,14 @@ func findDatabaseWaitForBootTargets(ctx cli.Context, param *params.WaitForBootDa
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -475,7 +485,7 @@ func findDatabaseWaitForBootTargets(ctx cli.Context, param *params.WaitForBootDa
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -493,23 +503,22 @@ func findDatabaseWaitForBootTargets(ctx cli.Context, param *params.WaitForBootDa
 	return ids, nil
 }
 
-func findDatabaseWaitForDownTargets(ctx cli.Context, param *params.WaitForDownDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseWaitForDownTargets(ctx cli.Context, param *params.WaitForDownDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -519,12 +528,14 @@ func findDatabaseWaitForDownTargets(ctx cli.Context, param *params.WaitForDownDa
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -533,7 +544,7 @@ func findDatabaseWaitForDownTargets(ctx cli.Context, param *params.WaitForDownDa
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -551,23 +562,22 @@ func findDatabaseWaitForDownTargets(ctx cli.Context, param *params.WaitForDownDa
 	return ids, nil
 }
 
-func findDatabaseBackupInfoTargets(ctx cli.Context, param *params.BackupInfoDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseBackupInfoTargets(ctx cli.Context, param *params.BackupInfoDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -577,12 +587,14 @@ func findDatabaseBackupInfoTargets(ctx cli.Context, param *params.BackupInfoData
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -591,7 +603,7 @@ func findDatabaseBackupInfoTargets(ctx cli.Context, param *params.BackupInfoData
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -612,10 +624,10 @@ func findDatabaseBackupInfoTargets(ctx cli.Context, param *params.BackupInfoData
 	return ids, nil
 }
 
-func findDatabaseBackupCreateTargets(ctx cli.Context, param *params.BackupCreateDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseBackupCreateTargets(ctx cli.Context, param *params.BackupCreateDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		return ids, fmt.Errorf("ID or Name argument is required")
@@ -623,12 +635,14 @@ func findDatabaseBackupCreateTargets(ctx cli.Context, param *params.BackupCreate
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -637,7 +651,7 @@ func findDatabaseBackupCreateTargets(ctx cli.Context, param *params.BackupCreate
 					}
 					for _, v := range res.Databases {
 
-						ids = append(ids, v.GetID())
+						ids = append(ids, v.ID)
 
 					}
 				}
@@ -658,10 +672,10 @@ func findDatabaseBackupCreateTargets(ctx cli.Context, param *params.BackupCreate
 	return ids, nil
 }
 
-func findDatabaseBackupRestoreTargets(ctx cli.Context, param *params.BackupRestoreDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseBackupRestoreTargets(ctx cli.Context, param *params.BackupRestoreDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		return ids, fmt.Errorf("ID or Name argument is required")
@@ -669,12 +683,14 @@ func findDatabaseBackupRestoreTargets(ctx cli.Context, param *params.BackupResto
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -683,7 +699,7 @@ func findDatabaseBackupRestoreTargets(ctx cli.Context, param *params.BackupResto
 					}
 					for _, v := range res.Databases {
 
-						ids = append(ids, v.GetID())
+						ids = append(ids, v.ID)
 
 					}
 				}
@@ -704,10 +720,10 @@ func findDatabaseBackupRestoreTargets(ctx cli.Context, param *params.BackupResto
 	return ids, nil
 }
 
-func findDatabaseBackupLockTargets(ctx cli.Context, param *params.BackupLockDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseBackupLockTargets(ctx cli.Context, param *params.BackupLockDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		return ids, fmt.Errorf("ID or Name argument is required")
@@ -715,12 +731,14 @@ func findDatabaseBackupLockTargets(ctx cli.Context, param *params.BackupLockData
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -729,7 +747,7 @@ func findDatabaseBackupLockTargets(ctx cli.Context, param *params.BackupLockData
 					}
 					for _, v := range res.Databases {
 
-						ids = append(ids, v.GetID())
+						ids = append(ids, v.ID)
 
 					}
 				}
@@ -750,10 +768,10 @@ func findDatabaseBackupLockTargets(ctx cli.Context, param *params.BackupLockData
 	return ids, nil
 }
 
-func findDatabaseBackupUnlockTargets(ctx cli.Context, param *params.BackupUnlockDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseBackupUnlockTargets(ctx cli.Context, param *params.BackupUnlockDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		return ids, fmt.Errorf("ID or Name argument is required")
@@ -761,12 +779,14 @@ func findDatabaseBackupUnlockTargets(ctx cli.Context, param *params.BackupUnlock
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -775,7 +795,7 @@ func findDatabaseBackupUnlockTargets(ctx cli.Context, param *params.BackupUnlock
 					}
 					for _, v := range res.Databases {
 
-						ids = append(ids, v.GetID())
+						ids = append(ids, v.ID)
 
 					}
 				}
@@ -796,10 +816,10 @@ func findDatabaseBackupUnlockTargets(ctx cli.Context, param *params.BackupUnlock
 	return ids, nil
 }
 
-func findDatabaseBackupRemoveTargets(ctx cli.Context, param *params.BackupRemoveDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseBackupRemoveTargets(ctx cli.Context, param *params.BackupRemoveDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		return ids, fmt.Errorf("ID or Name argument is required")
@@ -807,12 +827,14 @@ func findDatabaseBackupRemoveTargets(ctx cli.Context, param *params.BackupRemove
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -821,7 +843,7 @@ func findDatabaseBackupRemoveTargets(ctx cli.Context, param *params.BackupRemove
 					}
 					for _, v := range res.Databases {
 
-						ids = append(ids, v.GetID())
+						ids = append(ids, v.ID)
 
 					}
 				}
@@ -842,10 +864,10 @@ func findDatabaseBackupRemoveTargets(ctx cli.Context, param *params.BackupRemove
 	return ids, nil
 }
 
-func findDatabaseCloneTargets(ctx cli.Context, param *params.CloneDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseCloneTargets(ctx cli.Context, param *params.CloneDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		return ids, fmt.Errorf("ID or Name argument is required")
@@ -853,12 +875,14 @@ func findDatabaseCloneTargets(ctx cli.Context, param *params.CloneDatabaseParam)
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -867,7 +891,7 @@ func findDatabaseCloneTargets(ctx cli.Context, param *params.CloneDatabaseParam)
 					}
 					for _, v := range res.Databases {
 
-						ids = append(ids, v.GetID())
+						ids = append(ids, v.ID)
 
 					}
 				}
@@ -888,10 +912,10 @@ func findDatabaseCloneTargets(ctx cli.Context, param *params.CloneDatabaseParam)
 	return ids, nil
 }
 
-func findDatabaseReplicaCreateTargets(ctx cli.Context, param *params.ReplicaCreateDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseReplicaCreateTargets(ctx cli.Context, param *params.ReplicaCreateDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		return ids, fmt.Errorf("ID or Name argument is required")
@@ -899,12 +923,14 @@ func findDatabaseReplicaCreateTargets(ctx cli.Context, param *params.ReplicaCrea
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -913,7 +939,7 @@ func findDatabaseReplicaCreateTargets(ctx cli.Context, param *params.ReplicaCrea
 					}
 					for _, v := range res.Databases {
 
-						ids = append(ids, v.GetID())
+						ids = append(ids, v.ID)
 
 					}
 				}
@@ -934,23 +960,22 @@ func findDatabaseReplicaCreateTargets(ctx cli.Context, param *params.ReplicaCrea
 	return ids, nil
 }
 
-func findDatabaseMonitorCPUTargets(ctx cli.Context, param *params.MonitorCPUDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseMonitorCPUTargets(ctx cli.Context, param *params.MonitorCPUDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -960,12 +985,14 @@ func findDatabaseMonitorCPUTargets(ctx cli.Context, param *params.MonitorCPUData
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -974,7 +1001,7 @@ func findDatabaseMonitorCPUTargets(ctx cli.Context, param *params.MonitorCPUData
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -995,23 +1022,22 @@ func findDatabaseMonitorCPUTargets(ctx cli.Context, param *params.MonitorCPUData
 	return ids, nil
 }
 
-func findDatabaseMonitorMemoryTargets(ctx cli.Context, param *params.MonitorMemoryDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseMonitorMemoryTargets(ctx cli.Context, param *params.MonitorMemoryDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -1021,12 +1047,14 @@ func findDatabaseMonitorMemoryTargets(ctx cli.Context, param *params.MonitorMemo
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -1035,7 +1063,7 @@ func findDatabaseMonitorMemoryTargets(ctx cli.Context, param *params.MonitorMemo
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -1056,23 +1084,22 @@ func findDatabaseMonitorMemoryTargets(ctx cli.Context, param *params.MonitorMemo
 	return ids, nil
 }
 
-func findDatabaseMonitorNicTargets(ctx cli.Context, param *params.MonitorNicDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseMonitorNicTargets(ctx cli.Context, param *params.MonitorNicDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -1082,12 +1109,14 @@ func findDatabaseMonitorNicTargets(ctx cli.Context, param *params.MonitorNicData
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -1096,7 +1125,7 @@ func findDatabaseMonitorNicTargets(ctx cli.Context, param *params.MonitorNicData
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -1117,23 +1146,22 @@ func findDatabaseMonitorNicTargets(ctx cli.Context, param *params.MonitorNicData
 	return ids, nil
 }
 
-func findDatabaseMonitorSystemDiskTargets(ctx cli.Context, param *params.MonitorSystemDiskDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseMonitorSystemDiskTargets(ctx cli.Context, param *params.MonitorSystemDiskDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -1143,12 +1171,14 @@ func findDatabaseMonitorSystemDiskTargets(ctx cli.Context, param *params.Monitor
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -1157,7 +1187,7 @@ func findDatabaseMonitorSystemDiskTargets(ctx cli.Context, param *params.Monitor
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -1178,23 +1208,22 @@ func findDatabaseMonitorSystemDiskTargets(ctx cli.Context, param *params.Monitor
 	return ids, nil
 }
 
-func findDatabaseMonitorBackupDiskTargets(ctx cli.Context, param *params.MonitorBackupDiskDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseMonitorBackupDiskTargets(ctx cli.Context, param *params.MonitorBackupDiskDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -1204,12 +1233,14 @@ func findDatabaseMonitorBackupDiskTargets(ctx cli.Context, param *params.Monitor
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -1218,7 +1249,7 @@ func findDatabaseMonitorBackupDiskTargets(ctx cli.Context, param *params.Monitor
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -1239,23 +1270,22 @@ func findDatabaseMonitorBackupDiskTargets(ctx cli.Context, param *params.Monitor
 	return ids, nil
 }
 
-func findDatabaseMonitorSystemDiskSizeTargets(ctx cli.Context, param *params.MonitorSystemDiskSizeDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseMonitorSystemDiskSizeTargets(ctx cli.Context, param *params.MonitorSystemDiskSizeDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -1265,12 +1295,14 @@ func findDatabaseMonitorSystemDiskSizeTargets(ctx cli.Context, param *params.Mon
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -1279,7 +1311,7 @@ func findDatabaseMonitorSystemDiskSizeTargets(ctx cli.Context, param *params.Mon
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -1300,23 +1332,22 @@ func findDatabaseMonitorSystemDiskSizeTargets(ctx cli.Context, param *params.Mon
 	return ids, nil
 }
 
-func findDatabaseMonitorBackupDiskSizeTargets(ctx cli.Context, param *params.MonitorBackupDiskSizeDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseMonitorBackupDiskSizeTargets(ctx cli.Context, param *params.MonitorBackupDiskSizeDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -1326,12 +1357,14 @@ func findDatabaseMonitorBackupDiskSizeTargets(ctx cli.Context, param *params.Mon
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -1340,7 +1373,7 @@ func findDatabaseMonitorBackupDiskSizeTargets(ctx cli.Context, param *params.Mon
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -1361,23 +1394,22 @@ func findDatabaseMonitorBackupDiskSizeTargets(ctx cli.Context, param *params.Mon
 	return ids, nil
 }
 
-func findDatabaseLogsTargets(ctx cli.Context, param *params.LogsDatabaseParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDatabaseLogsTargets(ctx cli.Context, param *params.LogsDatabaseParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Database
+	client := sacloud.NewDatabaseOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Databases {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -1387,12 +1419,14 @@ func findDatabaseLogsTargets(ctx cli.Context, param *params.LogsDatabaseParam) (
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -1401,7 +1435,7 @@ func findDatabaseLogsTargets(ctx cli.Context, param *params.LogsDatabaseParam) (
 					}
 					for _, v := range res.Databases {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}

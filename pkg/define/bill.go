@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -79,7 +79,7 @@ func billListColumns() []output.ColumnDef {
 			Name: "Date",
 			FormatFunc: func(values map[string]string) string {
 				if strDate, ok := values["Date"]; ok {
-					t, err := time.Parse(sacloud.DatetimeLayout, strDate)
+					t, err := time.Parse(types.DatetimeLayout, strDate)
 					if err != nil {
 						return ""
 					}

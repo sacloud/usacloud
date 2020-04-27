@@ -15,7 +15,10 @@
 package define
 
 import (
-	"github.com/sacloud/libsacloud/sacloud"
+	"fmt"
+	"strings"
+
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -75,6 +78,7 @@ func StartupScriptResource() *schema.Resource {
 		AltResource:         "Note",
 		ListResultFieldName: "Notes",
 		ResourceCategory:    CategoryCommonItem,
+		IsGlobal:            true,
 	}
 }
 
@@ -100,11 +104,6 @@ func startupScriptDetailExcludes() []string {
 	return []string{}
 }
 
-var allowNoteClasses = []string{
-	string(sacloud.NoteClassShell),
-	string(sacloud.NoteClassYAMLCloudConfig),
-}
-
 func startupScriptCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"script-content": {
@@ -128,10 +127,10 @@ func startupScriptCreateParam() map[string]*schema.Schema {
 		"class": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
-			Description:  "set script class[shell/cloud-config-yaml]",
-			ValidateFunc: validateInStrValues(allowNoteClasses...),
+			Description:  fmt.Sprintf("set script class[%s]", strings.Join(types.NoteClassStrings, "/")),
+			ValidateFunc: validateInStrValues(types.NoteClassStrings...),
 			Required:     true,
-			DefaultValue: string(sacloud.NoteClassShell),
+			DefaultValue: "shell",
 			Category:     "basic",
 			Order:        20,
 		},
@@ -168,8 +167,8 @@ func startupScriptUpdateParam() map[string]*schema.Schema {
 		"class": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
-			Description:  "set script class[shell/cloud-config-yaml]",
-			ValidateFunc: validateInStrValues(allowNoteClasses...),
+			Description:  fmt.Sprintf("set script class[%s]", strings.Join(types.NoteClassStrings, "/")),
+			ValidateFunc: validateInStrValues(types.NoteClassStrings...),
 			Category:     "basic",
 			Order:        20,
 		},

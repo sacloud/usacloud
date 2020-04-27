@@ -84,6 +84,7 @@ func SSHKeyResource() *schema.Resource {
 		Commands:            commands,
 		ResourceCategory:    CategoryCommonItem,
 		ListResultFieldName: "SSHKeys",
+		IsGlobal:            true,
 	}
 }
 

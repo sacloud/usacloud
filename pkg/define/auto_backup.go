@@ -15,7 +15,7 @@
 package define
 
 import (
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -33,13 +33,12 @@ func AutoBackupResource() *schema.Resource {
 			Order:              10,
 		},
 		"create": {
-			Type:             schema.CommandCreate,
-			Params:           autoBackupCreateParam(),
-			IncludeFields:    autoBackupDetailIncludes(),
-			ExcludeFields:    autoBackupDetailExcludes(),
-			UseCustomCommand: true,
-			Category:         "basics",
-			Order:            20,
+			Type:          schema.CommandCreate,
+			Params:        autoBackupCreateParam(),
+			IncludeFields: autoBackupDetailIncludes(),
+			ExcludeFields: autoBackupDetailExcludes(),
+			Category:      "basics",
+			Order:         20,
 		},
 		"read": {
 			Type:          schema.CommandRead,
@@ -50,13 +49,12 @@ func AutoBackupResource() *schema.Resource {
 			Order:         30,
 		},
 		"update": {
-			Type:             schema.CommandUpdate,
-			Params:           autoBackupUpdateParam(),
-			IncludeFields:    autoBackupDetailIncludes(),
-			ExcludeFields:    autoBackupDetailExcludes(),
-			UseCustomCommand: true,
-			Category:         "basics",
-			Order:            40,
+			Type:          schema.CommandUpdate,
+			Params:        autoBackupUpdateParam(),
+			IncludeFields: autoBackupDetailIncludes(),
+			ExcludeFields: autoBackupDetailExcludes(),
+			Category:      "basics",
+			Order:         40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -72,7 +70,7 @@ func AutoBackupResource() *schema.Resource {
 	return &schema.Resource{
 		Commands:            commands,
 		ResourceCategory:    CategoryStorage,
-		ListResultFieldName: "CommonServiceAutoBackupItems",
+		ListResultFieldName: "AutoBackups",
 	}
 }
 
@@ -136,12 +134,13 @@ func autoBackupCreateParam() map[string]*schema.Schema {
 			Order:        10,
 		},
 		"weekdays": {
-			Type:            schema.TypeStringList,
-			HandlerType:     schema.HandlerPathThrough,
-			Description:     "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
-			DestinationProp: "SetBackupSpanWeekdays",
+			Type:               schema.TypeStringList,
+			HandlerType:        schema.HandlerPathThrough,
+			Description:        "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
+			DestinationProp:    "BackupSpanWeekdays",
+			DestinationWrapper: "weekday.FromStrings",
 			ValidateFunc: validateStringSlice(
-				validateInStrValues(append(sacloud.AllowAutoBackupWeekdays(), "all")...),
+				validateInStrValues(append(types.BackupWeekdayStrings, "all")...),
 			),
 			DefaultValue: []string{"all"},
 			Required:     true,
@@ -152,7 +151,7 @@ func autoBackupCreateParam() map[string]*schema.Schema {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
 			Description:     "set backup generation[1-10]",
-			DestinationProp: "SetBackupMaximumNumberOfArchives",
+			DestinationProp: "MaximumNumberOfArchives",
 			ValidateFunc:    validateIntRange(1, 10),
 			DefaultValue:    1,
 			Required:        true,
@@ -173,12 +172,13 @@ func autoBackupUpdateParam() map[string]*schema.Schema {
 		"tags":        paramTags,
 		"icon-id":     paramIconResourceID,
 		"weekdays": {
-			Type:            schema.TypeStringList,
-			HandlerType:     schema.HandlerPathThrough,
-			Description:     "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
-			DestinationProp: "SetBackupSpanWeekdays",
+			Type:               schema.TypeStringList,
+			HandlerType:        schema.HandlerPathThrough,
+			Description:        "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
+			DestinationProp:    "BackupSpanWeekdays",
+			DestinationWrapper: "weekday.FromStrings",
 			ValidateFunc: validateStringSlice(
-				validateInStrValues(append(sacloud.AllowAutoBackupWeekdays(), "all")...),
+				validateInStrValues(append(types.BackupWeekdayStrings, "all")...),
 			),
 			Category: "backup",
 			Order:    20,
@@ -187,7 +187,7 @@ func autoBackupUpdateParam() map[string]*schema.Schema {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
 			Description:     "set backup generation[1-10]",
-			DestinationProp: "SetBackupMaximumNumberOfArchives",
+			DestinationProp: "MaximumNumberOfArchives",
 			ValidateFunc:    validateIntRange(1, 10),
 			Category:        "backup",
 			Order:           30,

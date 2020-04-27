@@ -47,6 +47,7 @@ func ProductServerResource() *schema.Resource {
 		Aliases:             []string{"server-plan"},
 		ResourceCategory:    CategoryInformation,
 		ListResultFieldName: "ServerPlans",
+		AltResource:         "ServerPlan",
 	}
 }
 

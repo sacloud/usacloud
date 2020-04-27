@@ -28,11 +28,9 @@ import (
 
 // CurrentConfigParam is input parameters for the sacloud API
 type CurrentConfigParam struct {
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
 
 	config *config.Config
 	input  Input
@@ -60,14 +58,8 @@ func (p *CurrentConfigParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CurrentConfigParam) FillValueToSkeleton() {
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -114,53 +106,12 @@ func (p *CurrentConfigParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *CurrentConfigParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Config"]
-}
-
-func (p *CurrentConfigParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["current"]
-}
-
-func (p *CurrentConfigParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *CurrentConfigParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *CurrentConfigParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *CurrentConfigParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-func (p *CurrentConfigParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *CurrentConfigParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *CurrentConfigParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *CurrentConfigParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *CurrentConfigParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *CurrentConfigParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *CurrentConfigParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -177,19 +128,17 @@ func (p *CurrentConfigParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *CurrentConfigParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // DeleteConfigParam is input parameters for the sacloud API
 type DeleteConfigParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
 
 	config *config.Config
 	input  Input
@@ -220,14 +169,8 @@ func (p *DeleteConfigParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -274,33 +217,6 @@ func (p *DeleteConfigParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *DeleteConfigParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Config"]
-}
-
-func (p *DeleteConfigParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["delete"]
-}
-
-func (p *DeleteConfigParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *DeleteConfigParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *DeleteConfigParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *DeleteConfigParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *DeleteConfigParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -308,26 +224,12 @@ func (p *DeleteConfigParam) SetAssumeyes(v bool) {
 func (p *DeleteConfigParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeleteConfigParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *DeleteConfigParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *DeleteConfigParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *DeleteConfigParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *DeleteConfigParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *DeleteConfigParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *DeleteConfigParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -344,7 +246,7 @@ func (p *DeleteConfigParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *DeleteConfigParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
@@ -355,9 +257,7 @@ type EditConfigParam struct {
 	Secret            string
 	Zone              string
 	DefaultOutputType string
-	ParamTemplate     string
 	Parameters        string
-	ParamTemplateFile string
 	ParameterFile     string
 	GenerateSkeleton  bool
 
@@ -399,14 +299,8 @@ func (p *EditConfigParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.DefaultOutputType) {
 		p.DefaultOutputType = ""
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -469,33 +363,6 @@ func (p *EditConfigParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *EditConfigParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Config"]
-}
-
-func (p *EditConfigParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["edit"]
-}
-
-func (p *EditConfigParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *EditConfigParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *EditConfigParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *EditConfigParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *EditConfigParam) SetToken(v string) {
 	p.Token = v
 }
@@ -524,26 +391,12 @@ func (p *EditConfigParam) SetDefaultOutputType(v string) {
 func (p *EditConfigParam) GetDefaultOutputType() string {
 	return p.DefaultOutputType
 }
-func (p *EditConfigParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *EditConfigParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *EditConfigParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *EditConfigParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *EditConfigParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *EditConfigParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *EditConfigParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -560,18 +413,16 @@ func (p *EditConfigParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *EditConfigParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // ListConfigParam is input parameters for the sacloud API
 type ListConfigParam struct {
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
 
 	config *config.Config
 	input  Input
@@ -599,14 +450,8 @@ func (p *ListConfigParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ListConfigParam) FillValueToSkeleton() {
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -653,53 +498,12 @@ func (p *ListConfigParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ListConfigParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Config"]
-}
-
-func (p *ListConfigParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["list"]
-}
-
-func (p *ListConfigParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ListConfigParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ListConfigParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ListConfigParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-func (p *ListConfigParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ListConfigParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ListConfigParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ListConfigParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ListConfigParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ListConfigParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ListConfigParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -716,18 +520,16 @@ func (p *ListConfigParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ListConfigParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // MigrateConfigParam is input parameters for the sacloud API
 type MigrateConfigParam struct {
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
 
 	config *config.Config
 	input  Input
@@ -755,14 +557,8 @@ func (p *MigrateConfigParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *MigrateConfigParam) FillValueToSkeleton() {
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -809,53 +605,12 @@ func (p *MigrateConfigParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *MigrateConfigParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Config"]
-}
-
-func (p *MigrateConfigParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["migrate"]
-}
-
-func (p *MigrateConfigParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *MigrateConfigParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *MigrateConfigParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *MigrateConfigParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-func (p *MigrateConfigParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *MigrateConfigParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *MigrateConfigParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *MigrateConfigParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *MigrateConfigParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *MigrateConfigParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *MigrateConfigParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -872,18 +627,16 @@ func (p *MigrateConfigParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *MigrateConfigParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // ShowConfigParam is input parameters for the sacloud API
 type ShowConfigParam struct {
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
 
 	config *config.Config
 	input  Input
@@ -911,14 +664,8 @@ func (p *ShowConfigParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ShowConfigParam) FillValueToSkeleton() {
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -965,53 +712,12 @@ func (p *ShowConfigParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ShowConfigParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Config"]
-}
-
-func (p *ShowConfigParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["show"]
-}
-
-func (p *ShowConfigParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ShowConfigParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ShowConfigParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ShowConfigParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-func (p *ShowConfigParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ShowConfigParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ShowConfigParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ShowConfigParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ShowConfigParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ShowConfigParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ShowConfigParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -1028,18 +734,16 @@ func (p *ShowConfigParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ShowConfigParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // UseConfigParam is input parameters for the sacloud API
 type UseConfigParam struct {
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
 
 	config *config.Config
 	input  Input
@@ -1067,14 +771,8 @@ func (p *UseConfigParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *UseConfigParam) FillValueToSkeleton() {
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -1121,53 +819,12 @@ func (p *UseConfigParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *UseConfigParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Config"]
-}
-
-func (p *UseConfigParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["use"]
-}
-
-func (p *UseConfigParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *UseConfigParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *UseConfigParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *UseConfigParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-func (p *UseConfigParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *UseConfigParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *UseConfigParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *UseConfigParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *UseConfigParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *UseConfigParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *UseConfigParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -1184,7 +841,7 @@ func (p *UseConfigParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *UseConfigParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }

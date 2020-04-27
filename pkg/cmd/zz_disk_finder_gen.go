@@ -20,29 +20,30 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/search"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
-func findDiskReadTargets(ctx cli.Context, param *params.ReadDiskParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDiskReadTargets(ctx cli.Context, param *params.ReadDiskParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Disk
+	client := sacloud.NewDiskOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -52,12 +53,14 @@ func findDiskReadTargets(ctx cli.Context, param *params.ReadDiskParam) ([]saclou
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -66,7 +69,7 @@ func findDiskReadTargets(ctx cli.Context, param *params.ReadDiskParam) ([]saclou
 					}
 					for _, v := range res.Disks {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -87,23 +90,22 @@ func findDiskReadTargets(ctx cli.Context, param *params.ReadDiskParam) ([]saclou
 	return ids, nil
 }
 
-func findDiskUpdateTargets(ctx cli.Context, param *params.UpdateDiskParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDiskUpdateTargets(ctx cli.Context, param *params.UpdateDiskParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Disk
+	client := sacloud.NewDiskOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -113,12 +115,14 @@ func findDiskUpdateTargets(ctx cli.Context, param *params.UpdateDiskParam) ([]sa
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -127,7 +131,7 @@ func findDiskUpdateTargets(ctx cli.Context, param *params.UpdateDiskParam) ([]sa
 					}
 					for _, v := range res.Disks {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -145,23 +149,22 @@ func findDiskUpdateTargets(ctx cli.Context, param *params.UpdateDiskParam) ([]sa
 	return ids, nil
 }
 
-func findDiskDeleteTargets(ctx cli.Context, param *params.DeleteDiskParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDiskDeleteTargets(ctx cli.Context, param *params.DeleteDiskParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Disk
+	client := sacloud.NewDiskOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -171,12 +174,14 @@ func findDiskDeleteTargets(ctx cli.Context, param *params.DeleteDiskParam) ([]sa
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -185,7 +190,7 @@ func findDiskDeleteTargets(ctx cli.Context, param *params.DeleteDiskParam) ([]sa
 					}
 					for _, v := range res.Disks {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -203,23 +208,22 @@ func findDiskDeleteTargets(ctx cli.Context, param *params.DeleteDiskParam) ([]sa
 	return ids, nil
 }
 
-func findDiskEditTargets(ctx cli.Context, param *params.EditDiskParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDiskEditTargets(ctx cli.Context, param *params.EditDiskParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Disk
+	client := sacloud.NewDiskOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -229,12 +233,14 @@ func findDiskEditTargets(ctx cli.Context, param *params.EditDiskParam) ([]saclou
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -243,7 +249,7 @@ func findDiskEditTargets(ctx cli.Context, param *params.EditDiskParam) ([]saclou
 					}
 					for _, v := range res.Disks {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -261,23 +267,22 @@ func findDiskEditTargets(ctx cli.Context, param *params.EditDiskParam) ([]saclou
 	return ids, nil
 }
 
-func findDiskResizePartitionTargets(ctx cli.Context, param *params.ResizePartitionDiskParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDiskResizePartitionTargets(ctx cli.Context, param *params.ResizePartitionDiskParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Disk
+	client := sacloud.NewDiskOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -287,12 +292,14 @@ func findDiskResizePartitionTargets(ctx cli.Context, param *params.ResizePartiti
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -301,7 +308,7 @@ func findDiskResizePartitionTargets(ctx cli.Context, param *params.ResizePartiti
 					}
 					for _, v := range res.Disks {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -319,23 +326,22 @@ func findDiskResizePartitionTargets(ctx cli.Context, param *params.ResizePartiti
 	return ids, nil
 }
 
-func findDiskReinstallFromArchiveTargets(ctx cli.Context, param *params.ReinstallFromArchiveDiskParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDiskReinstallFromArchiveTargets(ctx cli.Context, param *params.ReinstallFromArchiveDiskParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Disk
+	client := sacloud.NewDiskOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -345,12 +351,14 @@ func findDiskReinstallFromArchiveTargets(ctx cli.Context, param *params.Reinstal
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -359,7 +367,7 @@ func findDiskReinstallFromArchiveTargets(ctx cli.Context, param *params.Reinstal
 					}
 					for _, v := range res.Disks {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -377,23 +385,22 @@ func findDiskReinstallFromArchiveTargets(ctx cli.Context, param *params.Reinstal
 	return ids, nil
 }
 
-func findDiskReinstallFromDiskTargets(ctx cli.Context, param *params.ReinstallFromDiskDiskParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDiskReinstallFromDiskTargets(ctx cli.Context, param *params.ReinstallFromDiskDiskParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Disk
+	client := sacloud.NewDiskOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -403,12 +410,14 @@ func findDiskReinstallFromDiskTargets(ctx cli.Context, param *params.ReinstallFr
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -417,7 +426,7 @@ func findDiskReinstallFromDiskTargets(ctx cli.Context, param *params.ReinstallFr
 					}
 					for _, v := range res.Disks {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -435,23 +444,22 @@ func findDiskReinstallFromDiskTargets(ctx cli.Context, param *params.ReinstallFr
 	return ids, nil
 }
 
-func findDiskReinstallToBlankTargets(ctx cli.Context, param *params.ReinstallToBlankDiskParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDiskReinstallToBlankTargets(ctx cli.Context, param *params.ReinstallToBlankDiskParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Disk
+	client := sacloud.NewDiskOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -461,12 +469,14 @@ func findDiskReinstallToBlankTargets(ctx cli.Context, param *params.ReinstallToB
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -475,7 +485,7 @@ func findDiskReinstallToBlankTargets(ctx cli.Context, param *params.ReinstallToB
 					}
 					for _, v := range res.Disks {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -493,23 +503,22 @@ func findDiskReinstallToBlankTargets(ctx cli.Context, param *params.ReinstallToB
 	return ids, nil
 }
 
-func findDiskServerConnectTargets(ctx cli.Context, param *params.ServerConnectDiskParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDiskServerConnectTargets(ctx cli.Context, param *params.ServerConnectDiskParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Disk
+	client := sacloud.NewDiskOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -519,12 +528,14 @@ func findDiskServerConnectTargets(ctx cli.Context, param *params.ServerConnectDi
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -533,7 +544,7 @@ func findDiskServerConnectTargets(ctx cli.Context, param *params.ServerConnectDi
 					}
 					for _, v := range res.Disks {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -551,23 +562,22 @@ func findDiskServerConnectTargets(ctx cli.Context, param *params.ServerConnectDi
 	return ids, nil
 }
 
-func findDiskServerDisconnectTargets(ctx cli.Context, param *params.ServerDisconnectDiskParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDiskServerDisconnectTargets(ctx cli.Context, param *params.ServerDisconnectDiskParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Disk
+	client := sacloud.NewDiskOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -577,12 +587,14 @@ func findDiskServerDisconnectTargets(ctx cli.Context, param *params.ServerDiscon
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -591,7 +603,7 @@ func findDiskServerDisconnectTargets(ctx cli.Context, param *params.ServerDiscon
 					}
 					for _, v := range res.Disks {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -609,23 +621,22 @@ func findDiskServerDisconnectTargets(ctx cli.Context, param *params.ServerDiscon
 	return ids, nil
 }
 
-func findDiskMonitorTargets(ctx cli.Context, param *params.MonitorDiskParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDiskMonitorTargets(ctx cli.Context, param *params.MonitorDiskParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Disk
+	client := sacloud.NewDiskOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -635,12 +646,14 @@ func findDiskMonitorTargets(ctx cli.Context, param *params.MonitorDiskParam) ([]
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -649,7 +662,7 @@ func findDiskMonitorTargets(ctx cli.Context, param *params.MonitorDiskParam) ([]
 					}
 					for _, v := range res.Disks {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -670,23 +683,22 @@ func findDiskMonitorTargets(ctx cli.Context, param *params.MonitorDiskParam) ([]
 	return ids, nil
 }
 
-func findDiskWaitForCopyTargets(ctx cli.Context, param *params.WaitForCopyDiskParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findDiskWaitForCopyTargets(ctx cli.Context, param *params.WaitForCopyDiskParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Disk
+	client := sacloud.NewDiskOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Disks {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -696,12 +708,14 @@ func findDiskWaitForCopyTargets(ctx cli.Context, param *params.WaitForCopyDiskPa
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -710,7 +724,7 @@ func findDiskWaitForCopyTargets(ctx cli.Context, param *params.WaitForCopyDiskPa
 					}
 					for _, v := range res.Disks {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}

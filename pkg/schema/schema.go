@@ -40,10 +40,15 @@ type Schema struct {
 	MaxItems int
 	MinItems int
 
-	HandlerType     HandlerType
+	HandlerType HandlerType
+	// DestinationProp Create/Updateでフラグからリクエストオブジェクトを作成する際の値の設定先フィールド名
 	DestinationProp string
-	CustomHandler   ValueHandlerFunc
-	FilterFunc      ListFilterFunc
+	// DestinationWrapper DestinationPropへの値の設定をラップするためのfunc名
+	DestinationWrapper string
+
+	// TODO あとで消す
+	CustomHandler ValueHandlerFunc
+	FilterFunc    ListFilterFunc
 }
 
 type ValueHandlerFunc func(name string, src interface{}, dest interface{})
@@ -53,7 +58,7 @@ type ListFilterFunc func(list []interface{}, item interface{}, param interface{}
 type ValidateFunc func(string, interface{}) []error
 
 func (s *Schema) Validate(name string) []error {
-	errs := []error{}
+	var errs []error
 
 	// Type
 	if s.Type == TypeInvalid {

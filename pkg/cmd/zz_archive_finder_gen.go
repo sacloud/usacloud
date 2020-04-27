@@ -20,29 +20,30 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/search"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
-func findArchiveReadTargets(ctx cli.Context, param *params.ReadArchiveParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findArchiveReadTargets(ctx cli.Context, param *params.ReadArchiveParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Archive
+	client := sacloud.NewArchiveOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Archives {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -52,12 +53,14 @@ func findArchiveReadTargets(ctx cli.Context, param *params.ReadArchiveParam) ([]
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -66,7 +69,7 @@ func findArchiveReadTargets(ctx cli.Context, param *params.ReadArchiveParam) ([]
 					}
 					for _, v := range res.Archives {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -87,23 +90,22 @@ func findArchiveReadTargets(ctx cli.Context, param *params.ReadArchiveParam) ([]
 	return ids, nil
 }
 
-func findArchiveUpdateTargets(ctx cli.Context, param *params.UpdateArchiveParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findArchiveUpdateTargets(ctx cli.Context, param *params.UpdateArchiveParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Archive
+	client := sacloud.NewArchiveOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Archives {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -113,12 +115,14 @@ func findArchiveUpdateTargets(ctx cli.Context, param *params.UpdateArchiveParam)
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -127,7 +131,7 @@ func findArchiveUpdateTargets(ctx cli.Context, param *params.UpdateArchiveParam)
 					}
 					for _, v := range res.Archives {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -145,23 +149,22 @@ func findArchiveUpdateTargets(ctx cli.Context, param *params.UpdateArchiveParam)
 	return ids, nil
 }
 
-func findArchiveDeleteTargets(ctx cli.Context, param *params.DeleteArchiveParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findArchiveDeleteTargets(ctx cli.Context, param *params.DeleteArchiveParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Archive
+	client := sacloud.NewArchiveOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Archives {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -171,12 +174,14 @@ func findArchiveDeleteTargets(ctx cli.Context, param *params.DeleteArchiveParam)
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -185,7 +190,7 @@ func findArchiveDeleteTargets(ctx cli.Context, param *params.DeleteArchiveParam)
 					}
 					for _, v := range res.Archives {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -203,23 +208,22 @@ func findArchiveDeleteTargets(ctx cli.Context, param *params.DeleteArchiveParam)
 	return ids, nil
 }
 
-func findArchiveUploadTargets(ctx cli.Context, param *params.UploadArchiveParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findArchiveUploadTargets(ctx cli.Context, param *params.UploadArchiveParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Archive
+	client := sacloud.NewArchiveOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Archives {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -229,12 +233,14 @@ func findArchiveUploadTargets(ctx cli.Context, param *params.UploadArchiveParam)
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -243,68 +249,7 @@ func findArchiveUploadTargets(ctx cli.Context, param *params.UploadArchiveParam)
 					}
 					for _, v := range res.Archives {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
-						}
-					}
-				}
-			}
-
-		}
-
-	}
-
-	ids = util.UniqIDs(ids)
-	if len(ids) == 0 {
-		return ids, fmt.Errorf("finding resource is is failed: not found")
-	}
-	if len(ids) != 1 {
-		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
-	}
-
-	return ids, nil
-}
-
-func findArchiveDownloadTargets(ctx cli.Context, param *params.DownloadArchiveParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
-	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Archive
-
-	if len(args) == 0 {
-		if len(param.Selector) == 0 {
-			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
-		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
-		if err != nil {
-			return ids, fmt.Errorf("finding resource id is failed: %s", err)
-		}
-		for _, v := range res.Archives {
-			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
-			}
-		}
-		if len(ids) == 0 {
-			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
-		}
-	} else {
-		for _, arg := range args {
-			for _, a := range strings.Split(arg, "\n") {
-				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
-					ids = append(ids, id)
-				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
-					if err != nil {
-						return ids, fmt.Errorf("finding resource id is failed: %s", err)
-					}
-					if res.Count == 0 {
-						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
-					}
-					for _, v := range res.Archives {
-						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -325,23 +270,22 @@ func findArchiveDownloadTargets(ctx cli.Context, param *params.DownloadArchivePa
 	return ids, nil
 }
 
-func findArchiveFTPOpenTargets(ctx cli.Context, param *params.FTPOpenArchiveParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findArchiveDownloadTargets(ctx cli.Context, param *params.DownloadArchiveParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Archive
+	client := sacloud.NewArchiveOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Archives {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -351,12 +295,14 @@ func findArchiveFTPOpenTargets(ctx cli.Context, param *params.FTPOpenArchivePara
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -365,7 +311,69 @@ func findArchiveFTPOpenTargets(ctx cli.Context, param *params.FTPOpenArchivePara
 					}
 					for _, v := range res.Archives {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
+						}
+					}
+				}
+			}
+
+		}
+
+	}
+
+	ids = util.UniqIDs(ids)
+	if len(ids) == 0 {
+		return ids, fmt.Errorf("finding resource is is failed: not found")
+	}
+	if len(ids) != 1 {
+		return ids, fmt.Errorf("could not run with multiple targets: %v", ids)
+	}
+
+	return ids, nil
+}
+
+func findArchiveFTPOpenTargets(ctx cli.Context, param *params.FTPOpenArchiveParam) ([]types.ID, error) {
+	var ids []types.ID
+	args := ctx.Args()
+	client := sacloud.NewArchiveOp(ctx.Client())
+
+	if len(args) == 0 {
+		if len(param.Selector) == 0 {
+			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
+		}
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
+		if err != nil {
+			return ids, fmt.Errorf("finding resource id is failed: %s", err)
+		}
+		for _, v := range res.Archives {
+			if util.HasTags(&v, param.Selector) {
+				ids = append(ids, v.ID)
+			}
+		}
+		if len(ids) == 0 {
+			return ids, fmt.Errorf("finding resource id is failed: not found with search param [tags=%s]", param.Selector)
+		}
+	} else {
+		for _, arg := range args {
+			for _, a := range strings.Split(arg, "\n") {
+				idOrName := a
+				if id := types.StringID(idOrName); !id.IsEmpty() {
+					ids = append(ids, id)
+				} else {
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
+					if err != nil {
+						return ids, fmt.Errorf("finding resource id is failed: %s", err)
+					}
+					if res.Count == 0 {
+						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
+					}
+					for _, v := range res.Archives {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -383,23 +391,22 @@ func findArchiveFTPOpenTargets(ctx cli.Context, param *params.FTPOpenArchivePara
 	return ids, nil
 }
 
-func findArchiveFTPCloseTargets(ctx cli.Context, param *params.FTPCloseArchiveParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findArchiveFTPCloseTargets(ctx cli.Context, param *params.FTPCloseArchiveParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Archive
+	client := sacloud.NewArchiveOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Archives {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -409,12 +416,14 @@ func findArchiveFTPCloseTargets(ctx cli.Context, param *params.FTPCloseArchivePa
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -423,7 +432,7 @@ func findArchiveFTPCloseTargets(ctx cli.Context, param *params.FTPCloseArchivePa
 					}
 					for _, v := range res.Archives {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}
@@ -441,23 +450,22 @@ func findArchiveFTPCloseTargets(ctx cli.Context, param *params.FTPCloseArchivePa
 	return ids, nil
 }
 
-func findArchiveWaitForCopyTargets(ctx cli.Context, param *params.WaitForCopyArchiveParam) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func findArchiveWaitForCopyTargets(ctx cli.Context, param *params.WaitForCopyArchiveParam) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().Archive
+	client := sacloud.NewArchiveOp(ctx.Client())
 
 	if len(args) == 0 {
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.Archives {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -467,12 +475,14 @@ func findArchiveWaitForCopyTargets(ctx cli.Context, param *params.WaitForCopyArc
 		for _, arg := range args {
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx, ctx.Zone(), &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -481,7 +491,7 @@ func findArchiveWaitForCopyTargets(ctx cli.Context, param *params.WaitForCopyArc
 					}
 					for _, v := range res.Archives {
 						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						}
 					}
 				}

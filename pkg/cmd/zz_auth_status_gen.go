@@ -18,7 +18,7 @@ package cmd
 
 import (
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/funcs"
+	"github.com/sacloud/usacloud/pkg/funcs/authstatus"
 	"github.com/sacloud/usacloud/pkg/params"
 	"github.com/spf13/cobra"
 )
@@ -45,7 +45,7 @@ func authStatusShowCmd() *cobra.Command {
 		Long:         `Show AuthStatus (default)`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, authStatusShowParam)
+			ctx, err := cli.NewCLIContext("auth-status", "show", globalFlags(), args, authStatusShowParam)
 			if err != nil {
 				return err
 			}
@@ -60,15 +60,13 @@ func authStatusShowCmd() *cobra.Command {
 				return generateSkeleton(ctx, authStatusShowParam)
 			}
 
-			return funcs.AuthStatusShow(ctx, authStatusShowParam)
+			return cli.WrapError(ctx, authstatus.Show(ctx, authStatusShowParam))
 
 		},
 	}
 
 	fs := cmd.Flags()
-	fs.StringVarP(&authStatusShowParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&authStatusShowParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&authStatusShowParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&authStatusShowParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&authStatusShowParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&authStatusShowParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")

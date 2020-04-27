@@ -17,8 +17,7 @@ package define
 import (
 	"fmt"
 
-	"github.com/sacloud/libsacloud/sacloud"
-
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
 
@@ -72,7 +71,7 @@ func getParamResourceShortID(resourceName string, digit int) *schema.Schema {
 var paramIconResourceID = &schema.Schema{
 	Type:            schema.TypeId,
 	HandlerType:     schema.HandlerPathThrough,
-	DestinationProp: "SetIconByID",
+	DestinationProp: "IconID",
 	Description:     "set Icon ID",
 	ValidateFunc:    validateSakuraID(),
 	Category:        "common",
@@ -216,7 +215,7 @@ var paramSourceDiskCond = map[string]*schema.Schema{
 func filterBySourceArchiveID(_ []interface{}, item interface{}, param interface{}) bool {
 
 	type archiveIDHandler interface {
-		GetSourceArchiveID() sacloud.ID
+		GetSourceArchiveID() types.ID
 	}
 
 	archiveIDHolder, ok := item.(archiveIDHandler)
@@ -224,7 +223,7 @@ func filterBySourceArchiveID(_ []interface{}, item interface{}, param interface{
 		return false
 	}
 
-	id := param.(sacloud.ID)
+	id := param.(types.ID)
 	if id == 0 {
 		return true
 	}
@@ -235,7 +234,7 @@ func filterBySourceArchiveID(_ []interface{}, item interface{}, param interface{
 func filterBySourceDiskID(_ []interface{}, item interface{}, param interface{}) bool {
 
 	type diskIDHandler interface {
-		GetSourceDiskID() sacloud.ID
+		GetSourceDiskID() types.ID
 	}
 
 	diskIDHolder, ok := item.(diskIDHandler)
@@ -243,7 +242,7 @@ func filterBySourceDiskID(_ []interface{}, item interface{}, param interface{}) 
 		return false
 	}
 
-	id := param.(sacloud.ID)
+	id := param.(types.ID)
 	if id == 0 {
 		return true
 	}

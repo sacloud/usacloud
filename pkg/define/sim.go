@@ -17,28 +17,12 @@ package define
 import (
 	"math"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
 
-// SIMCarrier defines SIM carrier names
-var SIMCarrier = map[string]string{
-	"kddi":     sacloud.SIMOperatorsKDDI,
-	"docomo":   sacloud.SIMOperatorsDOCOMO,
-	"softbank": sacloud.SIMOperatorsSoftBank,
-}
-
-func simCarrierKeys() []string {
-	var keys []string
-	for k := range SIMCarrier {
-		keys = append(keys, k)
-	}
-	return keys
-}
-
 func SIMResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
@@ -180,7 +164,8 @@ func SIMResource() *schema.Resource {
 		Commands:            commands,
 		ResourceCategory:    CategoryCommonServiceItem,
 		CommandCategories:   SIMCommandCategories,
-		ListResultFieldName: "CommonServiceSIMItems",
+		ListResultFieldName: "SIMs",
+		IsGlobal:            true,
 	}
 }
 
@@ -329,7 +314,7 @@ func simCreateParam() map[string]*schema.Schema {
 			Category:     "sim",
 			Required:     true,
 			Order:        50,
-			ValidateFunc: validateStringSlice(validateInStrValues(simCarrierKeys()...)),
+			ValidateFunc: validateStringSlice(validateInStrValues(types.SIMOperatorShortNames()...)),
 			MinItems:     1,
 			MaxItems:     3,
 		},
@@ -409,7 +394,7 @@ func simCarrierUpdateParam() map[string]*schema.Schema {
 		"carrier": {
 			Type:         schema.TypeStringList,
 			HandlerType:  schema.HandlerNoop,
-			ValidateFunc: validateStringSlice(validateInStrValues(simCarrierKeys()...)),
+			ValidateFunc: validateStringSlice(validateInStrValues(types.SIMOperatorShortNames()...)),
 			MinItems:     1,
 			MaxItems:     3,
 			Required:     true,

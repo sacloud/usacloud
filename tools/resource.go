@@ -118,3 +118,15 @@ func (r *Resource) ParameterSourceFileName() string {
 func (r *Resource) CommandOrderFunc() string {
 	return fmt.Sprintf("%sCommandOrder", ToCamelWithFirstLower(r.Name))
 }
+
+func (r *Resource) PackageDirName() string {
+	n := ToLowerName(r.Name)
+	switch n {
+	case "switch":
+		return "swytch"
+	case "interface":
+		return "iface"
+	default:
+		return n
+	}
+}

@@ -17,7 +17,8 @@ package define
 import (
 	"strings"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -52,12 +53,13 @@ func DiskResource() *schema.Resource {
 			Order:         30,
 		},
 		"update": {
-			Type:          schema.CommandUpdate,
-			Params:        diskUpdateParam(),
-			IncludeFields: diskDetailIncludes(),
-			ExcludeFields: diskDetailExcludes(),
-			Category:      "basics",
-			Order:         40,
+			Type:             schema.CommandUpdate,
+			Params:           diskUpdateParam(),
+			IncludeFields:    diskDetailIncludes(),
+			ExcludeFields:    diskDetailExcludes(),
+			UseCustomCommand: true,
+			Category:         "basics",
+			Order:            40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -278,10 +280,6 @@ func diskDetailExcludes() []string {
 	}
 }
 
-var allowDiskPlans = []string{"ssd", "hdd"}
-var allowDiskConnections = []string{"virtio", "ide"}
-var allowDiskSizes = []int{20, 40, 60, 80, 100, 250, 500, 750, 1024, 2048, 4096}
-
 func diskCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"name":        paramRequiredName,
@@ -295,7 +293,7 @@ func diskCreateParam() map[string]*schema.Schema {
 			Required:        true,
 			DefaultValue:    "ssd",
 			Description:     "set disk plan('hdd' or 'ssd')",
-			ValidateFunc:    validateInStrValues(allowDiskPlans...),
+			ValidateFunc:    validateInStrValues(types.DiskPlanStrings...),
 			Category:        "disk",
 			Order:           10,
 		},
@@ -306,7 +304,7 @@ func diskCreateParam() map[string]*schema.Schema {
 			Required:        true,
 			DefaultValue:    "virtio",
 			Description:     "set disk connection('virtio' or 'ide')",
-			ValidateFunc:    validateInStrValues(allowDiskConnections...),
+			ValidateFunc:    validateInStrValues(types.DiskConnectionStrings...),
 			Category:        "disk",
 			Order:           20,
 		},
@@ -337,7 +335,6 @@ func diskCreateParam() map[string]*schema.Schema {
 			DestinationProp: "SetSizeGB",
 			DefaultValue:    20,
 			Required:        true,
-			ValidateFunc:    validateInIntValues(allowDiskSizes...),
 			Category:        "disk",
 			Order:           50,
 		},
@@ -367,7 +364,6 @@ func diskUpdateParam() map[string]*schema.Schema {
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetDiskConnectionByStr",
 			Description:     "set disk connection('virtio' or 'ide')",
-			ValidateFunc:    validateInStrValues(allowDiskConnections...),
 			Category:        "disk",
 			Order:           20,
 		},
@@ -552,6 +548,7 @@ func diskMonitorParam() map[string]*schema.Schema {
 			Description:  "set end-time",
 			ValidateFunc: validateDateTimeString(),
 		},
+		// TODO キーフォーマットはv2でサポートすべきか検討
 		"key-format": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,

@@ -47,6 +47,7 @@ func ProductLicenseResource() *schema.Resource {
 		Aliases:             []string{"license-info"},
 		ResourceCategory:    CategoryInformation,
 		ListResultFieldName: "LicenseInfo",
+		AltResource:         "LicenseInfo",
 	}
 }
 

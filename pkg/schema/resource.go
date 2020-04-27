@@ -31,6 +31,7 @@ type Resource struct {
 	ResourceCategory    Category
 	SkipApplyConfigFile bool
 	ExperimentWarning   string
+	IsGlobal            bool // グローバルリソースか(API呼び出し時にゾーン指定が必要か)
 }
 
 func (r *Resource) CommandCategory(key string) *Category {

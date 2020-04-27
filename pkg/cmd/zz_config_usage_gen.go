@@ -45,9 +45,7 @@ func configCurrentFlagOrder(cmd *cobra.Command) []*flagSet {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -65,9 +63,7 @@ func configDeleteFlagOrder(cmd *cobra.Command) []*flagSet {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -96,9 +92,7 @@ func configEditFlagOrder(cmd *cobra.Command) []*flagSet {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -115,9 +109,7 @@ func configListFlagOrder(cmd *cobra.Command) []*flagSet {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -134,9 +126,7 @@ func configMigrateFlagOrder(cmd *cobra.Command) []*flagSet {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -153,9 +143,7 @@ func configShowFlagOrder(cmd *cobra.Command) []*flagSet {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -172,9 +160,7 @@ func configUseFlagOrder(cmd *cobra.Command) []*flagSet {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{

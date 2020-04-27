@@ -20,10 +20,11 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/funcs"
+	"github.com/sacloud/usacloud/pkg/funcs/archive"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/term"
 	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
@@ -51,7 +52,7 @@ func archiveListCmd() *cobra.Command {
 		Long:         `List Archive`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveListParam)
+			ctx, err := cli.NewCLIContext("archive", "list", globalFlags(), args, archiveListParam)
 			if err != nil {
 				return err
 			}
@@ -66,14 +67,14 @@ func archiveListCmd() *cobra.Command {
 				return generateSkeleton(ctx, archiveListParam)
 			}
 
-			return funcs.ArchiveList(ctx, archiveListParam)
+			return cli.WrapError(ctx, archive.List(ctx, archiveListParam))
 
 		},
 	}
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&archiveListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &archiveListParam.Id), "id", "", "set filter by id(s)")
+	fs.VarP(newIDSliceValue([]types.ID{}, &archiveListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringVarP(&archiveListParam.Scope, "scope", "", "", "set filter by scope('user' or 'shared')")
 	fs.StringSliceVarP(&archiveListParam.Tags, "tags", "", []string{}, "set filter by tags(AND) (aliases: selector)")
 	fs.VarP(newIDValue(0, &archiveListParam.SourceArchiveId), "source-archive-id", "", "set filter by source-archive-id")
@@ -81,9 +82,7 @@ func archiveListCmd() *cobra.Command {
 	fs.IntVarP(&archiveListParam.From, "from", "", 0, "set offset (aliases: offset)")
 	fs.IntVarP(&archiveListParam.Max, "max", "", 0, "set limit (aliases: limit)")
 	fs.StringSliceVarP(&archiveListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringVarP(&archiveListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&archiveListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&archiveListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&archiveListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&archiveListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -107,7 +106,7 @@ func archiveCreateCmd() *cobra.Command {
 		Long:         `Create Archive`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveCreateParam)
+			ctx, err := cli.NewCLIContext("archive", "create", globalFlags(), args, archiveCreateParam)
 			if err != nil {
 				return err
 			}
@@ -124,7 +123,7 @@ func archiveCreateCmd() *cobra.Command {
 
 			// confirm
 			if !archiveCreateParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
@@ -133,7 +132,7 @@ func archiveCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.ArchiveCreate(ctx, archiveCreateParam)
+			return cli.WrapError(ctx, archive.Create(ctx, archiveCreateParam))
 
 		},
 	}
@@ -148,9 +147,7 @@ func archiveCreateCmd() *cobra.Command {
 	fs.StringSliceVarP(&archiveCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &archiveCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.BoolVarP(&archiveCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&archiveCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&archiveCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&archiveCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&archiveCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&archiveCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -174,7 +171,7 @@ func archiveReadCmd() *cobra.Command {
 		Long:         `Read Archive`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveReadParam)
+			ctx, err := cli.NewCLIContext("archive", "read", globalFlags(), args, archiveReadParam)
 			if err != nil {
 				return err
 			}
@@ -200,14 +197,13 @@ func archiveReadCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				archiveReadParam.SetId(id)
-				go func(p *params.ReadArchiveParam) {
-					err := funcs.ArchiveRead(ctx, p)
+				go func(ctx cli.Context, p *params.ReadArchiveParam) {
+					err := cli.WrapError(ctx, archive.Read(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(archiveReadParam)
+				}(ctx.WithID(id), archiveReadParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -217,9 +213,7 @@ func archiveReadCmd() *cobra.Command {
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&archiveReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&archiveReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&archiveReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&archiveReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&archiveReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&archiveReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -244,7 +238,7 @@ func archiveUpdateCmd() *cobra.Command {
 		Long:         `Update Archive`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveUpdateParam)
+			ctx, err := cli.NewCLIContext("archive", "update", globalFlags(), args, archiveUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -267,7 +261,7 @@ func archiveUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !archiveUpdateParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -281,14 +275,13 @@ func archiveUpdateCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				archiveUpdateParam.SetId(id)
-				go func(p *params.UpdateArchiveParam) {
-					err := funcs.ArchiveUpdate(ctx, p)
+				go func(ctx cli.Context, p *params.UpdateArchiveParam) {
+					err := cli.WrapError(ctx, archive.Update(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(archiveUpdateParam)
+				}(ctx.WithID(id), archiveUpdateParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -303,9 +296,7 @@ func archiveUpdateCmd() *cobra.Command {
 	fs.StringSliceVarP(&archiveUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &archiveUpdateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.BoolVarP(&archiveUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&archiveUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&archiveUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&archiveUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&archiveUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&archiveUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -330,7 +321,7 @@ func archiveDeleteCmd() *cobra.Command {
 		Long:         `Delete Archive`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveDeleteParam)
+			ctx, err := cli.NewCLIContext("archive", "delete", globalFlags(), args, archiveDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -353,7 +344,7 @@ func archiveDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !archiveDeleteParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -367,14 +358,13 @@ func archiveDeleteCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				archiveDeleteParam.SetId(id)
-				go func(p *params.DeleteArchiveParam) {
-					err := funcs.ArchiveDelete(ctx, p)
+				go func(ctx cli.Context, p *params.DeleteArchiveParam) {
+					err := cli.WrapError(ctx, archive.Delete(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(archiveDeleteParam)
+				}(ctx.WithID(id), archiveDeleteParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -385,9 +375,7 @@ func archiveDeleteCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&archiveDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&archiveDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&archiveDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&archiveDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&archiveDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&archiveDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&archiveDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -412,7 +400,7 @@ func archiveUploadCmd() *cobra.Command {
 		Long:         `Upload Archive`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveUploadParam)
+			ctx, err := cli.NewCLIContext("archive", "upload", globalFlags(), args, archiveUploadParam)
 			if err != nil {
 				return err
 			}
@@ -435,7 +423,7 @@ func archiveUploadCmd() *cobra.Command {
 
 			// confirm
 			if !archiveUploadParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("upload", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -449,14 +437,13 @@ func archiveUploadCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				archiveUploadParam.SetId(id)
-				go func(p *params.UploadArchiveParam) {
-					err := funcs.ArchiveUpload(ctx, p)
+				go func(ctx cli.Context, p *params.UploadArchiveParam) {
+					err := cli.WrapError(ctx, archive.Upload(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(archiveUploadParam)
+				}(ctx.WithID(id), archiveUploadParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -468,9 +455,7 @@ func archiveUploadCmd() *cobra.Command {
 	fs.StringVarP(&archiveUploadParam.ArchiveFile, "archive-file", "", "", "set archive image file")
 	fs.StringSliceVarP(&archiveUploadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&archiveUploadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&archiveUploadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&archiveUploadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&archiveUploadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&archiveUploadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveUploadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&archiveUploadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -495,7 +480,7 @@ func archiveDownloadCmd() *cobra.Command {
 		Long:         `Download Archive`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveDownloadParam)
+			ctx, err := cli.NewCLIContext("archive", "download", globalFlags(), args, archiveDownloadParam)
 			if err != nil {
 				return err
 			}
@@ -518,7 +503,7 @@ func archiveDownloadCmd() *cobra.Command {
 
 			// confirm
 			if !archiveDownloadParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("download", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -532,14 +517,13 @@ func archiveDownloadCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				archiveDownloadParam.SetId(id)
-				go func(p *params.DownloadArchiveParam) {
-					err := funcs.ArchiveDownload(ctx, p)
+				go func(ctx cli.Context, p *params.DownloadArchiveParam) {
+					err := cli.WrapError(ctx, archive.Download(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(archiveDownloadParam)
+				}(ctx.WithID(id), archiveDownloadParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -551,9 +535,7 @@ func archiveDownloadCmd() *cobra.Command {
 	fs.StringVarP(&archiveDownloadParam.FileDestination, "file-destination", "", "", "set file destination path")
 	fs.StringSliceVarP(&archiveDownloadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&archiveDownloadParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&archiveDownloadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&archiveDownloadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&archiveDownloadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&archiveDownloadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveDownloadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &archiveDownloadParam.Id), "id", "", "Set target ID")
@@ -571,7 +553,7 @@ func archiveFTPOpenCmd() *cobra.Command {
 		Long:         `FTPOpen Archive`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveFTPOpenParam)
+			ctx, err := cli.NewCLIContext("archive", "ftp-open", globalFlags(), args, archiveFTPOpenParam)
 			if err != nil {
 				return err
 			}
@@ -594,7 +576,7 @@ func archiveFTPOpenCmd() *cobra.Command {
 
 			// confirm
 			if !archiveFTPOpenParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("ftp-open", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -608,14 +590,13 @@ func archiveFTPOpenCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				archiveFTPOpenParam.SetId(id)
-				go func(p *params.FTPOpenArchiveParam) {
-					err := funcs.ArchiveFTPOpen(ctx, p)
+				go func(ctx cli.Context, p *params.FTPOpenArchiveParam) {
+					err := cli.WrapError(ctx, archive.FTPOpen(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(archiveFTPOpenParam)
+				}(ctx.WithID(id), archiveFTPOpenParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -626,9 +607,7 @@ func archiveFTPOpenCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&archiveFTPOpenParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&archiveFTPOpenParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&archiveFTPOpenParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&archiveFTPOpenParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&archiveFTPOpenParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&archiveFTPOpenParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveFTPOpenParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&archiveFTPOpenParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -653,7 +632,7 @@ func archiveFTPCloseCmd() *cobra.Command {
 		Long:         `FTPClose Archive`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveFTPCloseParam)
+			ctx, err := cli.NewCLIContext("archive", "ftp-close", globalFlags(), args, archiveFTPCloseParam)
 			if err != nil {
 				return err
 			}
@@ -676,7 +655,7 @@ func archiveFTPCloseCmd() *cobra.Command {
 
 			// confirm
 			if !archiveFTPCloseParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("ftp-close", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -690,14 +669,13 @@ func archiveFTPCloseCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				archiveFTPCloseParam.SetId(id)
-				go func(p *params.FTPCloseArchiveParam) {
-					err := funcs.ArchiveFTPClose(ctx, p)
+				go func(ctx cli.Context, p *params.FTPCloseArchiveParam) {
+					err := cli.WrapError(ctx, archive.FTPClose(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(archiveFTPCloseParam)
+				}(ctx.WithID(id), archiveFTPCloseParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -708,9 +686,7 @@ func archiveFTPCloseCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&archiveFTPCloseParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&archiveFTPCloseParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&archiveFTPCloseParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&archiveFTPCloseParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&archiveFTPCloseParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&archiveFTPCloseParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveFTPCloseParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &archiveFTPCloseParam.Id), "id", "", "Set target ID")
@@ -728,7 +704,7 @@ func archiveWaitForCopyCmd() *cobra.Command {
 		Long:         `WaitForCopy Archive`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, archiveWaitForCopyParam)
+			ctx, err := cli.NewCLIContext("archive", "wait-for-copy", globalFlags(), args, archiveWaitForCopyParam)
 			if err != nil {
 				return err
 			}
@@ -754,14 +730,13 @@ func archiveWaitForCopyCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				archiveWaitForCopyParam.SetId(id)
-				go func(p *params.WaitForCopyArchiveParam) {
-					err := funcs.ArchiveWaitForCopy(ctx, p)
+				go func(ctx cli.Context, p *params.WaitForCopyArchiveParam) {
+					err := cli.WrapError(ctx, archive.WaitForCopy(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(archiveWaitForCopyParam)
+				}(ctx.WithID(id), archiveWaitForCopyParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -771,9 +746,7 @@ func archiveWaitForCopyCmd() *cobra.Command {
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&archiveWaitForCopyParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&archiveWaitForCopyParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&archiveWaitForCopyParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&archiveWaitForCopyParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&archiveWaitForCopyParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&archiveWaitForCopyParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &archiveWaitForCopyParam.Id), "id", "", "Set target ID")

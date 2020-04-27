@@ -17,7 +17,8 @@ package define
 import (
 	"testing"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -25,13 +26,10 @@ func TestFilterByTagFunc(t *testing.T) {
 
 	t.Run("With single word", func(t *testing.T) {
 
-		var sw1 = &sacloud.Switch{Resource: sacloud.NewResource(1)}
-		var sw2 = &sacloud.Switch{Resource: sacloud.NewResource(2)}
+		var sw1 = &sacloud.Switch{ID: 1, Tags: types.Tags{"tag1", "tag2"}}
+		var sw2 = &sacloud.Switch{ID: 2, Tags: types.Tags{"tag11", "tag2"}}
 
 		items := []interface{}{sw1, sw2}
-
-		sw1.SetTags([]string{"tag1", "tag2"})
-		sw2.SetTags([]string{"tag11", "tag2"})
 
 		expects := map[string][]bool{
 			"tag1":  {true, false},
@@ -51,15 +49,11 @@ func TestFilterByTagFunc(t *testing.T) {
 
 	t.Run("With multiple word", func(t *testing.T) {
 
-		var sw1 = &sacloud.Switch{Resource: sacloud.NewResource(1)}
-		var sw2 = &sacloud.Switch{Resource: sacloud.NewResource(2)}
-		var sw3 = &sacloud.Switch{Resource: sacloud.NewResource(3)}
+		var sw1 = &sacloud.Switch{ID: 1, Tags: types.Tags{"tag1", "tag2"}}
+		var sw2 = &sacloud.Switch{ID: 2, Tags: types.Tags{"tag1", "tag3"}}
+		var sw3 = &sacloud.Switch{ID: 2, Tags: types.Tags{"tag1", "tag2", "tag3"}}
 
 		items := []interface{}{sw1, sw2, sw3}
-
-		sw1.SetTags([]string{"tag1", "tag2"})
-		sw2.SetTags([]string{"tag1", "tag3"})
-		sw3.SetTags([]string{"tag1", "tag2", "tag3"})
 
 		type expect struct {
 			words   []string

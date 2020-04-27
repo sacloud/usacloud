@@ -14,11 +14,13 @@
 
 package util
 
-import "github.com/sacloud/libsacloud/sacloud"
+import (
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
+)
 
-func UniqIDs(elements []sacloud.ID) []sacloud.ID {
-	encountered := map[sacloud.ID]bool{}
-	result := []sacloud.ID{}
+func UniqIDs(elements []types.ID) []types.ID {
+	encountered := map[types.ID]bool{}
+	result := []types.ID{}
 	for v := range elements {
 		if !encountered[elements[v]] {
 			encountered[elements[v]] = true
@@ -29,7 +31,7 @@ func UniqIDs(elements []sacloud.ID) []sacloud.ID {
 }
 
 // StringIDs sacloud.IDスライスを文字列のスライスに変換する
-func StringIDs(ids []sacloud.ID) []string {
+func StringIDs(ids []types.ID) []string {
 	var strIDs []string
 
 	for _, v := range ids {

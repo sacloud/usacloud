@@ -38,20 +38,11 @@ func rootCommandOrder(cmd *cobra.Command) []*commandSet {
 	}
 	{
 		set := &commandSet{
-			title: "Computing",
-		}
-		set.commands = append(set.commands, lookupCmd(cmd, "private-host"))
-		set.commands = append(set.commands, lookupCmd(cmd, "server"))
-		commands = append(commands, set)
-	}
-	{
-		set := &commandSet{
 			title: "Storage",
 		}
 		set.commands = append(set.commands, lookupCmd(cmd, "archive"))
 		set.commands = append(set.commands, lookupCmd(cmd, "auto-backup"))
 		set.commands = append(set.commands, lookupCmd(cmd, "disk"))
-		set.commands = append(set.commands, lookupCmd(cmd, "iso-image"))
 		commands = append(commands, set)
 	}
 	{
@@ -59,12 +50,6 @@ func rootCommandOrder(cmd *cobra.Command) []*commandSet {
 			title: "Networking",
 		}
 		set.commands = append(set.commands, lookupCmd(cmd, "bridge"))
-		set.commands = append(set.commands, lookupCmd(cmd, "ipv4"))
-		set.commands = append(set.commands, lookupCmd(cmd, "ipv6"))
-		set.commands = append(set.commands, lookupCmd(cmd, "interface"))
-		set.commands = append(set.commands, lookupCmd(cmd, "internet"))
-		set.commands = append(set.commands, lookupCmd(cmd, "packet-filter"))
-		set.commands = append(set.commands, lookupCmd(cmd, "switch"))
 		commands = append(commands, set)
 	}
 	{
@@ -72,31 +57,6 @@ func rootCommandOrder(cmd *cobra.Command) []*commandSet {
 			title: "Appliance",
 		}
 		set.commands = append(set.commands, lookupCmd(cmd, "database"))
-		set.commands = append(set.commands, lookupCmd(cmd, "load-balancer"))
-		set.commands = append(set.commands, lookupCmd(cmd, "mobile-gateway"))
-		set.commands = append(set.commands, lookupCmd(cmd, "nfs"))
-		set.commands = append(set.commands, lookupCmd(cmd, "vpc-router"))
-		commands = append(commands, set)
-	}
-	{
-		set := &commandSet{
-			title: "Common service items",
-		}
-		set.commands = append(set.commands, lookupCmd(cmd, "dns"))
-		set.commands = append(set.commands, lookupCmd(cmd, "gslb"))
-		set.commands = append(set.commands, lookupCmd(cmd, "proxy-lb"))
-		set.commands = append(set.commands, lookupCmd(cmd, "sim"))
-		set.commands = append(set.commands, lookupCmd(cmd, "simple-monitor"))
-		commands = append(commands, set)
-	}
-	{
-		set := &commandSet{
-			title: "Common items",
-		}
-		set.commands = append(set.commands, lookupCmd(cmd, "icon"))
-		set.commands = append(set.commands, lookupCmd(cmd, "license"))
-		set.commands = append(set.commands, lookupCmd(cmd, "ssh-key"))
-		set.commands = append(set.commands, lookupCmd(cmd, "startup-script"))
 		commands = append(commands, set)
 	}
 	{
@@ -111,35 +71,6 @@ func rootCommandOrder(cmd *cobra.Command) []*commandSet {
 			title: "Coupon",
 		}
 		set.commands = append(set.commands, lookupCmd(cmd, "coupon"))
-		commands = append(commands, set)
-	}
-	{
-		set := &commandSet{
-			title: "Other services",
-		}
-		set.commands = append(set.commands, lookupCmd(cmd, "object-storage"))
-		set.commands = append(set.commands, lookupCmd(cmd, "self"))
-		set.commands = append(set.commands, lookupCmd(cmd, "web-accel"))
-		commands = append(commands, set)
-	}
-	{
-		set := &commandSet{
-			title: "Service/Product informations",
-		}
-		set.commands = append(set.commands, lookupCmd(cmd, "price"))
-		set.commands = append(set.commands, lookupCmd(cmd, "product-disk"))
-		set.commands = append(set.commands, lookupCmd(cmd, "product-internet"))
-		set.commands = append(set.commands, lookupCmd(cmd, "product-license"))
-		set.commands = append(set.commands, lookupCmd(cmd, "product-server"))
-		set.commands = append(set.commands, lookupCmd(cmd, "region"))
-		set.commands = append(set.commands, lookupCmd(cmd, "zone"))
-		commands = append(commands, set)
-	}
-	{
-		set := &commandSet{
-			title: "Summary",
-		}
-		set.commands = append(set.commands, lookupCmd(cmd, "summary"))
 		commands = append(commands, set)
 	}
 
@@ -163,60 +94,6 @@ func init() {
 		cmd := authStatusCmd()
 		cmd.AddCommand(authStatusShowCmd())
 		buildCommandsUsage(cmd, authStatusCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := privateHostCmd()
-		cmd.AddCommand(privateHostListCmd())
-		cmd.AddCommand(privateHostCreateCmd())
-		cmd.AddCommand(privateHostReadCmd())
-		cmd.AddCommand(privateHostUpdateCmd())
-		cmd.AddCommand(privateHostDeleteCmd())
-		cmd.AddCommand(privateHostServerInfoCmd())
-		cmd.AddCommand(privateHostServerAddCmd())
-		cmd.AddCommand(privateHostServerDeleteCmd())
-		buildCommandsUsage(cmd, privateHostCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := serverCmd()
-		cmd.AddCommand(serverListCmd())
-		cmd.AddCommand(serverBuildCmd())
-		cmd.AddCommand(serverReadCmd())
-		cmd.AddCommand(serverUpdateCmd())
-		cmd.AddCommand(serverDeleteCmd())
-		cmd.AddCommand(serverPlanChangeCmd())
-		cmd.AddCommand(serverBootCmd())
-		cmd.AddCommand(serverShutdownCmd())
-		cmd.AddCommand(serverShutdownForceCmd())
-		cmd.AddCommand(serverResetCmd())
-		cmd.AddCommand(serverWaitForBootCmd())
-		cmd.AddCommand(serverWaitForDownCmd())
-		cmd.AddCommand(serverSSHCmd())
-		cmd.AddCommand(serverSSHExecCmd())
-		cmd.AddCommand(serverScpCmd())
-		cmd.AddCommand(serverVncCmd())
-		cmd.AddCommand(serverVncInfoCmd())
-		cmd.AddCommand(serverVncSendCmd())
-		cmd.AddCommand(serverVncSnapshotCmd())
-		cmd.AddCommand(serverRemoteDesktopCmd())
-		cmd.AddCommand(serverRemoteDesktopInfoCmd())
-		cmd.AddCommand(serverDiskInfoCmd())
-		cmd.AddCommand(serverDiskConnectCmd())
-		cmd.AddCommand(serverDiskDisconnectCmd())
-		cmd.AddCommand(serverInterfaceInfoCmd())
-		cmd.AddCommand(serverInterfaceAddForInternetCmd())
-		cmd.AddCommand(serverInterfaceAddForRouterCmd())
-		cmd.AddCommand(serverInterfaceAddForSwitchCmd())
-		cmd.AddCommand(serverInterfaceAddDisconnectedCmd())
-		cmd.AddCommand(serverISOInfoCmd())
-		cmd.AddCommand(serverISOInsertCmd())
-		cmd.AddCommand(serverISOEjectCmd())
-		cmd.AddCommand(serverMonitorCPUCmd())
-		cmd.AddCommand(serverMonitorNicCmd())
-		cmd.AddCommand(serverMonitorDiskCmd())
-		cmd.AddCommand(serverMaintenanceInfoCmd())
-		buildCommandsUsage(cmd, serverCommandOrder(cmd))
 		rootCmd.AddCommand(cmd)
 	}
 	{
@@ -264,20 +141,6 @@ func init() {
 		rootCmd.AddCommand(cmd)
 	}
 	{
-		cmd := isoImageCmd()
-		cmd.AddCommand(isoImageListCmd())
-		cmd.AddCommand(isoImageCreateCmd())
-		cmd.AddCommand(isoImageReadCmd())
-		cmd.AddCommand(isoImageUpdateCmd())
-		cmd.AddCommand(isoImageDeleteCmd())
-		cmd.AddCommand(isoImageUploadCmd())
-		cmd.AddCommand(isoImageDownloadCmd())
-		cmd.AddCommand(isoImageFTPOpenCmd())
-		cmd.AddCommand(isoImageFTPCloseCmd())
-		buildCommandsUsage(cmd, isoImageCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
 		cmd := bridgeCmd()
 		cmd.AddCommand(bridgeListCmd())
 		cmd.AddCommand(bridgeCreateCmd())
@@ -285,85 +148,6 @@ func init() {
 		cmd.AddCommand(bridgeUpdateCmd())
 		cmd.AddCommand(bridgeDeleteCmd())
 		buildCommandsUsage(cmd, bridgeCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := ipv4Cmd()
-		cmd.AddCommand(ipv4ListCmd())
-		cmd.AddCommand(ipv4PtrAddCmd())
-		cmd.AddCommand(ipv4PtrReadCmd())
-		cmd.AddCommand(ipv4PtrUpdateCmd())
-		cmd.AddCommand(ipv4PtrDeleteCmd())
-		buildCommandsUsage(cmd, ipv4CommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := ipv6Cmd()
-		cmd.AddCommand(ipv6ListCmd())
-		cmd.AddCommand(ipv6PtrAddCmd())
-		cmd.AddCommand(ipv6PtrReadCmd())
-		cmd.AddCommand(ipv6PtrUpdateCmd())
-		cmd.AddCommand(ipv6PtrDeleteCmd())
-		buildCommandsUsage(cmd, ipv6CommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := interfaceCmd()
-		cmd.AddCommand(interfaceListCmd())
-		cmd.AddCommand(interfacePacketFilterConnectCmd())
-		cmd.AddCommand(interfaceCreateCmd())
-		cmd.AddCommand(interfacePacketFilterDisconnectCmd())
-		cmd.AddCommand(interfaceReadCmd())
-		cmd.AddCommand(interfaceUpdateCmd())
-		cmd.AddCommand(interfaceDeleteCmd())
-		buildCommandsUsage(cmd, interfaceCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := internetCmd()
-		cmd.AddCommand(internetListCmd())
-		cmd.AddCommand(internetCreateCmd())
-		cmd.AddCommand(internetReadCmd())
-		cmd.AddCommand(internetUpdateCmd())
-		cmd.AddCommand(internetDeleteCmd())
-		cmd.AddCommand(internetUpdateBandwidthCmd())
-		cmd.AddCommand(internetSubnetInfoCmd())
-		cmd.AddCommand(internetSubnetAddCmd())
-		cmd.AddCommand(internetSubnetDeleteCmd())
-		cmd.AddCommand(internetSubnetUpdateCmd())
-		cmd.AddCommand(internetIPv6InfoCmd())
-		cmd.AddCommand(internetIPv6EnableCmd())
-		cmd.AddCommand(internetIPv6DisableCmd())
-		cmd.AddCommand(internetMonitorCmd())
-		buildCommandsUsage(cmd, internetCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := packetFilterCmd()
-		cmd.AddCommand(packetFilterListCmd())
-		cmd.AddCommand(packetFilterCreateCmd())
-		cmd.AddCommand(packetFilterReadCmd())
-		cmd.AddCommand(packetFilterUpdateCmd())
-		cmd.AddCommand(packetFilterDeleteCmd())
-		cmd.AddCommand(packetFilterRuleInfoCmd())
-		cmd.AddCommand(packetFilterRuleAddCmd())
-		cmd.AddCommand(packetFilterRuleUpdateCmd())
-		cmd.AddCommand(packetFilterRuleDeleteCmd())
-		cmd.AddCommand(packetFilterInterfaceConnectCmd())
-		cmd.AddCommand(packetFilterInterfaceDisconnectCmd())
-		buildCommandsUsage(cmd, packetFilterCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := switchCmd()
-		cmd.AddCommand(switchListCmd())
-		cmd.AddCommand(switchCreateCmd())
-		cmd.AddCommand(switchReadCmd())
-		cmd.AddCommand(switchUpdateCmd())
-		cmd.AddCommand(switchDeleteCmd())
-		cmd.AddCommand(switchBridgeConnectCmd())
-		cmd.AddCommand(switchBridgeDisconnectCmd())
-		buildCommandsUsage(cmd, switchCommandOrder(cmd))
 		rootCmd.AddCommand(cmd)
 	}
 	{
@@ -399,280 +183,6 @@ func init() {
 		rootCmd.AddCommand(cmd)
 	}
 	{
-		cmd := loadBalancerCmd()
-		cmd.AddCommand(loadBalancerListCmd())
-		cmd.AddCommand(loadBalancerCreateCmd())
-		cmd.AddCommand(loadBalancerReadCmd())
-		cmd.AddCommand(loadBalancerUpdateCmd())
-		cmd.AddCommand(loadBalancerDeleteCmd())
-		cmd.AddCommand(loadBalancerBootCmd())
-		cmd.AddCommand(loadBalancerShutdownCmd())
-		cmd.AddCommand(loadBalancerShutdownForceCmd())
-		cmd.AddCommand(loadBalancerResetCmd())
-		cmd.AddCommand(loadBalancerWaitForBootCmd())
-		cmd.AddCommand(loadBalancerWaitForDownCmd())
-		cmd.AddCommand(loadBalancerVipInfoCmd())
-		cmd.AddCommand(loadBalancerVipAddCmd())
-		cmd.AddCommand(loadBalancerVipUpdateCmd())
-		cmd.AddCommand(loadBalancerVipDeleteCmd())
-		cmd.AddCommand(loadBalancerServerInfoCmd())
-		cmd.AddCommand(loadBalancerServerAddCmd())
-		cmd.AddCommand(loadBalancerServerUpdateCmd())
-		cmd.AddCommand(loadBalancerServerDeleteCmd())
-		cmd.AddCommand(loadBalancerMonitorCmd())
-		buildCommandsUsage(cmd, loadBalancerCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := mobileGatewayCmd()
-		cmd.AddCommand(mobileGatewayListCmd())
-		cmd.AddCommand(mobileGatewayCreateCmd())
-		cmd.AddCommand(mobileGatewayReadCmd())
-		cmd.AddCommand(mobileGatewayUpdateCmd())
-		cmd.AddCommand(mobileGatewayDeleteCmd())
-		cmd.AddCommand(mobileGatewayBootCmd())
-		cmd.AddCommand(mobileGatewayShutdownCmd())
-		cmd.AddCommand(mobileGatewayShutdownForceCmd())
-		cmd.AddCommand(mobileGatewayResetCmd())
-		cmd.AddCommand(mobileGatewayWaitForBootCmd())
-		cmd.AddCommand(mobileGatewayWaitForDownCmd())
-		cmd.AddCommand(mobileGatewayInterfaceInfoCmd())
-		cmd.AddCommand(mobileGatewayInterfaceConnectCmd())
-		cmd.AddCommand(mobileGatewayInterfaceUpdateCmd())
-		cmd.AddCommand(mobileGatewayInterfaceDisconnectCmd())
-		cmd.AddCommand(mobileGatewayTrafficControlInfoCmd())
-		cmd.AddCommand(mobileGatewayTrafficControlEnableCmd())
-		cmd.AddCommand(mobileGatewayTrafficControlUpdateCmd())
-		cmd.AddCommand(mobileGatewayTrafficControlDisableCmd())
-		cmd.AddCommand(mobileGatewayStaticRouteInfoCmd())
-		cmd.AddCommand(mobileGatewayStaticRouteAddCmd())
-		cmd.AddCommand(mobileGatewayStaticRouteUpdateCmd())
-		cmd.AddCommand(mobileGatewayStaticRouteDeleteCmd())
-		cmd.AddCommand(mobileGatewaySIMInfoCmd())
-		cmd.AddCommand(mobileGatewaySIMAddCmd())
-		cmd.AddCommand(mobileGatewaySIMUpdateCmd())
-		cmd.AddCommand(mobileGatewaySIMDeleteCmd())
-		cmd.AddCommand(mobileGatewaySIMRouteInfoCmd())
-		cmd.AddCommand(mobileGatewaySIMRouteAddCmd())
-		cmd.AddCommand(mobileGatewaySIMRouteUpdateCmd())
-		cmd.AddCommand(mobileGatewaySIMRouteDeleteCmd())
-		cmd.AddCommand(mobileGatewayDNSUpdateCmd())
-		cmd.AddCommand(mobileGatewayLogsCmd())
-		buildCommandsUsage(cmd, mobileGatewayCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := nfsCmd()
-		cmd.AddCommand(nfsListCmd())
-		cmd.AddCommand(nfsCreateCmd())
-		cmd.AddCommand(nfsReadCmd())
-		cmd.AddCommand(nfsUpdateCmd())
-		cmd.AddCommand(nfsDeleteCmd())
-		cmd.AddCommand(nfsBootCmd())
-		cmd.AddCommand(nfsShutdownCmd())
-		cmd.AddCommand(nfsShutdownForceCmd())
-		cmd.AddCommand(nfsResetCmd())
-		cmd.AddCommand(nfsWaitForBootCmd())
-		cmd.AddCommand(nfsWaitForDownCmd())
-		cmd.AddCommand(nfsMonitorNicCmd())
-		cmd.AddCommand(nfsMonitorFreeDiskSizeCmd())
-		buildCommandsUsage(cmd, nfsCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := vpcRouterCmd()
-		cmd.AddCommand(vpcRouterListCmd())
-		cmd.AddCommand(vpcRouterCreateCmd())
-		cmd.AddCommand(vpcRouterReadCmd())
-		cmd.AddCommand(vpcRouterUpdateCmd())
-		cmd.AddCommand(vpcRouterDeleteCmd())
-		cmd.AddCommand(vpcRouterBootCmd())
-		cmd.AddCommand(vpcRouterShutdownCmd())
-		cmd.AddCommand(vpcRouterShutdownForceCmd())
-		cmd.AddCommand(vpcRouterResetCmd())
-		cmd.AddCommand(vpcRouterWaitForBootCmd())
-		cmd.AddCommand(vpcRouterWaitForDownCmd())
-		cmd.AddCommand(vpcRouterEnableInternetConnectionCmd())
-		cmd.AddCommand(vpcRouterDisableInternetConnectionCmd())
-		cmd.AddCommand(vpcRouterInterfaceInfoCmd())
-		cmd.AddCommand(vpcRouterInterfaceConnectCmd())
-		cmd.AddCommand(vpcRouterInterfaceUpdateCmd())
-		cmd.AddCommand(vpcRouterInterfaceDisconnectCmd())
-		cmd.AddCommand(vpcRouterStaticNatInfoCmd())
-		cmd.AddCommand(vpcRouterStaticNatAddCmd())
-		cmd.AddCommand(vpcRouterStaticNatUpdateCmd())
-		cmd.AddCommand(vpcRouterStaticNatDeleteCmd())
-		cmd.AddCommand(vpcRouterPortForwardingInfoCmd())
-		cmd.AddCommand(vpcRouterPortForwardingAddCmd())
-		cmd.AddCommand(vpcRouterPortForwardingUpdateCmd())
-		cmd.AddCommand(vpcRouterPortForwardingDeleteCmd())
-		cmd.AddCommand(vpcRouterFirewallInfoCmd())
-		cmd.AddCommand(vpcRouterFirewallAddCmd())
-		cmd.AddCommand(vpcRouterFirewallUpdateCmd())
-		cmd.AddCommand(vpcRouterFirewallDeleteCmd())
-		cmd.AddCommand(vpcRouterDhcpServerInfoCmd())
-		cmd.AddCommand(vpcRouterDhcpServerAddCmd())
-		cmd.AddCommand(vpcRouterDhcpServerUpdateCmd())
-		cmd.AddCommand(vpcRouterDhcpServerDeleteCmd())
-		cmd.AddCommand(vpcRouterDhcpStaticMappingInfoCmd())
-		cmd.AddCommand(vpcRouterDhcpStaticMappingAddCmd())
-		cmd.AddCommand(vpcRouterDhcpStaticMappingUpdateCmd())
-		cmd.AddCommand(vpcRouterDhcpStaticMappingDeleteCmd())
-		cmd.AddCommand(vpcRouterPptpServerInfoCmd())
-		cmd.AddCommand(vpcRouterPptpServerUpdateCmd())
-		cmd.AddCommand(vpcRouterL2TPServerInfoCmd())
-		cmd.AddCommand(vpcRouterL2TPServerUpdateCmd())
-		cmd.AddCommand(vpcRouterUserInfoCmd())
-		cmd.AddCommand(vpcRouterUserAddCmd())
-		cmd.AddCommand(vpcRouterUserUpdateCmd())
-		cmd.AddCommand(vpcRouterUserDeleteCmd())
-		cmd.AddCommand(vpcRouterSiteToSiteVPNInfoCmd())
-		cmd.AddCommand(vpcRouterSiteToSiteVPNAddCmd())
-		cmd.AddCommand(vpcRouterSiteToSiteVPNUpdateCmd())
-		cmd.AddCommand(vpcRouterSiteToSiteVPNDeleteCmd())
-		cmd.AddCommand(vpcRouterSiteToSiteVPNPeersCmd())
-		cmd.AddCommand(vpcRouterStaticRouteInfoCmd())
-		cmd.AddCommand(vpcRouterStaticRouteAddCmd())
-		cmd.AddCommand(vpcRouterStaticRouteUpdateCmd())
-		cmd.AddCommand(vpcRouterStaticRouteDeleteCmd())
-		cmd.AddCommand(vpcRouterMonitorCmd())
-		cmd.AddCommand(vpcRouterLogsCmd())
-		buildCommandsUsage(cmd, vpcRouterCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := dnsCmd()
-		cmd.AddCommand(dnsListCmd())
-		cmd.AddCommand(dnsRecordInfoCmd())
-		cmd.AddCommand(dnsRecordBulkUpdateCmd())
-		cmd.AddCommand(dnsCreateCmd())
-		cmd.AddCommand(dnsRecordAddCmd())
-		cmd.AddCommand(dnsReadCmd())
-		cmd.AddCommand(dnsRecordUpdateCmd())
-		cmd.AddCommand(dnsRecordDeleteCmd())
-		cmd.AddCommand(dnsUpdateCmd())
-		cmd.AddCommand(dnsDeleteCmd())
-		buildCommandsUsage(cmd, dnsCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := gslbCmd()
-		cmd.AddCommand(gslbListCmd())
-		cmd.AddCommand(gslbServerInfoCmd())
-		cmd.AddCommand(gslbCreateCmd())
-		cmd.AddCommand(gslbServerAddCmd())
-		cmd.AddCommand(gslbReadCmd())
-		cmd.AddCommand(gslbServerUpdateCmd())
-		cmd.AddCommand(gslbServerDeleteCmd())
-		cmd.AddCommand(gslbUpdateCmd())
-		cmd.AddCommand(gslbDeleteCmd())
-		buildCommandsUsage(cmd, gslbCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := proxyLBCmd()
-		cmd.AddCommand(proxyLBListCmd())
-		cmd.AddCommand(proxyLBCreateCmd())
-		cmd.AddCommand(proxyLBReadCmd())
-		cmd.AddCommand(proxyLBUpdateCmd())
-		cmd.AddCommand(proxyLBDeleteCmd())
-		cmd.AddCommand(proxyLBPlanChangeCmd())
-		cmd.AddCommand(proxyLBBindPortInfoCmd())
-		cmd.AddCommand(proxyLBBindPortAddCmd())
-		cmd.AddCommand(proxyLBBindPortUpdateCmd())
-		cmd.AddCommand(proxyLBBindPortDeleteCmd())
-		cmd.AddCommand(proxyLBResponseHeaderInfoCmd())
-		cmd.AddCommand(proxyLBResponseHeaderAddCmd())
-		cmd.AddCommand(proxyLBResponseHeaderUpdateCmd())
-		cmd.AddCommand(proxyLBResponseHeaderDeleteCmd())
-		cmd.AddCommand(proxyLBACMEInfoCmd())
-		cmd.AddCommand(proxyLBACMESettingCmd())
-		cmd.AddCommand(proxyLBACMERenewCmd())
-		cmd.AddCommand(proxyLBServerInfoCmd())
-		cmd.AddCommand(proxyLBServerAddCmd())
-		cmd.AddCommand(proxyLBServerUpdateCmd())
-		cmd.AddCommand(proxyLBServerDeleteCmd())
-		cmd.AddCommand(proxyLBCertificateInfoCmd())
-		cmd.AddCommand(proxyLBCertificateAddCmd())
-		cmd.AddCommand(proxyLBCertificateUpdateCmd())
-		cmd.AddCommand(proxyLBCertificateDeleteCmd())
-		cmd.AddCommand(proxyLBMonitorCmd())
-		buildCommandsUsage(cmd, proxyLBCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := simCmd()
-		cmd.AddCommand(simListCmd())
-		cmd.AddCommand(simCreateCmd())
-		cmd.AddCommand(simReadCmd())
-		cmd.AddCommand(simUpdateCmd())
-		cmd.AddCommand(simDeleteCmd())
-		cmd.AddCommand(simCarrierInfoCmd())
-		cmd.AddCommand(simCarrierUpdateCmd())
-		cmd.AddCommand(simActivateCmd())
-		cmd.AddCommand(simDeactivateCmd())
-		cmd.AddCommand(simImeiLockCmd())
-		cmd.AddCommand(simIpAddCmd())
-		cmd.AddCommand(simImeiUnlockCmd())
-		cmd.AddCommand(simIpDeleteCmd())
-		cmd.AddCommand(simLogsCmd())
-		cmd.AddCommand(simMonitorCmd())
-		buildCommandsUsage(cmd, simCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := simpleMonitorCmd()
-		cmd.AddCommand(simpleMonitorListCmd())
-		cmd.AddCommand(simpleMonitorCreateCmd())
-		cmd.AddCommand(simpleMonitorReadCmd())
-		cmd.AddCommand(simpleMonitorUpdateCmd())
-		cmd.AddCommand(simpleMonitorDeleteCmd())
-		cmd.AddCommand(simpleMonitorHealthCmd())
-		buildCommandsUsage(cmd, simpleMonitorCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := iconCmd()
-		cmd.AddCommand(iconListCmd())
-		cmd.AddCommand(iconCreateCmd())
-		cmd.AddCommand(iconReadCmd())
-		cmd.AddCommand(iconUpdateCmd())
-		cmd.AddCommand(iconDeleteCmd())
-		buildCommandsUsage(cmd, iconCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := licenseCmd()
-		cmd.AddCommand(licenseListCmd())
-		cmd.AddCommand(licenseCreateCmd())
-		cmd.AddCommand(licenseReadCmd())
-		cmd.AddCommand(licenseUpdateCmd())
-		cmd.AddCommand(licenseDeleteCmd())
-		buildCommandsUsage(cmd, licenseCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := sshKeyCmd()
-		cmd.AddCommand(sshKeyListCmd())
-		cmd.AddCommand(sshKeyCreateCmd())
-		cmd.AddCommand(sshKeyReadCmd())
-		cmd.AddCommand(sshKeyUpdateCmd())
-		cmd.AddCommand(sshKeyDeleteCmd())
-		cmd.AddCommand(sshKeyGenerateCmd())
-		buildCommandsUsage(cmd, sshKeyCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := startupScriptCmd()
-		cmd.AddCommand(startupScriptListCmd())
-		cmd.AddCommand(startupScriptCreateCmd())
-		cmd.AddCommand(startupScriptReadCmd())
-		cmd.AddCommand(startupScriptUpdateCmd())
-		cmd.AddCommand(startupScriptDeleteCmd())
-		buildCommandsUsage(cmd, startupScriptCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
 		cmd := billCmd()
 		cmd.AddCommand(billCsvCmd())
 		cmd.AddCommand(billListCmd())
@@ -683,86 +193,6 @@ func init() {
 		cmd := couponCmd()
 		cmd.AddCommand(couponListCmd())
 		buildCommandsUsage(cmd, couponCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := objectStorageCmd()
-		cmd.AddCommand(objectStorageListCmd())
-		cmd.AddCommand(objectStoragePutCmd())
-		cmd.AddCommand(objectStorageGetCmd())
-		cmd.AddCommand(objectStorageDeleteCmd())
-		buildCommandsUsage(cmd, objectStorageCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := selfCmd()
-		cmd.AddCommand(selfInfoCmd())
-		buildCommandsUsage(cmd, selfCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := webAccelCmd()
-		cmd.AddCommand(webAccelListCmd())
-		cmd.AddCommand(webAccelReadCmd())
-		cmd.AddCommand(webAccelCertificateInfoCmd())
-		cmd.AddCommand(webAccelCertificateNewCmd())
-		cmd.AddCommand(webAccelCertificateUpdateCmd())
-		cmd.AddCommand(webAccelDeleteCacheCmd())
-		buildCommandsUsage(cmd, webAccelCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := priceCmd()
-		cmd.AddCommand(priceListCmd())
-		buildCommandsUsage(cmd, priceCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := productDiskCmd()
-		cmd.AddCommand(productDiskListCmd())
-		cmd.AddCommand(productDiskReadCmd())
-		buildCommandsUsage(cmd, productDiskCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := productInternetCmd()
-		cmd.AddCommand(productInternetListCmd())
-		cmd.AddCommand(productInternetReadCmd())
-		buildCommandsUsage(cmd, productInternetCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := productLicenseCmd()
-		cmd.AddCommand(productLicenseListCmd())
-		cmd.AddCommand(productLicenseReadCmd())
-		buildCommandsUsage(cmd, productLicenseCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := productServerCmd()
-		cmd.AddCommand(productServerListCmd())
-		cmd.AddCommand(productServerReadCmd())
-		buildCommandsUsage(cmd, productServerCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := regionCmd()
-		cmd.AddCommand(regionListCmd())
-		cmd.AddCommand(regionReadCmd())
-		buildCommandsUsage(cmd, regionCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := zoneCmd()
-		cmd.AddCommand(zoneListCmd())
-		cmd.AddCommand(zoneReadCmd())
-		buildCommandsUsage(cmd, zoneCommandOrder(cmd))
-		rootCmd.AddCommand(cmd)
-	}
-	{
-		cmd := summaryCmd()
-		cmd.AddCommand(summaryShowCmd())
-		buildCommandsUsage(cmd, summaryCommandOrder(cmd))
 		rootCmd.AddCommand(cmd)
 	}
 

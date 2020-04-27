@@ -89,6 +89,7 @@ func WebAccelResource() *schema.Resource {
 		ResourceCategory:    CategoryOther,
 		CommandCategories:   webAccelCommandCategories,
 		ListResultFieldName: "WebAccelSites",
+		IsGlobal:            true,
 	}
 }
 

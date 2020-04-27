@@ -29,18 +29,16 @@ import (
 
 // ShowAuthStatusParam is input parameters for the sacloud API
 type ShowAuthStatusParam struct {
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
 
 	config *config.Config
 	input  Input
@@ -68,14 +66,8 @@ func (p *ShowAuthStatusParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ShowAuthStatusParam) FillValueToSkeleton() {
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -157,53 +149,12 @@ func (p *ShowAuthStatusParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ShowAuthStatusParam) GetResourceDef() *schema.Resource {
-	return define.Resources["AuthStatus"]
-}
-
-func (p *ShowAuthStatusParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["show"]
-}
-
-func (p *ShowAuthStatusParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ShowAuthStatusParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ShowAuthStatusParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ShowAuthStatusParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-func (p *ShowAuthStatusParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ShowAuthStatusParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ShowAuthStatusParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ShowAuthStatusParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ShowAuthStatusParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ShowAuthStatusParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ShowAuthStatusParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -269,7 +220,7 @@ func (p *ShowAuthStatusParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ShowAuthStatusParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }

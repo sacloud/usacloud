@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -282,6 +282,7 @@ func ProxyLBResource() *schema.Resource {
 		Aliases:             []string{"enhanced-load-balancer", "proxylb"},
 		ResourceCategory:    CategoryCommonServiceItem,
 		ListResultFieldName: "CommonServiceProxyLBItems",
+		IsGlobal:            true,
 	}
 }
 
@@ -414,8 +415,8 @@ func proxyLBCreateParam() map[string]*schema.Schema {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set plan",
-			DefaultValue: 1000,
-			ValidateFunc: validateInIntValues(sacloud.AllowProxyLBPlans...),
+			DefaultValue: int(types.ProxyLBPlans.CPS100),
+			ValidateFunc: validateInIntValues(types.ProxyLBPlanValues...),
 			Category:     "ProxyLB",
 			Order:        5,
 		},
@@ -425,7 +426,7 @@ func proxyLBCreateParam() map[string]*schema.Schema {
 			Description:  "set healthcheck protocol[http/tcp]",
 			DefaultValue: "tcp",
 			Required:     true,
-			ValidateFunc: validateInStrValues(sacloud.AllowProxyLBHealthCheckProtocols...),
+			ValidateFunc: validateInStrValues(types.ProxyLBProtocolStrings...),
 			Category:     "ProxyLB",
 			Order:        10,
 		},
@@ -502,7 +503,7 @@ func proxyLBUpdateParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set healthcheck protocol[http/tcp]",
-			ValidateFunc: validateInStrValues(sacloud.AllowProxyLBHealthCheckProtocols...),
+			ValidateFunc: validateInStrValues(types.ProxyLBProtocolStrings...),
 			Category:     "ProxyLB",
 			Order:        10,
 		},
@@ -577,7 +578,7 @@ func proxyLBPlanChangeParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set plan",
 			Required:     true,
-			ValidateFunc: validateInIntValues(sacloud.AllowProxyLBPlans...),
+			ValidateFunc: validateInIntValues(types.ProxyLBPlanValues...),
 			Category:     "ProxyLB",
 			Order:        10,
 		},
@@ -593,9 +594,9 @@ func proxyLBBindPortAddParam() map[string]*schema.Schema {
 		"mode": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
-			Description:  fmt.Sprintf("set bind mode[%s]", strings.Join(sacloud.AllowProxyLBBindModes, "/")),
+			Description:  fmt.Sprintf("set bind mode[%s]", strings.Join(types.ProxyLBProxyModeStrings, "/")),
 			Required:     true,
-			ValidateFunc: validateInStrValues(sacloud.AllowProxyLBBindModes...),
+			ValidateFunc: validateInStrValues(types.ProxyLBProxyModeStrings...),
 			Category:     "bind-port",
 			Order:        10,
 		},
@@ -637,8 +638,8 @@ func proxyLBBindPortUpdateParam() map[string]*schema.Schema {
 		"mode": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
-			Description:  fmt.Sprintf("set bind mode[%s]", strings.Join(sacloud.AllowProxyLBBindModes, "/")),
-			ValidateFunc: validateInStrValues(sacloud.AllowProxyLBBindModes...),
+			Description:  fmt.Sprintf("set bind mode[%s]", strings.Join(types.ProxyLBProxyModeStrings, "/")),
+			ValidateFunc: validateInStrValues(types.ProxyLBProxyModeStrings...),
 			Category:     "bind-port",
 			Order:        10,
 		},

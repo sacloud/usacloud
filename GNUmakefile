@@ -45,7 +45,7 @@ clean:
 
 .PHONY: clean-all
 clean-all:
-	rm -Rf bin/* ; rm -Rf tools/bin/* ; rm -f pkg/*/*_gen.go
+	rm -Rf bin/* ; rm -Rf tools/bin/* ; rm -f pkg/*/*_gen.go; rm -f pkg/*/*/*_gen.go
 
 .PHONY: tools
 tools:

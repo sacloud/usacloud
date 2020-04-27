@@ -15,7 +15,7 @@
 package define
 
 import (
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -286,7 +286,7 @@ func internetCreateParam() map[string]*schema.Schema {
 			DestinationProp: "SetNetworkMaskLen",
 			Required:        true,
 			DefaultValue:    28,
-			ValidateFunc:    validateInIntValues(sacloud.AllowInternetNetworkMaskLen()...),
+			ValidateFunc:    validateInIntValues(types.InternetNetworkMaskLengths...),
 			Category:        "router",
 			Order:           10,
 		},
@@ -297,7 +297,7 @@ func internetCreateParam() map[string]*schema.Schema {
 			DestinationProp: "SetBandWidthMbps",
 			Required:        true,
 			DefaultValue:    100,
-			ValidateFunc:    validateInIntValues(sacloud.AllowInternetBandWidth()...),
+			ValidateFunc:    validateInIntValues(types.InternetBandWidths...),
 			Category:        "router",
 			Order:           20,
 		},
@@ -319,7 +319,7 @@ func internetUpdateParam() map[string]*schema.Schema {
 			HandlerType:     schema.HandlerPathThrough,
 			Description:     "set band-width(Mbpm)",
 			DestinationProp: "SetBandWidthMbps",
-			ValidateFunc:    validateInIntValues(sacloud.AllowInternetBandWidth()...),
+			ValidateFunc:    validateInIntValues(types.InternetBandWidths...),
 			Category:        "router",
 			Order:           20,
 		},
@@ -343,7 +343,7 @@ func internetUpdateBandWidthParam() map[string]*schema.Schema {
 			DestinationProp: "SetBandWidthMbps",
 			Required:        true,
 			DefaultValue:    100,
-			ValidateFunc:    validateInIntValues(sacloud.AllowInternetBandWidth()...),
+			ValidateFunc:    validateInIntValues(types.InternetBandWidths...),
 			Category:        "router",
 			Order:           20,
 		},
@@ -363,7 +363,7 @@ func internetSubnetAddParam() map[string]*schema.Schema {
 			Description:  "set Global-IPAddress(subnet) prefix",
 			Required:     true,
 			DefaultValue: 28,
-			ValidateFunc: validateInIntValues(sacloud.AllowInternetNetworkMaskLen()...),
+			ValidateFunc: validateInIntValues(types.InternetNetworkMaskLengths...),
 			Category:     "router",
 			Order:        10,
 		},

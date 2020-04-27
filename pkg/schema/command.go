@@ -95,173 +95,131 @@ func (c *Command) BuiltParams() SortableParams {
 	//         Validatorを利用したい場合はコード生成時に手動で呼び出すコードを出力する。
 	//         例: command.validateOutputOption(o output.Option)の呼び出し部分など
 
+	params := make(map[string]*Schema)
+	for k, v := range c.Params {
+		params[k] = v
+	}
+
 	// add ID param
 	if c.Type.IsRequiredIDType() {
-		if _, ok := c.Params["id"]; !ok {
-			c.Params["id"] = &Schema{
-				Type:        TypeId,
-				HandlerType: HandlerPathThrough,
-				Description: "Set target ID",
-				SakuraID:    true,
-				Hidden:      true,
-			}
+		params["id"] = &Schema{
+			Type:        TypeId,
+			HandlerType: HandlerPathThrough,
+			Description: "Set target ID",
+			SakuraID:    true,
+			Hidden:      true,
 		}
 	}
 	if c.Type.CanUseSelector() && !c.NoSelector {
-		if _, ok := c.Params["selector"]; !ok {
-			c.Params["selector"] = &Schema{
-				Type:        TypeStringList,
-				HandlerType: HandlerNoop,
-				Description: "Set target filter by tag",
-				Category:    "filter",
-				Order:       10,
-			}
+		params["selector"] = &Schema{
+			Type:        TypeStringList,
+			HandlerType: HandlerNoop,
+			Description: "Set target filter by tag",
+			Category:    "filter",
+			Order:       10,
 		}
 	}
 
 	if c.Type.IsNeedConfirmType() && !c.NeedlessConfirm {
-		if _, ok := c.Params["assumeyes"]; !ok {
-			c.Params["assumeyes"] = &Schema{
-				Type:        TypeBool,
-				HandlerType: HandlerNoop,
-				Description: "Assume that the answer to any question which would be asked is yes",
-				Category:    "input",
-				Order:       10,
-				Aliases:     []string{"y"},
-			}
-		}
-	}
-
-	// TODO あとで消す
-	if _, ok := c.Params["param-template"]; !ok {
-		c.Params["param-template"] = &Schema{
-			Type:        TypeString,
-			HandlerType: HandlerNoop,
-			Description: "Set input parameter from string(JSON)",
-			Category:    "input",
-			Order:       20,
-		}
-	}
-	// TODO あとで消す
-	if _, ok := c.Params["param-template-file"]; !ok {
-		c.Params["param-template-file"] = &Schema{
-			Type:        TypeString,
-			HandlerType: HandlerNoop,
-			Description: "Set input parameter from file",
-			Category:    "input",
-			Order:       30,
-		}
-	}
-
-	if _, ok := c.Params["parameters"]; !ok {
-		c.Params["parameters"] = &Schema{
-			Type:        TypeString,
-			HandlerType: HandlerNoop,
-			Description: "Set input parameters from JSON string",
-			Category:    "input",
-			Order:       21,
-		}
-	}
-	if _, ok := c.Params["parameter-file"]; !ok {
-		c.Params["parameter-file"] = &Schema{
-			Type:        TypeString,
-			HandlerType: HandlerNoop,
-			Description: "Set input parameters from file",
-			Category:    "input",
-			Order:       31,
-		}
-	}
-	if _, ok := c.Params["generate-skeleton"]; !ok {
-		c.Params["generate-skeleton"] = &Schema{
+		params["assumeyes"] = &Schema{
 			Type:        TypeBool,
 			HandlerType: HandlerNoop,
-			Description: "Output skelton of parameter JSON",
+			Description: "Assume that the answer to any question which would be asked is yes",
 			Category:    "input",
-			Order:       40,
+			Order:       10,
+			Aliases:     []string{"y"},
 		}
+	}
+
+	params["parameters"] = &Schema{
+		Type:        TypeString,
+		HandlerType: HandlerNoop,
+		Description: "Set input parameters from JSON string",
+		Category:    "input",
+		Order:       21,
+	}
+	params["parameter-file"] = &Schema{
+		Type:        TypeString,
+		HandlerType: HandlerNoop,
+		Description: "Set input parameters from file",
+		Category:    "input",
+		Order:       31,
+	}
+	params["generate-skeleton"] = &Schema{
+		Type:        TypeBool,
+		HandlerType: HandlerNoop,
+		Description: "Output skelton of parameter JSON",
+		Category:    "input",
+		Order:       40,
 	}
 
 	if !c.NoOutput {
-		if _, ok := c.Params["output-type"]; !ok {
-			c.Params["output-type"] = &Schema{
-				Type:        TypeString,
-				HandlerType: HandlerNoop,
-				Aliases:     []string{"out", "o"},
-				Description: "Output type [table/json/csv/tsv]",
-				Category:    "output",
-				Order:       10,
-			}
+		params["output-type"] = &Schema{
+			Type:        TypeString,
+			HandlerType: HandlerNoop,
+			Aliases:     []string{"out", "o"},
+			Description: "Output type [table/json/csv/tsv]",
+			Category:    "output",
+			Order:       10,
 		}
-		if _, ok := c.Params["column"]; !ok {
-			c.Params["column"] = &Schema{
-				Type:        TypeStringList,
-				HandlerType: HandlerNoop,
-				Aliases:     []string{"col"},
-				Description: "Output columns(using when '--output-type' is in [csv/tsv] only)",
-				Category:    "output",
-				Order:       20,
-			}
+		params["column"] = &Schema{
+			Type:        TypeStringList,
+			HandlerType: HandlerNoop,
+			Aliases:     []string{"col"},
+			Description: "Output columns(using when '--output-type' is in [csv/tsv] only)",
+			Category:    "output",
+			Order:       20,
 		}
-		if _, ok := c.Params["quiet"]; !ok {
-			c.Params["quiet"] = &Schema{
-				Type:        TypeBool,
-				HandlerType: HandlerNoop,
-				Aliases:     []string{"q"},
-				Description: "Only display IDs",
-				Category:    "output",
-				Order:       30,
-			}
+		params["quiet"] = &Schema{
+			Type:        TypeBool,
+			HandlerType: HandlerNoop,
+			Aliases:     []string{"q"},
+			Description: "Only display IDs",
+			Category:    "output",
+			Order:       30,
 		}
-		if _, ok := c.Params["format"]; !ok {
-			c.Params["format"] = &Schema{
-				Type:        TypeString,
-				HandlerType: HandlerNoop,
-				Aliases:     []string{"fmt"},
-				Description: "Output format(see text/template package document for detail)",
-				Category:    "output",
-				Order:       40,
-			}
+		params["format"] = &Schema{
+			Type:        TypeString,
+			HandlerType: HandlerNoop,
+			Aliases:     []string{"fmt"},
+			Description: "Output format(see text/template package document for detail)",
+			Category:    "output",
+			Order:       40,
 		}
-		if _, ok := c.Params["format-file"]; !ok {
-			c.Params["format-file"] = &Schema{
-				Type:        TypeString,
-				HandlerType: HandlerNoop,
-				Description: "Output format from file(see text/template package document for detail)",
-				Category:    "output",
-				Order:       50,
-			}
+		params["format-file"] = &Schema{
+			Type:        TypeString,
+			HandlerType: HandlerNoop,
+			Description: "Output format from file(see text/template package document for detail)",
+			Category:    "output",
+			Order:       50,
 		}
-		if _, ok := c.Params["query"]; !ok {
-			c.Params["query"] = &Schema{
-				Type:        TypeString,
-				HandlerType: HandlerNoop,
-				Description: "JMESPath query(using when '--output-type' is json only)",
-				Category:    "output",
-				Order:       60,
-			}
+		params["query"] = &Schema{
+			Type:        TypeString,
+			HandlerType: HandlerNoop,
+			Description: "JMESPath query(using when '--output-type' is json only)",
+			Category:    "output",
+			Order:       60,
 		}
-		if _, ok := c.Params["query-file"]; !ok {
-			c.Params["query-file"] = &Schema{
-				Type:        TypeString,
-				HandlerType: HandlerNoop,
-				Description: "JMESPath query from file(using when '--output-type' is json only)",
-				Category:    "output",
-				Order:       65,
-			}
+		params["query-file"] = &Schema{
+			Type:        TypeString,
+			HandlerType: HandlerNoop,
+			Description: "JMESPath query from file(using when '--output-type' is json only)",
+			Category:    "output",
+			Order:       65,
 		}
 	}
 
-	params := SortableParams{}
-	for k, v := range c.Params {
-		params = append(params, SortableParam{
+	res := SortableParams{}
+	for k, v := range params {
+		res = append(res, SortableParam{
 			ParamKey: k,
 			Param:    v,
 			Category: c.ParamCategory(v.Category),
 		})
 	}
 
-	sort.Sort(params)
-	return params
+	sort.Sort(res)
+	return res
 }
 
 func (c *Command) Validate() []error {

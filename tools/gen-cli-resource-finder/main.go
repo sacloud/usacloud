@@ -74,17 +74,19 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/search"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
 {{ range .Commands }}{{ if .MultipleArgToIdParams }}
-func {{ .ArgToIdFunc }}(ctx cli.Context, param *params.{{.InputParameterTypeName}}) ([]sacloud.ID, error) {
-	var ids []sacloud.ID
+func {{ .ArgToIdFunc }}(ctx cli.Context, param *params.{{.InputParameterTypeName}}) ([]types.ID, error) {
+	var ids []types.ID
 	args := ctx.Args()
-	apiClient := ctx.GetAPIClient().{{.TargetAPIName}}
+	client := sacloud.New{{.TargetAPIName}}Op(ctx.Client())
 
 	if len(args) == 0 {
 		{{ if .NoSelector -}}
@@ -93,14 +95,13 @@ func {{ .ArgToIdFunc }}(ctx cli.Context, param *params.{{.InputParameterTypeName
 		if len(param.Selector) == 0 {
 			return ids, fmt.Errorf("ID or Name argument or --selector option is required")
 		}
-		apiClient.Reset()
-		res, err := apiClient.Find()
+		res, err := client.Find(ctx{{if not .IsGlobal}}, ctx.Zone(){{ end }}, &sacloud.FindCondition{})
 		if err != nil {
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.{{.FindResultFieldName}} {
 			if util.HasTags(&v, param.Selector) {
-				ids = append(ids, v.GetID())
+				ids = append(ids, v.ID)
 			}
 		}
 		if len(ids) == 0 {
@@ -115,12 +116,14 @@ func {{ .ArgToIdFunc }}(ctx cli.Context, param *params.{{.InputParameterTypeName
 		{{ end -}}
 			for _, a := range strings.Split(arg, "\n") {
 				idOrName := a
-				if id := sacloud.StringID(idOrName); !id.IsEmpty() {
+				if id := types.StringID(idOrName); !id.IsEmpty() {
 					ids = append(ids, id)
 				} else {
-					apiClient.Reset()
-					apiClient.SetFilterBy("Name", idOrName)
-					res, err := apiClient.Find()
+					res, err := client.Find(ctx{{if not .IsGlobal}}, ctx.Zone(){{ end }}, &sacloud.FindCondition{
+						Filter: search.Filter{
+							search.Key("Name"): search.ExactMatch(idOrName),
+						},
+					})
 					if err != nil {
 						return ids, fmt.Errorf("finding resource id is failed: %s", err)
 					}
@@ -129,7 +132,7 @@ func {{ .ArgToIdFunc }}(ctx cli.Context, param *params.{{.InputParameterTypeName
 					}
 					for _, v := range res.{{.FindResultFieldName}} {
 						{{ if not .NoSelector }}if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) { {{ end }}
-							ids = append(ids, v.GetID())
+							ids = append(ids, v.ID)
 						{{ if not .NoSelector }}} {{ end }}
 					}
 				}

@@ -22,6 +22,7 @@ import (
 
 	"github.com/bitly/go-simplejson"
 	"github.com/sacloud/go-jmespath"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 type jsonOutput struct {
@@ -38,7 +39,8 @@ func NewJSONOutput(out io.Writer, err io.Writer, query string) Output {
 	}
 }
 
-func (o *jsonOutput) Print(targets ...interface{}) error {
+func (o *jsonOutput) Print(target interface{}) error {
+	targets := toSlice(target)
 	if o.out == nil {
 		o.out = os.Stdout
 	}
@@ -46,8 +48,8 @@ func (o *jsonOutput) Print(targets ...interface{}) error {
 		o.err = os.Stderr
 	}
 
-	if len(targets) == 0 {
-		fmt.Fprintf(o.err, "Result is empty\n")
+	if util.IsEmpty(targets) {
+		fmt.Fprintln(o.err, "no results")
 		return nil
 	}
 

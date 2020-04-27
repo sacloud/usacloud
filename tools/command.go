@@ -31,6 +31,7 @@ type Command struct {
 	Resource          *Resource
 	Category          *schema.Category
 	Params            []*Parameter
+	OwnParams         []*Parameter
 	CategorizedParams []*CategorizedParameters
 }
 
@@ -46,12 +47,29 @@ func NewCommand(name string, command *schema.Command, category *schema.Category,
 		Resource: resource,
 		Category: category,
 	}
+
 	var params []*Parameter
 	for _, p := range c.Command.BuiltParams() {
 		params = append(params, NewParameter(p.ParamKey, p.Param, p.Category, c))
 	}
-
 	c.Params = params
+
+	var ownParams []*Parameter
+	for k, p := range c.Command.Params {
+		if p.HandlerType != schema.HandlerNoop {
+			ownParams = append(ownParams, NewParameter(k, p, c.Command.ParamCategory(p.Category), c))
+		}
+	}
+	sort.Slice(ownParams, func(i, j int) bool {
+		ti := ownParams[i]
+		tj := ownParams[j]
+		if ti.Order == tj.Order {
+			return ti.Name < tj.Name
+		}
+		return ti.Order < tj.Order
+	})
+	c.OwnParams = ownParams
+
 	c.buildCategorizedParams()
 	return c
 }
@@ -79,6 +97,10 @@ func (c *Command) buildCategorizedParams() {
 		}
 		return c.CategorizedParams[i].Order < c.CategorizedParams[j].Order
 	})
+}
+
+func (c *Command) IsGlobal() bool {
+	return c.Resource.IsGlobal
 }
 
 func (c *Command) ExperimentWarning() string {
@@ -120,8 +142,21 @@ func (c *Command) AliasesLiteral() string {
 	return FlattenStringList(c.Command.Aliases)
 }
 
+func (c *Command) HasIDParam() bool {
+	for _, p := range c.Params {
+		if p.Name == "id" && p.Type == schema.TypeId {
+			return true
+		}
+	}
+	return false
+}
+
 func (c *Command) HasOutputOption() bool {
 	return !c.NoOutput
+}
+
+func (c *Command) CLIName() string {
+	return ToDashedName(c.Name)
 }
 
 func (c *Command) CLIVariableFuncName() string {
@@ -145,7 +180,7 @@ func (c *Command) InputParameterTypeName() string {
 }
 
 func (c *Command) FunctionName() string {
-	return fmt.Sprintf("%s%s", ToCamelCaseName(c.Resource.Name), ToCamelCaseName(c.Name))
+	return fmt.Sprintf("%s", ToCamelCaseName(c.Name))
 }
 
 func (c *Command) NeedConfirm() bool {
@@ -202,21 +237,30 @@ func (c *Command) HasLongAliases() bool {
 }
 
 func (c *Command) CommandFileName() string {
-	format := "%s_%s_gen.go"
+	format := "zz_%s_gen.go"
 	if c.UseCustomCommand {
-		format = "%s_%s.go"
+		format = "%s.go"
 	}
-	return fmt.Sprintf(format, ToSnakeCaseName(c.Resource.Name), ToSnakeCaseName(c.Name))
+	return fmt.Sprintf(format, ToSnakeCaseName(c.Name))
 }
 
 func (c *Command) ResourceName() string {
 	return util.FirstNonEmptyString(c.AltResource, c.Resource.AltResource, ToCamelCaseName(c.Resource.Name))
 }
 
-func (c *Command) FuncName() string {
-	return fmt.Sprintf("%s%s", ToCamelCaseName(c.Resource.Name), ToCamelCaseName(c.Name))
-}
-
 func (c *Command) InputModelTypeName() string {
 	return fmt.Sprintf("%s%sParam", ToCamelCaseName(c.Name), ToCamelCaseName(c.Resource.Name))
+}
+
+func (c *Command) APIRequestTypeName() string {
+	switch c.Type {
+	case schema.CommandList:
+		return "FindCondition"
+	default:
+		return fmt.Sprintf("%s%sRequest", c.ResourceName(), ToCamelCaseName(c.Name))
+	}
+}
+
+func (c *Command) PackageDirName() string {
+	return c.Resource.PackageDirName()
 }

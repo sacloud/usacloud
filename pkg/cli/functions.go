@@ -19,7 +19,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -34,13 +34,11 @@ func FlattenErrors(errors []error) error {
 	return fmt.Errorf(strings.Join(list, "\n"))
 }
 
-func FlattenErrorsWithPrefix(errors []error, pref string) error {
-	var list = make([]string, 0)
-	for _, str := range errors {
-		list = append(list, fmt.Sprintf("[%s] : %s", pref, str.Error()))
+func WrapError(ctx Context, err error) error {
+	if err != nil {
+		return fmt.Errorf("%s/%s failed: %s", ctx.ResourceName(), ctx.CommandName(), err)
 	}
-	return fmt.Errorf(strings.Join(list, "\n"))
-
+	return err
 }
 
 func Confirm(in *os.File, msg string) bool {
@@ -58,7 +56,7 @@ func Confirm(in *os.File, msg string) bool {
 	return input == "y" || input == "yes"
 }
 
-func ConfirmContinue(in *os.File, target string, ids ...sacloud.ID) bool {
+func ConfirmContinue(in *os.File, target string, ids ...types.ID) bool {
 	if len(ids) == 0 {
 		return Confirm(in, fmt.Sprintf("Are you sure you want to %s?", target))
 	}
@@ -66,13 +64,4 @@ func ConfirmContinue(in *os.File, target string, ids ...sacloud.ID) bool {
 	strIDs := util.StringIDs(ids)
 	msg := fmt.Sprintf("Target resource IDs => [\n\t%s\n]", strings.Join(strIDs, ",\n\t"))
 	return Confirm(in, fmt.Sprintf("%s\nAre you sure you want to %s?", msg, target))
-}
-
-func IsSetOr(ctx Context, targetes ...string) bool {
-	for _, target := range targetes {
-		if ctx.IsSet(target) {
-			return true
-		}
-	}
-	return false
 }

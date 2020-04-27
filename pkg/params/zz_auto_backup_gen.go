@@ -19,7 +19,7 @@ package params
 import (
 	"io"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
@@ -31,24 +31,22 @@ import (
 
 // ListAutoBackupParam is input parameters for the sacloud API
 type ListAutoBackupParam struct {
-	Name              []string
-	Id                []sacloud.ID
-	Tags              []string
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
+	Name             []string
+	Id               []types.ID
+	Tags             []string
+	From             int
+	Max              int
+	Sort             []string
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
 
 	config *config.Config
 	input  Input
@@ -80,7 +78,7 @@ func (p *ListAutoBackupParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = []sacloud.ID{}
+		p.Id = []types.ID{}
 	}
 	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -94,14 +92,8 @@ func (p *ListAutoBackupParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -218,33 +210,6 @@ func (p *ListAutoBackupParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ListAutoBackupParam) GetResourceDef() *schema.Resource {
-	return define.Resources["AutoBackup"]
-}
-
-func (p *ListAutoBackupParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["list"]
-}
-
-func (p *ListAutoBackupParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ListAutoBackupParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ListAutoBackupParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ListAutoBackupParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *ListAutoBackupParam) SetName(v []string) {
 	p.Name = v
 }
@@ -252,11 +217,11 @@ func (p *ListAutoBackupParam) SetName(v []string) {
 func (p *ListAutoBackupParam) GetName() []string {
 	return p.Name
 }
-func (p *ListAutoBackupParam) SetId(v []sacloud.ID) {
+func (p *ListAutoBackupParam) SetId(v []types.ID) {
 	p.Id = v
 }
 
-func (p *ListAutoBackupParam) GetId() []sacloud.ID {
+func (p *ListAutoBackupParam) GetId() []types.ID {
 	return p.Id
 }
 func (p *ListAutoBackupParam) SetTags(v []string) {
@@ -287,26 +252,12 @@ func (p *ListAutoBackupParam) SetSort(v []string) {
 func (p *ListAutoBackupParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListAutoBackupParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ListAutoBackupParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ListAutoBackupParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ListAutoBackupParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ListAutoBackupParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ListAutoBackupParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ListAutoBackupParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -372,33 +323,31 @@ func (p *ListAutoBackupParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ListAutoBackupParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // CreateAutoBackupParam is input parameters for the sacloud API
 type CreateAutoBackupParam struct {
-	DiskId            sacloud.ID
-	Weekdays          []string
-	Generation        int
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            sacloud.ID
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
+	DiskId           types.ID
+	Weekdays         []string
+	Generation       int
+	Name             string
+	Description      string
+	Tags             []string
+	IconId           types.ID
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
 
 	config *config.Config
 	input  Input
@@ -407,7 +356,9 @@ type CreateAutoBackupParam struct {
 // NewCreateAutoBackupParam return new CreateAutoBackupParam
 func NewCreateAutoBackupParam() *CreateAutoBackupParam {
 	return &CreateAutoBackupParam{
-		Weekdays: []string{"all"}, Generation: 1}
+		Weekdays:   []string{"all"},
+		Generation: 1,
+	}
 }
 
 // Initialize init CreateAutoBackupParam
@@ -428,7 +379,7 @@ func (p *CreateAutoBackupParam) WriteSkeleton(writer io.Writer) error {
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CreateAutoBackupParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.DiskId) {
-		p.DiskId = sacloud.ID(0)
+		p.DiskId = types.ID(0)
 	}
 	if util.IsEmpty(p.Weekdays) {
 		p.Weekdays = []string{""}
@@ -446,19 +397,13 @@ func (p *CreateAutoBackupParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if util.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
+		p.IconId = types.ID(0)
 	}
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -624,38 +569,11 @@ func (p *CreateAutoBackupParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *CreateAutoBackupParam) GetResourceDef() *schema.Resource {
-	return define.Resources["AutoBackup"]
-}
-
-func (p *CreateAutoBackupParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["create"]
-}
-
-func (p *CreateAutoBackupParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *CreateAutoBackupParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *CreateAutoBackupParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *CreateAutoBackupParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-func (p *CreateAutoBackupParam) SetDiskId(v sacloud.ID) {
+func (p *CreateAutoBackupParam) SetDiskId(v types.ID) {
 	p.DiskId = v
 }
 
-func (p *CreateAutoBackupParam) GetDiskId() sacloud.ID {
+func (p *CreateAutoBackupParam) GetDiskId() types.ID {
 	return p.DiskId
 }
 func (p *CreateAutoBackupParam) SetWeekdays(v []string) {
@@ -693,11 +611,11 @@ func (p *CreateAutoBackupParam) SetTags(v []string) {
 func (p *CreateAutoBackupParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateAutoBackupParam) SetIconId(v sacloud.ID) {
+func (p *CreateAutoBackupParam) SetIconId(v types.ID) {
 	p.IconId = v
 }
 
-func (p *CreateAutoBackupParam) GetIconId() sacloud.ID {
+func (p *CreateAutoBackupParam) GetIconId() types.ID {
 	return p.IconId
 }
 func (p *CreateAutoBackupParam) SetAssumeyes(v bool) {
@@ -707,26 +625,12 @@ func (p *CreateAutoBackupParam) SetAssumeyes(v bool) {
 func (p *CreateAutoBackupParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CreateAutoBackupParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *CreateAutoBackupParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *CreateAutoBackupParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *CreateAutoBackupParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *CreateAutoBackupParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *CreateAutoBackupParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *CreateAutoBackupParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -792,27 +696,25 @@ func (p *CreateAutoBackupParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *CreateAutoBackupParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // ReadAutoBackupParam is input parameters for the sacloud API
 type ReadAutoBackupParam struct {
-	Selector          []string
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
-	Id                sacloud.ID
+	Selector         []string
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -821,6 +723,24 @@ type ReadAutoBackupParam struct {
 // NewReadAutoBackupParam return new ReadAutoBackupParam
 func NewReadAutoBackupParam() *ReadAutoBackupParam {
 	return &ReadAutoBackupParam{}
+}
+
+// WithID returns new *ReadAutoBackupParam with id
+func (p *ReadAutoBackupParam) WithID(id types.ID) *ReadAutoBackupParam {
+	return &ReadAutoBackupParam{
+		Selector:         p.Selector,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		OutputType:       p.OutputType,
+		Column:           p.Column,
+		Quiet:            p.Quiet,
+		Format:           p.Format,
+		FormatFile:       p.FormatFile,
+		Query:            p.Query,
+		QueryFile:        p.QueryFile,
+		Id:               id,
+	}
 }
 
 // Initialize init ReadAutoBackupParam
@@ -843,14 +763,8 @@ func (p *ReadAutoBackupParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -880,7 +794,7 @@ func (p *ReadAutoBackupParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -943,33 +857,6 @@ func (p *ReadAutoBackupParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ReadAutoBackupParam) GetResourceDef() *schema.Resource {
-	return define.Resources["AutoBackup"]
-}
-
-func (p *ReadAutoBackupParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["read"]
-}
-
-func (p *ReadAutoBackupParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ReadAutoBackupParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ReadAutoBackupParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ReadAutoBackupParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *ReadAutoBackupParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -977,26 +864,12 @@ func (p *ReadAutoBackupParam) SetSelector(v []string) {
 func (p *ReadAutoBackupParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ReadAutoBackupParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ReadAutoBackupParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ReadAutoBackupParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ReadAutoBackupParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ReadAutoBackupParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ReadAutoBackupParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ReadAutoBackupParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -1061,42 +934,40 @@ func (p *ReadAutoBackupParam) SetQueryFile(v string) {
 func (p *ReadAutoBackupParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadAutoBackupParam) SetId(v sacloud.ID) {
+func (p *ReadAutoBackupParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *ReadAutoBackupParam) GetId() sacloud.ID {
+func (p *ReadAutoBackupParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ReadAutoBackupParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // UpdateAutoBackupParam is input parameters for the sacloud API
 type UpdateAutoBackupParam struct {
-	Weekdays          []string
-	Generation        int
-	Selector          []string
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            sacloud.ID
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
-	Id                sacloud.ID
+	Weekdays         []string
+	Generation       int
+	Selector         []string
+	Name             string
+	Description      string
+	Tags             []string
+	IconId           types.ID
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -1105,6 +976,31 @@ type UpdateAutoBackupParam struct {
 // NewUpdateAutoBackupParam return new UpdateAutoBackupParam
 func NewUpdateAutoBackupParam() *UpdateAutoBackupParam {
 	return &UpdateAutoBackupParam{}
+}
+
+// WithID returns new *UpdateAutoBackupParam with id
+func (p *UpdateAutoBackupParam) WithID(id types.ID) *UpdateAutoBackupParam {
+	return &UpdateAutoBackupParam{
+		Weekdays:         p.Weekdays,
+		Generation:       p.Generation,
+		Selector:         p.Selector,
+		Name:             p.Name,
+		Description:      p.Description,
+		Tags:             p.Tags,
+		IconId:           p.IconId,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		OutputType:       p.OutputType,
+		Column:           p.Column,
+		Quiet:            p.Quiet,
+		Format:           p.Format,
+		FormatFile:       p.FormatFile,
+		Query:            p.Query,
+		QueryFile:        p.QueryFile,
+		Id:               id,
+	}
 }
 
 // Initialize init UpdateAutoBackupParam
@@ -1143,19 +1039,13 @@ func (p *UpdateAutoBackupParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if util.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
+		p.IconId = types.ID(0)
 	}
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -1185,7 +1075,7 @@ func (p *UpdateAutoBackupParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -1296,33 +1186,6 @@ func (p *UpdateAutoBackupParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *UpdateAutoBackupParam) GetResourceDef() *schema.Resource {
-	return define.Resources["AutoBackup"]
-}
-
-func (p *UpdateAutoBackupParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["update"]
-}
-
-func (p *UpdateAutoBackupParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *UpdateAutoBackupParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *UpdateAutoBackupParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *UpdateAutoBackupParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *UpdateAutoBackupParam) SetWeekdays(v []string) {
 	p.Weekdays = v
 }
@@ -1365,11 +1228,11 @@ func (p *UpdateAutoBackupParam) SetTags(v []string) {
 func (p *UpdateAutoBackupParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateAutoBackupParam) SetIconId(v sacloud.ID) {
+func (p *UpdateAutoBackupParam) SetIconId(v types.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateAutoBackupParam) GetIconId() sacloud.ID {
+func (p *UpdateAutoBackupParam) GetIconId() types.ID {
 	return p.IconId
 }
 func (p *UpdateAutoBackupParam) SetAssumeyes(v bool) {
@@ -1379,26 +1242,12 @@ func (p *UpdateAutoBackupParam) SetAssumeyes(v bool) {
 func (p *UpdateAutoBackupParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *UpdateAutoBackupParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *UpdateAutoBackupParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *UpdateAutoBackupParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *UpdateAutoBackupParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *UpdateAutoBackupParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *UpdateAutoBackupParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *UpdateAutoBackupParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -1463,36 +1312,34 @@ func (p *UpdateAutoBackupParam) SetQueryFile(v string) {
 func (p *UpdateAutoBackupParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateAutoBackupParam) SetId(v sacloud.ID) {
+func (p *UpdateAutoBackupParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *UpdateAutoBackupParam) GetId() sacloud.ID {
+func (p *UpdateAutoBackupParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *UpdateAutoBackupParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // DeleteAutoBackupParam is input parameters for the sacloud API
 type DeleteAutoBackupParam struct {
-	Selector          []string
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
-	Id                sacloud.ID
+	Selector         []string
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -1501,6 +1348,25 @@ type DeleteAutoBackupParam struct {
 // NewDeleteAutoBackupParam return new DeleteAutoBackupParam
 func NewDeleteAutoBackupParam() *DeleteAutoBackupParam {
 	return &DeleteAutoBackupParam{}
+}
+
+// WithID returns new *DeleteAutoBackupParam with id
+func (p *DeleteAutoBackupParam) WithID(id types.ID) *DeleteAutoBackupParam {
+	return &DeleteAutoBackupParam{
+		Selector:         p.Selector,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		OutputType:       p.OutputType,
+		Column:           p.Column,
+		Quiet:            p.Quiet,
+		Format:           p.Format,
+		FormatFile:       p.FormatFile,
+		Query:            p.Query,
+		QueryFile:        p.QueryFile,
+		Id:               id,
+	}
 }
 
 // Initialize init DeleteAutoBackupParam
@@ -1526,14 +1392,8 @@ func (p *DeleteAutoBackupParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -1563,7 +1423,7 @@ func (p *DeleteAutoBackupParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -1626,33 +1486,6 @@ func (p *DeleteAutoBackupParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *DeleteAutoBackupParam) GetResourceDef() *schema.Resource {
-	return define.Resources["AutoBackup"]
-}
-
-func (p *DeleteAutoBackupParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["delete"]
-}
-
-func (p *DeleteAutoBackupParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *DeleteAutoBackupParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *DeleteAutoBackupParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *DeleteAutoBackupParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *DeleteAutoBackupParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1667,26 +1500,12 @@ func (p *DeleteAutoBackupParam) SetAssumeyes(v bool) {
 func (p *DeleteAutoBackupParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeleteAutoBackupParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *DeleteAutoBackupParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *DeleteAutoBackupParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *DeleteAutoBackupParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *DeleteAutoBackupParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *DeleteAutoBackupParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *DeleteAutoBackupParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -1751,15 +1570,15 @@ func (p *DeleteAutoBackupParam) SetQueryFile(v string) {
 func (p *DeleteAutoBackupParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteAutoBackupParam) SetId(v sacloud.ID) {
+func (p *DeleteAutoBackupParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *DeleteAutoBackupParam) GetId() sacloud.ID {
+func (p *DeleteAutoBackupParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *DeleteAutoBackupParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }

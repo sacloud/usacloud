@@ -37,11 +37,7 @@ tools:
 
 .PHONY: clean
 clean:
-	rm -f sacloud/zz_*.go; \
-	rm -f sacloud/fake/zz_*.go \
-	rm -f sacloud/naked/zz_*.go \
-	rm -f sacloud/stub/zz_*.go \
-	rm -f sacloud/trace/zz_*.go
+	find . -type f -name "zz_*.go" -delete
 
 .PHONY: gen
 gen: _gen fmt goimports set-license
@@ -67,8 +63,8 @@ fmt:
 
 .PHONY: godoc
 godoc:
-	@echo "URL: http://localhost:6060/pkg/github.com/sacloud/libsacloud/"; \
-	docker run -it --rm -v $$PWD:/go/src/github.com/sacloud/libsacloud -p 6060:6060 golang:1.12 godoc -http=:6060
+	@echo "booting godoc server..." ; \
+	docker run -it --rm -v $$PWD:/go/src/github.com/sacloud/libsacloud/v2 -p 6060:6060 golang:1.14 sh -c "go get golang.org/x/tools/cmd/godoc; echo 'URL: http://localhost:6060/pkg/github.com/sacloud/libsacloud/v2/'; godoc -http=:6060"
 
 .PHONY: lint
 lint:

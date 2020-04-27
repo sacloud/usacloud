@@ -14,8 +14,22 @@
 
 package types
 
+import "fmt"
+
 // ENFSSize NFSサイズ
 type ENFSSize int
+
+func (s ENFSSize) Int() int {
+	return int(s)
+}
+
+func (s ENFSSize) Int64() int64 {
+	return int64(s)
+}
+
+func (s ENFSSize) String() string {
+	return fmt.Sprintf("%d", s.Int())
+}
 
 // NFSHDDSizes NFSのHDDプランで指定可能なサイズ
 var NFSHDDSizes = struct {
@@ -51,4 +65,15 @@ var NFSSSDSizes = struct {
 	Size1TB:   ENFSSize(1024 * 1),
 	Size2TB:   ENFSSize(1024 * 2),
 	Size4TB:   ENFSSize(1024 * 4),
+}
+
+// NFSIntSizes NFSで使用可能なサイズの一覧
+var NFSIntSizes = []int{
+	int(NFSHDDSizes.Size100GB),
+	int(NFSHDDSizes.Size500GB),
+	int(NFSHDDSizes.Size1TB),
+	int(NFSHDDSizes.Size2TB),
+	int(NFSHDDSizes.Size4TB),
+	int(NFSHDDSizes.Size8TB),
+	int(NFSHDDSizes.Size12TB),
 }
