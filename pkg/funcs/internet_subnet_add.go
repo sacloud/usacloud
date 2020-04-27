@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func InternetSubnetAdd(ctx cli.Context, params *params.SubnetAddInternetParam) error {
@@ -32,7 +32,7 @@ func InternetSubnetAdd(ctx cli.Context, params *params.SubnetAddInternetParam) e
 	}
 
 	var sn *subnet
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		"Still creating...",
 		"Add subnet",
 		ctx.IO().Progress(),

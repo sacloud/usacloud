@@ -21,9 +21,9 @@ import (
 	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/helper/printer"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/printer"
+	"github.com/sacloud/usacloud/pkg/queue"
 )
 
 func VPCRouterLogs(ctx cli.Context, params *params.LogsVPCRouterParam) error {
@@ -40,7 +40,7 @@ func VPCRouterLogs(ctx cli.Context, params *params.LogsVPCRouterParam) error {
 		fmt.Fprintf(ctx.IO().Err(), "[WARN] --refresh-interval option can not use with --log-name=%q, ignored", "all")
 	}
 
-	logBuf := internal.NewHashQueue(500)
+	logBuf := queue.NewHashQueue(500)
 	out := ctx.IO().Out()
 
 	if params.ListLogNames {

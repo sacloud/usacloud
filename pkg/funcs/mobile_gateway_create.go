@@ -19,8 +19,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func MobileGatewayCreate(ctx cli.Context, params *params.CreateMobileGatewayParam) error {
@@ -53,7 +53,7 @@ func MobileGatewayCreate(ctx cli.Context, params *params.CreateMobileGatewayPara
 	p.SetIconByID(params.IconId)
 
 	var res *sacloud.MobileGateway
-	err = internal.ExecWithProgress(
+	err = progress.ExecWithProgress(
 		fmt.Sprintf("Still creating..."),
 		fmt.Sprintf("Create mobile-gateway"),
 		ctx.IO().Progress(),

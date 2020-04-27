@@ -32,14 +32,14 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud/trace"
 	"github.com/sacloud/libsacloud/v2/utils/builder"
 	"github.com/sacloud/libsacloud/v2/utils/setup"
-	"github.com/sacloud/usacloud/pkg/flags"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/version"
 	"github.com/spf13/pflag"
 )
 
 type Context interface {
-	Option() *flags.Flags
+	Option() *config.Config
 	Output() output.Output
 	Client() sacloud.APICaller
 	Zone() string
@@ -58,7 +58,7 @@ type Context interface {
 
 type cliContext struct {
 	parentCtx     context.Context
-	option        *flags.Flags
+	option        *config.Config
 	output        output.Output
 	cliIO         IO
 	args          []string
@@ -82,7 +82,7 @@ func NewCLIContext(globalFlags *pflag.FlagSet, args []string, parameter interfac
 
 	io := newIO()
 
-	option, err := flags.LoadFlags(globalFlags, io.Err())
+	option, err := config.LoadConfigValue(globalFlags, io.Err())
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +101,7 @@ func (c *cliContext) IO() IO {
 	return c.cliIO
 }
 
-func (c *cliContext) Option() *flags.Flags {
+func (c *cliContext) Option() *config.Config {
 	return c.option
 }
 

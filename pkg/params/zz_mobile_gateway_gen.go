@@ -20,11 +20,12 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/sacloud/usacloud/pkg/validation"
 )
 
@@ -49,8 +50,8 @@ type ListMobileGatewayParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListMobileGatewayParam return new ListMobileGatewayParam
@@ -59,9 +60,9 @@ func NewListMobileGatewayParam() *ListMobileGatewayParam {
 }
 
 // Initialize init ListMobileGatewayParam
-func (p *ListMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -75,58 +76,58 @@ func (p *ListMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ListMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.From) {
+	if util.IsEmpty(p.From) {
 		p.From = 0
 	}
-	if utils.IsEmpty(p.Max) {
+	if util.IsEmpty(p.Max) {
 		p.Max = 0
 	}
-	if utils.IsEmpty(p.Sort) {
+	if util.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -185,12 +186,12 @@ func (p *ListMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ListMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -397,8 +398,8 @@ type CreateMobileGatewayParam struct {
 	Query              string
 	QueryFile          string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreateMobileGatewayParam return new CreateMobileGatewayParam
@@ -407,9 +408,9 @@ func NewCreateMobileGatewayParam() *CreateMobileGatewayParam {
 }
 
 // Initialize init CreateMobileGatewayParam
-func (p *CreateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreateMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -423,58 +424,58 @@ func (p *CreateMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CreateMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.InternetConnection) {
+	if util.IsEmpty(p.InternetConnection) {
 		p.InternetConnection = false
 	}
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
+	if util.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -484,7 +485,7 @@ func (p *CreateMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -537,12 +538,12 @@ func (p *CreateMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *CreateMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -745,8 +746,8 @@ type ReadMobileGatewayParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadMobileGatewayParam return new ReadMobileGatewayParam
@@ -755,9 +756,9 @@ func NewReadMobileGatewayParam() *ReadMobileGatewayParam {
 }
 
 // Initialize init ReadMobileGatewayParam
-func (p *ReadMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -771,46 +772,46 @@ func (p *ReadMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReadMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -820,7 +821,7 @@ func (p *ReadMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -842,12 +843,12 @@ func (p *ReadMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ReadMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -1028,8 +1029,8 @@ type UpdateMobileGatewayParam struct {
 	QueryFile          string
 	Id                 sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateMobileGatewayParam return new UpdateMobileGatewayParam
@@ -1038,9 +1039,9 @@ func NewUpdateMobileGatewayParam() *UpdateMobileGatewayParam {
 }
 
 // Initialize init UpdateMobileGatewayParam
-func (p *UpdateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1054,64 +1055,64 @@ func (p *UpdateMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *UpdateMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.InternetConnection) {
+	if util.IsEmpty(p.InternetConnection) {
 		p.InternetConnection = false
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
+	if util.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1153,7 +1154,7 @@ func (p *UpdateMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1175,12 +1176,12 @@ func (p *UpdateMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *UpdateMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -1399,8 +1400,8 @@ type DeleteMobileGatewayParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteMobileGatewayParam return new DeleteMobileGatewayParam
@@ -1409,9 +1410,9 @@ func NewDeleteMobileGatewayParam() *DeleteMobileGatewayParam {
 }
 
 // Initialize init DeleteMobileGatewayParam
-func (p *DeleteMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1425,52 +1426,52 @@ func (p *DeleteMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DeleteMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Force) {
+	if util.IsEmpty(p.Force) {
 		p.Force = false
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1480,7 +1481,7 @@ func (p *DeleteMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1502,12 +1503,12 @@ func (p *DeleteMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DeleteMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -1690,8 +1691,8 @@ type BootMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewBootMobileGatewayParam return new BootMobileGatewayParam
@@ -1700,9 +1701,9 @@ func NewBootMobileGatewayParam() *BootMobileGatewayParam {
 }
 
 // Initialize init BootMobileGatewayParam
-func (p *BootMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *BootMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1716,28 +1717,28 @@ func (p *BootMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *BootMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1747,7 +1748,7 @@ func (p *BootMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1760,7 +1761,7 @@ func (p *BootMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *BootMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -1887,8 +1888,8 @@ type ShutdownMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewShutdownMobileGatewayParam return new ShutdownMobileGatewayParam
@@ -1897,9 +1898,9 @@ func NewShutdownMobileGatewayParam() *ShutdownMobileGatewayParam {
 }
 
 // Initialize init ShutdownMobileGatewayParam
-func (p *ShutdownMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ShutdownMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1913,28 +1914,28 @@ func (p *ShutdownMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ShutdownMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1944,7 +1945,7 @@ func (p *ShutdownMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1957,7 +1958,7 @@ func (p *ShutdownMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ShutdownMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -2084,8 +2085,8 @@ type ShutdownForceMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewShutdownForceMobileGatewayParam return new ShutdownForceMobileGatewayParam
@@ -2094,9 +2095,9 @@ func NewShutdownForceMobileGatewayParam() *ShutdownForceMobileGatewayParam {
 }
 
 // Initialize init ShutdownForceMobileGatewayParam
-func (p *ShutdownForceMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ShutdownForceMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2110,28 +2111,28 @@ func (p *ShutdownForceMobileGatewayParam) WriteSkeleton(writer io.Writer) error 
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ShutdownForceMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2141,7 +2142,7 @@ func (p *ShutdownForceMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2154,7 +2155,7 @@ func (p *ShutdownForceMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ShutdownForceMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -2281,8 +2282,8 @@ type ResetMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewResetMobileGatewayParam return new ResetMobileGatewayParam
@@ -2291,9 +2292,9 @@ func NewResetMobileGatewayParam() *ResetMobileGatewayParam {
 }
 
 // Initialize init ResetMobileGatewayParam
-func (p *ResetMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ResetMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2307,28 +2308,28 @@ func (p *ResetMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ResetMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2338,7 +2339,7 @@ func (p *ResetMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2351,7 +2352,7 @@ func (p *ResetMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ResetMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -2477,8 +2478,8 @@ type WaitForBootMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewWaitForBootMobileGatewayParam return new WaitForBootMobileGatewayParam
@@ -2487,9 +2488,9 @@ func NewWaitForBootMobileGatewayParam() *WaitForBootMobileGatewayParam {
 }
 
 // Initialize init WaitForBootMobileGatewayParam
-func (p *WaitForBootMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *WaitForBootMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2503,25 +2504,25 @@ func (p *WaitForBootMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *WaitForBootMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2531,7 +2532,7 @@ func (p *WaitForBootMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2544,7 +2545,7 @@ func (p *WaitForBootMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *WaitForBootMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -2663,8 +2664,8 @@ type WaitForDownMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewWaitForDownMobileGatewayParam return new WaitForDownMobileGatewayParam
@@ -2673,9 +2674,9 @@ func NewWaitForDownMobileGatewayParam() *WaitForDownMobileGatewayParam {
 }
 
 // Initialize init WaitForDownMobileGatewayParam
-func (p *WaitForDownMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *WaitForDownMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2689,25 +2690,25 @@ func (p *WaitForDownMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *WaitForDownMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2717,7 +2718,7 @@ func (p *WaitForDownMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2730,7 +2731,7 @@ func (p *WaitForDownMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *WaitForDownMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -2856,8 +2857,8 @@ type InterfaceInfoMobileGatewayParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewInterfaceInfoMobileGatewayParam return new InterfaceInfoMobileGatewayParam
@@ -2866,9 +2867,9 @@ func NewInterfaceInfoMobileGatewayParam() *InterfaceInfoMobileGatewayParam {
 }
 
 // Initialize init InterfaceInfoMobileGatewayParam
-func (p *InterfaceInfoMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *InterfaceInfoMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2882,46 +2883,46 @@ func (p *InterfaceInfoMobileGatewayParam) WriteSkeleton(writer io.Writer) error 
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *InterfaceInfoMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2931,7 +2932,7 @@ func (p *InterfaceInfoMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2953,12 +2954,12 @@ func (p *InterfaceInfoMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *InterfaceInfoMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -3130,8 +3131,8 @@ type InterfaceConnectMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewInterfaceConnectMobileGatewayParam return new InterfaceConnectMobileGatewayParam
@@ -3141,9 +3142,9 @@ func NewInterfaceConnectMobileGatewayParam() *InterfaceConnectMobileGatewayParam
 }
 
 // Initialize init InterfaceConnectMobileGatewayParam
-func (p *InterfaceConnectMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *InterfaceConnectMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3157,37 +3158,37 @@ func (p *InterfaceConnectMobileGatewayParam) WriteSkeleton(writer io.Writer) err
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *InterfaceConnectMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Ipaddress) {
+	if util.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
-	if utils.IsEmpty(p.SwitchId) {
+	if util.IsEmpty(p.SwitchId) {
 		p.SwitchId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.NwMasklen) {
+	if util.IsEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3197,7 +3198,7 @@ func (p *InterfaceConnectMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--ipaddress", p.Ipaddress)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3212,7 +3213,7 @@ func (p *InterfaceConnectMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--switch-id", p.SwitchId)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3235,7 +3236,7 @@ func (p *InterfaceConnectMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3248,7 +3249,7 @@ func (p *InterfaceConnectMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *InterfaceConnectMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -3398,8 +3399,8 @@ type InterfaceUpdateMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewInterfaceUpdateMobileGatewayParam return new InterfaceUpdateMobileGatewayParam
@@ -3409,9 +3410,9 @@ func NewInterfaceUpdateMobileGatewayParam() *InterfaceUpdateMobileGatewayParam {
 }
 
 // Initialize init InterfaceUpdateMobileGatewayParam
-func (p *InterfaceUpdateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *InterfaceUpdateMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3425,34 +3426,34 @@ func (p *InterfaceUpdateMobileGatewayParam) WriteSkeleton(writer io.Writer) erro
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *InterfaceUpdateMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Ipaddress) {
+	if util.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
-	if utils.IsEmpty(p.NwMasklen) {
+	if util.IsEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3478,7 +3479,7 @@ func (p *InterfaceUpdateMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3491,7 +3492,7 @@ func (p *InterfaceUpdateMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *InterfaceUpdateMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -3632,8 +3633,8 @@ type InterfaceDisconnectMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewInterfaceDisconnectMobileGatewayParam return new InterfaceDisconnectMobileGatewayParam
@@ -3642,9 +3643,9 @@ func NewInterfaceDisconnectMobileGatewayParam() *InterfaceDisconnectMobileGatewa
 }
 
 // Initialize init InterfaceDisconnectMobileGatewayParam
-func (p *InterfaceDisconnectMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *InterfaceDisconnectMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3658,28 +3659,28 @@ func (p *InterfaceDisconnectMobileGatewayParam) WriteSkeleton(writer io.Writer) 
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *InterfaceDisconnectMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3689,7 +3690,7 @@ func (p *InterfaceDisconnectMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3702,7 +3703,7 @@ func (p *InterfaceDisconnectMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *InterfaceDisconnectMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -3835,8 +3836,8 @@ type TrafficControlInfoMobileGatewayParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewTrafficControlInfoMobileGatewayParam return new TrafficControlInfoMobileGatewayParam
@@ -3845,9 +3846,9 @@ func NewTrafficControlInfoMobileGatewayParam() *TrafficControlInfoMobileGatewayP
 }
 
 // Initialize init TrafficControlInfoMobileGatewayParam
-func (p *TrafficControlInfoMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *TrafficControlInfoMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3861,46 +3862,46 @@ func (p *TrafficControlInfoMobileGatewayParam) WriteSkeleton(writer io.Writer) e
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *TrafficControlInfoMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3910,7 +3911,7 @@ func (p *TrafficControlInfoMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3932,12 +3933,12 @@ func (p *TrafficControlInfoMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *TrafficControlInfoMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -4111,8 +4112,8 @@ type TrafficControlEnableMobileGatewayParam struct {
 	GenerateSkeleton   bool
 	Id                 sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewTrafficControlEnableMobileGatewayParam return new TrafficControlEnableMobileGatewayParam
@@ -4122,9 +4123,9 @@ func NewTrafficControlEnableMobileGatewayParam() *TrafficControlEnableMobileGate
 }
 
 // Initialize init TrafficControlEnableMobileGatewayParam
-func (p *TrafficControlEnableMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *TrafficControlEnableMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4138,43 +4139,43 @@ func (p *TrafficControlEnableMobileGatewayParam) WriteSkeleton(writer io.Writer)
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *TrafficControlEnableMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Quota) {
+	if util.IsEmpty(p.Quota) {
 		p.Quota = 0
 	}
-	if utils.IsEmpty(p.BandWidthLimit) {
+	if util.IsEmpty(p.BandWidthLimit) {
 		p.BandWidthLimit = 0
 	}
-	if utils.IsEmpty(p.EnableEmail) {
+	if util.IsEmpty(p.EnableEmail) {
 		p.EnableEmail = false
 	}
-	if utils.IsEmpty(p.SlackWebhookUrl) {
+	if util.IsEmpty(p.SlackWebhookUrl) {
 		p.SlackWebhookUrl = ""
 	}
-	if utils.IsEmpty(p.AutoTrafficShaping) {
+	if util.IsEmpty(p.AutoTrafficShaping) {
 		p.AutoTrafficShaping = false
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -4184,7 +4185,7 @@ func (p *TrafficControlEnableMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--quota", p.Quota)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4215,7 +4216,7 @@ func (p *TrafficControlEnableMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4228,7 +4229,7 @@ func (p *TrafficControlEnableMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *TrafficControlEnableMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -4395,8 +4396,8 @@ type TrafficControlUpdateMobileGatewayParam struct {
 	GenerateSkeleton   bool
 	Id                 sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewTrafficControlUpdateMobileGatewayParam return new TrafficControlUpdateMobileGatewayParam
@@ -4405,9 +4406,9 @@ func NewTrafficControlUpdateMobileGatewayParam() *TrafficControlUpdateMobileGate
 }
 
 // Initialize init TrafficControlUpdateMobileGatewayParam
-func (p *TrafficControlUpdateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *TrafficControlUpdateMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4421,43 +4422,43 @@ func (p *TrafficControlUpdateMobileGatewayParam) WriteSkeleton(writer io.Writer)
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *TrafficControlUpdateMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Quota) {
+	if util.IsEmpty(p.Quota) {
 		p.Quota = 0
 	}
-	if utils.IsEmpty(p.BandWidthLimit) {
+	if util.IsEmpty(p.BandWidthLimit) {
 		p.BandWidthLimit = 0
 	}
-	if utils.IsEmpty(p.EnableEmail) {
+	if util.IsEmpty(p.EnableEmail) {
 		p.EnableEmail = false
 	}
-	if utils.IsEmpty(p.SlackWebhookUrl) {
+	if util.IsEmpty(p.SlackWebhookUrl) {
 		p.SlackWebhookUrl = ""
 	}
-	if utils.IsEmpty(p.AutoTrafficShaping) {
+	if util.IsEmpty(p.AutoTrafficShaping) {
 		p.AutoTrafficShaping = false
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -4491,7 +4492,7 @@ func (p *TrafficControlUpdateMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4504,7 +4505,7 @@ func (p *TrafficControlUpdateMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *TrafficControlUpdateMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -4666,8 +4667,8 @@ type TrafficControlDisableMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewTrafficControlDisableMobileGatewayParam return new TrafficControlDisableMobileGatewayParam
@@ -4676,9 +4677,9 @@ func NewTrafficControlDisableMobileGatewayParam() *TrafficControlDisableMobileGa
 }
 
 // Initialize init TrafficControlDisableMobileGatewayParam
-func (p *TrafficControlDisableMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *TrafficControlDisableMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4692,28 +4693,28 @@ func (p *TrafficControlDisableMobileGatewayParam) WriteSkeleton(writer io.Writer
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *TrafficControlDisableMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -4723,7 +4724,7 @@ func (p *TrafficControlDisableMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4736,7 +4737,7 @@ func (p *TrafficControlDisableMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *TrafficControlDisableMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -4869,8 +4870,8 @@ type StaticRouteInfoMobileGatewayParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewStaticRouteInfoMobileGatewayParam return new StaticRouteInfoMobileGatewayParam
@@ -4879,9 +4880,9 @@ func NewStaticRouteInfoMobileGatewayParam() *StaticRouteInfoMobileGatewayParam {
 }
 
 // Initialize init StaticRouteInfoMobileGatewayParam
-func (p *StaticRouteInfoMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *StaticRouteInfoMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4895,46 +4896,46 @@ func (p *StaticRouteInfoMobileGatewayParam) WriteSkeleton(writer io.Writer) erro
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *StaticRouteInfoMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -4944,7 +4945,7 @@ func (p *StaticRouteInfoMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4966,12 +4967,12 @@ func (p *StaticRouteInfoMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *StaticRouteInfoMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -5142,8 +5143,8 @@ type StaticRouteAddMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewStaticRouteAddMobileGatewayParam return new StaticRouteAddMobileGatewayParam
@@ -5152,9 +5153,9 @@ func NewStaticRouteAddMobileGatewayParam() *StaticRouteAddMobileGatewayParam {
 }
 
 // Initialize init StaticRouteAddMobileGatewayParam
-func (p *StaticRouteAddMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *StaticRouteAddMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5168,34 +5169,34 @@ func (p *StaticRouteAddMobileGatewayParam) WriteSkeleton(writer io.Writer) error
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *StaticRouteAddMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Prefix) {
+	if util.IsEmpty(p.Prefix) {
 		p.Prefix = ""
 	}
-	if utils.IsEmpty(p.NextHop) {
+	if util.IsEmpty(p.NextHop) {
 		p.NextHop = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -5205,7 +5206,7 @@ func (p *StaticRouteAddMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--prefix", p.Prefix)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5220,7 +5221,7 @@ func (p *StaticRouteAddMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--next-hop", p.NextHop)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5235,7 +5236,7 @@ func (p *StaticRouteAddMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5248,7 +5249,7 @@ func (p *StaticRouteAddMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *StaticRouteAddMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -5392,8 +5393,8 @@ type StaticRouteUpdateMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewStaticRouteUpdateMobileGatewayParam return new StaticRouteUpdateMobileGatewayParam
@@ -5402,9 +5403,9 @@ func NewStaticRouteUpdateMobileGatewayParam() *StaticRouteUpdateMobileGatewayPar
 }
 
 // Initialize init StaticRouteUpdateMobileGatewayParam
-func (p *StaticRouteUpdateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *StaticRouteUpdateMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5418,37 +5419,37 @@ func (p *StaticRouteUpdateMobileGatewayParam) WriteSkeleton(writer io.Writer) er
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *StaticRouteUpdateMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Prefix) {
+	if util.IsEmpty(p.Prefix) {
 		p.Prefix = ""
 	}
-	if utils.IsEmpty(p.NextHop) {
+	if util.IsEmpty(p.NextHop) {
 		p.NextHop = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -5458,7 +5459,7 @@ func (p *StaticRouteUpdateMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5482,7 +5483,7 @@ func (p *StaticRouteUpdateMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5495,7 +5496,7 @@ func (p *StaticRouteUpdateMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *StaticRouteUpdateMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -5644,8 +5645,8 @@ type StaticRouteDeleteMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewStaticRouteDeleteMobileGatewayParam return new StaticRouteDeleteMobileGatewayParam
@@ -5654,9 +5655,9 @@ func NewStaticRouteDeleteMobileGatewayParam() *StaticRouteDeleteMobileGatewayPar
 }
 
 // Initialize init StaticRouteDeleteMobileGatewayParam
-func (p *StaticRouteDeleteMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *StaticRouteDeleteMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5670,31 +5671,31 @@ func (p *StaticRouteDeleteMobileGatewayParam) WriteSkeleton(writer io.Writer) er
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *StaticRouteDeleteMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -5704,7 +5705,7 @@ func (p *StaticRouteDeleteMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5712,7 +5713,7 @@ func (p *StaticRouteDeleteMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5725,7 +5726,7 @@ func (p *StaticRouteDeleteMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *StaticRouteDeleteMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -5865,8 +5866,8 @@ type SIMInfoMobileGatewayParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewSIMInfoMobileGatewayParam return new SIMInfoMobileGatewayParam
@@ -5875,9 +5876,9 @@ func NewSIMInfoMobileGatewayParam() *SIMInfoMobileGatewayParam {
 }
 
 // Initialize init SIMInfoMobileGatewayParam
-func (p *SIMInfoMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *SIMInfoMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -5891,46 +5892,46 @@ func (p *SIMInfoMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *SIMInfoMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -5940,7 +5941,7 @@ func (p *SIMInfoMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5962,12 +5963,12 @@ func (p *SIMInfoMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *SIMInfoMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -6138,8 +6139,8 @@ type SIMAddMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewSIMAddMobileGatewayParam return new SIMAddMobileGatewayParam
@@ -6148,9 +6149,9 @@ func NewSIMAddMobileGatewayParam() *SIMAddMobileGatewayParam {
 }
 
 // Initialize init SIMAddMobileGatewayParam
-func (p *SIMAddMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *SIMAddMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6164,34 +6165,34 @@ func (p *SIMAddMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *SIMAddMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Ipaddress) {
+	if util.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
-	if utils.IsEmpty(p.SIMId) {
+	if util.IsEmpty(p.SIMId) {
 		p.SIMId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -6201,7 +6202,7 @@ func (p *SIMAddMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--ipaddress", p.Ipaddress)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6216,7 +6217,7 @@ func (p *SIMAddMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--sim-id", p.SIMId)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6231,7 +6232,7 @@ func (p *SIMAddMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6244,7 +6245,7 @@ func (p *SIMAddMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *SIMAddMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -6387,8 +6388,8 @@ type SIMUpdateMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewSIMUpdateMobileGatewayParam return new SIMUpdateMobileGatewayParam
@@ -6397,9 +6398,9 @@ func NewSIMUpdateMobileGatewayParam() *SIMUpdateMobileGatewayParam {
 }
 
 // Initialize init SIMUpdateMobileGatewayParam
-func (p *SIMUpdateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *SIMUpdateMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6413,34 +6414,34 @@ func (p *SIMUpdateMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *SIMUpdateMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Ipaddress) {
+	if util.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
-	if utils.IsEmpty(p.SIMId) {
+	if util.IsEmpty(p.SIMId) {
 		p.SIMId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -6458,7 +6459,7 @@ func (p *SIMUpdateMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--sim-id", p.SIMId)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6473,7 +6474,7 @@ func (p *SIMUpdateMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6486,7 +6487,7 @@ func (p *SIMUpdateMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *SIMUpdateMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -6628,8 +6629,8 @@ type SIMDeleteMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewSIMDeleteMobileGatewayParam return new SIMDeleteMobileGatewayParam
@@ -6638,9 +6639,9 @@ func NewSIMDeleteMobileGatewayParam() *SIMDeleteMobileGatewayParam {
 }
 
 // Initialize init SIMDeleteMobileGatewayParam
-func (p *SIMDeleteMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *SIMDeleteMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6654,31 +6655,31 @@ func (p *SIMDeleteMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *SIMDeleteMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.SIMId) {
+	if util.IsEmpty(p.SIMId) {
 		p.SIMId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -6688,7 +6689,7 @@ func (p *SIMDeleteMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--sim-id", p.SIMId)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6703,7 +6704,7 @@ func (p *SIMDeleteMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6716,7 +6717,7 @@ func (p *SIMDeleteMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *SIMDeleteMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -6856,8 +6857,8 @@ type SIMRouteInfoMobileGatewayParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewSIMRouteInfoMobileGatewayParam return new SIMRouteInfoMobileGatewayParam
@@ -6866,9 +6867,9 @@ func NewSIMRouteInfoMobileGatewayParam() *SIMRouteInfoMobileGatewayParam {
 }
 
 // Initialize init SIMRouteInfoMobileGatewayParam
-func (p *SIMRouteInfoMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *SIMRouteInfoMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -6882,46 +6883,46 @@ func (p *SIMRouteInfoMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *SIMRouteInfoMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -6931,7 +6932,7 @@ func (p *SIMRouteInfoMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6953,12 +6954,12 @@ func (p *SIMRouteInfoMobileGatewayParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *SIMRouteInfoMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -7129,8 +7130,8 @@ type SIMRouteAddMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewSIMRouteAddMobileGatewayParam return new SIMRouteAddMobileGatewayParam
@@ -7139,9 +7140,9 @@ func NewSIMRouteAddMobileGatewayParam() *SIMRouteAddMobileGatewayParam {
 }
 
 // Initialize init SIMRouteAddMobileGatewayParam
-func (p *SIMRouteAddMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *SIMRouteAddMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7155,34 +7156,34 @@ func (p *SIMRouteAddMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *SIMRouteAddMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Prefix) {
+	if util.IsEmpty(p.Prefix) {
 		p.Prefix = ""
 	}
-	if utils.IsEmpty(p.SIM) {
+	if util.IsEmpty(p.SIM) {
 		p.SIM = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -7192,7 +7193,7 @@ func (p *SIMRouteAddMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--prefix", p.Prefix)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7207,7 +7208,7 @@ func (p *SIMRouteAddMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--sim", p.SIM)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7222,7 +7223,7 @@ func (p *SIMRouteAddMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7235,7 +7236,7 @@ func (p *SIMRouteAddMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *SIMRouteAddMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -7379,8 +7380,8 @@ type SIMRouteUpdateMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewSIMRouteUpdateMobileGatewayParam return new SIMRouteUpdateMobileGatewayParam
@@ -7389,9 +7390,9 @@ func NewSIMRouteUpdateMobileGatewayParam() *SIMRouteUpdateMobileGatewayParam {
 }
 
 // Initialize init SIMRouteUpdateMobileGatewayParam
-func (p *SIMRouteUpdateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *SIMRouteUpdateMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7405,37 +7406,37 @@ func (p *SIMRouteUpdateMobileGatewayParam) WriteSkeleton(writer io.Writer) error
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *SIMRouteUpdateMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Prefix) {
+	if util.IsEmpty(p.Prefix) {
 		p.Prefix = ""
 	}
-	if utils.IsEmpty(p.SIM) {
+	if util.IsEmpty(p.SIM) {
 		p.SIM = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -7445,7 +7446,7 @@ func (p *SIMRouteUpdateMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7469,7 +7470,7 @@ func (p *SIMRouteUpdateMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7482,7 +7483,7 @@ func (p *SIMRouteUpdateMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *SIMRouteUpdateMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -7631,8 +7632,8 @@ type SIMRouteDeleteMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewSIMRouteDeleteMobileGatewayParam return new SIMRouteDeleteMobileGatewayParam
@@ -7641,9 +7642,9 @@ func NewSIMRouteDeleteMobileGatewayParam() *SIMRouteDeleteMobileGatewayParam {
 }
 
 // Initialize init SIMRouteDeleteMobileGatewayParam
-func (p *SIMRouteDeleteMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *SIMRouteDeleteMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7657,31 +7658,31 @@ func (p *SIMRouteDeleteMobileGatewayParam) WriteSkeleton(writer io.Writer) error
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *SIMRouteDeleteMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -7691,7 +7692,7 @@ func (p *SIMRouteDeleteMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7699,7 +7700,7 @@ func (p *SIMRouteDeleteMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7712,7 +7713,7 @@ func (p *SIMRouteDeleteMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *SIMRouteDeleteMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -7848,8 +7849,8 @@ type DNSUpdateMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDNSUpdateMobileGatewayParam return new DNSUpdateMobileGatewayParam
@@ -7858,9 +7859,9 @@ func NewDNSUpdateMobileGatewayParam() *DNSUpdateMobileGatewayParam {
 }
 
 // Initialize init DNSUpdateMobileGatewayParam
-func (p *DNSUpdateMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DNSUpdateMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -7874,34 +7875,34 @@ func (p *DNSUpdateMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DNSUpdateMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.DNS1) {
+	if util.IsEmpty(p.DNS1) {
 		p.DNS1 = ""
 	}
-	if utils.IsEmpty(p.DNS2) {
+	if util.IsEmpty(p.DNS2) {
 		p.DNS2 = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -7911,7 +7912,7 @@ func (p *DNSUpdateMobileGatewayParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--dns-1", p.DNS1)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7926,7 +7927,7 @@ func (p *DNSUpdateMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--dns-2", p.DNS2)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7941,7 +7942,7 @@ func (p *DNSUpdateMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7954,7 +7955,7 @@ func (p *DNSUpdateMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DNSUpdateMobileGatewayParam) ResourceDef() *schema.Resource {
@@ -8096,8 +8097,8 @@ type LogsMobileGatewayParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewLogsMobileGatewayParam return new LogsMobileGatewayParam
@@ -8107,9 +8108,9 @@ func NewLogsMobileGatewayParam() *LogsMobileGatewayParam {
 }
 
 // Initialize init LogsMobileGatewayParam
-func (p *LogsMobileGatewayParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *LogsMobileGatewayParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -8123,31 +8124,31 @@ func (p *LogsMobileGatewayParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *LogsMobileGatewayParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Follow) {
+	if util.IsEmpty(p.Follow) {
 		p.Follow = false
 	}
-	if utils.IsEmpty(p.RefreshInterval) {
+	if util.IsEmpty(p.RefreshInterval) {
 		p.RefreshInterval = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -8165,7 +8166,7 @@ func (p *LogsMobileGatewayParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -8178,7 +8179,7 @@ func (p *LogsMobileGatewayParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *LogsMobileGatewayParam) ResourceDef() *schema.Resource {

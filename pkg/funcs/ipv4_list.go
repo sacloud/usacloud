@@ -19,7 +19,7 @@ import (
 
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func IPv4List(ctx cli.Context, params *params.ListIPv4Param) error {
@@ -29,13 +29,13 @@ func IPv4List(ctx cli.Context, params *params.ListIPv4Param) error {
 
 	finder.SetEmpty()
 
-	if !utils.IsEmpty(params.From) {
+	if !util.IsEmpty(params.From) {
 		finder.SetOffset(params.From)
 	}
-	if !utils.IsEmpty(params.Max) {
+	if !util.IsEmpty(params.Max) {
 		finder.SetLimit(params.Max)
 	}
-	if !utils.IsEmpty(params.Sort) {
+	if !util.IsEmpty(params.Sort) {
 		for _, v := range params.Sort {
 			setSortBy(finder, v)
 		}

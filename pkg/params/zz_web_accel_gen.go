@@ -20,11 +20,12 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/sacloud/usacloud/pkg/validation"
 )
 
@@ -43,8 +44,8 @@ type ListWebAccelParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListWebAccelParam return new ListWebAccelParam
@@ -53,9 +54,9 @@ func NewListWebAccelParam() *ListWebAccelParam {
 }
 
 // Initialize init ListWebAccelParam
-func (p *ListWebAccelParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListWebAccelParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -69,40 +70,40 @@ func (p *ListWebAccelParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ListWebAccelParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -126,12 +127,12 @@ func (p *ListWebAccelParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ListWebAccelParam) ResourceDef() *schema.Resource {
@@ -292,8 +293,8 @@ type ReadWebAccelParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadWebAccelParam return new ReadWebAccelParam
@@ -302,9 +303,9 @@ func NewReadWebAccelParam() *ReadWebAccelParam {
 }
 
 // Initialize init ReadWebAccelParam
-func (p *ReadWebAccelParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadWebAccelParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -318,46 +319,46 @@ func (p *ReadWebAccelParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReadWebAccelParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -367,7 +368,7 @@ func (p *ReadWebAccelParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -389,12 +390,12 @@ func (p *ReadWebAccelParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ReadWebAccelParam) ResourceDef() *schema.Resource {
@@ -569,8 +570,8 @@ type CertificateInfoWebAccelParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCertificateInfoWebAccelParam return new CertificateInfoWebAccelParam
@@ -579,9 +580,9 @@ func NewCertificateInfoWebAccelParam() *CertificateInfoWebAccelParam {
 }
 
 // Initialize init CertificateInfoWebAccelParam
-func (p *CertificateInfoWebAccelParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CertificateInfoWebAccelParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -595,46 +596,46 @@ func (p *CertificateInfoWebAccelParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CertificateInfoWebAccelParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -644,7 +645,7 @@ func (p *CertificateInfoWebAccelParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -666,12 +667,12 @@ func (p *CertificateInfoWebAccelParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *CertificateInfoWebAccelParam) ResourceDef() *schema.Resource {
@@ -851,8 +852,8 @@ type CertificateNewWebAccelParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCertificateNewWebAccelParam return new CertificateNewWebAccelParam
@@ -861,9 +862,9 @@ func NewCertificateNewWebAccelParam() *CertificateNewWebAccelParam {
 }
 
 // Initialize init CertificateNewWebAccelParam
-func (p *CertificateNewWebAccelParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CertificateNewWebAccelParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -877,61 +878,61 @@ func (p *CertificateNewWebAccelParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CertificateNewWebAccelParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Cert) {
+	if util.IsEmpty(p.Cert) {
 		p.Cert = ""
 	}
-	if utils.IsEmpty(p.Key) {
+	if util.IsEmpty(p.Key) {
 		p.Key = ""
 	}
-	if utils.IsEmpty(p.CertContent) {
+	if util.IsEmpty(p.CertContent) {
 		p.CertContent = ""
 	}
-	if utils.IsEmpty(p.KeyContent) {
+	if util.IsEmpty(p.KeyContent) {
 		p.KeyContent = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -977,7 +978,7 @@ func (p *CertificateNewWebAccelParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -999,12 +1000,12 @@ func (p *CertificateNewWebAccelParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *CertificateNewWebAccelParam) ResourceDef() *schema.Resource {
@@ -1219,8 +1220,8 @@ type CertificateUpdateWebAccelParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCertificateUpdateWebAccelParam return new CertificateUpdateWebAccelParam
@@ -1229,9 +1230,9 @@ func NewCertificateUpdateWebAccelParam() *CertificateUpdateWebAccelParam {
 }
 
 // Initialize init CertificateUpdateWebAccelParam
-func (p *CertificateUpdateWebAccelParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CertificateUpdateWebAccelParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1245,61 +1246,61 @@ func (p *CertificateUpdateWebAccelParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CertificateUpdateWebAccelParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Cert) {
+	if util.IsEmpty(p.Cert) {
 		p.Cert = ""
 	}
-	if utils.IsEmpty(p.Key) {
+	if util.IsEmpty(p.Key) {
 		p.Key = ""
 	}
-	if utils.IsEmpty(p.CertContent) {
+	if util.IsEmpty(p.CertContent) {
 		p.CertContent = ""
 	}
-	if utils.IsEmpty(p.KeyContent) {
+	if util.IsEmpty(p.KeyContent) {
 		p.KeyContent = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1345,7 +1346,7 @@ func (p *CertificateUpdateWebAccelParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1367,12 +1368,12 @@ func (p *CertificateUpdateWebAccelParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *CertificateUpdateWebAccelParam) ResourceDef() *schema.Resource {
@@ -1581,8 +1582,8 @@ type DeleteCacheWebAccelParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteCacheWebAccelParam return new DeleteCacheWebAccelParam
@@ -1591,9 +1592,9 @@ func NewDeleteCacheWebAccelParam() *DeleteCacheWebAccelParam {
 }
 
 // Initialize init DeleteCacheWebAccelParam
-func (p *DeleteCacheWebAccelParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteCacheWebAccelParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1607,43 +1608,43 @@ func (p *DeleteCacheWebAccelParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DeleteCacheWebAccelParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -1667,12 +1668,12 @@ func (p *DeleteCacheWebAccelParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DeleteCacheWebAccelParam) ResourceDef() *schema.Resource {

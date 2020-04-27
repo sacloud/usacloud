@@ -19,9 +19,9 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/progress"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func DiskEdit(ctx cli.Context, params *params.EditDiskParam) error {
@@ -31,7 +31,7 @@ func DiskEdit(ctx cli.Context, params *params.EditDiskParam) error {
 	p := buildDiskEditValue(ctx, params)
 
 	// wait for copy with progress
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still editing[ID:%d]...", params.Id),
 		fmt.Sprintf("Edit disk[ID:%d]", params.Id),
 		ctx.IO().Progress(),
@@ -76,13 +76,13 @@ func buildDiskEditValue(ctx cli.Context, params *params.EditDiskParam) *sacloud.
 		p.SetPassword(params.Password)
 	}
 	if ctx.IsSet("ssh-key-ids") {
-		p.SetSSHKeys(utils.StringIDs(params.SSHKeyIds))
+		p.SetSSHKeys(util.StringIDs(params.SSHKeyIds))
 	}
 	if ctx.IsSet("disable-password-auth") {
 		p.SetDisablePWAuth(params.DisablePasswordAuth)
 	}
 	if ctx.IsSet("startup-script-ids") {
-		p.SetNotes(utils.StringIDs(params.StartupScriptIds))
+		p.SetNotes(util.StringIDs(params.StartupScriptIds))
 	}
 	if ctx.IsSet("ipaddress") {
 		p.SetUserIPAddress(params.Ipaddress)

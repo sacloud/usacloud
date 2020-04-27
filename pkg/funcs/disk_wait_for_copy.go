@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func DiskWaitForCopy(ctx cli.Context, params *params.WaitForCopyDiskParam) error {
@@ -32,7 +32,7 @@ func DiskWaitForCopy(ctx cli.Context, params *params.WaitForCopyDiskParam) error
 	}
 
 	// wait for copy with progress
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still copying[ID:%d]...", params.Id),
 		fmt.Sprintf("Copy disk[ID:%d]", params.Id),
 		ctx.IO().Progress(),

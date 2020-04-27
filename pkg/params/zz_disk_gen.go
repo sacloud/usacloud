@@ -20,11 +20,12 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/sacloud/usacloud/pkg/validation"
 )
 
@@ -53,8 +54,8 @@ type ListDiskParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListDiskParam return new ListDiskParam
@@ -63,9 +64,9 @@ func NewListDiskParam() *ListDiskParam {
 }
 
 // Initialize init ListDiskParam
-func (p *ListDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListDiskParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -79,70 +80,70 @@ func (p *ListDiskParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ListDiskParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.Scope) {
+	if util.IsEmpty(p.Scope) {
 		p.Scope = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.SourceArchiveId) {
+	if util.IsEmpty(p.SourceArchiveId) {
 		p.SourceArchiveId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.SourceDiskId) {
+	if util.IsEmpty(p.SourceDiskId) {
 		p.SourceDiskId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Storage) {
+	if util.IsEmpty(p.Storage) {
 		p.Storage = ""
 	}
-	if utils.IsEmpty(p.From) {
+	if util.IsEmpty(p.From) {
 		p.From = 0
 	}
-	if utils.IsEmpty(p.Max) {
+	if util.IsEmpty(p.Max) {
 		p.Max = 0
 	}
-	if utils.IsEmpty(p.Sort) {
+	if util.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -225,12 +226,12 @@ func (p *ListDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ListDiskParam) ResourceDef() *schema.Resource {
@@ -470,8 +471,8 @@ type CreateDiskParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreateDiskParam return new CreateDiskParam
@@ -481,9 +482,9 @@ func NewCreateDiskParam() *CreateDiskParam {
 }
 
 // Initialize init CreateDiskParam
-func (p *CreateDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreateDiskParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -497,73 +498,73 @@ func (p *CreateDiskParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CreateDiskParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Plan) {
+	if util.IsEmpty(p.Plan) {
 		p.Plan = ""
 	}
-	if utils.IsEmpty(p.Connection) {
+	if util.IsEmpty(p.Connection) {
 		p.Connection = ""
 	}
-	if utils.IsEmpty(p.SourceArchiveId) {
+	if util.IsEmpty(p.SourceArchiveId) {
 		p.SourceArchiveId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.SourceDiskId) {
+	if util.IsEmpty(p.SourceDiskId) {
 		p.SourceDiskId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Size) {
+	if util.IsEmpty(p.Size) {
 		p.Size = 0
 	}
-	if utils.IsEmpty(p.DistantFrom) {
+	if util.IsEmpty(p.DistantFrom) {
 		p.DistantFrom = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
+	if util.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -573,7 +574,7 @@ func (p *CreateDiskParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--plan", p.Plan)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -588,7 +589,7 @@ func (p *CreateDiskParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--connection", p.Connection)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -637,7 +638,7 @@ func (p *CreateDiskParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--size", p.Size)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -660,7 +661,7 @@ func (p *CreateDiskParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -713,12 +714,12 @@ func (p *CreateDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *CreateDiskParam) ResourceDef() *schema.Resource {
@@ -956,8 +957,8 @@ type ReadDiskParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadDiskParam return new ReadDiskParam
@@ -966,9 +967,9 @@ func NewReadDiskParam() *ReadDiskParam {
 }
 
 // Initialize init ReadDiskParam
-func (p *ReadDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadDiskParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -982,46 +983,46 @@ func (p *ReadDiskParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReadDiskParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1031,7 +1032,7 @@ func (p *ReadDiskParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1053,12 +1054,12 @@ func (p *ReadDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ReadDiskParam) ResourceDef() *schema.Resource {
@@ -1239,8 +1240,8 @@ type UpdateDiskParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateDiskParam return new UpdateDiskParam
@@ -1249,9 +1250,9 @@ func NewUpdateDiskParam() *UpdateDiskParam {
 }
 
 // Initialize init UpdateDiskParam
-func (p *UpdateDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateDiskParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1265,64 +1266,64 @@ func (p *UpdateDiskParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *UpdateDiskParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Connection) {
+	if util.IsEmpty(p.Connection) {
 		p.Connection = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
+	if util.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1372,7 +1373,7 @@ func (p *UpdateDiskParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1394,12 +1395,12 @@ func (p *UpdateDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *UpdateDiskParam) ResourceDef() *schema.Resource {
@@ -1617,8 +1618,8 @@ type DeleteDiskParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteDiskParam return new DeleteDiskParam
@@ -1627,9 +1628,9 @@ func NewDeleteDiskParam() *DeleteDiskParam {
 }
 
 // Initialize init DeleteDiskParam
-func (p *DeleteDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteDiskParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1643,49 +1644,49 @@ func (p *DeleteDiskParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DeleteDiskParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1695,7 +1696,7 @@ func (p *DeleteDiskParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1717,12 +1718,12 @@ func (p *DeleteDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DeleteDiskParam) ResourceDef() *schema.Resource {
@@ -1913,8 +1914,8 @@ type EditDiskParam struct {
 	QueryFile           string
 	Id                  sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewEditDiskParam return new EditDiskParam
@@ -1924,9 +1925,9 @@ func NewEditDiskParam() *EditDiskParam {
 }
 
 // Initialize init EditDiskParam
-func (p *EditDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *EditDiskParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1940,73 +1941,73 @@ func (p *EditDiskParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *EditDiskParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Hostname) {
+	if util.IsEmpty(p.Hostname) {
 		p.Hostname = ""
 	}
-	if utils.IsEmpty(p.Password) {
+	if util.IsEmpty(p.Password) {
 		p.Password = ""
 	}
-	if utils.IsEmpty(p.SSHKeyIds) {
+	if util.IsEmpty(p.SSHKeyIds) {
 		p.SSHKeyIds = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.DisablePasswordAuth) {
+	if util.IsEmpty(p.DisablePasswordAuth) {
 		p.DisablePasswordAuth = false
 	}
-	if utils.IsEmpty(p.Ipaddress) {
+	if util.IsEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
-	if utils.IsEmpty(p.DefaultRoute) {
+	if util.IsEmpty(p.DefaultRoute) {
 		p.DefaultRoute = ""
 	}
-	if utils.IsEmpty(p.NwMasklen) {
+	if util.IsEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
 	}
-	if utils.IsEmpty(p.StartupScriptIds) {
+	if util.IsEmpty(p.StartupScriptIds) {
 		p.StartupScriptIds = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2040,7 +2041,7 @@ func (p *EditDiskParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2062,12 +2063,12 @@ func (p *EditDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *EditDiskParam) ResourceDef() *schema.Resource {
@@ -2306,8 +2307,8 @@ type ResizePartitionDiskParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewResizePartitionDiskParam return new ResizePartitionDiskParam
@@ -2316,9 +2317,9 @@ func NewResizePartitionDiskParam() *ResizePartitionDiskParam {
 }
 
 // Initialize init ResizePartitionDiskParam
-func (p *ResizePartitionDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ResizePartitionDiskParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2332,49 +2333,49 @@ func (p *ResizePartitionDiskParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ResizePartitionDiskParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2384,7 +2385,7 @@ func (p *ResizePartitionDiskParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2406,12 +2407,12 @@ func (p *ResizePartitionDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ResizePartitionDiskParam) ResourceDef() *schema.Resource {
@@ -2589,8 +2590,8 @@ type ReinstallFromArchiveDiskParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReinstallFromArchiveDiskParam return new ReinstallFromArchiveDiskParam
@@ -2599,9 +2600,9 @@ func NewReinstallFromArchiveDiskParam() *ReinstallFromArchiveDiskParam {
 }
 
 // Initialize init ReinstallFromArchiveDiskParam
-func (p *ReinstallFromArchiveDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReinstallFromArchiveDiskParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2615,34 +2616,34 @@ func (p *ReinstallFromArchiveDiskParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReinstallFromArchiveDiskParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.SourceArchiveId) {
+	if util.IsEmpty(p.SourceArchiveId) {
 		p.SourceArchiveId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.DistantFrom) {
+	if util.IsEmpty(p.DistantFrom) {
 		p.DistantFrom = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2652,7 +2653,7 @@ func (p *ReinstallFromArchiveDiskParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--source-archive-id", p.SourceArchiveId)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2675,7 +2676,7 @@ func (p *ReinstallFromArchiveDiskParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2688,7 +2689,7 @@ func (p *ReinstallFromArchiveDiskParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ReinstallFromArchiveDiskParam) ResourceDef() *schema.Resource {
@@ -2831,8 +2832,8 @@ type ReinstallFromDiskDiskParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReinstallFromDiskDiskParam return new ReinstallFromDiskDiskParam
@@ -2841,9 +2842,9 @@ func NewReinstallFromDiskDiskParam() *ReinstallFromDiskDiskParam {
 }
 
 // Initialize init ReinstallFromDiskDiskParam
-func (p *ReinstallFromDiskDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReinstallFromDiskDiskParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2857,34 +2858,34 @@ func (p *ReinstallFromDiskDiskParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReinstallFromDiskDiskParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.SourceDiskId) {
+	if util.IsEmpty(p.SourceDiskId) {
 		p.SourceDiskId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.DistantFrom) {
+	if util.IsEmpty(p.DistantFrom) {
 		p.DistantFrom = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2894,7 +2895,7 @@ func (p *ReinstallFromDiskDiskParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--source-disk-id", p.SourceDiskId)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2917,7 +2918,7 @@ func (p *ReinstallFromDiskDiskParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2930,7 +2931,7 @@ func (p *ReinstallFromDiskDiskParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ReinstallFromDiskDiskParam) ResourceDef() *schema.Resource {
@@ -3072,8 +3073,8 @@ type ReinstallToBlankDiskParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReinstallToBlankDiskParam return new ReinstallToBlankDiskParam
@@ -3082,9 +3083,9 @@ func NewReinstallToBlankDiskParam() *ReinstallToBlankDiskParam {
 }
 
 // Initialize init ReinstallToBlankDiskParam
-func (p *ReinstallToBlankDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReinstallToBlankDiskParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3098,31 +3099,31 @@ func (p *ReinstallToBlankDiskParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReinstallToBlankDiskParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.DistantFrom) {
+	if util.IsEmpty(p.DistantFrom) {
 		p.DistantFrom = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3140,7 +3141,7 @@ func (p *ReinstallToBlankDiskParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3153,7 +3154,7 @@ func (p *ReinstallToBlankDiskParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ReinstallToBlankDiskParam) ResourceDef() *schema.Resource {
@@ -3288,8 +3289,8 @@ type ServerConnectDiskParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewServerConnectDiskParam return new ServerConnectDiskParam
@@ -3298,9 +3299,9 @@ func NewServerConnectDiskParam() *ServerConnectDiskParam {
 }
 
 // Initialize init ServerConnectDiskParam
-func (p *ServerConnectDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ServerConnectDiskParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3314,31 +3315,31 @@ func (p *ServerConnectDiskParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ServerConnectDiskParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.ServerId) {
+	if util.IsEmpty(p.ServerId) {
 		p.ServerId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3348,7 +3349,7 @@ func (p *ServerConnectDiskParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--server-id", p.ServerId)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3363,7 +3364,7 @@ func (p *ServerConnectDiskParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3376,7 +3377,7 @@ func (p *ServerConnectDiskParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ServerConnectDiskParam) ResourceDef() *schema.Resource {
@@ -3510,8 +3511,8 @@ type ServerDisconnectDiskParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewServerDisconnectDiskParam return new ServerDisconnectDiskParam
@@ -3520,9 +3521,9 @@ func NewServerDisconnectDiskParam() *ServerDisconnectDiskParam {
 }
 
 // Initialize init ServerDisconnectDiskParam
-func (p *ServerDisconnectDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ServerDisconnectDiskParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3536,28 +3537,28 @@ func (p *ServerDisconnectDiskParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ServerDisconnectDiskParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3567,7 +3568,7 @@ func (p *ServerDisconnectDiskParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3580,7 +3581,7 @@ func (p *ServerDisconnectDiskParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ServerDisconnectDiskParam) ResourceDef() *schema.Resource {
@@ -3716,8 +3717,8 @@ type MonitorDiskParam struct {
 	KeyFormat         string
 	Start             string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewMonitorDiskParam return new MonitorDiskParam
@@ -3727,9 +3728,9 @@ func NewMonitorDiskParam() *MonitorDiskParam {
 }
 
 // Initialize init MonitorDiskParam
-func (p *MonitorDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *MonitorDiskParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3743,55 +3744,55 @@ func (p *MonitorDiskParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *MonitorDiskParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.End) {
+	if util.IsEmpty(p.End) {
 		p.End = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.KeyFormat) {
+	if util.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
 	}
-	if utils.IsEmpty(p.Start) {
+	if util.IsEmpty(p.Start) {
 		p.Start = ""
 	}
 
@@ -3809,7 +3810,7 @@ func (p *MonitorDiskParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3817,7 +3818,7 @@ func (p *MonitorDiskParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--key-format", p.KeyFormat)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3847,12 +3848,12 @@ func (p *MonitorDiskParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *MonitorDiskParam) ResourceDef() *schema.Resource {
@@ -4041,8 +4042,8 @@ type WaitForCopyDiskParam struct {
 	GenerateSkeleton  bool
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewWaitForCopyDiskParam return new WaitForCopyDiskParam
@@ -4051,9 +4052,9 @@ func NewWaitForCopyDiskParam() *WaitForCopyDiskParam {
 }
 
 // Initialize init WaitForCopyDiskParam
-func (p *WaitForCopyDiskParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *WaitForCopyDiskParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -4067,25 +4068,25 @@ func (p *WaitForCopyDiskParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *WaitForCopyDiskParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -4095,7 +4096,7 @@ func (p *WaitForCopyDiskParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4108,7 +4109,7 @@ func (p *WaitForCopyDiskParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *WaitForCopyDiskParam) ResourceDef() *schema.Resource {

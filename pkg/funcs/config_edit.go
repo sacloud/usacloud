@@ -18,19 +18,23 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/sacloud/usacloud/pkg/config"
+
 	"github.com/fatih/color"
+	"github.com/sacloud/libsacloud/v2/sacloud/profile"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/helper/printer"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/profile"
+	"github.com/sacloud/usacloud/pkg/printer"
 )
 
 func ConfigEdit(ctx cli.Context, params *params.EditConfigParam) error {
-	inputParams := &profile.ConfigFileValue{
-		AccessToken:       params.Token,
-		AccessTokenSecret: params.Secret,
-		Zone:              params.Zone,
+	inputParams := &config.Config{
+		ConfigValue: profile.ConfigValue{
+			AccessToken:       params.Token,
+			AccessTokenSecret: params.Secret,
+			Zone:              params.Zone,
+		},
 		DefaultOutputType: params.DefaultOutputType,
 	}
 	needAsk := inputParams.IsEmpty()
@@ -48,14 +52,14 @@ func ConfigEdit(ctx cli.Context, params *params.EditConfigParam) error {
 	}
 
 	// validate
-	err := profile.ValidateProfileName(profileName)
+	err := profile.ValidateName(profileName)
 	if err != nil {
 		return err
 	}
 
-	conf, err := profile.LoadConfigFile(profileName)
-	if err != nil {
-		conf = &profile.ConfigFileValue{}
+	conf := &config.Config{}
+	if err := profile.Load(profileName, conf); err != nil {
+		conf = &config.Config{}
 	}
 
 	// token
@@ -220,13 +224,13 @@ func ConfigEdit(ctx cli.Context, params *params.EditConfigParam) error {
 	}
 
 	// write file
-	err = profile.SaveConfigFile(profileName, inputParams)
+	err = profile.Save(profileName, inputParams)
 	if err != nil {
 		return fmt.Errorf("Config: Writing configFile is failed: %s", err)
 	}
 
 	// get file path
-	filePath, err := profile.GetConfigFilePath(profileName)
+	filePath, err := profile.ConfigFilePath(profileName)
 	if err != nil {
 		return fmt.Errorf("Config: GetConfigFilePath is failed: %s", err)
 	}

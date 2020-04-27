@@ -24,7 +24,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/funcs"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -121,10 +121,10 @@ func serverBuildCmd() *cobra.Command {
 
 			// confirm
 			if !serverBuildParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("build", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("build", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
@@ -298,10 +298,10 @@ func serverUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !serverUpdateParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -385,10 +385,10 @@ func serverDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !serverDeleteParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -469,10 +469,10 @@ func serverPlanChangeCmd() *cobra.Command {
 
 			// confirm
 			if !serverPlanChangeParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("plan-change", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("plan-change", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -554,10 +554,10 @@ func serverBootCmd() *cobra.Command {
 
 			// confirm
 			if !serverBootParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -629,10 +629,10 @@ func serverShutdownCmd() *cobra.Command {
 
 			// confirm
 			if !serverShutdownParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -704,10 +704,10 @@ func serverShutdownForceCmd() *cobra.Command {
 
 			// confirm
 			if !serverShutdownForceParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -779,10 +779,10 @@ func serverResetCmd() *cobra.Command {
 
 			// confirm
 			if !serverResetParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1109,10 +1109,10 @@ func serverScpCmd() *cobra.Command {
 
 			// confirm
 			if !serverScpParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("scp", ctx.IO().In(), ctx.IO().Out())
+				result, err := util.ConfirmContinue("scp", ctx.IO().In(), ctx.IO().Out())
 				if err != nil || !result {
 					return err
 				}
@@ -1308,10 +1308,10 @@ func serverVncSendCmd() *cobra.Command {
 
 			// confirm
 			if !serverVncSendParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("vnc-send", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("vnc-send", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1395,10 +1395,10 @@ func serverVncSnapshotCmd() *cobra.Command {
 
 			// confirm
 			if !serverVncSnapshotParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("vnc-snapshot", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("vnc-snapshot", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1686,10 +1686,10 @@ func serverDiskConnectCmd() *cobra.Command {
 
 			// confirm
 			if !serverDiskConnectParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("disk-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("disk-connect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1762,10 +1762,10 @@ func serverDiskDisconnectCmd() *cobra.Command {
 
 			// confirm
 			if !serverDiskDisconnectParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("disk-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("disk-disconnect", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1908,10 +1908,10 @@ func serverInterfaceAddForInternetCmd() *cobra.Command {
 
 			// confirm
 			if !serverInterfaceAddForInternetParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-add-for-internet", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("interface-add-for-internet", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -1984,10 +1984,10 @@ func serverInterfaceAddForRouterCmd() *cobra.Command {
 
 			// confirm
 			if !serverInterfaceAddForRouterParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-add-for-router", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("interface-add-for-router", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -2064,10 +2064,10 @@ func serverInterfaceAddForSwitchCmd() *cobra.Command {
 
 			// confirm
 			if !serverInterfaceAddForSwitchParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-add-for-switch", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("interface-add-for-switch", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -2144,10 +2144,10 @@ func serverInterfaceAddDisconnectedCmd() *cobra.Command {
 
 			// confirm
 			if !serverInterfaceAddDisconnectedParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("interface-add-disconnected", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("interface-add-disconnected", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -2289,10 +2289,10 @@ func serverISOInsertCmd() *cobra.Command {
 
 			// confirm
 			if !serverISOInsertParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("iso-insert", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("iso-insert", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}
@@ -2371,10 +2371,10 @@ func serverISOEjectCmd() *cobra.Command {
 
 			// confirm
 			if !serverISOEjectParam.Assumeyes {
-				if !utils.IsTerminal() {
+				if !util.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := utils.ConfirmContinue("iso-eject", ctx.IO().In(), ctx.IO().Out(), ids...)
+				result, err := util.ConfirmContinue("iso-eject", ctx.IO().In(), ctx.IO().Out(), ids...)
 				if err != nil || !result {
 					return err
 				}

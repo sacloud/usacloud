@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func findInterfacePacketFilterConnectTargets(ctx cli.Context, param *params.PacketFilterConnectInterfaceParam) ([]sacloud.ID, error) {
@@ -61,7 +61,7 @@ func findInterfacePacketFilterConnectTargets(ctx cli.Context, param *params.Pack
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -104,7 +104,7 @@ func findInterfacePacketFilterDisconnectTargets(ctx cli.Context, param *params.P
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -147,7 +147,7 @@ func findInterfaceReadTargets(ctx cli.Context, param *params.ReadInterfaceParam)
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -193,7 +193,7 @@ func findInterfaceUpdateTargets(ctx cli.Context, param *params.UpdateInterfacePa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -236,7 +236,7 @@ func findInterfaceDeleteTargets(ctx cli.Context, param *params.DeleteInterfacePa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}

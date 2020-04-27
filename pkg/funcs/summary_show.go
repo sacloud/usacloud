@@ -22,9 +22,9 @@ import (
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/helper/mutexkv"
-	"github.com/sacloud/usacloud/pkg/internal"
+	"github.com/sacloud/usacloud/pkg/mutexkv"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 const SummaryAPIThrottleSize = 5
@@ -54,7 +54,7 @@ func SummaryShow(ctx cli.Context, params *params.ShowSummaryParam) error {
 
 	counters := buildCounters(ctx, params.PaidResourcesOnly, results, errs)
 
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		"Still calculating...",
 		"Calculate resource count",
 		ctx.IO().Progress(),

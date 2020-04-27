@@ -20,11 +20,12 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/sacloud/usacloud/pkg/validation"
 )
 
@@ -50,8 +51,8 @@ type ListIPv6Param struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListIPv6Param return new ListIPv6Param
@@ -60,9 +61,9 @@ func NewListIPv6Param() *ListIPv6Param {
 }
 
 // Initialize init ListIPv6Param
-func (p *ListIPv6Param) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListIPv6Param) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -76,61 +77,61 @@ func (p *ListIPv6Param) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ListIPv6Param) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.IPv6netId) {
+	if util.IsEmpty(p.IPv6netId) {
 		p.IPv6netId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.InternetId) {
+	if util.IsEmpty(p.InternetId) {
 		p.InternetId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.From) {
+	if util.IsEmpty(p.From) {
 		p.From = 0
 	}
-	if utils.IsEmpty(p.Max) {
+	if util.IsEmpty(p.Max) {
 		p.Max = 0
 	}
-	if utils.IsEmpty(p.Sort) {
+	if util.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -197,12 +198,12 @@ func (p *ListIPv6Param) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ListIPv6Param) ResourceDef() *schema.Resource {
@@ -412,8 +413,8 @@ type PtrAddIPv6Param struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewPtrAddIPv6Param return new PtrAddIPv6Param
@@ -422,9 +423,9 @@ func NewPtrAddIPv6Param() *PtrAddIPv6Param {
 }
 
 // Initialize init PtrAddIPv6Param
-func (p *PtrAddIPv6Param) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *PtrAddIPv6Param) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -438,46 +439,46 @@ func (p *PtrAddIPv6Param) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *PtrAddIPv6Param) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Hostname) {
+	if util.IsEmpty(p.Hostname) {
 		p.Hostname = ""
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -487,7 +488,7 @@ func (p *PtrAddIPv6Param) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--hostname", p.Hostname)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -509,12 +510,12 @@ func (p *PtrAddIPv6Param) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *PtrAddIPv6Param) ResourceDef() *schema.Resource {
@@ -687,8 +688,8 @@ type PtrReadIPv6Param struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewPtrReadIPv6Param return new PtrReadIPv6Param
@@ -697,9 +698,9 @@ func NewPtrReadIPv6Param() *PtrReadIPv6Param {
 }
 
 // Initialize init PtrReadIPv6Param
-func (p *PtrReadIPv6Param) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *PtrReadIPv6Param) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -713,40 +714,40 @@ func (p *PtrReadIPv6Param) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *PtrReadIPv6Param) FillValueToSkeleton() {
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -770,12 +771,12 @@ func (p *PtrReadIPv6Param) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *PtrReadIPv6Param) ResourceDef() *schema.Resource {
@@ -936,8 +937,8 @@ type PtrUpdateIPv6Param struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewPtrUpdateIPv6Param return new PtrUpdateIPv6Param
@@ -946,9 +947,9 @@ func NewPtrUpdateIPv6Param() *PtrUpdateIPv6Param {
 }
 
 // Initialize init PtrUpdateIPv6Param
-func (p *PtrUpdateIPv6Param) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *PtrUpdateIPv6Param) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -962,46 +963,46 @@ func (p *PtrUpdateIPv6Param) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *PtrUpdateIPv6Param) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Hostname) {
+	if util.IsEmpty(p.Hostname) {
 		p.Hostname = ""
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -1011,7 +1012,7 @@ func (p *PtrUpdateIPv6Param) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--hostname", p.Hostname)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1033,12 +1034,12 @@ func (p *PtrUpdateIPv6Param) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *PtrUpdateIPv6Param) ResourceDef() *schema.Resource {
@@ -1212,8 +1213,8 @@ type PtrDeleteIPv6Param struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewPtrDeleteIPv6Param return new PtrDeleteIPv6Param
@@ -1222,9 +1223,9 @@ func NewPtrDeleteIPv6Param() *PtrDeleteIPv6Param {
 }
 
 // Initialize init PtrDeleteIPv6Param
-func (p *PtrDeleteIPv6Param) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *PtrDeleteIPv6Param) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1238,43 +1239,43 @@ func (p *PtrDeleteIPv6Param) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *PtrDeleteIPv6Param) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -1298,12 +1299,12 @@ func (p *PtrDeleteIPv6Param) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *PtrDeleteIPv6Param) ResourceDef() *schema.Resource {

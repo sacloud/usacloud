@@ -20,11 +20,12 @@ import (
 	"io"
 
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/sacloud/usacloud/pkg/validation"
 )
 
@@ -49,8 +50,8 @@ type ListDNSParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListDNSParam return new ListDNSParam
@@ -59,9 +60,9 @@ func NewListDNSParam() *ListDNSParam {
 }
 
 // Initialize init ListDNSParam
-func (p *ListDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -75,58 +76,58 @@ func (p *ListDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ListDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = []string{""}
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = []sacloud.ID{}
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.From) {
+	if util.IsEmpty(p.From) {
 		p.From = 0
 	}
-	if utils.IsEmpty(p.Max) {
+	if util.IsEmpty(p.Max) {
 		p.Max = 0
 	}
-	if utils.IsEmpty(p.Sort) {
+	if util.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -185,12 +186,12 @@ func (p *ListDNSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ListDNSParam) ResourceDef() *schema.Resource {
@@ -395,8 +396,8 @@ type RecordInfoDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewRecordInfoDNSParam return new RecordInfoDNSParam
@@ -405,9 +406,9 @@ func NewRecordInfoDNSParam() *RecordInfoDNSParam {
 }
 
 // Initialize init RecordInfoDNSParam
-func (p *RecordInfoDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *RecordInfoDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -421,52 +422,52 @@ func (p *RecordInfoDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *RecordInfoDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Type) {
+	if util.IsEmpty(p.Type) {
 		p.Type = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -492,7 +493,7 @@ func (p *RecordInfoDNSParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -514,12 +515,12 @@ func (p *RecordInfoDNSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *RecordInfoDNSParam) ResourceDef() *schema.Resource {
@@ -711,8 +712,8 @@ type RecordBulkUpdateDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewRecordBulkUpdateDNSParam return new RecordBulkUpdateDNSParam
@@ -722,9 +723,9 @@ func NewRecordBulkUpdateDNSParam() *RecordBulkUpdateDNSParam {
 }
 
 // Initialize init RecordBulkUpdateDNSParam
-func (p *RecordBulkUpdateDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *RecordBulkUpdateDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -738,55 +739,55 @@ func (p *RecordBulkUpdateDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *RecordBulkUpdateDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.File) {
+	if util.IsEmpty(p.File) {
 		p.File = ""
 	}
-	if utils.IsEmpty(p.Mode) {
+	if util.IsEmpty(p.Mode) {
 		p.Mode = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -796,7 +797,7 @@ func (p *RecordBulkUpdateDNSParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--file", p.File)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -811,7 +812,7 @@ func (p *RecordBulkUpdateDNSParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--mode", p.Mode)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -826,7 +827,7 @@ func (p *RecordBulkUpdateDNSParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -848,12 +849,12 @@ func (p *RecordBulkUpdateDNSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *RecordBulkUpdateDNSParam) ResourceDef() *schema.Resource {
@@ -1052,8 +1053,8 @@ type CreateDNSParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCreateDNSParam return new CreateDNSParam
@@ -1062,9 +1063,9 @@ func NewCreateDNSParam() *CreateDNSParam {
 }
 
 // Initialize init CreateDNSParam
-func (p *CreateDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CreateDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1078,55 +1079,55 @@ func (p *CreateDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CreateDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
+	if util.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -1136,7 +1137,7 @@ func (p *CreateDNSParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1189,12 +1190,12 @@ func (p *CreateDNSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *CreateDNSParam) ResourceDef() *schema.Resource {
@@ -1400,8 +1401,8 @@ type RecordAddDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewRecordAddDNSParam return new RecordAddDNSParam
@@ -1411,9 +1412,9 @@ func NewRecordAddDNSParam() *RecordAddDNSParam {
 }
 
 // Initialize init RecordAddDNSParam
-func (p *RecordAddDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *RecordAddDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1427,76 +1428,76 @@ func (p *RecordAddDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *RecordAddDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Type) {
+	if util.IsEmpty(p.Type) {
 		p.Type = ""
 	}
-	if utils.IsEmpty(p.Value) {
+	if util.IsEmpty(p.Value) {
 		p.Value = ""
 	}
-	if utils.IsEmpty(p.Ttl) {
+	if util.IsEmpty(p.Ttl) {
 		p.Ttl = 0
 	}
-	if utils.IsEmpty(p.MxPriority) {
+	if util.IsEmpty(p.MxPriority) {
 		p.MxPriority = 0
 	}
-	if utils.IsEmpty(p.SrvPriority) {
+	if util.IsEmpty(p.SrvPriority) {
 		p.SrvPriority = 0
 	}
-	if utils.IsEmpty(p.SrvWeight) {
+	if util.IsEmpty(p.SrvWeight) {
 		p.SrvWeight = 0
 	}
-	if utils.IsEmpty(p.SrvPort) {
+	if util.IsEmpty(p.SrvPort) {
 		p.SrvPort = 0
 	}
-	if utils.IsEmpty(p.SrvTarget) {
+	if util.IsEmpty(p.SrvTarget) {
 		p.SrvTarget = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1506,7 +1507,7 @@ func (p *RecordAddDNSParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1521,7 +1522,7 @@ func (p *RecordAddDNSParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--type", p.Type)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1584,7 +1585,7 @@ func (p *RecordAddDNSParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1606,12 +1607,12 @@ func (p *RecordAddDNSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *RecordAddDNSParam) ResourceDef() *schema.Resource {
@@ -1856,8 +1857,8 @@ type ReadDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewReadDNSParam return new ReadDNSParam
@@ -1866,9 +1867,9 @@ func NewReadDNSParam() *ReadDNSParam {
 }
 
 // Initialize init ReadDNSParam
-func (p *ReadDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ReadDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1882,46 +1883,46 @@ func (p *ReadDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReadDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -1931,7 +1932,7 @@ func (p *ReadDNSParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1953,12 +1954,12 @@ func (p *ReadDNSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ReadDNSParam) ResourceDef() *schema.Resource {
@@ -2144,8 +2145,8 @@ type RecordUpdateDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewRecordUpdateDNSParam return new RecordUpdateDNSParam
@@ -2154,9 +2155,9 @@ func NewRecordUpdateDNSParam() *RecordUpdateDNSParam {
 }
 
 // Initialize init RecordUpdateDNSParam
-func (p *RecordUpdateDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *RecordUpdateDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2170,79 +2171,79 @@ func (p *RecordUpdateDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *RecordUpdateDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Name) {
+	if util.IsEmpty(p.Name) {
 		p.Name = ""
 	}
-	if utils.IsEmpty(p.Type) {
+	if util.IsEmpty(p.Type) {
 		p.Type = ""
 	}
-	if utils.IsEmpty(p.Value) {
+	if util.IsEmpty(p.Value) {
 		p.Value = ""
 	}
-	if utils.IsEmpty(p.Ttl) {
+	if util.IsEmpty(p.Ttl) {
 		p.Ttl = 0
 	}
-	if utils.IsEmpty(p.MxPriority) {
+	if util.IsEmpty(p.MxPriority) {
 		p.MxPriority = 0
 	}
-	if utils.IsEmpty(p.SrvPriority) {
+	if util.IsEmpty(p.SrvPriority) {
 		p.SrvPriority = 0
 	}
-	if utils.IsEmpty(p.SrvWeight) {
+	if util.IsEmpty(p.SrvWeight) {
 		p.SrvWeight = 0
 	}
-	if utils.IsEmpty(p.SrvPort) {
+	if util.IsEmpty(p.SrvPort) {
 		p.SrvPort = 0
 	}
-	if utils.IsEmpty(p.SrvTarget) {
+	if util.IsEmpty(p.SrvTarget) {
 		p.SrvTarget = ""
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2252,7 +2253,7 @@ func (p *RecordUpdateDNSParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2324,7 +2325,7 @@ func (p *RecordUpdateDNSParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2346,12 +2347,12 @@ func (p *RecordUpdateDNSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *RecordUpdateDNSParam) ResourceDef() *schema.Resource {
@@ -2605,8 +2606,8 @@ type RecordDeleteDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewRecordDeleteDNSParam return new RecordDeleteDNSParam
@@ -2615,9 +2616,9 @@ func NewRecordDeleteDNSParam() *RecordDeleteDNSParam {
 }
 
 // Initialize init RecordDeleteDNSParam
-func (p *RecordDeleteDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *RecordDeleteDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2631,52 +2632,52 @@ func (p *RecordDeleteDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *RecordDeleteDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Index) {
+	if util.IsEmpty(p.Index) {
 		p.Index = 0
 	}
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -2686,7 +2687,7 @@ func (p *RecordDeleteDNSParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2694,7 +2695,7 @@ func (p *RecordDeleteDNSParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2716,12 +2717,12 @@ func (p *RecordDeleteDNSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *RecordDeleteDNSParam) ResourceDef() *schema.Resource {
@@ -2914,8 +2915,8 @@ type UpdateDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUpdateDNSParam return new UpdateDNSParam
@@ -2924,9 +2925,9 @@ func NewUpdateDNSParam() *UpdateDNSParam {
 }
 
 // Initialize init UpdateDNSParam
-func (p *UpdateDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UpdateDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -2940,58 +2941,58 @@ func (p *UpdateDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *UpdateDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Description) {
+	if util.IsEmpty(p.Description) {
 		p.Description = ""
 	}
-	if utils.IsEmpty(p.Tags) {
+	if util.IsEmpty(p.Tags) {
 		p.Tags = []string{""}
 	}
-	if utils.IsEmpty(p.IconId) {
+	if util.IsEmpty(p.IconId) {
 		p.IconId = sacloud.ID(0)
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3025,7 +3026,7 @@ func (p *UpdateDNSParam) validate() error {
 	}
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3047,12 +3048,12 @@ func (p *UpdateDNSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *UpdateDNSParam) ResourceDef() *schema.Resource {
@@ -3256,8 +3257,8 @@ type DeleteDNSParam struct {
 	QueryFile         string
 	Id                sacloud.ID
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteDNSParam return new DeleteDNSParam
@@ -3266,9 +3267,9 @@ func NewDeleteDNSParam() *DeleteDNSParam {
 }
 
 // Initialize init DeleteDNSParam
-func (p *DeleteDNSParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteDNSParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -3282,49 +3283,49 @@ func (p *DeleteDNSParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DeleteDNSParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Selector) {
+	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
-	if utils.IsEmpty(p.Id) {
+	if util.IsEmpty(p.Id) {
 		p.Id = sacloud.ID(0)
 	}
 
@@ -3334,7 +3335,7 @@ func (p *DeleteDNSParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateSakuraID
+		validator := cli.ValidateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3356,12 +3357,12 @@ func (p *DeleteDNSParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DeleteDNSParam) ResourceDef() *schema.Resource {

@@ -23,8 +23,8 @@ import (
 	"github.com/fatih/color"
 	"github.com/sacloud/libsacloud/utils/server"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/helper/printer"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/printer"
 )
 
 var serverSSHMutex = sync.Mutex{}

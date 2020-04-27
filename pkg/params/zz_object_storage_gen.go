@@ -19,11 +19,12 @@ package params
 import (
 	"io"
 
+	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 // ListObjectStorageParam is input parameters for the sacloud API
@@ -44,8 +45,8 @@ type ListObjectStorageParam struct {
 	Query             string
 	QueryFile         string
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListObjectStorageParam return new ListObjectStorageParam
@@ -54,9 +55,9 @@ func NewListObjectStorageParam() *ListObjectStorageParam {
 }
 
 // Initialize init ListObjectStorageParam
-func (p *ListObjectStorageParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListObjectStorageParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -70,49 +71,49 @@ func (p *ListObjectStorageParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ListObjectStorageParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.AccessKey) {
+	if util.IsEmpty(p.AccessKey) {
 		p.AccessKey = ""
 	}
-	if utils.IsEmpty(p.SecretKey) {
+	if util.IsEmpty(p.SecretKey) {
 		p.SecretKey = ""
 	}
-	if utils.IsEmpty(p.Bucket) {
+	if util.IsEmpty(p.Bucket) {
 		p.Bucket = ""
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if utils.IsEmpty(p.OutputType) {
+	if util.IsEmpty(p.OutputType) {
 		p.OutputType = ""
 	}
-	if utils.IsEmpty(p.Column) {
+	if util.IsEmpty(p.Column) {
 		p.Column = []string{""}
 	}
-	if utils.IsEmpty(p.Quiet) {
+	if util.IsEmpty(p.Quiet) {
 		p.Quiet = false
 	}
-	if utils.IsEmpty(p.Format) {
+	if util.IsEmpty(p.Format) {
 		p.Format = ""
 	}
-	if utils.IsEmpty(p.FormatFile) {
+	if util.IsEmpty(p.FormatFile) {
 		p.FormatFile = ""
 	}
-	if utils.IsEmpty(p.Query) {
+	if util.IsEmpty(p.Query) {
 		p.Query = ""
 	}
-	if utils.IsEmpty(p.QueryFile) {
+	if util.IsEmpty(p.QueryFile) {
 		p.QueryFile = ""
 	}
 
@@ -122,7 +123,7 @@ func (p *ListObjectStorageParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -130,7 +131,7 @@ func (p *ListObjectStorageParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -152,12 +153,12 @@ func (p *ListObjectStorageParam) validate() error {
 		}
 	}
 	{
-		errs := validateOutputOption(p, p.options.DefaultOutputType)
+		errs := cli.ValidateOutputOption(p, p.config.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ListObjectStorageParam) ResourceDef() *schema.Resource {
@@ -336,8 +337,8 @@ type PutObjectStorageParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewPutObjectStorageParam return new PutObjectStorageParam
@@ -347,9 +348,9 @@ func NewPutObjectStorageParam() *PutObjectStorageParam {
 }
 
 // Initialize init PutObjectStorageParam
-func (p *PutObjectStorageParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *PutObjectStorageParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -363,37 +364,37 @@ func (p *PutObjectStorageParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *PutObjectStorageParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.AccessKey) {
+	if util.IsEmpty(p.AccessKey) {
 		p.AccessKey = ""
 	}
-	if utils.IsEmpty(p.ContentType) {
+	if util.IsEmpty(p.ContentType) {
 		p.ContentType = ""
 	}
-	if utils.IsEmpty(p.Recursive) {
+	if util.IsEmpty(p.Recursive) {
 		p.Recursive = false
 	}
-	if utils.IsEmpty(p.SecretKey) {
+	if util.IsEmpty(p.SecretKey) {
 		p.SecretKey = ""
 	}
-	if utils.IsEmpty(p.Bucket) {
+	if util.IsEmpty(p.Bucket) {
 		p.Bucket = ""
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
 
@@ -403,7 +404,7 @@ func (p *PutObjectStorageParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -411,7 +412,7 @@ func (p *PutObjectStorageParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -424,7 +425,7 @@ func (p *PutObjectStorageParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *PutObjectStorageParam) ResourceDef() *schema.Resource {
@@ -573,8 +574,8 @@ type GetObjectStorageParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewGetObjectStorageParam return new GetObjectStorageParam
@@ -583,9 +584,9 @@ func NewGetObjectStorageParam() *GetObjectStorageParam {
 }
 
 // Initialize init GetObjectStorageParam
-func (p *GetObjectStorageParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *GetObjectStorageParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -599,31 +600,31 @@ func (p *GetObjectStorageParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *GetObjectStorageParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.AccessKey) {
+	if util.IsEmpty(p.AccessKey) {
 		p.AccessKey = ""
 	}
-	if utils.IsEmpty(p.Recursive) {
+	if util.IsEmpty(p.Recursive) {
 		p.Recursive = false
 	}
-	if utils.IsEmpty(p.SecretKey) {
+	if util.IsEmpty(p.SecretKey) {
 		p.SecretKey = ""
 	}
-	if utils.IsEmpty(p.Bucket) {
+	if util.IsEmpty(p.Bucket) {
 		p.Bucket = ""
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
 
@@ -633,7 +634,7 @@ func (p *GetObjectStorageParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -641,7 +642,7 @@ func (p *GetObjectStorageParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -654,7 +655,7 @@ func (p *GetObjectStorageParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *GetObjectStorageParam) ResourceDef() *schema.Resource {
@@ -790,8 +791,8 @@ type DeleteObjectStorageParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteObjectStorageParam return new DeleteObjectStorageParam
@@ -800,9 +801,9 @@ func NewDeleteObjectStorageParam() *DeleteObjectStorageParam {
 }
 
 // Initialize init DeleteObjectStorageParam
-func (p *DeleteObjectStorageParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteObjectStorageParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -816,34 +817,34 @@ func (p *DeleteObjectStorageParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DeleteObjectStorageParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.AccessKey) {
+	if util.IsEmpty(p.AccessKey) {
 		p.AccessKey = ""
 	}
-	if utils.IsEmpty(p.Recursive) {
+	if util.IsEmpty(p.Recursive) {
 		p.Recursive = false
 	}
-	if utils.IsEmpty(p.SecretKey) {
+	if util.IsEmpty(p.SecretKey) {
 		p.SecretKey = ""
 	}
-	if utils.IsEmpty(p.Bucket) {
+	if util.IsEmpty(p.Bucket) {
 		p.Bucket = ""
 	}
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
 
@@ -853,7 +854,7 @@ func (p *DeleteObjectStorageParam) validate() error {
 	var errors []error
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -861,7 +862,7 @@ func (p *DeleteObjectStorageParam) validate() error {
 	}
 
 	{
-		validator := validateRequired
+		validator := cli.ValidateRequired
 		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -874,7 +875,7 @@ func (p *DeleteObjectStorageParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DeleteObjectStorageParam) ResourceDef() *schema.Resource {

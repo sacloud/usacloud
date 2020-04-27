@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func findSIMReadTargets(ctx cli.Context, param *params.ReadSIMParam) ([]sacloud.ID, error) {
@@ -41,7 +41,7 @@ func findSIMReadTargets(ctx cli.Context, param *params.ReadSIMParam) ([]sacloud.
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceSIMItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -65,7 +65,7 @@ func findSIMReadTargets(ctx cli.Context, param *params.ReadSIMParam) ([]sacloud.
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceSIMItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -76,7 +76,7 @@ func findSIMReadTargets(ctx cli.Context, param *params.ReadSIMParam) ([]sacloud.
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -102,7 +102,7 @@ func findSIMUpdateTargets(ctx cli.Context, param *params.UpdateSIMParam) ([]sacl
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceSIMItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -126,7 +126,7 @@ func findSIMUpdateTargets(ctx cli.Context, param *params.UpdateSIMParam) ([]sacl
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceSIMItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -137,7 +137,7 @@ func findSIMUpdateTargets(ctx cli.Context, param *params.UpdateSIMParam) ([]sacl
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -160,7 +160,7 @@ func findSIMDeleteTargets(ctx cli.Context, param *params.DeleteSIMParam) ([]sacl
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceSIMItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -184,7 +184,7 @@ func findSIMDeleteTargets(ctx cli.Context, param *params.DeleteSIMParam) ([]sacl
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceSIMItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -195,7 +195,7 @@ func findSIMDeleteTargets(ctx cli.Context, param *params.DeleteSIMParam) ([]sacl
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -218,7 +218,7 @@ func findSIMCarrierInfoTargets(ctx cli.Context, param *params.CarrierInfoSIMPara
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceSIMItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -242,7 +242,7 @@ func findSIMCarrierInfoTargets(ctx cli.Context, param *params.CarrierInfoSIMPara
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceSIMItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -253,7 +253,7 @@ func findSIMCarrierInfoTargets(ctx cli.Context, param *params.CarrierInfoSIMPara
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -279,7 +279,7 @@ func findSIMCarrierUpdateTargets(ctx cli.Context, param *params.CarrierUpdateSIM
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceSIMItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -303,7 +303,7 @@ func findSIMCarrierUpdateTargets(ctx cli.Context, param *params.CarrierUpdateSIM
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceSIMItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -314,7 +314,7 @@ func findSIMCarrierUpdateTargets(ctx cli.Context, param *params.CarrierUpdateSIM
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -337,7 +337,7 @@ func findSIMActivateTargets(ctx cli.Context, param *params.ActivateSIMParam) ([]
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceSIMItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -361,7 +361,7 @@ func findSIMActivateTargets(ctx cli.Context, param *params.ActivateSIMParam) ([]
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceSIMItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -372,7 +372,7 @@ func findSIMActivateTargets(ctx cli.Context, param *params.ActivateSIMParam) ([]
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -395,7 +395,7 @@ func findSIMDeactivateTargets(ctx cli.Context, param *params.DeactivateSIMParam)
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceSIMItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -419,7 +419,7 @@ func findSIMDeactivateTargets(ctx cli.Context, param *params.DeactivateSIMParam)
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceSIMItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -430,7 +430,7 @@ func findSIMDeactivateTargets(ctx cli.Context, param *params.DeactivateSIMParam)
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -453,7 +453,7 @@ func findSIMImeiLockTargets(ctx cli.Context, param *params.ImeiLockSIMParam) ([]
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceSIMItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -477,7 +477,7 @@ func findSIMImeiLockTargets(ctx cli.Context, param *params.ImeiLockSIMParam) ([]
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceSIMItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -488,7 +488,7 @@ func findSIMImeiLockTargets(ctx cli.Context, param *params.ImeiLockSIMParam) ([]
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -511,7 +511,7 @@ func findSIMIpAddTargets(ctx cli.Context, param *params.IpAddSIMParam) ([]saclou
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceSIMItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -535,7 +535,7 @@ func findSIMIpAddTargets(ctx cli.Context, param *params.IpAddSIMParam) ([]saclou
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceSIMItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -546,7 +546,7 @@ func findSIMIpAddTargets(ctx cli.Context, param *params.IpAddSIMParam) ([]saclou
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -572,7 +572,7 @@ func findSIMImeiUnlockTargets(ctx cli.Context, param *params.ImeiUnlockSIMParam)
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceSIMItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -596,7 +596,7 @@ func findSIMImeiUnlockTargets(ctx cli.Context, param *params.ImeiUnlockSIMParam)
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceSIMItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -607,7 +607,7 @@ func findSIMImeiUnlockTargets(ctx cli.Context, param *params.ImeiUnlockSIMParam)
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -630,7 +630,7 @@ func findSIMIpDeleteTargets(ctx cli.Context, param *params.IpDeleteSIMParam) ([]
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceSIMItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -654,7 +654,7 @@ func findSIMIpDeleteTargets(ctx cli.Context, param *params.IpDeleteSIMParam) ([]
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceSIMItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -665,7 +665,7 @@ func findSIMIpDeleteTargets(ctx cli.Context, param *params.IpDeleteSIMParam) ([]
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -691,7 +691,7 @@ func findSIMLogsTargets(ctx cli.Context, param *params.LogsSIMParam) ([]sacloud.
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceSIMItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -715,7 +715,7 @@ func findSIMLogsTargets(ctx cli.Context, param *params.LogsSIMParam) ([]sacloud.
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceSIMItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -726,7 +726,7 @@ func findSIMLogsTargets(ctx cli.Context, param *params.LogsSIMParam) ([]sacloud.
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -752,7 +752,7 @@ func findSIMMonitorTargets(ctx cli.Context, param *params.MonitorSIMParam) ([]sa
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceSIMItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -776,7 +776,7 @@ func findSIMMonitorTargets(ctx cli.Context, param *params.MonitorSIMParam) ([]sa
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceSIMItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -787,7 +787,7 @@ func findSIMMonitorTargets(ctx cli.Context, param *params.MonitorSIMParam) ([]sa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}

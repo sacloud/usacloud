@@ -19,11 +19,11 @@ package params
 import (
 	"io"
 
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/flags"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 // CurrentConfigParam is input parameters for the sacloud API
@@ -34,8 +34,8 @@ type CurrentConfigParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewCurrentConfigParam return new CurrentConfigParam
@@ -44,9 +44,9 @@ func NewCurrentConfigParam() *CurrentConfigParam {
 }
 
 // Initialize init CurrentConfigParam
-func (p *CurrentConfigParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *CurrentConfigParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -60,19 +60,19 @@ func (p *CurrentConfigParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CurrentConfigParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
 
@@ -87,7 +87,7 @@ func (p *CurrentConfigParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *CurrentConfigParam) ResourceDef() *schema.Resource {
@@ -191,8 +191,8 @@ type DeleteConfigParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewDeleteConfigParam return new DeleteConfigParam
@@ -201,9 +201,9 @@ func NewDeleteConfigParam() *DeleteConfigParam {
 }
 
 // Initialize init DeleteConfigParam
-func (p *DeleteConfigParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *DeleteConfigParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -217,22 +217,22 @@ func (p *DeleteConfigParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *DeleteConfigParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Assumeyes) {
+	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
 
@@ -247,7 +247,7 @@ func (p *DeleteConfigParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *DeleteConfigParam) ResourceDef() *schema.Resource {
@@ -361,8 +361,8 @@ type EditConfigParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewEditConfigParam return new EditConfigParam
@@ -371,9 +371,9 @@ func NewEditConfigParam() *EditConfigParam {
 }
 
 // Initialize init EditConfigParam
-func (p *EditConfigParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *EditConfigParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -387,31 +387,31 @@ func (p *EditConfigParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *EditConfigParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.Token) {
+	if util.IsEmpty(p.Token) {
 		p.Token = ""
 	}
-	if utils.IsEmpty(p.Secret) {
+	if util.IsEmpty(p.Secret) {
 		p.Secret = ""
 	}
-	if utils.IsEmpty(p.Zone) {
+	if util.IsEmpty(p.Zone) {
 		p.Zone = ""
 	}
-	if utils.IsEmpty(p.DefaultOutputType) {
+	if util.IsEmpty(p.DefaultOutputType) {
 		p.DefaultOutputType = ""
 	}
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
 
@@ -442,7 +442,7 @@ func (p *EditConfigParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *EditConfigParam) ResourceDef() *schema.Resource {
@@ -573,8 +573,8 @@ type ListConfigParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewListConfigParam return new ListConfigParam
@@ -583,9 +583,9 @@ func NewListConfigParam() *ListConfigParam {
 }
 
 // Initialize init ListConfigParam
-func (p *ListConfigParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ListConfigParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -599,19 +599,19 @@ func (p *ListConfigParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ListConfigParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
 
@@ -626,7 +626,7 @@ func (p *ListConfigParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ListConfigParam) ResourceDef() *schema.Resource {
@@ -729,8 +729,8 @@ type MigrateConfigParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewMigrateConfigParam return new MigrateConfigParam
@@ -739,9 +739,9 @@ func NewMigrateConfigParam() *MigrateConfigParam {
 }
 
 // Initialize init MigrateConfigParam
-func (p *MigrateConfigParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *MigrateConfigParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -755,19 +755,19 @@ func (p *MigrateConfigParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *MigrateConfigParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
 
@@ -782,7 +782,7 @@ func (p *MigrateConfigParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *MigrateConfigParam) ResourceDef() *schema.Resource {
@@ -885,8 +885,8 @@ type ShowConfigParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewShowConfigParam return new ShowConfigParam
@@ -895,9 +895,9 @@ func NewShowConfigParam() *ShowConfigParam {
 }
 
 // Initialize init ShowConfigParam
-func (p *ShowConfigParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *ShowConfigParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -911,19 +911,19 @@ func (p *ShowConfigParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ShowConfigParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
 
@@ -938,7 +938,7 @@ func (p *ShowConfigParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *ShowConfigParam) ResourceDef() *schema.Resource {
@@ -1041,8 +1041,8 @@ type UseConfigParam struct {
 	ParameterFile     string
 	GenerateSkeleton  bool
 
-	options *flags.Flags
-	input   Input
+	config *config.Config
+	input  Input
 }
 
 // NewUseConfigParam return new UseConfigParam
@@ -1051,9 +1051,9 @@ func NewUseConfigParam() *UseConfigParam {
 }
 
 // Initialize init UseConfigParam
-func (p *UseConfigParam) Initialize(in Input, args []string, options *flags.Flags) error {
+func (p *UseConfigParam) Initialize(in Input, args []string, config *config.Config) error {
 	p.input = in
-	p.options = options
+	p.config = config
 	if err := p.validate(); err != nil {
 		return err
 	}
@@ -1067,19 +1067,19 @@ func (p *UseConfigParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *UseConfigParam) FillValueToSkeleton() {
-	if utils.IsEmpty(p.ParamTemplate) {
+	if util.IsEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
-	if utils.IsEmpty(p.Parameters) {
+	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
 	}
-	if utils.IsEmpty(p.ParamTemplateFile) {
+	if util.IsEmpty(p.ParamTemplateFile) {
 		p.ParamTemplateFile = ""
 	}
-	if utils.IsEmpty(p.ParameterFile) {
+	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
 	}
-	if utils.IsEmpty(p.GenerateSkeleton) {
+	if util.IsEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
 
@@ -1094,7 +1094,7 @@ func (p *UseConfigParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	return utils.FlattenErrors(errors)
+	return util.FlattenErrors(errors)
 }
 
 func (p *UseConfigParam) ResourceDef() *schema.Resource {

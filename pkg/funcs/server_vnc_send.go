@@ -21,8 +21,8 @@ import (
 
 	"github.com/sacloud/libsacloud/utils/server"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func ServerVncSend(ctx cli.Context, params *params.VncSendServerParam) error {
@@ -36,7 +36,7 @@ func ServerVncSend(ctx cli.Context, params *params.VncSendServerParam) error {
 
 	if !p.IsUp() && params.WaitForBoot {
 
-		err := internal.ExecWithProgress(
+		err := progress.ExecWithProgress(
 			fmt.Sprintf("Still booting[ID:%d]...", params.Id),
 			fmt.Sprintf("Connect to server[ID:%d]", params.Id),
 			ctx.IO().Progress(),

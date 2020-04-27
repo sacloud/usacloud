@@ -19,8 +19,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func VPCRouterCreate(ctx cli.Context, params *params.CreateVPCRouterParam) error {
@@ -92,7 +92,7 @@ func VPCRouterCreate(ctx cli.Context, params *params.CreateVPCRouterParam) error
 		return fmt.Errorf("VPCRouterCreate is failed: %s", err)
 	}
 	// wait for boot
-	err = internal.ExecWithProgress(
+	err = progress.ExecWithProgress(
 		fmt.Sprintf("Still creating[ID:%d]...", res.ID),
 		fmt.Sprintf("Create vpc-router[ID:%d]", res.ID),
 		ctx.IO().Progress(),

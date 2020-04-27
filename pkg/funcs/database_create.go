@@ -19,8 +19,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func DatabaseCreate(ctx cli.Context, params *params.CreateDatabaseParam) error {
@@ -89,7 +89,7 @@ func DatabaseCreate(ctx cli.Context, params *params.CreateDatabaseParam) error {
 	}
 
 	// wait for boot
-	err = internal.ExecWithProgress(
+	err = progress.ExecWithProgress(
 		fmt.Sprintf("Still creating[ID:%d]...", res.ID),
 		fmt.Sprintf("Create database[ID:%d]", res.ID),
 		ctx.IO().Progress(),

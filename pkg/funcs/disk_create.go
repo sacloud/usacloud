@@ -19,8 +19,8 @@ import (
 
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func DiskCreate(ctx cli.Context, params *params.CreateDiskParam) error {
@@ -49,7 +49,7 @@ func DiskCreate(ctx cli.Context, params *params.CreateDiskParam) error {
 	// wait for copy with progress
 	var res *sacloud.Disk
 	var err error
-	err = internal.ExecWithProgress(
+	err = progress.ExecWithProgress(
 		"Still creating...",
 		"Create disk",
 		ctx.IO().Progress(),

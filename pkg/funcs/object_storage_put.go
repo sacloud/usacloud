@@ -28,8 +28,8 @@ import (
 	"github.com/mitchellh/goamz/aws"
 	"github.com/mitchellh/goamz/s3"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func ObjectStoragePut(ctx cli.Context, params *params.PutObjectStorageParam) error {
@@ -130,7 +130,7 @@ func ObjectStoragePut(ctx cli.Context, params *params.PutObjectStorageParam) err
 		}
 	}
 
-	return internal.ExecWithProgress(
+	return progress.ExecWithProgress(
 		fmt.Sprintf("Still uploading[%q]...", progressLabel),
 		fmt.Sprintf("Upload [%q]", progressLabel),
 		ctx.IO().Progress(),

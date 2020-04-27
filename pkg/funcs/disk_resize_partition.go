@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func DiskResizePartition(ctx cli.Context, params *params.ResizePartitionDiskParam) error {
@@ -28,7 +28,7 @@ func DiskResizePartition(ctx cli.Context, params *params.ResizePartitionDiskPara
 	api := client.GetDiskAPI()
 
 	// wait for copy with progress
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still resizing[ID:%d]...", params.Id),
 		fmt.Sprintf("Resize-Partition disk[ID:%d]", params.Id),
 		ctx.IO().Progress(),

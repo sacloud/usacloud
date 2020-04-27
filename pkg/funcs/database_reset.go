@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func DatabaseReset(ctx cli.Context, params *params.ResetDatabaseParam) error {
@@ -32,7 +32,7 @@ func DatabaseReset(ctx cli.Context, params *params.ResetDatabaseParam) error {
 	}
 
 	// set params
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still resetting[ID:%d]...", params.Id),
 		fmt.Sprintf("Reset database[ID:%d]", params.Id),
 		ctx.IO().Progress(),

@@ -17,16 +17,18 @@ package funcs
 import (
 	"fmt"
 
+	"github.com/sacloud/usacloud/pkg/config"
+
+	"github.com/sacloud/libsacloud/v2/sacloud/profile"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/profile"
 )
 
 func ConfigShow(ctx cli.Context, params *params.ShowConfigParam) error {
 
 	profileName := ""
 	if ctx.NArgs() == 0 {
-		n, err := profile.GetCurrentName()
+		n, err := profile.CurrentName()
 		if err != nil {
 			return err
 		}
@@ -35,8 +37,8 @@ func ConfigShow(ctx cli.Context, params *params.ShowConfigParam) error {
 		profileName = ctx.Args()[0]
 	}
 
-	conf, err := profile.LoadConfigFile(profileName)
-	if err != nil {
+	conf := &config.Config{}
+	if err := profile.Load(profileName, conf); err != nil {
 		return err
 	}
 

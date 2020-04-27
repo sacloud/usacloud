@@ -25,8 +25,8 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/libsacloud/sacloud/ostype"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func ServerBuild(ctx cli.Context, params *params.BuildServerParam) error {
@@ -262,7 +262,7 @@ func handleDiskEvents(sb serverBuilder, ctx cli.Context, params *params.BuildSer
 	if sb.HasDiskEventProperty() {
 		sb := sb.(builder.DiskEventProperty)
 		// create disk
-		progCreate := internal.NewProgress(
+		progCreate := progress.NewProgress(
 			"Still creating disk...",
 			"Create disk",
 			ctx.IO().Progress(),
@@ -275,7 +275,7 @@ func handleDiskEvents(sb serverBuilder, ctx cli.Context, params *params.BuildSer
 		})
 
 		// cleanup startup script
-		progCleanupNotes := internal.NewProgress(
+		progCleanupNotes := progress.NewProgress(
 			"Still cleaning StartupScript...",
 			"Cleanup StartupScript",
 			ctx.IO().Progress(),
@@ -288,7 +288,7 @@ func handleDiskEvents(sb serverBuilder, ctx cli.Context, params *params.BuildSer
 		})
 
 		// cleanup ssh key script
-		progCleanupSSHKey := internal.NewProgress(
+		progCleanupSSHKey := progress.NewProgress(
 			"Still cleaning SSHKey...",
 			"Cleanup SSHKey",
 			ctx.IO().Progress(),
@@ -307,7 +307,7 @@ func handleDiskEvents(sb serverBuilder, ctx cli.Context, params *params.BuildSer
 func handleServerEvents(sb serverBuilder, ctx cli.Context, params *params.BuildServerParam) error {
 	if sb.HasServerEventProperty() {
 		sb := sb.(builder.ServerEventProperty)
-		progCreate := internal.NewProgress(
+		progCreate := progress.NewProgress(
 			"Still creating server...",
 			"Create server",
 			ctx.IO().Progress(),
@@ -320,7 +320,7 @@ func handleServerEvents(sb serverBuilder, ctx cli.Context, params *params.BuildS
 			progCreate.Stop()
 		})
 
-		progBoot := internal.NewProgress(
+		progBoot := progress.NewProgress(
 			"Still booting server...",
 			"Boot server",
 			ctx.IO().Progress(),

@@ -17,9 +17,9 @@ package funcs
 import (
 	"fmt"
 
+	"github.com/sacloud/libsacloud/v2/sacloud/profile"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/profile"
 )
 
 func ConfigList(ctx cli.Context, params *params.ListConfigParam) error {

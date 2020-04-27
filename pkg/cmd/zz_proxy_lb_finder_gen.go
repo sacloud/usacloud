@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func findProxyLBReadTargets(ctx cli.Context, param *params.ReadProxyLBParam) ([]sacloud.ID, error) {
@@ -41,7 +41,7 @@ func findProxyLBReadTargets(ctx cli.Context, param *params.ReadProxyLBParam) ([]
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -65,7 +65,7 @@ func findProxyLBReadTargets(ctx cli.Context, param *params.ReadProxyLBParam) ([]
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -76,7 +76,7 @@ func findProxyLBReadTargets(ctx cli.Context, param *params.ReadProxyLBParam) ([]
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -102,7 +102,7 @@ func findProxyLBUpdateTargets(ctx cli.Context, param *params.UpdateProxyLBParam)
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -126,7 +126,7 @@ func findProxyLBUpdateTargets(ctx cli.Context, param *params.UpdateProxyLBParam)
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -137,7 +137,7 @@ func findProxyLBUpdateTargets(ctx cli.Context, param *params.UpdateProxyLBParam)
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -160,7 +160,7 @@ func findProxyLBDeleteTargets(ctx cli.Context, param *params.DeleteProxyLBParam)
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -184,7 +184,7 @@ func findProxyLBDeleteTargets(ctx cli.Context, param *params.DeleteProxyLBParam)
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -195,7 +195,7 @@ func findProxyLBDeleteTargets(ctx cli.Context, param *params.DeleteProxyLBParam)
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -218,7 +218,7 @@ func findProxyLBPlanChangeTargets(ctx cli.Context, param *params.PlanChangeProxy
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -242,7 +242,7 @@ func findProxyLBPlanChangeTargets(ctx cli.Context, param *params.PlanChangeProxy
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -253,7 +253,7 @@ func findProxyLBPlanChangeTargets(ctx cli.Context, param *params.PlanChangeProxy
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -276,7 +276,7 @@ func findProxyLBBindPortInfoTargets(ctx cli.Context, param *params.BindPortInfoP
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -300,7 +300,7 @@ func findProxyLBBindPortInfoTargets(ctx cli.Context, param *params.BindPortInfoP
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -311,7 +311,7 @@ func findProxyLBBindPortInfoTargets(ctx cli.Context, param *params.BindPortInfoP
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -337,7 +337,7 @@ func findProxyLBBindPortAddTargets(ctx cli.Context, param *params.BindPortAddPro
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -361,7 +361,7 @@ func findProxyLBBindPortAddTargets(ctx cli.Context, param *params.BindPortAddPro
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -372,7 +372,7 @@ func findProxyLBBindPortAddTargets(ctx cli.Context, param *params.BindPortAddPro
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -398,7 +398,7 @@ func findProxyLBBindPortUpdateTargets(ctx cli.Context, param *params.BindPortUpd
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -422,7 +422,7 @@ func findProxyLBBindPortUpdateTargets(ctx cli.Context, param *params.BindPortUpd
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -433,7 +433,7 @@ func findProxyLBBindPortUpdateTargets(ctx cli.Context, param *params.BindPortUpd
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -459,7 +459,7 @@ func findProxyLBBindPortDeleteTargets(ctx cli.Context, param *params.BindPortDel
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -483,7 +483,7 @@ func findProxyLBBindPortDeleteTargets(ctx cli.Context, param *params.BindPortDel
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -494,7 +494,7 @@ func findProxyLBBindPortDeleteTargets(ctx cli.Context, param *params.BindPortDel
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -520,7 +520,7 @@ func findProxyLBResponseHeaderInfoTargets(ctx cli.Context, param *params.Respons
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -544,7 +544,7 @@ func findProxyLBResponseHeaderInfoTargets(ctx cli.Context, param *params.Respons
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -555,7 +555,7 @@ func findProxyLBResponseHeaderInfoTargets(ctx cli.Context, param *params.Respons
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -581,7 +581,7 @@ func findProxyLBResponseHeaderAddTargets(ctx cli.Context, param *params.Response
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -605,7 +605,7 @@ func findProxyLBResponseHeaderAddTargets(ctx cli.Context, param *params.Response
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -616,7 +616,7 @@ func findProxyLBResponseHeaderAddTargets(ctx cli.Context, param *params.Response
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -642,7 +642,7 @@ func findProxyLBResponseHeaderUpdateTargets(ctx cli.Context, param *params.Respo
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -666,7 +666,7 @@ func findProxyLBResponseHeaderUpdateTargets(ctx cli.Context, param *params.Respo
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -677,7 +677,7 @@ func findProxyLBResponseHeaderUpdateTargets(ctx cli.Context, param *params.Respo
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -703,7 +703,7 @@ func findProxyLBResponseHeaderDeleteTargets(ctx cli.Context, param *params.Respo
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -727,7 +727,7 @@ func findProxyLBResponseHeaderDeleteTargets(ctx cli.Context, param *params.Respo
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -738,7 +738,7 @@ func findProxyLBResponseHeaderDeleteTargets(ctx cli.Context, param *params.Respo
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -764,7 +764,7 @@ func findProxyLBACMEInfoTargets(ctx cli.Context, param *params.ACMEInfoProxyLBPa
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -788,7 +788,7 @@ func findProxyLBACMEInfoTargets(ctx cli.Context, param *params.ACMEInfoProxyLBPa
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -799,7 +799,7 @@ func findProxyLBACMEInfoTargets(ctx cli.Context, param *params.ACMEInfoProxyLBPa
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -825,7 +825,7 @@ func findProxyLBACMESettingTargets(ctx cli.Context, param *params.ACMESettingPro
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -849,7 +849,7 @@ func findProxyLBACMESettingTargets(ctx cli.Context, param *params.ACMESettingPro
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -860,7 +860,7 @@ func findProxyLBACMESettingTargets(ctx cli.Context, param *params.ACMESettingPro
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -886,7 +886,7 @@ func findProxyLBACMERenewTargets(ctx cli.Context, param *params.ACMERenewProxyLB
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -910,7 +910,7 @@ func findProxyLBACMERenewTargets(ctx cli.Context, param *params.ACMERenewProxyLB
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -921,7 +921,7 @@ func findProxyLBACMERenewTargets(ctx cli.Context, param *params.ACMERenewProxyLB
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -947,7 +947,7 @@ func findProxyLBServerInfoTargets(ctx cli.Context, param *params.ServerInfoProxy
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -971,7 +971,7 @@ func findProxyLBServerInfoTargets(ctx cli.Context, param *params.ServerInfoProxy
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -982,7 +982,7 @@ func findProxyLBServerInfoTargets(ctx cli.Context, param *params.ServerInfoProxy
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1008,7 +1008,7 @@ func findProxyLBServerAddTargets(ctx cli.Context, param *params.ServerAddProxyLB
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1032,7 +1032,7 @@ func findProxyLBServerAddTargets(ctx cli.Context, param *params.ServerAddProxyLB
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1043,7 +1043,7 @@ func findProxyLBServerAddTargets(ctx cli.Context, param *params.ServerAddProxyLB
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1069,7 +1069,7 @@ func findProxyLBServerUpdateTargets(ctx cli.Context, param *params.ServerUpdateP
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1093,7 +1093,7 @@ func findProxyLBServerUpdateTargets(ctx cli.Context, param *params.ServerUpdateP
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1104,7 +1104,7 @@ func findProxyLBServerUpdateTargets(ctx cli.Context, param *params.ServerUpdateP
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1130,7 +1130,7 @@ func findProxyLBServerDeleteTargets(ctx cli.Context, param *params.ServerDeleteP
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1154,7 +1154,7 @@ func findProxyLBServerDeleteTargets(ctx cli.Context, param *params.ServerDeleteP
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1165,7 +1165,7 @@ func findProxyLBServerDeleteTargets(ctx cli.Context, param *params.ServerDeleteP
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1191,7 +1191,7 @@ func findProxyLBCertificateInfoTargets(ctx cli.Context, param *params.Certificat
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1215,7 +1215,7 @@ func findProxyLBCertificateInfoTargets(ctx cli.Context, param *params.Certificat
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1226,7 +1226,7 @@ func findProxyLBCertificateInfoTargets(ctx cli.Context, param *params.Certificat
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1252,7 +1252,7 @@ func findProxyLBCertificateAddTargets(ctx cli.Context, param *params.Certificate
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1276,7 +1276,7 @@ func findProxyLBCertificateAddTargets(ctx cli.Context, param *params.Certificate
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1287,7 +1287,7 @@ func findProxyLBCertificateAddTargets(ctx cli.Context, param *params.Certificate
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1313,7 +1313,7 @@ func findProxyLBCertificateUpdateTargets(ctx cli.Context, param *params.Certific
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1337,7 +1337,7 @@ func findProxyLBCertificateUpdateTargets(ctx cli.Context, param *params.Certific
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1348,7 +1348,7 @@ func findProxyLBCertificateUpdateTargets(ctx cli.Context, param *params.Certific
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1374,7 +1374,7 @@ func findProxyLBCertificateDeleteTargets(ctx cli.Context, param *params.Certific
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1398,7 +1398,7 @@ func findProxyLBCertificateDeleteTargets(ctx cli.Context, param *params.Certific
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1409,7 +1409,7 @@ func findProxyLBCertificateDeleteTargets(ctx cli.Context, param *params.Certific
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}
@@ -1435,7 +1435,7 @@ func findProxyLBMonitorTargets(ctx cli.Context, param *params.MonitorProxyLBPara
 			return ids, fmt.Errorf("finding resource id is failed: %s", err)
 		}
 		for _, v := range res.CommonServiceProxyLBItems {
-			if utils.HasTags(&v, param.Selector) {
+			if util.HasTags(&v, param.Selector) {
 				ids = append(ids, v.GetID())
 			}
 		}
@@ -1459,7 +1459,7 @@ func findProxyLBMonitorTargets(ctx cli.Context, param *params.MonitorProxyLBPara
 						return ids, fmt.Errorf("finding resource id is failed: not found with search param [%q]", idOrName)
 					}
 					for _, v := range res.CommonServiceProxyLBItems {
-						if len(param.Selector) == 0 || utils.HasTags(&v, param.Selector) {
+						if len(param.Selector) == 0 || util.HasTags(&v, param.Selector) {
 							ids = append(ids, v.GetID())
 						}
 					}
@@ -1470,7 +1470,7 @@ func findProxyLBMonitorTargets(ctx cli.Context, param *params.MonitorProxyLBPara
 
 	}
 
-	ids = utils.UniqIDs(ids)
+	ids = util.UniqIDs(ids)
 	if len(ids) == 0 {
 		return ids, fmt.Errorf("finding resource is is failed: not found")
 	}

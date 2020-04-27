@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func DatabaseBackupCreate(ctx cli.Context, params *params.BackupCreateDatabaseParam) error {
@@ -36,7 +36,7 @@ func DatabaseBackupCreate(ctx cli.Context, params *params.BackupCreateDatabasePa
 		return nil
 	}
 
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still creating backup[ID:%d]...", params.Id),
 		fmt.Sprintf("Backup Database[ID:%d]", params.Id),
 		ctx.IO().Progress(),

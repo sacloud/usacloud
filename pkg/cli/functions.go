@@ -20,7 +20,7 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func FlattenErrors(errors []error) error {
@@ -63,7 +63,7 @@ func ConfirmContinue(in *os.File, target string, ids ...sacloud.ID) bool {
 		return Confirm(in, fmt.Sprintf("Are you sure you want to %s?", target))
 	}
 
-	strIDs := utils.StringIDs(ids)
+	strIDs := util.StringIDs(ids)
 	msg := fmt.Sprintf("Target resource IDs => [\n\t%s\n]", strings.Join(strIDs, ",\n\t"))
 	return Confirm(in, fmt.Sprintf("%s\nAre you sure you want to %s?", msg, target))
 }

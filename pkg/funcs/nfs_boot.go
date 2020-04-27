@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func NFSBoot(ctx cli.Context, params *params.BootNFSParam) error {
@@ -35,7 +35,7 @@ func NFSBoot(ctx cli.Context, params *params.BootNFSParam) error {
 		return nil // already booted.
 	}
 
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still booting[ID:%d]...", params.Id),
 		fmt.Sprintf("Boot nfs[ID:%d]", params.Id),
 		ctx.IO().Progress(),

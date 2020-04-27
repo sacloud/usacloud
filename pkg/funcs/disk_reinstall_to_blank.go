@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func DiskReinstallToBlank(ctx cli.Context, params *params.ReinstallToBlankDiskParam) error {
@@ -31,7 +31,7 @@ func DiskReinstallToBlank(ctx cli.Context, params *params.ReinstallToBlankDiskPa
 		return fmt.Errorf("DiskReinstallToBlank is failed: %s", e)
 	}
 
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still installing[ID:%d]...", params.Id),
 		fmt.Sprintf("Reinstall disk[ID:%d]", params.Id),
 		ctx.IO().Progress(),

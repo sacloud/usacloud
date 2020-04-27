@@ -19,8 +19,8 @@ import (
 	"time"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 const maxErrorCount = 10
@@ -38,7 +38,7 @@ func ServerBoot(ctx cli.Context, params *params.BootServerParam) error {
 		return nil // already booted.
 	}
 
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still booting[ID:%d]...", params.Id),
 		fmt.Sprintf("Boot server[ID:%d]", params.Id),
 		ctx.IO().Progress(),

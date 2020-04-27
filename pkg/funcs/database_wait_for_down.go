@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func DatabaseWaitForDown(ctx cli.Context, params *params.WaitForDownDatabaseParam) error {
@@ -35,7 +35,7 @@ func DatabaseWaitForDown(ctx cli.Context, params *params.WaitForDownDatabasePara
 		return nil // already downed.
 	}
 
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still waiting for Shutdown[ID:%d]...", params.Id),
 		fmt.Sprintf("Shutdown database[ID:%d]", params.Id),
 		ctx.IO().Progress(),

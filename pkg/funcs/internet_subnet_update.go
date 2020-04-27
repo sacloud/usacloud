@@ -18,8 +18,8 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/internal"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/progress"
 )
 
 func InternetSubnetUpdate(ctx cli.Context, params *params.SubnetUpdateInternetParam) error {
@@ -32,7 +32,7 @@ func InternetSubnetUpdate(ctx cli.Context, params *params.SubnetUpdateInternetPa
 	}
 
 	var sn *subnet
-	err := internal.ExecWithProgress(
+	err := progress.ExecWithProgress(
 		fmt.Sprintf("Still updating[ID:%d]...", params.SubnetId),
 		fmt.Sprintf("Update subnet[ID:%d]", params.SubnetId),
 		ctx.IO().Progress(),

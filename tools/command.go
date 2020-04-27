@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -180,11 +180,11 @@ func (c *Command) FlagOrderFunc() string {
 }
 
 func (c *Command) TargetAPIName() string {
-	return utils.FirstNonEmptyString(c.AltResource, c.Resource.AltResource, ToCamelCaseName(c.Resource.Name))
+	return util.FirstNonEmptyString(c.AltResource, c.Resource.AltResource, ToCamelCaseName(c.Resource.Name))
 }
 
 func (c *Command) FindResultFieldName() string {
-	return utils.FirstNonEmptyString(c.ListResultFieldName, c.Resource.ListResultFieldName, ToCamelCaseName(c.Resource.Name)+"s")
+	return util.FirstNonEmptyString(c.ListResultFieldName, c.Resource.ListResultFieldName, ToCamelCaseName(c.Resource.Name)+"s")
 }
 
 func (c *Command) RequireSingleID() bool {
@@ -210,7 +210,7 @@ func (c *Command) CommandFileName() string {
 }
 
 func (c *Command) ResourceName() string {
-	return utils.FirstNonEmptyString(c.AltResource, c.Resource.AltResource, ToCamelCaseName(c.Resource.Name))
+	return util.FirstNonEmptyString(c.AltResource, c.Resource.AltResource, ToCamelCaseName(c.Resource.Name))
 }
 
 func (c *Command) FuncName() string {

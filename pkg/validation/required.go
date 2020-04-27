@@ -17,11 +17,11 @@ package validation
 import (
 	"fmt"
 
-	"github.com/sacloud/usacloud/pkg/utils"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func Required(fieldName string, object interface{}) []error {
-	if utils.IsEmpty(object) {
+	if util.IsEmpty(object) {
 		return []error{fmt.Errorf("%q: is required", fieldName)}
 	}
 	return []error{}

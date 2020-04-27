@@ -109,7 +109,7 @@ import (
     "fmt"
     "github.com/sacloud/usacloud/pkg/cli"
     "github.com/sacloud/usacloud/pkg/params"
-    "github.com/sacloud/usacloud/pkg/utils"
+    "github.com/sacloud/usacloud/pkg/util"
 )
 
 func {{.FuncName}}(ctx cli.Context, params *params.{{.ParamName}}) error {
