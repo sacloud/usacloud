@@ -77,6 +77,8 @@ func (p NFSPlan) String() string {
 type NFSSize int
 
 var (
+	// NFSSize20G 20Gプラン
+	NFSSize20G = NFSSize(20)
 	// NFSSize100G 100Gプラン
 	NFSSize100G = NFSSize(100)
 	// NFSSize500G 500Gプラン
@@ -109,11 +111,28 @@ func AllowNFSNormalPlanSizes() []int {
 // AllowNFSSSDPlanSizes 指定可能なNFSサイズ(SSDプラン)
 func AllowNFSSSDPlanSizes() []int {
 	return []int{
+		int(NFSSize20G),
 		int(NFSSize100G),
 		int(NFSSize500G),
 		int(NFSSize1T),
 		int(NFSSize2T),
 		int(NFSSize4T),
+	}
+}
+
+// AllowNFSAllPlanSizes 指定可能なNFSサイズ(HDD/SSD両方)
+//
+// ディスクプランによって選択できないサイズを含むため、利用する側で適切にバリデーションを行う必要がある
+func AllowNFSAllPlanSizes() []int {
+	return []int{
+		int(NFSSize20G),
+		int(NFSSize100G),
+		int(NFSSize500G),
+		int(NFSSize1T),
+		int(NFSSize2T),
+		int(NFSSize4T),
+		int(NFSSize8T),
+		int(NFSSize12T),
 	}
 }
 
