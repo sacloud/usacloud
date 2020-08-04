@@ -403,7 +403,7 @@ func init() {
 					},
 					&cli.IntFlag{
 						Name:  "size",
-						Usage: "[Required] set plan[100/500/1024/2048/4096/8192/12288]",
+						Usage: "[Required] set plan[20/100/500/1024/2048/4096/8192/12288]",
 						Value: 100,
 					},
 					&cli.StringFlag{

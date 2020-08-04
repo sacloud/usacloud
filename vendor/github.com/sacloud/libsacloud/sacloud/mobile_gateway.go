@@ -132,7 +132,7 @@ type MobileGatewayPlan int
 
 var (
 	// MobileGatewayPlanStandard スタンダードプラン // TODO 正式名称不明なため暫定の名前
-	MobileGatewayPlanStandard = MobileGatewayPlan(1)
+	MobileGatewayPlanStandard = MobileGatewayPlan(2)
 )
 
 // CreateMobileGatewayValue モバイルゲートウェイ作成用パラメーター

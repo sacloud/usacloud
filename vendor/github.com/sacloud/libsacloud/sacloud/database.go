@@ -302,7 +302,7 @@ func NewCreatePostgreSQLDatabaseValue() *CreateDatabaseValue {
 func NewCreateMariaDBDatabaseValue() *CreateDatabaseValue {
 	return &CreateDatabaseValue{
 		DatabaseName:    "MariaDB",
-		DatabaseVersion: "10.3",
+		DatabaseVersion: "10.4",
 	}
 }
 
