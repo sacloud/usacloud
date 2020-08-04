@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Aug 04 2020 <sacloud.users@gmail.com> - 0.32.4-1
+- libsacloud v1.36.2 (by yamamoto-febc)
+
 * Tue Apr 21 2020 <sacloud.users@gmail.com> - 0.32.3-1
 - Install gnupg2 when running install script on Ubuntu/Debian (by yamamoto-febc)
 

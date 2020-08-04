@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.32.4 (2020-08-04)
+
+* libsacloud v1.36.2 #525 (yamamoto-febc)
+
+
 ## 0.32.3 (2020-04-21)
 
 * Install gnupg2 when running install script on Ubuntu/Debian #517 (yamamoto-febc)
