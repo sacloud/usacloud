@@ -143,7 +143,7 @@ _usacloud() {
     local flags=({{range .GlobalFlags}}{{.}} {{end}}--help --version)
     local wants_value=({{range .GlobalWantValues}}{{.}} {{end}})
     local configflags=(--help --token --secret --zone --config --profile --show)
-    local zones=(is1a is1b tk1a tk1v)
+    local zones=(is1a is1b tk1a tk1b tk1v)
 
     local cur prev words cword
     _get_comp_words_by_ref -n : cur prev words cword
