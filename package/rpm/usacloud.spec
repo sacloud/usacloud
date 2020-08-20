@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu Aug 20 2020 <sacloud.users@gmail.com> - 0.33.0-1
+- tk1b zone (by yamamoto-febc)
+
 * Tue Aug 04 2020 <sacloud.users@gmail.com> - 0.32.4-1
 - libsacloud v1.36.2 (by yamamoto-febc)
 

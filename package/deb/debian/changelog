@@ -1,3 +1,10 @@
+usacloud (0.33.0-1) stable; urgency=low
+
+  * tk1b zone (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/528>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Thu, 20 Aug 2020 06:22:16 +0000
+
 usacloud (0.32.4-1) stable; urgency=low
 
   * libsacloud v1.36.2 (by yamamoto-febc)
