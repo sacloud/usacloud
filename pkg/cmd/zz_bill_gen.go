@@ -18,7 +18,7 @@ package cmd
 
 import (
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/funcs"
+	"github.com/sacloud/usacloud/pkg/funcs/bill"
 	"github.com/sacloud/usacloud/pkg/params"
 	"github.com/spf13/cobra"
 )
@@ -45,7 +45,7 @@ func billCsvCmd() *cobra.Command {
 		Long:         `Csv Bill`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, billCsvParam)
+			ctx, err := cli.NewCLIContext("bill", "csv", globalFlags(), args, billCsvParam)
 			if err != nil {
 				return err
 			}
@@ -60,15 +60,13 @@ func billCsvCmd() *cobra.Command {
 				return generateSkeleton(ctx, billCsvParam)
 			}
 
-			return funcs.BillCsv(ctx, billCsvParam)
+			return cli.WrapError(ctx, bill.Csv(ctx, billCsvParam))
 
 		},
 	}
 
 	fs := cmd.Flags()
-	fs.StringVarP(&billCsvParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&billCsvParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&billCsvParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&billCsvParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&billCsvParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.BoolVarP(&billCsvParam.NoHeader, "no-header", "", false, "set output header flag")
@@ -88,7 +86,7 @@ func billListCmd() *cobra.Command {
 		Long:         `List Bill (default)`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, billListParam)
+			ctx, err := cli.NewCLIContext("bill", "list", globalFlags(), args, billListParam)
 			if err != nil {
 				return err
 			}
@@ -103,7 +101,7 @@ func billListCmd() *cobra.Command {
 				return generateSkeleton(ctx, billListParam)
 			}
 
-			return funcs.BillList(ctx, billListParam)
+			return cli.WrapError(ctx, bill.List(ctx, billListParam))
 
 		},
 	}
@@ -111,9 +109,7 @@ func billListCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.IntVarP(&billListParam.Year, "year", "", 0, "set year")
 	fs.IntVarP(&billListParam.Month, "month", "", 0, "set month")
-	fs.StringVarP(&billListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&billListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&billListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&billListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&billListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&billListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")

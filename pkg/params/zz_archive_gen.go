@@ -19,7 +19,7 @@ package params
 import (
 	"io"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
@@ -31,27 +31,25 @@ import (
 
 // ListArchiveParam is input parameters for the sacloud API
 type ListArchiveParam struct {
-	Name              []string
-	Id                []sacloud.ID
-	Scope             string
-	Tags              []string
-	SourceArchiveId   sacloud.ID
-	SourceDiskId      sacloud.ID
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
+	Name             []string
+	Id               []types.ID
+	Scope            string
+	Tags             []string
+	SourceArchiveId  types.ID
+	SourceDiskId     types.ID
+	From             int
+	Max              int
+	Sort             []string
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
 
 	config *config.Config
 	input  Input
@@ -83,7 +81,7 @@ func (p *ListArchiveParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = []sacloud.ID{}
+		p.Id = []types.ID{}
 	}
 	if util.IsEmpty(p.Scope) {
 		p.Scope = ""
@@ -92,10 +90,10 @@ func (p *ListArchiveParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if util.IsEmpty(p.SourceArchiveId) {
-		p.SourceArchiveId = sacloud.ID(0)
+		p.SourceArchiveId = types.ID(0)
 	}
 	if util.IsEmpty(p.SourceDiskId) {
-		p.SourceDiskId = sacloud.ID(0)
+		p.SourceDiskId = types.ID(0)
 	}
 	if util.IsEmpty(p.From) {
 		p.From = 0
@@ -106,14 +104,8 @@ func (p *ListArchiveParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -254,33 +246,6 @@ func (p *ListArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ListArchiveParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Archive"]
-}
-
-func (p *ListArchiveParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["list"]
-}
-
-func (p *ListArchiveParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ListArchiveParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ListArchiveParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ListArchiveParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *ListArchiveParam) SetName(v []string) {
 	p.Name = v
 }
@@ -288,11 +253,11 @@ func (p *ListArchiveParam) SetName(v []string) {
 func (p *ListArchiveParam) GetName() []string {
 	return p.Name
 }
-func (p *ListArchiveParam) SetId(v []sacloud.ID) {
+func (p *ListArchiveParam) SetId(v []types.ID) {
 	p.Id = v
 }
 
-func (p *ListArchiveParam) GetId() []sacloud.ID {
+func (p *ListArchiveParam) GetId() []types.ID {
 	return p.Id
 }
 func (p *ListArchiveParam) SetScope(v string) {
@@ -309,18 +274,18 @@ func (p *ListArchiveParam) SetTags(v []string) {
 func (p *ListArchiveParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListArchiveParam) SetSourceArchiveId(v sacloud.ID) {
+func (p *ListArchiveParam) SetSourceArchiveId(v types.ID) {
 	p.SourceArchiveId = v
 }
 
-func (p *ListArchiveParam) GetSourceArchiveId() sacloud.ID {
+func (p *ListArchiveParam) GetSourceArchiveId() types.ID {
 	return p.SourceArchiveId
 }
-func (p *ListArchiveParam) SetSourceDiskId(v sacloud.ID) {
+func (p *ListArchiveParam) SetSourceDiskId(v types.ID) {
 	p.SourceDiskId = v
 }
 
-func (p *ListArchiveParam) GetSourceDiskId() sacloud.ID {
+func (p *ListArchiveParam) GetSourceDiskId() types.ID {
 	return p.SourceDiskId
 }
 func (p *ListArchiveParam) SetFrom(v int) {
@@ -344,26 +309,12 @@ func (p *ListArchiveParam) SetSort(v []string) {
 func (p *ListArchiveParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListArchiveParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ListArchiveParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ListArchiveParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ListArchiveParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ListArchiveParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ListArchiveParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ListArchiveParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -429,34 +380,32 @@ func (p *ListArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ListArchiveParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // CreateArchiveParam is input parameters for the sacloud API
 type CreateArchiveParam struct {
-	SourceDiskId      sacloud.ID
-	SourceArchiveId   sacloud.ID
-	Size              int
-	ArchiveFile       string
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            sacloud.ID
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
+	SourceDiskId     types.ID
+	SourceArchiveId  types.ID
+	Size             int
+	ArchiveFile      string
+	Name             string
+	Description      string
+	Tags             []string
+	IconId           types.ID
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
 
 	config *config.Config
 	input  Input
@@ -485,10 +434,10 @@ func (p *CreateArchiveParam) WriteSkeleton(writer io.Writer) error {
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CreateArchiveParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.SourceDiskId) {
-		p.SourceDiskId = sacloud.ID(0)
+		p.SourceDiskId = types.ID(0)
 	}
 	if util.IsEmpty(p.SourceArchiveId) {
-		p.SourceArchiveId = sacloud.ID(0)
+		p.SourceArchiveId = types.ID(0)
 	}
 	if util.IsEmpty(p.Size) {
 		p.Size = 0
@@ -506,19 +455,13 @@ func (p *CreateArchiveParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if util.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
+		p.IconId = types.ID(0)
 	}
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -713,45 +656,18 @@ func (p *CreateArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *CreateArchiveParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Archive"]
-}
-
-func (p *CreateArchiveParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["create"]
-}
-
-func (p *CreateArchiveParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *CreateArchiveParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *CreateArchiveParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *CreateArchiveParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-func (p *CreateArchiveParam) SetSourceDiskId(v sacloud.ID) {
+func (p *CreateArchiveParam) SetSourceDiskId(v types.ID) {
 	p.SourceDiskId = v
 }
 
-func (p *CreateArchiveParam) GetSourceDiskId() sacloud.ID {
+func (p *CreateArchiveParam) GetSourceDiskId() types.ID {
 	return p.SourceDiskId
 }
-func (p *CreateArchiveParam) SetSourceArchiveId(v sacloud.ID) {
+func (p *CreateArchiveParam) SetSourceArchiveId(v types.ID) {
 	p.SourceArchiveId = v
 }
 
-func (p *CreateArchiveParam) GetSourceArchiveId() sacloud.ID {
+func (p *CreateArchiveParam) GetSourceArchiveId() types.ID {
 	return p.SourceArchiveId
 }
 func (p *CreateArchiveParam) SetSize(v int) {
@@ -789,11 +705,11 @@ func (p *CreateArchiveParam) SetTags(v []string) {
 func (p *CreateArchiveParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateArchiveParam) SetIconId(v sacloud.ID) {
+func (p *CreateArchiveParam) SetIconId(v types.ID) {
 	p.IconId = v
 }
 
-func (p *CreateArchiveParam) GetIconId() sacloud.ID {
+func (p *CreateArchiveParam) GetIconId() types.ID {
 	return p.IconId
 }
 func (p *CreateArchiveParam) SetAssumeyes(v bool) {
@@ -803,26 +719,12 @@ func (p *CreateArchiveParam) SetAssumeyes(v bool) {
 func (p *CreateArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CreateArchiveParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *CreateArchiveParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *CreateArchiveParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *CreateArchiveParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *CreateArchiveParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *CreateArchiveParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *CreateArchiveParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -888,27 +790,25 @@ func (p *CreateArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *CreateArchiveParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // ReadArchiveParam is input parameters for the sacloud API
 type ReadArchiveParam struct {
-	Selector          []string
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
-	Id                sacloud.ID
+	Selector         []string
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -917,6 +817,24 @@ type ReadArchiveParam struct {
 // NewReadArchiveParam return new ReadArchiveParam
 func NewReadArchiveParam() *ReadArchiveParam {
 	return &ReadArchiveParam{}
+}
+
+// WithID returns new *ReadArchiveParam with id
+func (p *ReadArchiveParam) WithID(id types.ID) *ReadArchiveParam {
+	return &ReadArchiveParam{
+		Selector:         p.Selector,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		OutputType:       p.OutputType,
+		Column:           p.Column,
+		Quiet:            p.Quiet,
+		Format:           p.Format,
+		FormatFile:       p.FormatFile,
+		Query:            p.Query,
+		QueryFile:        p.QueryFile,
+		Id:               id,
+	}
 }
 
 // Initialize init ReadArchiveParam
@@ -939,14 +857,8 @@ func (p *ReadArchiveParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -976,7 +888,7 @@ func (p *ReadArchiveParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -1039,33 +951,6 @@ func (p *ReadArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ReadArchiveParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Archive"]
-}
-
-func (p *ReadArchiveParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["read"]
-}
-
-func (p *ReadArchiveParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ReadArchiveParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ReadArchiveParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ReadArchiveParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *ReadArchiveParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1073,26 +958,12 @@ func (p *ReadArchiveParam) SetSelector(v []string) {
 func (p *ReadArchiveParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ReadArchiveParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ReadArchiveParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ReadArchiveParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ReadArchiveParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ReadArchiveParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ReadArchiveParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ReadArchiveParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -1157,40 +1028,38 @@ func (p *ReadArchiveParam) SetQueryFile(v string) {
 func (p *ReadArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadArchiveParam) SetId(v sacloud.ID) {
+func (p *ReadArchiveParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *ReadArchiveParam) GetId() sacloud.ID {
+func (p *ReadArchiveParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ReadArchiveParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // UpdateArchiveParam is input parameters for the sacloud API
 type UpdateArchiveParam struct {
-	Selector          []string
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            sacloud.ID
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
-	Id                sacloud.ID
+	Selector         []string
+	Name             string
+	Description      string
+	Tags             []string
+	IconId           types.ID
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -1199,6 +1068,29 @@ type UpdateArchiveParam struct {
 // NewUpdateArchiveParam return new UpdateArchiveParam
 func NewUpdateArchiveParam() *UpdateArchiveParam {
 	return &UpdateArchiveParam{}
+}
+
+// WithID returns new *UpdateArchiveParam with id
+func (p *UpdateArchiveParam) WithID(id types.ID) *UpdateArchiveParam {
+	return &UpdateArchiveParam{
+		Selector:         p.Selector,
+		Name:             p.Name,
+		Description:      p.Description,
+		Tags:             p.Tags,
+		IconId:           p.IconId,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		OutputType:       p.OutputType,
+		Column:           p.Column,
+		Quiet:            p.Quiet,
+		Format:           p.Format,
+		FormatFile:       p.FormatFile,
+		Query:            p.Query,
+		QueryFile:        p.QueryFile,
+		Id:               id,
+	}
 }
 
 // Initialize init UpdateArchiveParam
@@ -1231,19 +1123,13 @@ func (p *UpdateArchiveParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if util.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
+		p.IconId = types.ID(0)
 	}
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -1273,7 +1159,7 @@ func (p *UpdateArchiveParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -1368,33 +1254,6 @@ func (p *UpdateArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *UpdateArchiveParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Archive"]
-}
-
-func (p *UpdateArchiveParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["update"]
-}
-
-func (p *UpdateArchiveParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *UpdateArchiveParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *UpdateArchiveParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *UpdateArchiveParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *UpdateArchiveParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1423,11 +1282,11 @@ func (p *UpdateArchiveParam) SetTags(v []string) {
 func (p *UpdateArchiveParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateArchiveParam) SetIconId(v sacloud.ID) {
+func (p *UpdateArchiveParam) SetIconId(v types.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateArchiveParam) GetIconId() sacloud.ID {
+func (p *UpdateArchiveParam) GetIconId() types.ID {
 	return p.IconId
 }
 func (p *UpdateArchiveParam) SetAssumeyes(v bool) {
@@ -1437,26 +1296,12 @@ func (p *UpdateArchiveParam) SetAssumeyes(v bool) {
 func (p *UpdateArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *UpdateArchiveParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *UpdateArchiveParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *UpdateArchiveParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *UpdateArchiveParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *UpdateArchiveParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *UpdateArchiveParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *UpdateArchiveParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -1521,36 +1366,34 @@ func (p *UpdateArchiveParam) SetQueryFile(v string) {
 func (p *UpdateArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateArchiveParam) SetId(v sacloud.ID) {
+func (p *UpdateArchiveParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *UpdateArchiveParam) GetId() sacloud.ID {
+func (p *UpdateArchiveParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *UpdateArchiveParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // DeleteArchiveParam is input parameters for the sacloud API
 type DeleteArchiveParam struct {
-	Selector          []string
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
-	Id                sacloud.ID
+	Selector         []string
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -1559,6 +1402,25 @@ type DeleteArchiveParam struct {
 // NewDeleteArchiveParam return new DeleteArchiveParam
 func NewDeleteArchiveParam() *DeleteArchiveParam {
 	return &DeleteArchiveParam{}
+}
+
+// WithID returns new *DeleteArchiveParam with id
+func (p *DeleteArchiveParam) WithID(id types.ID) *DeleteArchiveParam {
+	return &DeleteArchiveParam{
+		Selector:         p.Selector,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		OutputType:       p.OutputType,
+		Column:           p.Column,
+		Quiet:            p.Quiet,
+		Format:           p.Format,
+		FormatFile:       p.FormatFile,
+		Query:            p.Query,
+		QueryFile:        p.QueryFile,
+		Id:               id,
+	}
 }
 
 // Initialize init DeleteArchiveParam
@@ -1584,14 +1446,8 @@ func (p *DeleteArchiveParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -1621,7 +1477,7 @@ func (p *DeleteArchiveParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -1684,33 +1540,6 @@ func (p *DeleteArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *DeleteArchiveParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Archive"]
-}
-
-func (p *DeleteArchiveParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["delete"]
-}
-
-func (p *DeleteArchiveParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *DeleteArchiveParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *DeleteArchiveParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *DeleteArchiveParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *DeleteArchiveParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1725,26 +1554,12 @@ func (p *DeleteArchiveParam) SetAssumeyes(v bool) {
 func (p *DeleteArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeleteArchiveParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *DeleteArchiveParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *DeleteArchiveParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *DeleteArchiveParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *DeleteArchiveParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *DeleteArchiveParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *DeleteArchiveParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -1809,37 +1624,35 @@ func (p *DeleteArchiveParam) SetQueryFile(v string) {
 func (p *DeleteArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteArchiveParam) SetId(v sacloud.ID) {
+func (p *DeleteArchiveParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *DeleteArchiveParam) GetId() sacloud.ID {
+func (p *DeleteArchiveParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *DeleteArchiveParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // UploadArchiveParam is input parameters for the sacloud API
 type UploadArchiveParam struct {
-	ArchiveFile       string
-	Selector          []string
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
-	Id                sacloud.ID
+	ArchiveFile      string
+	Selector         []string
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -1848,6 +1661,26 @@ type UploadArchiveParam struct {
 // NewUploadArchiveParam return new UploadArchiveParam
 func NewUploadArchiveParam() *UploadArchiveParam {
 	return &UploadArchiveParam{}
+}
+
+// WithID returns new *UploadArchiveParam with id
+func (p *UploadArchiveParam) WithID(id types.ID) *UploadArchiveParam {
+	return &UploadArchiveParam{
+		ArchiveFile:      p.ArchiveFile,
+		Selector:         p.Selector,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		OutputType:       p.OutputType,
+		Column:           p.Column,
+		Quiet:            p.Quiet,
+		Format:           p.Format,
+		FormatFile:       p.FormatFile,
+		Query:            p.Query,
+		QueryFile:        p.QueryFile,
+		Id:               id,
+	}
 }
 
 // Initialize init UploadArchiveParam
@@ -1876,14 +1709,8 @@ func (p *UploadArchiveParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -1913,7 +1740,7 @@ func (p *UploadArchiveParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -1984,33 +1811,6 @@ func (p *UploadArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *UploadArchiveParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Archive"]
-}
-
-func (p *UploadArchiveParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["upload"]
-}
-
-func (p *UploadArchiveParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *UploadArchiveParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *UploadArchiveParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *UploadArchiveParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *UploadArchiveParam) SetArchiveFile(v string) {
 	p.ArchiveFile = v
 }
@@ -2032,26 +1832,12 @@ func (p *UploadArchiveParam) SetAssumeyes(v bool) {
 func (p *UploadArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *UploadArchiveParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *UploadArchiveParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *UploadArchiveParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *UploadArchiveParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *UploadArchiveParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *UploadArchiveParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *UploadArchiveParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -2116,30 +1902,28 @@ func (p *UploadArchiveParam) SetQueryFile(v string) {
 func (p *UploadArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UploadArchiveParam) SetId(v sacloud.ID) {
+func (p *UploadArchiveParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *UploadArchiveParam) GetId() sacloud.ID {
+func (p *UploadArchiveParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *UploadArchiveParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // DownloadArchiveParam is input parameters for the sacloud API
 type DownloadArchiveParam struct {
-	FileDestination   string
-	Selector          []string
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	Id                sacloud.ID
+	FileDestination  string
+	Selector         []string
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -2148,6 +1932,19 @@ type DownloadArchiveParam struct {
 // NewDownloadArchiveParam return new DownloadArchiveParam
 func NewDownloadArchiveParam() *DownloadArchiveParam {
 	return &DownloadArchiveParam{}
+}
+
+// WithID returns new *DownloadArchiveParam with id
+func (p *DownloadArchiveParam) WithID(id types.ID) *DownloadArchiveParam {
+	return &DownloadArchiveParam{
+		FileDestination:  p.FileDestination,
+		Selector:         p.Selector,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		Id:               id,
+	}
 }
 
 // Initialize init DownloadArchiveParam
@@ -2176,14 +1973,8 @@ func (p *DownloadArchiveParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -2192,7 +1983,7 @@ func (p *DownloadArchiveParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -2241,33 +2032,6 @@ func (p *DownloadArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *DownloadArchiveParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Archive"]
-}
-
-func (p *DownloadArchiveParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["download"]
-}
-
-func (p *DownloadArchiveParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *DownloadArchiveParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *DownloadArchiveParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *DownloadArchiveParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *DownloadArchiveParam) SetFileDestination(v string) {
 	p.FileDestination = v
 }
@@ -2289,26 +2053,12 @@ func (p *DownloadArchiveParam) SetAssumeyes(v bool) {
 func (p *DownloadArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DownloadArchiveParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *DownloadArchiveParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *DownloadArchiveParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *DownloadArchiveParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *DownloadArchiveParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *DownloadArchiveParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *DownloadArchiveParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -2324,36 +2074,34 @@ func (p *DownloadArchiveParam) SetGenerateSkeleton(v bool) {
 func (p *DownloadArchiveParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DownloadArchiveParam) SetId(v sacloud.ID) {
+func (p *DownloadArchiveParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *DownloadArchiveParam) GetId() sacloud.ID {
+func (p *DownloadArchiveParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *DownloadArchiveParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // FTPOpenArchiveParam is input parameters for the sacloud API
 type FTPOpenArchiveParam struct {
-	Selector          []string
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
-	Id                sacloud.ID
+	Selector         []string
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -2362,6 +2110,25 @@ type FTPOpenArchiveParam struct {
 // NewFTPOpenArchiveParam return new FTPOpenArchiveParam
 func NewFTPOpenArchiveParam() *FTPOpenArchiveParam {
 	return &FTPOpenArchiveParam{}
+}
+
+// WithID returns new *FTPOpenArchiveParam with id
+func (p *FTPOpenArchiveParam) WithID(id types.ID) *FTPOpenArchiveParam {
+	return &FTPOpenArchiveParam{
+		Selector:         p.Selector,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		OutputType:       p.OutputType,
+		Column:           p.Column,
+		Quiet:            p.Quiet,
+		Format:           p.Format,
+		FormatFile:       p.FormatFile,
+		Query:            p.Query,
+		QueryFile:        p.QueryFile,
+		Id:               id,
+	}
 }
 
 // Initialize init FTPOpenArchiveParam
@@ -2387,14 +2154,8 @@ func (p *FTPOpenArchiveParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -2424,7 +2185,7 @@ func (p *FTPOpenArchiveParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -2487,33 +2248,6 @@ func (p *FTPOpenArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *FTPOpenArchiveParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Archive"]
-}
-
-func (p *FTPOpenArchiveParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["ftp-open"]
-}
-
-func (p *FTPOpenArchiveParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *FTPOpenArchiveParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *FTPOpenArchiveParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *FTPOpenArchiveParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *FTPOpenArchiveParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2528,26 +2262,12 @@ func (p *FTPOpenArchiveParam) SetAssumeyes(v bool) {
 func (p *FTPOpenArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *FTPOpenArchiveParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *FTPOpenArchiveParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *FTPOpenArchiveParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *FTPOpenArchiveParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *FTPOpenArchiveParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *FTPOpenArchiveParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *FTPOpenArchiveParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -2612,29 +2332,27 @@ func (p *FTPOpenArchiveParam) SetQueryFile(v string) {
 func (p *FTPOpenArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *FTPOpenArchiveParam) SetId(v sacloud.ID) {
+func (p *FTPOpenArchiveParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *FTPOpenArchiveParam) GetId() sacloud.ID {
+func (p *FTPOpenArchiveParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *FTPOpenArchiveParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // FTPCloseArchiveParam is input parameters for the sacloud API
 type FTPCloseArchiveParam struct {
-	Selector          []string
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	Id                sacloud.ID
+	Selector         []string
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -2643,6 +2361,18 @@ type FTPCloseArchiveParam struct {
 // NewFTPCloseArchiveParam return new FTPCloseArchiveParam
 func NewFTPCloseArchiveParam() *FTPCloseArchiveParam {
 	return &FTPCloseArchiveParam{}
+}
+
+// WithID returns new *FTPCloseArchiveParam with id
+func (p *FTPCloseArchiveParam) WithID(id types.ID) *FTPCloseArchiveParam {
+	return &FTPCloseArchiveParam{
+		Selector:         p.Selector,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		Id:               id,
+	}
 }
 
 // Initialize init FTPCloseArchiveParam
@@ -2668,14 +2398,8 @@ func (p *FTPCloseArchiveParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -2684,7 +2408,7 @@ func (p *FTPCloseArchiveParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -2733,33 +2457,6 @@ func (p *FTPCloseArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *FTPCloseArchiveParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Archive"]
-}
-
-func (p *FTPCloseArchiveParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["ftp-close"]
-}
-
-func (p *FTPCloseArchiveParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *FTPCloseArchiveParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *FTPCloseArchiveParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *FTPCloseArchiveParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *FTPCloseArchiveParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2774,26 +2471,12 @@ func (p *FTPCloseArchiveParam) SetAssumeyes(v bool) {
 func (p *FTPCloseArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *FTPCloseArchiveParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *FTPCloseArchiveParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *FTPCloseArchiveParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *FTPCloseArchiveParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *FTPCloseArchiveParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *FTPCloseArchiveParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *FTPCloseArchiveParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -2809,28 +2492,26 @@ func (p *FTPCloseArchiveParam) SetGenerateSkeleton(v bool) {
 func (p *FTPCloseArchiveParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *FTPCloseArchiveParam) SetId(v sacloud.ID) {
+func (p *FTPCloseArchiveParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *FTPCloseArchiveParam) GetId() sacloud.ID {
+func (p *FTPCloseArchiveParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *FTPCloseArchiveParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // WaitForCopyArchiveParam is input parameters for the sacloud API
 type WaitForCopyArchiveParam struct {
-	Selector          []string
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	Id                sacloud.ID
+	Selector         []string
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -2839,6 +2520,17 @@ type WaitForCopyArchiveParam struct {
 // NewWaitForCopyArchiveParam return new WaitForCopyArchiveParam
 func NewWaitForCopyArchiveParam() *WaitForCopyArchiveParam {
 	return &WaitForCopyArchiveParam{}
+}
+
+// WithID returns new *WaitForCopyArchiveParam with id
+func (p *WaitForCopyArchiveParam) WithID(id types.ID) *WaitForCopyArchiveParam {
+	return &WaitForCopyArchiveParam{
+		Selector:         p.Selector,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		Id:               id,
+	}
 }
 
 // Initialize init WaitForCopyArchiveParam
@@ -2861,14 +2553,8 @@ func (p *WaitForCopyArchiveParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -2877,7 +2563,7 @@ func (p *WaitForCopyArchiveParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -2926,33 +2612,6 @@ func (p *WaitForCopyArchiveParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *WaitForCopyArchiveParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Archive"]
-}
-
-func (p *WaitForCopyArchiveParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["wait-for-copy"]
-}
-
-func (p *WaitForCopyArchiveParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *WaitForCopyArchiveParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *WaitForCopyArchiveParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *WaitForCopyArchiveParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *WaitForCopyArchiveParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2960,26 +2619,12 @@ func (p *WaitForCopyArchiveParam) SetSelector(v []string) {
 func (p *WaitForCopyArchiveParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *WaitForCopyArchiveParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *WaitForCopyArchiveParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *WaitForCopyArchiveParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *WaitForCopyArchiveParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *WaitForCopyArchiveParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *WaitForCopyArchiveParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *WaitForCopyArchiveParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -2995,15 +2640,15 @@ func (p *WaitForCopyArchiveParam) SetGenerateSkeleton(v bool) {
 func (p *WaitForCopyArchiveParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForCopyArchiveParam) SetId(v sacloud.ID) {
+func (p *WaitForCopyArchiveParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *WaitForCopyArchiveParam) GetId() sacloud.ID {
+func (p *WaitForCopyArchiveParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *WaitForCopyArchiveParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }

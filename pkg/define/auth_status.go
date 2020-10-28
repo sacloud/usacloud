@@ -36,6 +36,7 @@ func AuthStatusResource() *schema.Resource {
 		Commands:         commands,
 		DefaultCommand:   "show",
 		ResourceCategory: CategoryAuth,
+		IsGlobal:         true,
 	}
 }
 
@@ -45,22 +46,10 @@ func authShowParam() map[string]*schema.Schema {
 
 func authShowColumns() []output.ColumnDef {
 	return []output.ColumnDef{
-		{
-			Name:    "AccountID",
-			Sources: []string{"Account.ID"},
-		},
-		{
-			Name:    "AccountCode",
-			Sources: []string{"Account.Code"},
-		},
-		{
-			Name:    "AccountName",
-			Sources: []string{"Account.Name"},
-		},
-		{
-			Name:    "MemberCode",
-			Sources: []string{"Member.Code"},
-		},
+		{Name: "AccountID"},
+		{Name: "AccountCode"},
+		{Name: "AccountName"},
+		{Name: "MemberCode"},
 		{Name: "Permission"},
 		{Name: "ExternalPermission"},
 	}

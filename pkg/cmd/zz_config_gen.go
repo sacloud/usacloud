@@ -20,8 +20,9 @@ import (
 	"errors"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/funcs"
+	"github.com/sacloud/usacloud/pkg/funcs/config"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/term"
 	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
@@ -48,7 +49,7 @@ func configCurrentCmd() *cobra.Command {
 		Long:         `Current Config`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, configCurrentParam)
+			ctx, err := cli.NewCLIContext("config", "current", globalFlags(), args, configCurrentParam)
 			if err != nil {
 				return err
 			}
@@ -63,15 +64,13 @@ func configCurrentCmd() *cobra.Command {
 				return generateSkeleton(ctx, configCurrentParam)
 			}
 
-			return funcs.ConfigCurrent(ctx, configCurrentParam)
+			return cli.WrapError(ctx, config.Current(ctx, configCurrentParam))
 
 		},
 	}
 
 	fs := cmd.Flags()
-	fs.StringVarP(&configCurrentParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&configCurrentParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&configCurrentParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configCurrentParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configCurrentParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.SetNormalizeFunc(configCurrentNormalizeFlagNames)
@@ -88,7 +87,7 @@ func configDeleteCmd() *cobra.Command {
 		Long:         `Delete Config`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, configDeleteParam)
+			ctx, err := cli.NewCLIContext("config", "delete", globalFlags(), args, configDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -105,7 +104,7 @@ func configDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !configDeleteParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out())
@@ -114,16 +113,14 @@ func configDeleteCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.ConfigDelete(ctx, configDeleteParam)
+			return cli.WrapError(ctx, config.Delete(ctx, configDeleteParam))
 
 		},
 	}
 
 	fs := cmd.Flags()
 	fs.BoolVarP(&configDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&configDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&configDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&configDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.SetNormalizeFunc(configDeleteNormalizeFlagNames)
@@ -140,7 +137,7 @@ func configEditCmd() *cobra.Command {
 		Long:         `Edit Config (default)`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, configEditParam)
+			ctx, err := cli.NewCLIContext("config", "edit", globalFlags(), args, configEditParam)
 			if err != nil {
 				return err
 			}
@@ -155,7 +152,7 @@ func configEditCmd() *cobra.Command {
 				return generateSkeleton(ctx, configEditParam)
 			}
 
-			return funcs.ConfigEdit(ctx, configEditParam)
+			return cli.WrapError(ctx, config.Edit(ctx, configEditParam))
 
 		},
 	}
@@ -165,9 +162,7 @@ func configEditCmd() *cobra.Command {
 	fs.StringVarP(&configEditParam.Secret, "secret", "", "", "API Secret of SakuraCloud")
 	fs.StringVarP(&configEditParam.Zone, "zone", "", "", "Target zone of SakuraCloud")
 	fs.StringVarP(&configEditParam.DefaultOutputType, "default-output-type", "", "", "Default output format type")
-	fs.StringVarP(&configEditParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&configEditParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&configEditParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configEditParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configEditParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.SetNormalizeFunc(configEditNormalizeFlagNames)
@@ -184,7 +179,7 @@ func configListCmd() *cobra.Command {
 		Long:         `List Config`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, configListParam)
+			ctx, err := cli.NewCLIContext("config", "list", globalFlags(), args, configListParam)
 			if err != nil {
 				return err
 			}
@@ -199,15 +194,13 @@ func configListCmd() *cobra.Command {
 				return generateSkeleton(ctx, configListParam)
 			}
 
-			return funcs.ConfigList(ctx, configListParam)
+			return cli.WrapError(ctx, config.List(ctx, configListParam))
 
 		},
 	}
 
 	fs := cmd.Flags()
-	fs.StringVarP(&configListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&configListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&configListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.SetNormalizeFunc(configListNormalizeFlagNames)
@@ -224,7 +217,7 @@ func configMigrateCmd() *cobra.Command {
 		Long:         `Migrate Config`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, configMigrateParam)
+			ctx, err := cli.NewCLIContext("config", "migrate", globalFlags(), args, configMigrateParam)
 			if err != nil {
 				return err
 			}
@@ -239,15 +232,13 @@ func configMigrateCmd() *cobra.Command {
 				return generateSkeleton(ctx, configMigrateParam)
 			}
 
-			return funcs.ConfigMigrate(ctx, configMigrateParam)
+			return cli.WrapError(ctx, config.Migrate(ctx, configMigrateParam))
 
 		},
 	}
 
 	fs := cmd.Flags()
-	fs.StringVarP(&configMigrateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&configMigrateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&configMigrateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configMigrateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configMigrateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.SetNormalizeFunc(configMigrateNormalizeFlagNames)
@@ -264,7 +255,7 @@ func configShowCmd() *cobra.Command {
 		Long:         `Show Config`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, configShowParam)
+			ctx, err := cli.NewCLIContext("config", "show", globalFlags(), args, configShowParam)
 			if err != nil {
 				return err
 			}
@@ -279,15 +270,13 @@ func configShowCmd() *cobra.Command {
 				return generateSkeleton(ctx, configShowParam)
 			}
 
-			return funcs.ConfigShow(ctx, configShowParam)
+			return cli.WrapError(ctx, config.Show(ctx, configShowParam))
 
 		},
 	}
 
 	fs := cmd.Flags()
-	fs.StringVarP(&configShowParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&configShowParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&configShowParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configShowParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configShowParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.SetNormalizeFunc(configShowNormalizeFlagNames)
@@ -304,7 +293,7 @@ func configUseCmd() *cobra.Command {
 		Long:         `Use Config`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, configUseParam)
+			ctx, err := cli.NewCLIContext("config", "use", globalFlags(), args, configUseParam)
 			if err != nil {
 				return err
 			}
@@ -319,15 +308,13 @@ func configUseCmd() *cobra.Command {
 				return generateSkeleton(ctx, configUseParam)
 			}
 
-			return funcs.ConfigUse(ctx, configUseParam)
+			return cli.WrapError(ctx, config.Use(ctx, configUseParam))
 
 		},
 	}
 
 	fs := cmd.Flags()
-	fs.StringVarP(&configUseParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&configUseParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&configUseParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&configUseParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&configUseParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.SetNormalizeFunc(configUseNormalizeFlagNames)

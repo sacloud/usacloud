@@ -24,6 +24,7 @@ import (
 
 	"github.com/astaxie/flatmap"
 	"github.com/bitly/go-simplejson"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 type rowOutput struct {
@@ -42,7 +43,8 @@ func NewRowOutput(out io.Writer, err io.Writer, separator rune, option Option) O
 	}
 }
 
-func (o *rowOutput) Print(targets ...interface{}) error {
+func (o *rowOutput) Print(target interface{}) error {
+	targets := toSlice(target)
 	if o.Out == nil {
 		o.Out = os.Stdout
 	}
@@ -50,8 +52,8 @@ func (o *rowOutput) Print(targets ...interface{}) error {
 		o.Err = os.Stderr
 	}
 
-	if len(targets) == 0 {
-		fmt.Fprintf(o.Err, "Result is empty\n")
+	if util.IsEmpty(targets) {
+		fmt.Fprintln(o.Err, "no results")
 		return nil
 	}
 
@@ -76,7 +78,7 @@ func (o *rowOutput) Print(targets ...interface{}) error {
 	// first, collect header
 	if len(header) == 0 {
 		header = append(header, "RowNumber")
-		for i := range targets {
+		for i := 0; i < sliceLen(targets); i++ {
 			// interface{} -> map[string]interface{}
 			v := j.GetIndex(i)
 			mapValue, err := v.Map()
@@ -104,7 +106,7 @@ func (o *rowOutput) Print(targets ...interface{}) error {
 	w.Write(header)
 
 	// next, collect values
-	for rowIndex := range targets {
+	for rowIndex := 0; rowIndex < sliceLen(targets); rowIndex++ {
 
 		// interface{} -> map[string]interface{}
 		v := j.GetIndex(rowIndex)

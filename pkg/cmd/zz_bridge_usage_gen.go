@@ -72,9 +72,7 @@ func bridgeListFlagOrder(cmd *cobra.Command) []*flagSet {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -117,9 +115,7 @@ func bridgeCreateFlagOrder(cmd *cobra.Command) []*flagSet {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -151,9 +147,7 @@ func bridgeReadFlagOrder(cmd *cobra.Command) []*flagSet {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -205,9 +199,7 @@ func bridgeUpdateFlagOrder(cmd *cobra.Command) []*flagSet {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -249,9 +241,7 @@ func bridgeDeleteFlagOrder(cmd *cobra.Command) []*flagSet {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{

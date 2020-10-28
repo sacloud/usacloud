@@ -45,6 +45,7 @@ func ZoneResource() *schema.Resource {
 		Commands:         commands,
 		DefaultCommand:   "list",
 		ResourceCategory: CategoryInformation,
+		IsGlobal:         true,
 	}
 }
 

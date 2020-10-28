@@ -116,9 +116,7 @@ func diskListFlagOrder(cmd *cobra.Command) []*flagSet {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -177,9 +175,7 @@ func diskCreateFlagOrder(cmd *cobra.Command) []*flagSet {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -220,9 +216,7 @@ func diskReadFlagOrder(cmd *cobra.Command) []*flagSet {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -294,9 +288,7 @@ func diskUpdateFlagOrder(cmd *cobra.Command) []*flagSet {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -347,9 +339,7 @@ func diskDeleteFlagOrder(cmd *cobra.Command) []*flagSet {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -416,9 +406,7 @@ func diskEditFlagOrder(cmd *cobra.Command) []*flagSet {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -469,9 +457,7 @@ func diskResizePartitionFlagOrder(cmd *cobra.Command) []*flagSet {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -532,9 +518,7 @@ func diskReinstallFromArchiveFlagOrder(cmd *cobra.Command) []*flagSet {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -580,9 +564,7 @@ func diskReinstallFromDiskFlagOrder(cmd *cobra.Command) []*flagSet {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -627,9 +609,7 @@ func diskReinstallToBlankFlagOrder(cmd *cobra.Command) []*flagSet {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -674,9 +654,7 @@ func diskServerConnectFlagOrder(cmd *cobra.Command) []*flagSet {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -712,9 +690,7 @@ func diskServerDisconnectFlagOrder(cmd *cobra.Command) []*flagSet {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -749,9 +725,7 @@ func diskMonitorFlagOrder(cmd *cobra.Command) []*flagSet {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{
@@ -804,9 +778,7 @@ func diskWaitForCopyFlagOrder(cmd *cobra.Command) []*flagSet {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("param-template-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		sets = append(sets, &flagSet{

@@ -18,7 +18,7 @@ package cmd
 
 import (
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/funcs"
+	"github.com/sacloud/usacloud/pkg/funcs/coupon"
 	"github.com/sacloud/usacloud/pkg/params"
 	"github.com/spf13/cobra"
 )
@@ -45,7 +45,7 @@ func couponListCmd() *cobra.Command {
 		Long:         `List Coupon (default)`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, couponListParam)
+			ctx, err := cli.NewCLIContext("coupon", "list", globalFlags(), args, couponListParam)
 			if err != nil {
 				return err
 			}
@@ -60,15 +60,13 @@ func couponListCmd() *cobra.Command {
 				return generateSkeleton(ctx, couponListParam)
 			}
 
-			return funcs.CouponList(ctx, couponListParam)
+			return cli.WrapError(ctx, coupon.List(ctx, couponListParam))
 
 		},
 	}
 
 	fs := cmd.Flags()
-	fs.StringVarP(&couponListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&couponListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&couponListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&couponListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&couponListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&couponListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")

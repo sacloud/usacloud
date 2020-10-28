@@ -70,13 +70,50 @@ type DatabaseSettingCommon struct {
 	//
 	// [HACK] Create時はbool型、Read/Update時は文字列(FQDN or IP)となる。
 	// また、無効にするにはJSONで要素自体を指定しないことで行う。
-	WebUI           interface{} `yaml:"web_ui"`
-	ServicePort     int         `json:",omitempty" yaml:"service_port,omitempty" structs:",omitempty"`
-	SourceNetwork   []string    `yaml:"source_network"`
-	DefaultUser     string      `json:",omitempty" yaml:"default_user,omitempty" structs:",omitempty"`
-	UserPassword    string      `json:",omitempty" yaml:"user_password,omitempty" structs:",omitempty"`
-	ReplicaUser     string      `json:",omitempty" yaml:"replica_user,omitempty" structs:",omitempty"`
-	ReplicaPassword string      `json:",omitempty" yaml:"replica_password,omitempty" structs:",omitempty"`
+	WebUI           interface{}                   `yaml:"web_ui"`
+	ServicePort     int                           `json:",omitempty" yaml:"service_port,omitempty" structs:",omitempty"`
+	SourceNetwork   DatabaseSettingSourceNetworks `yaml:"source_network"`
+	DefaultUser     string                        `json:",omitempty" yaml:"default_user,omitempty" structs:",omitempty"`
+	UserPassword    string                        `json:",omitempty" yaml:"user_password,omitempty" structs:",omitempty"`
+	ReplicaUser     string                        `json:",omitempty" yaml:"replica_user,omitempty" structs:",omitempty"`
+	ReplicaPassword string                        `json:",omitempty" yaml:"replica_password,omitempty" structs:",omitempty"`
+}
+
+// DatabaseSettingSourceNetworks データベースへのアクセスを許可するCIDRリスト
+//
+// Note: すべての接続先を許可する場合は"0.0.0.0/0"を指定する。
+// この処理はMarshalJSON時にDatabaseSettingSourceNetwork側で行われるため、
+// APIクライアント側は許可したいCIDRブロックのリストを指定する。
+// libsacloudではすべての接続を拒否する設定はサポートしない。
+type DatabaseSettingSourceNetworks []string
+
+// MarshalJSON すべての接続先を許可する場合は"0.0.0.0/0"を指定するための対応
+func (d DatabaseSettingSourceNetworks) MarshalJSON() ([]byte, error) {
+	type alias DatabaseSettingSourceNetworks
+	dest := alias(d)
+
+	if dest == nil || len(dest) == 0 {
+		dest = append(dest, "0.0.0.0/0")
+	}
+
+	return json.Marshal(dest)
+}
+
+func (d *DatabaseSettingSourceNetworks) UnmarshalJSON(b []byte) error {
+	if string(b) == `""` || string(b) == "" {
+		return nil
+	}
+	type alias DatabaseSettingSourceNetworks
+
+	var a alias
+	if err := json.Unmarshal(b, &a); err != nil {
+		return err
+	}
+	if len(a) == 1 && a[0] == "0.0.0.0/0" {
+		return nil
+	}
+	*d = DatabaseSettingSourceNetworks(a)
+	return nil
 }
 
 // DatabaseSettingBackup データベース設定 バックアップ設定
@@ -127,14 +164,21 @@ type DatabaseStatus struct {
 
 // DatabaseStatusDBConf データベース設定
 type DatabaseStatusDBConf struct {
-	Version *DatabaseStatusVersion `json:"version,omitempty" yaml:"version,omitempty" structs:",omitempty"`
-	Log     []*DatabaseLog         `json:"log,omitempty" yaml:"log,omitempty" structs:",omitempty"`
-	Backup  *DatabaseBackupInfo    `json:"backup,omitempty" yaml:"backup,omitempty" structs:",omitempty"`
+	Version  *DatabaseStatusVersion    `json:"version,omitempty" yaml:"version,omitempty" structs:",omitempty"`
+	Log      []*DatabaseLog            `json:"log,omitempty" yaml:"log,omitempty" structs:",omitempty"`
+	Backup   *DatabaseBackupInfo       `json:"backup,omitempty" yaml:"backup,omitempty" structs:",omitempty"`
+	MariaDB  *DatabaseStatusMariaDB    `json:",omitempty" yaml:"maria_db,omitempty" structs:",omitempty"`
+	Postgres *DatabaseStatusPostgreSQL `json:"postgres,omitempty" yaml:"postgres,omitempty" structs:",omitempty"`
 
 	// 以下フィールドはサポートしない
 	// Replication
-	// MariaDB
-	// Postgress
+}
+
+type DatabaseStatusMariaDB struct {
+	Status string `json:"status,omitempty"`
+}
+type DatabaseStatusPostgreSQL struct {
+	Status string `json:"status,omitempty"`
 }
 
 // DatabaseStatusVersion データベース設定バージョン情報
@@ -148,9 +192,9 @@ type DatabaseStatusVersion struct {
 
 // DatabaseLog データベースログ
 type DatabaseLog struct {
-	Name string `json:"name,omitempty" yaml:"name,omitempty" structs:",omitempty"`
-	Data string `json:"data,omitempty" yaml:"data,omitempty" structs:",omitempty"`
-	Size int    `json:"size,omitempty" yaml:"size,omitempty" structs:",omitempty"`
+	Name string             `json:"name,omitempty" yaml:"name,omitempty" structs:",omitempty"`
+	Data string             `json:"data,omitempty" yaml:"data,omitempty" structs:",omitempty"`
+	Size types.StringNumber `json:"size,omitempty" yaml:"size,omitempty" structs:",omitempty"`
 }
 
 // IsSystemdLog systemcltのログか判定

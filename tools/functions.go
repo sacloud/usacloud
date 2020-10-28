@@ -20,8 +20,6 @@ import (
 	"log"
 	"strings"
 
-	"github.com/sacloud/libsacloud/sacloud"
-
 	"github.com/huandu/xstrings"
 )
 
@@ -112,6 +110,10 @@ func ToCamelWithFirstLower(name string) string {
 	return NormalizeName(xstrings.FirstRuneToLower(xstrings.ToCamelCase(xstrings.ToSnakeCase(name))))
 }
 
+func ToLowerName(name string) string {
+	return strings.ToLower(NormalizeName(xstrings.ToCamelCase(xstrings.ToSnakeCase(name))))
+}
+
 func ToCLIFlagName(name string) string {
 	format := "--%s"
 	if len(name) == 1 {
@@ -125,81 +127,4 @@ func FlattenStringList(list []string) string {
 		return fmt.Sprintf(`"%s"`, strings.Join(list, `","`))
 	}
 	return ""
-}
-
-func FlattenIntList(list []int) string {
-	if len(list) > 0 {
-		tmp := []string{}
-		for _, s := range list {
-			tmp = append(tmp, fmt.Sprintf("%d", s))
-		}
-		return strings.Join(tmp, ",")
-	}
-	return ""
-}
-
-func FlattenUintList(list []uint) string {
-	if len(list) > 0 {
-		tmp := []string{}
-		for _, s := range list {
-			tmp = append(tmp, fmt.Sprintf("%d", s))
-		}
-		return strings.Join(tmp, ",")
-	}
-	return ""
-}
-func FlattenInt64List(list []int64) string {
-	if len(list) > 0 {
-		tmp := []string{}
-		for _, s := range list {
-			tmp = append(tmp, fmt.Sprintf("%d", s))
-		}
-		return strings.Join(tmp, ",")
-	}
-	return ""
-}
-
-func FlattenUint64List(list []uint64) string {
-	if len(list) > 0 {
-		tmp := []string{}
-		for _, s := range list {
-			tmp = append(tmp, fmt.Sprintf("%d", s))
-		}
-		return strings.Join(tmp, ",")
-	}
-	return ""
-}
-
-func FlattenFloatList(list []float32) string {
-	if len(list) > 0 {
-		tmp := []string{}
-		for _, s := range list {
-			tmp = append(tmp, fmt.Sprintf("%f", s))
-		}
-		return strings.Join(tmp, ",")
-	}
-	return ""
-}
-
-func FlattenFloat64List(list []float64) string {
-	if len(list) > 0 {
-		tmp := []string{}
-		for _, s := range list {
-			tmp = append(tmp, fmt.Sprintf("%f", s))
-		}
-		return strings.Join(tmp, ",")
-	}
-	return ""
-}
-
-func FlattenIDList(list []sacloud.ID) string {
-	if len(list) > 0 {
-		tmp := []string{}
-		for _, s := range list {
-			tmp = append(tmp, fmt.Sprintf("sacloud.ID(%d)", s.Int64()))
-		}
-		return strings.Join(tmp, ",")
-	}
-	return ""
-
 }

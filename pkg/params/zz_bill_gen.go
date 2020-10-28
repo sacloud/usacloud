@@ -19,7 +19,7 @@ package params
 import (
 	"io"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
@@ -30,14 +30,12 @@ import (
 
 // CsvBillParam is input parameters for the sacloud API
 type CsvBillParam struct {
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	NoHeader          bool
-	BillOutput        string
-	BillId            sacloud.ID
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	NoHeader         bool
+	BillOutput       string
+	BillId           types.ID
 
 	config *config.Config
 	input  Input
@@ -65,14 +63,8 @@ func (p *CsvBillParam) WriteSkeleton(writer io.Writer) error {
 
 // FillValueToSkeleton fills empty value to the parameter
 func (p *CsvBillParam) FillValueToSkeleton() {
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -87,7 +79,7 @@ func (p *CsvBillParam) FillValueToSkeleton() {
 		p.BillOutput = ""
 	}
 	if util.IsEmpty(p.BillId) {
-		p.BillId = sacloud.ID(0)
+		p.BillId = types.ID(0)
 	}
 
 }
@@ -136,53 +128,12 @@ func (p *CsvBillParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *CsvBillParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Bill"]
-}
-
-func (p *CsvBillParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["csv"]
-}
-
-func (p *CsvBillParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *CsvBillParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *CsvBillParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *CsvBillParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-func (p *CsvBillParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *CsvBillParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *CsvBillParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *CsvBillParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *CsvBillParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *CsvBillParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *CsvBillParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -212,35 +163,33 @@ func (p *CsvBillParam) SetBillOutput(v string) {
 func (p *CsvBillParam) GetBillOutput() string {
 	return p.BillOutput
 }
-func (p *CsvBillParam) SetBillId(v sacloud.ID) {
+func (p *CsvBillParam) SetBillId(v types.ID) {
 	p.BillId = v
 }
 
-func (p *CsvBillParam) GetBillId() sacloud.ID {
+func (p *CsvBillParam) GetBillId() types.ID {
 	return p.BillId
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *CsvBillParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // ListBillParam is input parameters for the sacloud API
 type ListBillParam struct {
-	Year              int
-	Month             int
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
+	Year             int
+	Month            int
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
 
 	config *config.Config
 	input  Input
@@ -274,14 +223,8 @@ func (p *ListBillParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Month) {
 		p.Month = 0
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -379,33 +322,6 @@ func (p *ListBillParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ListBillParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Bill"]
-}
-
-func (p *ListBillParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["list"]
-}
-
-func (p *ListBillParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ListBillParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ListBillParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ListBillParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *ListBillParam) SetYear(v int) {
 	p.Year = v
 }
@@ -420,26 +336,12 @@ func (p *ListBillParam) SetMonth(v int) {
 func (p *ListBillParam) GetMonth() int {
 	return p.Month
 }
-func (p *ListBillParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ListBillParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ListBillParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ListBillParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ListBillParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ListBillParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ListBillParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -505,7 +407,7 @@ func (p *ListBillParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ListBillParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }

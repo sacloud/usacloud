@@ -20,6 +20,8 @@ import (
 	"io"
 	"os"
 
+	"github.com/sacloud/usacloud/pkg/util"
+
 	"github.com/astaxie/flatmap"
 	"github.com/bitly/go-simplejson"
 )
@@ -37,14 +39,15 @@ func NewTableOutput(out io.Writer, err io.Writer, formater Formatter) Output {
 	return &tableOutput{
 		Out:           out,
 		Err:           err,
-		IncludeFields: formater.GetIncludeFields(),
-		ExcludeFields: formater.GetExcludeFields(),
-		ColumnDefs:    formater.GetColumnDefs(),
-		TableType:     formater.GetTableType(),
+		IncludeFields: formater.IncludeFields(),
+		ExcludeFields: formater.ExcludeFields(),
+		ColumnDefs:    formater.ColumnDefs(),
+		TableType:     formater.TableType(),
 	}
 }
 
-func (o *tableOutput) Print(targets ...interface{}) error {
+func (o *tableOutput) Print(target interface{}) error {
+	targets := toSlice(target)
 	if o.Out == nil {
 		o.Out = os.Stdout
 	}
@@ -52,8 +55,8 @@ func (o *tableOutput) Print(targets ...interface{}) error {
 		o.Err = os.Stderr
 	}
 
-	if len(targets) == 0 {
-		fmt.Fprintf(o.Err, "Result is empty\n")
+	if util.IsEmpty(targets) {
+		fmt.Fprintln(o.Err, "no results")
 		return nil
 	}
 
@@ -73,7 +76,7 @@ func (o *tableOutput) Print(targets ...interface{}) error {
 		return fmt.Errorf("TableOutput:Print: create simplejson is failed: %s", err)
 	}
 
-	for i := range targets {
+	for i := 0; i < sliceLen(targets); i++ {
 
 		// interface{} -> map[string]interface{}
 		v := j.GetIndex(i)

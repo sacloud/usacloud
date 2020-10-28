@@ -17,7 +17,7 @@ package define
 import (
 	"fmt"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -279,7 +279,7 @@ func nfsCreateParam() map[string]*schema.Schema {
 			Required:     true,
 			DefaultValue: 100,
 			Description:  "set plan[100/500/1024/2048/4096/8192/12288]",
-			ValidateFunc: validateInIntValues(sacloud.AllowNFSNormalPlanSizes()...),
+			ValidateFunc: validateInIntValues(types.NFSIntSizes...),
 			Category:     "nfs",
 			Order:        45,
 		},

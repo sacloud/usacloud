@@ -20,10 +20,11 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/funcs"
+	"github.com/sacloud/usacloud/pkg/funcs/bridge"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/term"
 	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
@@ -51,7 +52,7 @@ func bridgeListCmd() *cobra.Command {
 		Long:         `List Bridge`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, bridgeListParam)
+			ctx, err := cli.NewCLIContext("bridge", "list", globalFlags(), args, bridgeListParam)
 			if err != nil {
 				return err
 			}
@@ -66,20 +67,18 @@ func bridgeListCmd() *cobra.Command {
 				return generateSkeleton(ctx, bridgeListParam)
 			}
 
-			return funcs.BridgeList(ctx, bridgeListParam)
+			return cli.WrapError(ctx, bridge.List(ctx, bridgeListParam))
 
 		},
 	}
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&bridgeListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &bridgeListParam.Id), "id", "", "set filter by id(s)")
+	fs.VarP(newIDSliceValue([]types.ID{}, &bridgeListParam.Id), "id", "", "set filter by id(s)")
 	fs.IntVarP(&bridgeListParam.From, "from", "", 0, "set offset (aliases: offset)")
 	fs.IntVarP(&bridgeListParam.Max, "max", "", 0, "set limit (aliases: limit)")
 	fs.StringSliceVarP(&bridgeListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringVarP(&bridgeListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&bridgeListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&bridgeListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&bridgeListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&bridgeListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&bridgeListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -103,7 +102,7 @@ func bridgeCreateCmd() *cobra.Command {
 		Long:         `Create Bridge`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, bridgeCreateParam)
+			ctx, err := cli.NewCLIContext("bridge", "create", globalFlags(), args, bridgeCreateParam)
 			if err != nil {
 				return err
 			}
@@ -120,7 +119,7 @@ func bridgeCreateCmd() *cobra.Command {
 
 			// confirm
 			if !bridgeCreateParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
@@ -129,7 +128,7 @@ func bridgeCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.BridgeCreate(ctx, bridgeCreateParam)
+			return cli.WrapError(ctx, bridge.Create(ctx, bridgeCreateParam))
 
 		},
 	}
@@ -138,9 +137,7 @@ func bridgeCreateCmd() *cobra.Command {
 	fs.StringVarP(&bridgeCreateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&bridgeCreateParam.Description, "description", "", "", "set resource description (aliases: desc)")
 	fs.BoolVarP(&bridgeCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&bridgeCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&bridgeCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&bridgeCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&bridgeCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&bridgeCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&bridgeCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -164,7 +161,7 @@ func bridgeReadCmd() *cobra.Command {
 		Long:         `Read Bridge`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, bridgeReadParam)
+			ctx, err := cli.NewCLIContext("bridge", "read", globalFlags(), args, bridgeReadParam)
 			if err != nil {
 				return err
 			}
@@ -190,14 +187,13 @@ func bridgeReadCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				bridgeReadParam.SetId(id)
-				go func(p *params.ReadBridgeParam) {
-					err := funcs.BridgeRead(ctx, p)
+				go func(ctx cli.Context, p *params.ReadBridgeParam) {
+					err := cli.WrapError(ctx, bridge.Read(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(bridgeReadParam)
+				}(ctx.WithID(id), bridgeReadParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -206,9 +202,7 @@ func bridgeReadCmd() *cobra.Command {
 	}
 
 	fs := cmd.Flags()
-	fs.StringVarP(&bridgeReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&bridgeReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&bridgeReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&bridgeReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&bridgeReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&bridgeReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -233,7 +227,7 @@ func bridgeUpdateCmd() *cobra.Command {
 		Long:         `Update Bridge`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, bridgeUpdateParam)
+			ctx, err := cli.NewCLIContext("bridge", "update", globalFlags(), args, bridgeUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -256,7 +250,7 @@ func bridgeUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !bridgeUpdateParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -270,14 +264,13 @@ func bridgeUpdateCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				bridgeUpdateParam.SetId(id)
-				go func(p *params.UpdateBridgeParam) {
-					err := funcs.BridgeUpdate(ctx, p)
+				go func(ctx cli.Context, p *params.UpdateBridgeParam) {
+					err := cli.WrapError(ctx, bridge.Update(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(bridgeUpdateParam)
+				}(ctx.WithID(id), bridgeUpdateParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -289,9 +282,7 @@ func bridgeUpdateCmd() *cobra.Command {
 	fs.StringVarP(&bridgeUpdateParam.Name, "name", "", "", "set resource display name")
 	fs.StringVarP(&bridgeUpdateParam.Description, "description", "", "", "set resource description (aliases: desc)")
 	fs.BoolVarP(&bridgeUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&bridgeUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&bridgeUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&bridgeUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&bridgeUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&bridgeUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&bridgeUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -316,7 +307,7 @@ func bridgeDeleteCmd() *cobra.Command {
 		Long:         `Delete Bridge`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, bridgeDeleteParam)
+			ctx, err := cli.NewCLIContext("bridge", "delete", globalFlags(), args, bridgeDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -339,7 +330,7 @@ func bridgeDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !bridgeDeleteParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -353,14 +344,13 @@ func bridgeDeleteCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				bridgeDeleteParam.SetId(id)
-				go func(p *params.DeleteBridgeParam) {
-					err := funcs.BridgeDelete(ctx, p)
+				go func(ctx cli.Context, p *params.DeleteBridgeParam) {
+					err := cli.WrapError(ctx, bridge.Delete(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(bridgeDeleteParam)
+				}(ctx.WithID(id), bridgeDeleteParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -370,9 +360,7 @@ func bridgeDeleteCmd() *cobra.Command {
 
 	fs := cmd.Flags()
 	fs.BoolVarP(&bridgeDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&bridgeDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&bridgeDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&bridgeDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&bridgeDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&bridgeDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&bridgeDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")

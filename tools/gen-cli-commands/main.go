@@ -75,8 +75,10 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/usacloud/pkg/funcs/{{ .PackageDirName }}"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/term"
 	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
@@ -109,7 +111,7 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 		Long: ` + "`{{ .Usage }}`" + `,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, {{ .InputParameterVariable }})
+			ctx, err := cli.NewCLIContext("{{ .Resource.CLIName }}", "{{ .CLIName }}", globalFlags(), args, {{ .InputParameterVariable }})
 			if err != nil {
 				return err
 			}
@@ -135,7 +137,7 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 			{{ if .NeedConfirm }}
 			// confirm
 			if !{{.InputParameterVariable}}.Assumeyes {
-				if !util.IsTerminal(){
+				if !term.IsTerminal(){
 				    return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("{{.ConfirmMessage}}", ctx.IO().In(), ctx.IO().Out(){{ if .MultipleArgToIdParams }}, ids...{{ end }})
@@ -151,19 +153,18 @@ func {{ .CLIVariableFuncName }}() *cobra.Command {
 			var errs []error
 			for _ , id := range ids {
 				wg.Add(1)
-				{{ .InputParameterVariable }}.SetId(id)
-				go func(p *params.{{ .InputParameterTypeName }}) {
-					err := funcs.{{ .FunctionName }}(ctx, p)
+				go func(ctx cli.Context, p *params.{{ .InputParameterTypeName }}) {
+					err := cli.WrapError(ctx, {{ .PackageDirName }}.{{ .FunctionName }}(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}({{ .InputParameterVariable }})
+				}(ctx.WithID(id), {{ .InputParameterVariable }}.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
 			{{ else }}
-			return funcs.{{ .FunctionName }}(ctx, {{ .InputParameterVariable }})
+			return cli.WrapError(ctx, {{ .PackageDirName }}.{{ .FunctionName }}(ctx, {{ .InputParameterVariable }}))
 			{{ end }}
 		},
 	}

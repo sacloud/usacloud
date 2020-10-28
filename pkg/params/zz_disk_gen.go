@@ -19,7 +19,7 @@ package params
 import (
 	"io"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
@@ -31,28 +31,26 @@ import (
 
 // ListDiskParam is input parameters for the sacloud API
 type ListDiskParam struct {
-	Name              []string
-	Id                []sacloud.ID
-	Scope             string
-	Tags              []string
-	SourceArchiveId   sacloud.ID
-	SourceDiskId      sacloud.ID
-	Storage           string
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
+	Name             []string
+	Id               []types.ID
+	Scope            string
+	Tags             []string
+	SourceArchiveId  types.ID
+	SourceDiskId     types.ID
+	Storage          string
+	From             int
+	Max              int
+	Sort             []string
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
 
 	config *config.Config
 	input  Input
@@ -84,7 +82,7 @@ func (p *ListDiskParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = []sacloud.ID{}
+		p.Id = []types.ID{}
 	}
 	if util.IsEmpty(p.Scope) {
 		p.Scope = ""
@@ -93,10 +91,10 @@ func (p *ListDiskParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if util.IsEmpty(p.SourceArchiveId) {
-		p.SourceArchiveId = sacloud.ID(0)
+		p.SourceArchiveId = types.ID(0)
 	}
 	if util.IsEmpty(p.SourceDiskId) {
-		p.SourceDiskId = sacloud.ID(0)
+		p.SourceDiskId = types.ID(0)
 	}
 	if util.IsEmpty(p.Storage) {
 		p.Storage = ""
@@ -110,14 +108,8 @@ func (p *ListDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Sort) {
 		p.Sort = []string{""}
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -258,33 +250,6 @@ func (p *ListDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ListDiskParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *ListDiskParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["list"]
-}
-
-func (p *ListDiskParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ListDiskParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ListDiskParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ListDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *ListDiskParam) SetName(v []string) {
 	p.Name = v
 }
@@ -292,11 +257,11 @@ func (p *ListDiskParam) SetName(v []string) {
 func (p *ListDiskParam) GetName() []string {
 	return p.Name
 }
-func (p *ListDiskParam) SetId(v []sacloud.ID) {
+func (p *ListDiskParam) SetId(v []types.ID) {
 	p.Id = v
 }
 
-func (p *ListDiskParam) GetId() []sacloud.ID {
+func (p *ListDiskParam) GetId() []types.ID {
 	return p.Id
 }
 func (p *ListDiskParam) SetScope(v string) {
@@ -313,18 +278,18 @@ func (p *ListDiskParam) SetTags(v []string) {
 func (p *ListDiskParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListDiskParam) SetSourceArchiveId(v sacloud.ID) {
+func (p *ListDiskParam) SetSourceArchiveId(v types.ID) {
 	p.SourceArchiveId = v
 }
 
-func (p *ListDiskParam) GetSourceArchiveId() sacloud.ID {
+func (p *ListDiskParam) GetSourceArchiveId() types.ID {
 	return p.SourceArchiveId
 }
-func (p *ListDiskParam) SetSourceDiskId(v sacloud.ID) {
+func (p *ListDiskParam) SetSourceDiskId(v types.ID) {
 	p.SourceDiskId = v
 }
 
-func (p *ListDiskParam) GetSourceDiskId() sacloud.ID {
+func (p *ListDiskParam) GetSourceDiskId() types.ID {
 	return p.SourceDiskId
 }
 func (p *ListDiskParam) SetStorage(v string) {
@@ -355,26 +320,12 @@ func (p *ListDiskParam) SetSort(v []string) {
 func (p *ListDiskParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListDiskParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ListDiskParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ListDiskParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ListDiskParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ListDiskParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ListDiskParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ListDiskParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -440,36 +391,34 @@ func (p *ListDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ListDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // CreateDiskParam is input parameters for the sacloud API
 type CreateDiskParam struct {
-	Plan              string
-	Connection        string
-	SourceArchiveId   sacloud.ID
-	SourceDiskId      sacloud.ID
-	Size              int
-	DistantFrom       []sacloud.ID
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            sacloud.ID
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
+	Plan             string
+	Connection       string
+	SourceArchiveId  types.ID
+	SourceDiskId     types.ID
+	Size             int
+	DistantFrom      []types.ID
+	Name             string
+	Description      string
+	Tags             []string
+	IconId           types.ID
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
 
 	config *config.Config
 	input  Input
@@ -478,7 +427,10 @@ type CreateDiskParam struct {
 // NewCreateDiskParam return new CreateDiskParam
 func NewCreateDiskParam() *CreateDiskParam {
 	return &CreateDiskParam{
-		Plan: "ssd", Connection: "virtio", Size: 20}
+		Plan:       "ssd",
+		Connection: "virtio",
+		Size:       20,
+	}
 }
 
 // Initialize init CreateDiskParam
@@ -505,16 +457,16 @@ func (p *CreateDiskParam) FillValueToSkeleton() {
 		p.Connection = ""
 	}
 	if util.IsEmpty(p.SourceArchiveId) {
-		p.SourceArchiveId = sacloud.ID(0)
+		p.SourceArchiveId = types.ID(0)
 	}
 	if util.IsEmpty(p.SourceDiskId) {
-		p.SourceDiskId = sacloud.ID(0)
+		p.SourceDiskId = types.ID(0)
 	}
 	if util.IsEmpty(p.Size) {
 		p.Size = 0
 	}
 	if util.IsEmpty(p.DistantFrom) {
-		p.DistantFrom = []sacloud.ID{}
+		p.DistantFrom = []types.ID{}
 	}
 	if util.IsEmpty(p.Name) {
 		p.Name = ""
@@ -526,19 +478,13 @@ func (p *CreateDiskParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if util.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
+		p.IconId = types.ID(0)
 	}
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -644,13 +590,6 @@ func (p *CreateDiskParam) validate() error {
 			errors = append(errors, errs...)
 		}
 	}
-	{
-		validator := define.Resources["Disk"].Commands["create"].Params["size"].ValidateFunc
-		errs := validator("--size", p.Size)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Disk"].Commands["create"].Params["distant-from"].ValidateFunc
@@ -746,33 +685,6 @@ func (p *CreateDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *CreateDiskParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *CreateDiskParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["create"]
-}
-
-func (p *CreateDiskParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *CreateDiskParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *CreateDiskParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *CreateDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *CreateDiskParam) SetPlan(v string) {
 	p.Plan = v
 }
@@ -787,18 +699,18 @@ func (p *CreateDiskParam) SetConnection(v string) {
 func (p *CreateDiskParam) GetConnection() string {
 	return p.Connection
 }
-func (p *CreateDiskParam) SetSourceArchiveId(v sacloud.ID) {
+func (p *CreateDiskParam) SetSourceArchiveId(v types.ID) {
 	p.SourceArchiveId = v
 }
 
-func (p *CreateDiskParam) GetSourceArchiveId() sacloud.ID {
+func (p *CreateDiskParam) GetSourceArchiveId() types.ID {
 	return p.SourceArchiveId
 }
-func (p *CreateDiskParam) SetSourceDiskId(v sacloud.ID) {
+func (p *CreateDiskParam) SetSourceDiskId(v types.ID) {
 	p.SourceDiskId = v
 }
 
-func (p *CreateDiskParam) GetSourceDiskId() sacloud.ID {
+func (p *CreateDiskParam) GetSourceDiskId() types.ID {
 	return p.SourceDiskId
 }
 func (p *CreateDiskParam) SetSize(v int) {
@@ -808,11 +720,11 @@ func (p *CreateDiskParam) SetSize(v int) {
 func (p *CreateDiskParam) GetSize() int {
 	return p.Size
 }
-func (p *CreateDiskParam) SetDistantFrom(v []sacloud.ID) {
+func (p *CreateDiskParam) SetDistantFrom(v []types.ID) {
 	p.DistantFrom = v
 }
 
-func (p *CreateDiskParam) GetDistantFrom() []sacloud.ID {
+func (p *CreateDiskParam) GetDistantFrom() []types.ID {
 	return p.DistantFrom
 }
 func (p *CreateDiskParam) SetName(v string) {
@@ -836,11 +748,11 @@ func (p *CreateDiskParam) SetTags(v []string) {
 func (p *CreateDiskParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateDiskParam) SetIconId(v sacloud.ID) {
+func (p *CreateDiskParam) SetIconId(v types.ID) {
 	p.IconId = v
 }
 
-func (p *CreateDiskParam) GetIconId() sacloud.ID {
+func (p *CreateDiskParam) GetIconId() types.ID {
 	return p.IconId
 }
 func (p *CreateDiskParam) SetAssumeyes(v bool) {
@@ -850,26 +762,12 @@ func (p *CreateDiskParam) SetAssumeyes(v bool) {
 func (p *CreateDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *CreateDiskParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *CreateDiskParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *CreateDiskParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *CreateDiskParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *CreateDiskParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *CreateDiskParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *CreateDiskParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -935,27 +833,25 @@ func (p *CreateDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *CreateDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // ReadDiskParam is input parameters for the sacloud API
 type ReadDiskParam struct {
-	Selector          []string
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
-	Id                sacloud.ID
+	Selector         []string
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -964,6 +860,24 @@ type ReadDiskParam struct {
 // NewReadDiskParam return new ReadDiskParam
 func NewReadDiskParam() *ReadDiskParam {
 	return &ReadDiskParam{}
+}
+
+// WithID returns new *ReadDiskParam with id
+func (p *ReadDiskParam) WithID(id types.ID) *ReadDiskParam {
+	return &ReadDiskParam{
+		Selector:         p.Selector,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		OutputType:       p.OutputType,
+		Column:           p.Column,
+		Quiet:            p.Quiet,
+		Format:           p.Format,
+		FormatFile:       p.FormatFile,
+		Query:            p.Query,
+		QueryFile:        p.QueryFile,
+		Id:               id,
+	}
 }
 
 // Initialize init ReadDiskParam
@@ -986,14 +900,8 @@ func (p *ReadDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -1023,7 +931,7 @@ func (p *ReadDiskParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -1086,33 +994,6 @@ func (p *ReadDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ReadDiskParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *ReadDiskParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["read"]
-}
-
-func (p *ReadDiskParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ReadDiskParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ReadDiskParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ReadDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *ReadDiskParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1120,26 +1001,12 @@ func (p *ReadDiskParam) SetSelector(v []string) {
 func (p *ReadDiskParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *ReadDiskParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ReadDiskParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ReadDiskParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ReadDiskParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ReadDiskParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ReadDiskParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ReadDiskParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -1204,41 +1071,39 @@ func (p *ReadDiskParam) SetQueryFile(v string) {
 func (p *ReadDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadDiskParam) SetId(v sacloud.ID) {
+func (p *ReadDiskParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *ReadDiskParam) GetId() sacloud.ID {
+func (p *ReadDiskParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ReadDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // UpdateDiskParam is input parameters for the sacloud API
 type UpdateDiskParam struct {
-	Connection        string
-	Selector          []string
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            sacloud.ID
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
-	Id                sacloud.ID
+	Connection       string
+	Selector         []string
+	Name             string
+	Description      string
+	Tags             []string
+	IconId           types.ID
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -1247,6 +1112,30 @@ type UpdateDiskParam struct {
 // NewUpdateDiskParam return new UpdateDiskParam
 func NewUpdateDiskParam() *UpdateDiskParam {
 	return &UpdateDiskParam{}
+}
+
+// WithID returns new *UpdateDiskParam with id
+func (p *UpdateDiskParam) WithID(id types.ID) *UpdateDiskParam {
+	return &UpdateDiskParam{
+		Connection:       p.Connection,
+		Selector:         p.Selector,
+		Name:             p.Name,
+		Description:      p.Description,
+		Tags:             p.Tags,
+		IconId:           p.IconId,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		OutputType:       p.OutputType,
+		Column:           p.Column,
+		Quiet:            p.Quiet,
+		Format:           p.Format,
+		FormatFile:       p.FormatFile,
+		Query:            p.Query,
+		QueryFile:        p.QueryFile,
+		Id:               id,
+	}
 }
 
 // Initialize init UpdateDiskParam
@@ -1282,19 +1171,13 @@ func (p *UpdateDiskParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if util.IsEmpty(p.IconId) {
-		p.IconId = sacloud.ID(0)
+		p.IconId = types.ID(0)
 	}
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -1324,21 +1207,13 @@ func (p *UpdateDiskParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
 
 func (p *UpdateDiskParam) validate() error {
 	var errors []error
-
-	{
-		validator := define.Resources["Disk"].Commands["update"].Params["connection"].ValidateFunc
-		errs := validator("--connection", p.Connection)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	{
 		validator := define.Resources["Disk"].Commands["update"].Params["name"].ValidateFunc
@@ -1427,33 +1302,6 @@ func (p *UpdateDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *UpdateDiskParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *UpdateDiskParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["update"]
-}
-
-func (p *UpdateDiskParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *UpdateDiskParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *UpdateDiskParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *UpdateDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *UpdateDiskParam) SetConnection(v string) {
 	p.Connection = v
 }
@@ -1489,11 +1337,11 @@ func (p *UpdateDiskParam) SetTags(v []string) {
 func (p *UpdateDiskParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateDiskParam) SetIconId(v sacloud.ID) {
+func (p *UpdateDiskParam) SetIconId(v types.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateDiskParam) GetIconId() sacloud.ID {
+func (p *UpdateDiskParam) GetIconId() types.ID {
 	return p.IconId
 }
 func (p *UpdateDiskParam) SetAssumeyes(v bool) {
@@ -1503,26 +1351,12 @@ func (p *UpdateDiskParam) SetAssumeyes(v bool) {
 func (p *UpdateDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *UpdateDiskParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *UpdateDiskParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *UpdateDiskParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *UpdateDiskParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *UpdateDiskParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *UpdateDiskParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *UpdateDiskParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -1587,36 +1421,34 @@ func (p *UpdateDiskParam) SetQueryFile(v string) {
 func (p *UpdateDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateDiskParam) SetId(v sacloud.ID) {
+func (p *UpdateDiskParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *UpdateDiskParam) GetId() sacloud.ID {
+func (p *UpdateDiskParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *UpdateDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // DeleteDiskParam is input parameters for the sacloud API
 type DeleteDiskParam struct {
-	Selector          []string
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
-	Id                sacloud.ID
+	Selector         []string
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -1625,6 +1457,25 @@ type DeleteDiskParam struct {
 // NewDeleteDiskParam return new DeleteDiskParam
 func NewDeleteDiskParam() *DeleteDiskParam {
 	return &DeleteDiskParam{}
+}
+
+// WithID returns new *DeleteDiskParam with id
+func (p *DeleteDiskParam) WithID(id types.ID) *DeleteDiskParam {
+	return &DeleteDiskParam{
+		Selector:         p.Selector,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		OutputType:       p.OutputType,
+		Column:           p.Column,
+		Quiet:            p.Quiet,
+		Format:           p.Format,
+		FormatFile:       p.FormatFile,
+		Query:            p.Query,
+		QueryFile:        p.QueryFile,
+		Id:               id,
+	}
 }
 
 // Initialize init DeleteDiskParam
@@ -1650,14 +1501,8 @@ func (p *DeleteDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -1687,7 +1532,7 @@ func (p *DeleteDiskParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -1750,33 +1595,6 @@ func (p *DeleteDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *DeleteDiskParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *DeleteDiskParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["delete"]
-}
-
-func (p *DeleteDiskParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *DeleteDiskParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *DeleteDiskParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *DeleteDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *DeleteDiskParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1791,26 +1609,12 @@ func (p *DeleteDiskParam) SetAssumeyes(v bool) {
 func (p *DeleteDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *DeleteDiskParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *DeleteDiskParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *DeleteDiskParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *DeleteDiskParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *DeleteDiskParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *DeleteDiskParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *DeleteDiskParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -1875,15 +1679,15 @@ func (p *DeleteDiskParam) SetQueryFile(v string) {
 func (p *DeleteDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteDiskParam) SetId(v sacloud.ID) {
+func (p *DeleteDiskParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *DeleteDiskParam) GetId() sacloud.ID {
+func (p *DeleteDiskParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *DeleteDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
@@ -1892,17 +1696,15 @@ func (p *DeleteDiskParam) Changed(name string) bool {
 type EditDiskParam struct {
 	Hostname            string
 	Password            string
-	SSHKeyIds           []sacloud.ID
+	SSHKeyIds           []types.ID
 	DisablePasswordAuth bool
 	Ipaddress           string
 	DefaultRoute        string
 	NwMasklen           int
-	StartupScriptIds    []sacloud.ID
+	StartupScriptIds    []types.ID
 	Selector            []string
 	Assumeyes           bool
-	ParamTemplate       string
 	Parameters          string
-	ParamTemplateFile   string
 	ParameterFile       string
 	GenerateSkeleton    bool
 	OutputType          string
@@ -1912,7 +1714,7 @@ type EditDiskParam struct {
 	FormatFile          string
 	Query               string
 	QueryFile           string
-	Id                  sacloud.ID
+	Id                  types.ID
 
 	config *config.Config
 	input  Input
@@ -1921,7 +1723,35 @@ type EditDiskParam struct {
 // NewEditDiskParam return new EditDiskParam
 func NewEditDiskParam() *EditDiskParam {
 	return &EditDiskParam{
-		NwMasklen: 24}
+		NwMasklen: 24,
+	}
+}
+
+// WithID returns new *EditDiskParam with id
+func (p *EditDiskParam) WithID(id types.ID) *EditDiskParam {
+	return &EditDiskParam{
+		Hostname:            p.Hostname,
+		Password:            p.Password,
+		SSHKeyIds:           p.SSHKeyIds,
+		DisablePasswordAuth: p.DisablePasswordAuth,
+		Ipaddress:           p.Ipaddress,
+		DefaultRoute:        p.DefaultRoute,
+		NwMasklen:           p.NwMasklen,
+		StartupScriptIds:    p.StartupScriptIds,
+		Selector:            p.Selector,
+		Assumeyes:           p.Assumeyes,
+		Parameters:          p.Parameters,
+		ParameterFile:       p.ParameterFile,
+		GenerateSkeleton:    p.GenerateSkeleton,
+		OutputType:          p.OutputType,
+		Column:              p.Column,
+		Quiet:               p.Quiet,
+		Format:              p.Format,
+		FormatFile:          p.FormatFile,
+		Query:               p.Query,
+		QueryFile:           p.QueryFile,
+		Id:                  id,
+	}
 }
 
 // Initialize init EditDiskParam
@@ -1948,7 +1778,7 @@ func (p *EditDiskParam) FillValueToSkeleton() {
 		p.Password = ""
 	}
 	if util.IsEmpty(p.SSHKeyIds) {
-		p.SSHKeyIds = []sacloud.ID{}
+		p.SSHKeyIds = []types.ID{}
 	}
 	if util.IsEmpty(p.DisablePasswordAuth) {
 		p.DisablePasswordAuth = false
@@ -1963,7 +1793,7 @@ func (p *EditDiskParam) FillValueToSkeleton() {
 		p.NwMasklen = 0
 	}
 	if util.IsEmpty(p.StartupScriptIds) {
-		p.StartupScriptIds = []sacloud.ID{}
+		p.StartupScriptIds = []types.ID{}
 	}
 	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -1971,14 +1801,8 @@ func (p *EditDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -2008,7 +1832,7 @@ func (p *EditDiskParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -2095,33 +1919,6 @@ func (p *EditDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *EditDiskParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *EditDiskParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["edit"]
-}
-
-func (p *EditDiskParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *EditDiskParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *EditDiskParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *EditDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *EditDiskParam) SetHostname(v string) {
 	p.Hostname = v
 }
@@ -2136,11 +1933,11 @@ func (p *EditDiskParam) SetPassword(v string) {
 func (p *EditDiskParam) GetPassword() string {
 	return p.Password
 }
-func (p *EditDiskParam) SetSSHKeyIds(v []sacloud.ID) {
+func (p *EditDiskParam) SetSSHKeyIds(v []types.ID) {
 	p.SSHKeyIds = v
 }
 
-func (p *EditDiskParam) GetSSHKeyIds() []sacloud.ID {
+func (p *EditDiskParam) GetSSHKeyIds() []types.ID {
 	return p.SSHKeyIds
 }
 func (p *EditDiskParam) SetDisablePasswordAuth(v bool) {
@@ -2171,11 +1968,11 @@ func (p *EditDiskParam) SetNwMasklen(v int) {
 func (p *EditDiskParam) GetNwMasklen() int {
 	return p.NwMasklen
 }
-func (p *EditDiskParam) SetStartupScriptIds(v []sacloud.ID) {
+func (p *EditDiskParam) SetStartupScriptIds(v []types.ID) {
 	p.StartupScriptIds = v
 }
 
-func (p *EditDiskParam) GetStartupScriptIds() []sacloud.ID {
+func (p *EditDiskParam) GetStartupScriptIds() []types.ID {
 	return p.StartupScriptIds
 }
 func (p *EditDiskParam) SetSelector(v []string) {
@@ -2192,26 +1989,12 @@ func (p *EditDiskParam) SetAssumeyes(v bool) {
 func (p *EditDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *EditDiskParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *EditDiskParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *EditDiskParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *EditDiskParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *EditDiskParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *EditDiskParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *EditDiskParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -2276,36 +2059,34 @@ func (p *EditDiskParam) SetQueryFile(v string) {
 func (p *EditDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *EditDiskParam) SetId(v sacloud.ID) {
+func (p *EditDiskParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *EditDiskParam) GetId() sacloud.ID {
+func (p *EditDiskParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *EditDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // ResizePartitionDiskParam is input parameters for the sacloud API
 type ResizePartitionDiskParam struct {
-	Selector          []string
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
-	Id                sacloud.ID
+	Selector         []string
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -2314,6 +2095,25 @@ type ResizePartitionDiskParam struct {
 // NewResizePartitionDiskParam return new ResizePartitionDiskParam
 func NewResizePartitionDiskParam() *ResizePartitionDiskParam {
 	return &ResizePartitionDiskParam{}
+}
+
+// WithID returns new *ResizePartitionDiskParam with id
+func (p *ResizePartitionDiskParam) WithID(id types.ID) *ResizePartitionDiskParam {
+	return &ResizePartitionDiskParam{
+		Selector:         p.Selector,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		OutputType:       p.OutputType,
+		Column:           p.Column,
+		Quiet:            p.Quiet,
+		Format:           p.Format,
+		FormatFile:       p.FormatFile,
+		Query:            p.Query,
+		QueryFile:        p.QueryFile,
+		Id:               id,
+	}
 }
 
 // Initialize init ResizePartitionDiskParam
@@ -2339,14 +2139,8 @@ func (p *ResizePartitionDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -2376,7 +2170,7 @@ func (p *ResizePartitionDiskParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -2439,33 +2233,6 @@ func (p *ResizePartitionDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ResizePartitionDiskParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *ResizePartitionDiskParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["resize-partition"]
-}
-
-func (p *ResizePartitionDiskParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ResizePartitionDiskParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ResizePartitionDiskParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ResizePartitionDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *ResizePartitionDiskParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2480,26 +2247,12 @@ func (p *ResizePartitionDiskParam) SetAssumeyes(v bool) {
 func (p *ResizePartitionDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ResizePartitionDiskParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ResizePartitionDiskParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ResizePartitionDiskParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ResizePartitionDiskParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ResizePartitionDiskParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ResizePartitionDiskParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ResizePartitionDiskParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -2564,31 +2317,29 @@ func (p *ResizePartitionDiskParam) SetQueryFile(v string) {
 func (p *ResizePartitionDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ResizePartitionDiskParam) SetId(v sacloud.ID) {
+func (p *ResizePartitionDiskParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *ResizePartitionDiskParam) GetId() sacloud.ID {
+func (p *ResizePartitionDiskParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ResizePartitionDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // ReinstallFromArchiveDiskParam is input parameters for the sacloud API
 type ReinstallFromArchiveDiskParam struct {
-	SourceArchiveId   sacloud.ID
-	DistantFrom       []sacloud.ID
-	Selector          []string
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	Id                sacloud.ID
+	SourceArchiveId  types.ID
+	DistantFrom      []types.ID
+	Selector         []string
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -2597,6 +2348,20 @@ type ReinstallFromArchiveDiskParam struct {
 // NewReinstallFromArchiveDiskParam return new ReinstallFromArchiveDiskParam
 func NewReinstallFromArchiveDiskParam() *ReinstallFromArchiveDiskParam {
 	return &ReinstallFromArchiveDiskParam{}
+}
+
+// WithID returns new *ReinstallFromArchiveDiskParam with id
+func (p *ReinstallFromArchiveDiskParam) WithID(id types.ID) *ReinstallFromArchiveDiskParam {
+	return &ReinstallFromArchiveDiskParam{
+		SourceArchiveId:  p.SourceArchiveId,
+		DistantFrom:      p.DistantFrom,
+		Selector:         p.Selector,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		Id:               id,
+	}
 }
 
 // Initialize init ReinstallFromArchiveDiskParam
@@ -2617,10 +2382,10 @@ func (p *ReinstallFromArchiveDiskParam) WriteSkeleton(writer io.Writer) error {
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReinstallFromArchiveDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.SourceArchiveId) {
-		p.SourceArchiveId = sacloud.ID(0)
+		p.SourceArchiveId = types.ID(0)
 	}
 	if util.IsEmpty(p.DistantFrom) {
-		p.DistantFrom = []sacloud.ID{}
+		p.DistantFrom = []types.ID{}
 	}
 	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -2628,14 +2393,8 @@ func (p *ReinstallFromArchiveDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -2644,7 +2403,7 @@ func (p *ReinstallFromArchiveDiskParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -2716,45 +2475,18 @@ func (p *ReinstallFromArchiveDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ReinstallFromArchiveDiskParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *ReinstallFromArchiveDiskParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["reinstall-from-archive"]
-}
-
-func (p *ReinstallFromArchiveDiskParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ReinstallFromArchiveDiskParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ReinstallFromArchiveDiskParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ReinstallFromArchiveDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-func (p *ReinstallFromArchiveDiskParam) SetSourceArchiveId(v sacloud.ID) {
+func (p *ReinstallFromArchiveDiskParam) SetSourceArchiveId(v types.ID) {
 	p.SourceArchiveId = v
 }
 
-func (p *ReinstallFromArchiveDiskParam) GetSourceArchiveId() sacloud.ID {
+func (p *ReinstallFromArchiveDiskParam) GetSourceArchiveId() types.ID {
 	return p.SourceArchiveId
 }
-func (p *ReinstallFromArchiveDiskParam) SetDistantFrom(v []sacloud.ID) {
+func (p *ReinstallFromArchiveDiskParam) SetDistantFrom(v []types.ID) {
 	p.DistantFrom = v
 }
 
-func (p *ReinstallFromArchiveDiskParam) GetDistantFrom() []sacloud.ID {
+func (p *ReinstallFromArchiveDiskParam) GetDistantFrom() []types.ID {
 	return p.DistantFrom
 }
 func (p *ReinstallFromArchiveDiskParam) SetSelector(v []string) {
@@ -2771,26 +2503,12 @@ func (p *ReinstallFromArchiveDiskParam) SetAssumeyes(v bool) {
 func (p *ReinstallFromArchiveDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ReinstallFromArchiveDiskParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ReinstallFromArchiveDiskParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ReinstallFromArchiveDiskParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ReinstallFromArchiveDiskParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ReinstallFromArchiveDiskParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ReinstallFromArchiveDiskParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ReinstallFromArchiveDiskParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -2806,31 +2524,29 @@ func (p *ReinstallFromArchiveDiskParam) SetGenerateSkeleton(v bool) {
 func (p *ReinstallFromArchiveDiskParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReinstallFromArchiveDiskParam) SetId(v sacloud.ID) {
+func (p *ReinstallFromArchiveDiskParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *ReinstallFromArchiveDiskParam) GetId() sacloud.ID {
+func (p *ReinstallFromArchiveDiskParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ReinstallFromArchiveDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // ReinstallFromDiskDiskParam is input parameters for the sacloud API
 type ReinstallFromDiskDiskParam struct {
-	SourceDiskId      sacloud.ID
-	DistantFrom       []sacloud.ID
-	Selector          []string
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	Id                sacloud.ID
+	SourceDiskId     types.ID
+	DistantFrom      []types.ID
+	Selector         []string
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -2839,6 +2555,20 @@ type ReinstallFromDiskDiskParam struct {
 // NewReinstallFromDiskDiskParam return new ReinstallFromDiskDiskParam
 func NewReinstallFromDiskDiskParam() *ReinstallFromDiskDiskParam {
 	return &ReinstallFromDiskDiskParam{}
+}
+
+// WithID returns new *ReinstallFromDiskDiskParam with id
+func (p *ReinstallFromDiskDiskParam) WithID(id types.ID) *ReinstallFromDiskDiskParam {
+	return &ReinstallFromDiskDiskParam{
+		SourceDiskId:     p.SourceDiskId,
+		DistantFrom:      p.DistantFrom,
+		Selector:         p.Selector,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		Id:               id,
+	}
 }
 
 // Initialize init ReinstallFromDiskDiskParam
@@ -2859,10 +2589,10 @@ func (p *ReinstallFromDiskDiskParam) WriteSkeleton(writer io.Writer) error {
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReinstallFromDiskDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.SourceDiskId) {
-		p.SourceDiskId = sacloud.ID(0)
+		p.SourceDiskId = types.ID(0)
 	}
 	if util.IsEmpty(p.DistantFrom) {
-		p.DistantFrom = []sacloud.ID{}
+		p.DistantFrom = []types.ID{}
 	}
 	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -2870,14 +2600,8 @@ func (p *ReinstallFromDiskDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -2886,7 +2610,7 @@ func (p *ReinstallFromDiskDiskParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -2958,45 +2682,18 @@ func (p *ReinstallFromDiskDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ReinstallFromDiskDiskParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *ReinstallFromDiskDiskParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["reinstall-from-disk"]
-}
-
-func (p *ReinstallFromDiskDiskParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ReinstallFromDiskDiskParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ReinstallFromDiskDiskParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ReinstallFromDiskDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-func (p *ReinstallFromDiskDiskParam) SetSourceDiskId(v sacloud.ID) {
+func (p *ReinstallFromDiskDiskParam) SetSourceDiskId(v types.ID) {
 	p.SourceDiskId = v
 }
 
-func (p *ReinstallFromDiskDiskParam) GetSourceDiskId() sacloud.ID {
+func (p *ReinstallFromDiskDiskParam) GetSourceDiskId() types.ID {
 	return p.SourceDiskId
 }
-func (p *ReinstallFromDiskDiskParam) SetDistantFrom(v []sacloud.ID) {
+func (p *ReinstallFromDiskDiskParam) SetDistantFrom(v []types.ID) {
 	p.DistantFrom = v
 }
 
-func (p *ReinstallFromDiskDiskParam) GetDistantFrom() []sacloud.ID {
+func (p *ReinstallFromDiskDiskParam) GetDistantFrom() []types.ID {
 	return p.DistantFrom
 }
 func (p *ReinstallFromDiskDiskParam) SetSelector(v []string) {
@@ -3013,26 +2710,12 @@ func (p *ReinstallFromDiskDiskParam) SetAssumeyes(v bool) {
 func (p *ReinstallFromDiskDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ReinstallFromDiskDiskParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ReinstallFromDiskDiskParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ReinstallFromDiskDiskParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ReinstallFromDiskDiskParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ReinstallFromDiskDiskParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ReinstallFromDiskDiskParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ReinstallFromDiskDiskParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -3048,30 +2731,28 @@ func (p *ReinstallFromDiskDiskParam) SetGenerateSkeleton(v bool) {
 func (p *ReinstallFromDiskDiskParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReinstallFromDiskDiskParam) SetId(v sacloud.ID) {
+func (p *ReinstallFromDiskDiskParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *ReinstallFromDiskDiskParam) GetId() sacloud.ID {
+func (p *ReinstallFromDiskDiskParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ReinstallFromDiskDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // ReinstallToBlankDiskParam is input parameters for the sacloud API
 type ReinstallToBlankDiskParam struct {
-	DistantFrom       []sacloud.ID
-	Selector          []string
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	Id                sacloud.ID
+	DistantFrom      []types.ID
+	Selector         []string
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -3080,6 +2761,19 @@ type ReinstallToBlankDiskParam struct {
 // NewReinstallToBlankDiskParam return new ReinstallToBlankDiskParam
 func NewReinstallToBlankDiskParam() *ReinstallToBlankDiskParam {
 	return &ReinstallToBlankDiskParam{}
+}
+
+// WithID returns new *ReinstallToBlankDiskParam with id
+func (p *ReinstallToBlankDiskParam) WithID(id types.ID) *ReinstallToBlankDiskParam {
+	return &ReinstallToBlankDiskParam{
+		DistantFrom:      p.DistantFrom,
+		Selector:         p.Selector,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		Id:               id,
+	}
 }
 
 // Initialize init ReinstallToBlankDiskParam
@@ -3100,7 +2794,7 @@ func (p *ReinstallToBlankDiskParam) WriteSkeleton(writer io.Writer) error {
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ReinstallToBlankDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.DistantFrom) {
-		p.DistantFrom = []sacloud.ID{}
+		p.DistantFrom = []types.ID{}
 	}
 	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -3108,14 +2802,8 @@ func (p *ReinstallToBlankDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -3124,7 +2812,7 @@ func (p *ReinstallToBlankDiskParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -3181,38 +2869,11 @@ func (p *ReinstallToBlankDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ReinstallToBlankDiskParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *ReinstallToBlankDiskParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["reinstall-to-blank"]
-}
-
-func (p *ReinstallToBlankDiskParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ReinstallToBlankDiskParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ReinstallToBlankDiskParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ReinstallToBlankDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-func (p *ReinstallToBlankDiskParam) SetDistantFrom(v []sacloud.ID) {
+func (p *ReinstallToBlankDiskParam) SetDistantFrom(v []types.ID) {
 	p.DistantFrom = v
 }
 
-func (p *ReinstallToBlankDiskParam) GetDistantFrom() []sacloud.ID {
+func (p *ReinstallToBlankDiskParam) GetDistantFrom() []types.ID {
 	return p.DistantFrom
 }
 func (p *ReinstallToBlankDiskParam) SetSelector(v []string) {
@@ -3229,26 +2890,12 @@ func (p *ReinstallToBlankDiskParam) SetAssumeyes(v bool) {
 func (p *ReinstallToBlankDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ReinstallToBlankDiskParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ReinstallToBlankDiskParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ReinstallToBlankDiskParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ReinstallToBlankDiskParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ReinstallToBlankDiskParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ReinstallToBlankDiskParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ReinstallToBlankDiskParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -3264,30 +2911,28 @@ func (p *ReinstallToBlankDiskParam) SetGenerateSkeleton(v bool) {
 func (p *ReinstallToBlankDiskParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReinstallToBlankDiskParam) SetId(v sacloud.ID) {
+func (p *ReinstallToBlankDiskParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *ReinstallToBlankDiskParam) GetId() sacloud.ID {
+func (p *ReinstallToBlankDiskParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ReinstallToBlankDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // ServerConnectDiskParam is input parameters for the sacloud API
 type ServerConnectDiskParam struct {
-	ServerId          sacloud.ID
-	Selector          []string
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	Id                sacloud.ID
+	ServerId         types.ID
+	Selector         []string
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -3296,6 +2941,19 @@ type ServerConnectDiskParam struct {
 // NewServerConnectDiskParam return new ServerConnectDiskParam
 func NewServerConnectDiskParam() *ServerConnectDiskParam {
 	return &ServerConnectDiskParam{}
+}
+
+// WithID returns new *ServerConnectDiskParam with id
+func (p *ServerConnectDiskParam) WithID(id types.ID) *ServerConnectDiskParam {
+	return &ServerConnectDiskParam{
+		ServerId:         p.ServerId,
+		Selector:         p.Selector,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		Id:               id,
+	}
 }
 
 // Initialize init ServerConnectDiskParam
@@ -3316,7 +2974,7 @@ func (p *ServerConnectDiskParam) WriteSkeleton(writer io.Writer) error {
 // FillValueToSkeleton fills empty value to the parameter
 func (p *ServerConnectDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.ServerId) {
-		p.ServerId = sacloud.ID(0)
+		p.ServerId = types.ID(0)
 	}
 	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -3324,14 +2982,8 @@ func (p *ServerConnectDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -3340,7 +2992,7 @@ func (p *ServerConnectDiskParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -3404,38 +3056,11 @@ func (p *ServerConnectDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ServerConnectDiskParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *ServerConnectDiskParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["server-connect"]
-}
-
-func (p *ServerConnectDiskParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ServerConnectDiskParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ServerConnectDiskParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ServerConnectDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
-func (p *ServerConnectDiskParam) SetServerId(v sacloud.ID) {
+func (p *ServerConnectDiskParam) SetServerId(v types.ID) {
 	p.ServerId = v
 }
 
-func (p *ServerConnectDiskParam) GetServerId() sacloud.ID {
+func (p *ServerConnectDiskParam) GetServerId() types.ID {
 	return p.ServerId
 }
 func (p *ServerConnectDiskParam) SetSelector(v []string) {
@@ -3452,26 +3077,12 @@ func (p *ServerConnectDiskParam) SetAssumeyes(v bool) {
 func (p *ServerConnectDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ServerConnectDiskParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ServerConnectDiskParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ServerConnectDiskParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ServerConnectDiskParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ServerConnectDiskParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ServerConnectDiskParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ServerConnectDiskParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -3487,29 +3098,27 @@ func (p *ServerConnectDiskParam) SetGenerateSkeleton(v bool) {
 func (p *ServerConnectDiskParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerConnectDiskParam) SetId(v sacloud.ID) {
+func (p *ServerConnectDiskParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *ServerConnectDiskParam) GetId() sacloud.ID {
+func (p *ServerConnectDiskParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ServerConnectDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // ServerDisconnectDiskParam is input parameters for the sacloud API
 type ServerDisconnectDiskParam struct {
-	Selector          []string
-	Assumeyes         bool
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	Id                sacloud.ID
+	Selector         []string
+	Assumeyes        bool
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -3518,6 +3127,18 @@ type ServerDisconnectDiskParam struct {
 // NewServerDisconnectDiskParam return new ServerDisconnectDiskParam
 func NewServerDisconnectDiskParam() *ServerDisconnectDiskParam {
 	return &ServerDisconnectDiskParam{}
+}
+
+// WithID returns new *ServerDisconnectDiskParam with id
+func (p *ServerDisconnectDiskParam) WithID(id types.ID) *ServerDisconnectDiskParam {
+	return &ServerDisconnectDiskParam{
+		Selector:         p.Selector,
+		Assumeyes:        p.Assumeyes,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		Id:               id,
+	}
 }
 
 // Initialize init ServerDisconnectDiskParam
@@ -3543,14 +3164,8 @@ func (p *ServerDisconnectDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -3559,7 +3174,7 @@ func (p *ServerDisconnectDiskParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -3608,33 +3223,6 @@ func (p *ServerDisconnectDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *ServerDisconnectDiskParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *ServerDisconnectDiskParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["server-disconnect"]
-}
-
-func (p *ServerDisconnectDiskParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *ServerDisconnectDiskParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *ServerDisconnectDiskParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *ServerDisconnectDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *ServerDisconnectDiskParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3649,26 +3237,12 @@ func (p *ServerDisconnectDiskParam) SetAssumeyes(v bool) {
 func (p *ServerDisconnectDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
-func (p *ServerDisconnectDiskParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *ServerDisconnectDiskParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *ServerDisconnectDiskParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *ServerDisconnectDiskParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *ServerDisconnectDiskParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *ServerDisconnectDiskParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *ServerDisconnectDiskParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -3684,38 +3258,36 @@ func (p *ServerDisconnectDiskParam) SetGenerateSkeleton(v bool) {
 func (p *ServerDisconnectDiskParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerDisconnectDiskParam) SetId(v sacloud.ID) {
+func (p *ServerDisconnectDiskParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *ServerDisconnectDiskParam) GetId() sacloud.ID {
+func (p *ServerDisconnectDiskParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *ServerDisconnectDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // MonitorDiskParam is input parameters for the sacloud API
 type MonitorDiskParam struct {
-	Selector          []string
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Query             string
-	QueryFile         string
-	End               string
-	Id                sacloud.ID
-	KeyFormat         string
-	Start             string
+	Selector         []string
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
+	FormatFile       string
+	Query            string
+	QueryFile        string
+	End              string
+	Id               types.ID
+	KeyFormat        string
+	Start            string
 
 	config *config.Config
 	input  Input
@@ -3724,7 +3296,29 @@ type MonitorDiskParam struct {
 // NewMonitorDiskParam return new MonitorDiskParam
 func NewMonitorDiskParam() *MonitorDiskParam {
 	return &MonitorDiskParam{
-		KeyFormat: "sakuracloud.disk.{{.ID}}.disk"}
+		KeyFormat: "sakuracloud.disk.{{.ID}}.disk",
+	}
+}
+
+// WithID returns new *MonitorDiskParam with id
+func (p *MonitorDiskParam) WithID(id types.ID) *MonitorDiskParam {
+	return &MonitorDiskParam{
+		Selector:         p.Selector,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		OutputType:       p.OutputType,
+		Column:           p.Column,
+		Quiet:            p.Quiet,
+		Format:           p.Format,
+		FormatFile:       p.FormatFile,
+		Query:            p.Query,
+		QueryFile:        p.QueryFile,
+		End:              p.End,
+		Id:               id,
+		KeyFormat:        p.KeyFormat,
+		Start:            p.Start,
+	}
 }
 
 // Initialize init MonitorDiskParam
@@ -3747,14 +3341,8 @@ func (p *MonitorDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -3787,7 +3375,7 @@ func (p *MonitorDiskParam) FillValueToSkeleton() {
 		p.End = ""
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 	if util.IsEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
@@ -3880,33 +3468,6 @@ func (p *MonitorDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *MonitorDiskParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *MonitorDiskParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["monitor"]
-}
-
-func (p *MonitorDiskParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *MonitorDiskParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *MonitorDiskParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *MonitorDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *MonitorDiskParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -3914,26 +3475,12 @@ func (p *MonitorDiskParam) SetSelector(v []string) {
 func (p *MonitorDiskParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *MonitorDiskParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *MonitorDiskParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *MonitorDiskParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *MonitorDiskParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *MonitorDiskParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *MonitorDiskParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *MonitorDiskParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -4005,11 +3552,11 @@ func (p *MonitorDiskParam) SetEnd(v string) {
 func (p *MonitorDiskParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorDiskParam) SetId(v sacloud.ID) {
+func (p *MonitorDiskParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *MonitorDiskParam) GetId() sacloud.ID {
+func (p *MonitorDiskParam) GetId() types.ID {
 	return p.Id
 }
 func (p *MonitorDiskParam) SetKeyFormat(v string) {
@@ -4027,20 +3574,18 @@ func (p *MonitorDiskParam) GetStart() string {
 	return p.Start
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *MonitorDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }
 
 // WaitForCopyDiskParam is input parameters for the sacloud API
 type WaitForCopyDiskParam struct {
-	Selector          []string
-	ParamTemplate     string
-	Parameters        string
-	ParamTemplateFile string
-	ParameterFile     string
-	GenerateSkeleton  bool
-	Id                sacloud.ID
+	Selector         []string
+	Parameters       string
+	ParameterFile    string
+	GenerateSkeleton bool
+	Id               types.ID
 
 	config *config.Config
 	input  Input
@@ -4049,6 +3594,17 @@ type WaitForCopyDiskParam struct {
 // NewWaitForCopyDiskParam return new WaitForCopyDiskParam
 func NewWaitForCopyDiskParam() *WaitForCopyDiskParam {
 	return &WaitForCopyDiskParam{}
+}
+
+// WithID returns new *WaitForCopyDiskParam with id
+func (p *WaitForCopyDiskParam) WithID(id types.ID) *WaitForCopyDiskParam {
+	return &WaitForCopyDiskParam{
+		Selector:         p.Selector,
+		Parameters:       p.Parameters,
+		ParameterFile:    p.ParameterFile,
+		GenerateSkeleton: p.GenerateSkeleton,
+		Id:               id,
+	}
 }
 
 // Initialize init WaitForCopyDiskParam
@@ -4071,14 +3627,8 @@ func (p *WaitForCopyDiskParam) FillValueToSkeleton() {
 	if util.IsEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
-	if util.IsEmpty(p.ParamTemplate) {
-		p.ParamTemplate = ""
-	}
 	if util.IsEmpty(p.Parameters) {
 		p.Parameters = ""
-	}
-	if util.IsEmpty(p.ParamTemplateFile) {
-		p.ParamTemplateFile = ""
 	}
 	if util.IsEmpty(p.ParameterFile) {
 		p.ParameterFile = ""
@@ -4087,7 +3637,7 @@ func (p *WaitForCopyDiskParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if util.IsEmpty(p.Id) {
-		p.Id = sacloud.ID(0)
+		p.Id = types.ID(0)
 	}
 
 }
@@ -4136,33 +3686,6 @@ func (p *WaitForCopyDiskParam) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-/*
- * v0系との互換性維持のための実装
- */
-func (p *WaitForCopyDiskParam) GetResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *WaitForCopyDiskParam) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["wait-for-copy"]
-}
-
-func (p *WaitForCopyDiskParam) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *WaitForCopyDiskParam) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *WaitForCopyDiskParam) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *WaitForCopyDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 func (p *WaitForCopyDiskParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -4170,26 +3693,12 @@ func (p *WaitForCopyDiskParam) SetSelector(v []string) {
 func (p *WaitForCopyDiskParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *WaitForCopyDiskParam) SetParamTemplate(v string) {
-	p.ParamTemplate = v
-}
-
-func (p *WaitForCopyDiskParam) GetParamTemplate() string {
-	return p.ParamTemplate
-}
 func (p *WaitForCopyDiskParam) SetParameters(v string) {
 	p.Parameters = v
 }
 
 func (p *WaitForCopyDiskParam) GetParameters() string {
 	return p.Parameters
-}
-func (p *WaitForCopyDiskParam) SetParamTemplateFile(v string) {
-	p.ParamTemplateFile = v
-}
-
-func (p *WaitForCopyDiskParam) GetParamTemplateFile() string {
-	return p.ParamTemplateFile
 }
 func (p *WaitForCopyDiskParam) SetParameterFile(v string) {
 	p.ParameterFile = v
@@ -4205,15 +3714,15 @@ func (p *WaitForCopyDiskParam) SetGenerateSkeleton(v bool) {
 func (p *WaitForCopyDiskParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForCopyDiskParam) SetId(v sacloud.ID) {
+func (p *WaitForCopyDiskParam) SetId(v types.ID) {
 	p.Id = v
 }
 
-func (p *WaitForCopyDiskParam) GetId() sacloud.ID {
+func (p *WaitForCopyDiskParam) GetId() types.ID {
 	return p.Id
 }
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *WaitForCopyDiskParam) Changed(name string) bool {
 	return p.input.Changed(name)
 }

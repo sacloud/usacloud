@@ -19,6 +19,8 @@ import (
 	"io"
 	"os"
 
+	"github.com/sacloud/usacloud/pkg/util"
+
 	"github.com/ghodss/yaml"
 )
 
@@ -34,7 +36,8 @@ func NewYAMLOutput(out io.Writer, err io.Writer) Output {
 	}
 }
 
-func (o *yamlOutput) Print(targets ...interface{}) error {
+func (o *yamlOutput) Print(target interface{}) error {
+	targets := toSlice(target)
 	if o.out == nil {
 		o.out = os.Stdout
 	}
@@ -42,8 +45,8 @@ func (o *yamlOutput) Print(targets ...interface{}) error {
 		o.err = os.Stderr
 	}
 
-	if len(targets) == 0 {
-		fmt.Fprintf(o.err, "Result is empty\n")
+	if util.IsEmpty(targets) {
+		fmt.Fprintf(o.err, "no results\n")
 		return nil
 	}
 

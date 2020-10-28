@@ -15,9 +15,6 @@
 package define
 
 import (
-	"encoding/base64"
-	"io/ioutil"
-
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -72,6 +69,7 @@ func IconResource() *schema.Resource {
 	return &schema.Resource{
 		Commands:         commands,
 		ResourceCategory: CategoryCommonItem,
+		IsGlobal:         true,
 	}
 }
 
@@ -101,14 +99,14 @@ func iconCreateParam() map[string]*schema.Schema {
 		"name": paramRequiredName,
 		"tags": paramTags,
 		"image": {
-			Type:          schema.TypeString,
-			HandlerType:   schema.HandlerCustomFunc,
-			Description:   "set file path for upload",
-			Required:      true,
-			ValidateFunc:  validateFileExists(),
-			CustomHandler: iconSetImageContentUseBase64,
-			Category:      "icon",
-			Order:         10,
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerPathThrough,
+			Description:  "set file path for upload",
+			Required:     true,
+			ValidateFunc: validateFileExists(),
+			//CustomHandler: iconSetImageContentUseBase64,
+			Category: "icon",
+			Order:    10,
 		},
 	}
 }
@@ -128,25 +126,26 @@ func iconDeleteParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{}
 }
 
-func iconSetImageContentUseBase64(name string, s interface{}, d interface{}) {
-
-	type imageSrc interface {
-		GetImage() string
-	}
-	type imageDest interface {
-		SetImage(img string)
-	}
-
-	src, ok1 := s.(imageSrc)
-	dest, ok2 := d.(imageDest)
-	if ok1 && ok2 {
-		filePath := src.GetImage()
-		b, err := ioutil.ReadFile(filePath)
-		if err != nil {
-			panic(err)
-		}
-
-		img := base64.StdEncoding.EncodeToString(b)
-		dest.SetImage(img)
-	}
-}
+// TODO あとで消す
+//func iconSetImageContentUseBase64(name string, s interface{}) string {
+//
+//	type imageSrc interface {
+//		GetImage() string
+//	}
+//	type imageDest interface {
+//		SetImage(img string)
+//	}
+//
+//	src, ok1 := s.(imageSrc)
+//	dest, ok2 := d.(imageDest)
+//	if ok1 && ok2 {
+//		filePath := src.GetImage()
+//		b, err := ioutil.ReadFile(filePath)
+//		if err != nil {
+//			panic(err)
+//		}
+//
+//		img := base64.StdEncoding.EncodeToString(b)
+//		dest.SetImage(img)
+//	}
+//}

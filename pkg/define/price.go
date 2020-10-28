@@ -40,6 +40,7 @@ func PriceResource() *schema.Resource {
 		AltResource:         "PublicPrice",
 		ListResultFieldName: "ServiceClasses",
 		ResourceCategory:    CategoryInformation,
+		IsGlobal:            true,
 	}
 }
 

@@ -48,6 +48,7 @@ type SIMStatus struct {
 type SIMInfo struct {
 	ICCID                      string           `json:"iccid,omitempty" yaml:"iccid,omitempty" structs:",omitempty"`
 	IMSI                       []string         `json:"imsi,omitempty" yaml:"imsi,omitempty" structs:",omitempty"`
+	IMEI                       string           `json:"imei,omitempty" yaml:"imei,omitempty" structs:",omitempty"`
 	IP                         string           `json:"ip,omitempty" yaml:"ip,omitempty" structs:",omitempty"`
 	SessionStatus              string           `json:"session_status,omitempty" yaml:"session_status,omitempty" structs:",omitempty"`
 	IMEILock                   bool             `json:"imei_lock" yaml:"imei_lock"`
@@ -64,8 +65,8 @@ type SIMInfo struct {
 
 // SIMTrafficBytes 当月通信量
 type SIMTrafficBytes struct {
-	UplinkBytes   uint64 `json:"uplink_bytes,omitempty" yaml:"uplink_bytes,omitempty" structs:",omitempty"`
-	DownlinkBytes uint64 `json:"downlink_bytes,omitempty" yaml:"downlink_bytes,omitempty" structs:",omitempty"`
+	UplinkBytes   types.StringNumber `json:"uplink_bytes,omitempty" yaml:"uplink_bytes,omitempty" structs:",omitempty"`
+	DownlinkBytes types.StringNumber `json:"downlink_bytes,omitempty" yaml:"downlink_bytes,omitempty" structs:",omitempty"`
 }
 
 // SIMProvider SIMプロバイダー

@@ -73,6 +73,7 @@ func ObjectStorageResource() *schema.Resource {
 		Commands:         commands,
 		Aliases:          []string{"ojs"},
 		ResourceCategory: CategoryOther,
+		IsGlobal:         true,
 	}
 }
 

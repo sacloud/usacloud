@@ -17,41 +17,39 @@ package cmd
 import (
 	"strings"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
-// TODO v0との互換性維持用、あとでv1向けに修正する
-type idValue sacloud.ID
+type idValue types.ID
 
-func newIDValue(val sacloud.ID, p *sacloud.ID) *idValue {
+func newIDValue(val types.ID, p *types.ID) *idValue {
 	*p = val
 	return (*idValue)(p)
 }
 
 func (v *idValue) String() string {
-	return sacloud.ID(*v).String()
+	return types.ID(*v).String()
 }
 
 func (v *idValue) Set(id string) error {
-	*v = idValue(sacloud.StringID(id))
+	*v = idValue(types.StringID(id))
 	return nil
 }
 
 func (v *idValue) Type() string {
-	return "sacloud.ID"
+	return "types.ID"
 }
 
-// TODO v0との互換性維持用、あとでv1向けに修正する
-type idSliceValue []sacloud.ID
+type idSliceValue []types.ID
 
-func newIDSliceValue(val []sacloud.ID, p *[]sacloud.ID) *idSliceValue {
+func newIDSliceValue(val []types.ID, p *[]types.ID) *idSliceValue {
 	*p = val
 	return (*idSliceValue)(p)
 }
 
 func (v *idSliceValue) String() string {
 	var ids []string
-	for _, id := range []sacloud.ID(*v) {
+	for _, id := range []types.ID(*v) {
 		ids = append(ids, id.String())
 	}
 	return strings.Join(ids, ",")
@@ -59,13 +57,13 @@ func (v *idSliceValue) String() string {
 
 func (v *idSliceValue) Set(ids string) error {
 	values := strings.Split(ids, ",")
-	*v = []sacloud.ID{}
+	*v = []types.ID{}
 	for _, val := range values {
-		*v = append(*v, sacloud.StringID(val))
+		*v = append(*v, types.StringID(val))
 	}
 	return nil
 }
 
 func (v *idSliceValue) Type() string {
-	return "sacloud.IDSlice"
+	return "types.IDSlice"
 }

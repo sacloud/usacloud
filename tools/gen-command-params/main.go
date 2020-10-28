@@ -95,7 +95,7 @@ package params
 import (
 	"io"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
@@ -120,9 +120,20 @@ type {{.InputParameterTypeName}} struct {
 // New{{.InputParameterTypeName}} return new {{.InputParameterTypeName}}
 func New{{.InputParameterTypeName}}() *{{.InputParameterTypeName}}{
 	return &{{.InputParameterTypeName}} {
-		{{ range .Params }}{{ if .DefaultValue }}{{.FieldName}}: {{.DefaultValueOnSource}},{{ end }}{{ end -}}
+		{{ range .Params }}{{ if .DefaultValue }}{{.FieldName}}: {{.DefaultValueOnSource}},
+{{ end }}{{ end }}
 	}
 }
+
+{{ if .HasIDParam -}}
+// WithID returns new *{{.InputParameterTypeName}} with id
+func (p *{{.InputParameterTypeName}}) WithID(id types.ID) *{{.InputParameterTypeName}} {
+	return &{{.InputParameterTypeName}} {
+		{{ range .Params }}{{ .FieldName }}: {{ if eq .Name "id" }}id{{ else }}p.{{ .FieldName }}{{ end }},
+{{ end }}
+	}
+}
+{{ end -}}
 
 // Initialize init {{.InputParameterTypeName}}
 func (p *{{.InputParameterTypeName}}) Initialize(in Input, args []string, config *config.Config) error {
@@ -132,7 +143,7 @@ func (p *{{.InputParameterTypeName}}) Initialize(in Input, args []string, config
 	if len(args) == 0 {
 		return fmt.Errorf("argument <ID> is required")
 	}
-	p.Id = sacloud.StringID(args[0])
+	p.Id = types.StringID(args[0])
 	if p.Id.IsEmpty() {
 		return fmt.Errorf("argument <ID> is required")
 	}
@@ -210,34 +221,6 @@ func (p *{{.InputParameterTypeName}}) ColumnDefs() []output.ColumnDef {
 	return p.CommandDef().TableColumnDefines
 }
 
-
-/*
- * v0系との互換性維持のための実装
- */
-func (p *{{.InputParameterTypeName}}) GetResourceDef() *schema.Resource {
-	return define.Resources["{{.Resource.Name}}"]
-}
-
-func (p *{{.InputParameterTypeName}}) GetCommandDef() *schema.Command {
-	return p.ResourceDef().Commands["{{.Name}}"]
-}
-
-func (p *{{.InputParameterTypeName}}) GetIncludeFields() []string {
-	return p.CommandDef().IncludeFields
-}
-
-func (p *{{.InputParameterTypeName}}) GetExcludeFields() []string {
-	return p.CommandDef().ExcludeFields
-}
-
-func (p *{{.InputParameterTypeName}}) GetTableType() output.TableType {
-	return p.CommandDef().TableType
-}
-
-func (p *{{.InputParameterTypeName}}) GetColumnDefs() []output.ColumnDef {
-	return p.CommandDef().TableColumnDefines
-}
-
 {{ range .Params -}}
 func (p *{{.Command.InputParameterTypeName}}) Set{{.FieldName}}(v {{.FieldTypeName}}) {
 	p.{{.FieldName}} = v
@@ -248,7 +231,7 @@ func (p *{{.Command.InputParameterTypeName}}) Get{{.FieldName}}() {{.FieldTypeNa
 }
 {{ end }}
 
-// Changed usacloud v0系との互換性維持のための実装
+// Changed 指定の項目に入力があった場合にtrueを返す
 func (p *{{.InputParameterTypeName}}) Changed(name string) bool {
 	return p.input.Changed(name)
 }

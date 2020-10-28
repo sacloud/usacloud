@@ -16,7 +16,6 @@ package types
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 )
 
@@ -31,6 +30,11 @@ type EProxyLBPlan int
 // Int EProxyLBPlanのint表現
 func (p EProxyLBPlan) Int() int {
 	return int(p)
+}
+
+// String EProxyLBPlanの文字列表現
+func (p EProxyLBPlan) String() string {
+	return fmt.Sprintf("%d", p)
 }
 
 // ProxyLBPlans エンハンスドロードバランサのプラン
@@ -52,7 +56,7 @@ var ProxyLBPlans = struct {
 	CPS100000: EProxyLBPlan(100000),
 }
 
-// ProxyLBPlanValues プランを表すint値
+// ProxyLBPlanValues 有効なプランを表すint値
 var ProxyLBPlanValues = []int{
 	int(ProxyLBPlans.CPS100),
 	int(ProxyLBPlans.CPS500),
@@ -63,36 +67,13 @@ var ProxyLBPlanValues = []int{
 	int(ProxyLBPlans.CPS100000),
 }
 
-const (
-	proxyLBServiceClassPrefix        = "cloud/proxylb/plain/"
-	proxyLBServiceClassPrefixEscaped = "cloud\\/proxylb\\/plain\\/"
-)
-
-// MarshalJSON implements json.Marshaler
-func (p *EProxyLBPlan) MarshalJSON() ([]byte, error) {
-	if p == nil || int(*p) == 0 {
-		return []byte(`""`), nil
-	}
-	return []byte(fmt.Sprintf(`"%s%d"`, proxyLBServiceClassPrefix, int(*p))), nil
-}
-
-// UnmarshalJSON implements json.Unmarshaler
-func (p *EProxyLBPlan) UnmarshalJSON(b []byte) error {
-	strPlan := string(b)
-	if strPlan == `""` {
-		*p = EProxyLBPlan(0)
-		return nil
-	}
-
-	strPlan = strings.Replace(strPlan, `"`, "", -1)
-	strPlan = strings.Replace(strPlan, proxyLBServiceClassPrefix, "", -1)
-	strPlan = strings.Replace(strPlan, proxyLBServiceClassPrefixEscaped, "", -1)
-
-	plan, err := strconv.Atoi(strPlan)
-	if err != nil {
-		return err
-	}
-
-	*p = EProxyLBPlan(plan)
-	return nil
-}
+// ProxyLBPlanString 有効なプランを表す文字列(スペース区切り)
+var ProxyLBPlanString = strings.Join([]string{
+	ProxyLBPlans.CPS100.String(),
+	ProxyLBPlans.CPS500.String(),
+	ProxyLBPlans.CPS1000.String(),
+	ProxyLBPlans.CPS5000.String(),
+	ProxyLBPlans.CPS10000.String(),
+	ProxyLBPlans.CPS50000.String(),
+	ProxyLBPlans.CPS100000.String(),
+}, " ")

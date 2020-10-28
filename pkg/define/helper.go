@@ -17,6 +17,8 @@ package define
 import (
 	"fmt"
 
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
+
 	"github.com/sacloud/usacloud/pkg/schema"
 )
 
@@ -48,6 +50,14 @@ func validateInStrValues(allows ...string) schema.ValidateFunc {
 
 func validateInIntValues(allows ...int) schema.ValidateFunc {
 	return schema.ValidateInIntValues(allows...)
+}
+
+func validateInIDs(allows ...types.ID) schema.ValidateFunc {
+	var ids []int
+	for _, v := range allows {
+		ids = append(ids, int(v.Int64()))
+	}
+	return schema.ValidateInIntValues(ids...)
 }
 
 func validateSakuraID() schema.ValidateFunc {

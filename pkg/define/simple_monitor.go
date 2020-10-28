@@ -15,7 +15,7 @@
 package define
 
 import (
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -84,6 +84,7 @@ func SimpleMonitorResource() *schema.Resource {
 	return &schema.Resource{
 		Commands:         commands,
 		ResourceCategory: CategoryCommonServiceItem,
+		IsGlobal:         true,
 	}
 }
 
@@ -168,7 +169,7 @@ func simpleMonitorListParam() map[string]*schema.Schema {
 				HandlerType: schema.HandlerFilterFunc,
 				FilterFunc: func(_ []interface{}, item interface{}, param interface{}) bool {
 					type handler interface {
-						HealthCheckResult() *sacloud.SimpleMonitorHealthCheckStatus
+						GetHealth() types.ESimpleMonitorHealth
 					}
 
 					holder, ok := item.(handler)
@@ -177,15 +178,13 @@ func simpleMonitorListParam() map[string]*schema.Schema {
 					}
 
 					paramCond := param.(string)
-					status := holder.HealthCheckResult()
+					status := holder.GetHealth()
 
 					switch paramCond {
 					case "up":
-						return status != nil && status.Health == sacloud.EHealthUp
+						return status == types.SimpleMonitorHealth.Up
 					case "down":
-						return status != nil && status.Health == sacloud.EHealthDown
-					case "unknown":
-						return status == nil || (status.Health != sacloud.EHealthUp && status.Health != sacloud.EHealthDown)
+						return status == types.SimpleMonitorHealth.Down
 					default:
 						return true
 					}

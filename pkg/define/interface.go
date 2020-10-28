@@ -150,7 +150,7 @@ func interfaceCreateParam() map[string]*schema.Schema {
 		"server-id": {
 			Type:            schema.TypeId,
 			HandlerType:     schema.HandlerPathThrough,
-			DestinationProp: "SetServerID",
+			DestinationProp: "ServerID",
 			Description:     "set server ID",
 			Required:        true,
 			ValidateFunc:    validateSakuraID(),
@@ -169,7 +169,7 @@ func interfaceUpdateParam() map[string]*schema.Schema {
 		"user-ipaddress": {
 			Type:            schema.TypeString,
 			HandlerType:     schema.HandlerPathThrough,
-			DestinationProp: "SetUserIPAddress",
+			DestinationProp: "UserIPAddress",
 			Description:     "set user-ipaddress",
 			ValidateFunc:    validateIPv4Address(),
 			Category:        "interface",

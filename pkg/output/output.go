@@ -15,14 +15,14 @@
 package output
 
 type Output interface {
-	Print(...interface{}) error
+	Print(interface{}) error
 }
 
 type Formatter interface {
-	GetIncludeFields() []string
-	GetExcludeFields() []string
-	GetColumnDefs() []ColumnDef
-	GetTableType() TableType
+	IncludeFields() []string
+	ExcludeFields() []string
+	ColumnDefs() []ColumnDef
+	TableType() TableType
 	Option
 }
 type Option interface {

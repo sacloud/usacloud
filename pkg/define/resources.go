@@ -13,58 +13,59 @@
 // limitations under the License.
 
 // Package define .
-//go:generate go run ../../tools/gen-command-params/main.go
-//go:generate go run ../../tools/gen-command-funcs/main.go
-//go:generate go run ../../tools/gen-cli-commands/main.go
-//go:generate go run ../../tools/gen-cli-resource-finder/main.go
-//go:generate go run ../../tools/gen-cli-usage/main.go
-//go:generate go run ../../tools/gen-cli-normalize-flag-name/main.go
-//go:generate go run ../../tools/gen-cli-root-command/main.go
+//go:generate go run github.com/sacloud/usacloud/tools/gen-command-params/
+//go:generate go run github.com/sacloud/usacloud/tools/gen-command-funcs/
+//go:generate go run github.com/sacloud/usacloud/tools/gen-cli-commands/
+//go:generate go run github.com/sacloud/usacloud/tools/gen-cli-resource-finder/
+//go:generate go run github.com/sacloud/usacloud/tools/gen-cli-usage/
+//go:generate go run github.com/sacloud/usacloud/tools/gen-cli-normalize-flag-name/
+//go:generate go run github.com/sacloud/usacloud/tools/gen-cli-root-command/
 package define
 
 import "github.com/sacloud/usacloud/pkg/schema"
 
 var Resources = map[string]*schema.Resource{
-	"AuthStatus":      AuthStatusResource(),
-	"Archive":         ArchiveResource(),
-	"AutoBackup":      AutoBackupResource(),
-	"Bill":            BillResource(),
-	"Bridge":          BridgeResource(),
-	"Config":          ConfigResource(),
-	"Coupon":          CouponResource(),
-	"Database":        DatabaseResource(),
-	"Disk":            DiskResource(),
-	"DNS":             DNSResource(),
-	"GSLB":            GSLBResource(),
-	"Icon":            IconResource(),
-	"Interface":       InterfaceResource(),
-	"Internet":        InternetResource(),
-	"IPv4":            IPv4Resource(),
-	"IPv6":            IPv6Resource(),
-	"ISOImage":        ISOImageResource(),
-	"License":         LicenseResource(),
-	"LoadBalancer":    LoadBalancerResource(),
-	"MobileGateway":   MobileGatewayResource(),
-	"NFS":             NFSResource(),
-	"ObjectStorage":   ObjectStorageResource(),
-	"PacketFilter":    PacketFilterResource(),
-	"ProxyLB":         ProxyLBResource(),
-	"Price":           PriceResource(),
-	"PrivateHost":     PrivateHostResource(),
-	"ProductDisk":     ProductDiskResource(),
-	"ProductInternet": ProductInternetResource(),
-	"ProductLicense":  ProductLicenseResource(),
-	"ProductServer":   ProductServerResource(),
-	"Region":          RegionResource(),
-	"Self":            SelfResource(),
-	"Server":          ServerResource(),
-	"SIM":             SIMResource(),
-	"SimpleMonitor":   SimpleMonitorResource(),
-	"SSHKey":          SSHKeyResource(),
-	"StartupScript":   StartupScriptResource(),
-	"Switch":          SwitchResource(),
-	"VPCRouter":       VPCRouterResource(),
-	"WebAccel":        WebAccelResource(),
-	"Zone":            ZoneResource(),
-	"Summary":         SummaryResource(),
+	"AuthStatus": AuthStatusResource(),
+	"Archive":    ArchiveResource(),
+	"AutoBackup": AutoBackupResource(),
+	"Bill":       BillResource(),
+	"Bridge":     BridgeResource(),
+	"Config":     ConfigResource(),
+	"Coupon":     CouponResource(),
+	"Database":   DatabaseResource(),
+	"Disk":       DiskResource(),
+	//"DNS":           DNSResource(),
+	//"GSLB":          GSLBResource(),
+	//"Icon":          IconResource(),
+	//"Interface":     InterfaceResource(),
+	//"Internet":      InternetResource(),
+	//"IPv4":          IPv4Resource(),
+	//"IPv6":          IPv6Resource(),
+	//"ISOImage":      ISOImageResource(),
+	//"License":       LicenseResource(),
+	//"LoadBalancer":  LoadBalancerResource(),
+	//"MobileGateway": MobileGatewayResource(),
+	//"NFS":           NFSResource(),
+	//"ObjectStorage": ObjectStorageResource(),
+	//"PacketFilter":  PacketFilterResource(),
+	//"ProxyLB":       ProxyLBResource(),
+	//// TODO libsacloud v2でPrice API未実装
+	////"Price":           PriceResource(),
+	//"PrivateHost":     PrivateHostResource(),
+	//"ProductDisk":     ProductDiskResource(),
+	//"ProductInternet": ProductInternetResource(),
+	//"ProductLicense":  ProductLicenseResource(),
+	//"ProductServer":   ProductServerResource(),
+	//"Region":          RegionResource(),
+	//"Self":            SelfResource(),
+	//"Server":          ServerResource(),
+	//"SIM":             SIMResource(),
+	//"SimpleMonitor":   SimpleMonitorResource(),
+	//"SSHKey":          SSHKeyResource(),
+	//"StartupScript":   StartupScriptResource(),
+	//"Switch":          SwitchResource(),
+	//"VPCRouter":       VPCRouterResource(),
+	//"WebAccel":        WebAccelResource(),
+	//"Zone":            ZoneResource(),
+	//"Summary":         SummaryResource(),
 }

@@ -47,6 +47,7 @@ func ProductDiskResource() *schema.Resource {
 		Aliases:             []string{"disk-plan"},
 		ResourceCategory:    CategoryInformation,
 		ListResultFieldName: "DiskPlans",
+		AltResource:         "DiskPlan",
 	}
 }
 

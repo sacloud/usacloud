@@ -17,8 +17,8 @@ package define
 import (
 	"fmt"
 
-	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/libsacloud/sacloud/ostype"
+	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -637,8 +637,6 @@ var serverBuildParamCategories = []schema.Category{
 	},
 }
 
-var AllowInterfaceDriver = []string{string(sacloud.InterfaceDriverVirtIO), string(sacloud.InterfaceDriverE1000)}
-
 func serverBuildParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		/*
@@ -705,7 +703,7 @@ func serverBuildParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			DefaultValue: "ssd",
 			Description:  "set disk plan('hdd' or 'ssd')",
-			ValidateFunc: validateInStrValues(allowDiskPlans...),
+			ValidateFunc: validateInStrValues(types.DiskPlanStrings...),
 			Category:     "disk",
 			Order:        30,
 		},
@@ -714,7 +712,7 @@ func serverBuildParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			DefaultValue: "virtio",
 			Description:  "set disk connection('virtio' or 'ide')",
-			ValidateFunc: validateInStrValues(allowDiskConnections...),
+			ValidateFunc: validateInStrValues(types.DiskConnectionStrings...),
 			Category:     "disk",
 			Order:        40,
 		},
@@ -723,7 +721,6 @@ func serverBuildParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set disk size(GB)",
 			DefaultValue: 20,
-			ValidateFunc: validateInIntValues(allowDiskSizes...),
 			Category:     "disk",
 			Order:        50,
 		},
@@ -790,8 +787,8 @@ func serverBuildParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set interface driver[virtio/e1000]",
-			ValidateFunc: validateInStrValues(AllowInterfaceDriver...),
-			DefaultValue: string(sacloud.InterfaceDriverVirtIO),
+			ValidateFunc: validateInStrValues(types.InterfaceDriverStrings...),
+			DefaultValue: types.InterfaceDrivers.VirtIO.String(),
 			Category:     "network",
 			Order:        20,
 		},
@@ -994,7 +991,7 @@ func serverBuildParam() map[string]*schema.Schema {
 		"icon-id": {
 			Type:            schema.TypeId,
 			HandlerType:     schema.HandlerPathThrough,
-			DestinationProp: "SetIconByID",
+			DestinationProp: "IconID",
 			Description:     "set Icon ID",
 			ValidateFunc:    validateSakuraID(),
 			Category:        "server-info",
@@ -1033,8 +1030,8 @@ func serverUpdateParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set interface driver[virtio/e1000]",
-			ValidateFunc: validateInStrValues(AllowInterfaceDriver...),
-			DefaultValue: string(sacloud.InterfaceDriverVirtIO),
+			ValidateFunc: validateInStrValues(types.InterfaceDriverStrings...),
+			DefaultValue: types.InterfaceDrivers.VirtIO.String(),
 			Category:     "network",
 			Order:        10,
 		},
@@ -1372,7 +1369,7 @@ func serverISOImageInsertParam() map[string]*schema.Schema {
 		"icon-id": {
 			Type:            schema.TypeId,
 			HandlerType:     schema.HandlerPathThrough,
-			DestinationProp: "SetIconByID",
+			DestinationProp: "IconID",
 			Description:     "set Icon ID",
 			ValidateFunc:    validateSakuraID(),
 			Category:        "ISO-upload",

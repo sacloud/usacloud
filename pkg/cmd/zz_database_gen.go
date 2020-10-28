@@ -20,10 +20,11 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/funcs"
+	"github.com/sacloud/usacloud/pkg/funcs/database"
 	"github.com/sacloud/usacloud/pkg/params"
+	"github.com/sacloud/usacloud/pkg/term"
 	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 )
@@ -51,7 +52,7 @@ func databaseListCmd() *cobra.Command {
 		Long:         `List Database`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseListParam)
+			ctx, err := cli.NewCLIContext("database", "list", globalFlags(), args, databaseListParam)
 			if err != nil {
 				return err
 			}
@@ -66,21 +67,19 @@ func databaseListCmd() *cobra.Command {
 				return generateSkeleton(ctx, databaseListParam)
 			}
 
-			return funcs.DatabaseList(ctx, databaseListParam)
+			return cli.WrapError(ctx, database.List(ctx, databaseListParam))
 
 		},
 	}
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseListParam.Name, "name", "", []string{}, "set filter by name(s)")
-	fs.VarP(newIDSliceValue([]sacloud.ID{}, &databaseListParam.Id), "id", "", "set filter by id(s)")
+	fs.VarP(newIDSliceValue([]types.ID{}, &databaseListParam.Id), "id", "", "set filter by id(s)")
 	fs.StringSliceVarP(&databaseListParam.Tags, "tags", "", []string{}, "set filter by tags(AND) (aliases: selector)")
 	fs.IntVarP(&databaseListParam.From, "from", "", 0, "set offset (aliases: offset)")
 	fs.IntVarP(&databaseListParam.Max, "max", "", 0, "set limit (aliases: limit)")
 	fs.StringSliceVarP(&databaseListParam.Sort, "sort", "", []string{}, "set field(s) for sort")
-	fs.StringVarP(&databaseListParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseListParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseListParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseListParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseListParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseListParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -104,7 +103,7 @@ func databaseCreateCmd() *cobra.Command {
 		Long:         `Create Database`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseCreateParam)
+			ctx, err := cli.NewCLIContext("database", "create", globalFlags(), args, databaseCreateParam)
 			if err != nil {
 				return err
 			}
@@ -121,7 +120,7 @@ func databaseCreateCmd() *cobra.Command {
 
 			// confirm
 			if !databaseCreateParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("create", ctx.IO().In(), ctx.IO().Out())
@@ -130,7 +129,7 @@ func databaseCreateCmd() *cobra.Command {
 				}
 			}
 
-			return funcs.DatabaseCreate(ctx, databaseCreateParam)
+			return cli.WrapError(ctx, database.Create(ctx, databaseCreateParam))
 
 		},
 	}
@@ -156,9 +155,7 @@ func databaseCreateCmd() *cobra.Command {
 	fs.StringSliceVarP(&databaseCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &databaseCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.BoolVarP(&databaseCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&databaseCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -182,7 +179,7 @@ func databaseReadCmd() *cobra.Command {
 		Long:         `Read Database`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseReadParam)
+			ctx, err := cli.NewCLIContext("database", "read", globalFlags(), args, databaseReadParam)
 			if err != nil {
 				return err
 			}
@@ -208,14 +205,13 @@ func databaseReadCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseReadParam.SetId(id)
-				go func(p *params.ReadDatabaseParam) {
-					err := funcs.DatabaseRead(ctx, p)
+				go func(ctx cli.Context, p *params.ReadDatabaseParam) {
+					err := cli.WrapError(ctx, database.Read(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseReadParam)
+				}(ctx.WithID(id), databaseReadParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -225,9 +221,7 @@ func databaseReadCmd() *cobra.Command {
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseReadParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&databaseReadParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseReadParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseReadParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseReadParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseReadParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseReadParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -252,7 +246,7 @@ func databaseUpdateCmd() *cobra.Command {
 		Long:         `Update Database`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseUpdateParam)
+			ctx, err := cli.NewCLIContext("database", "update", globalFlags(), args, databaseUpdateParam)
 			if err != nil {
 				return err
 			}
@@ -275,7 +269,7 @@ func databaseUpdateCmd() *cobra.Command {
 
 			// confirm
 			if !databaseUpdateParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("update", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -289,14 +283,13 @@ func databaseUpdateCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseUpdateParam.SetId(id)
-				go func(p *params.UpdateDatabaseParam) {
-					err := funcs.DatabaseUpdate(ctx, p)
+				go func(ctx cli.Context, p *params.UpdateDatabaseParam) {
+					err := cli.WrapError(ctx, database.Update(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseUpdateParam)
+				}(ctx.WithID(id), databaseUpdateParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -320,9 +313,7 @@ func databaseUpdateCmd() *cobra.Command {
 	fs.StringSliceVarP(&databaseUpdateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &databaseUpdateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.BoolVarP(&databaseUpdateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&databaseUpdateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseUpdateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseUpdateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseUpdateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseUpdateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseUpdateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -347,7 +338,7 @@ func databaseDeleteCmd() *cobra.Command {
 		Long:         `Delete Database`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseDeleteParam)
+			ctx, err := cli.NewCLIContext("database", "delete", globalFlags(), args, databaseDeleteParam)
 			if err != nil {
 				return err
 			}
@@ -370,7 +361,7 @@ func databaseDeleteCmd() *cobra.Command {
 
 			// confirm
 			if !databaseDeleteParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("delete", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -384,14 +375,13 @@ func databaseDeleteCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseDeleteParam.SetId(id)
-				go func(p *params.DeleteDatabaseParam) {
-					err := funcs.DatabaseDelete(ctx, p)
+				go func(ctx cli.Context, p *params.DeleteDatabaseParam) {
+					err := cli.WrapError(ctx, database.Delete(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseDeleteParam)
+				}(ctx.WithID(id), databaseDeleteParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -402,9 +392,7 @@ func databaseDeleteCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseDeleteParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&databaseDeleteParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&databaseDeleteParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseDeleteParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseDeleteParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseDeleteParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseDeleteParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseDeleteParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -430,7 +418,7 @@ func databaseBootCmd() *cobra.Command {
 		Long:         `Boot Database`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseBootParam)
+			ctx, err := cli.NewCLIContext("database", "boot", globalFlags(), args, databaseBootParam)
 			if err != nil {
 				return err
 			}
@@ -453,7 +441,7 @@ func databaseBootCmd() *cobra.Command {
 
 			// confirm
 			if !databaseBootParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("boot", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -467,14 +455,13 @@ func databaseBootCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseBootParam.SetId(id)
-				go func(p *params.BootDatabaseParam) {
-					err := funcs.DatabaseBoot(ctx, p)
+				go func(ctx cli.Context, p *params.BootDatabaseParam) {
+					err := cli.WrapError(ctx, database.Boot(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseBootParam)
+				}(ctx.WithID(id), databaseBootParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -485,9 +472,7 @@ func databaseBootCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&databaseBootParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&databaseBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseBootParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseBootParam.Id), "id", "", "Set target ID")
@@ -505,7 +490,7 @@ func databaseShutdownCmd() *cobra.Command {
 		Long:         `Shutdown Database`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseShutdownParam)
+			ctx, err := cli.NewCLIContext("database", "shutdown", globalFlags(), args, databaseShutdownParam)
 			if err != nil {
 				return err
 			}
@@ -528,7 +513,7 @@ func databaseShutdownCmd() *cobra.Command {
 
 			// confirm
 			if !databaseShutdownParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("shutdown", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -542,14 +527,13 @@ func databaseShutdownCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseShutdownParam.SetId(id)
-				go func(p *params.ShutdownDatabaseParam) {
-					err := funcs.DatabaseShutdown(ctx, p)
+				go func(ctx cli.Context, p *params.ShutdownDatabaseParam) {
+					err := cli.WrapError(ctx, database.Shutdown(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseShutdownParam)
+				}(ctx.WithID(id), databaseShutdownParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -560,9 +544,7 @@ func databaseShutdownCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseShutdownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&databaseShutdownParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&databaseShutdownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseShutdownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseShutdownParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseShutdownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseShutdownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseShutdownParam.Id), "id", "", "Set target ID")
@@ -580,7 +562,7 @@ func databaseShutdownForceCmd() *cobra.Command {
 		Long:         `ShutdownForce Database`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseShutdownForceParam)
+			ctx, err := cli.NewCLIContext("database", "shutdown-force", globalFlags(), args, databaseShutdownForceParam)
 			if err != nil {
 				return err
 			}
@@ -603,7 +585,7 @@ func databaseShutdownForceCmd() *cobra.Command {
 
 			// confirm
 			if !databaseShutdownForceParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("shutdown-force", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -617,14 +599,13 @@ func databaseShutdownForceCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseShutdownForceParam.SetId(id)
-				go func(p *params.ShutdownForceDatabaseParam) {
-					err := funcs.DatabaseShutdownForce(ctx, p)
+				go func(ctx cli.Context, p *params.ShutdownForceDatabaseParam) {
+					err := cli.WrapError(ctx, database.ShutdownForce(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseShutdownForceParam)
+				}(ctx.WithID(id), databaseShutdownForceParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -635,9 +616,7 @@ func databaseShutdownForceCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseShutdownForceParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&databaseShutdownForceParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&databaseShutdownForceParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseShutdownForceParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseShutdownForceParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseShutdownForceParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseShutdownForceParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseShutdownForceParam.Id), "id", "", "Set target ID")
@@ -655,7 +634,7 @@ func databaseResetCmd() *cobra.Command {
 		Long:         `Reset Database`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseResetParam)
+			ctx, err := cli.NewCLIContext("database", "reset", globalFlags(), args, databaseResetParam)
 			if err != nil {
 				return err
 			}
@@ -678,7 +657,7 @@ func databaseResetCmd() *cobra.Command {
 
 			// confirm
 			if !databaseResetParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("reset", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -692,14 +671,13 @@ func databaseResetCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseResetParam.SetId(id)
-				go func(p *params.ResetDatabaseParam) {
-					err := funcs.DatabaseReset(ctx, p)
+				go func(ctx cli.Context, p *params.ResetDatabaseParam) {
+					err := cli.WrapError(ctx, database.Reset(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseResetParam)
+				}(ctx.WithID(id), databaseResetParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -710,9 +688,7 @@ func databaseResetCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseResetParam.Selector, "selector", "", []string{}, "Set target filter by tag")
 	fs.BoolVarP(&databaseResetParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&databaseResetParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseResetParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseResetParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseResetParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseResetParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseResetParam.Id), "id", "", "Set target ID")
@@ -730,7 +706,7 @@ func databaseWaitForBootCmd() *cobra.Command {
 		Long:         `Wait until boot is completed`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseWaitForBootParam)
+			ctx, err := cli.NewCLIContext("database", "wait-for-boot", globalFlags(), args, databaseWaitForBootParam)
 			if err != nil {
 				return err
 			}
@@ -756,14 +732,13 @@ func databaseWaitForBootCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseWaitForBootParam.SetId(id)
-				go func(p *params.WaitForBootDatabaseParam) {
-					err := funcs.DatabaseWaitForBoot(ctx, p)
+				go func(ctx cli.Context, p *params.WaitForBootDatabaseParam) {
+					err := cli.WrapError(ctx, database.WaitForBoot(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseWaitForBootParam)
+				}(ctx.WithID(id), databaseWaitForBootParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -773,9 +748,7 @@ func databaseWaitForBootCmd() *cobra.Command {
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseWaitForBootParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&databaseWaitForBootParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseWaitForBootParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseWaitForBootParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseWaitForBootParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseWaitForBootParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseWaitForBootParam.Id), "id", "", "Set target ID")
@@ -793,7 +766,7 @@ func databaseWaitForDownCmd() *cobra.Command {
 		Long:         `Wait until shutdown is completed`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseWaitForDownParam)
+			ctx, err := cli.NewCLIContext("database", "wait-for-down", globalFlags(), args, databaseWaitForDownParam)
 			if err != nil {
 				return err
 			}
@@ -819,14 +792,13 @@ func databaseWaitForDownCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseWaitForDownParam.SetId(id)
-				go func(p *params.WaitForDownDatabaseParam) {
-					err := funcs.DatabaseWaitForDown(ctx, p)
+				go func(ctx cli.Context, p *params.WaitForDownDatabaseParam) {
+					err := cli.WrapError(ctx, database.WaitForDown(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseWaitForDownParam)
+				}(ctx.WithID(id), databaseWaitForDownParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -836,9 +808,7 @@ func databaseWaitForDownCmd() *cobra.Command {
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseWaitForDownParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&databaseWaitForDownParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseWaitForDownParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseWaitForDownParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseWaitForDownParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseWaitForDownParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseWaitForDownParam.Id), "id", "", "Set target ID")
@@ -856,7 +826,7 @@ func databaseBackupInfoCmd() *cobra.Command {
 		Long:         `Show information of backup`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseBackupInfoParam)
+			ctx, err := cli.NewCLIContext("database", "backup-info", globalFlags(), args, databaseBackupInfoParam)
 			if err != nil {
 				return err
 			}
@@ -882,14 +852,13 @@ func databaseBackupInfoCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseBackupInfoParam.SetId(id)
-				go func(p *params.BackupInfoDatabaseParam) {
-					err := funcs.DatabaseBackupInfo(ctx, p)
+				go func(ctx cli.Context, p *params.BackupInfoDatabaseParam) {
+					err := cli.WrapError(ctx, database.BackupInfo(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseBackupInfoParam)
+				}(ctx.WithID(id), databaseBackupInfoParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -899,9 +868,7 @@ func databaseBackupInfoCmd() *cobra.Command {
 
 	fs := cmd.Flags()
 	fs.StringSliceVarP(&databaseBackupInfoParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&databaseBackupInfoParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseBackupInfoParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseBackupInfoParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseBackupInfoParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseBackupInfoParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseBackupInfoParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -926,7 +893,7 @@ func databaseBackupCreateCmd() *cobra.Command {
 		Long:         `Make new database backup`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseBackupCreateParam)
+			ctx, err := cli.NewCLIContext("database", "backup-create", globalFlags(), args, databaseBackupCreateParam)
 			if err != nil {
 				return err
 			}
@@ -949,7 +916,7 @@ func databaseBackupCreateCmd() *cobra.Command {
 
 			// confirm
 			if !databaseBackupCreateParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("backup-create", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -963,14 +930,13 @@ func databaseBackupCreateCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseBackupCreateParam.SetId(id)
-				go func(p *params.BackupCreateDatabaseParam) {
-					err := funcs.DatabaseBackupCreate(ctx, p)
+				go func(ctx cli.Context, p *params.BackupCreateDatabaseParam) {
+					err := cli.WrapError(ctx, database.BackupCreate(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseBackupCreateParam)
+				}(ctx.WithID(id), databaseBackupCreateParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -980,9 +946,7 @@ func databaseBackupCreateCmd() *cobra.Command {
 
 	fs := cmd.Flags()
 	fs.BoolVarP(&databaseBackupCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&databaseBackupCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseBackupCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseBackupCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseBackupCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseBackupCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseBackupCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -1007,7 +971,7 @@ func databaseBackupRestoreCmd() *cobra.Command {
 		Long:         `Restore database from backup`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseBackupRestoreParam)
+			ctx, err := cli.NewCLIContext("database", "backup-restore", globalFlags(), args, databaseBackupRestoreParam)
 			if err != nil {
 				return err
 			}
@@ -1030,7 +994,7 @@ func databaseBackupRestoreCmd() *cobra.Command {
 
 			// confirm
 			if !databaseBackupRestoreParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("backup-restore", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -1044,14 +1008,13 @@ func databaseBackupRestoreCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseBackupRestoreParam.SetId(id)
-				go func(p *params.BackupRestoreDatabaseParam) {
-					err := funcs.DatabaseBackupRestore(ctx, p)
+				go func(ctx cli.Context, p *params.BackupRestoreDatabaseParam) {
+					err := cli.WrapError(ctx, database.BackupRestore(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseBackupRestoreParam)
+				}(ctx.WithID(id), databaseBackupRestoreParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -1062,9 +1025,7 @@ func databaseBackupRestoreCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.IntVarP(&databaseBackupRestoreParam.Index, "index", "", 0, "index of target backup")
 	fs.BoolVarP(&databaseBackupRestoreParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&databaseBackupRestoreParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseBackupRestoreParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseBackupRestoreParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseBackupRestoreParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseBackupRestoreParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseBackupRestoreParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -1089,7 +1050,7 @@ func databaseBackupLockCmd() *cobra.Command {
 		Long:         `Lock backup`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseBackupLockParam)
+			ctx, err := cli.NewCLIContext("database", "backup-lock", globalFlags(), args, databaseBackupLockParam)
 			if err != nil {
 				return err
 			}
@@ -1112,7 +1073,7 @@ func databaseBackupLockCmd() *cobra.Command {
 
 			// confirm
 			if !databaseBackupLockParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("backup-lock", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -1126,14 +1087,13 @@ func databaseBackupLockCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseBackupLockParam.SetId(id)
-				go func(p *params.BackupLockDatabaseParam) {
-					err := funcs.DatabaseBackupLock(ctx, p)
+				go func(ctx cli.Context, p *params.BackupLockDatabaseParam) {
+					err := cli.WrapError(ctx, database.BackupLock(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseBackupLockParam)
+				}(ctx.WithID(id), databaseBackupLockParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -1144,9 +1104,7 @@ func databaseBackupLockCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.IntVarP(&databaseBackupLockParam.Index, "index", "", 0, "index of target backup")
 	fs.BoolVarP(&databaseBackupLockParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&databaseBackupLockParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseBackupLockParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseBackupLockParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseBackupLockParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseBackupLockParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseBackupLockParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -1171,7 +1129,7 @@ func databaseBackupUnlockCmd() *cobra.Command {
 		Long:         `Unlock backup`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseBackupUnlockParam)
+			ctx, err := cli.NewCLIContext("database", "backup-unlock", globalFlags(), args, databaseBackupUnlockParam)
 			if err != nil {
 				return err
 			}
@@ -1194,7 +1152,7 @@ func databaseBackupUnlockCmd() *cobra.Command {
 
 			// confirm
 			if !databaseBackupUnlockParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("backup-unlock", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -1208,14 +1166,13 @@ func databaseBackupUnlockCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseBackupUnlockParam.SetId(id)
-				go func(p *params.BackupUnlockDatabaseParam) {
-					err := funcs.DatabaseBackupUnlock(ctx, p)
+				go func(ctx cli.Context, p *params.BackupUnlockDatabaseParam) {
+					err := cli.WrapError(ctx, database.BackupUnlock(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseBackupUnlockParam)
+				}(ctx.WithID(id), databaseBackupUnlockParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -1226,9 +1183,7 @@ func databaseBackupUnlockCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.IntVarP(&databaseBackupUnlockParam.Index, "index", "", 0, "index of target backup")
 	fs.BoolVarP(&databaseBackupUnlockParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&databaseBackupUnlockParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseBackupUnlockParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseBackupUnlockParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseBackupUnlockParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseBackupUnlockParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseBackupUnlockParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -1253,7 +1208,7 @@ func databaseBackupRemoveCmd() *cobra.Command {
 		Long:         `Remove backup`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseBackupRemoveParam)
+			ctx, err := cli.NewCLIContext("database", "backup-remove", globalFlags(), args, databaseBackupRemoveParam)
 			if err != nil {
 				return err
 			}
@@ -1276,7 +1231,7 @@ func databaseBackupRemoveCmd() *cobra.Command {
 
 			// confirm
 			if !databaseBackupRemoveParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("backup-remove", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -1290,14 +1245,13 @@ func databaseBackupRemoveCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseBackupRemoveParam.SetId(id)
-				go func(p *params.BackupRemoveDatabaseParam) {
-					err := funcs.DatabaseBackupRemove(ctx, p)
+				go func(ctx cli.Context, p *params.BackupRemoveDatabaseParam) {
+					err := cli.WrapError(ctx, database.BackupRemove(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseBackupRemoveParam)
+				}(ctx.WithID(id), databaseBackupRemoveParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -1308,9 +1262,7 @@ func databaseBackupRemoveCmd() *cobra.Command {
 	fs := cmd.Flags()
 	fs.IntVarP(&databaseBackupRemoveParam.Index, "index", "", 0, "index of target backup")
 	fs.BoolVarP(&databaseBackupRemoveParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&databaseBackupRemoveParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseBackupRemoveParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseBackupRemoveParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseBackupRemoveParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseBackupRemoveParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseBackupRemoveParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -1335,7 +1287,7 @@ func databaseCloneCmd() *cobra.Command {
 		Long:         `Create clone instance`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseCloneParam)
+			ctx, err := cli.NewCLIContext("database", "clone", globalFlags(), args, databaseCloneParam)
 			if err != nil {
 				return err
 			}
@@ -1358,7 +1310,7 @@ func databaseCloneCmd() *cobra.Command {
 
 			// confirm
 			if !databaseCloneParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("clone", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -1372,14 +1324,13 @@ func databaseCloneCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseCloneParam.SetId(id)
-				go func(p *params.CloneDatabaseParam) {
-					err := funcs.DatabaseClone(ctx, p)
+				go func(ctx cli.Context, p *params.CloneDatabaseParam) {
+					err := cli.WrapError(ctx, database.Clone(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseCloneParam)
+				}(ctx.WithID(id), databaseCloneParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -1405,9 +1356,7 @@ func databaseCloneCmd() *cobra.Command {
 	fs.StringSliceVarP(&databaseCloneParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &databaseCloneParam.IconId), "icon-id", "", "set Icon ID")
 	fs.BoolVarP(&databaseCloneParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&databaseCloneParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseCloneParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseCloneParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseCloneParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseCloneParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseCloneParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -1432,7 +1381,7 @@ func databaseReplicaCreateCmd() *cobra.Command {
 		Long:         `Create replication slave instance`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseReplicaCreateParam)
+			ctx, err := cli.NewCLIContext("database", "replica-create", globalFlags(), args, databaseReplicaCreateParam)
 			if err != nil {
 				return err
 			}
@@ -1455,7 +1404,7 @@ func databaseReplicaCreateCmd() *cobra.Command {
 
 			// confirm
 			if !databaseReplicaCreateParam.Assumeyes {
-				if !util.IsTerminal() {
+				if !term.IsTerminal() {
 					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
 				result, err := util.ConfirmContinue("replica-create", ctx.IO().In(), ctx.IO().Out(), ids...)
@@ -1469,14 +1418,13 @@ func databaseReplicaCreateCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseReplicaCreateParam.SetId(id)
-				go func(p *params.ReplicaCreateDatabaseParam) {
-					err := funcs.DatabaseReplicaCreate(ctx, p)
+				go func(ctx cli.Context, p *params.ReplicaCreateDatabaseParam) {
+					err := cli.WrapError(ctx, database.ReplicaCreate(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseReplicaCreateParam)
+				}(ctx.WithID(id), databaseReplicaCreateParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -1494,9 +1442,7 @@ func databaseReplicaCreateCmd() *cobra.Command {
 	fs.StringSliceVarP(&databaseReplicaCreateParam.Tags, "tags", "", []string{}, "set resource tags")
 	fs.VarP(newIDValue(0, &databaseReplicaCreateParam.IconId), "icon-id", "", "set Icon ID")
 	fs.BoolVarP(&databaseReplicaCreateParam.Assumeyes, "assumeyes", "y", false, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&databaseReplicaCreateParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseReplicaCreateParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseReplicaCreateParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseReplicaCreateParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseReplicaCreateParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseReplicaCreateParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -1521,7 +1467,7 @@ func databaseMonitorCPUCmd() *cobra.Command {
 		Long:         `Collect CPU monitor values`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseMonitorCPUParam)
+			ctx, err := cli.NewCLIContext("database", "monitor-cpu", globalFlags(), args, databaseMonitorCPUParam)
 			if err != nil {
 				return err
 			}
@@ -1547,14 +1493,13 @@ func databaseMonitorCPUCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseMonitorCPUParam.SetId(id)
-				go func(p *params.MonitorCPUDatabaseParam) {
-					err := funcs.DatabaseMonitorCPU(ctx, p)
+				go func(ctx cli.Context, p *params.MonitorCPUDatabaseParam) {
+					err := cli.WrapError(ctx, database.MonitorCPU(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseMonitorCPUParam)
+				}(ctx.WithID(id), databaseMonitorCPUParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -1567,9 +1512,7 @@ func databaseMonitorCPUCmd() *cobra.Command {
 	fs.StringVarP(&databaseMonitorCPUParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorCPUParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.cpu", "set monitoring value key-format")
 	fs.StringSliceVarP(&databaseMonitorCPUParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&databaseMonitorCPUParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseMonitorCPUParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseMonitorCPUParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseMonitorCPUParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseMonitorCPUParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseMonitorCPUParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -1594,7 +1537,7 @@ func databaseMonitorMemoryCmd() *cobra.Command {
 		Long:         `Collect memory monitor values`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseMonitorMemoryParam)
+			ctx, err := cli.NewCLIContext("database", "monitor-memory", globalFlags(), args, databaseMonitorMemoryParam)
 			if err != nil {
 				return err
 			}
@@ -1620,14 +1563,13 @@ func databaseMonitorMemoryCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseMonitorMemoryParam.SetId(id)
-				go func(p *params.MonitorMemoryDatabaseParam) {
-					err := funcs.DatabaseMonitorMemory(ctx, p)
+				go func(ctx cli.Context, p *params.MonitorMemoryDatabaseParam) {
+					err := cli.WrapError(ctx, database.MonitorMemory(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseMonitorMemoryParam)
+				}(ctx.WithID(id), databaseMonitorMemoryParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -1640,9 +1582,7 @@ func databaseMonitorMemoryCmd() *cobra.Command {
 	fs.StringVarP(&databaseMonitorMemoryParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorMemoryParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.memory", "set monitoring value key-format")
 	fs.StringSliceVarP(&databaseMonitorMemoryParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&databaseMonitorMemoryParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseMonitorMemoryParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseMonitorMemoryParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseMonitorMemoryParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseMonitorMemoryParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseMonitorMemoryParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -1667,7 +1607,7 @@ func databaseMonitorNicCmd() *cobra.Command {
 		Long:         `Collect NIC(s) monitor values`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseMonitorNicParam)
+			ctx, err := cli.NewCLIContext("database", "monitor-nic", globalFlags(), args, databaseMonitorNicParam)
 			if err != nil {
 				return err
 			}
@@ -1693,14 +1633,13 @@ func databaseMonitorNicCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseMonitorNicParam.SetId(id)
-				go func(p *params.MonitorNicDatabaseParam) {
-					err := funcs.DatabaseMonitorNic(ctx, p)
+				go func(ctx cli.Context, p *params.MonitorNicDatabaseParam) {
+					err := cli.WrapError(ctx, database.MonitorNic(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseMonitorNicParam)
+				}(ctx.WithID(id), databaseMonitorNicParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -1713,9 +1652,7 @@ func databaseMonitorNicCmd() *cobra.Command {
 	fs.StringVarP(&databaseMonitorNicParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorNicParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.nic", "set monitoring value key-format")
 	fs.StringSliceVarP(&databaseMonitorNicParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&databaseMonitorNicParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseMonitorNicParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseMonitorNicParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseMonitorNicParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseMonitorNicParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseMonitorNicParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -1740,7 +1677,7 @@ func databaseMonitorSystemDiskCmd() *cobra.Command {
 		Long:         `Collect system-disk monitor values(IO)`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseMonitorSystemDiskParam)
+			ctx, err := cli.NewCLIContext("database", "monitor-system-disk", globalFlags(), args, databaseMonitorSystemDiskParam)
 			if err != nil {
 				return err
 			}
@@ -1766,14 +1703,13 @@ func databaseMonitorSystemDiskCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseMonitorSystemDiskParam.SetId(id)
-				go func(p *params.MonitorSystemDiskDatabaseParam) {
-					err := funcs.DatabaseMonitorSystemDisk(ctx, p)
+				go func(ctx cli.Context, p *params.MonitorSystemDiskDatabaseParam) {
+					err := cli.WrapError(ctx, database.MonitorSystemDisk(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseMonitorSystemDiskParam)
+				}(ctx.WithID(id), databaseMonitorSystemDiskParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -1786,9 +1722,7 @@ func databaseMonitorSystemDiskCmd() *cobra.Command {
 	fs.StringVarP(&databaseMonitorSystemDiskParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorSystemDiskParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.disk1", "set monitoring value key-format")
 	fs.StringSliceVarP(&databaseMonitorSystemDiskParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&databaseMonitorSystemDiskParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseMonitorSystemDiskParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseMonitorSystemDiskParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseMonitorSystemDiskParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseMonitorSystemDiskParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseMonitorSystemDiskParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -1813,7 +1747,7 @@ func databaseMonitorBackupDiskCmd() *cobra.Command {
 		Long:         `Collect backup-disk monitor values(IO)`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseMonitorBackupDiskParam)
+			ctx, err := cli.NewCLIContext("database", "monitor-backup-disk", globalFlags(), args, databaseMonitorBackupDiskParam)
 			if err != nil {
 				return err
 			}
@@ -1839,14 +1773,13 @@ func databaseMonitorBackupDiskCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseMonitorBackupDiskParam.SetId(id)
-				go func(p *params.MonitorBackupDiskDatabaseParam) {
-					err := funcs.DatabaseMonitorBackupDisk(ctx, p)
+				go func(ctx cli.Context, p *params.MonitorBackupDiskDatabaseParam) {
+					err := cli.WrapError(ctx, database.MonitorBackupDisk(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseMonitorBackupDiskParam)
+				}(ctx.WithID(id), databaseMonitorBackupDiskParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -1859,9 +1792,7 @@ func databaseMonitorBackupDiskCmd() *cobra.Command {
 	fs.StringVarP(&databaseMonitorBackupDiskParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorBackupDiskParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.disk2", "set monitoring value key-format")
 	fs.StringSliceVarP(&databaseMonitorBackupDiskParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&databaseMonitorBackupDiskParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseMonitorBackupDiskParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseMonitorBackupDiskParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseMonitorBackupDiskParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseMonitorBackupDiskParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseMonitorBackupDiskParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -1886,7 +1817,7 @@ func databaseMonitorSystemDiskSizeCmd() *cobra.Command {
 		Long:         `Collect system-disk monitor values(usage)`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseMonitorSystemDiskSizeParam)
+			ctx, err := cli.NewCLIContext("database", "monitor-system-disk-size", globalFlags(), args, databaseMonitorSystemDiskSizeParam)
 			if err != nil {
 				return err
 			}
@@ -1912,14 +1843,13 @@ func databaseMonitorSystemDiskSizeCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseMonitorSystemDiskSizeParam.SetId(id)
-				go func(p *params.MonitorSystemDiskSizeDatabaseParam) {
-					err := funcs.DatabaseMonitorSystemDiskSize(ctx, p)
+				go func(ctx cli.Context, p *params.MonitorSystemDiskSizeDatabaseParam) {
+					err := cli.WrapError(ctx, database.MonitorSystemDiskSize(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseMonitorSystemDiskSizeParam)
+				}(ctx.WithID(id), databaseMonitorSystemDiskSizeParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -1932,9 +1862,7 @@ func databaseMonitorSystemDiskSizeCmd() *cobra.Command {
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.disk1", "set monitoring value key-format")
 	fs.StringSliceVarP(&databaseMonitorSystemDiskSizeParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseMonitorSystemDiskSizeParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseMonitorSystemDiskSizeParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -1959,7 +1887,7 @@ func databaseMonitorBackupDiskSizeCmd() *cobra.Command {
 		Long:         `Collect backup-disk monitor values(usage)`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseMonitorBackupDiskSizeParam)
+			ctx, err := cli.NewCLIContext("database", "monitor-backup-disk-size", globalFlags(), args, databaseMonitorBackupDiskSizeParam)
 			if err != nil {
 				return err
 			}
@@ -1985,14 +1913,13 @@ func databaseMonitorBackupDiskSizeCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseMonitorBackupDiskSizeParam.SetId(id)
-				go func(p *params.MonitorBackupDiskSizeDatabaseParam) {
-					err := funcs.DatabaseMonitorBackupDiskSize(ctx, p)
+				go func(ctx cli.Context, p *params.MonitorBackupDiskSizeDatabaseParam) {
+					err := cli.WrapError(ctx, database.MonitorBackupDiskSize(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseMonitorBackupDiskSizeParam)
+				}(ctx.WithID(id), databaseMonitorBackupDiskSizeParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -2005,9 +1932,7 @@ func databaseMonitorBackupDiskSizeCmd() *cobra.Command {
 	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.End, "end", "", "", "set end-time")
 	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.KeyFormat, "key-format", "", "sakuracloud.database.{{.ID}}.disk2", "set monitoring value key-format")
 	fs.StringSliceVarP(&databaseMonitorBackupDiskSizeParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseMonitorBackupDiskSizeParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.StringVarP(&databaseMonitorBackupDiskSizeParam.OutputType, "output-type", "o", "", "Output type [table/json/csv/tsv] (aliases: out)")
@@ -2032,7 +1957,7 @@ func databaseLogsCmd() *cobra.Command {
 		Long:         `Logs Database`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			ctx, err := cli.NewCLIContext(globalFlags(), args, databaseLogsParam)
+			ctx, err := cli.NewCLIContext("database", "logs", globalFlags(), args, databaseLogsParam)
 			if err != nil {
 				return err
 			}
@@ -2058,14 +1983,13 @@ func databaseLogsCmd() *cobra.Command {
 			var errs []error
 			for _, id := range ids {
 				wg.Add(1)
-				databaseLogsParam.SetId(id)
-				go func(p *params.LogsDatabaseParam) {
-					err := funcs.DatabaseLogs(ctx, p)
+				go func(ctx cli.Context, p *params.LogsDatabaseParam) {
+					err := cli.WrapError(ctx, database.Logs(ctx, p))
 					if err != nil {
 						errs = append(errs, err)
 					}
 					wg.Done()
-				}(databaseLogsParam)
+				}(ctx.WithID(id), databaseLogsParam.WithID(id))
 			}
 			wg.Wait()
 			return cli.FlattenErrors(errs)
@@ -2079,9 +2003,7 @@ func databaseLogsCmd() *cobra.Command {
 	fs.VarP(newIDValue(0, &databaseLogsParam.RefreshInterval), "refresh-interval", "", "log refresh interval second")
 	fs.BoolVarP(&databaseLogsParam.ListLogNames, "list-log-names", "", false, "show log-name list")
 	fs.StringSliceVarP(&databaseLogsParam.Selector, "selector", "", []string{}, "Set target filter by tag")
-	fs.StringVarP(&databaseLogsParam.ParamTemplate, "param-template", "", "", "Set input parameter from string(JSON)")
 	fs.StringVarP(&databaseLogsParam.Parameters, "parameters", "", "", "Set input parameters from JSON string")
-	fs.StringVarP(&databaseLogsParam.ParamTemplateFile, "param-template-file", "", "", "Set input parameter from file")
 	fs.StringVarP(&databaseLogsParam.ParameterFile, "parameter-file", "", "", "Set input parameters from file")
 	fs.BoolVarP(&databaseLogsParam.GenerateSkeleton, "generate-skeleton", "", false, "Output skelton of parameter JSON")
 	fs.VarP(newIDValue(0, &databaseLogsParam.Id), "id", "", "Set target ID")

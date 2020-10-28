@@ -32,13 +32,12 @@ func DNSResource() *schema.Resource {
 			Order:              10,
 		},
 		"create": {
-			Type:             schema.CommandCreate,
-			Params:           dnsCreateParam(),
-			IncludeFields:    dnsDetailIncludes(),
-			ExcludeFields:    dnsDetailExcludes(),
-			UseCustomCommand: true,
-			Category:         "basics",
-			Order:            20,
+			Type:          schema.CommandCreate,
+			Params:        dnsCreateParam(),
+			IncludeFields: dnsDetailIncludes(),
+			ExcludeFields: dnsDetailExcludes(),
+			Category:      "basics",
+			Order:         20,
 		},
 		"read": {
 			Type:          schema.CommandRead,
@@ -119,7 +118,8 @@ func DNSResource() *schema.Resource {
 	return &schema.Resource{
 		Commands:            commands,
 		ResourceCategory:    CategoryCommonServiceItem,
-		ListResultFieldName: "CommonServiceDNSItems",
+		ListResultFieldName: "DNS",
+		IsGlobal:            true,
 	}
 }
 

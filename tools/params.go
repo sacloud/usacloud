@@ -20,8 +20,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/sacloud/libsacloud/sacloud"
-
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
 
@@ -172,18 +171,18 @@ func (p *Parameter) DefaultValueOnSource() string {
 		return res
 	case schema.TypeId:
 		res := `0`
-		if v, ok := p.DefaultValue.(sacloud.ID); ok {
-			res = fmt.Sprintf("sacloud.ID(%d)", v)
+		if v, ok := p.DefaultValue.(types.ID); ok {
+			res = fmt.Sprintf("types.ID(%d)", v)
 		}
 		return res
 	case schema.TypeIdList:
-		res := `[]sacloud.ID{}`
-		if v, ok := p.DefaultValue.([]sacloud.ID); ok {
+		res := `[]types.ID{}`
+		if v, ok := p.DefaultValue.([]types.ID); ok {
 			strVal := ""
 			for _, v := range v {
-				strVal += fmt.Sprintf("sacloud.ID(%d),", v)
+				strVal += fmt.Sprintf("types.ID(%d),", v)
 			}
-			res = fmt.Sprintf(`[]sacloud.ID{%s}`, strVal)
+			res = fmt.Sprintf(`[]types.ID{%s}`, strVal)
 		}
 		return res
 	default:
@@ -208,9 +207,9 @@ func (p *Parameter) FieldTypeName() string {
 	case schema.TypeStringList:
 		return "[]string"
 	case schema.TypeId:
-		return "sacloud.ID"
+		return "types.ID"
 	case schema.TypeIdList:
-		return "[]sacloud.ID"
+		return "[]types.ID"
 	}
 	panic("invalid type")
 }
@@ -236,9 +235,9 @@ func (p *Parameter) SetEmptyStatement() string {
 	case schema.TypeStringList:
 		return `[]string{""}`
 	case schema.TypeId:
-		return "sacloud.ID(0)"
+		return "types.ID(0)"
 	case schema.TypeIdList:
-		return "[]sacloud.ID{}"
+		return "[]types.ID{}"
 	}
 
 	panic("invalid type")
@@ -372,4 +371,12 @@ func (p *Parameter) DestinationName() string {
 		n = ToCamelCaseName(p.Name)
 	}
 	return n
+}
+
+func (p *Parameter) SetToDestinationStatement() string {
+	s := fmt.Sprintf("params.%s", p.FieldName())
+	if p.DestinationWrapper != "" {
+		s = fmt.Sprintf("%s(%s)", p.DestinationWrapper, s)
+	}
+	return s
 }

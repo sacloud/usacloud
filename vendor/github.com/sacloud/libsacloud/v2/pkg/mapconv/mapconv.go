@@ -23,19 +23,43 @@ import (
 	"github.com/mitchellh/mapstructure"
 )
 
-// ConvertTo converts struct which input by mapconv to plain models
-func ConvertTo(source interface{}, dest interface{}) error {
+const defaultMapConvTag = "mapconv"
+
+// DecoderConfig mapconvでの変換の設定
+type DecoderConfig struct {
+	TagName string
+}
+
+// TagInfo mapconvタグの情報
+type TagInfo struct {
+	Ignore       bool
+	SourceFields []string
+	DefaultValue interface{}
+	OmitEmpty    bool
+	Recursive    bool
+	Squash       bool
+	IsSlice      bool
+}
+
+// Decoder mapconvでの変換
+type Decoder struct {
+	Config *DecoderConfig
+}
+
+func (d *Decoder) ConvertTo(source interface{}, dest interface{}) error {
 	s := structs.New(source)
 	destMap := Map(make(map[string]interface{}))
 
 	fields := s.Fields()
 	for _, f := range fields {
-		//if !f.IsExported() || f.IsZero() {
 		if !f.IsExported() {
 			continue
 		}
 
-		tags := ParseMapConvTag(f.Tag("mapconv"))
+		tags := d.ParseMapConvTag(f.Tag(d.Config.TagName))
+		if tags.Ignore {
+			continue
+		}
 		for _, key := range tags.SourceFields {
 			destKey := f.Name()
 			value := f.Value()
@@ -92,6 +116,7 @@ func ConvertTo(source interface{}, dest interface{}) error {
 	config := &mapstructure.DecoderConfig{
 		WeaklyTypedInput: true,
 		Result:           dest,
+		ZeroFields:       true,
 	}
 	decoder, err := mapstructure.NewDecoder(config)
 	if err != nil {
@@ -100,8 +125,7 @@ func ConvertTo(source interface{}, dest interface{}) error {
 	return decoder.Decode(destMap.Map())
 }
 
-// ConvertFrom converts struct which input by mapconv from plain models
-func ConvertFrom(source interface{}, dest interface{}) error {
+func (d *Decoder) ConvertFrom(source interface{}, dest interface{}) error {
 	var sourceMap Map
 	if m, ok := source.(map[string]interface{}); ok {
 		sourceMap = Map(m)
@@ -117,7 +141,10 @@ func ConvertFrom(source interface{}, dest interface{}) error {
 			continue
 		}
 
-		tags := ParseMapConvTag(f.Tag("mapconv"))
+		tags := d.ParseMapConvTag(f.Tag(d.Config.TagName))
+		if tags.Ignore {
+			continue
+		}
 		if tags.Squash {
 			return errors.New("ConvertFrom is not allowed squash")
 		}
@@ -172,6 +199,7 @@ func ConvertFrom(source interface{}, dest interface{}) error {
 	config := &mapstructure.DecoderConfig{
 		WeaklyTypedInput: true,
 		Result:           dest,
+		ZeroFields:       true,
 	}
 	decoder, err := mapstructure.NewDecoder(config)
 	if err != nil {
@@ -180,26 +208,32 @@ func ConvertFrom(source interface{}, dest interface{}) error {
 	return decoder.Decode(destMap.Map())
 }
 
-// TagInfo mapconvタグの情報
-type TagInfo struct {
-	SourceFields []string
-	DefaultValue interface{}
-	OmitEmpty    bool
-	Recursive    bool
-	Squash       bool
-	IsSlice      bool
+// ConvertTo converts struct which input by mapconv to plain models
+func ConvertTo(source interface{}, dest interface{}) error {
+	decoder := &Decoder{Config: &DecoderConfig{TagName: defaultMapConvTag}}
+	return decoder.ConvertTo(source, dest)
+}
+
+// ConvertFrom converts struct which input by mapconv from plain models
+func ConvertFrom(source interface{}, dest interface{}) error {
+	decoder := &Decoder{Config: &DecoderConfig{TagName: defaultMapConvTag}}
+	return decoder.ConvertFrom(source, dest)
 }
 
 // ParseMapConvTag mapconvタグを文字列で受け取りパースしてTagInfoを返す
-func ParseMapConvTag(tagBody string) TagInfo {
+func (d *Decoder) ParseMapConvTag(tagBody string) TagInfo {
 	tokens := strings.Split(tagBody, ",")
 	key := tokens[0]
 
 	keys := strings.Split(key, "/")
 	var defaultValue interface{}
-	var omitEmpty, recursive, squash, isSlice bool
+	var ignore, omitEmpty, recursive, squash, isSlice bool
 
 	for _, k := range keys {
+		if k == "-" {
+			ignore = true
+			break
+		}
 		if strings.Contains(k, "[]") {
 			isSlice = true
 		}
@@ -225,6 +259,7 @@ func ParseMapConvTag(tagBody string) TagInfo {
 		}
 	}
 	return TagInfo{
+		Ignore:       ignore,
 		SourceFields: keys,
 		DefaultValue: defaultValue,
 		OmitEmpty:    omitEmpty,

@@ -15,7 +15,7 @@
 package define
 
 import (
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -111,7 +111,8 @@ func GSLBResource() *schema.Resource {
 	return &schema.Resource{
 		Commands:            commands,
 		ResourceCategory:    CategoryCommonServiceItem,
-		ListResultFieldName: "CommonServiceGSLBItems",
+		ListResultFieldName: "GSLBs",
+		IsGlobal:            true,
 	}
 }
 
@@ -163,7 +164,7 @@ func gslbCreateParam() map[string]*schema.Schema {
 			Description:  "set healthcheck protocol[http/https/ping/tcp]",
 			DefaultValue: "ping",
 			Required:     true,
-			ValidateFunc: validateInStrValues(sacloud.AllowGSLBHealthCheckProtocol()...),
+			ValidateFunc: validateInStrValues(types.GSLBHealthCheckProtocolStrings...),
 			Category:     "GSLB",
 			Order:        10,
 		},
@@ -240,7 +241,7 @@ func gslbUpdateParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set healthcheck protocol[http/https/ping/tcp]",
-			ValidateFunc: validateInStrValues(sacloud.AllowGSLBHealthCheckProtocol()...),
+			ValidateFunc: validateInStrValues(types.GSLBHealthCheckProtocolStrings...),
 			Category:     "GSLB",
 			Order:        10,
 		},

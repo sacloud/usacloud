@@ -23,15 +23,15 @@ import (
 	"sync"
 	"time"
 
+	"github.com/sacloud/libsacloud/v2"
+
 	"github.com/fatih/color"
-	libsacloudv1 "github.com/sacloud/libsacloud"
-	"github.com/sacloud/libsacloud/api"
-	libsacloudv2 "github.com/sacloud/libsacloud/v2"
+	"github.com/sacloud/libsacloud/v2/helper/builder"
+	"github.com/sacloud/libsacloud/v2/helper/setup"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/fake"
 	"github.com/sacloud/libsacloud/v2/sacloud/trace"
-	"github.com/sacloud/libsacloud/v2/utils/builder"
-	"github.com/sacloud/libsacloud/v2/utils/setup"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/version"
@@ -48,11 +48,16 @@ type Context interface {
 
 	Args() []string
 
+	ResourceName() string
+	CommandName() string
+
+	ID() types.ID
+	SetID(id types.ID)
+	WithID(id types.ID) Context
+
+	ExecWithProgress(func() error) error
+
 	// TODO v0との互換性維持用、あとで消す
-	GetOutput() output.Output
-	GetAPIClient() *api.Client
-	NArgs() int
-	IsSet(name string) bool
 	PrintWarning(warn string)
 }
 
@@ -64,19 +69,22 @@ type cliContext struct {
 	args          []string
 	changeHandler changeHandler
 
-	client     sacloud.APICaller
-	clientOnce sync.Once
-
-	v1Client     *api.Client
-	v1ClientOnce sync.Once
+	resourceName string
+	commandName  string
+	id           types.ID
 }
+
+var (
+	clientOnce sync.Once
+	client     sacloud.APICaller
+)
 
 // changeHandler usacloud v0の互換性維持のための実装
 type changeHandler interface {
 	Changed(string) bool
 }
 
-func NewCLIContext(globalFlags *pflag.FlagSet, args []string, parameter interface{}) (Context, error) {
+func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet, args []string, parameter interface{}) (Context, error) {
 	// TODO あとでグローバルなタイムアウトなどを実装する
 	ctx := context.TODO()
 
@@ -88,12 +96,13 @@ func NewCLIContext(globalFlags *pflag.FlagSet, args []string, parameter interfac
 	}
 
 	return &cliContext{
-		parentCtx:     ctx,
-		option:        option,
-		output:        getOutputWriter(io, parameter),
-		cliIO:         io,
-		args:          args,
-		changeHandler: getChangeHandler(parameter),
+		parentCtx:    ctx,
+		option:       option,
+		output:       getOutputWriter(io, parameter),
+		resourceName: resourceName,
+		commandName:  commandName,
+		cliIO:        io,
+		args:         args,
 	}, nil
 }
 
@@ -109,8 +118,41 @@ func (c *cliContext) Output() output.Output {
 	return c.output
 }
 
+func (c *cliContext) ResourceName() string {
+	return c.resourceName
+}
+
+func (c *cliContext) CommandName() string {
+	return c.commandName
+}
+
+func (c *cliContext) ID() types.ID {
+	return c.id
+}
+
+func (c *cliContext) SetID(id types.ID) {
+	c.id = id
+}
+
+func (c *cliContext) WithID(id types.ID) Context {
+	return &cliContext{
+		parentCtx:    c,
+		option:       c.option,
+		output:       c.output,
+		cliIO:        c.cliIO,
+		args:         c.args,
+		resourceName: c.resourceName,
+		commandName:  c.commandName,
+		id:           id,
+	}
+}
+
+func (c *cliContext) ExecWithProgress(f func() error) error {
+	return NewProgress(c).Exec(f)
+}
+
 func (c *cliContext) Client() sacloud.APICaller {
-	c.clientOnce.Do(func() {
+	clientOnce.Do(func() {
 		o := c.Option()
 
 		httpClient := http.DefaultClient
@@ -126,7 +168,7 @@ func (c *cliContext) Client() sacloud.APICaller {
 			retryWaitMin = time.Duration(o.RetryWaitMin) * time.Second
 		}
 
-		ua := fmt.Sprintf("Usacloud/ (+https://github.com/sacloud/usacloud) cli/v%s libsacloud/%s", version.Version, libsacloudv2.Version)
+		ua := fmt.Sprintf("Usacloud/ (+https://github.com/sacloud/usacloud) cli/v%s libsacloud/%s", version.Version, libsacloud.Version)
 
 		caller := &sacloud.Client{
 			AccessToken:       o.AccessToken,
@@ -192,10 +234,10 @@ func (c *cliContext) Client() sacloud.APICaller {
 			}
 			sacloud.SakuraCloudAPIRoot = o.APIRootURL
 		}
-		c.client = caller
+		client = caller
 	})
 
-	return c.client
+	return client
 }
 
 func (c *cliContext) Zone() string {
@@ -216,6 +258,10 @@ func (c *cliContext) Err() error {
 
 func (c *cliContext) Value(key interface{}) interface{} {
 	return c.parentCtx.Value(key)
+}
+
+func (c *cliContext) Args() []string {
+	return c.args
 }
 
 func getOutputWriter(io IO, rawFormatter interface{}) output.Output {
@@ -253,46 +299,6 @@ func getOutputWriter(io IO, rawFormatter interface{}) output.Output {
 	default:
 		return output.NewTableOutput(out, err, formatter)
 	}
-}
-
-// TODO v0との互換性維持用、あとで消す
-func getChangeHandler(parameter interface{}) changeHandler {
-	if v, ok := parameter.(changeHandler); ok {
-		return v
-	}
-	return nil
-}
-
-// TODO v0との互換性維持用、あとで消す
-func (c *cliContext) GetOutput() output.Output {
-	return c.output
-}
-
-// TODO v0との互換性維持用、あとで消す
-func (c *cliContext) GetAPIClient() *api.Client {
-	c.v1ClientOnce.Do(func() {
-		o := c.Option()
-		client := api.NewClient(o.AccessToken, o.AccessTokenSecret, o.Zone)
-		ua := fmt.Sprintf("Usacloud/ (+https://github.com/sacloud/usacloud) cli/v%s libsacloud/%s", version.Version, libsacloudv1.Version)
-		client.UserAgent = ua
-		client.TraceMode = o.TraceMode != ""
-		c.v1Client = client
-	})
-	return c.v1Client
-}
-
-// TODO v0との互換性維持用、あとで消す
-func (c *cliContext) IsSet(name string) bool {
-	return c.changeHandler.Changed(name)
-}
-
-// TODO v0との互換性維持用、あとで消す
-func (c *cliContext) NArgs() int {
-	return len(c.args)
-}
-
-func (c *cliContext) Args() []string {
-	return c.args
 }
 
 // TODO v0との互換性維持用、実装する場所を再考

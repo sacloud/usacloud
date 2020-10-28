@@ -37,6 +37,7 @@ func CouponResource() *schema.Resource {
 		Commands:         commands,
 		DefaultCommand:   "list",
 		ResourceCategory: CategoryCoupon,
+		IsGlobal:         true,
 	}
 }
 

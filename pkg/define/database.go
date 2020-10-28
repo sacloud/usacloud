@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -453,7 +453,7 @@ func databaseCreateParam() map[string]*schema.Schema {
 			Required:     true,
 			DefaultValue: 10,
 			Description:  "set plan[10/30/90/240/500/1000]",
-			ValidateFunc: validateInIntValues(sacloud.AllowDatabasePlans()...),
+			ValidateFunc: validateInIDs(types.DatabasePlanIDs...),
 			Category:     "database",
 			Order:        20,
 		},
@@ -520,7 +520,7 @@ func databaseCreateParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
 			ValidateFunc: validateStringSlice(
-				validateInStrValues(append(sacloud.AllowDatabaseBackupWeekdays(), "all")...),
+				validateInStrValues(append(types.BackupWeekdayStrings, "all")...),
 			),
 			DefaultValue: []string{"all"},
 			Category:     "database",
@@ -674,7 +674,7 @@ func databaseUpdateParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
 			ValidateFunc: validateStringSlice(
-				validateInStrValues(append(sacloud.AllowDatabaseBackupWeekdays(), "all")...),
+				validateInStrValues(append(types.BackupWeekdayStrings, "all")...),
 			),
 			DefaultValue: []string{"all"},
 			Category:     "database",
@@ -803,7 +803,7 @@ func databaseCloneParam() map[string]*schema.Schema {
 			Required:     true,
 			DefaultValue: 10,
 			Description:  "set plan[10/30/90/240/500/1000]",
-			ValidateFunc: validateInIntValues(sacloud.AllowDatabasePlans()...),
+			ValidateFunc: validateInIDs(types.DatabasePlanIDs...),
 			Category:     "database",
 			Order:        20,
 		},
@@ -842,7 +842,7 @@ func databaseCloneParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
 			ValidateFunc: validateStringSlice(
-				validateInStrValues(append(sacloud.AllowDatabaseBackupWeekdays(), "all")...),
+				validateInStrValues(append(types.BackupWeekdayStrings, "all")...),
 			),
 			DefaultValue: []string{"all"},
 			Category:     "database",

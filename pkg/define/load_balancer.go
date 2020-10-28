@@ -17,7 +17,7 @@ package define
 import (
 	"fmt"
 
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -743,7 +743,7 @@ func loadBalancerServerAddParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set health check protocol[http/https/ping/tcp]",
-			ValidateFunc: validateInStrValues(sacloud.AllowLoadBalancerHealthCheckProtocol()...),
+			ValidateFunc: validateInStrValues(types.LoadBalancerHealthCheckProtocolStrings...),
 			Required:     true,
 			DefaultValue: "ping",
 			Category:     "server",
@@ -815,7 +815,7 @@ func loadBalancerServerUpdateParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set health check protocol[http/https/ping/tcp]",
-			ValidateFunc: validateInStrValues(sacloud.AllowLoadBalancerHealthCheckProtocol()...),
+			ValidateFunc: validateInStrValues(types.LoadBalancerHealthCheckProtocolStrings...),
 			Category:     "server",
 			Order:        20,
 		},
