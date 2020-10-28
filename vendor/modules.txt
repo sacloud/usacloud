@@ -47,12 +47,6 @@ github.com/pmezard/go-difflib/difflib
 github.com/sacloud/ftps
 # github.com/sacloud/go-jmespath v0.0.0-20190125082617-862639817e08
 github.com/sacloud/go-jmespath
-# github.com/sacloud/libsacloud v1.36.0
-github.com/sacloud/libsacloud
-github.com/sacloud/libsacloud/api
-github.com/sacloud/libsacloud/sacloud
-github.com/sacloud/libsacloud/sacloud/ostype
-github.com/sacloud/libsacloud/utils/mutexkv
 # github.com/sacloud/libsacloud/v2 v2.8.6 => /Users/kaz/go/src/github.com/sacloud/libsacloud/v2
 github.com/sacloud/libsacloud/v2
 github.com/sacloud/libsacloud/v2/helper/builder
@@ -80,7 +74,7 @@ github.com/sacloud/libsacloud/v2/sacloud/types
 github.com/spf13/cobra
 # github.com/spf13/pflag v1.0.5
 github.com/spf13/pflag
-# github.com/stretchr/testify v1.4.0
+# github.com/stretchr/testify v1.6.1
 github.com/stretchr/testify/assert
 github.com/stretchr/testify/require
 # go.uber.org/ratelimit v0.0.0-20180316092928-c15da0234277
@@ -99,3 +93,5 @@ golang.org/x/sys/cpu
 golang.org/x/sys/unix
 # gopkg.in/yaml.v2 v2.2.2
 gopkg.in/yaml.v2
+# gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
+gopkg.in/yaml.v3

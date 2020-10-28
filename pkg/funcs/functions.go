@@ -19,89 +19,13 @@ import (
 	"path/filepath"
 
 	"github.com/mitchellh/go-homedir"
-	"github.com/sacloud/libsacloud/api"
-	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
-func getSSHPrivateKeyStorePath(serverID sacloud.ID) (string, error) {
+func getSSHPrivateKeyStorePath(serverID types.ID) (string, error) {
 	homeDir, err := homedir.Dir()
 	if err != nil {
 		return "", fmt.Errorf("getting HomeDir is failed:%s", err)
 	}
 	return filepath.Join(homeDir, ".ssh", fmt.Sprintf("sacloud_pkey_%d", serverID)), nil
-}
-
-func getSSHDefaultUserName(client *api.Client, serverID sacloud.ID) (string, error) {
-
-	// read server
-	server, err := client.GetServerAPI().Read(serverID)
-	if err != nil {
-		return "", err
-	}
-
-	if len(server.Disks) == 0 {
-		return "", nil
-	}
-
-	return getSSHDefaultUserNameDiskRec(client, server.Disks[0].ID)
-}
-
-func getSSHDefaultUserNameDiskRec(client *api.Client, diskID sacloud.ID) (string, error) {
-
-	disk, err := client.GetDiskAPI().Read(diskID)
-	if err != nil {
-		return "", err
-	}
-
-	if disk.SourceDisk != nil {
-		return getSSHDefaultUserNameDiskRec(client, disk.SourceDisk.ID)
-	}
-
-	if disk.SourceArchive != nil {
-		return getSSHDefaultUserNameArchiveRec(client, disk.SourceArchive.ID)
-
-	}
-
-	return "", nil
-}
-
-func getSSHDefaultUserNameArchiveRec(client *api.Client, archiveID sacloud.ID) (string, error) {
-	// read archive
-	archive, err := client.GetArchiveAPI().Read(archiveID)
-	if err != nil {
-		return "", err
-	}
-
-	if archive.Scope == string(sacloud.ESCopeShared) {
-
-		// has ubuntu/coreos tag?
-		if archive.HasTag("distro-ubuntu") {
-			return "ubuntu", nil
-		}
-
-		if archive.HasTag("distro-vyos") {
-			return "vyos", nil
-		}
-
-		if archive.HasTag("distro-coreos") {
-			return "core", nil
-		}
-
-		if archive.HasTag("distro-rancheros") {
-			return "rancher", nil
-		}
-
-		if archive.HasTag("distro-k3os") {
-			return "rancher", nil
-		}
-	}
-	if archive.SourceDisk != nil {
-		return getSSHDefaultUserNameDiskRec(client, archive.SourceDisk.ID)
-	}
-
-	if archive.SourceArchive != nil {
-		return getSSHDefaultUserNameArchiveRec(client, archive.SourceArchive.ID)
-	}
-	return "", nil
-
 }

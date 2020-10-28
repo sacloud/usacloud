@@ -49,10 +49,12 @@ clean-all:
 
 .PHONY: tools
 tools:
-	GO111MODULE=off go get -u golang.org/x/tools/cmd/goimports
 	GO111MODULE=off go get github.com/x-motemen/gobump/cmd/gobump
-	GO111MODULE=off go get -u golang.org/x/lint/golint
+	GO111MODULE=off go get golang.org/x/tools/cmd/goimports
+	GO111MODULE=off go get golang.org/x/tools/cmd/stringer
 	GO111MODULE=off go get github.com/sacloud/addlicense
+	GO111MODULE=off go get -u github.com/client9/misspell/cmd/misspell
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v1.23.8/install.sh | sh -s -- -b $$(go env GOPATH)/bin v1.23.8
 
 .PHONY: gen
 gen: pkg/*/*_gen.go set-license fmt goimports
@@ -119,19 +121,12 @@ integration-test: bin/usacloud
 	test/integration/run-bats.sh test/integration/bats ;
 
 .PHONY: lint
-lint: golint
-	gometalinter --vendor --skip=vendor/ --disable-all --enable vet --enable goimports --deadline=5m ./...
-	@echo
-
-.PHONY: golint
-golint: goimports
-	for pkg in $$(go list ./... | grep -v /vendor/ ) ; do \
-        test -z "$$(golint $$pkg | grep -v '_gen.go' | grep -v '_string.go' | grep -v 'should have comment' | grep -v 'func ServerMonitorCpu' | grep -v 'func ServerSsh' | grep -v 'DatabaseMonitorCpu' | grep -v "func MobileGatewayDnsUpdate" | tee /dev/stderr)" || RES=1; \
-    done ;exit $$RES
+lint:
+	golangci-lint run ./...
 
 .PHONY: goimports
 goimports:
-	find . -name '*.go' | grep -v vendor | xargs goimports -l -w
+	goimports -l -w pkg/ tools/
 
 .PHONY: fmt
 fmt:

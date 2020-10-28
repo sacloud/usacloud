@@ -15,7 +15,6 @@
 package database
 
 import (
-	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/params"
 )
@@ -54,13 +53,13 @@ func BackupInfo(ctx cli.Context, params *params.BackupInfoDatabaseParam) error {
 	//return ctx.Output().Print(list...)
 }
 
-type backupHistory struct {
-	*sacloud.DatabaseBackupHistory
-	SizeMB int64
-}
-
-func hasDatabaseBackup(status *sacloud.DatabaseStatus) bool {
-	return status.DBConf != nil &&
-		status.DBConf.Backup != nil &&
-		len(status.DBConf.Backup.History) > 0
-}
+//type backupHistory struct {
+//	*sacloud.DatabaseBackupHistory
+//	SizeMB int64
+//}
+//
+//func hasDatabaseBackup(status *sacloud.DatabaseStatus) bool {
+//	return status.DBConf != nil &&
+//		status.DBConf.Backup != nil &&
+//		len(status.DBConf.Backup.History) > 0
+//}
