@@ -34,5 +34,4 @@ func ConflictsWith(fieldName string, object interface{}, values map[string]inter
 		}
 	}
 	return []error{}
-
 }

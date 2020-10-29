@@ -57,5 +57,4 @@ func (o *yamlOutput) Print(target interface{}) error {
 	o.out.Write(b)          // nolint
 	fmt.Fprintln(o.out, "") // nolint
 	return nil
-
 }

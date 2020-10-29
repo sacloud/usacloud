@@ -153,5 +153,4 @@ func Update(ctx cli.Context, params *params.UpdateDatabaseParam) error {
 		return fmt.Errorf("DatabaseUpdate is failed: %s", err)
 	}
 	return ctx.Output().Print(db)
-
 }

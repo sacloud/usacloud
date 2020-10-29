@@ -81,11 +81,9 @@ func (o *jsonOutput) Print(target interface{}) error {
 	o.out.Write(b) // nolint
 	fmt.Fprintln(o.out, "")
 	return nil
-
 }
 
 func (o *jsonOutput) searchByJMESPath(v interface{}) (result interface{}, err error) {
-
 	defer func() {
 		ret := recover()
 		if ret != nil {

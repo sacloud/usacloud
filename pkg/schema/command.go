@@ -87,7 +87,6 @@ func (c *Command) ParamCategory(key string) *Category {
 }
 
 func (c *Command) BuiltParams() SortableParams {
-
 	// Notice: ここで追加されるパラメータはdefine.Resourcesからは見えない。
 	//         (コード生成時に追加されるため)
 	//         このため、ランタイムでdefine.Resourcesを参照する必要のある
@@ -311,14 +310,11 @@ func (s SortableParams) Swap(i, j int) {
 }
 
 func (s SortableParams) Less(i, j int) bool {
-
 	if s[i].Category.Order == s[j].Category.Order {
-
 		if s[i].Param.Order == s[j].Param.Order {
 			return s[i].ParamKey < s[j].ParamKey
 		}
 		return s[i].Param.Order < s[j].Param.Order
-
 	}
 	return s[i].Category.Order < s[j].Category.Order
 }

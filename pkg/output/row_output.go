@@ -107,7 +107,6 @@ func (o *rowOutput) Print(target interface{}) error {
 
 	// next, collect values
 	for rowIndex := 0; rowIndex < sliceLen(targets); rowIndex++ {
-
 		// interface{} -> map[string]interface{}
 		v := j.GetIndex(rowIndex)
 		mapValue, err := v.Map()
@@ -140,7 +139,6 @@ func (o *rowOutput) Print(target interface{}) error {
 
 	w.Flush()
 	return nil
-
 }
 
 type header []string

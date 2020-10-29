@@ -84,7 +84,6 @@ func (o *freeOutput) Print(target interface{}) error {
 	}
 
 	for i := 0; i < sliceLen(targets); i++ {
-
 		// interface{} -> map[string]interface{}
 		v := j.GetIndex(i)
 		mapValue, err := v.Map()

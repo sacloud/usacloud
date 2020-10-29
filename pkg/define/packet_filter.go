@@ -24,7 +24,6 @@ import (
 )
 
 func PacketFilterResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
@@ -407,7 +406,6 @@ func validatePacketFilterSourceNetwork() schema.ValidateFunc {
 				// first , validate ipv4 address
 				errs := ipv4Validator(fieldName, tokens[0])
 				if len(errs) == 0 {
-
 					// next , second token is Number?
 					num, err := strconv.Atoi(tokens[1])
 					if err == nil {
@@ -422,7 +420,6 @@ func validatePacketFilterSourceNetwork() schema.ValidateFunc {
 							res = append(res, validateError)
 						}
 					}
-
 				} else {
 					res = append(res, validateError)
 				}
@@ -430,7 +427,6 @@ func validatePacketFilterSourceNetwork() schema.ValidateFunc {
 			default:
 				res = append(res, validateError)
 			}
-
 		}
 
 		return res
@@ -468,7 +464,6 @@ func validatePacketFilterPort() schema.ValidateFunc {
 				} else {
 					strNum1 = value
 				}
-
 			}
 
 			num1, num2 := 0, 0

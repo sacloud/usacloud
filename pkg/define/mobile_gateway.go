@@ -23,7 +23,6 @@ import (
 )
 
 func MobileGatewayResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,

@@ -60,7 +60,6 @@ func ValidateExistsFileOrStdIn(fieldName string, object interface{}) []error {
 }
 
 func ValidateConflicts(fieldName string, object interface{}, values map[string]interface{}) []error {
-
 	if !util.IsEmpty(object) {
 		for _, v := range values {
 			if !util.IsEmpty(v) {
@@ -73,11 +72,9 @@ func ValidateConflicts(fieldName string, object interface{}, values map[string]i
 		}
 	}
 	return []error{}
-
 }
 
 func ValidateConflictValues(fieldName string, object interface{}, values map[string]interface{}) []error {
-
 	if !util.IsEmpty(object) {
 		for _, v := range values {
 			if !util.IsEmpty(v) {
@@ -90,11 +87,9 @@ func ValidateConflictValues(fieldName string, object interface{}, values map[str
 		}
 	}
 	return []error{}
-
 }
 
 func ValidateBetween(fieldName string, object interface{}, min int, max int) []error {
-
 	if object == nil {
 		object = []int64{}
 	}
@@ -123,7 +118,6 @@ func ValidateBetween(fieldName string, object interface{}, min int, max int) []e
 			if !(min <= sliceLen && sliceLen <= max) {
 				return []error{fmt.Errorf("%q: slice length must be beetween %d and %d", fieldName, min, max)}
 			}
-
 		}
 	}
 

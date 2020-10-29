@@ -92,5 +92,4 @@ func Logs(ctx cli.Context, params *params.LogsDatabaseParam) error {
 	//	time.Sleep(time.Duration(params.RefreshInterval) * time.Second)
 	//}
 	//return nil
-
 }

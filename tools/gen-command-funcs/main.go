@@ -45,7 +45,6 @@ func main() {
 }
 
 func generateResource(resource *tools.Resource) error {
-
 	dirName := filepath.Join(ctx.Gopath(), destination, resource.PackageDirName())
 	os.MkdirAll(dirName, 0755) // nolint
 
@@ -117,7 +116,6 @@ func {{.FunctionName}}(ctx cli.Context, params *params.{{.InputModelTypeName}}) 
 `
 
 func generateAction(command *tools.Command) (string, error) {
-
 	var res string
 	var err error
 	switch command.Type {

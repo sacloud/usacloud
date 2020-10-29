@@ -49,7 +49,6 @@ func TestFreeOutput_Print(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.Equal(t, testFreeOutputText, buf.String())
-
 }
 
 var testFreeOutputText = `test ID:1

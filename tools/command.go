@@ -132,7 +132,6 @@ func (c *Command) ArgsUsage() string {
 			argsUsage = "<ID or Name(only single target)>"
 		default:
 			argsUsage = "<ID or Name(allow multiple target)>"
-
 		}
 	}
 	return argsUsage

@@ -564,7 +564,6 @@ func ValidateDateTimeString() ValidateFunc {
 			}
 
 			res = append(res, fmt.Errorf("%q: Invalid Datetime format", fieldName))
-
 		}
 
 		return res

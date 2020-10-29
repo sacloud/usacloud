@@ -43,5 +43,4 @@ func WaitForBoot(ctx cli.Context, params *params.WaitForBootDatabaseParam) error
 	}
 
 	return nil
-
 }

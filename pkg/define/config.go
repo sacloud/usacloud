@@ -19,7 +19,6 @@ import (
 )
 
 func ConfigResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:             schema.CommandCustom,

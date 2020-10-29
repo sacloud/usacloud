@@ -93,7 +93,6 @@ func TestMigrateConfig(t *testing.T) {
 			fileExists = true
 		}
 		assert.False(t, fileExists)
-
 	})
 	t.Run("Answer 'No' to overwrite confirm", func(t *testing.T) {
 		defer initFunc()()
@@ -122,7 +121,6 @@ func TestMigrateConfig(t *testing.T) {
 		assert.EqualValues(t, "default-token", v.AccessToken)
 		assert.EqualValues(t, "default-secret", v.AccessTokenSecret)
 		assert.EqualValues(t, "tk1v", v.Zone)
-
 	})
 	t.Run("Overwrite default config", func(t *testing.T) {
 		defer initFunc()()

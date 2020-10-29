@@ -24,7 +24,6 @@ import (
 )
 
 func ServerResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
@@ -429,9 +428,7 @@ func serverListColumns() []output.ColumnDef {
 							values["Interfaces.0.UserIPAddress"],
 							values["Interfaces.0.Switch.UserSubnet.NetworkMaskLen"],
 						)
-
 					}
-
 				}
 
 				return ""

@@ -43,7 +43,6 @@ func (o dummyOption) GetQuery() string       { return o.query }
 func (o dummyOption) GetQueryFile() string   { return o.queryFile }
 
 func TestValidateOutputOption(t *testing.T) {
-
 	expects := []struct {
 		testName string
 		option   *dummyOption

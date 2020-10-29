@@ -56,7 +56,6 @@ func (r *Resource) CommandCategory(key string) *Category {
 }
 
 func (r *Resource) SortedCommands() SortableCommands {
-
 	params := SortableCommands{}
 	for k, v := range r.Commands {
 		params = append(params, SortableCommand{
@@ -87,14 +86,11 @@ func (s SortableCommands) Swap(i, j int) {
 }
 
 func (s SortableCommands) Less(i, j int) bool {
-
 	if s[i].Category.Order == s[j].Category.Order {
-
 		if s[i].Command.Order == s[j].Command.Order {
 			return s[i].CommandKey < s[j].CommandKey
 		}
 		return s[i].Command.Order < s[j].Command.Order
-
 	}
 	return s[i].Category.Order < s[j].Category.Order
 }

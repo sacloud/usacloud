@@ -20,7 +20,6 @@ import (
 )
 
 func IPv4Resource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,

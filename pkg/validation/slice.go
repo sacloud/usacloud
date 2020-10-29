@@ -17,7 +17,6 @@ package validation
 import "fmt"
 
 func SliceLenBetween(fieldName string, object interface{}, min int, max int) []error {
-
 	if object == nil {
 		object = []int64{}
 	}
@@ -46,7 +45,6 @@ func SliceLenBetween(fieldName string, object interface{}, min int, max int) []e
 			if !(min <= sliceLen && sliceLen <= max) {
 				return []error{fmt.Errorf("%q: slice length must be beetween %d and %d", fieldName, min, max)}
 			}
-
 		}
 	}
 
