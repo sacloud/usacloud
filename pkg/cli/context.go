@@ -19,18 +19,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strings"
 	"sync"
 	"time"
 
 	"github.com/sacloud/libsacloud/v2"
 
 	"github.com/fatih/color"
-	"github.com/sacloud/libsacloud/v2/helper/builder"
-	"github.com/sacloud/libsacloud/v2/helper/setup"
+	"github.com/sacloud/libsacloud/v2/helper/api"
 	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/fake"
-	"github.com/sacloud/libsacloud/v2/sacloud/trace"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -152,92 +148,24 @@ func (c *cliContext) ExecWithProgress(f func() error) error {
 }
 
 func (c *cliContext) Client() sacloud.APICaller {
-	clientOnce.Do(func() {
-		o := c.Option()
-
-		httpClient := http.DefaultClient
-		httpClient.Timeout = time.Duration(o.HTTPRequestTimeout) * time.Second
-		httpClient.Transport = &sacloud.RateLimitRoundTripper{RateLimitPerSec: o.HTTPRequestRateLimit}
-
-		retryWaitMax := sacloud.APIDefaultRetryWaitMax
-		retryWaitMin := sacloud.APIDefaultRetryWaitMin
-		if o.RetryWaitMax > 0 {
-			retryWaitMax = time.Duration(o.RetryWaitMax) * time.Second
-		}
-		if o.RetryWaitMin > 0 {
-			retryWaitMin = time.Duration(o.RetryWaitMin) * time.Second
-		}
-
-		ua := fmt.Sprintf("Usacloud/ (+https://github.com/sacloud/usacloud) cli/v%s libsacloud/%s", version.Version, libsacloud.Version)
-
-		caller := &sacloud.Client{
-			AccessToken:       o.AccessToken,
-			AccessTokenSecret: o.AccessTokenSecret,
-			UserAgent:         ua,
-			AcceptLanguage:    o.AcceptLanguage,
-			RetryMax:          o.RetryMax,
-			RetryWaitMax:      retryWaitMax,
-			RetryWaitMin:      retryWaitMin,
-			HTTPClient:        httpClient,
-		}
-		sacloud.DefaultStatePollingTimeout = 72 * time.Hour
-
-		if o.TraceMode != "" {
-			enableAPITrace := true
-			enableHTTPTrace := true
-
-			mode := strings.ToLower(o.TraceMode)
-			switch mode {
-			case "api":
-				enableHTTPTrace = false
-			case "http":
-				enableAPITrace = false
-			}
-
-			if enableAPITrace {
-				// note: exact once
-				trace.AddClientFactoryHooks()
-			}
-			if enableHTTPTrace {
-				caller.HTTPClient.Transport = &sacloud.TracingRoundTripper{
-					Transport: caller.HTTPClient.Transport,
-				}
-			}
-		}
-
-		if o.FakeMode {
-			if o.FakeStorePath != "" {
-				fake.DataStore = fake.NewJSONFileStore(o.FakeStorePath)
-			}
-			// note: exact once
-			fake.SwitchFactoryFuncToFake()
-
-			defaultInterval := 10 * time.Millisecond
-
-			// update default polling intervals: libsacloud/sacloud
-			sacloud.DefaultStatePollingInterval = defaultInterval
-			// update default polling intervals: libsacloud/utils/setup
-			setup.DefaultDeleteWaitInterval = defaultInterval
-			setup.DefaultProvisioningWaitInterval = defaultInterval
-			setup.DefaultPollingInterval = defaultInterval
-			// update default polling intervals: libsacloud/utils/builder
-			builder.DefaultNICUpdateWaitDuration = defaultInterval
-		}
-
-		zones := o.Zones
-		if len(zones) == 0 {
-			zones = sacloud.SakuraCloudZones
-		}
-		if o.APIRootURL != "" {
-			if strings.HasSuffix(o.APIRootURL, "/") {
-				o.APIRootURL = strings.TrimRight(o.APIRootURL, "/")
-			}
-			sacloud.SakuraCloudAPIRoot = o.APIRootURL
-		}
-		client = caller
+	o := c.Option()
+	return api.NewCaller(&api.CallerOptions{
+		AccessToken:          o.AccessToken,
+		AccessTokenSecret:    o.AccessTokenSecret,
+		APIRootURL:           o.APIRootURL,
+		AcceptLanguage:       o.AcceptLanguage,
+		HTTPClient:           http.DefaultClient,
+		HTTPRequestTimeout:   o.HTTPRequestTimeout,
+		HTTPRequestRateLimit: o.HTTPRequestRateLimit,
+		RetryMax:             o.RetryMax,
+		RetryWaitMax:         o.RetryWaitMax,
+		RetryWaitMin:         o.RetryWaitMin,
+		UserAgent:            fmt.Sprintf("Usacloud/v%s (+https://github.com/sacloud/usacloud) libsacloud/%s", version.Version, libsacloud.Version),
+		TraceAPI:             o.EnableAPITrace(),
+		TraceHTTP:            o.EnableHTTPTrace(),
+		FakeMode:             o.FakeMode,
+		FakeStorePath:        o.FakeStorePath,
 	})
-
-	return client
 }
 
 func (c *cliContext) Zone() string {
