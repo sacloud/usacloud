@@ -57,21 +57,15 @@ type Context interface {
 }
 
 type cliContext struct {
-	parentCtx     context.Context
-	option        *config.Config
-	output        output.Output
-	cliIO         IO
-	args          []string
-	changeHandler changeHandler
+	parentCtx context.Context
+	option    *config.Config
+	output    output.Output
+	cliIO     IO
+	args      []string
 
 	resourceName string
 	commandName  string
 	id           types.ID
-}
-
-// changeHandler usacloud v0の互換性維持のための実装
-type changeHandler interface {
-	Changed(string) bool
 }
 
 func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet, args []string, parameter interface{}) (Context, error) {
