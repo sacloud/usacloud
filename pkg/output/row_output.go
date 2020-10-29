@@ -103,7 +103,7 @@ func (o *rowOutput) Print(target interface{}) error {
 
 	sort.Sort(header)
 	// write header
-	w.Write(header)
+	w.Write(header) // nolint
 
 	// next, collect values
 	for rowIndex := 0; rowIndex < sliceLen(targets); rowIndex++ {
@@ -135,7 +135,7 @@ func (o *rowOutput) Print(target interface{}) error {
 			row = append(row, value)
 		}
 
-		w.Write(row)
+		w.Write(row) // nolint
 	}
 
 	w.Flush()

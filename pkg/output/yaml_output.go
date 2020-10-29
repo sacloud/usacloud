@@ -46,7 +46,7 @@ func (o *yamlOutput) Print(target interface{}) error {
 	}
 
 	if util.IsEmpty(targets) {
-		fmt.Fprintf(o.err, "no results\n")
+		fmt.Fprintf(o.err, "no results\n") // nolint
 		return nil
 	}
 
@@ -54,8 +54,8 @@ func (o *yamlOutput) Print(target interface{}) error {
 	if err != nil {
 		return fmt.Errorf("YAMLOutput:Print: yaml.Marshal is Failed: %s", err)
 	}
-	o.out.Write(b)
-	fmt.Fprintln(o.out, "")
+	o.out.Write(b)          // nolint
+	fmt.Fprintln(o.out, "") // nolint
 	return nil
 
 }

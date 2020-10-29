@@ -78,7 +78,7 @@ func (o *jsonOutput) Print(target interface{}) error {
 	if err != nil {
 		return fmt.Errorf("JSONOutput:Print: Print pretty JSON is failed: %s", err)
 	}
-	o.out.Write(b)
+	o.out.Write(b) // nolint
 	fmt.Fprintln(o.out, "")
 	return nil
 

@@ -165,7 +165,7 @@ func createOldConfig() {
 }
 
 func createDefaultProfile() {
-	profile.Save(profile.DefaultProfileName, &config.Config{
+	profile.Save(profile.DefaultProfileName, &config.Config{ // nolint
 		ConfigValue: profile.ConfigValue{
 			AccessToken:       "default-token",
 			AccessTokenSecret: "default-secret",
