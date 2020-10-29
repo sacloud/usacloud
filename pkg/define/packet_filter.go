@@ -456,7 +456,8 @@ func validatePacketFilterPort() schema.ValidateFunc {
 				return 0 <= num && num <= 65535
 			}
 
-			strNum1, strNum2 := "0", "0"
+			var strNum1 string
+			strNum2 := "0"
 			tokens := strings.Split(value, "-")
 			if len(tokens) == 2 {
 				strNum1, strNum2 = tokens[0], tokens[1]
