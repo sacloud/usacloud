@@ -16,7 +16,6 @@ package cli
 
 import (
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
@@ -41,7 +40,7 @@ func WrapError(ctx Context, err error) error {
 	return err
 }
 
-func Confirm(in *os.File, msg string) bool {
+func Confirm(in util.In, msg string) bool {
 	fi, err := in.Stat()
 	if err != nil {
 		panic(err)
@@ -56,7 +55,7 @@ func Confirm(in *os.File, msg string) bool {
 	return input == "y" || input == "yes"
 }
 
-func ConfirmContinue(in *os.File, target string, ids ...types.ID) bool {
+func ConfirmContinue(in util.In, target string, ids ...types.ID) bool {
 	if len(ids) == 0 {
 		return Confirm(in, fmt.Sprintf("Are you sure you want to %s?", target))
 	}
