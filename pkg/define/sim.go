@@ -359,10 +359,6 @@ func simReadParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{}
 }
 
-func simInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
-}
-
 func simUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"name":        paramName,

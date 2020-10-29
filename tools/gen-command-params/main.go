@@ -32,13 +32,6 @@ var (
 	ctx         = tools.NewGenerateContext()
 )
 
-// Usage is a replacement usage function for the flags package.
-func Usage() {
-	fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
-	fmt.Fprintf(os.Stderr, "\tgen-command-params\n")
-	os.Exit(2)
-}
-
 func main() {
 	log.SetFlags(0)
 	log.SetPrefix("gen-command-params: ")

@@ -19,7 +19,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
 	"path/filepath"
 	"text/template"
 
@@ -30,12 +29,6 @@ var (
 	destination = "src/github.com/sacloud/usacloud/pkg/cmd"
 	ctx         = tools.NewGenerateContext()
 )
-
-func Usage() {
-	fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
-	fmt.Fprint(os.Stderr, "\tgen-cli-normalize-flag-name\n")
-	os.Exit(2)
-}
 
 func main() {
 	log.SetFlags(0)

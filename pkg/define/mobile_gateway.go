@@ -540,17 +540,6 @@ func mobileGatewaySIMInfoColumns() []output.ColumnDef {
 	}
 }
 
-func mobileGatewayLogsColumns() []output.ColumnDef {
-	return []output.ColumnDef{
-		{Name: "__ORDER__"}, // magic column name(generated on demand)
-		{Name: "Date"},
-		{Name: "SessionStatus"},
-		{Name: "ResourceID"},
-		{Name: "IMEI"},
-		{Name: "IMSI"},
-	}
-}
-
 func mobileGatewayDetailIncludes() []string {
 	return []string{}
 }

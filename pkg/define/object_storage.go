@@ -20,7 +20,6 @@ import (
 )
 
 func ObjectStorageResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandCustom,
@@ -83,14 +82,6 @@ func objectStorageListColumns() []output.ColumnDef {
 		{Name: "Size"},
 		{Name: "ETag"},
 	}
-}
-
-func objectStorageDetailIncludes() []string {
-	return []string{}
-}
-
-func objectStorageDetailExcludes() []string {
-	return []string{}
 }
 
 func objectStorageListParam() map[string]*schema.Schema {

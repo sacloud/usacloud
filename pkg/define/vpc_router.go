@@ -1078,10 +1078,6 @@ func vpcRouterEnableInternetParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{}
 }
 
-func vpcRouterDisableInternetParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
-}
-
 func vpcRouterPowerOnParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{}
 }

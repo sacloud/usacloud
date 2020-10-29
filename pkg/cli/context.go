@@ -19,7 +19,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"sync"
 	"time"
 
 	"github.com/sacloud/libsacloud/v2"
@@ -69,11 +68,6 @@ type cliContext struct {
 	commandName  string
 	id           types.ID
 }
-
-var (
-	clientOnce sync.Once
-	client     sacloud.APICaller
-)
 
 // changeHandler usacloud v0の互換性維持のための実装
 type changeHandler interface {
