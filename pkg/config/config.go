@@ -74,6 +74,30 @@ func initDebugConfig(fs *pflag.FlagSet) {
 	fs.StringP("fake-store", "", "", "path to file store used by the fake API driver")
 }
 
+func (o *Config) EnableHTTPTrace() bool {
+	if o.TraceMode == "" {
+		return false
+	}
+
+	// TraceModeが"api"の場合はfalseにする(TraceMode=1などの場合はAPI/HTTP両方が有効になる)
+	if strings.ToLower(o.TraceMode) == "api" {
+		return false
+	}
+	return true
+}
+
+func (o *Config) EnableAPITrace() bool {
+	if o.TraceMode == "" {
+		return false
+	}
+
+	// TraceModeが"http"の場合はfalseにする(TraceMode=1などの場合はAPI/HTTP両方が有効になる)
+	if strings.ToLower(o.TraceMode) == "http" {
+		return false
+	}
+	return true
+}
+
 func (o *Config) IsEmpty() bool {
 	return o.AccessToken == "" &&
 		o.AccessTokenSecret == "" &&

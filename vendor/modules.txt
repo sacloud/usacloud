@@ -49,6 +49,7 @@ github.com/sacloud/ftps
 github.com/sacloud/go-jmespath
 # github.com/sacloud/libsacloud/v2 v2.8.7
 github.com/sacloud/libsacloud/v2
+github.com/sacloud/libsacloud/v2/helper/api
 github.com/sacloud/libsacloud/v2/helper/builder
 github.com/sacloud/libsacloud/v2/helper/builder/archive
 github.com/sacloud/libsacloud/v2/helper/builder/database
