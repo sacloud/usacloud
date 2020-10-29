@@ -15,7 +15,6 @@
 package schema
 
 import (
-	"fmt"
 	"sort"
 	"strings"
 )
@@ -42,7 +41,7 @@ func (r *Resource) CommandCategory(key string) *Category {
 	if len(r.CommandCategories) == 0 {
 		return &Category{
 			Key:         key,
-			DisplayName: fmt.Sprintf("%s", strings.Title(key)),
+			DisplayName: strings.Title(key),
 			Order:       1,
 		}
 	}

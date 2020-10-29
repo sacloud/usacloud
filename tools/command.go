@@ -180,7 +180,7 @@ func (c *Command) InputParameterTypeName() string {
 }
 
 func (c *Command) FunctionName() string {
-	return fmt.Sprintf("%s", ToCamelCaseName(c.Name))
+	return ToCamelCaseName(c.Name)
 }
 
 func (c *Command) NeedConfirm() bool {
