@@ -121,7 +121,7 @@ func Update(ctx cli.Context, params *params.UpdateDatabaseParam) error {
 	}
 
 	// update
-	db, err = client.Update(ctx, ctx.Zone(), params.Id, &sacloud.DatabaseUpdateRequest{
+	_, err = client.Update(ctx, ctx.Zone(), params.Id, &sacloud.DatabaseUpdateRequest{
 		Name:        db.Name,
 		Description: db.Description,
 		Tags:        db.Tags,
@@ -153,5 +153,4 @@ func Update(ctx cli.Context, params *params.UpdateDatabaseParam) error {
 		return fmt.Errorf("DatabaseUpdate is failed: %s", err)
 	}
 	return ctx.Output().Print(db)
-
 }

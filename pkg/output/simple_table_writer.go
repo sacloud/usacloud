@@ -59,7 +59,6 @@ func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) tableWriter {
 }
 
 func (w *simpleTableWriter) append(values map[string]string) {
-
 	rowValeus := []string{}
 	for _, def := range w.columnDefs {
 		collected := ""
@@ -79,7 +78,6 @@ func (w *simpleTableWriter) append(values map[string]string) {
 							s = mapped
 						}
 					}
-
 				}
 				if s != "" {
 					exists = true

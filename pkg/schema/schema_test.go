@@ -21,7 +21,6 @@ import (
 )
 
 func TestSchema_ValidateMinimum(t *testing.T) {
-
 	var errs []error
 	// empty schema
 	s := &Schema{}
@@ -37,7 +36,6 @@ func TestSchema_ValidateMinimum(t *testing.T) {
 }
 
 func TestSchema_ValidateEnvVars(t *testing.T) {
-
 	var errs []error
 	// duplicate EnvVars
 	s := &Schema{
@@ -57,7 +55,6 @@ func TestSchema_ValidateEnvVars(t *testing.T) {
 }
 
 func TestSchema_ValidateDefaultValue(t *testing.T) {
-
 	var errs []error
 	// DefaultValue and Type ref
 	s := &Schema{
@@ -90,7 +87,6 @@ func TestSchema_ValidateDefaultValue(t *testing.T) {
 }
 
 func TestSchema_ValidateConflictsWithAndRequired(t *testing.T) {
-
 	var errs []error
 
 	// ConflictsWith
@@ -113,7 +109,6 @@ func TestSchema_ValidateConflictsWithAndRequired(t *testing.T) {
 }
 
 func TestSchema_ValidateMaxMinItems(t *testing.T) {
-
 	var errs []error
 	// MaxItems/MinItems
 	s := &Schema{
@@ -129,7 +124,6 @@ func TestSchema_ValidateMaxMinItems(t *testing.T) {
 	}
 	errs = s.Validate("invalid-min-item")
 	assert.True(t, len(errs) > 0)
-
 }
 
 func TestSchema_ValidateDestination(t *testing.T) {
@@ -151,7 +145,6 @@ func TestSchema_ValidateDestination(t *testing.T) {
 		errs := s.Validate("test")
 		assert.Equal(t, len(errs) == 0, result)
 	}
-
 }
 
 func TestSchema_NeedSliceValueHandlers(t *testing.T) {

@@ -23,9 +23,7 @@ import (
 )
 
 func TestFilterByTagFunc(t *testing.T) {
-
 	t.Run("With single word", func(t *testing.T) {
-
 		var sw1 = &sacloud.Switch{ID: 1, Tags: types.Tags{"tag1", "tag2"}}
 		var sw2 = &sacloud.Switch{ID: 2, Tags: types.Tags{"tag11", "tag2"}}
 
@@ -44,11 +42,9 @@ func TestFilterByTagFunc(t *testing.T) {
 					"filterListByTags(%q), expect:%t, but got %t", k, v[i], res)
 			}
 		}
-
 	})
 
 	t.Run("With multiple word", func(t *testing.T) {
-
 		var sw1 = &sacloud.Switch{ID: 1, Tags: types.Tags{"tag1", "tag2"}}
 		var sw2 = &sacloud.Switch{ID: 2, Tags: types.Tags{"tag1", "tag3"}}
 		var sw3 = &sacloud.Switch{ID: 2, Tags: types.Tags{"tag1", "tag2", "tag3"}}
@@ -94,6 +90,5 @@ func TestFilterByTagFunc(t *testing.T) {
 					"filterListByTags(%q), expect:%t, but got %t", v.words, v.results[i], res)
 			}
 		}
-
 	})
 }

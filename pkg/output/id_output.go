@@ -93,5 +93,4 @@ func (o *idOutput) Print(target interface{}) error {
 	}
 
 	return nil
-
 }

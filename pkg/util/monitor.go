@@ -27,7 +27,7 @@ func MonitorCondition(start, end string) (*sacloud.MonitorCondition, error) {
 	if start != "" {
 		s = ParseDateTimeString(start)
 	}
-	if !(s.Unix() <= s.Unix()) {
+	if !(s.Unix() <= e.Unix()) {
 		return nil, fmt.Errorf("invalid parameter : start(%s) or end(%s) is invalid", start, end)
 	}
 	return &sacloud.MonitorCondition{Start: s, End: e}, nil

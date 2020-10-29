@@ -44,7 +44,6 @@ func newDetailTableWriter(out io.Writer, includes []string, excludes []string) t
 }
 
 func (w *detailTableWriter) append(values map[string]string) {
-
 	var keys []string
 	for k := range values {
 		keys = append(keys, k)
@@ -60,7 +59,6 @@ func (w *detailTableWriter) append(values map[string]string) {
 	// include
 	for _, k := range sortedKeys {
 		if w.needInclude(k, includes) && !w.needExclude(k, w.excludes) && k != "__ORDER__" {
-
 			sv := values[k]
 			if sv == "" {
 				sv = "-"
@@ -69,7 +67,6 @@ func (w *detailTableWriter) append(values map[string]string) {
 			w.table.Append([]string{k, sv})
 		}
 	}
-
 }
 
 func (w *detailTableWriter) needInclude(targetName string, includes []string) bool {
@@ -113,7 +110,6 @@ func (l sortedKeys) Swap(i, j int) {
 }
 
 func (l sortedKeys) Less(i, j int) bool {
-
 	c1 := strings.Count(l[i], ".")
 	c2 := strings.Count(l[j], ".")
 	if c1 != c2 {

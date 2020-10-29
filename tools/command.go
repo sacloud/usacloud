@@ -132,7 +132,6 @@ func (c *Command) ArgsUsage() string {
 			argsUsage = "<ID or Name(only single target)>"
 		default:
 			argsUsage = "<ID or Name(allow multiple target)>"
-
 		}
 	}
 	return argsUsage
@@ -180,7 +179,7 @@ func (c *Command) InputParameterTypeName() string {
 }
 
 func (c *Command) FunctionName() string {
-	return fmt.Sprintf("%s", ToCamelCaseName(c.Name))
+	return ToCamelCaseName(c.Name)
 }
 
 func (c *Command) NeedConfirm() bool {

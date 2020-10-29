@@ -103,11 +103,10 @@ func (o *rowOutput) Print(target interface{}) error {
 
 	sort.Sort(header)
 	// write header
-	w.Write(header)
+	w.Write(header) // nolint
 
 	// next, collect values
 	for rowIndex := 0; rowIndex < sliceLen(targets); rowIndex++ {
-
 		// interface{} -> map[string]interface{}
 		v := j.GetIndex(rowIndex)
 		mapValue, err := v.Map()
@@ -135,12 +134,11 @@ func (o *rowOutput) Print(target interface{}) error {
 			row = append(row, value)
 		}
 
-		w.Write(row)
+		w.Write(row) // nolint
 	}
 
 	w.Flush()
 	return nil
-
 }
 
 type header []string

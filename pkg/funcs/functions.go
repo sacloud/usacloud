@@ -14,18 +14,11 @@
 
 package funcs
 
-import (
-	"fmt"
-	"path/filepath"
-
-	"github.com/mitchellh/go-homedir"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
-)
-
-func getSSHPrivateKeyStorePath(serverID types.ID) (string, error) {
-	homeDir, err := homedir.Dir()
-	if err != nil {
-		return "", fmt.Errorf("getting HomeDir is failed:%s", err)
-	}
-	return filepath.Join(homeDir, ".ssh", fmt.Sprintf("sacloud_pkey_%d", serverID)), nil
-}
+// TODO v1へのserverコマンド移行までコメントアウト
+//func getSSHPrivateKeyStorePath(serverID types.ID) (string, error) {
+//	homeDir, err := homedir.Dir()
+//	if err != nil {
+//		return "", fmt.Errorf("getting HomeDir is failed:%s", err)
+//	}
+//	return filepath.Join(homeDir, ".ssh", fmt.Sprintf("sacloud_pkey_%d", serverID)), nil
+//}

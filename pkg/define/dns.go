@@ -20,7 +20,6 @@ import (
 )
 
 func DNSResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
@@ -234,7 +233,6 @@ var allowDNSTypes = []string{
 }
 
 func dnsRecordBulkUpdateParam() map[string]*schema.Schema {
-
 	return map[string]*schema.Schema{
 		"file": {
 			Type:         schema.TypeString,

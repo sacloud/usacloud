@@ -21,7 +21,6 @@ import (
 )
 
 func GSLBResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,

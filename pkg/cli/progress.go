@@ -86,10 +86,13 @@ func (p *Progress) Start() {
 	p.doneCh = make(chan error)
 	defer close(p.doneCh)
 
+	ticker := time.NewTicker(p.duration)
+	defer ticker.Stop()
+
 	p.print(color.New(color.FgWhite), p.msgStart())
 	for {
 		select {
-		case <-time.Tick(p.duration):
+		case <-ticker.C:
 			p.elapsed += p.duration
 			p.print(color.New(color.FgWhite), p.msgProgress())
 		case err := <-p.doneCh:

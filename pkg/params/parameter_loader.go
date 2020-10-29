@@ -28,7 +28,6 @@ type ParameterLoader interface {
 }
 
 func validateParameterOptions(o ParameterLoader) []error {
-
 	p := o.GetParameters()
 	pf := o.GetParameterFile()
 
@@ -45,7 +44,6 @@ func validateParameterOptions(o ParameterLoader) []error {
 	}
 
 	return []error{}
-
 }
 
 func loadParameters(input interface{}) error {

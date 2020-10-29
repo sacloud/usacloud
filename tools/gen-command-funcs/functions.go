@@ -24,7 +24,6 @@ import (
 )
 
 func generateSetParamActions(ctx *tools.GenerateContext, command *tools.Command) (string, error) {
-
 	b := bytes.NewBufferString("")
 
 	for _, p := range command.Params {

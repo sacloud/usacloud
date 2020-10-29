@@ -21,7 +21,6 @@ import (
 )
 
 func SimpleMonitorResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,

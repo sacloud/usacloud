@@ -20,7 +20,6 @@ import (
 )
 
 func SummaryResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"show": {
 			Type:               schema.CommandList,

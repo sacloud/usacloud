@@ -20,7 +20,6 @@ import (
 )
 
 func AuthStatusResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"show": {
 			Type:               schema.CommandCustom,

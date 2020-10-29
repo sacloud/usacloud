@@ -68,7 +68,6 @@ func simpleTableTestValue() map[string]string {
 }
 
 func TestSimpleTableWriter_Basic(t *testing.T) {
-
 	defs := []ColumnDef{
 		{
 			Name: "ID",
@@ -86,7 +85,6 @@ func TestSimpleTableWriter_Basic(t *testing.T) {
 }
 
 func TestSimpleTableWriter_EmptyColumn(t *testing.T) {
-
 	defs := []ColumnDef{
 		{
 			Name: "EmptyCol",
@@ -132,7 +130,6 @@ func TestSimpleTableWriter_Format(t *testing.T) {
 
 	values = writer.getValues()
 	assert.NotEqual(t, values[0][0], fmt.Sprintf(format, value["Name"], value["ID"]))
-
 }
 
 func TestSimpleTableWriter_ValueMapping(t *testing.T) {
@@ -199,7 +196,6 @@ func TestSimpleTableWriter_ValueMappingMulti(t *testing.T) {
 }
 
 func TestSimpleTableWriter_CustomFormat(t *testing.T) {
-
 	formatFunc := func(values map[string]string) string {
 		if scope, ok := values["Interfaces.0.Switch.Scope"]; ok {
 			format := "%s/%s"
@@ -214,9 +210,7 @@ func TestSimpleTableWriter_CustomFormat(t *testing.T) {
 					values["Interfaces.0.UserIPAddress"],
 					values["Interfaces.0.Switch.UserSubnet.NetworkMaskLen"],
 				)
-
 			}
-
 		}
 
 		return ""

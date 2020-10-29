@@ -35,7 +35,6 @@ func TestCommand_Validate(t *testing.T) {
 	}
 	errs = c.Validate()
 	assert.True(t, len(errs) == 0)
-
 }
 
 func TestCommand_ParamsHandlerType(t *testing.T) {
@@ -99,11 +98,9 @@ func TestCommand_TableType_ColumnDef(t *testing.T) {
 	c.TableType = output.TableDetail
 	errs = c.Validate()
 	assert.True(t, len(errs) > 0)
-
 }
 
 func TestCommand_Categories_Params(t *testing.T) {
-
 	var errs []error
 
 	c := &Command{
@@ -139,7 +136,6 @@ func TestCommand_Categories_Params(t *testing.T) {
 	c.ParamCategories[1].Key = "have-not-same-category-params"
 	errs = c.Validate()
 	assert.True(t, len(errs) > 0)
-
 }
 
 func TestCommand_NoSelector(t *testing.T) {
@@ -166,5 +162,4 @@ func TestCommand_NoSelector(t *testing.T) {
 		errs = c.Validate()
 		assert.Equal(t, expect, len(errs) == 0, "CommandType[%s]+NoSelector: expected:%v but actual:%v: err: %s", key.String(), expect, len(errs) == 0, errs)
 	}
-
 }

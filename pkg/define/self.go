@@ -19,7 +19,6 @@ import (
 )
 
 func SelfResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"info": {
 			Type:             schema.CommandCustom,

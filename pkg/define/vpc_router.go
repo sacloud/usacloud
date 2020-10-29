@@ -24,7 +24,6 @@ import (
 )
 
 func VPCRouterResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
@@ -1075,10 +1074,6 @@ func vpcRouterDeleteParam() map[string]*schema.Schema {
 }
 
 func vpcRouterEnableInternetParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
-}
-
-func vpcRouterDisableInternetParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{}
 }
 

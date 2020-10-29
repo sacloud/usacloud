@@ -20,7 +20,6 @@ import (
 )
 
 func CouponResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandCustom,

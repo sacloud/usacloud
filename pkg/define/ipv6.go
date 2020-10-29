@@ -20,7 +20,6 @@ import (
 )
 
 func IPv6Resource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
@@ -111,7 +110,6 @@ var paramInternetIDCond = map[string]*schema.Schema{
 }
 
 func filterByIPv6NetID(_ []interface{}, item interface{}, param interface{}) bool {
-
 	type idHandler interface {
 		GetIPv6NetID() int64
 	}
@@ -130,7 +128,6 @@ func filterByIPv6NetID(_ []interface{}, item interface{}, param interface{}) boo
 }
 
 func filterByInternetID(_ []interface{}, item interface{}, param interface{}) bool {
-
 	type idHandler interface {
 		GetInternetID() int64
 	}

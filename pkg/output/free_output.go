@@ -54,7 +54,7 @@ func (o *freeOutput) Print(target interface{}) error {
 	}
 
 	if util.IsEmpty(targets) {
-		fmt.Fprintf(o.Err, "no results\n")
+		fmt.Fprintf(o.Err, "no results\n") // nolint
 		return nil
 	}
 
@@ -84,7 +84,6 @@ func (o *freeOutput) Print(target interface{}) error {
 	}
 
 	for i := 0; i < sliceLen(targets); i++ {
-
 		// interface{} -> map[string]interface{}
 		v := j.GetIndex(i)
 		mapValue, err := v.Map()
@@ -99,7 +98,7 @@ func (o *freeOutput) Print(target interface{}) error {
 			return err
 		}
 
-		o.Out.Write(buf.Bytes())
+		o.Out.Write(buf.Bytes()) // nolint
 		fmt.Fprintln(o.Out, "")
 	}
 

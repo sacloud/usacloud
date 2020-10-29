@@ -36,5 +36,4 @@ func FlattenErrorsWithPrefix(errors []error, pref string) error {
 		list = append(list, fmt.Sprintf("[%s] : %s", pref, str.Error()))
 	}
 	return fmt.Errorf(strings.Join(list, "\n"))
-
 }

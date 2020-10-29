@@ -21,7 +21,6 @@ import (
 )
 
 func TestLogHashBuffer_PutIfAbsent(t *testing.T) {
-
 	b := NewHashQueue(2)
 
 	// put 1 value
@@ -39,5 +38,4 @@ func TestLogHashBuffer_PutIfAbsent(t *testing.T) {
 	assert.False(t, b.PutIfAbsent("test2"))
 	assert.False(t, b.PutIfAbsent("test3"))
 	assert.True(t, b.PutIfAbsent("test1"))
-
 }

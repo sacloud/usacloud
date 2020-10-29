@@ -165,7 +165,6 @@ var paramTagsCond = map[string]*schema.Schema{
 }
 
 func filterListByTags(_ []interface{}, item interface{}, param interface{}) bool {
-
 	type tagHandler interface {
 		HasTag(target string) bool
 	}
@@ -213,7 +212,6 @@ var paramSourceDiskCond = map[string]*schema.Schema{
 }
 
 func filterBySourceArchiveID(_ []interface{}, item interface{}, param interface{}) bool {
-
 	type archiveIDHandler interface {
 		GetSourceArchiveID() types.ID
 	}
@@ -232,7 +230,6 @@ func filterBySourceArchiveID(_ []interface{}, item interface{}, param interface{
 }
 
 func filterBySourceDiskID(_ []interface{}, item interface{}, param interface{}) bool {
-
 	type diskIDHandler interface {
 		GetSourceDiskID() types.ID
 	}

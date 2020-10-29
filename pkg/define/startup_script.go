@@ -24,7 +24,6 @@ import (
 )
 
 func StartupScriptResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
@@ -84,7 +83,6 @@ func StartupScriptResource() *schema.Resource {
 
 func startupScriptListParam() map[string]*schema.Schema {
 	return mergeParameterMap(CommonListParam, paramScopeCond, paramTagsCond, paramClassCond)
-
 }
 
 func startupScriptListColumns() []output.ColumnDef {

@@ -23,7 +23,6 @@ import (
 )
 
 func MobileGatewayResource() *schema.Resource {
-
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
@@ -537,17 +536,6 @@ func mobileGatewaySIMInfoColumns() []output.ColumnDef {
 			Name:       "Activated",
 			FormatFunc: formatBoolFunc("activated"),
 		},
-	}
-}
-
-func mobileGatewayLogsColumns() []output.ColumnDef {
-	return []output.ColumnDef{
-		{Name: "__ORDER__"}, // magic column name(generated on demand)
-		{Name: "Date"},
-		{Name: "SessionStatus"},
-		{Name: "ResourceID"},
-		{Name: "IMEI"},
-		{Name: "IMSI"},
 	}
 }
 

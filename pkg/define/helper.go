@@ -22,12 +22,6 @@ import (
 	"github.com/sacloud/usacloud/pkg/schema"
 )
 
-func validateMulti(validators ...schema.ValidateFunc) schema.ValidateFunc {
-	return schema.ValidateMulti(validators...)
-}
-func validateMultiOr(validators ...schema.ValidateFunc) schema.ValidateFunc {
-	return schema.ValidateMultiOr(validators...)
-}
 func validateStringSlice(validator schema.ValidateFunc) schema.ValidateFunc {
 	return schema.ValidateStringSlice(validator)
 }
@@ -66,10 +60,6 @@ func validateSakuraID() schema.ValidateFunc {
 
 func validateSakuraShortID(digit int) schema.ValidateFunc {
 	return schema.ValidateSakuraShortID(digit)
-}
-
-func validateMemberCD() schema.ValidateFunc {
-	return schema.ValidateMemberCD()
 }
 
 func validateSlackWebhookURL() schema.ValidateFunc {

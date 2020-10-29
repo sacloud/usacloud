@@ -159,7 +159,6 @@ func (s *Schema) Validate(name string) []error {
 
 	// ConflictsWith
 	if len(s.ConflictsWith) > 0 {
-
 		if s.Required {
 			errs = append(errs, fmt.Errorf("schema#%s.%q: cannot set with Required=true", name, "ConflictsWith"))
 		} else if s.hasDuplicateValue(s.ConflictsWith) {
@@ -186,7 +185,6 @@ func (s *Schema) Validate(name string) []error {
 		if s.MinItems != 0 {
 			errs = append(errs, fmt.Errorf("schema#%s.%q: cannot set without TypeIntList or TypeStringList", name, "MinItems"))
 		}
-
 	}
 
 	// ValueType and HandlerType
