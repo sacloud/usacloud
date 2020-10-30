@@ -1,73 +1,105 @@
+// Copyright 2017-2020 The Usacloud Authors
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package ftag
 
 import (
+	"errors"
 	"fmt"
-	"strings"
+	"reflect"
+
+	"github.com/sacloud/usacloud/tools"
 )
 
-// const defaultTagName = "cli"
+// DefaultTagName ftagのデフォルト名
+const DefaultTagName = "cli"
 
-// type ParserConfig struct {
-// 	TagName string
-// }
+// ParserConfig パーサ設定
+type ParserConfig struct {
+	TagName string
+}
 
+// Parser ftagのパーサー
 type Parser struct {
-	//	Config *ParserConfig
+	Config *ParserConfig
 }
 
-func Parse(t string) (Tag, error) {
-	parser := &Parser{}
-	return parser.Parse(t)
+// Parse デフォルトのParser(タグ名:cli)でftagをパースする
+func Parse(v interface{}) ([]StructField, error) {
+	parser := &Parser{Config: &ParserConfig{TagName: DefaultTagName}}
+	return parser.Parse(v)
 }
 
-const (
-	aliasesKey   = "aliases"
-	shortHandKey = "short"
-	descKey      = "desc"
-)
-
-func (p *Parser) Parse(t string) (Tag, error) {
-	tag := Tag{}
-	t = strings.TrimSpace(t)
-	if t == "" {
-		return tag, nil
+// Parse ftagをパースする
+func (p *Parser) Parse(v interface{}) ([]StructField, error) {
+	if v == nil {
+		return nil, errors.New("value required")
 	}
 
-	tokens := strings.Split(t, `,`) // 1つ以上の要素を含むスライスを返す
-	name := strings.TrimSpace(tokens[0])
-	if name != "" {
-		tag.Name = name
+	rv := reflect.ValueOf(v)
+	switch rv.Kind() {
+	case reflect.Ptr:
+		return p.Parse(rv.Elem().Interface()) // dereference pointer
+	case reflect.Struct:
+		return p.parseFields("", reflect.TypeOf(v))
+	default:
+		return nil, fmt.Errorf("unsupported value: %#v", v)
 	}
-	if len(tokens) > 1 {
-		for _, token := range tokens[1:] {
-			token = strings.TrimSpace(token)
-			kv := strings.Split(token, `=`)
-			if len(kv) != 2 {
-				return tag, fmt.Errorf("got invalid tag value: %q", token)
-			}
+}
 
-			key := strings.TrimSpace(kv[0])
-			val := strings.TrimSpace(kv[1])
-
-			switch key {
-			case aliasesKey:
-				names := strings.Split(val, ` `)
-				for _, n := range names {
-					if n != "" {
-						tag.Aliases = append(tag.Aliases, n)
-					}
-				}
-			case shortHandKey:
-				if len(val) != 1 {
-					return tag, fmt.Errorf("got invalid tag value: key 'short' must have only 1 character: %q", token)
-				}
-				tag.Shorthand = kv[1]
-			case descKey:
-				tag.Description = kv[1]
-			default:
-				return tag, fmt.Errorf("got invalid tag key: %q", token)
+func (p *Parser) parseFields(prefix string, tp reflect.Type) ([]StructField, error) {
+	var fields []StructField
+	for i := 0; i < tp.NumField(); i++ {
+		f := tp.Field(i)
+		if f.PkgPath == "" { // exported?
+			parsed, err := p.parseField(prefix, f)
+			if err != nil {
+				return nil, err
 			}
+			fields = append(fields, parsed...)
 		}
 	}
-	return tag, nil
+	return fields, nil
+}
+
+func (p *Parser) parseField(prefix string, f reflect.StructField) ([]StructField, error) {
+	tag, err := p.parseTag(f.Tag.Get(p.Config.TagName))
+	if err != nil {
+		return nil, err
+	}
+	if tag.Ignore {
+		return nil, err
+	}
+
+	// handle tag values
+	if tag.Name == "" {
+		tag.Name = tools.ToDashedName(f.Name)
+	}
+	if !tag.Squash {
+		if prefix != "" && tag.Name != "" {
+			tag.Name = fmt.Sprintf("%s-%s", prefix, tag.Name)
+		}
+		prefix = tag.Name
+	}
+
+	kind := f.Type.Kind()
+	switch kind {
+	case reflect.Ptr:
+		return p.parseFields(prefix, f.Type.Elem())
+	case reflect.Struct:
+		return p.parseFields(prefix, f.Type)
+	}
+
+	return []StructField{{StructField: f, Tag: tag}}, nil
 }
