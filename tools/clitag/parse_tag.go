@@ -16,6 +16,7 @@ package clitag
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -24,6 +25,8 @@ const (
 	shortHandKey = "short"
 	descKey      = "desc"
 	squashKey    = "squash"
+	categoryKey  = "category"
+	orderKey     = "order"
 )
 
 func (p *Parser) parseTag(t string) (Tag, error) {
@@ -72,9 +75,17 @@ func (p *Parser) parseTag(t string) (Tag, error) {
 				if len(val) != 1 {
 					return tag, fmt.Errorf("got invalid tag value: key 'short' must have only 1 character: %q", token)
 				}
-				tag.Shorthand = kv[1]
+				tag.Shorthand = val
 			case descKey:
-				tag.Description = kv[1]
+				tag.Description = val
+			case categoryKey:
+				tag.Category = val
+			case orderKey:
+				order, err := strconv.ParseInt(val, 10, 64)
+				if err != nil {
+					return tag, fmt.Errorf("got invalid tag value: key 'order' must have valid number: %q", token)
+				}
+				tag.Order = int(order)
 			default:
 				return tag, fmt.Errorf("got invalid tag key: %q", token)
 			}
