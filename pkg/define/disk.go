@@ -19,6 +19,7 @@ import (
 
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/usacloud/pkg/cmd/disk"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -28,6 +29,7 @@ func DiskResource() *schema.Resource {
 		"list": {
 			Type:               schema.CommandList,
 			Aliases:            []string{"ls", "find", "select"},
+			Parameters:         &disk.ListParameter{}, // TODO v1向け試験実装
 			Params:             diskListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: diskListColumns(),
@@ -36,6 +38,7 @@ func DiskResource() *schema.Resource {
 		},
 		"create": {
 			Type:             schema.CommandCreate,
+			Parameters:       &disk.CreateParameter{}, // TODO v1向け試験実装
 			Params:           diskCreateParam(),
 			IncludeFields:    diskDetailIncludes(),
 			ExcludeFields:    diskDetailExcludes(),
@@ -53,6 +56,7 @@ func DiskResource() *schema.Resource {
 		},
 		"update": {
 			Type:             schema.CommandUpdate,
+			Parameters:       &disk.UpdateParameter{}, // TODO v1向け試験実装
 			Params:           diskUpdateParam(),
 			IncludeFields:    diskDetailIncludes(),
 			ExcludeFields:    diskDetailExcludes(),

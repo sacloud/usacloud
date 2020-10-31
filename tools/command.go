@@ -20,15 +20,12 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/sacloud/usacloud/tools/utils"
-
 	"github.com/fatih/structs"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
-	"github.com/sacloud/usacloud/tools/clitag"
-
-	"github.com/sacloud/usacloud/pkg/util"
-
 	"github.com/sacloud/usacloud/pkg/schema"
+	"github.com/sacloud/usacloud/pkg/util"
+	"github.com/sacloud/usacloud/tools/clitag"
+	"github.com/sacloud/usacloud/tools/utils"
 )
 
 // Command コード生成時に利用するコマンド定義
@@ -46,6 +43,11 @@ type Command struct {
 type CategorizedParameters struct {
 	*schema.Category
 	Params []*Parameter
+}
+
+type CategorizedParameterFields struct {
+	*schema.Category
+	Fields []clitag.StructField
 }
 
 func NewCommand(name string, command *schema.Command, category *schema.Category, resource *Resource) *Command {
@@ -276,8 +278,8 @@ func (c *Command) PackageDirName() string {
   TODO gen-cli-command-v1用、あとでschema.Commandを整理する際に移動するかも
 */
 
-func (c *Command) CLICommandParameterFileName() string {
-	return fmt.Sprintf("%s_parameter_gen.go", utils.ToSnakeCaseName(c.Name))
+func (c *Command) CLICommandGeneratedSourceFile() string {
+	return fmt.Sprintf("%s_gen.go", utils.ToSnakeCaseName(c.Name))
 }
 
 func (c *Command) CLICommandParameterTypeName() string {
@@ -287,16 +289,63 @@ func (c *Command) CLICommandParameterTypeName() string {
 	return structs.Name(c.Command.Parameters)
 }
 
-func (c *Command) CLIFlagDefinitionStatements(parameterVariableName, flagSetVariableName string) string {
-	if c.Command.Parameters == nil {
-		return ""
+func (c *Command) CategorizedParameterFields() []*CategorizedParameterFields {
+	if c.Parameters == nil {
+		return nil
 	}
+
+	m := map[string]*CategorizedParameterFields{}
+	for _, f := range c.Fields() {
+		cp, ok := m[f.Category]
+		if !ok {
+			cp = &CategorizedParameterFields{
+				Category: c.Command.ParamCategory(f.Category),
+			}
+		}
+		cp.Fields = append(cp.Fields, f)
+		m[f.Category] = cp
+	}
+	var categorizedFields []*CategorizedParameterFields
+	for _, cat := range m {
+		categorizedFields = append(categorizedFields, cat)
+	}
+	sort.Slice(categorizedFields, func(i, j int) bool {
+		if categorizedFields[i].Order == categorizedFields[j].Order {
+			return categorizedFields[i].Key < categorizedFields[j].Key
+		}
+		return categorizedFields[i].Order < categorizedFields[j].Order
+	})
+
+	return categorizedFields
+}
+
+func (c *Command) HasAliases() bool {
+	if c.Command.Parameters == nil {
+		return false
+	}
+	for _, f := range c.Fields() {
+		if len(f.Aliases) > 0 {
+			return true
+		}
+	}
+	return false
+}
+
+func (c *Command) Fields() []clitag.StructField {
 	fields, err := clitag.Parse(c.Command.Parameters)
 	if err != nil {
 		panic(err)
 	}
+	return fields
+}
+
+func (c *Command) CLIFlagDefinitionStatements(parameterVariableName, flagSetVariableName string) string {
+	if c.Command.Parameters == nil {
+		return ""
+	}
+
 	var statements []string
-	for _, f := range fields {
+	for _, f := range c.Fields() {
 		s := c.cliFlagDefinitionStatement(parameterVariableName, f)
 		if s != "" {
 			statements = append(statements, fmt.Sprintf("%s.%s", flagSetVariableName, s))
@@ -306,9 +355,12 @@ func (c *Command) CLIFlagDefinitionStatements(parameterVariableName, flagSetVari
 }
 
 func (c *Command) cliFlagDefinitionStatement(parameterVariableName string, field clitag.StructField) string {
-	cliVariable := fmt.Sprintf("%s.%s", parameterVariableName, field.Name)
-	if field.Type.Kind() != reflect.Ptr {
-		cliVariable = "&" + cliVariable
+	fieldVar := fmt.Sprintf("%s.%s", parameterVariableName, field.Name)
+	fieldPointerVar := fieldVar
+	if field.Type.Kind() == reflect.Ptr {
+		fieldVar = "*" + fieldVar
+	} else {
+		fieldPointerVar = "&" + fieldPointerVar
 	}
 
 	name := field.FlagName
@@ -322,30 +374,30 @@ func (c *Command) cliFlagDefinitionStatement(parameterVariableName string, field
 	statement := ""
 	fieldType := dereferencePtrType(field.Type)
 	if isLibsacloudIDType(fieldType) {
-		statement = `VarP(base.NewIDFlag(%s,pointer.NewID(types.ID(0))), "%s", "%s", "%s")`
-		return fmt.Sprintf(statement, cliVariable, name, shorthands, usage)
+		statement = `VarP(base.NewIDFlag(%s, %s), "%s", "%s", "%s")`
+		return fmt.Sprintf(statement, fieldPointerVar, fieldPointerVar, name, shorthands, usage)
 	} else {
 		switch fieldType.Kind() {
 		case reflect.Bool:
-			statement = `BoolVarP(%s, "%s", "%s", false, "%s")`
+			statement = `BoolVarP(%s, "%s", "%s", %s, "%s")`
 		case reflect.Int:
-			statement = `IntVarP(%s, "%s", "%s", 0, "%s")`
+			statement = `IntVarP(%s, "%s", "%s", %s, "%s")`
 		case reflect.Int64:
-			statement = `Int64VarP(%s, "%s", "%s", 0, "%s")`
+			statement = `Int64VarP(%s, "%s", "%s", %s, "%s")`
 		case reflect.Float64:
-			statement = `Float64VarP(%s, "%s", "%s", float64(0), "%s")`
+			statement = `Float64VarP(%s, "%s", "%s", %s, "%s")`
 		case reflect.String:
-			statement = `StringVarP(%s, "%s", "%s", "", "%s")`
+			statement = `StringVarP(%s, "%s", "%s", %s, "%s")`
 		case reflect.Slice:
 			if isLibsacloudIDType(fieldType.Elem()) {
-				statement = `VarP(base.NewIDSliceFlag(%s, pointer.NewIDSlice([]types.ID{})), "%s", "%s", "%s")`
-				return fmt.Sprintf(statement, cliVariable, name, shorthands, usage)
+				statement = `VarP(base.NewIDSliceFlag(%s, %s), "%s", "%s", "%s")`
+				return fmt.Sprintf(statement, fieldPointerVar, fieldPointerVar, name, shorthands, usage)
 			} else {
 				switch fieldType.Elem().Kind() {
 				case reflect.Int64:
-					statement = `Int64SliceVarP(%s, "%s", "%s", []int64{}, "%s")`
+					statement = `Int64SliceVarP(%s, "%s", "%s", %s, "%s")`
 				case reflect.String:
-					statement = `StringSliceVarP(%s, "%s", "%s", []string{}, "%s")`
+					statement = `StringSliceVarP(%s, "%s", "%s", %s, "%s")`
 				default:
 					panic(fmt.Sprintf("unsupported type: field: %s, type: []%s", field.Name, fieldType.Elem().Kind().String()))
 				}
@@ -355,7 +407,7 @@ func (c *Command) cliFlagDefinitionStatement(parameterVariableName string, field
 		}
 	}
 
-	return fmt.Sprintf(statement, cliVariable, name, shorthands, usage)
+	return fmt.Sprintf(statement, fieldPointerVar, name, shorthands, fieldVar, usage)
 }
 
 func isLibsacloudIDType(t reflect.Type) bool {

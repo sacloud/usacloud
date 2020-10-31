@@ -20,6 +20,7 @@
 //go:generate go run github.com/sacloud/usacloud/tools/gen-cli-usage/
 //go:generate go run github.com/sacloud/usacloud/tools/gen-cli-normalize-flag-name/
 //go:generate go run github.com/sacloud/usacloud/tools/gen-cli-root-command/
+//go:generate go run github.com/sacloud/usacloud/tools/gen-cli-commands-v1/            # TODO 実験的実装
 package define
 
 import "github.com/sacloud/usacloud/pkg/schema"
