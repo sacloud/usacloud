@@ -53,11 +53,13 @@ func TestParser_parseTag(t *testing.T) {
 			},
 		},
 		{
-			in: `,short=e,desc=desc,squash`,
+			in: `,short=e,desc=desc,squash,category=foo,order=10`,
 			expect: Tag{
 				Shorthand:   "e",
 				Description: "desc",
 				Squash:      true,
+				Category:    "foo",
+				Order:       10,
 			},
 		},
 		{

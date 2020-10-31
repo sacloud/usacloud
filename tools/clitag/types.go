@@ -31,6 +31,8 @@ type StructField struct {
 // - Description: foobar
 // - Squash: false
 // - Ignore: false
+// - Category: (empty)
+// - Order: 0
 type Tag struct {
 	Name        string
 	Aliases     []string
@@ -38,4 +40,6 @@ type Tag struct {
 	Description string
 	Squash      bool
 	Ignore      bool
+	Category    string
+	Order       int
 }
