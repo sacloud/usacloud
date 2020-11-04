@@ -23,6 +23,8 @@ import (
 	"path/filepath"
 	"text/template"
 
+	"github.com/sacloud/usacloud/tools/utils"
+
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/tools"
 )
@@ -64,7 +66,7 @@ func generateResource(resource *tools.Resource) error {
 		// target file is exist?
 		_, err = os.Stat(outputName)
 		if !c.UseCustomCommand || err != nil {
-			err = ioutil.WriteFile(outputName, tools.Sformat([]byte(src)), 0644)
+			err = ioutil.WriteFile(outputName, utils.Sformat([]byte(src)), 0644)
 			if err != nil {
 				return err
 			}

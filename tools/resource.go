@@ -18,6 +18,8 @@ import (
 	"fmt"
 	"sort"
 
+	"github.com/sacloud/usacloud/tools/utils"
+
 	"github.com/sacloud/usacloud/pkg/schema"
 )
 
@@ -76,11 +78,11 @@ func (r *Resource) buildCategorizedCommands() {
 }
 
 func (r *Resource) CLIName() string {
-	return ToDashedName(r.Name)
+	return utils.ToDashedName(r.Name)
 }
 
 func (r *Resource) AliasesLiteral() string {
-	return FlattenStringList(r.Resource.Aliases)
+	return utils.FlattenStringList(r.Resource.Aliases)
 }
 
 func (r *Resource) Usage() string {
@@ -92,35 +94,35 @@ func (r *Resource) Usage() string {
 }
 
 func (r *Resource) CLIVariableFuncName() string {
-	return fmt.Sprintf("%sCmd", ToCamelWithFirstLower(r.Name))
+	return fmt.Sprintf("%sCmd", utils.ToCamelWithFirstLower(r.Name))
 }
 
 func (r *Resource) CLISourceFileName() string {
-	return fmt.Sprintf("zz_%s_gen.go", ToSnakeCaseName(r.Name))
+	return fmt.Sprintf("zz_%s_gen.go", utils.ToSnakeCaseName(r.Name))
 }
 
 func (r *Resource) CLIResourceFinderSourceFileName() string {
-	return fmt.Sprintf("zz_%s_finder_gen.go", ToSnakeCaseName(r.Name))
+	return fmt.Sprintf("zz_%s_finder_gen.go", utils.ToSnakeCaseName(r.Name))
 }
 
 func (r *Resource) CLIUsageFileName() string {
-	return fmt.Sprintf("zz_%s_usage_gen.go", ToSnakeCaseName(r.Name))
+	return fmt.Sprintf("zz_%s_usage_gen.go", utils.ToSnakeCaseName(r.Name))
 }
 
 func (r *Resource) CLINormalizeFlagsFileName() string {
-	return fmt.Sprintf("zz_%s_normalize_flag_names_gen.go", ToSnakeCaseName(r.Name))
+	return fmt.Sprintf("zz_%s_normalize_flag_names_gen.go", utils.ToSnakeCaseName(r.Name))
 }
 
 func (r *Resource) ParameterSourceFileName() string {
-	return fmt.Sprintf("zz_%s_gen.go", ToSnakeCaseName(r.Name))
+	return fmt.Sprintf("zz_%s_gen.go", utils.ToSnakeCaseName(r.Name))
 }
 
 func (r *Resource) CommandOrderFunc() string {
-	return fmt.Sprintf("%sCommandOrder", ToCamelWithFirstLower(r.Name))
+	return fmt.Sprintf("%sCommandOrder", utils.ToCamelWithFirstLower(r.Name))
 }
 
 func (r *Resource) PackageDirName() string {
-	n := ToLowerName(r.Name)
+	n := utils.ToLowerName(r.Name)
 	switch n {
 	case "switch":
 		return "swytch"

@@ -114,7 +114,7 @@ func (p *ListCouponParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)

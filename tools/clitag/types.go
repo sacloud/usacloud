@@ -25,7 +25,7 @@ type StructField struct {
 // Tag structにつけられたftagの値
 //
 // 例: タグが`example,aliases=foo bar,short=e,desc=foobar`の場合
-// - Name: example
+// - FlagName: example
 // - Aliases: foo, bar
 // - Shorthand: e
 // - Description: foobar
@@ -34,7 +34,7 @@ type StructField struct {
 // - Category: (empty)
 // - Order: 0
 type Tag struct {
-	Name        string
+	FlagName    string
 	Aliases     []string
 	Shorthand   string
 	Description string

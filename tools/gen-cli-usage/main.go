@@ -22,6 +22,8 @@ import (
 	"path/filepath"
 	"text/template"
 
+	"github.com/sacloud/usacloud/tools/utils"
+
 	"github.com/sacloud/usacloud/tools"
 )
 
@@ -43,7 +45,7 @@ func main() {
 			log.Fatalf("writing output: %s", err)
 		}
 
-		err = ioutil.WriteFile(fileFullPath, tools.Sformat([]byte(src)), 0644)
+		err = ioutil.WriteFile(fileFullPath, utils.Sformat([]byte(src)), 0644)
 		if err != nil {
 			log.Fatalf("writing output: %s", err)
 		}

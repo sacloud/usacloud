@@ -25,7 +25,6 @@ import (
 
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/profile"
-	"github.com/sacloud/usacloud/pkg/define"
 	"github.com/sacloud/usacloud/pkg/validation"
 	"github.com/spf13/pflag"
 )
@@ -231,7 +230,7 @@ func (o *Config) Validate(skipCred bool) []error {
 		errs = append(errs, validation.Required("zone", o.Zone)...)
 		errs = append(errs, validation.StringInSlice("zone", o.Zone, o.Zones)...)
 	}
-	errs = append(errs, validation.StringInSlice("default-output-type", o.DefaultOutputType, define.AllowOutputTypes)...)
+	errs = append(errs, validation.StringInSlice("default-output-type", o.DefaultOutputType, AllowOutputTypes)...)
 
 	return errs
 }

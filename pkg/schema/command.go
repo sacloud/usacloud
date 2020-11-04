@@ -31,8 +31,13 @@ type Command struct {
 	Category string
 	Order    int
 
-	Params              map[string]*Schema
-	ParamCategories     []Category
+	// TODO v0向け、あとで消す
+	Params          map[string]*Schema
+	ParamCategories []Category
+
+	// v1向け
+	Parameters interface{} // cmd/xxx配下の各コマンドパラメータstruct
+
 	AltResource         string // 空の場合はResourceのキーをCamelizeしてsacloud.XXXを対象とする。
 	ListResultFieldName string
 	SkipAuth            bool

@@ -24,6 +24,8 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/sacloud/usacloud/tools/utils"
+
 	"github.com/sacloud/usacloud/tools"
 )
 
@@ -62,7 +64,7 @@ func main() {
 		filePath := filepath.Join(destination, strings.ToLower(baseName))
 		fileFullPath := filepath.Join(ctx.Gopath(), filePath)
 
-		err = ioutil.WriteFile(fileFullPath, tools.Sformat([]byte(src)), 0644)
+		err = ioutil.WriteFile(fileFullPath, utils.Sformat([]byte(src)), 0644)
 		if err != nil {
 			log.Fatalf("writing output: %s", err)
 		}
@@ -92,7 +94,6 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -174,7 +175,7 @@ func (p *{{.InputParameterTypeName}}) validate() error {
 	}
 	{{ if .HasOutputOption }}
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type" , p.OutputType )
 		if errs != nil {
 			errors = append(errors , errs...)

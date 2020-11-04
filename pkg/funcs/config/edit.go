@@ -18,12 +18,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sacloud/usacloud/pkg/config"
-
 	"github.com/fatih/color"
 	"github.com/sacloud/libsacloud/v2/sacloud/profile"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/define"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/params"
 	"github.com/sacloud/usacloud/pkg/printer"
 )
@@ -157,10 +155,10 @@ func Edit(ctx cli.Context, params *params.EditConfigParam) error {
 			// read input
 			var input string
 			for {
-				fmt.Fprintf(out, "\n\t%s[%s]: ", "Enter zone", strings.Join(define.AllowZones, "/"))
+				fmt.Fprintf(out, "\n\t%s[%s]: ", "Enter zone", strings.Join(config.AllowZones, "/"))
 				fmt.Fscanln(in, &input)
 
-				if errs := cli.ValidateInStrValues("", input, define.AllowZones...); len(errs) == 0 {
+				if errs := cli.ValidateInStrValues("", input, config.AllowZones...); len(errs) == 0 {
 					break
 				}
 
@@ -200,10 +198,10 @@ func Edit(ctx cli.Context, params *params.EditConfigParam) error {
 			// read input
 			var input string
 			for {
-				fmt.Fprintf(out, "\n\t%s[%s]: ", "Enter default-output-type", strings.Join(define.AllowOutputTypes, "/"))
+				fmt.Fprintf(out, "\n\t%s[%s]: ", "Enter default-output-type", strings.Join(config.AllowOutputTypes, "/"))
 				fmt.Fscanln(in, &input)
 
-				if errs := cli.ValidateInStrValues("", input, define.AllowOutputTypes...); len(errs) == 0 {
+				if errs := cli.ValidateInStrValues("", input, config.AllowOutputTypes...); len(errs) == 0 {
 					break
 				}
 

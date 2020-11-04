@@ -47,25 +47,31 @@ github.com/pmezard/go-difflib/difflib
 github.com/sacloud/ftps
 # github.com/sacloud/go-jmespath v0.0.0-20190125082617-862639817e08
 github.com/sacloud/go-jmespath
-# github.com/sacloud/libsacloud/v2 v2.8.8
+# github.com/sacloud/libsacloud/v2 v2.8.9-0.20201104084812-02587fb2e64c
 github.com/sacloud/libsacloud/v2
 github.com/sacloud/libsacloud/v2/helper/api
 github.com/sacloud/libsacloud/v2/helper/builder
 github.com/sacloud/libsacloud/v2/helper/builder/archive
 github.com/sacloud/libsacloud/v2/helper/builder/database
+github.com/sacloud/libsacloud/v2/helper/builder/disk
 github.com/sacloud/libsacloud/v2/helper/power
 github.com/sacloud/libsacloud/v2/helper/query
+github.com/sacloud/libsacloud/v2/helper/service
+github.com/sacloud/libsacloud/v2/helper/service/disk
 github.com/sacloud/libsacloud/v2/helper/setup
 github.com/sacloud/libsacloud/v2/helper/validate
+github.com/sacloud/libsacloud/v2/helper/wait
 github.com/sacloud/libsacloud/v2/pkg/cidr
 github.com/sacloud/libsacloud/v2/pkg/mapconv
 github.com/sacloud/libsacloud/v2/pkg/mutexkv
 github.com/sacloud/libsacloud/v2/pkg/size
+github.com/sacloud/libsacloud/v2/pkg/util
 github.com/sacloud/libsacloud/v2/sacloud
 github.com/sacloud/libsacloud/v2/sacloud/accessor
 github.com/sacloud/libsacloud/v2/sacloud/fake
 github.com/sacloud/libsacloud/v2/sacloud/naked
 github.com/sacloud/libsacloud/v2/sacloud/ostype
+github.com/sacloud/libsacloud/v2/sacloud/pointer
 github.com/sacloud/libsacloud/v2/sacloud/profile
 github.com/sacloud/libsacloud/v2/sacloud/search
 github.com/sacloud/libsacloud/v2/sacloud/search/keys

@@ -211,7 +211,7 @@ func (p *ListDiskParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -646,7 +646,7 @@ func (p *CreateDiskParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -955,7 +955,7 @@ func (p *ReadDiskParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1263,7 +1263,7 @@ func (p *UpdateDiskParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1556,7 +1556,7 @@ func (p *DeleteDiskParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1880,7 +1880,7 @@ func (p *EditDiskParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2194,7 +2194,7 @@ func (p *ResizePartitionDiskParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3429,7 +3429,7 @@ func (p *MonitorDiskParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
