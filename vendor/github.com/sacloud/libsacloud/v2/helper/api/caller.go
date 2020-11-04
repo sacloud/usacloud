@@ -35,6 +35,7 @@ type CallerOptions struct {
 	AccessTokenSecret string
 
 	APIRootURL     string
+	DefaultZone    string
 	AcceptLanguage string
 
 	HTTPClient *http.Client
@@ -141,6 +142,10 @@ func newCaller(opts *CallerOptions) sacloud.APICaller {
 		setup.DefaultPollingInterval = defaultInterval
 		// update default polling intervals: libsacloud/utils/builder
 		builder.DefaultNICUpdateWaitDuration = defaultInterval
+	}
+
+	if opts.DefaultZone != "" {
+		sacloud.APIDefaultZone = opts.DefaultZone
 	}
 
 	if opts.APIRootURL != "" {

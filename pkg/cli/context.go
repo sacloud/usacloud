@@ -141,6 +141,7 @@ func (c *cliContext) Client() sacloud.APICaller {
 		AccessToken:          o.AccessToken,
 		AccessTokenSecret:    o.AccessTokenSecret,
 		APIRootURL:           o.APIRootURL,
+		DefaultZone:          o.DefaultZone,
 		AcceptLanguage:       o.AcceptLanguage,
 		HTTPClient:           http.DefaultClient,
 		HTTPRequestTimeout:   o.HTTPRequestTimeout,
