@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/sacloud/usacloud/tools"
+	"github.com/sacloud/usacloud/tools/utils"
 )
 
 // DefaultTagName ftagのデフォルト名
@@ -83,20 +83,22 @@ func (p *Parser) parseField(prefix string, f reflect.StructField) ([]StructField
 	}
 
 	// handle tag values
-	if tag.Name == "" {
-		tag.Name = tools.ToDashedName(f.Name)
+	if tag.FlagName == "" {
+		tag.FlagName = utils.ToDashedName(f.Name)
 	}
 	if !tag.Squash {
-		if prefix != "" && tag.Name != "" {
-			tag.Name = fmt.Sprintf("%s-%s", prefix, tag.Name)
+		if prefix != "" && tag.FlagName != "" {
+			tag.FlagName = fmt.Sprintf("%s-%s", prefix, tag.FlagName)
 		}
-		prefix = tag.Name
+		prefix = tag.FlagName
 	}
 
 	kind := f.Type.Kind()
 	switch kind {
 	case reflect.Ptr:
-		return p.parseFields(prefix, f.Type.Elem())
+		if f.Type.Elem().Kind() == reflect.Struct {
+			return p.parseFields(prefix, f.Type.Elem())
+		}
 	case reflect.Struct:
 		return p.parseFields(prefix, f.Type)
 	}

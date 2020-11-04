@@ -20,6 +20,8 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/sacloud/usacloud/tools/utils"
+
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -53,15 +55,15 @@ func (p *Parameter) LongAliases() []string {
 }
 
 func (p *Parameter) FlagName() string {
-	return ToDashedName(p.Name)
+	return utils.ToDashedName(p.Name)
 }
 
 func (p *Parameter) FieldName() string {
-	return ToCamelCaseName(p.Name)
+	return utils.ToCamelCaseName(p.Name)
 }
 
 func (p *Parameter) FlagNameWithDash() string {
-	return ToCLIFlagName(p.Name)
+	return utils.ToCLIFlagName(p.Name)
 }
 
 func (p *Parameter) FlagNameShorthands() string {
@@ -326,8 +328,8 @@ func (p *Parameter) ValidatorStatements() string {
 		conflictsWith := map[string]interface{}{}
 
 		for _, key := range p.ConflictsWith {
-			k := ToCLIFlagName(key)
-			v := ToCamelCaseName(key)
+			k := utils.ToCLIFlagName(key)
+			v := utils.ToCamelCaseName(key)
 			conflictsWith[k] = v
 		}
 
@@ -360,7 +362,7 @@ func (p *Parameter) ValidatorStatements() string {
 func (p *Parameter) SetterFuncName() string {
 	n := p.DestinationProp
 	if n == "" {
-		n = fmt.Sprintf("Set%s", ToCamelCaseName(p.Name))
+		n = fmt.Sprintf("Set%s", utils.ToCamelCaseName(p.Name))
 	}
 	return n
 }
@@ -368,7 +370,7 @@ func (p *Parameter) SetterFuncName() string {
 func (p *Parameter) DestinationName() string {
 	n := p.DestinationProp
 	if n == "" {
-		n = ToCamelCaseName(p.Name)
+		n = utils.ToCamelCaseName(p.Name)
 	}
 	return n
 }

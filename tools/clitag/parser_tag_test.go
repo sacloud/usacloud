@@ -33,7 +33,7 @@ func TestParser_parseTag(t *testing.T) {
 		{
 			in: `example`,
 			expect: Tag{
-				Name: "example",
+				FlagName: "example",
 			},
 		},
 		{

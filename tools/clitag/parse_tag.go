@@ -44,7 +44,7 @@ func (p *Parser) parseTag(t string) (Tag, error) {
 	}
 
 	if name != "" {
-		tag.Name = name
+		tag.FlagName = name
 	}
 	if len(tokens) > 1 {
 		for _, token := range tokens[1:] {
