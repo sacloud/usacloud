@@ -7,6 +7,7 @@ require (
 	github.com/bitly/go-simplejson v0.5.0
 	github.com/bmizerany/assert v0.0.0-20160611221934-b7ed37b82869 // indirect
 	github.com/fatih/color v1.7.0
+	github.com/fatih/structs v1.1.0
 	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32
 	github.com/huandu/xstrings v1.3.0
 	github.com/mattn/go-colorable v0.0.9
@@ -16,7 +17,7 @@ require (
 	github.com/olekukonko/tablewriter v0.0.0-20180506121414-d4647c9c7a84
 	github.com/sacloud/ftps v1.1.0
 	github.com/sacloud/go-jmespath v0.0.0-20190125082617-862639817e08
-	github.com/sacloud/libsacloud/v2 v2.8.8
+	github.com/sacloud/libsacloud/v2 v2.8.9-0.20201104084812-02587fb2e64c
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.6.1

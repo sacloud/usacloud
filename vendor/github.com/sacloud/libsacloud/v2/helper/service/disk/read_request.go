@@ -1,4 +1,4 @@
-// Copyright 2017-2020 The Usacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,11 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package base
+package disk
 
-// CommonParameter 全コマンド共通フィールド
-type CommonParameter struct {
-	Parameters       string `cli:",category=input,desc=Input parameters in JSON format"`
-	ParameterFile    string `cli:",category=input,desc=Input parameters in JSON format(from file)"`
-	GenerateSkeleton bool   `cli:",category=input,desc=Output skeleton of parameters with JSON format"`
+import (
+	"github.com/sacloud/libsacloud/v2/helper/validate"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
+)
+
+type ReadRequest struct {
+	Zone string   `request:"-" validate:"required"`
+	ID   types.ID `request:"-" validate:"required"`
+}
+
+func (req *ReadRequest) Validate() error {
+	return validate.Struct(req)
 }

@@ -1,4 +1,4 @@
-// Copyright 2017-2020 The Usacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,22 +14,21 @@
 
 package disk
 
-import "github.com/sacloud/usacloud/pkg/schema"
+import (
+	"context"
 
-func Define() *schema.Resource {
-	commands := map[string]*schema.Command{
-		"list": {
-			Type:    schema.CommandList,
-			Aliases: []string{"ls", "find", "select"},
-			//Params:             diskListParam(),
-			// Category:           "basics", // TODO カテゴリをstringからちゃんとした型に変更
-			Order: 10,
-		},
+	"github.com/sacloud/libsacloud/v2/sacloud"
+)
+
+func (s *Service) DisconnectFromServer(req *DisconnectFromServerRequest) error {
+	return s.DisconnectFromServerWithContext(context.Background(), req)
+}
+
+func (s *Service) DisconnectFromServerWithContext(ctx context.Context, req *DisconnectFromServerRequest) error {
+	if err := req.Validate(); err != nil {
+		return err
 	}
 
-	return &schema.Resource{
-		Commands: commands,
-		//ResourceCategory:  CategoryStorage,
-		//CommandCategories: DiskCommandCategories,
-	}
+	client := sacloud.NewDiskOp(s.caller)
+	return client.DisconnectFromServer(ctx, req.Zone, req.ID)
 }

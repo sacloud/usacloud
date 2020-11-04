@@ -1,4 +1,4 @@
-// Copyright 2017-2020 The Usacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,11 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package base
+package disk
 
-// CommonParameter 全コマンド共通フィールド
-type CommonParameter struct {
-	Parameters       string `cli:",category=input,desc=Input parameters in JSON format"`
-	ParameterFile    string `cli:",category=input,desc=Input parameters in JSON format(from file)"`
-	GenerateSkeleton bool   `cli:",category=input,desc=Output skeleton of parameters with JSON format"`
+import (
+	"context"
+
+	"github.com/sacloud/libsacloud/v2/helper/wait"
+	"github.com/sacloud/libsacloud/v2/sacloud"
+)
+
+func (s *Service) WaitReady(req *WaitReadyRequest) error {
+	return s.WaitReadyWithContext(context.Background(), req)
+}
+
+func (s *Service) WaitReadyWithContext(ctx context.Context, req *WaitReadyRequest) error {
+	if err := req.Validate(); err != nil {
+		return err
+	}
+
+	client := sacloud.NewDiskOp(s.caller)
+	_, err := wait.UntilDiskIsReady(ctx, client, req.Zone, req.ID)
+	return err
 }
