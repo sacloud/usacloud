@@ -15,6 +15,7 @@
 package define
 
 import (
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
 
@@ -82,9 +83,6 @@ func ConfigResource() *schema.Resource {
 	}
 }
 
-var AllowZones = []string{"is1a", "is1b", "tk1a", "tk1v"}
-var AllowOutputTypes = []string{"table", "json", "yaml", "csv", "tsv"}
-
 func configEditParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"token": {
@@ -105,7 +103,7 @@ func configEditParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "Target zone of SakuraCloud",
-			ValidateFunc: validateInStrValues(AllowZones...),
+			ValidateFunc: validateInStrValues(config.AllowZones...),
 			Category:     "config",
 			Order:        30,
 		},
@@ -113,7 +111,7 @@ func configEditParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "Default output format type",
-			ValidateFunc: validateInStrValues(AllowOutputTypes...),
+			ValidateFunc: validateInStrValues(config.AllowOutputTypes...),
 			Category:     "config",
 			Order:        40,
 		},

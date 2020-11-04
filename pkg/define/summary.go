@@ -15,6 +15,7 @@
 package define
 
 import (
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -54,7 +55,7 @@ func summaryShowColumns() []output.ColumnDef {
 		{Name: "Name"},
 	}
 
-	for _, zone := range AllowZones {
+	for _, zone := range config.AllowZones {
 		defs = append(defs, output.ColumnDef{Name: zone})
 	}
 

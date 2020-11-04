@@ -207,7 +207,7 @@ func (p *ListArchiveParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -617,7 +617,7 @@ func (p *CreateArchiveParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -912,7 +912,7 @@ func (p *ReadArchiveParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1215,7 +1215,7 @@ func (p *UpdateArchiveParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1501,7 +1501,7 @@ func (p *DeleteArchiveParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1772,7 +1772,7 @@ func (p *UploadArchiveParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2209,7 +2209,7 @@ func (p *FTPOpenArchiveParam) validate() error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		validator := schema.ValidateInStrValues(config.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
