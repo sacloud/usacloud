@@ -106,6 +106,7 @@ func (o *Config) loadFromEnv() {
 	o.HTTPRequestTimeout = intFromEnv("SAKURACLOUD_API_REQUEST_TIMEOUT", 300)
 	o.HTTPRequestRateLimit = intFromEnv("SAKURACLOUD_API_REQUEST_RATE_LIMIT", 1)
 	o.APIRootURL = stringFromEnv("SAKURACLOUD_API_ROOT_URL", sacloud.SakuraCloudAPIRoot)
+	o.DefaultZone = stringFromEnv("SAKURACLOUD_DEFAULT_ZONE", sacloud.APIDefaultZone)
 	o.TraceMode = stringFromEnv("SAKURACLOUD_TRACE", "")
 	o.FakeMode = os.Getenv("SAKURACLOUD_FAKE_MODE") != ""
 	o.FakeStorePath = stringFromEnv("SAKURACLOUD_FAKE_STORE_PATH", "")
