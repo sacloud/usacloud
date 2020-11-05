@@ -30,6 +30,7 @@ func DiskResource() *schema.Resource {
 			Type:               schema.CommandList,
 			Aliases:            []string{"ls", "find", "select"},
 			Parameters:         &disk.ListParameter{}, // TODO v1向け試験実装
+			ServiceFuncAltName: "Find",                // TODO v1向け試験実装
 			Params:             diskListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: diskListColumns(),
