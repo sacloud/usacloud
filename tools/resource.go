@@ -132,3 +132,7 @@ func (r *Resource) PackageDirName() string {
 		return n
 	}
 }
+
+func (r *Resource) ServiceSourceFileName() string {
+	return "services_gen.go"
+}

@@ -297,6 +297,18 @@ func (c *Command) ServiceRequestTypeName() string {
 	return fmt.Sprintf("%sRequest", utils.ToCamelCaseName(name))
 }
 
+func (c *Command) ServiceFuncName() string {
+	name := c.Name
+	if c.ServiceFuncAltName != "" {
+		name = c.ServiceFuncAltName
+	}
+	return fmt.Sprintf("%sWithContext", utils.ToCamelCaseName(name))
+}
+
+func (c *Command) ServiceCommandFuncName() string {
+	return fmt.Sprintf("run%sService", utils.ToCamelCaseName(c.Name))
+}
+
 func (c *Command) CategorizedParameterFields() []*CategorizedParameterFields {
 	if c.Parameters == nil {
 		return nil
