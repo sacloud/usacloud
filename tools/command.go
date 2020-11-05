@@ -289,6 +289,14 @@ func (c *Command) CLICommandParameterTypeName() string {
 	return structs.Name(c.Command.Parameters)
 }
 
+func (c *Command) ServiceRequestTypeName() string {
+	name := c.Name
+	if c.ServiceFuncAltName != "" {
+		name = c.ServiceFuncAltName
+	}
+	return fmt.Sprintf("%sRequest", utils.ToCamelCaseName(name))
+}
+
 func (c *Command) CategorizedParameterFields() []*CategorizedParameterFields {
 	if c.Parameters == nil {
 		return nil

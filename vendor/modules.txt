@@ -47,7 +47,7 @@ github.com/pmezard/go-difflib/difflib
 github.com/sacloud/ftps
 # github.com/sacloud/go-jmespath v0.0.0-20190125082617-862639817e08
 github.com/sacloud/go-jmespath
-# github.com/sacloud/libsacloud/v2 v2.8.9-0.20201104084812-02587fb2e64c
+# github.com/sacloud/libsacloud/v2 v2.8.9-0.20201105050622-3b40f109ba37
 github.com/sacloud/libsacloud/v2
 github.com/sacloud/libsacloud/v2/helper/api
 github.com/sacloud/libsacloud/v2/helper/builder

@@ -17,11 +17,12 @@ package disk
 import (
 	"testing"
 
+	"github.com/sacloud/usacloud/pkg/cmd/conv"
+
 	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 
 	"github.com/sacloud/libsacloud/v2/helper/service/disk"
-	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
 	"github.com/stretchr/testify/require"
 )
 
@@ -40,7 +41,7 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 		}
 
 		out := &disk.UpdateRequest{}
-		if err := mapconv.ConvertTo(in, out); err != nil {
+		if err := conv.ConvertTo(in, out); err != nil {
 			t.Fatal(err)
 		}
 
@@ -65,7 +66,7 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 		}
 
 		out := &disk.UpdateRequest{}
-		if err := mapconv.ConvertTo(in, out); err != nil {
+		if err := conv.ConvertTo(in, out); err != nil {
 			t.Fatal(err)
 		}
 
@@ -92,7 +93,7 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 		}
 
 		out := &disk.UpdateRequest{}
-		if err := mapconv.ConvertTo(in, out); err != nil {
+		if err := conv.ConvertTo(in, out); err != nil {
 			t.Fatal(err)
 		}
 

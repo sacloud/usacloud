@@ -17,7 +17,9 @@
 package disk
 
 import (
+	service "github.com/sacloud/libsacloud/v2/helper/service/disk"
 	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/conv"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -27,7 +29,7 @@ func (p *CreateParameter) BuildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(base.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.StringVarP(&p.DiskPlanID, "disk-plan-id", "", p.DiskPlanID, "")
+	fs.StringVarP(&p.DiskPlan, "disk-plan", "", p.DiskPlan, "")
 	fs.StringVarP(&p.Connection, "connection", "", p.Connection, "")
 	fs.VarP(base.NewIDFlag(&p.SourceDiskID, &p.SourceDiskID), "source-disk-id", "", "")
 	fs.VarP(base.NewIDFlag(&p.SourceArchiveID, &p.SourceArchiveID), "source-archive-id", "", "")
@@ -63,7 +65,7 @@ func (p *CreateParameter) CategorizedFlagSets(cmd *cobra.Command) []*base.FlagSe
 		fs.AddFlag(cmd.LocalFlags().Lookup("description"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("disk-plan-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-plan"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("connection"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("source-disk-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("source-archive-id"))
@@ -92,4 +94,9 @@ func (p *CreateParameter) CategorizedFlagSets(cmd *cobra.Command) []*base.FlagSe
 	}
 
 	return sets
+}
+
+func (p *CreateParameter) ServiceRequest() (*service.CreateRequest, error) {
+	req := &service.CreateRequest{}
+	return req, conv.ConvertTo(p, req)
 }

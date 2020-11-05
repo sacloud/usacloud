@@ -17,7 +17,9 @@
 package disk
 
 import (
+	service "github.com/sacloud/libsacloud/v2/helper/service/disk"
 	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/conv"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -82,4 +84,9 @@ func (p *ListParameter) CategorizedFlagSets(cmd *cobra.Command) []*base.FlagSet 
 	}
 
 	return sets
+}
+
+func (p *ListParameter) ServiceRequest() (*service.FindRequest, error) {
+	req := &service.FindRequest{}
+	return req, conv.ConvertTo(p, req)
 }

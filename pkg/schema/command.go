@@ -32,11 +32,12 @@ type Command struct {
 	Order    int
 
 	// TODO v0向け、あとで消す
-	Params          map[string]*Schema
-	ParamCategories []Category
+	Params map[string]*Schema
+	// TODO v1向け
+	Parameters         interface{} // cmd/xxx配下の各コマンドパラメータstruct
+	ServiceFuncAltName string
 
-	// v1向け
-	Parameters interface{} // cmd/xxx配下の各コマンドパラメータstruct
+	ParamCategories []Category
 
 	AltResource         string // 空の場合はResourceのキーをCamelizeしてsacloud.XXXを対象とする。
 	ListResultFieldName string

@@ -29,14 +29,14 @@ type CreateParameter struct {
 	Description     string     `cli:",category=disk"`
 	Tags            []string   `cli:",category=disk"`
 	IconID          types.ID   `cli:",category=disk"`
-	DiskPlanID      string     `cli:",category=disk" validate:"oneof=ssd hdd"` // TODO パラメータ変換ロジック(string -> types.ID)をコード生成と組み合わせる
+	DiskPlan        string     `cli:",category=disk" mapconv:"DiskPlanID,filters=disk_plan_to_id" validate:"oneof=ssd hdd"`
 	Connection      string     `cli:",category=disk" validate:"oneof=virtio ide"`
 	SourceDiskID    types.ID   `cli:",category=disk"`
 	SourceArchiveID types.ID   `cli:",category=disk"`
 	ServerID        types.ID   `cli:",category=disk"`
 	SizeGB          int        `cli:"size,category=disk"`
 	DistantFrom     []types.ID `cli:",category=disk"`
-	OSType          string     `cli:",category=disk"` // TODO 設定できる値の例示をどうするか
+	OSType          string     `cli:",category=disk" mapconv:",filters=os_type"` // TODO 設定できる値の例示をどうするか
 
 	*base.OutputParameter `cli:",squash" mapconv:"-"`
 }
