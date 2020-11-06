@@ -17,9 +17,6 @@ package disk
 import "github.com/sacloud/usacloud/pkg/cmd/base"
 
 type ListParameter struct {
-	// TODO これらはコマンドのコンテキストでパラメーターに含めないべき？要検討
-	*base.ExecContext `mapconv:"-"`
-
 	Zone string `cli:"-" validate:"required"`
 
 	Names               []string `cli:",category=filter"`

@@ -29,7 +29,7 @@ func (p *UpdateParameter) BuildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.Description, "description", "", *p.Description, "")
 	fs.StringSliceVarP(p.Tags, "tags", "", *p.Tags, "")
 	fs.VarP(base.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
-	fs.StringVarP(p.Connection, "connection", "", *p.Connection, " options: [virtio/ide]")
+	fs.StringVarP(p.Connection, "connection", "", *p.Connection, "options: [virtio/ide]")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")

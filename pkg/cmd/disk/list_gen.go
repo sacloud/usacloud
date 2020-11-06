@@ -27,8 +27,8 @@ import (
 func (p *ListParameter) BuildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.Names, "names", "", p.Names, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
-	fs.IntVarP(&p.Count, "count", "", p.Count, " (aliases: --max, --limit)")
-	fs.IntVarP(&p.From, "from", "", p.From, " (aliases: --offset)")
+	fs.IntVarP(&p.Count, "count", "", p.Count, "(aliases: --max, --limit)")
+	fs.IntVarP(&p.From, "from", "", p.From, "(aliases: --offset)")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")

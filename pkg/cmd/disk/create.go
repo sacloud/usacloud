@@ -20,9 +20,6 @@ import (
 )
 
 type CreateParameter struct {
-	// TODO これらはコマンドのコンテキストでパラメーターに含めないべき？要検討
-	*base.ExecContext `cli:"-" mapconv:"-"`
-
 	Zone string `cli:"-" validate:"required"`
 
 	Name            string     `cli:",category=disk"`

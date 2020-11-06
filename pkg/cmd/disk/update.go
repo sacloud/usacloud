@@ -20,9 +20,6 @@ import (
 )
 
 type UpdateParameter struct {
-	// TODO これらはコマンドのコンテキストでパラメーターに含めないべき？要検討
-	*base.ExecContext `cli:"-" mapconv:"-"`
-
 	Zone string   `cli:"-" validate:"required"`
 	ID   types.ID `cli:"-" validate:"required"`
 
