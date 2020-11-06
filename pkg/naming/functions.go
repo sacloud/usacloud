@@ -1,0 +1,115 @@
+// Copyright 2017-2020 The Usacloud Authors
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package naming
+
+import (
+	"fmt"
+	"strings"
+
+	"github.com/huandu/xstrings"
+)
+
+var normalizationWords = map[string]string{
+	"Acme": "ACME",
+	"Dns":  "DNS",
+	"Gslb": "GSLB",
+
+	"Ipv4":   "IPv4",
+	"Ipv6":   "IPv6",
+	"iPv4":   "ipv4",
+	"iPv6":   "ipv6",
+	"i_pv_4": "ipv4",
+	"i_pv_6": "ipv6",
+	"ipv_4":  "ipv4",
+	"ipv_6":  "ipv6",
+	"i-pv-4": "ipv4",
+	"i-pv-6": "ipv6",
+	"ipv-4":  "ipv4",
+	"ipv-6":  "ipv6",
+
+	"Iso": "ISO",
+	"Cpu": "CPU",
+	"Ftp": "FTP",
+	"Nfs": "NFS",
+
+	"Lb": "LB",
+
+	"Sim": "SIM",
+	"Ssh": "SSH",
+	"Vpc": "VPC",
+	"Vpn": "VPN",
+
+	"L2tp":  "L2TP",
+	"l_2tp": "l2tp",
+	"l-2tp": "l2tp",
+
+	"Ipsec": "IPsec",
+}
+
+var normalizationIgnoreWords = []string{"Simple", "simple"}
+
+func isIncludeInNormalizationIgnoreWords(w string) bool {
+	for _, v := range normalizationIgnoreWords {
+		if strings.Contains(w, v) {
+			return true
+		}
+	}
+	return false
+}
+
+func Normalize(name string) string {
+	n := name
+	for k, v := range normalizationWords {
+		if strings.Contains(n, k) && !isIncludeInNormalizationIgnoreWords(n) {
+			n = strings.Replace(n, k, v, -1)
+		}
+	}
+	return n
+}
+
+func ToSnakeCase(name string) string {
+	return Normalize(xstrings.ToSnakeCase(name))
+}
+
+func ToKebabCase(name string) string {
+	return Normalize(xstrings.ToKebabCase(name))
+}
+
+func ToCamelCase(name string) string {
+	return Normalize(xstrings.ToCamelCase(xstrings.ToSnakeCase(name)))
+}
+
+func ToCamelCaseWithFirstLower(name string) string {
+	return Normalize(xstrings.FirstRuneToLower(xstrings.ToCamelCase(xstrings.ToSnakeCase(name))))
+}
+
+func ToLower(name string) string {
+	return strings.ToLower(Normalize(xstrings.ToCamelCase(xstrings.ToSnakeCase(name))))
+}
+
+func ToCLIFlag(name string) string {
+	format := "--%s"
+	if len(name) == 1 {
+		format = "-%s"
+	}
+	return fmt.Sprintf(format, ToKebabCase(name))
+}
+
+func FlattenStringList(list []string) string {
+	if len(list) > 0 {
+		return fmt.Sprintf(`"%s"`, strings.Join(list, `","`))
+	}
+	return ""
+}

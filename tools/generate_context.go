@@ -18,65 +18,20 @@ import (
 	"fmt"
 	"go/build"
 	"path/filepath"
-	"sort"
 
-	"github.com/sacloud/usacloud/pkg/define"
-	"github.com/sacloud/usacloud/pkg/schema"
+	"github.com/sacloud/usacloud/pkg/cmd"
+
 	"github.com/sacloud/usacloud/pkg/version"
 )
 
 type GenerateContext struct {
-	Resources            []*Resource
-	CategorizedResources []*CategorizedResources
-}
-
-type CategorizedResources struct {
-	*schema.Category
 	Resources []*Resource
 }
 
 func NewGenerateContext() *GenerateContext {
-	ctx := &GenerateContext{}
-	for rn, r := range define.Resources {
-		ctx.Resources = append(ctx.Resources, NewResource(rn, r))
+	return &GenerateContext{
+		Resources: NewResources(cmd.Resources),
 	}
-	sort.Slice(ctx.Resources, func(i, j int) bool {
-		if ctx.Resources[i].ResourceCategory.Order == ctx.Resources[j].ResourceCategory.Order {
-			if ctx.Resources[i].ResourceCategory.Key == ctx.Resources[j].ResourceCategory.Key {
-				return ctx.Resources[i].Name < ctx.Resources[j].Name
-			}
-			return ctx.Resources[i].ResourceCategory.Key < ctx.Resources[j].ResourceCategory.Key
-		}
-		return ctx.Resources[i].ResourceCategory.Order < ctx.Resources[j].ResourceCategory.Order
-	})
-
-	ctx.buildCategorizedResources()
-	return ctx
-}
-
-func (c *GenerateContext) buildCategorizedResources() {
-	m := map[string]*CategorizedResources{}
-	for _, r := range c.Resources {
-		c := &r.ResourceCategory
-		cr, ok := m[c.Key]
-		if !ok {
-			cr = &CategorizedResources{
-				Category: c,
-			}
-		}
-		cr.Resources = append(cr.Resources, r)
-		m[c.Key] = cr
-	}
-	c.CategorizedResources = []*CategorizedResources{}
-	for _, cat := range m {
-		c.CategorizedResources = append(c.CategorizedResources, cat)
-	}
-	sort.Slice(c.CategorizedResources, func(i, j int) bool {
-		if c.CategorizedResources[i].Order == c.CategorizedResources[j].Order {
-			return c.CategorizedResources[i].Key < c.CategorizedResources[j].Key
-		}
-		return c.CategorizedResources[i].Order < c.CategorizedResources[j].Order
-	})
 }
 
 func (c *GenerateContext) Copyright() string {

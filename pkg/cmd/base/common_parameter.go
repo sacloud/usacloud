@@ -16,7 +16,19 @@ package base
 
 // CommonParameter 全コマンド共通フィールド
 type CommonParameter struct {
-	Parameters       string `cli:",category=input,desc=Input parameters in JSON format"`
-	ParameterFile    string `cli:",category=input,desc=Input parameters in JSON format(from file)"`
-	GenerateSkeleton bool   `cli:",category=input,desc=Output skeleton of parameters with JSON format"`
+	Parameters       string `cli:",category=input,desc=Input parameters in JSON format" json:"-"`
+	ParameterFile    string `cli:",category=input,desc=Input parameters in JSON format(from file)" json:"-"`
+	GenerateSkeleton bool   `cli:",category=input,desc=Output skeleton of parameters with JSON format" json:"-"`
+}
+
+func (p *CommonParameter) ParametersFlagValue() string {
+	return p.Parameters
+}
+
+func (p *CommonParameter) ParameterFileFlagValue() string {
+	return p.ParameterFile
+}
+
+func (p *CommonParameter) GenerateSkeletonFlagValue() bool {
+	return p.GenerateSkeleton
 }

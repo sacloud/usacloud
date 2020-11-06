@@ -50,7 +50,7 @@ func ProductServerResource() *schema.Resource {
 	}
 }
 
-func productServerListParam() map[string]*schema.Schema {
+func productServerListParam() map[string]*schema.Parameter {
 	return CommonListParam
 }
 
@@ -76,10 +76,10 @@ func productServerDetailExcludes() []string {
 	return []string{}
 }
 
-func productServerReadParam() map[string]*schema.Schema {
+func productServerReadParam() map[string]*schema.Parameter {
 	id := getParamResourceShortID("resource ID", 9)
 	id.Hidden = true
-	return map[string]*schema.Schema{
+	return map[string]*schema.Parameter{
 		"id": id,
 	}
 }

@@ -15,9 +15,8 @@ require (
 	github.com/mattn/go-runewidth v0.0.4 // indirect
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.0-20180506121414-d4647c9c7a84
-	github.com/sacloud/ftps v1.1.0
 	github.com/sacloud/go-jmespath v0.0.0-20190125082617-862639817e08
-	github.com/sacloud/libsacloud/v2 v2.8.9-0.20201105050622-3b40f109ba37
+	github.com/sacloud/libsacloud/v2 v2.8.9-0.20201111151335-1cd5a387ae01
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.6.1

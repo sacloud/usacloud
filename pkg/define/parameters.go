@@ -22,7 +22,7 @@ import (
 )
 
 var (
-	paramName = &schema.Schema{
+	paramName = &schema.Parameter{
 		Type:         schema.TypeString,
 		HandlerType:  schema.HandlerPathThrough,
 		Description:  "set resource display name",
@@ -30,7 +30,7 @@ var (
 		Category:     "common",
 		Order:        500,
 	}
-	paramRequiredName = &schema.Schema{
+	paramRequiredName = &schema.Parameter{
 		Type:         schema.TypeString,
 		HandlerType:  schema.HandlerPathThrough,
 		Description:  "set resource display name",
@@ -39,7 +39,7 @@ var (
 		Category:     "common",
 		Order:        510,
 	}
-	paramDescription = &schema.Schema{
+	paramDescription = &schema.Parameter{
 		Type:         schema.TypeString,
 		HandlerType:  schema.HandlerPathThrough,
 		Description:  "set resource description",
@@ -48,7 +48,7 @@ var (
 		Category:     "common",
 		Order:        520,
 	}
-	paramTags = &schema.Schema{
+	paramTags = &schema.Parameter{
 		Type:         schema.TypeStringList,
 		HandlerType:  schema.HandlerPathThrough,
 		Description:  "set resource tags",
@@ -58,8 +58,8 @@ var (
 	}
 )
 
-func getParamResourceShortID(resourceName string, digit int) *schema.Schema {
-	return &schema.Schema{
+func getParamResourceShortID(resourceName string, digit int) *schema.Parameter {
+	return &schema.Parameter{
 		Type:         schema.TypeId,
 		HandlerType:  schema.HandlerPathThrough,
 		Description:  fmt.Sprintf("set %s", resourceName),
@@ -68,7 +68,7 @@ func getParamResourceShortID(resourceName string, digit int) *schema.Schema {
 	}
 }
 
-var paramIconResourceID = &schema.Schema{
+var paramIconResourceID = &schema.Parameter{
 	Type:            schema.TypeId,
 	HandlerType:     schema.HandlerPathThrough,
 	DestinationProp: "IconID",
@@ -78,7 +78,7 @@ var paramIconResourceID = &schema.Schema{
 	Order:           540,
 }
 
-var CommonListParam = map[string]*schema.Schema{
+var CommonListParam = map[string]*schema.Parameter{
 
 	"name": {
 		Type:          schema.TypeStringList,
@@ -135,12 +135,12 @@ var CommonListParam = map[string]*schema.Schema{
 	},
 }
 
-func emptyParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func emptyParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
 var scopeCondStrings = []string{"user", "shared"}
-var paramScopeCond = map[string]*schema.Schema{
+var paramScopeCond = map[string]*schema.Parameter{
 	"scope": {
 		Type:         schema.TypeString,
 		HandlerType:  schema.HandlerFilterBy,
@@ -151,7 +151,7 @@ var paramScopeCond = map[string]*schema.Schema{
 	},
 }
 
-var paramTagsCond = map[string]*schema.Schema{
+var paramTagsCond = map[string]*schema.Parameter{
 	"tags": {
 		Type:         schema.TypeStringList,
 		Aliases:      []string{"selector"},
@@ -187,7 +187,7 @@ func filterListByTags(_ []interface{}, item interface{}, param interface{}) bool
 	return res
 }
 
-var paramSourceArchiveIDCond = map[string]*schema.Schema{
+var paramSourceArchiveIDCond = map[string]*schema.Parameter{
 	"source-archive-id": {
 		Type:         schema.TypeId,
 		HandlerType:  schema.HandlerFilterFunc,
@@ -199,7 +199,7 @@ var paramSourceArchiveIDCond = map[string]*schema.Schema{
 	},
 }
 
-var paramSourceDiskCond = map[string]*schema.Schema{
+var paramSourceDiskCond = map[string]*schema.Parameter{
 	"source-disk-id": {
 		Type:         schema.TypeId,
 		HandlerType:  schema.HandlerFilterFunc,
@@ -247,7 +247,7 @@ func filterBySourceDiskID(_ []interface{}, item interface{}, param interface{}) 
 	return diskIDHolder.GetSourceDiskID() == id
 }
 
-var paramClassCond = map[string]*schema.Schema{
+var paramClassCond = map[string]*schema.Parameter{
 	"class": {
 		Type:        schema.TypeStringList,
 		HandlerType: schema.HandlerFilterBy,

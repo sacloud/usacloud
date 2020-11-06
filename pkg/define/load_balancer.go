@@ -280,7 +280,7 @@ var loadBalancerParamsCategories = []schema.Category{
 	},
 }
 
-func loadBalancerListParam() map[string]*schema.Schema {
+func loadBalancerListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
@@ -396,8 +396,8 @@ func loadBalancerDetailExcludes() []string {
 	return []string{}
 }
 
-func loadBalancerCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func loadBalancerCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"switch-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -508,12 +508,12 @@ func loadBalancerCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func loadBalancerReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func loadBalancerReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func loadBalancerUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func loadBalancerUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -521,8 +521,8 @@ func loadBalancerUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func loadBalancerDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func loadBalancerDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"force": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -534,28 +534,28 @@ func loadBalancerDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func loadBalancerPowerOnParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func loadBalancerPowerOnParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func loadBalancerPowerOffParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func loadBalancerPowerOffParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func loadBalancerResetParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func loadBalancerResetParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func loadBalancerWaitForParams() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func loadBalancerWaitForParams() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func loadBalancerVIPInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func loadBalancerVIPInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func loadBalancerVIPAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func loadBalancerVIPAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"vip": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -602,8 +602,8 @@ func loadBalancerVIPAddParam() map[string]*schema.Schema {
 	}
 }
 
-func loadBalancerVIPUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func loadBalancerVIPUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -656,8 +656,8 @@ func loadBalancerVIPUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func loadBalancerVIPDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func loadBalancerVIPDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -669,8 +669,8 @@ func loadBalancerVIPDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func loadBalancerServerInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func loadBalancerServerInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"vip-index": {
 			Type:          schema.TypeInt,
 			HandlerType:   schema.HandlerNoop,
@@ -700,8 +700,8 @@ func loadBalancerServerInfoParam() map[string]*schema.Schema {
 	}
 }
 
-func loadBalancerServerAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func loadBalancerServerAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"vip-index": {
 			Type:          schema.TypeInt,
 			HandlerType:   schema.HandlerNoop,
@@ -772,8 +772,8 @@ func loadBalancerServerAddParam() map[string]*schema.Schema {
 	}
 }
 
-func loadBalancerServerUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func loadBalancerServerUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"vip-index": {
 			Type:          schema.TypeInt,
 			HandlerType:   schema.HandlerNoop,
@@ -842,8 +842,8 @@ func loadBalancerServerUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func loadBalancerServerDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func loadBalancerServerDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"vip-index": {
 			Type:          schema.TypeInt,
 			HandlerType:   schema.HandlerNoop,
@@ -883,8 +883,8 @@ func loadBalancerServerDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func loadBalancerMonitorParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func loadBalancerMonitorParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,

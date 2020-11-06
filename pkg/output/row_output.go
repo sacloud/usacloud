@@ -31,7 +31,7 @@ type rowOutput struct {
 	Out       io.Writer
 	Err       io.Writer
 	Separator rune
-	Columns   []string
+	//Columns   []string
 }
 
 func NewRowOutput(out io.Writer, err io.Writer, separator rune, option Option) Output {
@@ -39,7 +39,7 @@ func NewRowOutput(out io.Writer, err io.Writer, separator rune, option Option) O
 		Out:       out,
 		Err:       err,
 		Separator: separator,
-		Columns:   option.GetColumn(),
+		//Columns:   option.GetColumn(),
 	}
 }
 
@@ -53,7 +53,6 @@ func (o *rowOutput) Print(target interface{}) error {
 	}
 
 	if util.IsEmpty(targets) {
-		fmt.Fprintln(o.Err, "no results")
 		return nil
 	}
 
@@ -61,7 +60,8 @@ func (o *rowOutput) Print(target interface{}) error {
 	w.UseCRLF = true
 	w.Comma = o.Separator
 
-	header := header(o.Columns)
+	//header := header(o.Columns)
+	header := header{}
 	headerExists := map[string]bool{}
 
 	// targets -> byte[] -> []interface{}

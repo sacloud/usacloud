@@ -207,7 +207,7 @@ var SIMCommandCategories = []schema.Category{
 	},
 }
 
-func simListParam() map[string]*schema.Schema {
+func simListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
@@ -279,8 +279,8 @@ func simDetailExcludes() []string {
 	return []string{}
 }
 
-func simCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func simCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"iccid": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -355,12 +355,12 @@ func simCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func simReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func simReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func simUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func simUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -368,8 +368,8 @@ func simUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func simDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func simDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"force": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -381,12 +381,12 @@ func simDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func simCarrierInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func simCarrierInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func simCarrierUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func simCarrierUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"carrier": {
 			Type:         schema.TypeStringList,
 			HandlerType:  schema.HandlerNoop,
@@ -399,16 +399,16 @@ func simCarrierUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func simActivateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func simActivateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func simDeactivateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func simDeactivateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func simIPAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func simIPAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"ip": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -419,12 +419,12 @@ func simIPAddParam() map[string]*schema.Schema {
 	}
 }
 
-func simIPDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func simIPDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func simIMEILockParams() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func simIMEILockParams() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"imei": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -434,12 +434,12 @@ func simIMEILockParams() map[string]*schema.Schema {
 	}
 }
 
-func simIMEIUnlockParams() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func simIMEIUnlockParams() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func simLogsParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func simLogsParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"follow": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -460,8 +460,8 @@ func simLogsParam() map[string]*schema.Schema {
 	}
 }
 
-func simMonitorParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func simMonitorParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,

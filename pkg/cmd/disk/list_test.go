@@ -24,12 +24,13 @@ import (
 )
 
 func TestList_ConvertToServiceRequest(t *testing.T) {
-	in := &ListParameter{
-		OutputParameter: nil,
-		Zone:            "is1a",
-		Names:           []string{"name1", "name2"},
-		Tags:            []string{"tag1", "tag2"},
-		FindParameter: &base.FindParameter{
+	in := &listParameter{
+		ZoneParameter: base.ZoneParameter{
+			Zone: "is1b",
+		},
+		Names: []string{"name1", "name2"},
+		Tags:  []string{"tag1", "tag2"},
+		FindParameter: base.FindParameter{
 			Count: 1,
 			From:  2,
 		},
@@ -41,7 +42,7 @@ func TestList_ConvertToServiceRequest(t *testing.T) {
 	}
 
 	require.EqualValues(t, &disk.FindRequest{
-		Zone:  "is1a",
+		Zone:  "is1b",
 		Names: []string{"name1", "name2"},
 		Tags:  []string{"tag1", "tag2"},
 		Count: 1,

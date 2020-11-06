@@ -17,6 +17,8 @@ package disk
 import (
 	"testing"
 
+	"github.com/sacloud/usacloud/pkg/cmd/base"
+
 	"github.com/sacloud/usacloud/pkg/cmd/conv"
 
 	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
@@ -28,15 +30,14 @@ import (
 
 func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 	t.Run("full", func(t *testing.T) {
-		in := &UpdateParameter{
-			OutputParameter: nil,
-			Zone:            "is1a",
-			ID:              types.ID(1),
-			Name:            pointer.NewString("name"),
-			Description:     pointer.NewString("desc"),
-			Tags:            pointer.NewStringSlice([]string{"tag1", "tag2"}),
-			IconID:          pointer.NewID(types.ID(2)),
-			Connection:      pointer.NewString(types.DiskConnections.VirtIO.String()),
+		in := &updateParameter{
+			ZoneParameter: base.ZoneParameter{Zone: "is1a"},
+			IDParameter:   base.IDParameter{ID: types.ID(1)},
+			Name:          pointer.NewString("name"),
+			Description:   pointer.NewString("desc"),
+			Tags:          pointer.NewStringSlice([]string{"tag1", "tag2"}),
+			IconID:        pointer.NewID(types.ID(2)),
+			Connection:    pointer.NewString(types.DiskConnections.VirtIO.String()),
 		}
 
 		out := &disk.UpdateRequest{}
@@ -56,11 +57,10 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 	})
 
 	t.Run("nil", func(t *testing.T) {
-		in := &UpdateParameter{
-			OutputParameter: nil,
-			Zone:            "is1a",
-			ID:              types.ID(1),
-			Name:            pointer.NewString("name"),
+		in := &updateParameter{
+			ZoneParameter: base.ZoneParameter{Zone: "is1a"},
+			IDParameter:   base.IDParameter{ID: types.ID(1)},
+			Name:          pointer.NewString("name"),
 		}
 
 		out := &disk.UpdateRequest{}
@@ -79,14 +79,13 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 		}, out)
 	})
 	t.Run("empty", func(t *testing.T) {
-		in := &UpdateParameter{
-			OutputParameter: nil,
-			Zone:            "is1a",
-			ID:              types.ID(1),
-			Name:            pointer.NewString("name"),
-			Description:     pointer.NewString(""),
-			Tags:            pointer.NewStringSlice([]string{}),
-			IconID:          pointer.NewID(types.ID(0)),
+		in := &updateParameter{
+			ZoneParameter: base.ZoneParameter{Zone: "is1a"},
+			IDParameter:   base.IDParameter{ID: types.ID(1)},
+			Name:          pointer.NewString("name"),
+			Description:   pointer.NewString(""),
+			Tags:          pointer.NewStringSlice([]string{}),
+			IconID:        pointer.NewID(types.ID(0)),
 		}
 
 		out := &disk.UpdateRequest{}

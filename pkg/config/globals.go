@@ -15,6 +15,7 @@
 package config
 
 var (
+	// TODO libsacloudで定義しているもの + profileに差し替える
 	AllowZones       = []string{"is1a", "is1b", "tk1a", "tk1v"}
 	AllowOutputTypes = []string{"table", "json", "yaml", "csv", "tsv"}
 )

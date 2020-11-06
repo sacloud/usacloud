@@ -23,7 +23,6 @@ import (
 
 	"github.com/sacloud/libsacloud/v2"
 
-	"github.com/fatih/color"
 	"github.com/sacloud/libsacloud/v2/helper/api"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
@@ -51,9 +50,6 @@ type Context interface {
 	WithID(id types.ID) Context
 
 	ExecWithProgress(func() error) error
-
-	// TODO v0との互換性維持用、あとで消す
-	PrintWarning(warn string)
 }
 
 type cliContext struct {
@@ -68,7 +64,7 @@ type cliContext struct {
 	id           types.ID
 }
 
-func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet, args []string, parameter interface{}) (Context, error) {
+func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet, args []string, columnDefs []output.ColumnDef, parameter interface{}) (Context, error) {
 	// TODO あとでグローバルなタイムアウトなどを実装する
 	ctx := context.TODO()
 
@@ -82,7 +78,7 @@ func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet,
 	return &cliContext{
 		parentCtx:    ctx,
 		option:       option,
-		output:       getOutputWriter(io, parameter),
+		output:       getOutputWriter(io, columnDefs, parameter),
 		resourceName: resourceName,
 		commandName:  commandName,
 		cliIO:        io,
@@ -181,52 +177,35 @@ func (c *cliContext) Args() []string {
 	return c.args
 }
 
-func getOutputWriter(io IO, rawFormatter interface{}) output.Output {
-	if rawFormatter == nil {
-		return nil
+func getOutputWriter(io IO, columnDefs []output.ColumnDef, rawOptions interface{}) output.Output {
+	if rawOptions == nil {
+		return nil // TODO 何かエラーを返した方がいいかも
 	}
-	formatter, ok := rawFormatter.(output.Formatter)
+	options, ok := rawOptions.(output.Option)
 	if !ok {
-		return nil
+		return nil // TODO 何かエラーを返した方がいいかも
 	}
 
 	out := io.Out()
 	err := io.Err()
 
-	if formatter.GetQuiet() {
+	if options.QuietFlagValue() {
 		return output.NewIDOutput(out, err)
 	}
-	if formatter.GetFormat() != "" || formatter.GetFormatFile() != "" {
-		return output.NewFreeOutput(out, err, formatter)
+	if options.FormatFlagValue() != "" || options.FormatFileFlagValue() != "" {
+		return output.NewFreeOutput(out, err, options)
 	}
-	switch formatter.GetOutputType() {
-	case "csv":
-		return output.NewRowOutput(out, err, ',', formatter)
-	case "tsv":
-		return output.NewRowOutput(out, err, '\t', formatter)
+	switch options.OutputTypeFlagValue() {
 	case "json":
-		query := formatter.GetQuery()
+		query := options.QueryFlagValue()
 		if query == "" {
-			bQuery, _ := ioutil.ReadFile(formatter.GetQueryFile()) // nolint: err was already checked
+			bQuery, _ := ioutil.ReadFile(options.QueryFileFlagValue()) // nolint: err was already checked
 			query = string(bQuery)
 		}
 		return output.NewJSONOutput(out, err, query)
 	case "yaml":
 		return output.NewYAMLOutput(out, err)
 	default:
-		return output.NewTableOutput(out, err, formatter)
-	}
-}
-
-// TODO v0との互換性維持用、実装する場所を再考
-func (c *cliContext) PrintWarning(warn string) {
-	if warn == "" {
-		return
-	}
-	if c.option.NoColor {
-		fmt.Fprintf(c.IO().Err(), "[WARN] %s\n", warn)
-	} else {
-		out := color.New(color.FgYellow)
-		out.Fprintf(c.IO().Err(), "[WARN] %s\n", warn)
+		return output.NewTableOutput(out, err, columnDefs)
 	}
 }

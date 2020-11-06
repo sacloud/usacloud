@@ -61,6 +61,10 @@ func strToOSType(v interface{}) (interface{}, error) {
 	if !ok {
 		return nil, fmt.Errorf("invalid os type: %v", v)
 	}
+	if s == "" {
+		return ostype.Custom, nil
+	}
+
 	ot := ostype.StrToOSType(s)
 	if ot == ostype.Custom {
 		return nil, fmt.Errorf("os type %s not found", s)

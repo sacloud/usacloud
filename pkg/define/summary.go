@@ -39,8 +39,8 @@ func SummaryResource() *schema.Resource {
 	}
 }
 
-func showSummaryParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func showSummaryParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"paid-resources-only": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,

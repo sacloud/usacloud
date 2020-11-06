@@ -686,7 +686,7 @@ var vpcRouterDeleteParamCategories = []schema.Category{
 	},
 }
 
-func vpcRouterListParam() map[string]*schema.Schema {
+func vpcRouterListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
@@ -924,8 +924,8 @@ func vpcRouterDetailExcludes() []string {
 
 var allowVPCRouterPlans = []string{"standard", "premium", "highspec", "highspec1600", "highspec4000"}
 
-func vpcRouterCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"plan": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1032,12 +1032,12 @@ func vpcRouterCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"syslog-host": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1060,8 +1060,8 @@ func vpcRouterUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"force": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -1073,32 +1073,32 @@ func vpcRouterDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterEnableInternetParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterEnableInternetParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterPowerOnParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterPowerOnParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterPowerOffParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterPowerOffParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterResetParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterResetParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterWaitForParams() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterWaitForParams() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterInterfaceInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterInterfaceInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterInterfaceConnectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterInterfaceConnectParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"interface": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1165,8 +1165,8 @@ func vpcRouterInterfaceConnectParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterInterfaceUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterInterfaceUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"interface": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1239,8 +1239,8 @@ func vpcRouterInterfaceUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterInterfaceDisconnectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterInterfaceDisconnectParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"interface": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1260,12 +1260,12 @@ func vpcRouterInterfaceDisconnectParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterStaticNATInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterStaticNATInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterStaticNATAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterStaticNATAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"global": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1298,8 +1298,8 @@ func vpcRouterStaticNATAddParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterStaticNATUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterStaticNATUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -1338,8 +1338,8 @@ func vpcRouterStaticNATUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterStaticNATDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterStaticNATDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -1351,12 +1351,12 @@ func vpcRouterStaticNATDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterPortForwardingInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterPortForwardingInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterPortForwardingAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterPortForwardingAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"protocol": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1406,8 +1406,8 @@ func vpcRouterPortForwardingAddParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterPortForwardingUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterPortForwardingUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -1461,8 +1461,8 @@ func vpcRouterPortForwardingUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterPortForwardingDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterPortForwardingDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -1474,8 +1474,8 @@ func vpcRouterPortForwardingDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterFirewallInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterFirewallInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"interface": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -1498,8 +1498,8 @@ func vpcRouterFirewallInfoParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterFirewallAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterFirewallAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"interface": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -1591,8 +1591,8 @@ func vpcRouterFirewallAddParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterFirewallUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterFirewallUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"interface": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -1690,8 +1690,8 @@ func vpcRouterFirewallUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterFirewallDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterFirewallDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"interface": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -1722,12 +1722,12 @@ func vpcRouterFirewallDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterDHCPServerInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterDHCPServerInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterDHCPServerAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterDHCPServerAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"interface": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -1767,8 +1767,8 @@ func vpcRouterDHCPServerAddParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterDHCPServerUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterDHCPServerUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"interface": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -1806,8 +1806,8 @@ func vpcRouterDHCPServerUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterDHCPServerDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterDHCPServerDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"interface": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -1820,12 +1820,12 @@ func vpcRouterDHCPServerDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterDHCPStaticMappingInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterDHCPStaticMappingInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterDHCPStaticMappingAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterDHCPStaticMappingAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"macaddress": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1849,8 +1849,8 @@ func vpcRouterDHCPStaticMappingAddParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterDHCPStaticMappingUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterDHCPStaticMappingUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -1880,8 +1880,8 @@ func vpcRouterDHCPStaticMappingUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterDHCPStaticMappingDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterDHCPStaticMappingDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -1893,12 +1893,12 @@ func vpcRouterDHCPStaticMappingDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterPPTPServerInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterPPTPServerInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterPPTPServerUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterPPTPServerUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"disabled": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -1926,12 +1926,12 @@ func vpcRouterPPTPServerUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterL2TPServerInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterL2TPServerInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterL2TPServerUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterL2TPServerUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"disabled": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -1967,12 +1967,12 @@ func vpcRouterL2TPServerUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterUserInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterUserInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterUserAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterUserAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"username": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1996,8 +1996,8 @@ func vpcRouterUserAddParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterUserUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterUserUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -2027,8 +2027,8 @@ func vpcRouterUserUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterUserDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterUserDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -2040,12 +2040,12 @@ func vpcRouterUserDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterS2SInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterS2SInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterS2SAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterS2SAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"peer": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -2093,8 +2093,8 @@ func vpcRouterS2SAddParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterS2SUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterS2SUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -2145,8 +2145,8 @@ func vpcRouterS2SUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterS2SDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterS2SDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -2158,16 +2158,16 @@ func vpcRouterS2SDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterS2SPeersParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterS2SPeersParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterStaticRouteInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func vpcRouterStaticRouteInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func vpcRouterStaticRouteAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterStaticRouteAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"prefix": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -2189,8 +2189,8 @@ func vpcRouterStaticRouteAddParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterStaticRouteUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterStaticRouteUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -2218,8 +2218,8 @@ func vpcRouterStaticRouteUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterStaticRouteDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterStaticRouteDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -2231,8 +2231,8 @@ func vpcRouterStaticRouteDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func vpcRouterMonitorParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterMonitorParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"interface": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -2273,8 +2273,8 @@ func vpcRouterMonitorParam() map[string]*schema.Schema {
 
 var AllowVPCRouterLogNames = []string{"all", "vpn", "firewall-send", "firewall-receive"}
 
-func vpcRouterLogParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func vpcRouterLogParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"log-name": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,

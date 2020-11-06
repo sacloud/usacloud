@@ -46,7 +46,6 @@ func (o *yamlOutput) Print(target interface{}) error {
 	}
 
 	if util.IsEmpty(targets) {
-		fmt.Fprintf(o.err, "no results\n") // nolint
 		return nil
 	}
 

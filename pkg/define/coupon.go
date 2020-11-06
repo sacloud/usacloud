@@ -40,8 +40,8 @@ func CouponResource() *schema.Resource {
 	}
 }
 
-func couponListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func couponListParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"usable": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,

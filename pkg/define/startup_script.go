@@ -81,7 +81,7 @@ func StartupScriptResource() *schema.Resource {
 	}
 }
 
-func startupScriptListParam() map[string]*schema.Schema {
+func startupScriptListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramScopeCond, paramTagsCond, paramClassCond)
 }
 
@@ -102,8 +102,8 @@ func startupScriptDetailExcludes() []string {
 	return []string{}
 }
 
-func startupScriptCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func startupScriptCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"script-content": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerNoop,
@@ -138,12 +138,12 @@ func startupScriptCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func startupScriptReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func startupScriptReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func startupScriptUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func startupScriptUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"script-content": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerNoop,
@@ -176,6 +176,6 @@ func startupScriptUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func startupScriptDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func startupScriptDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }

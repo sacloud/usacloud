@@ -140,7 +140,7 @@ var dnsCommandParamCategories = []schema.Category{
 	},
 }
 
-func dnsListParam() map[string]*schema.Schema {
+func dnsListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
@@ -173,8 +173,8 @@ func dnsDetailExcludes() []string {
 	return []string{}
 }
 
-func dnsCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func dnsCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerPathThrough,
@@ -190,24 +190,24 @@ func dnsCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func dnsReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func dnsReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func dnsUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func dnsUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"description": paramDescription,
 		"tags":        paramTags,
 		"icon-id":     paramIconResourceID,
 	}
 }
 
-func dnsDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func dnsDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func dnsRecordListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func dnsRecordListParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -232,8 +232,8 @@ var allowDNSTypes = []string{
 	"A", "AAAA", "ALIAS", "NS", "CNAME", "MX", "TXT", "SRV", "CAA", "PTR",
 }
 
-func dnsRecordBulkUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func dnsRecordBulkUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"file": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -256,8 +256,8 @@ func dnsRecordBulkUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func dnsRecordAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func dnsRecordAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -338,8 +338,8 @@ func dnsRecordAddParam() map[string]*schema.Schema {
 		},
 	}
 }
-func dnsRecordUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func dnsRecordUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -421,8 +421,8 @@ func dnsRecordUpdateParam() map[string]*schema.Schema {
 		},
 	}
 }
-func dnsRecordDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func dnsRecordDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,

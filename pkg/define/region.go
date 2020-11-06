@@ -48,7 +48,7 @@ func RegionResource() *schema.Resource {
 	}
 }
 
-func regionListParam() map[string]*schema.Schema {
+func regionListParam() map[string]*schema.Parameter {
 	return CommonListParam
 }
 
@@ -73,10 +73,10 @@ func regionDetailExcludes() []string {
 	return []string{}
 }
 
-func regionReadParam() map[string]*schema.Schema {
+func regionReadParam() map[string]*schema.Parameter {
 	id := getParamResourceShortID("resource ID", 3)
 	id.Hidden = true
-	return map[string]*schema.Schema{
+	return map[string]*schema.Parameter{
 		"id": id,
 	}
 }

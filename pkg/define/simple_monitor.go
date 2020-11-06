@@ -160,9 +160,9 @@ var simpleMonitorUpdateParamCategories = []schema.Category{
 
 var healthCheckCondStrings = []string{"up", "down", "unknown"}
 
-func simpleMonitorListParam() map[string]*schema.Schema {
+func simpleMonitorListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond,
-		map[string]*schema.Schema{
+		map[string]*schema.Parameter{
 			"health": {
 				Type:        schema.TypeString,
 				HandlerType: schema.HandlerFilterFunc,
@@ -239,8 +239,8 @@ func simpleMonitorDetailExcludes() []string {
 
 var allowSimpleMonitorProtocol = []string{"http", "https", "ping", "tcp", "dns", "ssh", "smtp", "pop3", "ssl-certificate"}
 
-func simpleMonitorCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func simpleMonitorCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"target": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -392,12 +392,12 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func simpleMonitorReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func simpleMonitorReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func simpleMonitorUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func simpleMonitorUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"protocol": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -534,10 +534,10 @@ func simpleMonitorUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func simpleMonitorDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func simpleMonitorDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func simpleMonitorHealthParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func simpleMonitorHealthParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }

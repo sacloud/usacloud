@@ -15,114 +15,35 @@
 package tools
 
 import (
-	"fmt"
-	"sort"
-
-	"github.com/sacloud/usacloud/tools/utils"
-
-	"github.com/sacloud/usacloud/pkg/schema"
+	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/naming"
 )
 
-// Resource コード生成時に利用するリソース定義
 type Resource struct {
-	*schema.Resource
-
-	Name                string
-	Commands            []*Command
-	CategorizedCommands []*CategorizedCommands
-}
-
-type CategorizedCommands struct {
-	*schema.Category
+	*base.Resource
 	Commands []*Command
 }
 
-// NewResource コード生成時に利用するリソース定義オブジェクトの作成
-func NewResource(name string, resource *schema.Resource) *Resource {
-	r := &Resource{
-		Resource: resource,
-		Name:     name,
+func NewResource(r *base.Resource) *Resource {
+	resource := &Resource{Resource: r}
+
+	for _, command := range r.Commands() {
+		resource.Commands = append(resource.Commands, NewCommand(resource, command))
 	}
-	var commands []*Command
-	for _, c := range r.Resource.SortedCommands() {
-		commands = append(commands, NewCommand(c.CommandKey, c.Command, c.Category, r))
+
+	return resource
+}
+
+func NewResources(resources []*base.Resource) []*Resource {
+	var results []*Resource
+	for _, r := range resources {
+		results = append(results, NewResource(r))
 	}
-	r.Commands = commands
-	r.buildCategorizedCommands()
-	return r
-}
-
-func (r *Resource) buildCategorizedCommands() {
-	m := map[string]*CategorizedCommands{}
-	for _, c := range r.Commands {
-		cat := c.Category
-		cc, ok := m[cat.Key]
-		if !ok {
-			cc = &CategorizedCommands{
-				Category: cat,
-			}
-		}
-		cc.Commands = append(cc.Commands, c)
-		m[cat.Key] = cc
-	}
-	r.CategorizedCommands = []*CategorizedCommands{}
-	for _, cat := range m {
-		r.CategorizedCommands = append(r.CategorizedCommands, cat)
-	}
-	sort.Slice(r.CategorizedCommands, func(i, j int) bool {
-		if r.CategorizedCommands[i].Order == r.CategorizedCommands[j].Order {
-			return r.CategorizedCommands[i].Key < r.CategorizedCommands[j].Key
-		}
-		return r.CategorizedCommands[i].Order < r.CategorizedCommands[j].Order
-	})
-}
-
-func (r *Resource) CLIName() string {
-	return utils.ToDashedName(r.Name)
-}
-
-func (r *Resource) AliasesLiteral() string {
-	return utils.FlattenStringList(r.Resource.Aliases)
-}
-
-func (r *Resource) Usage() string {
-	usage := r.Resource.Usage
-	if usage == "" {
-		usage = fmt.Sprintf("A manage commands of %s", r.Name)
-	}
-	return usage
-}
-
-func (r *Resource) CLIVariableFuncName() string {
-	return fmt.Sprintf("%sCmd", utils.ToCamelWithFirstLower(r.Name))
-}
-
-func (r *Resource) CLISourceFileName() string {
-	return fmt.Sprintf("zz_%s_gen.go", utils.ToSnakeCaseName(r.Name))
-}
-
-func (r *Resource) CLIResourceFinderSourceFileName() string {
-	return fmt.Sprintf("zz_%s_finder_gen.go", utils.ToSnakeCaseName(r.Name))
-}
-
-func (r *Resource) CLIUsageFileName() string {
-	return fmt.Sprintf("zz_%s_usage_gen.go", utils.ToSnakeCaseName(r.Name))
-}
-
-func (r *Resource) CLINormalizeFlagsFileName() string {
-	return fmt.Sprintf("zz_%s_normalize_flag_names_gen.go", utils.ToSnakeCaseName(r.Name))
-}
-
-func (r *Resource) ParameterSourceFileName() string {
-	return fmt.Sprintf("zz_%s_gen.go", utils.ToSnakeCaseName(r.Name))
-}
-
-func (r *Resource) CommandOrderFunc() string {
-	return fmt.Sprintf("%sCommandOrder", utils.ToCamelWithFirstLower(r.Name))
+	return results
 }
 
 func (r *Resource) PackageDirName() string {
-	n := utils.ToLowerName(r.Name)
+	n := naming.ToLower(r.Name)
 	switch n {
 	case "switch":
 		return "swytch"
@@ -131,12 +52,4 @@ func (r *Resource) PackageDirName() string {
 	default:
 		return n
 	}
-}
-
-func (r *Resource) ServiceSourceFileName() string {
-	return "zz_services_gen.go"
-}
-
-func (r *Resource) CLICommandsSourceFileName() string {
-	return "zz_cli_commands_gen.go"
 }

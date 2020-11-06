@@ -48,7 +48,7 @@ func ZoneResource() *schema.Resource {
 	}
 }
 
-func zoneListParam() map[string]*schema.Schema {
+func zoneListParam() map[string]*schema.Parameter {
 	return CommonListParam
 }
 
@@ -73,10 +73,10 @@ func zoneDetailExcludes() []string {
 	return []string{}
 }
 
-func zoneReadParam() map[string]*schema.Schema {
+func zoneReadParam() map[string]*schema.Parameter {
 	id := getParamResourceShortID("resource ID", 5)
 	id.Hidden = true
-	return map[string]*schema.Schema{
+	return map[string]*schema.Parameter{
 		"id": id,
 	}
 }

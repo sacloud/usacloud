@@ -73,7 +73,7 @@ func AutoBackupResource() *schema.Resource {
 	}
 }
 
-func autoBackupListParam() map[string]*schema.Schema {
+func autoBackupListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
@@ -117,8 +117,8 @@ func autoBackupDetailExcludes() []string {
 	return []string{}
 }
 
-func autoBackupCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func autoBackupCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -160,12 +160,12 @@ func autoBackupCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func autoBackupReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func autoBackupReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func autoBackupUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func autoBackupUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -194,6 +194,6 @@ func autoBackupUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func autoBackupDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func autoBackupDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }

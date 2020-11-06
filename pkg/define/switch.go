@@ -106,7 +106,7 @@ var switchCommandCategories = []schema.Category{
 	},
 }
 
-func switchListParam() map[string]*schema.Schema {
+func switchListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
@@ -157,8 +157,8 @@ func switchDetailExcludes() []string {
 	}
 }
 
-func switchCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func switchCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -166,12 +166,12 @@ func switchCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func switchReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func switchReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func switchUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func switchUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -179,12 +179,12 @@ func switchUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func switchDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func switchDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func switchConnectBridgeParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func switchConnectBridgeParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"bridge-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerPathThrough,
@@ -197,6 +197,6 @@ func switchConnectBridgeParam() map[string]*schema.Schema {
 	}
 }
 
-func switchDisconnectBridgeParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func switchDisconnectBridgeParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }

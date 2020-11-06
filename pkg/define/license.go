@@ -76,7 +76,7 @@ func LicenseResource() *schema.Resource {
 	}
 }
 
-func licenseListParam() map[string]*schema.Schema {
+func licenseListParam() map[string]*schema.Parameter {
 	return CommonListParam
 }
 
@@ -103,8 +103,8 @@ func licenseDetailExcludes() []string {
 	return []string{}
 }
 
-func licenseCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func licenseCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name": paramRequiredName,
 		"license-info-id": {
 			Type:            schema.TypeId,
@@ -117,16 +117,16 @@ func licenseCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func licenseReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func licenseReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func licenseUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func licenseUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name": paramName,
 	}
 }
 
-func licenseDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func licenseDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }

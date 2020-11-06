@@ -41,7 +41,7 @@ func TestCommand_ParamsHandlerType(t *testing.T) {
 	var errs []error
 
 	// parameters of valid only when CommandType is CommandList
-	params := map[string]*Schema{
+	params := map[string]*Parameter{
 		"p1": {
 			Type:        TypeStringList,
 			HandlerType: HandlerSort, // valid only when Type is CommandList
@@ -112,7 +112,7 @@ func TestCommand_Categories_Params(t *testing.T) {
 				Order:       1,
 			},
 		},
-		Params: map[string]*Schema{
+		Params: map[string]*Parameter{
 			"test": {
 				Type:        TypeInt,
 				HandlerType: HandlerNoop,

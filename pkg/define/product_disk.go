@@ -50,7 +50,7 @@ func ProductDiskResource() *schema.Resource {
 	}
 }
 
-func productDiskListParam() map[string]*schema.Schema {
+func productDiskListParam() map[string]*schema.Parameter {
 	return CommonListParam
 }
 
@@ -69,10 +69,10 @@ func productDiskDetailExcludes() []string {
 	return []string{}
 }
 
-func productDiskReadParam() map[string]*schema.Schema {
+func productDiskReadParam() map[string]*schema.Parameter {
 	id := getParamResourceShortID("resource ID", 1)
 	id.Hidden = true
-	return map[string]*schema.Schema{
+	return map[string]*schema.Parameter{
 		"id": id,
 	}
 }

@@ -19,20 +19,34 @@ type Output interface {
 }
 
 type Formatter interface {
-	IncludeFields() []string
-	ExcludeFields() []string
 	ColumnDefs() []ColumnDef
-	TableType() TableType
-	Option
 }
+
+type DefaultFormatter struct{}
+
+func (f *DefaultFormatter) IncludeFields() []string {
+	return []string{}
+}
+
+func (f *DefaultFormatter) ExcludeFields() []string {
+	return []string{}
+}
+
+func (f *DefaultFormatter) ColumnDefs() []ColumnDef {
+	return []ColumnDef{}
+}
+
+func (f *DefaultFormatter) TableType() TableType {
+	return TableSimple
+}
+
 type Option interface {
-	GetOutputType() string
-	GetColumn() []string
-	GetFormat() string
-	GetFormatFile() string
-	GetQuiet() bool
-	GetQuery() string
-	GetQueryFile() string
+	OutputTypeFlagValue() string
+	FormatFlagValue() string
+	FormatFileFlagValue() string
+	QuietFlagValue() bool
+	QueryFlagValue() string
+	QueryFileFlagValue() string
 }
 
 type TableType int //go:generate stringer -type=OutputTableType :: manual

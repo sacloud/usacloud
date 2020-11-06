@@ -323,7 +323,7 @@ var proxyLBCommandCategories = []schema.Category{
 	},
 }
 
-func proxyLBListParam() map[string]*schema.Schema {
+func proxyLBListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
@@ -408,8 +408,8 @@ func proxyLBDetailExcludes() []string {
 	return []string{}
 }
 
-func proxyLBCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"plan": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -492,12 +492,12 @@ func proxyLBCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func proxyLBReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func proxyLBReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func proxyLBUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"protocol": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -566,12 +566,12 @@ func proxyLBUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func proxyLBDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func proxyLBDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func proxyLBPlanChangeParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBPlanChangeParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"plan": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -584,12 +584,12 @@ func proxyLBPlanChangeParam() map[string]*schema.Schema {
 	}
 }
 
-func proxyLBBindPortListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func proxyLBBindPortListParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func proxyLBBindPortAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBBindPortAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"mode": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -624,8 +624,8 @@ func proxyLBBindPortAddParam() map[string]*schema.Schema {
 		},
 	}
 }
-func proxyLBBindPortUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBBindPortUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -667,8 +667,8 @@ func proxyLBBindPortUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func proxyLBBindPortDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBBindPortDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -680,8 +680,8 @@ func proxyLBBindPortDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func proxyLBResponseHeaderListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBResponseHeaderListParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"port-index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -693,8 +693,8 @@ func proxyLBResponseHeaderListParam() map[string]*schema.Schema {
 	}
 }
 
-func proxyLBResponseHeaderAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBResponseHeaderAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"port-index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -721,8 +721,8 @@ func proxyLBResponseHeaderAddParam() map[string]*schema.Schema {
 		},
 	}
 }
-func proxyLBResponseHeaderUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBResponseHeaderUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -756,8 +756,8 @@ func proxyLBResponseHeaderUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func proxyLBResponseHeaderDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBResponseHeaderDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -777,12 +777,12 @@ func proxyLBResponseHeaderDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func proxyLBACMEInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func proxyLBACMEInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func proxyLBACMESettingParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBACMESettingParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"accept-tos": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -807,16 +807,16 @@ func proxyLBACMESettingParam() map[string]*schema.Schema {
 	}
 }
 
-func proxyLBACMERenewParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func proxyLBACMERenewParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func proxyLBServerListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func proxyLBServerListParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func proxyLBServerAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBServerAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"ipaddress": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -844,8 +844,8 @@ func proxyLBServerAddParam() map[string]*schema.Schema {
 		},
 	}
 }
-func proxyLBServerUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBServerUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -879,8 +879,8 @@ func proxyLBServerUpdateParam() map[string]*schema.Schema {
 		},
 	}
 }
-func proxyLBServerDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBServerDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -892,12 +892,12 @@ func proxyLBServerDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func proxyLBCertListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func proxyLBCertListParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func proxyLBCertAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBCertAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"server-certificate": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -923,8 +923,8 @@ func proxyLBCertAddParam() map[string]*schema.Schema {
 	}
 }
 
-func proxyLBCertUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBCertUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"server-certificate": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -948,12 +948,12 @@ func proxyLBCertUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func proxyLBCertDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func proxyLBCertDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func proxyLBMonitorParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func proxyLBMonitorParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,

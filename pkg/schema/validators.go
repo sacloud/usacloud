@@ -242,7 +242,7 @@ func ValidateSakuraID() ValidateFunc {
 			s := fmt.Sprintf("%d", id)
 			strlen := utf8.RuneCountInString(s)
 			if id < 0 || strlen != idLen {
-				res = append(res, fmt.Errorf("%q: Resource ID must be a %d digits number", fieldName, idLen))
+				res = append(res, fmt.Errorf("%q: resource ID must be a %d digits number", fieldName, idLen))
 			}
 		}
 
@@ -267,7 +267,7 @@ func ValidateSakuraShortID(digit int) ValidateFunc {
 			s := fmt.Sprintf("%d", id)
 			strlen := utf8.RuneCountInString(s)
 			if id < 0 || strlen > idLen {
-				res = append(res, fmt.Errorf("%q: Resource ID must be less than %d digits", fieldName, idLen))
+				res = append(res, fmt.Errorf("%q: resource ID must be less than %d digits", fieldName, idLen))
 			}
 		}
 

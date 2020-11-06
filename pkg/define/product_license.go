@@ -50,7 +50,7 @@ func ProductLicenseResource() *schema.Resource {
 	}
 }
 
-func productLicenseListParam() map[string]*schema.Schema {
+func productLicenseListParam() map[string]*schema.Parameter {
 	return CommonListParam
 }
 
@@ -70,10 +70,10 @@ func productLicenseDetailExcludes() []string {
 	return []string{}
 }
 
-func productLicenseReadParam() map[string]*schema.Schema {
+func productLicenseReadParam() map[string]*schema.Parameter {
 	id := getParamResourceShortID("resource ID", 5)
 	id.Hidden = true
-	return map[string]*schema.Schema{
+	return map[string]*schema.Parameter{
 		"id": id,
 	}
 }

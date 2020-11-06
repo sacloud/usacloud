@@ -81,7 +81,7 @@ func IPv4Resource() *schema.Resource {
 	}
 }
 
-func ipv4ListParam() map[string]*schema.Schema {
+func ipv4ListParam() map[string]*schema.Parameter {
 	return CommonListParam
 }
 
@@ -120,8 +120,8 @@ func ipv4DetailExcludes() []string {
 	return []string{}
 }
 
-func ipv4PTRCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func ipv4PTRCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"hostname": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -133,12 +133,12 @@ func ipv4PTRCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func ipv4PTRReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func ipv4PTRReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func ipv4PTRUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func ipv4PTRUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"hostname": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -150,6 +150,6 @@ func ipv4PTRUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func ipv4PTRDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func ipv4PTRDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
