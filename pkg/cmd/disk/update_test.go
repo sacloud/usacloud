@@ -29,7 +29,6 @@ import (
 func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 	t.Run("full", func(t *testing.T) {
 		in := &UpdateParameter{
-			ExecContext:     nil,
 			OutputParameter: nil,
 			Zone:            "is1a",
 			ID:              types.ID(1),
@@ -58,7 +57,6 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 
 	t.Run("nil", func(t *testing.T) {
 		in := &UpdateParameter{
-			ExecContext:     nil,
 			OutputParameter: nil,
 			Zone:            "is1a",
 			ID:              types.ID(1),
@@ -82,7 +80,6 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 	})
 	t.Run("empty", func(t *testing.T) {
 		in := &UpdateParameter{
-			ExecContext:     nil,
 			OutputParameter: nil,
 			Zone:            "is1a",
 			ID:              types.ID(1),

@@ -20,9 +20,6 @@ import (
 )
 
 type CreateParameter struct {
-	// TODO これらはコマンドのコンテキストでパラメーターに含めないべき？要検討
-	*base.ExecContext `cli:"-" mapconv:"-"`
-
 	Zone string `cli:"-" validate:"required"`
 
 	Name            string     `cli:",category=disk"`
@@ -38,7 +35,8 @@ type CreateParameter struct {
 	DistantFrom     []types.ID `cli:",category=disk"`
 	OSType          string     `cli:",category=disk,options=os_type" mapconv:",filters=os_type"`
 
-	*base.OutputParameter `cli:",squash" mapconv:"-"`
+	*base.ConfirmParameter `cli:",squash" mapconv:"-"`
+	*base.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 func NewCreateParameter() *CreateParameter {

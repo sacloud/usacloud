@@ -24,12 +24,13 @@ import (
 	"github.com/spf13/pflag"
 )
 
-func (p *UpdateParameter) BuildFlags(fs *pflag.FlagSet) {
+func (p *UpdateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.Name, "name", "", *p.Name, "")
 	fs.StringVarP(p.Description, "description", "", *p.Description, "")
 	fs.StringSliceVarP(p.Tags, "tags", "", *p.Tags, "")
 	fs.VarP(base.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
-	fs.StringVarP(p.Connection, "connection", "", *p.Connection, " options: [virtio/ide]")
+	fs.StringVarP(p.Connection, "connection", "", *p.Connection, "options: [virtio/ide]")
+	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
@@ -49,7 +50,7 @@ func (p *UpdateParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 	return pflag.NormalizedName(name)
 }
 
-func (p *UpdateParameter) CategorizedFlagSets(cmd *cobra.Command) []*base.FlagSet {
+func (p *UpdateParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*base.FlagSet
 	{
 		var fs *pflag.FlagSet
@@ -74,6 +75,15 @@ func (p *UpdateParameter) CategorizedFlagSets(cmd *cobra.Command) []*base.FlagSe
 	}
 	{
 		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
+		sets = append(sets, &base.FlagSet{
+			Title: "Input options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
@@ -87,7 +97,12 @@ func (p *UpdateParameter) CategorizedFlagSets(cmd *cobra.Command) []*base.FlagSe
 		})
 	}
 
-	return sets
+	base.BuildFlagsUsage(cmd, sets)
+}
+
+func (p *UpdateParameter) SetupCobraCommandFlags(cmd *cobra.Command) {
+	p.buildFlags(cmd.Flags())
+	p.buildFlagsUsage(cmd)
 }
 
 func (p *UpdateParameter) ServiceRequest() (*service.UpdateRequest, error) {

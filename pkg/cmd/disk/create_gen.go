@@ -24,19 +24,20 @@ import (
 	"github.com/spf13/pflag"
 )
 
-func (p *CreateParameter) BuildFlags(fs *pflag.FlagSet) {
+func (p *CreateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Name, "name", "", p.Name, "")
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(base.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.StringVarP(&p.DiskPlan, "disk-plan", "", p.DiskPlan, " options: [ssd/hdd]")
-	fs.StringVarP(&p.Connection, "connection", "", p.Connection, " options: [virtio/ide]")
+	fs.StringVarP(&p.DiskPlan, "disk-plan", "", p.DiskPlan, "options: [ssd/hdd]")
+	fs.StringVarP(&p.Connection, "connection", "", p.Connection, "options: [virtio/ide]")
 	fs.VarP(base.NewIDFlag(&p.SourceDiskID, &p.SourceDiskID), "source-disk-id", "", "")
 	fs.VarP(base.NewIDFlag(&p.SourceArchiveID, &p.SourceArchiveID), "source-archive-id", "", "")
 	fs.VarP(base.NewIDFlag(&p.ServerID, &p.ServerID), "server-id", "", "")
 	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "")
 	fs.VarP(base.NewIDSliceFlag(&p.DistantFrom, &p.DistantFrom), "distant-from", "", "")
-	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, " options: [centos/centos8/centos7/centos6/ubuntu/ubuntu2004/ubuntu1804/ubuntu1604/debian/debian10/debian9/coreos/rancheros/k3os/kusanagi/freebsd/windows2016/windows2016-rds/windows2016-rds-office/windows2016-sql-web/windows2016-sql-standard/windows2016-sql-standard-all/windows2016-sql2017-standard/windows2016-sql2017-enterprise/windows2016-sql2017-standard-all/windows2019/windows2019-rds/windows2019-rds-office2019/windows2019-sql2017-web/windows2019-sql2019-web/windows2019-sql2017-standard/windows2019-sql2019-standard/windows2019-sql2017-enterprise/windows2019-sql2019-enterprise/windows2019-sql2017-standard-all/windows2019-sql2019-standard-all]")
+	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [centos/centos8/centos7/centos6/ubuntu/ubuntu2004/ubuntu1804/ubuntu1604/debian/debian10/debian9/coreos/rancheros/k3os/kusanagi/freebsd/windows2016/windows2016-rds/windows2016-rds-office/windows2016-sql-web/windows2016-sql-standard/windows2016-sql-standard-all/windows2016-sql2017-standard/windows2016-sql2017-enterprise/windows2016-sql2017-standard-all/windows2019/windows2019-rds/windows2019-rds-office2019/windows2019-sql2017-web/windows2019-sql2019-web/windows2019-sql2017-standard/windows2019-sql2019-standard/windows2019-sql2017-enterprise/windows2019-sql2019-enterprise/windows2019-sql2017-standard-all/windows2019-sql2019-standard-all]")
+	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
@@ -56,7 +57,7 @@ func (p *CreateParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 	return pflag.NormalizedName(name)
 }
 
-func (p *CreateParameter) CategorizedFlagSets(cmd *cobra.Command) []*base.FlagSet {
+func (p *CreateParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*base.FlagSet
 	{
 		var fs *pflag.FlagSet
@@ -80,6 +81,15 @@ func (p *CreateParameter) CategorizedFlagSets(cmd *cobra.Command) []*base.FlagSe
 	}
 	{
 		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
+		sets = append(sets, &base.FlagSet{
+			Title: "Input options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
@@ -93,7 +103,12 @@ func (p *CreateParameter) CategorizedFlagSets(cmd *cobra.Command) []*base.FlagSe
 		})
 	}
 
-	return sets
+	base.BuildFlagsUsage(cmd, sets)
+}
+
+func (p *CreateParameter) SetupCobraCommandFlags(cmd *cobra.Command) {
+	p.buildFlags(cmd.Flags())
+	p.buildFlagsUsage(cmd)
 }
 
 func (p *CreateParameter) ServiceRequest() (*service.CreateRequest, error) {

@@ -20,9 +20,6 @@ import (
 )
 
 type UpdateParameter struct {
-	// TODO これらはコマンドのコンテキストでパラメーターに含めないべき？要検討
-	*base.ExecContext `cli:"-" mapconv:"-"`
-
 	Zone string   `cli:"-" validate:"required"`
 	ID   types.ID `cli:"-" validate:"required"`
 
@@ -32,7 +29,8 @@ type UpdateParameter struct {
 	IconID      *types.ID `cli:",category=disk"`
 	Connection  *string   `cli:",category=disk,options=disk_connection"`
 
-	*base.OutputParameter `cli:",squash" mapconv:"-"`
+	*base.ConfirmParameter `cli:",squash" mapconv:"-"`
+	*base.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 func NewUpdateParameter() *UpdateParameter {

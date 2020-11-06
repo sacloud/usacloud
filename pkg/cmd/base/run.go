@@ -14,18 +14,22 @@
 
 package base
 
-import "github.com/sacloud/libsacloud/v2/sacloud/types"
+import "github.com/spf13/cobra"
 
-// Input 入力値を保持/参照するためのインターフェース
-type Input interface {
-	Changed(name string) bool
-	Bool(name string) (bool, error)
-	String(name string) (string, error)
-	StringSlice(name string) ([]string, error)
-	Int(name string) (int, error)
-	IntSlice(name string) ([]int, error)
-	Int64(name string) (int64, error)
-	Int64Slice(name string) ([]int64, error)
-	ID(name string) (types.ID, error)
-	IDSlice(name string) ([]types.ID, error)
+func LookupCmd(cmd *cobra.Command, name string) *cobra.Command {
+	for _, c := range cmd.Commands() {
+		if c.Name() == name {
+			return c
+		}
+	}
+	return nil
+}
+
+func RunDefaultCmd(cmd *cobra.Command, args []string, commandName string) error {
+	defaultCmd := LookupCmd(cmd, commandName)
+	if defaultCmd == nil {
+		cmd.HelpFunc()(cmd, args)
+		return nil
+	}
+	return defaultCmd.RunE(defaultCmd, args)
 }

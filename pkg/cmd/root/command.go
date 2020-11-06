@@ -12,12 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package base
+package root
 
-import "github.com/sacloud/usacloud/pkg/config"
+import (
+	"github.com/sacloud/usacloud/pkg/config"
+	"github.com/spf13/cobra"
+)
 
-// ExecContext コマンド実行時のコンテキストパラメータ
-type ExecContext struct {
-	Config *config.Config `cli:"-"`
-	Input  Input          `cli:"-"`
+// Command represents the base command when called without any sub-commands
+var Command = &cobra.Command{
+	Use:   "usacloud [global options] <command> <sub-command> [options] [arguments]",
+	Short: "Usacloud is CLI for manage to resources on the SAKURA Cloud",
+	Long:  `CLI to manage to resources on the SAKURA Cloud`,
+}
+
+func init() {
+	Command.Flags().SortFlags = false
+	Command.PersistentFlags().SortFlags = false
+
+	config.InitConfig(Command.PersistentFlags())
 }

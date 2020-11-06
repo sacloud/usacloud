@@ -25,7 +25,6 @@ import (
 
 func TestList_ConvertToServiceRequest(t *testing.T) {
 	in := &ListParameter{
-		ExecContext:     nil,
 		OutputParameter: nil,
 		Zone:            "is1a",
 		Names:           []string{"name1", "name2"},
