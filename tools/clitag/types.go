@@ -14,7 +14,11 @@
 
 package clitag
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+	"strings"
+)
 
 // Field reflect.StructField + Tag
 type StructField struct {
@@ -43,4 +47,46 @@ type Tag struct {
 	Category    string
 	Order       int
 	Options     []string // 設定可能な値のリスト
+}
+
+// LongDescription DescriptionにAliasesとOptionsを連結して返す
+func (t Tag) LongDescription() string {
+	var tokens []string
+
+	if t.Description != "" {
+		tokens = append(tokens, t.Description)
+	}
+
+	options := t.OptionsString()
+	if options != "" {
+		tokens = append(tokens, options)
+	}
+
+	aliases := t.AliasesString()
+	if aliases != "" {
+		tokens = append(tokens, aliases)
+	}
+
+	return strings.Join(tokens, " ")
+}
+
+func (t Tag) AliasesString() string {
+	if len(t.Aliases) == 0 {
+		return ""
+	}
+
+	var aliases []string
+	for _, a := range t.Aliases {
+		aliases = append(aliases, "--"+a)
+	}
+
+	return fmt.Sprintf("(aliases: %s)", strings.Join(aliases, ", "))
+}
+
+func (t Tag) OptionsString() string {
+	if len(t.Options) == 0 {
+		return ""
+	}
+
+	return fmt.Sprintf("options: [%s]", strings.Join(t.Options, "/"))
 }

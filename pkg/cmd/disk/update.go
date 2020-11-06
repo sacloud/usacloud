@@ -26,11 +26,11 @@ type UpdateParameter struct {
 	Zone string   `cli:"-" validate:"required"`
 	ID   types.ID `cli:"-" validate:"required"`
 
-	Name        *string   `cli:",category=common" validate:"omitempty,min=1"`
-	Description *string   `cli:",category=common" validate:"omitempty,min=1,max=512"`
-	Tags        *[]string `cli:",category=common"`
-	IconID      *types.ID `cli:",category=common"`
-	Connection  *string   `cli:",category=common"`
+	Name        *string   `cli:",category=disk" validate:"omitempty,min=1"`
+	Description *string   `cli:",category=disk" validate:"omitempty,min=1,max=512"`
+	Tags        *[]string `cli:",category=diks"`
+	IconID      *types.ID `cli:",category=disk"`
+	Connection  *string   `cli:",category=disk,options=disk_connection"`
 
 	*base.OutputParameter `cli:",squash" mapconv:"-"`
 }
