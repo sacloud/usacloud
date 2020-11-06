@@ -42,4 +42,5 @@ type Tag struct {
 	Ignore      bool
 	Category    string
 	Order       int
+	Options     []string // 設定可能な値のリスト
 }
