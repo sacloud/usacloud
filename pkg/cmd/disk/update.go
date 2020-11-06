@@ -29,7 +29,8 @@ type UpdateParameter struct {
 	IconID      *types.ID `cli:",category=disk"`
 	Connection  *string   `cli:",category=disk,options=disk_connection"`
 
-	*base.OutputParameter `cli:",squash" mapconv:"-"`
+	*base.ConfirmParameter `cli:",squash" mapconv:"-"`
+	*base.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 func NewUpdateParameter() *UpdateParameter {

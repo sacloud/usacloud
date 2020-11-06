@@ -134,5 +134,9 @@ func (r *Resource) PackageDirName() string {
 }
 
 func (r *Resource) ServiceSourceFileName() string {
-	return "services_gen.go"
+	return "zz_services_gen.go"
+}
+
+func (r *Resource) CLICommandsSourceFileName() string {
+	return "zz_cli_commands_gen.go"
 }

@@ -24,7 +24,7 @@ import (
 	"github.com/spf13/pflag"
 )
 
-func (p *ListParameter) BuildFlags(fs *pflag.FlagSet) {
+func (p *ListParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.Names, "names", "", p.Names, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.IntVarP(&p.Count, "count", "", p.Count, "(aliases: --max, --limit)")
@@ -54,7 +54,7 @@ func (p *ListParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.N
 	return pflag.NormalizedName(name)
 }
 
-func (p *ListParameter) CategorizedFlagSets(cmd *cobra.Command) []*base.FlagSet {
+func (p *ListParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*base.FlagSet
 	{
 		var fs *pflag.FlagSet
@@ -83,7 +83,12 @@ func (p *ListParameter) CategorizedFlagSets(cmd *cobra.Command) []*base.FlagSet 
 		})
 	}
 
-	return sets
+	base.BuildFlagsUsage(cmd, sets)
+}
+
+func (p *ListParameter) SetupCobraCommandFlags(cmd *cobra.Command) {
+	p.buildFlags(cmd.Flags())
+	p.buildFlagsUsage(cmd)
 }
 
 func (p *ListParameter) ServiceRequest() (*service.FindRequest, error) {
