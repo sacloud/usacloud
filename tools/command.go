@@ -352,7 +352,7 @@ func (c *Command) HasAliases() bool {
 }
 
 func (c *Command) Fields() []clitag.StructField {
-	fields, err := clitag.Parse(c.Command.Parameters)
+	fields, err := clitagParser.Parse(c.Command.Parameters)
 	if err != nil {
 		panic(err)
 	}
@@ -386,10 +386,7 @@ func (c *Command) cliFlagDefinitionStatement(parameterVariableName string, field
 	name := field.FlagName
 	shorthands := field.Shorthand
 	//value := p.DefaultValueOnSource()
-	usage := field.Description
-	if len(field.Aliases) > 0 {
-		usage = fmt.Sprintf("%s (aliases: %s)", usage, strings.Join(c.Aliases, ", "))
-	}
+	usage := field.LongDescription()
 
 	statement := ""
 	fieldType := dereferencePtrType(field.Type)

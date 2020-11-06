@@ -29,10 +29,10 @@ func (p *UpdateParameter) BuildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.Description, "description", "", *p.Description, "")
 	fs.StringSliceVarP(p.Tags, "tags", "", *p.Tags, "")
 	fs.VarP(base.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
-	fs.StringVarP(p.Connection, "connection", "", *p.Connection, "")
-	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: )")
+	fs.StringVarP(p.Connection, "connection", "", *p.Connection, " options: [virtio/ide]")
+	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
-	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: )")
+	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
 	fs.StringVarP(&p.FormatFile, "format-file", "", p.FormatFile, "Output format in Go templates(from file)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
 	fs.StringVarP(&p.QueryFile, "query-file", "", p.QueryFile, "JMESPath query(from file)")
@@ -53,14 +53,22 @@ func (p *UpdateParameter) CategorizedFlagSets(cmd *cobra.Command) []*base.FlagSe
 	var sets []*base.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("common", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("diks", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
+		sets = append(sets, &base.FlagSet{
+			Title: "Diks options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("disk", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("description"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("connection"))
 		sets = append(sets, &base.FlagSet{
-			Title: "Common options",
+			Title: "Disk options",
 			Flags: fs,
 		})
 	}

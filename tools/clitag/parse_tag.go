@@ -27,6 +27,7 @@ const (
 	squashKey    = "squash"
 	categoryKey  = "category"
 	orderKey     = "order"
+	optionsKey   = "options"
 )
 
 func (p *Parser) parseTag(t string) (Tag, error) {
@@ -86,6 +87,16 @@ func (p *Parser) parseTag(t string) (Tag, error) {
 					return tag, fmt.Errorf("got invalid tag value: key 'order' must have valid number: %q", token)
 				}
 				tag.Order = int(order)
+			case optionsKey:
+				options := strings.Split(val, " ")
+				for _, o := range options {
+					if registered, ok := p.Config.OptionsMap[o]; ok {
+						tag.Options = append(tag.Options, registered...)
+						continue
+					}
+					// 登録済みでなければキーをそのまま登録
+					tag.Options = append(tag.Options, o)
+				}
 			default:
 				return tag, fmt.Errorf("got invalid tag key: %q", token)
 			}

@@ -27,7 +27,8 @@ const DefaultTagName = "cli"
 
 // ParserConfig パーサ設定
 type ParserConfig struct {
-	TagName string
+	TagName    string
+	OptionsMap map[string][]string // 指定可能な値(オプション)参照用のマップ
 }
 
 // Parser ftagのパーサー

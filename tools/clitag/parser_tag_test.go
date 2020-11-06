@@ -53,6 +53,18 @@ func TestParser_parseTag(t *testing.T) {
 			},
 		},
 		{
+			in: `,options=from literal`,
+			expect: Tag{
+				Options: []string{"from", "literal"},
+			},
+		},
+		{
+			in: `,options=fromKey`,
+			expect: Tag{
+				Options: []string{"example", "options"},
+			},
+		},
+		{
 			in: `,short=e,desc=desc,squash,category=foo,order=10`,
 			expect: Tag{
 				Shorthand:   "e",
@@ -77,7 +89,14 @@ func TestParser_parseTag(t *testing.T) {
 	}
 
 	for _, tc := range cases {
-		parser := &Parser{}
+		parser := &Parser{
+			Config: &ParserConfig{
+				TagName: DefaultTagName,
+				OptionsMap: map[string][]string{
+					"fromKey": {"example", "options"},
+				},
+			},
+		}
 		tag, err := parser.parseTag(tc.in)
 		if tc.errString != "" {
 			require.EqualError(t, err, tc.errString, tc.in)
