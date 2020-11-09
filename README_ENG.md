@@ -19,12 +19,6 @@
 
 # Usage
 
-## Try `usacloud` in sandbox
-
-You can try `usacloud` by using your web browser.
-
-<a href="https://sandbox.usacloud.jp" target="_blank">https://sandbox.usacloud.jp</a>
-
 ## Install on local machine
 
 ### macOS(`brew`) / Linux(`apt` or `yum` or `brew`) / bash on Windows(Ubuntu)
