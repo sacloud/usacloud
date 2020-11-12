@@ -51,7 +51,9 @@ type createParameter struct {
 
 func newCreateParameter() *createParameter {
 	return &createParameter{
-		// TODO デフォルト値はここで設定する
+		DiskPlan:   "ssd",
+		Connection: "virtio",
+		SizeGB:     20,
 	}
 }
 
