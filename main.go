@@ -17,5 +17,5 @@ package main
 import "github.com/sacloud/usacloud/pkg/cmd"
 
 func main() {
-	cmd.Execute()
+	cmd.Run()
 }

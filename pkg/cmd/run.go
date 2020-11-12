@@ -20,7 +20,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/root"
 )
 
-func Execute() {
+func Run() {
 	initCommands()
 	if err := root.Command.Execute(); err != nil {
 		os.Exit(1)
