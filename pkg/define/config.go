@@ -83,8 +83,8 @@ func ConfigResource() *schema.Resource {
 	}
 }
 
-func configEditParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func configEditParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"token": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,

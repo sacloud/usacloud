@@ -87,7 +87,7 @@ func SSHKeyResource() *schema.Resource {
 	}
 }
 
-func sshKeyListParam() map[string]*schema.Schema {
+func sshKeyListParam() map[string]*schema.Parameter {
 	return CommonListParam
 }
 
@@ -112,8 +112,8 @@ func sshKeyDetailExcludes() []string {
 	}
 }
 
-func sshKeyCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func sshKeyCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"public-key-content": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerNoop,
@@ -135,8 +135,8 @@ func sshKeyCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func sshKeyGenerateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func sshKeyGenerateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"pass-phrase": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -158,17 +158,17 @@ func sshKeyGenerateParam() map[string]*schema.Schema {
 	}
 }
 
-func sshKeyReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func sshKeyReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func sshKeyUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func sshKeyUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramName,
 		"description": paramDescription,
 	}
 }
 
-func sshKeyDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func sshKeyDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }

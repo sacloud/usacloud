@@ -197,7 +197,7 @@ var internetCommandCategories = []schema.Category{
 	},
 }
 
-func internetListParam() map[string]*schema.Schema {
+func internetListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
@@ -275,8 +275,8 @@ func internetDetailExcludes() []string {
 	}
 }
 
-func internetCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func internetCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"nw-masklen": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
@@ -307,12 +307,12 @@ func internetCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func internetReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func internetReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func internetUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func internetUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"band-width": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
@@ -329,12 +329,12 @@ func internetUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func internetDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func internetDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func internetUpdateBandWidthParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func internetUpdateBandWidthParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"band-width": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
@@ -349,12 +349,12 @@ func internetUpdateBandWidthParam() map[string]*schema.Schema {
 	}
 }
 
-func internetSubnetInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func internetSubnetInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func internetSubnetAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func internetSubnetAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"nw-masklen": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -378,8 +378,8 @@ func internetSubnetAddParam() map[string]*schema.Schema {
 	}
 }
 
-func internetSubnetUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func internetSubnetUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"subnet-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -400,8 +400,8 @@ func internetSubnetUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func internetSubnetDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func internetSubnetDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"subnet-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -413,12 +413,12 @@ func internetSubnetDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func internetIPv6EnableParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func internetIPv6EnableParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func internetMonitorParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func internetMonitorParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,

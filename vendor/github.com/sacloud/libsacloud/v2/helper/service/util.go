@@ -19,7 +19,7 @@ import (
 	"time"
 
 	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
-
+	"github.com/sacloud/libsacloud/v2/pkg/size"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 )
 
@@ -47,6 +47,21 @@ func MonitorCondition(start, end time.Time) (*sacloud.MonitorCondition, error) {
 }
 
 func RequestConvertTo(source interface{}, dest interface{}) error {
-	decoder := &mapconv.Decoder{Config: &mapconv.DecoderConfig{TagName: "request"}}
+	decoder := &mapconv.Decoder{
+		Config: &mapconv.DecoderConfig{
+			TagName: "request",
+			FilterFuncs: map[string]mapconv.FilterFunc{
+				"gb_to_mb": gbToMb,
+			},
+		},
+	}
 	return decoder.ConvertTo(source, dest)
+}
+
+func gbToMb(v interface{}) (interface{}, error) {
+	s, ok := v.(int)
+	if !ok {
+		return nil, fmt.Errorf("invalid size value: %v", v)
+	}
+	return size.GiBToMiB(s), nil
 }

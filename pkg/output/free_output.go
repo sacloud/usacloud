@@ -39,8 +39,8 @@ func NewFreeOutput(out io.Writer, err io.Writer, option Option) Output {
 	return &freeOutput{
 		Out:        out,
 		Err:        err,
-		Format:     option.GetFormat(),
-		FormatFile: option.GetFormatFile(),
+		Format:     option.FormatFlagValue(),
+		FormatFile: option.FormatFileFlagValue(),
 	}
 }
 
@@ -54,7 +54,6 @@ func (o *freeOutput) Print(target interface{}) error {
 	}
 
 	if util.IsEmpty(targets) {
-		fmt.Fprintf(o.Err, "no results\n") // nolint
 		return nil
 	}
 

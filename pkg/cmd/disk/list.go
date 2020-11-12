@@ -14,20 +14,39 @@
 
 package disk
 
-import "github.com/sacloud/usacloud/pkg/cmd/base"
+import (
+	"github.com/sacloud/usacloud/pkg/cmd/base"
+)
 
-type ListParameter struct {
-	Zone string `cli:"-" validate:"required"`
+var listCommand = &base.Command{
+	Name:               "list",
+	Aliases:            []string{"ls", "find", "select"},
+	Category:           "basics",
+	Order:              10,
+	ServiceFuncAltName: "Find",
+	NoConfirm:          true,
 
-	Names               []string `cli:",category=filter"`
-	Tags                []string `cli:",category=filter"`
-	*base.FindParameter `cli:",squash" mapconv:",squash"`
-
-	*base.OutputParameter `cli:",squash" mapconv:"-"`
+	ParameterInitializer: func() interface{} {
+		return newListParameter()
+	},
 }
 
-func NewListParameter() *ListParameter {
-	return &ListParameter{
+type listParameter struct {
+	base.ZoneParameter `cli:",squash" mapconv:",squash"`
+
+	Names              []string `cli:",category=filter"`
+	Tags               []string `cli:",category=filter"`
+	base.FindParameter `cli:",squash" mapconv:",squash"`
+
+	base.OutputParameter `cli:",squash" mapconv:"-"`
+}
+
+func newListParameter() *listParameter {
+	return &listParameter{
 		// TODO デフォルト値はここで設定する
 	}
+}
+
+func init() {
+	Resource.AddCommand(listCommand)
 }

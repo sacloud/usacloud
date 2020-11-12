@@ -35,14 +35,11 @@ type tableOutput struct {
 	TableType     TableType
 }
 
-func NewTableOutput(out io.Writer, err io.Writer, formater Formatter) Output {
+func NewTableOutput(out io.Writer, err io.Writer, columnDefs []ColumnDef) Output {
 	return &tableOutput{
-		Out:           out,
-		Err:           err,
-		IncludeFields: formater.IncludeFields(),
-		ExcludeFields: formater.ExcludeFields(),
-		ColumnDefs:    formater.ColumnDefs(),
-		TableType:     formater.TableType(),
+		Out:        out,
+		Err:        err,
+		ColumnDefs: columnDefs,
 	}
 }
 
@@ -56,13 +53,7 @@ func (o *tableOutput) Print(target interface{}) error {
 	}
 
 	if util.IsEmpty(targets) {
-		fmt.Fprintln(o.Err, "no results")
 		return nil
-	}
-
-	table, err := o.getTableWriter()
-	if err != nil {
-		return fmt.Errorf("TableOutput:Print: %s", err)
 	}
 
 	// targets -> byte[] -> []interface{}
@@ -76,6 +67,7 @@ func (o *tableOutput) Print(target interface{}) error {
 		return fmt.Errorf("TableOutput:Print: create simplejson is failed: %s", err)
 	}
 
+	table := newSimpleTableWriter(o.Out, o.ColumnDefs)
 	for i := 0; i < sliceLen(targets); i++ {
 		// interface{} -> map[string]interface{}
 		v := j.GetIndex(i)
@@ -96,15 +88,4 @@ func (o *tableOutput) Print(target interface{}) error {
 
 	table.render()
 	return nil
-}
-
-func (o *tableOutput) getTableWriter() (tableWriter, error) {
-	switch o.TableType {
-	case TableSimple:
-		return newSimpleTableWriter(o.Out, o.ColumnDefs), nil
-	case TableDetail:
-		return newDetailTableWriter(o.Out, o.IncludeFields, o.ExcludeFields), nil
-	default:
-		return nil, fmt.Errorf("unknown OutputTableType(%v)", o.TableType)
-	}
 }

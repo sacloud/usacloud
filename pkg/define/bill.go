@@ -50,8 +50,8 @@ func BillResource() *schema.Resource {
 	}
 }
 
-func billListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func billListParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"year": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -92,10 +92,10 @@ func billListColumns() []output.ColumnDef {
 	}
 }
 
-func billReadParam() map[string]*schema.Schema {
+func billReadParam() map[string]*schema.Parameter {
 	id := getParamResourceShortID("bill ID", 8)
 	id.Required = false
-	return map[string]*schema.Schema{
+	return map[string]*schema.Parameter{
 		"bill-id": id,
 		"no-header": {
 			Type:        schema.TypeBool,

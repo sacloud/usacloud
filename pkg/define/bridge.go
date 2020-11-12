@@ -74,7 +74,7 @@ func BridgeResource() *schema.Resource {
 	}
 }
 
-func bridgeListParam() map[string]*schema.Schema {
+func bridgeListParam() map[string]*schema.Parameter {
 	return CommonListParam
 }
 
@@ -101,24 +101,24 @@ func bridgeDetailExcludes() []string {
 	}
 }
 
-func bridgeCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func bridgeCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramRequiredName,
 		"description": paramDescription,
 	}
 }
 
-func bridgeReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func bridgeReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func bridgeUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func bridgeUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramName,
 		"description": paramDescription,
 	}
 }
 
-func bridgeDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func bridgeDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }

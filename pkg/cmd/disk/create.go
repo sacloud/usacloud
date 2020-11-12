@@ -19,8 +19,18 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/base"
 )
 
-type CreateParameter struct {
-	Zone string `cli:"-" validate:"required"`
+var createCommand = &base.Command{
+	Name:     "create",
+	Category: "basics",
+	Order:    20,
+
+	ParameterInitializer: func() interface{} {
+		return newCreateParameter()
+	},
+}
+
+type createParameter struct {
+	base.ZoneParameter `cli:",squash" mapconv:",squash"`
 
 	Name            string     `cli:",category=disk"`
 	Description     string     `cli:",category=disk"`
@@ -35,12 +45,16 @@ type CreateParameter struct {
 	DistantFrom     []types.ID `cli:",category=disk"`
 	OSType          string     `cli:",category=disk,options=os_type" mapconv:",filters=os_type"`
 
-	*base.ConfirmParameter `cli:",squash" mapconv:"-"`
-	*base.OutputParameter  `cli:",squash" mapconv:"-"`
+	base.ConfirmParameter `cli:",squash" mapconv:"-"`
+	base.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
-func NewCreateParameter() *CreateParameter {
-	return &CreateParameter{
+func newCreateParameter() *createParameter {
+	return &createParameter{
 		// TODO デフォルト値はここで設定する
 	}
+}
+
+func init() {
+	Resource.AddCommand(createCommand)
 }

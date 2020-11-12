@@ -125,13 +125,13 @@ func ValidateBetween(fieldName string, object interface{}, min int, max int) []e
 }
 
 func ValidateOutputOption(o output.Option, defaultOutputType string) []error {
-	outputType := o.GetOutputType()
-	columns := o.GetColumn()
-	format := o.GetFormat()
-	formatFile := o.GetFormatFile()
-	quiet := o.GetQuiet()
-	query := o.GetQuery()
-	queryFile := o.GetQueryFile()
+	outputType := o.OutputTypeFlagValue()
+	//columns := o.GetColumn()
+	format := o.FormatFlagValue()
+	formatFile := o.FormatFileFlagValue()
+	quiet := o.QuietFlagValue()
+	query := o.QueryFlagValue()
+	queryFile := o.QueryFileFlagValue()
 
 	// format and format-file
 	if format != "" && formatFile != "" {
@@ -179,11 +179,6 @@ func ValidateOutputOption(o output.Option, defaultOutputType string) []error {
 		if outputType != defaultOutputType {
 			return []error{fmt.Errorf("%q: can't set with %s", "--quiet", outputType)}
 		}
-	}
-
-	// columns only allow when outputType is tsv/csv
-	if outputType != "tsv" && outputType != "csv" && len(columns) > 0 {
-		return []error{fmt.Errorf("%q: can't set when --output-type is csv/tsv", "--column")}
 	}
 
 	// query-file is exists?

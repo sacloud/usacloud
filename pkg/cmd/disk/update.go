@@ -19,22 +19,36 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/base"
 )
 
-type UpdateParameter struct {
-	Zone string   `cli:"-" validate:"required"`
-	ID   types.ID `cli:"-" validate:"required"`
+var updateCommand = &base.Command{
+	Name:     "update",
+	Category: "basics",
+	Order:    40,
+
+	ParameterInitializer: func() interface{} {
+		return newUpdateParameter()
+	},
+}
+
+type updateParameter struct {
+	base.ZoneParameter `cli:",squash" mapconv:",squash"`
+	base.IDParameter   `cli:",squash" mapconv:",squash"`
 
 	Name        *string   `cli:",category=disk" validate:"omitempty,min=1"`
 	Description *string   `cli:",category=disk" validate:"omitempty,min=1,max=512"`
-	Tags        *[]string `cli:",category=diks"`
+	Tags        *[]string `cli:",category=disk"`
 	IconID      *types.ID `cli:",category=disk"`
 	Connection  *string   `cli:",category=disk,options=disk_connection"`
 
-	*base.ConfirmParameter `cli:",squash" mapconv:"-"`
-	*base.OutputParameter  `cli:",squash" mapconv:"-"`
+	base.ConfirmParameter `cli:",squash" mapconv:"-"`
+	base.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
-func NewUpdateParameter() *UpdateParameter {
-	return &UpdateParameter{
+func newUpdateParameter() *updateParameter {
+	return &updateParameter{
 		// TODO デフォルト値はここで設定する
 	}
+}
+
+func init() {
+	Resource.AddCommand(updateCommand)
 }

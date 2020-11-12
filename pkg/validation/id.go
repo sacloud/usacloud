@@ -36,12 +36,12 @@ func ValidID(fieldName string, object interface{}) []error {
 	case string:
 		id = types.StringID(v)
 	default:
-		res = append(res, fmt.Errorf("%q: Resource ID must be valid format", fieldName))
+		res = append(res, fmt.Errorf("%q: resource ID must be valid format", fieldName))
 		return res
 	}
 
 	if id.IsEmpty() {
-		res = append(res, fmt.Errorf("%q: Resource ID must be valid format", fieldName))
+		res = append(res, fmt.Errorf("%q: resource ID must be valid format", fieldName))
 	}
 
 	return res

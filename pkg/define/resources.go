@@ -13,17 +13,18 @@
 // limitations under the License.
 
 // Package define .
-//go:generate go run github.com/sacloud/usacloud/tools/gen-command-params/
-//go:generate go run github.com/sacloud/usacloud/tools/gen-command-funcs/
-//go:generate go run github.com/sacloud/usacloud/tools/gen-cli-commands/
-//go:generate go run github.com/sacloud/usacloud/tools/gen-cli-resource-finder/
-//go:generate go run github.com/sacloud/usacloud/tools/gen-cli-usage/
-//go:generate go run github.com/sacloud/usacloud/tools/gen-cli-normalize-flag-name/
-//go:generate go run github.com/sacloud/usacloud/tools/gen-cli-root-command/
-//go:generate go run github.com/sacloud/usacloud/tools/gen-commands-v1/ # TODO 実験的実装
+//~go:generate go run github.com/sacloud/usacloud/tools/gen-command-params/
+//~go:generate go run github.com/sacloud/usacloud/tools/gen-command-funcs/
+//~go:generate go run github.com/sacloud/usacloud/tools/gen-cli-commands/
+//~go:generate go run github.com/sacloud/usacloud/tools/gen-cli-resource-finder/
+//~go:generate go run github.com/sacloud/usacloud/tools/gen-cli-usage/
+//~go:generate go run github.com/sacloud/usacloud/tools/gen-cli-normalize-flag-name/
+//~go:generate go run github.com/sacloud/usacloud/tools/gen-cli-root-command/
 package define
 
-import "github.com/sacloud/usacloud/pkg/schema"
+import (
+	"github.com/sacloud/usacloud/pkg/schema"
+)
 
 var Resources = map[string]*schema.Resource{
 	"AuthStatus": AuthStatusResource(),

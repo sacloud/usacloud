@@ -38,6 +38,6 @@ func SelfResource() *schema.Resource {
 	}
 }
 
-func selfInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func selfInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }

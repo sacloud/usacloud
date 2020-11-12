@@ -19,7 +19,6 @@ import (
 
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
-	"github.com/sacloud/usacloud/pkg/cmd/disk"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -27,10 +26,10 @@ import (
 func DiskResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find", "select"},
-			Parameters:         &disk.ListParameter{}, // TODO v1向け試験実装
-			ServiceFuncAltName: "Find",                // TODO v1向け試験実装
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find", "select"},
+			//Parameters:         &disk.ListParameter{}, // TODO v1向け試験実装
+			ServiceFuncAltName: "Find", // TODO v1向け試験実装
 			Params:             diskListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: diskListColumns(),
@@ -38,8 +37,8 @@ func DiskResource() *schema.Resource {
 			Order:              10,
 		},
 		"create": {
-			Type:             schema.CommandCreate,
-			Parameters:       &disk.CreateParameter{}, // TODO v1向け試験実装
+			Type: schema.CommandCreate,
+			//Parameters:       &disk.CreateParameter{}, // TODO v1向け試験実装
 			Params:           diskCreateParam(),
 			IncludeFields:    diskDetailIncludes(),
 			ExcludeFields:    diskDetailExcludes(),
@@ -56,8 +55,8 @@ func DiskResource() *schema.Resource {
 			Order:         30,
 		},
 		"update": {
-			Type:             schema.CommandUpdate,
-			Parameters:       &disk.UpdateParameter{}, // TODO v1向け試験実装
+			Type: schema.CommandUpdate,
+			//Parameters:       &disk.UpdateParameter{}, // TODO v1向け試験実装
 			Params:           diskUpdateParam(),
 			IncludeFields:    diskDetailIncludes(),
 			ExcludeFields:    diskDetailExcludes(),
@@ -209,14 +208,14 @@ var DiskCommandCategories = []schema.Category{
 	},
 }
 
-func diskListParam() map[string]*schema.Schema {
+func diskListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(
 		CommonListParam,
 		paramScopeCond,
 		paramTagsCond,
 		paramSourceArchiveIDCond,
 		paramSourceDiskCond,
-		map[string]*schema.Schema{
+		map[string]*schema.Parameter{
 			"storage": {
 				Type:        schema.TypeString,
 				HandlerType: schema.HandlerFilterFunc,
@@ -284,8 +283,8 @@ func diskDetailExcludes() []string {
 	}
 }
 
-func diskCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func diskCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -353,12 +352,12 @@ func diskCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func diskReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func diskReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func diskUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func diskUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -374,12 +373,12 @@ func diskUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func diskDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func diskDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func diskConfigParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func diskConfigParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"hostname": {
 			Type:            schema.TypeString,
 			HandlerType:     schema.HandlerPathThrough,
@@ -455,16 +454,16 @@ func diskConfigParam() map[string]*schema.Schema {
 	}
 }
 
-func diskResizePartitionParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func diskResizePartitionParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func diskWaitForCopyParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func diskWaitForCopyParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func diskReinstallFromArchiveParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func diskReinstallFromArchiveParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"source-archive-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -485,8 +484,8 @@ func diskReinstallFromArchiveParam() map[string]*schema.Schema {
 	}
 }
 
-func diskReinstallFromDiskParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func diskReinstallFromDiskParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"source-disk-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -507,8 +506,8 @@ func diskReinstallFromDiskParam() map[string]*schema.Schema {
 	}
 }
 
-func diskReinstallToBlankParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func diskReinstallToBlankParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"distant-from": {
 			Type:         schema.TypeIdList,
 			HandlerType:  schema.HandlerNoop,
@@ -520,8 +519,8 @@ func diskReinstallToBlankParam() map[string]*schema.Schema {
 	}
 }
 
-func diskServerConnectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func diskServerConnectParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"server-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -534,12 +533,12 @@ func diskServerConnectParam() map[string]*schema.Schema {
 	}
 }
 
-func diskServerDisconnectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func diskServerDisconnectParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func diskMonitorParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func diskMonitorParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,

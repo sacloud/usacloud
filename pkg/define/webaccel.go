@@ -188,20 +188,20 @@ func webAccelCertExcludes() []string {
 	}
 }
 
-func webAccelListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func webAccelListParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func webAccelReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func webAccelReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func webAccelCertInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func webAccelCertInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func webAccelCertCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func webAccelCertCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"cert": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -237,8 +237,8 @@ func webAccelCertCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func webAccelCertUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func webAccelCertUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"cert": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -274,6 +274,6 @@ func webAccelCertUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func webAccelDeleteCacheParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func webAccelDeleteCacheParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }

@@ -81,11 +81,11 @@ func IPv6Resource() *schema.Resource {
 	}
 }
 
-func ipv6ListParam() map[string]*schema.Schema {
+func ipv6ListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramIPv6NetIDCond, paramInternetIDCond)
 }
 
-var paramIPv6NetIDCond = map[string]*schema.Schema{
+var paramIPv6NetIDCond = map[string]*schema.Parameter{
 	"ipv6net-id": {
 		Type:         schema.TypeId,
 		HandlerType:  schema.HandlerFilterFunc,
@@ -97,7 +97,7 @@ var paramIPv6NetIDCond = map[string]*schema.Schema{
 	},
 }
 
-var paramInternetIDCond = map[string]*schema.Schema{
+var paramInternetIDCond = map[string]*schema.Parameter{
 	"internet-id": {
 		Type:         schema.TypeId,
 		HandlerType:  schema.HandlerFilterFunc,
@@ -180,8 +180,8 @@ func ipv6DetailExcludes() []string {
 	return []string{}
 }
 
-func ipv6PTRCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func ipv6PTRCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"hostname": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -193,12 +193,12 @@ func ipv6PTRCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func ipv6PTRReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func ipv6PTRReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func ipv6PTRUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func ipv6PTRUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"hostname": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -210,6 +210,6 @@ func ipv6PTRUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func ipv6PTRDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func ipv6PTRDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }

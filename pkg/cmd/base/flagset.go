@@ -15,10 +15,19 @@
 package base
 
 import (
+	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
 
 type FlagSet struct {
 	Title string
 	Flags *pflag.FlagSet
+}
+
+type FlagInitializer interface {
+	SetupCobraCommandFlags(cmd *cobra.Command)
+}
+
+type FlagValueCleaner interface {
+	CleanupEmptyValue(flags *pflag.FlagSet)
 }

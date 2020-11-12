@@ -43,7 +43,7 @@ func PriceResource() *schema.Resource {
 	}
 }
 
-func priceListParam() map[string]*schema.Schema {
+func priceListParam() map[string]*schema.Parameter {
 	return CommonListParam
 }
 

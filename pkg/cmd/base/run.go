@@ -16,7 +16,7 @@ package base
 
 import "github.com/spf13/cobra"
 
-func LookupCmd(cmd *cobra.Command, name string) *cobra.Command {
+func lookupCmd(cmd *cobra.Command, name string) *cobra.Command {
 	for _, c := range cmd.Commands() {
 		if c.Name() == name {
 			return c
@@ -25,8 +25,8 @@ func LookupCmd(cmd *cobra.Command, name string) *cobra.Command {
 	return nil
 }
 
-func RunDefaultCmd(cmd *cobra.Command, args []string, commandName string) error {
-	defaultCmd := LookupCmd(cmd, commandName)
+func runDefaultCmd(cmd *cobra.Command, args []string, commandName string) error {
+	defaultCmd := lookupCmd(cmd, commandName)
 	if defaultCmd == nil {
 		cmd.HelpFunc()(cmd, args)
 		return nil

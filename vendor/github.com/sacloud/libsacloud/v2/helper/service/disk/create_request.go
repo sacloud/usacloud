@@ -39,7 +39,7 @@ type CreateRequest struct {
 	SourceDiskID    types.ID
 	SourceArchiveID types.ID
 	ServerID        types.ID
-	SizeGB          int
+	SizeGB          int `request:"SizeMB,filters=gb_to_mb"`
 	DistantFrom     []types.ID
 	OSType          ostype.ArchiveOSType
 }

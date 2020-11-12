@@ -43,18 +43,13 @@ github.com/mitchellh/mapstructure
 github.com/olekukonko/tablewriter
 # github.com/pmezard/go-difflib v1.0.0
 github.com/pmezard/go-difflib/difflib
-# github.com/sacloud/ftps v1.1.0
-github.com/sacloud/ftps
 # github.com/sacloud/go-jmespath v0.0.0-20190125082617-862639817e08
 github.com/sacloud/go-jmespath
-# github.com/sacloud/libsacloud/v2 v2.8.9-0.20201105050622-3b40f109ba37
+# github.com/sacloud/libsacloud/v2 v2.8.9-0.20201111151335-1cd5a387ae01
 github.com/sacloud/libsacloud/v2
 github.com/sacloud/libsacloud/v2/helper/api
 github.com/sacloud/libsacloud/v2/helper/builder
-github.com/sacloud/libsacloud/v2/helper/builder/archive
-github.com/sacloud/libsacloud/v2/helper/builder/database
 github.com/sacloud/libsacloud/v2/helper/builder/disk
-github.com/sacloud/libsacloud/v2/helper/power
 github.com/sacloud/libsacloud/v2/helper/query
 github.com/sacloud/libsacloud/v2/helper/service
 github.com/sacloud/libsacloud/v2/helper/service/disk

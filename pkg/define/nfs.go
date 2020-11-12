@@ -201,7 +201,7 @@ var nfsParamsCategories = []schema.Category{
 	},
 }
 
-func nfsListParam() map[string]*schema.Schema {
+func nfsListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
@@ -251,8 +251,8 @@ func nfsDetailExcludes() []string {
 	return []string{}
 }
 
-func nfsCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func nfsCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"switch-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -346,12 +346,12 @@ func nfsCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func nfsReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func nfsReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func nfsUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func nfsUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -359,8 +359,8 @@ func nfsUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func nfsDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func nfsDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"force": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -372,24 +372,24 @@ func nfsDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func nfsPowerOnParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func nfsPowerOnParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func nfsPowerOffParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func nfsPowerOffParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func nfsResetParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func nfsResetParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func nfsWaitForParams() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func nfsWaitForParams() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func nfsMonitorParam(key string) map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func nfsMonitorParam(key string) map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,

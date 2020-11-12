@@ -22,3 +22,27 @@ type OutputParameter struct {
 	Query      string `cli:",category=output,desc=JMESPath query"`
 	QueryFile  string `cli:",category=output,desc=JMESPath query(from file)"`
 }
+
+func (p *OutputParameter) OutputTypeFlagValue() string {
+	return p.OutputType
+}
+
+func (p *OutputParameter) QuietFlagValue() bool {
+	return p.Quiet
+}
+
+func (p *OutputParameter) FormatFlagValue() string {
+	return p.Format
+}
+
+func (p *OutputParameter) FormatFileFlagValue() string {
+	return p.FormatFile
+}
+
+func (p *OutputParameter) QueryFlagValue() string {
+	return p.Query
+}
+
+func (p *OutputParameter) QueryFileFlagValue() string {
+	return p.QueryFile
+}

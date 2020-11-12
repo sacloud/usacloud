@@ -39,8 +39,8 @@ func AuthStatusResource() *schema.Resource {
 	}
 }
 
-func authShowParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func authShowParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
 func authShowColumns() []output.ColumnDef {

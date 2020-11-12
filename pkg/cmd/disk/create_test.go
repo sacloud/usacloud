@@ -17,6 +17,8 @@ package disk
 import (
 	"testing"
 
+	"github.com/sacloud/usacloud/pkg/cmd/base"
+
 	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
 
 	"github.com/sacloud/usacloud/pkg/cmd/conv"
@@ -29,16 +31,16 @@ import (
 
 func TestCreate_ConvertToServiceRequest(t *testing.T) {
 	t.Run("full", func(t *testing.T) {
-		in := &CreateParameter{
-			Zone:        "is1a",
-			Name:        "name",
-			Description: "desc",
-			Tags:        []string{"tag1", "tag2"},
-			IconID:      types.ID(1),
-			DiskPlan:    "ssd",
-			Connection:  types.DiskConnections.VirtIO.String(),
-			SizeGB:      20,
-			OSType:      "ubuntu",
+		in := &createParameter{
+			ZoneParameter: base.ZoneParameter{Zone: "is1a"},
+			Name:          "name",
+			Description:   "desc",
+			Tags:          []string{"tag1", "tag2"},
+			IconID:        types.ID(1),
+			DiskPlan:      "ssd",
+			Connection:    types.DiskConnections.VirtIO.String(),
+			SizeGB:        20,
+			OSType:        "ubuntu",
 		}
 
 		out := &disk.CreateRequest{}

@@ -397,7 +397,7 @@ var MobileGatewayCommandCategories = []schema.Category{
 	},
 }
 
-func mobileGatewayListParam() map[string]*schema.Schema {
+func mobileGatewayListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
@@ -547,8 +547,8 @@ func mobileGatewayDetailExcludes() []string {
 	return []string{}
 }
 
-func mobileGatewayCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewayCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -593,12 +593,12 @@ func mobileGatewayCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewayReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func mobileGatewayReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func mobileGatewayUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewayUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -613,8 +613,8 @@ func mobileGatewayUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewayDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewayDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"force": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -626,28 +626,28 @@ func mobileGatewayDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewayPowerOnParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func mobileGatewayPowerOnParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func mobileGatewayPowerOffParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func mobileGatewayPowerOffParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func mobileGatewayResetParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func mobileGatewayResetParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func mobileGatewayWaitForParams() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func mobileGatewayWaitForParams() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func mobileGatewayInterfaceInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func mobileGatewayInterfaceInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func mobileGatewayInterfaceConnectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewayInterfaceConnectParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"switch-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -680,8 +680,8 @@ func mobileGatewayInterfaceConnectParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewayInterfaceUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewayInterfaceUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"ipaddress": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -704,16 +704,16 @@ func mobileGatewayInterfaceUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewayInterfaceDisconnectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func mobileGatewayInterfaceDisconnectParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func mobileGatewayTrafficControlInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func mobileGatewayTrafficControlInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func mobileGatewayTrafficControlCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewayTrafficControlCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"quota": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -752,8 +752,8 @@ func mobileGatewayTrafficControlCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewayTrafficControlUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewayTrafficControlUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"quota": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -790,12 +790,12 @@ func mobileGatewayTrafficControlUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewayTrafficControlDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func mobileGatewayTrafficControlDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func mobileGatewayDNSUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewayDNSUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"dns1": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -817,8 +817,8 @@ func mobileGatewayDNSUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewayLogsParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewayLogsParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"follow": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -839,12 +839,12 @@ func mobileGatewayLogsParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewayStaticRouteInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func mobileGatewayStaticRouteInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func mobileGatewayStaticRouteAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewayStaticRouteAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"prefix": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -866,8 +866,8 @@ func mobileGatewayStaticRouteAddParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewayStaticRouteUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewayStaticRouteUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -895,8 +895,8 @@ func mobileGatewayStaticRouteUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewayStaticRouteDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewayStaticRouteDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -908,12 +908,12 @@ func mobileGatewayStaticRouteDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewaySIMInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func mobileGatewaySIMInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func mobileGatewaySIMAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewaySIMAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"sim-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -935,8 +935,8 @@ func mobileGatewaySIMAddParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewaySIMUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewaySIMUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"sim-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -957,8 +957,8 @@ func mobileGatewaySIMUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewaySIMDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewaySIMDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"sim-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -970,12 +970,12 @@ func mobileGatewaySIMDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewaySIMRouteInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func mobileGatewaySIMRouteInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func mobileGatewaySIMRouteAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewaySIMRouteAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"prefix": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -997,8 +997,8 @@ func mobileGatewaySIMRouteAddParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewaySIMRouteUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewaySIMRouteUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -1026,8 +1026,8 @@ func mobileGatewaySIMRouteUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func mobileGatewaySIMRouteDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func mobileGatewaySIMRouteDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,

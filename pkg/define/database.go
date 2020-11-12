@@ -357,7 +357,7 @@ var databaseParamsCategories = []schema.Category{
 	},
 }
 
-func databaseListParam() map[string]*schema.Schema {
+func databaseListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
@@ -435,8 +435,8 @@ func databaseDetailExcludes() []string {
 	return []string{}
 }
 
-func databaseCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func databaseCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"switch-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -608,12 +608,12 @@ func databaseCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func databaseReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func databaseReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func databaseUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func databaseUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"password": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -723,8 +723,8 @@ func databaseUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func databaseDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func databaseDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"force": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -734,32 +734,32 @@ func databaseDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func databasePowerOnParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func databasePowerOnParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func databasePowerOffParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func databasePowerOffParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func databaseResetParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func databaseResetParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func databaseWaitForParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func databaseWaitForParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func databaseBackupListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func databaseBackupListParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func databaseBackupCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func databaseBackupCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func databaseBackupLockParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func databaseBackupLockParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -772,8 +772,8 @@ func databaseBackupLockParam() map[string]*schema.Schema {
 	}
 }
 
-func databaseBackupManipulateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func databaseBackupManipulateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -786,8 +786,8 @@ func databaseBackupManipulateParam() map[string]*schema.Schema {
 	}
 }
 
-func databaseCloneParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func databaseCloneParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"switch-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -928,8 +928,8 @@ func databaseCloneParam() map[string]*schema.Schema {
 	}
 }
 
-func databaseReplicaCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func databaseReplicaCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"switch-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -1001,8 +1001,8 @@ func databaseReplicaCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func databaseMonitorParam(key string) map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func databaseMonitorParam(key string) map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1070,8 +1070,8 @@ func databaseMonitorSizeColumns() []output.ColumnDef {
 	}
 }
 
-func databaseLogParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func databaseLogParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"log-name": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,

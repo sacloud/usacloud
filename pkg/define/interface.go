@@ -93,7 +93,7 @@ func InterfaceResource() *schema.Resource {
 	}
 }
 
-func interfaceListParam() map[string]*schema.Schema {
+func interfaceListParam() map[string]*schema.Parameter {
 	return CommonListParam
 }
 
@@ -144,8 +144,8 @@ func interfaceDetailExcludes() []string {
 	return []string{}
 }
 
-func interfaceCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func interfaceCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"server-id": {
 			Type:            schema.TypeId,
 			HandlerType:     schema.HandlerPathThrough,
@@ -159,12 +159,12 @@ func interfaceCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func interfaceReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func interfaceReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func interfaceUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func interfaceUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"user-ipaddress": {
 			Type:            schema.TypeString,
 			HandlerType:     schema.HandlerPathThrough,
@@ -177,12 +177,12 @@ func interfaceUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func interfaceDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func interfaceDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func interfacePacketFilterConnectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func interfacePacketFilterConnectParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"packet-filter-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -195,8 +195,8 @@ func interfacePacketFilterConnectParam() map[string]*schema.Schema {
 	}
 }
 
-func interfacePacketFilterDisconnectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func interfacePacketFilterDisconnectParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"packet-filter-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,

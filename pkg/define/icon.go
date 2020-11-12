@@ -72,7 +72,7 @@ func IconResource() *schema.Resource {
 	}
 }
 
-func iconListParam() map[string]*schema.Schema {
+func iconListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramScopeCond, paramTagsCond)
 }
 
@@ -93,8 +93,8 @@ func iconDetailExcludes() []string {
 	return []string{}
 }
 
-func iconCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func iconCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name": paramRequiredName,
 		"tags": paramTags,
 		"image": {
@@ -110,19 +110,19 @@ func iconCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func iconReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func iconReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func iconUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func iconUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name": paramName,
 		"tags": paramTags,
 	}
 }
 
-func iconDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func iconDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
 // TODO あとで消す

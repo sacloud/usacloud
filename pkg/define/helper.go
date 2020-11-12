@@ -109,8 +109,8 @@ func validateBackupTime() schema.ValidateFunc {
 	return schema.ValidateInStrValues(timeStrings...)
 }
 
-func mergeParameterMap(params ...map[string]*schema.Schema) map[string]*schema.Schema {
-	dest := map[string]*schema.Schema{}
+func mergeParameterMap(params ...map[string]*schema.Parameter) map[string]*schema.Parameter {
+	dest := map[string]*schema.Parameter{}
 	for _, m := range params {
 		for k, v := range m {
 			dest[k] = v

@@ -117,7 +117,7 @@ var privateHostCommandCategories = []schema.Category{
 	},
 }
 
-func privateHostListParam() map[string]*schema.Schema {
+func privateHostListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
@@ -150,8 +150,8 @@ func privateHostDetailExcludes() []string {
 	return []string{}
 }
 
-func privateHostCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func privateHostCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -159,12 +159,12 @@ func privateHostCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func privateHostReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func privateHostReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func privateHostUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func privateHostUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -172,16 +172,16 @@ func privateHostUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func privateHostDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func privateHostDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func privateHostServerInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func privateHostServerInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func privateHostServerUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func privateHostServerUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"server-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,

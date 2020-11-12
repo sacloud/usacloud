@@ -140,7 +140,7 @@ var ArchiveCommandCategories = []schema.Category{
 	},
 }
 
-func archiveListParam() map[string]*schema.Schema {
+func archiveListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(
 		CommonListParam,
 		paramScopeCond,
@@ -171,8 +171,8 @@ func archiveDetailExcludes() []string {
 
 var allowSizes = []int{20, 40, 60, 80, 100, 250, 500, 750, 1024}
 
-func archiveCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func archiveCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -219,12 +219,12 @@ func archiveCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func archiveReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func archiveReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func archiveUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func archiveUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -232,12 +232,12 @@ func archiveUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func archiveDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func archiveDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func archiveUploadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func archiveUploadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"archive-file": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -249,8 +249,8 @@ func archiveUploadParam() map[string]*schema.Schema {
 	}
 }
 
-func archiveDownloadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func archiveDownloadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"file-destination": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -261,14 +261,14 @@ func archiveDownloadParam() map[string]*schema.Schema {
 	}
 }
 
-func archiveWaitForCopyParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func archiveWaitForCopyParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func archiveOpenFTPParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func archiveOpenFTPParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func archiveCloseFTPParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func archiveCloseFTPParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }

@@ -158,7 +158,7 @@ var packetFilterCommandCategories = []schema.Category{
 	},
 }
 
-func packetFilterListParam() map[string]*schema.Schema {
+func packetFilterListParam() map[string]*schema.Parameter {
 	return CommonListParam
 }
 
@@ -198,36 +198,36 @@ func packetFilterDetailExcludes() []string {
 	return []string{}
 }
 
-func packetFilterCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func packetFilterCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramRequiredName,
 		"description": paramDescription,
 	}
 }
 
-func packetFilterReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func packetFilterReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func packetFilterUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func packetFilterUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramName,
 		"description": paramDescription,
 	}
 }
 
-func packetFilterDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func packetFilterDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func packetFilterRuleListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func packetFilterRuleListParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
 var allowPacketFilterProtocol = []string{"tcp", "udp", "icmp", "fragment", "ip"}
 
-func packetFilterRuleAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func packetFilterRuleAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -281,8 +281,8 @@ func packetFilterRuleAddParam() map[string]*schema.Schema {
 	}
 }
 
-func packetFilterRuleUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func packetFilterRuleUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -336,8 +336,8 @@ func packetFilterRuleUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func packetFilterRuleDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func packetFilterRuleDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -349,8 +349,8 @@ func packetFilterRuleDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func packetFilterInterfaceConnectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func packetFilterInterfaceConnectParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"interface-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -363,8 +363,8 @@ func packetFilterInterfaceConnectParam() map[string]*schema.Schema {
 	}
 }
 
-func packetFilterInterfaceDisconnectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func packetFilterInterfaceDisconnectParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"interface-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,

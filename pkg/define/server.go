@@ -391,7 +391,7 @@ func ServerResource() *schema.Resource {
 	}
 }
 
-func serverListParam() map[string]*schema.Schema {
+func serverListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
@@ -634,8 +634,8 @@ var serverBuildParamCategories = []schema.Category{
 	},
 }
 
-func serverBuildParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverBuildParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		/*
 		 === server plan ===
 		*/
@@ -1013,12 +1013,12 @@ func serverBuildParam() map[string]*schema.Schema {
 	}
 }
 
-func serverReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func serverReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func serverUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -1035,8 +1035,8 @@ func serverUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func serverDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"force": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -1055,8 +1055,8 @@ func serverDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func serverSSHParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverSSHParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"key": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1103,8 +1103,8 @@ func serverSSHParam() map[string]*schema.Schema {
 	}
 }
 
-func serverSCPParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverSCPParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"key": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1159,8 +1159,8 @@ func serverSCPParam() map[string]*schema.Schema {
 	}
 }
 
-func serverVNCParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverVNCParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"wait-for-boot": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -1170,8 +1170,8 @@ func serverVNCParam() map[string]*schema.Schema {
 	}
 }
 
-func serverVNCSendParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverVNCSendParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"command": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerNoop,
@@ -1215,8 +1215,8 @@ func serverVNCSendParam() map[string]*schema.Schema {
 	}
 }
 
-func serverVNCSnapshotParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverVNCSnapshotParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"wait-for-boot": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -1234,8 +1234,8 @@ func serverVNCSnapshotParam() map[string]*schema.Schema {
 	}
 }
 
-func serverRDPParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverRDPParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"user": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1259,24 +1259,24 @@ func serverRDPParam() map[string]*schema.Schema {
 	}
 }
 
-func serverPowerOnParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func serverPowerOnParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func serverPowerOffParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func serverPowerOffParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func serverResetParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func serverResetParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func serverWaitForParams() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func serverWaitForParams() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func serverPlanChangeParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverPlanChangeParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		/*
 		 === server plan ===
 		*/
@@ -1308,12 +1308,12 @@ func serverPlanChangeParam() map[string]*schema.Schema {
 	}
 }
 
-func serverISOImageInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func serverISOImageInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func serverISOImageInsertParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverISOImageInsertParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"iso-image-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -1375,16 +1375,16 @@ func serverISOImageInsertParam() map[string]*schema.Schema {
 	}
 }
 
-func serverISOImageEjectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func serverISOImageEjectParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func serverDiskInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func serverDiskInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func serverDiskConnectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverDiskConnectParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"disk-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -1397,8 +1397,8 @@ func serverDiskConnectParam() map[string]*schema.Schema {
 	}
 }
 
-func serverDiskDisconnectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverDiskDisconnectParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"disk-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -1411,12 +1411,12 @@ func serverDiskDisconnectParam() map[string]*schema.Schema {
 	}
 }
 
-func serverInterfaceInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func serverInterfaceInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func serverInterfaceAddForInternetParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverInterfaceAddForInternetParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"without-disk-edit": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -1426,8 +1426,8 @@ func serverInterfaceAddForInternetParam() map[string]*schema.Schema {
 		},
 	}
 }
-func serverInterfaceAddForRouterParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverInterfaceAddForRouterParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"switch-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -1474,8 +1474,8 @@ func serverInterfaceAddForRouterParam() map[string]*schema.Schema {
 		},
 	}
 }
-func serverInterfaceAddForSwitchParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverInterfaceAddForSwitchParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"switch-id": {
 			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
@@ -1522,12 +1522,12 @@ func serverInterfaceAddForSwitchParam() map[string]*schema.Schema {
 		},
 	}
 }
-func serverInterfaceAddDisconnectedParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func serverInterfaceAddDisconnectedParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func serverMonitorCPUParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverMonitorCPUParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1565,8 +1565,8 @@ func serverMonitorCPUColumns() []output.ColumnDef {
 	}
 }
 
-func serverMonitorNICParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverMonitorNICParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1616,8 +1616,8 @@ func serverMonitorNICColumns() []output.ColumnDef {
 		{Name: "Receive"},
 	}
 }
-func serverMonitorDiskParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func serverMonitorDiskParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1665,6 +1665,6 @@ func serverMonitorDiskColumns() []output.ColumnDef {
 	}
 }
 
-func serverMaintenanceInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func serverMaintenanceInfoParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }

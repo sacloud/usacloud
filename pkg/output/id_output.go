@@ -49,7 +49,6 @@ func (o *idOutput) Print(target interface{}) error {
 	}
 
 	if util.IsEmpty(targets) {
-		fmt.Fprintf(o.Err, "no results\n")
 		return nil
 	}
 

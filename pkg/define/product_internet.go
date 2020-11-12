@@ -50,7 +50,7 @@ func ProductInternetResource() *schema.Resource {
 	}
 }
 
-func productInternetListParam() map[string]*schema.Schema {
+func productInternetListParam() map[string]*schema.Parameter {
 	return CommonListParam
 }
 
@@ -74,10 +74,10 @@ func productInternetDetailExcludes() []string {
 	return []string{}
 }
 
-func productInternetReadParam() map[string]*schema.Schema {
+func productInternetReadParam() map[string]*schema.Parameter {
 	id := getParamResourceShortID("resource ID", 4)
 	id.Hidden = true
-	return map[string]*schema.Schema{
+	return map[string]*schema.Parameter{
 		"id": id,
 	}
 }

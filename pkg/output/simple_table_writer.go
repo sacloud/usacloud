@@ -37,6 +37,14 @@ type tableHandler interface {
 }
 
 func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) tableWriter {
+	if len(columnDefs) == 0 {
+		columnDefs = []ColumnDef{
+			{Name: "__ORDER__"},
+			{Name: "ID"},
+			{Name: "Name"},
+		}
+	}
+
 	w := &simpleTableWriter{
 		table:      tablewriter.NewWriter(out),
 		columnDefs: columnDefs,

@@ -115,7 +115,7 @@ func GSLBResource() *schema.Resource {
 	}
 }
 
-func gslbListParam() map[string]*schema.Schema {
+func gslbListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
@@ -155,8 +155,8 @@ func gslbDetailExcludes() []string {
 	return []string{}
 }
 
-func gslbCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func gslbCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"protocol": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -230,12 +230,12 @@ func gslbCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func gslbReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func gslbReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func gslbUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func gslbUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"protocol": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -302,16 +302,16 @@ func gslbUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func gslbDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func gslbDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func gslbServerListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func gslbServerListParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func gslbServerAddParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func gslbServerAddParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"ipaddress": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -337,8 +337,8 @@ func gslbServerAddParam() map[string]*schema.Schema {
 		},
 	}
 }
-func gslbServerUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func gslbServerUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -372,8 +372,8 @@ func gslbServerUpdateParam() map[string]*schema.Schema {
 		},
 	}
 }
-func gslbServerDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func gslbServerDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,

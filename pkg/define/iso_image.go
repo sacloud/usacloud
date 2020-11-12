@@ -131,7 +131,7 @@ var isoImageCommandCategories = []schema.Category{
 	},
 }
 
-func isoImageListParam() map[string]*schema.Schema {
+func isoImageListParam() map[string]*schema.Parameter {
 	return mergeParameterMap(CommonListParam, paramScopeCond, paramTagsCond)
 }
 
@@ -153,8 +153,8 @@ func isoImageDetailExcludes() []string {
 	}
 }
 
-func isoImageCreateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func isoImageCreateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"size": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -180,12 +180,12 @@ func isoImageCreateParam() map[string]*schema.Schema {
 	}
 }
 
-func isoImageReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func isoImageReadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func isoImageUpdateParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func isoImageUpdateParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -193,12 +193,12 @@ func isoImageUpdateParam() map[string]*schema.Schema {
 	}
 }
 
-func isoImageDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func isoImageDeleteParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func isoImageUploadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func isoImageUploadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"iso-file": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -210,8 +210,8 @@ func isoImageUploadParam() map[string]*schema.Schema {
 	}
 }
 
-func isoImageDownloadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func isoImageDownloadParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"file-destination": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -222,10 +222,10 @@ func isoImageDownloadParam() map[string]*schema.Schema {
 	}
 }
 
-func isoImageOpenFTPParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func isoImageOpenFTPParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }
 
-func isoImageCloseFTPParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+func isoImageCloseFTPParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{}
 }

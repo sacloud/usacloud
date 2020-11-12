@@ -49,7 +49,6 @@ func (o *jsonOutput) Print(target interface{}) error {
 	}
 
 	if util.IsEmpty(targets) {
-		fmt.Fprintln(o.err, "no results")
 		return nil
 	}
 

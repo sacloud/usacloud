@@ -84,8 +84,8 @@ func objectStorageListColumns() []output.ColumnDef {
 	}
 }
 
-func objectStorageListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func objectStorageListParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"access-key": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -115,8 +115,8 @@ func objectStorageListParam() map[string]*schema.Schema {
 	}
 }
 
-func objectStoragePutParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func objectStoragePutParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"access-key": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -162,8 +162,8 @@ func objectStoragePutParam() map[string]*schema.Schema {
 	}
 }
 
-func objectStorageGetParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func objectStorageGetParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"access-key": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -201,8 +201,8 @@ func objectStorageGetParam() map[string]*schema.Schema {
 	}
 }
 
-func objectStorageDelParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
+func objectStorageDelParam() map[string]*schema.Parameter {
+	return map[string]*schema.Parameter{
 		"access-key": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,

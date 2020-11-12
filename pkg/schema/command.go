@@ -32,7 +32,7 @@ type Command struct {
 	Order    int
 
 	// TODO v0向け、あとで消す
-	Params map[string]*Schema
+	Params map[string]*Parameter
 	// TODO v1向け
 	Parameters         interface{} // cmd/xxx配下の各コマンドパラメータstruct
 	ServiceFuncAltName string
@@ -100,14 +100,14 @@ func (c *Command) BuiltParams() SortableParams {
 	//         Validatorを利用したい場合はコード生成時に手動で呼び出すコードを出力する。
 	//         例: command.validateOutputOption(o output.Option)の呼び出し部分など
 
-	params := make(map[string]*Schema)
+	params := make(map[string]*Parameter)
 	for k, v := range c.Params {
 		params[k] = v
 	}
 
 	// add ID param
 	if c.Type.IsRequiredIDType() {
-		params["id"] = &Schema{
+		params["id"] = &Parameter{
 			Type:        TypeId,
 			HandlerType: HandlerPathThrough,
 			Description: "Set target ID",
@@ -116,7 +116,7 @@ func (c *Command) BuiltParams() SortableParams {
 		}
 	}
 	if c.Type.CanUseSelector() && !c.NoSelector {
-		params["selector"] = &Schema{
+		params["selector"] = &Parameter{
 			Type:        TypeStringList,
 			HandlerType: HandlerNoop,
 			Description: "Set target filter by tag",
@@ -126,7 +126,7 @@ func (c *Command) BuiltParams() SortableParams {
 	}
 
 	if c.Type.IsNeedConfirmType() && !c.NeedlessConfirm {
-		params["assumeyes"] = &Schema{
+		params["assumeyes"] = &Parameter{
 			Type:        TypeBool,
 			HandlerType: HandlerNoop,
 			Description: "Assume that the answer to any question which would be asked is yes",
@@ -136,21 +136,21 @@ func (c *Command) BuiltParams() SortableParams {
 		}
 	}
 
-	params["parameters"] = &Schema{
+	params["parameters"] = &Parameter{
 		Type:        TypeString,
 		HandlerType: HandlerNoop,
 		Description: "Set input parameters from JSON string",
 		Category:    "input",
 		Order:       21,
 	}
-	params["parameter-file"] = &Schema{
+	params["parameter-file"] = &Parameter{
 		Type:        TypeString,
 		HandlerType: HandlerNoop,
 		Description: "Set input parameters from file",
 		Category:    "input",
 		Order:       31,
 	}
-	params["generate-skeleton"] = &Schema{
+	params["generate-skeleton"] = &Parameter{
 		Type:        TypeBool,
 		HandlerType: HandlerNoop,
 		Description: "Output skelton of parameter JSON",
@@ -159,7 +159,7 @@ func (c *Command) BuiltParams() SortableParams {
 	}
 
 	if !c.NoOutput {
-		params["output-type"] = &Schema{
+		params["output-type"] = &Parameter{
 			Type:        TypeString,
 			HandlerType: HandlerNoop,
 			Aliases:     []string{"out", "o"},
@@ -167,7 +167,7 @@ func (c *Command) BuiltParams() SortableParams {
 			Category:    "output",
 			Order:       10,
 		}
-		params["column"] = &Schema{
+		params["column"] = &Parameter{
 			Type:        TypeStringList,
 			HandlerType: HandlerNoop,
 			Aliases:     []string{"col"},
@@ -175,7 +175,7 @@ func (c *Command) BuiltParams() SortableParams {
 			Category:    "output",
 			Order:       20,
 		}
-		params["quiet"] = &Schema{
+		params["quiet"] = &Parameter{
 			Type:        TypeBool,
 			HandlerType: HandlerNoop,
 			Aliases:     []string{"q"},
@@ -183,7 +183,7 @@ func (c *Command) BuiltParams() SortableParams {
 			Category:    "output",
 			Order:       30,
 		}
-		params["format"] = &Schema{
+		params["format"] = &Parameter{
 			Type:        TypeString,
 			HandlerType: HandlerNoop,
 			Aliases:     []string{"fmt"},
@@ -191,21 +191,21 @@ func (c *Command) BuiltParams() SortableParams {
 			Category:    "output",
 			Order:       40,
 		}
-		params["format-file"] = &Schema{
+		params["format-file"] = &Parameter{
 			Type:        TypeString,
 			HandlerType: HandlerNoop,
 			Description: "Output format from file(see text/template package document for detail)",
 			Category:    "output",
 			Order:       50,
 		}
-		params["query"] = &Schema{
+		params["query"] = &Parameter{
 			Type:        TypeString,
 			HandlerType: HandlerNoop,
 			Description: "JMESPath query(using when '--output-type' is json only)",
 			Category:    "output",
 			Order:       60,
 		}
-		params["query-file"] = &Schema{
+		params["query-file"] = &Parameter{
 			Type:        TypeString,
 			HandlerType: HandlerNoop,
 			Description: "JMESPath query from file(using when '--output-type' is json only)",
@@ -302,7 +302,7 @@ func (c *Command) Validate() []error {
 
 type SortableParam struct {
 	Category *Category
-	Param    *Schema
+	Param    *Parameter
 	ParamKey string
 }
 type SortableParams []SortableParam

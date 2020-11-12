@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/sacloud/usacloud/tools/utils"
+	"github.com/sacloud/usacloud/pkg/naming"
 )
 
 // DefaultTagName ftagのデフォルト名
@@ -85,7 +85,7 @@ func (p *Parser) parseField(prefix string, f reflect.StructField) ([]StructField
 
 	// handle tag values
 	if tag.FlagName == "" {
-		tag.FlagName = utils.ToDashedName(f.Name)
+		tag.FlagName = naming.ToKebabCase(f.Name)
 	}
 	if !tag.Squash {
 		if prefix != "" && tag.FlagName != "" {
