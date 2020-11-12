@@ -1,4 +1,4 @@
-// Copyright 2017-2020 The Usacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,23 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate go run github.com/sacloud/usacloud/tools/gen-commands/
-package cmd
+package authstatus
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/authstatus"
-	"github.com/sacloud/usacloud/pkg/cmd/base"
-	"github.com/sacloud/usacloud/pkg/cmd/disk"
-	"github.com/sacloud/usacloud/pkg/cmd/root"
+	"context"
+
+	"github.com/sacloud/libsacloud/v2/sacloud"
 )
 
-var Resources = []*base.Resource{
-	authstatus.Resource,
-	disk.Resource,
+func (s *Service) Read() (*sacloud.AuthStatus, error) {
+	return s.ReadWithContext(context.Background())
 }
 
-func initCommands() {
-	for _, r := range Resources {
-		root.Command.AddCommand(r.CLICommand())
-	}
+func (s *Service) ReadWithContext(ctx context.Context) (*sacloud.AuthStatus, error) {
+	client := sacloud.NewAuthStatusOp(s.caller)
+	return client.Read(ctx)
 }

@@ -52,6 +52,7 @@ github.com/sacloud/libsacloud/v2/helper/builder
 github.com/sacloud/libsacloud/v2/helper/builder/disk
 github.com/sacloud/libsacloud/v2/helper/query
 github.com/sacloud/libsacloud/v2/helper/service
+github.com/sacloud/libsacloud/v2/helper/service/authstatus
 github.com/sacloud/libsacloud/v2/helper/service/disk
 github.com/sacloud/libsacloud/v2/helper/setup
 github.com/sacloud/libsacloud/v2/helper/validate

@@ -20,9 +20,10 @@ import (
 )
 
 var updateCommand = &base.Command{
-	Name:     "update",
-	Category: "basics",
-	Order:    40,
+	Name:         "update",
+	Category:     "basics",
+	Order:        40,
+	SelectorType: base.SelectorTypeRequireMulti,
 
 	ParameterInitializer: func() interface{} {
 		return newUpdateParameter()
