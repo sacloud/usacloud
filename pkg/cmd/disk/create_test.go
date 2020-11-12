@@ -15,7 +15,11 @@
 package disk
 
 import (
+	"errors"
+	"strings"
 	"testing"
+
+	"github.com/sacloud/usacloud/pkg/validate"
 
 	"github.com/sacloud/usacloud/pkg/cmd/base"
 
@@ -60,4 +64,70 @@ func TestCreate_ConvertToServiceRequest(t *testing.T) {
 			OSType:      ostype.Ubuntu,
 		}, out)
 	})
+}
+
+func TestCreateParameter_Validate(t *testing.T) {
+	cases := []struct {
+		in  *createParameter
+		err error
+	}{
+		// default
+		{
+			in: newCreateParameter(),
+			err: errors.New(strings.Join([]string{
+				"validation error:",
+				"\t--zone: required",
+				"\t--name: required",
+			}, "\n")),
+		},
+		// minimum
+		{
+			in: &createParameter{
+				ZoneParameter: base.ZoneParameter{
+					Zone: "is1a",
+				},
+				Name:       "foobar",
+				DiskPlan:   "ssd",
+				Connection: "virtio",
+			},
+			err: nil,
+		},
+		// invalid tags length
+		{
+			in: &createParameter{
+				ZoneParameter: base.ZoneParameter{
+					Zone: "is1a",
+				},
+				Name:       "foobar",
+				DiskPlan:   "ssd",
+				Connection: "virtio",
+				Tags:       []string{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "invalid"},
+			},
+			err: errors.New(strings.Join([]string{
+				"validation error:",
+				"\t--tags: max=10",
+			}, "\n")),
+		},
+		// invalid tags body
+		{
+			in: &createParameter{
+				ZoneParameter: base.ZoneParameter{
+					Zone: "is1a",
+				},
+				Name:       "foobar",
+				DiskPlan:   "ssd",
+				Connection: "virtio",
+				Tags:       []string{"********10********20********30++x"},
+			},
+			err: errors.New(strings.Join([]string{
+				"validation error:",
+				"\t--tags[0]: max=32",
+			}, "\n")),
+		},
+	}
+
+	for _, tc := range cases {
+		err := validate.Exec(tc.in)
+		require.Equal(t, tc.err, err)
+	}
 }

@@ -15,7 +15,11 @@
 package disk
 
 import (
+	"errors"
+	"strings"
 	"testing"
+
+	"github.com/sacloud/usacloud/pkg/validate"
 
 	"github.com/sacloud/usacloud/pkg/cmd/base"
 
@@ -103,4 +107,50 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 			Connection:  nil,
 		}, out)
 	})
+}
+
+func TestUpdateParameter_Validate(t *testing.T) {
+	cases := []struct {
+		in  *updateParameter
+		err error
+	}{
+		// default
+		{
+			in: newUpdateParameter(),
+			err: errors.New(strings.Join([]string{
+				"validation error:",
+				"\t--zone: required",
+				"\t--id: required",
+			}, "\n")),
+		},
+		// valid
+		{
+			in: &updateParameter{
+				ZoneParameter: base.ZoneParameter{Zone: "is1a"},
+				IDParameter:   base.IDParameter{ID: 1},
+				Name:          pointer.NewString("1"),
+				Description:   pointer.NewString(""),
+				Tags:          pointer.NewStringSlice([]string{}),
+				Connection:    pointer.NewString("ide"),
+			},
+			err: nil,
+		},
+		// name
+		{
+			in: &updateParameter{
+				ZoneParameter: base.ZoneParameter{Zone: "is1a"},
+				IDParameter:   base.IDParameter{ID: 1},
+				Name:          pointer.NewString(""),
+			},
+			err: errors.New(strings.Join([]string{
+				"validation error:",
+				"\t--name: min=1",
+			}, "\n")),
+		},
+	}
+
+	for _, tc := range cases {
+		err := validate.Exec(tc.in)
+		require.Equal(t, tc.err, err)
+	}
 }
