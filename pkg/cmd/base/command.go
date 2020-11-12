@@ -20,6 +20,8 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/sacloud/usacloud/pkg/validate"
+
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 
 	"github.com/sacloud/usacloud/pkg/cmd/services"
@@ -42,6 +44,8 @@ const (
 	SelectorTypeRequireSingle        // ID or Name or Tagsを受け取る(複数ヒットNG)
 	SelectorTypeRequireMulti         // ID or Name or Tagsを受け取る(複数ヒットOK)
 )
+
+type ValidateFunc func(ctx cli.Context, parameter interface{}) error
 
 // Command コマンド定義、実行時のコンテキスト(設定保持)にもなる
 type Command struct {
@@ -73,6 +77,9 @@ type Command struct {
 
 	// 操作対象リソースの一覧取得用。通常はResourceに紐づけられたfuncを利用する
 	ListAllFunc func(ctx cli.Context, parameter interface{}) ([]interface{}, error)
+
+	// カスタムバリデーション用。空の場合usacloud/pkg/validate.Execが実行される
+	ValidateFunc ValidateFunc
 
 	// コマンドの実処理。設定してない場合はデフォルトのlibsacloud service呼び出しが行われる
 	Func func(ctx cli.Context, parameter interface{}) ([]interface{}, error)
@@ -135,19 +142,13 @@ func (c *Command) Run(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	if p, ok := c.currentParameter.(FlagValueCleaner); ok {
-		p.CleanupEmptyValue(cmd.Flags())
+	c.completeParameterValue(cmd, ctx, c.currentParameter)
+
+	if err := c.validateParameter(ctx, c.currentParameter); err != nil {
+		return err
 	}
 
-	// TODO パラメータのカスタムバリデーションをこの辺で
-
-	if c.resource.Warning != "" {
-		c.printWarning(ctx.IO().Err(), ctx.Option().NoColor, c.resource.Warning)
-	}
-
-	if c.ExperimentWarning != "" {
-		c.printWarning(ctx.IO().Err(), ctx.Option().NoColor, c.ExperimentWarning)
-	}
+	c.printCommandWarning(ctx)
 
 	if cp, ok := c.currentParameter.(cflag.CommonParameterValueHolder); ok {
 		// パラメータスケルトンの生成
@@ -157,12 +158,6 @@ func (c *Command) Run(cmd *cobra.Command, args []string) error {
 		// --parameters/--parameter-fileフラグの処理
 		if err := loadParameters(cp); err != nil {
 			return err
-		}
-	}
-
-	if zp, ok := c.currentParameter.(cflag.ZoneParameterValueHandler); ok {
-		if zp.ZoneFlagValue() == "" {
-			zp.SetZoneFlagValue(ctx.Zone())
 		}
 	}
 
@@ -192,6 +187,39 @@ func (c *Command) Run(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	return ctx.Output().Print(results)
+}
+
+func (c *Command) validateParameter(ctx cli.Context, parameter interface{}) error {
+	validateFunc := c.ValidateFunc
+	if validateFunc == nil {
+		validateFunc = func(_ cli.Context, p interface{}) error {
+			return validate.Exec(p)
+		}
+	}
+
+	return validateFunc(ctx, parameter)
+}
+
+func (c *Command) completeParameterValue(cmd *cobra.Command, ctx cli.Context, parameter interface{}) {
+	if p, ok := parameter.(FlagValueCleaner); ok {
+		p.CleanupEmptyValue(cmd.Flags())
+	}
+
+	if zp, ok := parameter.(cflag.ZoneParameterValueHandler); ok {
+		if zp.ZoneFlagValue() == "" {
+			zp.SetZoneFlagValue(ctx.Zone())
+		}
+	}
+}
+
+func (c *Command) printCommandWarning(ctx cli.Context) {
+	if c.resource.Warning != "" {
+		c.printWarning(ctx.IO().Err(), ctx.Option().NoColor, c.resource.Warning)
+	}
+
+	if c.ExperimentWarning != "" {
+		c.printWarning(ctx.IO().Err(), ctx.Option().NoColor, c.ExperimentWarning)
+	}
 }
 
 func (c *Command) expandIDsFromArgs(ctx cli.Context, parameter interface{}, args []string) ([]types.ID, error) {
