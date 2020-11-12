@@ -21,19 +21,13 @@ GO_FILES        ?=$(shell find . -name '*.go')
 AUTHOR          ?="The Usacloud Authors"
 COPYRIGHT_YEAR  ?="2017-2020"
 COPYRIGHT_FILES ?=$$(find . \( -name "*.dockerfile" -or -name "*.go" -or -name "*.sh" -or -name "*.pl" -or -name "*.bats" -or -name "*.bash" \) -print | grep -v "/vendor/")
+BUILD_LDFLAGS   ?= "-s -w -X github.com/sacloud/usacloud/pkg/version.Revision=`git rev-parse --short HEAD`"
 
 export GO111MODULE=on
 export GOPROXY=https://proxy.golang.org
 
-.PHONY: build-envs
-build-envs:
-	$(eval CURRENT_VERSION ?= $(shell gobump show -r pkg/version/))
-	$(eval BUILD_LDFLAGS := "-s -w \
-           -X github.com/sacloud/usacloud/pkg/version.Revision=`git rev-parse --short HEAD` \
-           -X github.com/sacloud/usacloud/pkg/version.Version=$(CURRENT_VERSION)")
-
 .PHONY: default
-default: test build
+default: gen lint test build
 
 .PHONY: run
 run:
@@ -49,7 +43,6 @@ clean-all:
 
 .PHONY: tools
 tools:
-	GO111MODULE=off go get github.com/x-motemen/gobump/cmd/gobump
 	GO111MODULE=off go get golang.org/x/tools/cmd/goimports
 	GO111MODULE=off go get golang.org/x/tools/cmd/stringer
 	GO111MODULE=off go get github.com/sacloud/addlicense
@@ -69,7 +62,7 @@ gen-force: clean-all gen
 .PHONY: build build-x build-darwin build-windows build-linux
 build: bin/usacloud
 
-bin/usacloud: build-envs $(GO_FILES)
+bin/usacloud: $(GO_FILES)
 	OS="`go env GOOS`" ARCH="`go env GOARCH`" ARCHIVE= BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
 build-x: build-darwin build-windows build-linux build-bsd
@@ -82,35 +75,35 @@ build-linux: bin/usacloud_linux-386.zip bin/usacloud_linux-amd64.zip bin/usaclou
 
 build-bsd: bin/usacloud_freebsd-386.zip bin/usacloud_freebsd-amd64.zip
 
-bin/usacloud_darwin-amd64.zip: build-envs
+bin/usacloud_darwin-amd64.zip:
 	OS="darwin"  ARCH="amd64"     ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
-bin/usacloud_windows-386.zip: build-envs
+bin/usacloud_windows-386.zip:
 	OS="windows" ARCH="386"     ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
-bin/usacloud_windows-amd64.zip: build-envs
+bin/usacloud_windows-amd64.zip:
 	OS="windows" ARCH="amd64"     ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
-bin/usacloud_linux-386.zip: build-envs
+bin/usacloud_linux-386.zip:
 	OS="linux"   ARCH="386" ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
-bin/usacloud_linux-amd64.zip: build-envs
+bin/usacloud_linux-amd64.zip:
 	OS="linux"   ARCH="amd64" ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
-bin/usacloud_linux-arm.zip: build-envs
+bin/usacloud_linux-arm.zip:
 	OS="linux"   ARCH="arm" ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
-bin/usacloud_freebsd-386.zip: build-envs
+bin/usacloud_freebsd-386.zip:
 	OS="freebsd"   ARCH="386" ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
-bin/usacloud_freebsd-amd64.zip: build-envs
+bin/usacloud_freebsd-amd64.zip:
 	OS="freebsd"   ARCH="amd64" ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
 .PHONY: rpm deb
-rpm: build-envs build-linux
+rpm: build-linux
 	CURRENT_VERSION="$(CURRENT_VERSION)" sh -c "'$(CURDIR)/scripts/build_rpm.sh'"
 
-deb: build-envs rpm
+deb: rpm
 	CURRENT_VERSION="$(CURRENT_VERSION)" sh -c "'$(CURDIR)/scripts/build_apt.sh'"
 
 .PHONY: test
@@ -159,19 +152,6 @@ docker-build: clean
 
 docker-rpm: clean
 	sh -c "'$(CURDIR)/scripts/build_on_docker.sh' 'rpm'"
-
-.PHONY: bump-patch bump-minor bump-major version
-bump-patch:
-	gobump patch -w
-
-bump-minor:
-	gobump minor -w
-
-bump-major:
-	gobump major -w
-
-git-tag:
-	git tag v`gobump show -r pkg/version`
 
 set-license:
 	@addlicense -c $(AUTHOR) -y $(COPYRIGHT_YEAR) $(COPYRIGHT_FILES)
