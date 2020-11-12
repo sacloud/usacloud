@@ -17,6 +17,7 @@ package tools
 import (
 	"fmt"
 	"go/build"
+	"log"
 	"path/filepath"
 
 	"github.com/sacloud/usacloud/pkg/cmd"
@@ -29,6 +30,14 @@ type GenerateContext struct {
 }
 
 func NewGenerateContext() *GenerateContext {
+	// command schema validation
+	for _, r := range cmd.Resources {
+		for _, c := range r.Commands() {
+			if err := c.ValidateSchema(); err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
 	return &GenerateContext{
 		Resources: NewResources(cmd.Resources),
 	}

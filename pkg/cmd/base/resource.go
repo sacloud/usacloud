@@ -52,13 +52,29 @@ func (r *Resource) CLICommand() *cobra.Command {
 				cmd.HelpFunc()(cmd, args)
 				return nil
 			}
-			return runDefaultCmd(cmd, args, r.DefaultCommandName)
+			return r.runDefaultCmd(cmd, args, r.DefaultCommandName)
 		},
 	}
 	for _, c := range r.Commands() {
-		cmd.AddCommand(c.CLICommand())
+		subCmd := c.CLICommand()
+		cmd.AddCommand(subCmd)
+
+		// フラグの引き継ぎ
+		if c.Name == r.DefaultCommandName {
+			parameter := c.ParameterInitializer().(FlagInitializer)
+			parameter.SetupCobraCommandFlags(cmd)
+		}
 	}
 	return cmd
+}
+
+func (r *Resource) runDefaultCmd(cmd *cobra.Command, args []string, commandName string) error {
+	defaultCmd := lookupCmd(cmd, commandName)
+	if defaultCmd == nil {
+		cmd.HelpFunc()(cmd, args)
+		return nil
+	}
+	return defaultCmd.RunE(defaultCmd, args)
 }
 
 func (r *Resource) Commands() []*Command {
