@@ -56,7 +56,11 @@ func (p *Progress) Exec(f func() error) error {
 	go p.Start()
 	defer p.Stop()
 
-	return f()
+	err := f()
+	if err != nil {
+		p.doneCh <- err
+	}
+	return err
 }
 
 func (p *Progress) msgPrefix() string {

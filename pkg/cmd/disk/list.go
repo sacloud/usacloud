@@ -25,6 +25,7 @@ var listCommand = &base.Command{
 	Order:              10,
 	ServiceFuncAltName: "Find",
 	NoConfirm:          true,
+	NoProgress:         true,
 
 	ParameterInitializer: func() interface{} {
 		return newListParameter()
