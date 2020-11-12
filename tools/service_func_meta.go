@@ -20,6 +20,7 @@ import (
 )
 
 type ServiceFuncMeta struct {
+	HasRequestValue    bool
 	HasReturnValue     bool
 	IsReturnValueSlice bool
 }
@@ -33,14 +34,20 @@ func (c *Command) ServiceFuncReturnValueType() *ServiceFuncMeta {
 			svcType.Name(), c.ServiceFuncName())
 	}
 
+	hasRequest := false
+	numIn := method.Type.NumIn()
+	if numIn > 2 { // [0]はレシーバー、[1]はctx
+		hasRequest = true
+	}
+
 	numOut := method.Type.NumOut()
 	if numOut < 2 { // 戻り値なし(ないはず) or errorのみの場合
-		return &ServiceFuncMeta{HasReturnValue: false, IsReturnValueSlice: false}
+		return &ServiceFuncMeta{HasRequestValue: hasRequest, HasReturnValue: false, IsReturnValueSlice: false}
 	}
 
 	firstReturnValue := method.Type.Out(0)
 	if firstReturnValue.Kind() == reflect.Slice {
-		return &ServiceFuncMeta{HasReturnValue: true, IsReturnValueSlice: true}
+		return &ServiceFuncMeta{HasRequestValue: hasRequest, HasReturnValue: true, IsReturnValueSlice: true}
 	}
-	return &ServiceFuncMeta{HasReturnValue: true, IsReturnValueSlice: false}
+	return &ServiceFuncMeta{HasRequestValue: hasRequest, HasReturnValue: true, IsReturnValueSlice: false}
 }

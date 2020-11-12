@@ -12,23 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate go run github.com/sacloud/usacloud/tools/gen-commands/
-package cmd
+package tools
 
-import (
-	"github.com/sacloud/usacloud/pkg/cmd/authstatus"
-	"github.com/sacloud/usacloud/pkg/cmd/base"
-	"github.com/sacloud/usacloud/pkg/cmd/disk"
-	"github.com/sacloud/usacloud/pkg/cmd/root"
-)
-
-var Resources = []*base.Resource{
-	authstatus.Resource,
-	disk.Resource,
+type ServiceMeta struct {
+	HasFindMethod bool
 }
 
-func initCommands() {
-	for _, r := range Resources {
-		root.Command.AddCommand(r.CLICommand())
-	}
+func (r *Resource) ServiceMeta() *ServiceMeta {
+	funcName := "FindWithContext"
+
+	svcType := r.ServiceType
+	_, ok := svcType.MethodByName(funcName)
+	return &ServiceMeta{HasFindMethod: ok}
 }

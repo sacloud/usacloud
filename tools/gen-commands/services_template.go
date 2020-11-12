@@ -30,7 +30,7 @@ func init() { {{ range .Commands }}{{ if .ParameterInitializer }}
 	setDefaultServiceFunc("{{ .Resource.Name }}", "{{.Name}}", 
 		func (ctx cli.Context, parameter interface{}) ([]interface{}, error) { 
 			svc := service.New(ctx.Client())
-		
+			{{ if .ServiceFuncReturnValueType.HasRequestValue }}
 			req := &service.{{.ServiceRequestTypeName}}{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
 				return nil, err
@@ -38,8 +38,9 @@ func init() { {{ range .Commands }}{{ if .ParameterInitializer }}
 			if err := req.Validate(); err != nil {
 				return nil, err
 			}
+			{{ end }}
 		
-			{{ if .ServiceFuncReturnValueType.HasReturnValue }}res, {{ end }}err := svc.{{ .ServiceFuncName }}(ctx, req)
+			{{ if .ServiceFuncReturnValueType.HasReturnValue }}res, {{ end }}err := svc.{{ .ServiceFuncName }}(ctx{{ if .ServiceFuncReturnValueType.HasRequestValue }}, req{{ end }})
 			if err != nil {
 				return nil, err
 			}
@@ -59,7 +60,7 @@ func init() { {{ range .Commands }}{{ if .ParameterInitializer }}
 			{{ end }}
 		},
 	)
-	setDefaultListAllFunc("{{ .Resource.Name }}", "{{.Name}}", 
+	{{ if .Resource.ServiceMeta.HasFindMethod }}setDefaultListAllFunc("{{ .Resource.Name }}", "{{.Name}}", 
 		func (ctx cli.Context, parameter interface{}) ([]interface{}, error) { 
 			svc := service.New(ctx.Client())
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{ {{ if not .Resource.IsGlobalResource}} Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue(){{ end }} })
@@ -73,7 +74,7 @@ func init() { {{ range .Commands }}{{ if .ParameterInitializer }}
 			}
 			return results, nil
 		},
-	)
+	){{ end -}}
 {{ end }}{{ end -}}
 }
 {{ end }}

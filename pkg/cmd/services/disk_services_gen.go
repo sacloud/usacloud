@@ -64,7 +64,6 @@ func init() {
 			return results, nil
 		},
 	)
-
 	setDefaultServiceFunc("disk", "create",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
@@ -101,7 +100,6 @@ func init() {
 			return results, nil
 		},
 	)
-
 	setDefaultServiceFunc("disk", "update",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())

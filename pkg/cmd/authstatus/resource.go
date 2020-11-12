@@ -12,23 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate go run github.com/sacloud/usacloud/tools/gen-commands/
-package cmd
+package authstatus
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/authstatus"
+	"reflect"
+
+	"github.com/sacloud/libsacloud/v2/helper/service/authstatus"
 	"github.com/sacloud/usacloud/pkg/cmd/base"
-	"github.com/sacloud/usacloud/pkg/cmd/disk"
-	"github.com/sacloud/usacloud/pkg/cmd/root"
 )
 
-var Resources = []*base.Resource{
-	authstatus.Resource,
-	disk.Resource,
-}
-
-func initCommands() {
-	for _, r := range Resources {
-		root.Command.AddCommand(r.CLICommand())
-	}
+var Resource = &base.Resource{
+	Name:               "auth-status",
+	ServiceType:        reflect.TypeOf(&authstatus.Service{}),
+	DefaultCommandName: "read",
+	Category:           base.ResourceCategoryAuth,
+	CommandCategories: []base.Category{
+		{
+			Key:         "basics",
+			DisplayName: "Basics",
+			Order:       10,
+		},
+	},
 }

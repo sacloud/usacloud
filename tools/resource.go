@@ -15,6 +15,8 @@
 package tools
 
 import (
+	"strings"
+
 	"github.com/sacloud/usacloud/pkg/cmd/base"
 	"github.com/sacloud/usacloud/pkg/naming"
 )
@@ -44,6 +46,9 @@ func NewResources(resources []*base.Resource) []*Resource {
 
 func (r *Resource) PackageDirName() string {
 	n := naming.ToLower(r.Name)
+	// ハイフンやアンダーバーは除去する
+	n = strings.ReplaceAll(n, "-", "")
+	n = strings.ReplaceAll(n, "_", "")
 	switch n {
 	case "switch":
 		return "swytch"
