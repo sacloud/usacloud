@@ -55,6 +55,7 @@ type Command struct {
 
 	// コマンド動作関連
 	SelectorType   SelectorType
+	NoProgress     bool // コマンド実行時のプログレス表示の有無
 	NoConfirm      bool
 	ConfirmMessage string
 
@@ -266,6 +267,23 @@ func (c *Command) exec(ctx cli.Context, ids []types.ID) ([]interface{}, error) {
 			return nil, fmt.Errorf("default service func not found: resource:%s command:%s", c.ResourceName(), c.Name)
 		}
 		c.Func = fn
+	}
+
+	// プログレス表示が必要な場合はここでラップする
+	if !c.NoProgress {
+		fn := c.Func
+		c.Func = func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			var results []interface{}
+			err := ctx.ExecWithProgress(func() error {
+				res, err := fn(ctx, parameter)
+				if err != nil {
+					return err
+				}
+				results = res
+				return nil
+			})
+			return results, err
+		}
 	}
 
 	if len(ids) == 0 {
