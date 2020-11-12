@@ -12,29 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package base
+package core
 
-import (
-	"encoding/json"
-	"fmt"
-
-	"github.com/sacloud/usacloud/pkg/cli"
-)
-
-type SkeletonHandler interface {
-	FillValueToSkeleton()
-}
-
-func generateSkeleton(ctx cli.Context, params interface{}) error {
-	v, ok := params.(SkeletonHandler)
-	if ok {
-		v.FillValueToSkeleton()
-	}
-
-	data, err := json.MarshalIndent(v, "", "\t")
-	if err != nil {
-		return fmt.Errorf("marshaling to JSON is failed: %s", err)
-	}
-	_, err = fmt.Fprintln(ctx.IO().Out(), string(data))
-	return err
+type FindParameter struct {
+	Count int `cli:",aliases=max limit,category=filter"`
+	From  int `cli:",aliases=offset,category=filter"`
 }

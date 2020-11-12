@@ -17,12 +17,12 @@ package cmd
 
 import (
 	"github.com/sacloud/usacloud/pkg/cmd/authstatus"
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/cmd/disk"
 	"github.com/sacloud/usacloud/pkg/cmd/root"
 )
 
-var Resources = []*base.Resource{
+var Resources = []*core.Resource{
 	authstatus.Resource,
 	disk.Resource,
 }

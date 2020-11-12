@@ -17,7 +17,7 @@
 package disk
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -32,14 +32,14 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Name, "name", "", p.Name, "")
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
-	fs.VarP(base.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
+	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
 	fs.StringVarP(&p.DiskPlan, "disk-plan", "", p.DiskPlan, "options: [ssd/hdd]")
 	fs.StringVarP(&p.Connection, "connection", "", p.Connection, "options: [virtio/ide]")
-	fs.VarP(base.NewIDFlag(&p.SourceDiskID, &p.SourceDiskID), "source-disk-id", "", "")
-	fs.VarP(base.NewIDFlag(&p.SourceArchiveID, &p.SourceArchiveID), "source-archive-id", "", "")
-	fs.VarP(base.NewIDFlag(&p.ServerID, &p.ServerID), "server-id", "", "")
+	fs.VarP(core.NewIDFlag(&p.SourceDiskID, &p.SourceDiskID), "source-disk-id", "", "")
+	fs.VarP(core.NewIDFlag(&p.SourceArchiveID, &p.SourceArchiveID), "source-archive-id", "", "")
+	fs.VarP(core.NewIDFlag(&p.ServerID, &p.ServerID), "server-id", "", "")
 	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "")
-	fs.VarP(base.NewIDSliceFlag(&p.DistantFrom, &p.DistantFrom), "distant-from", "", "")
+	fs.VarP(core.NewIDSliceFlag(&p.DistantFrom, &p.DistantFrom), "distant-from", "", "")
 	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [centos/centos8/centos7/centos6/ubuntu/ubuntu2004/ubuntu1804/ubuntu1604/debian/debian10/debian9/coreos/rancheros/k3os/kusanagi/freebsd/windows2016/windows2016-rds/windows2016-rds-office/windows2016-sql-web/windows2016-sql-standard/windows2016-sql-standard-all/windows2016-sql2017-standard/windows2016-sql2017-enterprise/windows2016-sql2017-standard-all/windows2019/windows2019-rds/windows2019-rds-office2019/windows2019-sql2017-web/windows2019-sql2019-web/windows2019-sql2017-standard/windows2019-sql2019-standard/windows2019-sql2017-enterprise/windows2019-sql2019-enterprise/windows2019-sql2017-standard-all/windows2019-sql2019-standard-all]")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
@@ -62,7 +62,7 @@ func (p *createParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 }
 
 func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
-	var sets []*base.FlagSet
+	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("disk", pflag.ContinueOnError)
@@ -78,7 +78,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("size"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("distant-from"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("os-type"))
-		sets = append(sets, &base.FlagSet{
+		sets = append(sets, &core.FlagSet{
 			Title: "Disk options",
 			Flags: fs,
 		})
@@ -87,7 +87,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		sets = append(sets, &base.FlagSet{
+		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,
 		})
@@ -101,7 +101,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("format-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
-		sets = append(sets, &base.FlagSet{
+		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
 			Flags: fs,
 		})
@@ -110,13 +110,13 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("default", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
-		sets = append(sets, &base.FlagSet{
+		sets = append(sets, &core.FlagSet{
 			Title: "Other options",
 			Flags: fs,
 		})
 	}
 
-	base.BuildFlagsUsage(cmd, sets)
+	core.BuildFlagsUsage(cmd, sets)
 }
 
 func (p *createParameter) SetupCobraCommandFlags(cmd *cobra.Command) {

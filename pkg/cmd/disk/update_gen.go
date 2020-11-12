@@ -19,7 +19,7 @@ package disk
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -62,7 +62,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.Name, "name", "", "", "")
 	fs.StringVarP(p.Description, "description", "", "", "")
 	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
-	fs.VarP(base.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
+	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
 	fs.StringVarP(p.Connection, "connection", "", "", "options: [virtio/ide]")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
@@ -85,7 +85,7 @@ func (p *updateParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 }
 
 func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
-	var sets []*base.FlagSet
+	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("disk", pflag.ContinueOnError)
@@ -94,7 +94,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("connection"))
-		sets = append(sets, &base.FlagSet{
+		sets = append(sets, &core.FlagSet{
 			Title: "Disk options",
 			Flags: fs,
 		})
@@ -103,7 +103,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
-		sets = append(sets, &base.FlagSet{
+		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,
 		})
@@ -117,7 +117,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("format-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
-		sets = append(sets, &base.FlagSet{
+		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
 			Flags: fs,
 		})
@@ -126,13 +126,13 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("default", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
-		sets = append(sets, &base.FlagSet{
+		sets = append(sets, &core.FlagSet{
 			Title: "Other options",
 			Flags: fs,
 		})
 	}
 
-	base.BuildFlagsUsage(cmd, sets)
+	core.BuildFlagsUsage(cmd, sets)
 }
 
 func (p *updateParameter) SetupCobraCommandFlags(cmd *cobra.Command) {

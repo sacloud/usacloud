@@ -21,7 +21,7 @@ import (
 
 	"github.com/sacloud/usacloud/pkg/validate"
 
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 
 	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
 
@@ -36,7 +36,7 @@ import (
 func TestCreate_ConvertToServiceRequest(t *testing.T) {
 	t.Run("full", func(t *testing.T) {
 		in := &createParameter{
-			ZoneParameter: base.ZoneParameter{Zone: "is1a"},
+			ZoneParameter: core.ZoneParameter{Zone: "is1a"},
 			Name:          "name",
 			Description:   "desc",
 			Tags:          []string{"tag1", "tag2"},
@@ -83,7 +83,7 @@ func TestCreateParameter_Validate(t *testing.T) {
 		// minimum
 		{
 			in: &createParameter{
-				ZoneParameter: base.ZoneParameter{
+				ZoneParameter: core.ZoneParameter{
 					Zone: "is1a",
 				},
 				Name:       "foobar",
@@ -95,7 +95,7 @@ func TestCreateParameter_Validate(t *testing.T) {
 		// invalid tags length
 		{
 			in: &createParameter{
-				ZoneParameter: base.ZoneParameter{
+				ZoneParameter: core.ZoneParameter{
 					Zone: "is1a",
 				},
 				Name:       "foobar",
@@ -111,7 +111,7 @@ func TestCreateParameter_Validate(t *testing.T) {
 		// invalid tags body
 		{
 			in: &createParameter{
-				ZoneParameter: base.ZoneParameter{
+				ZoneParameter: core.ZoneParameter{
 					Zone: "is1a",
 				},
 				Name:       "foobar",

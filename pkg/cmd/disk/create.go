@@ -16,10 +16,10 @@ package disk
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
-var createCommand = &base.Command{
+var createCommand = &core.Command{
 	Name:     "create",
 	Category: "basics",
 	Order:    20,
@@ -30,7 +30,7 @@ var createCommand = &base.Command{
 }
 
 type createParameter struct {
-	base.ZoneParameter `cli:",squash" mapconv:",squash"`
+	core.ZoneParameter `cli:",squash" mapconv:",squash"`
 
 	Name            string     `cli:",category=disk" validate:"required"`
 	Description     string     `cli:",category=disk" validate:"description"`
@@ -45,8 +45,8 @@ type createParameter struct {
 	DistantFrom     []types.ID `cli:",category=disk"`
 	OSType          string     `cli:",category=disk,options=os_type" mapconv:",filters=os_type" validate:"omitempty,os_type"`
 
-	base.ConfirmParameter `cli:",squash" mapconv:"-"`
-	base.OutputParameter  `cli:",squash" mapconv:"-"`
+	core.ConfirmParameter `cli:",squash" mapconv:"-"`
+	core.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 func newCreateParameter() *createParameter {

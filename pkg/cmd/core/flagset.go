@@ -12,14 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package base
+package core
 
-type Category struct {
-	Key         string
-	DisplayName string
-	Order       int
+import (
+	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
+)
+
+type FlagSet struct {
+	Title string
+	Flags *pflag.FlagSet
 }
 
-func (c *Category) Equals(target *Category) bool {
-	return c.Key == target.Key
+type FlagInitializer interface {
+	SetupCobraCommandFlags(cmd *cobra.Command)
+}
+
+type FlagValueCleaner interface {
+	CleanupEmptyValue(flags *pflag.FlagSet)
 }

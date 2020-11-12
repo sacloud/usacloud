@@ -12,24 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package base
+package core
 
-import "github.com/sacloud/libsacloud/v2/sacloud/types"
-
-// IDParameter IDを指定して操作する必要があるリソースが実装すべきIDパラメータの定義
-type IDParameter struct {
-	ID types.ID `cli:"-" validate:"required"` // 念のためvalidateタグを指定しているが、base.CommandでSelectorTypeに応じて独自にバリデーションされる
+type ConfirmParameter struct {
+	AssumeYes bool `cli:"assumeyes,short=y,category=input,desc=Assume that the answer to any question which would be asked is yes"`
 }
 
-func (p *IDParameter) IDFlagValue() types.ID {
-	return p.ID
+func (p *ConfirmParameter) AssumeYesFlagValue() bool {
+	return p.AssumeYes
 }
 
-func (p *IDParameter) SetIDFlagValue(id types.ID) {
-	p.ID = id
-}
-
-type IDParameterValueHandler interface {
-	IDFlagValue() types.ID
-	SetIDFlagValue(id types.ID)
+type ConfirmParameterValueHandler interface {
+	AssumeYesFlagValue() bool
 }

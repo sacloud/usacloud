@@ -18,14 +18,14 @@ import (
 	"reflect"
 
 	"github.com/sacloud/libsacloud/v2/helper/service/disk"
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
-var Resource = &base.Resource{
+var Resource = &core.Resource{
 	Name:        "disk",
 	ServiceType: reflect.TypeOf(&disk.Service{}),
-	Category:    base.ResourceCategoryStorage,
-	CommandCategories: []base.Category{
+	Category:    core.ResourceCategoryStorage,
+	CommandCategories: []core.Category{
 		{
 			Key:         "basics",
 			DisplayName: "Basics",

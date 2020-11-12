@@ -12,22 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package base
+package core
 
-import (
-	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
-)
-
-type FlagSet struct {
-	Title string
-	Flags *pflag.FlagSet
+type ZoneParameter struct {
+	Zone string `validate:"required"`
 }
 
-type FlagInitializer interface {
-	SetupCobraCommandFlags(cmd *cobra.Command)
+func (p *ZoneParameter) ZoneFlagValue() string {
+	return p.Zone
 }
 
-type FlagValueCleaner interface {
-	CleanupEmptyValue(flags *pflag.FlagSet)
+func (p *ZoneParameter) SetZoneFlagValue(zone string) {
+	p.Zone = zone
 }

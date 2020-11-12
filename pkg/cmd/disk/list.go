@@ -15,10 +15,10 @@
 package disk
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
-var listCommand = &base.Command{
+var listCommand = &core.Command{
 	Name:               "list",
 	Aliases:            []string{"ls", "find", "select"},
 	Category:           "basics",
@@ -33,13 +33,13 @@ var listCommand = &base.Command{
 }
 
 type listParameter struct {
-	base.ZoneParameter `cli:",squash" mapconv:",squash"`
+	core.ZoneParameter `cli:",squash" mapconv:",squash"`
 
 	Names              []string `cli:",category=filter"`
 	Tags               []string `cli:",category=filter"`
-	base.FindParameter `cli:",squash" mapconv:",squash"`
+	core.FindParameter `cli:",squash" mapconv:",squash"`
 
-	base.OutputParameter `cli:",squash" mapconv:"-"`
+	core.OutputParameter `cli:",squash" mapconv:"-"`
 }
 
 func newListParameter() *listParameter {

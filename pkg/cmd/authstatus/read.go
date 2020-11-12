@@ -15,11 +15,11 @@
 package authstatus
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/output"
 )
 
-var readCommand = &base.Command{
+var readCommand = &core.Command{
 	Name:       "read",
 	Aliases:    []string{"show"},
 	Category:   "basics",
@@ -42,7 +42,7 @@ var readCommand = &base.Command{
 }
 
 type readParameter struct {
-	base.OutputParameter `cli:",squash" mapconv:"-"`
+	core.OutputParameter `cli:",squash" mapconv:"-"`
 }
 
 func newReadParameter() *readParameter {

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package base
+package core
 
 type OutputParameter struct {
 	OutputType string `cli:",short=o,aliases=out,category=output,desc=Output format: one of the following [table/json/yaml]"`

@@ -17,12 +17,12 @@ package tools
 import (
 	"sort"
 
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/tools/clitag"
 )
 
 type CategorizedParameterFields struct {
-	*base.Category
+	*core.Category
 	Fields []clitag.StructField
 }
 

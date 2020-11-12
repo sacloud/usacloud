@@ -12,16 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package base
+package core
 
-type ZoneParameter struct {
-	Zone string `validate:"required"`
+type Category struct {
+	Key         string
+	DisplayName string
+	Order       int
 }
 
-func (p *ZoneParameter) ZoneFlagValue() string {
-	return p.Zone
-}
-
-func (p *ZoneParameter) SetZoneFlagValue(zone string) {
-	p.Zone = zone
+func (c *Category) Equals(target *Category) bool {
+	return c.Key == target.Key
 }

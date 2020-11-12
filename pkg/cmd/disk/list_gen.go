@@ -17,7 +17,7 @@
 package disk
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -59,7 +59,7 @@ func (p *listParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.N
 }
 
 func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
-	var sets []*base.FlagSet
+	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("filter", pflag.ContinueOnError)
@@ -67,7 +67,7 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("count"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("from"))
-		sets = append(sets, &base.FlagSet{
+		sets = append(sets, &core.FlagSet{
 			Title: "Filter options",
 			Flags: fs,
 		})
@@ -81,7 +81,7 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("format-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
-		sets = append(sets, &base.FlagSet{
+		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
 			Flags: fs,
 		})
@@ -90,13 +90,13 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("default", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
-		sets = append(sets, &base.FlagSet{
+		sets = append(sets, &core.FlagSet{
 			Title: "Other options",
 			Flags: fs,
 		})
 	}
 
-	base.BuildFlagsUsage(cmd, sets)
+	core.BuildFlagsUsage(cmd, sets)
 }
 
 func (p *listParameter) SetupCobraCommandFlags(cmd *cobra.Command) {

@@ -18,15 +18,15 @@ import (
 	"reflect"
 
 	"github.com/sacloud/libsacloud/v2/helper/service/authstatus"
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
-var Resource = &base.Resource{
+var Resource = &core.Resource{
 	Name:               "auth-status",
 	ServiceType:        reflect.TypeOf(&authstatus.Service{}),
 	DefaultCommandName: "read",
-	Category:           base.ResourceCategoryAuth,
-	CommandCategories: []base.Category{
+	Category:           core.ResourceCategoryAuth,
+	CommandCategories: []core.Category{
 		{
 			Key:         "basics",
 			DisplayName: "Basics",

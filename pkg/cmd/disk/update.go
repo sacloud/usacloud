@@ -16,14 +16,14 @@ package disk
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
-var updateCommand = &base.Command{
+var updateCommand = &core.Command{
 	Name:         "update",
 	Category:     "basics",
 	Order:        40,
-	SelectorType: base.SelectorTypeRequireMulti,
+	SelectorType: core.SelectorTypeRequireMulti,
 
 	ParameterInitializer: func() interface{} {
 		return newUpdateParameter()
@@ -31,8 +31,8 @@ var updateCommand = &base.Command{
 }
 
 type updateParameter struct {
-	base.ZoneParameter `cli:",squash" mapconv:",squash"`
-	base.IDParameter   `cli:",squash" mapconv:",squash"`
+	core.ZoneParameter `cli:",squash" mapconv:",squash"`
+	core.IDParameter   `cli:",squash" mapconv:",squash"`
 
 	Name        *string   `cli:",category=disk" validate:"omitempty,min=1"`
 	Description *string   `cli:",category=disk" validate:"omitempty,description"`
@@ -40,8 +40,8 @@ type updateParameter struct {
 	IconID      *types.ID `cli:",category=disk"`
 	Connection  *string   `cli:",category=disk,options=disk_connection" validate:"omitempty,disk_connection"`
 
-	base.ConfirmParameter `cli:",squash" mapconv:"-"`
-	base.OutputParameter  `cli:",squash" mapconv:"-"`
+	core.ConfirmParameter `cli:",squash" mapconv:"-"`
+	core.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 func newUpdateParameter() *updateParameter {

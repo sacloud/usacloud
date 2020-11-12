@@ -17,7 +17,7 @@
 package authstatus
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -48,7 +48,7 @@ func (p *readParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.N
 }
 
 func (p *readParameter) buildFlagsUsage(cmd *cobra.Command) {
-	var sets []*base.FlagSet
+	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)
@@ -58,13 +58,13 @@ func (p *readParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("format-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
-		sets = append(sets, &base.FlagSet{
+		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
 			Flags: fs,
 		})
 	}
 
-	base.BuildFlagsUsage(cmd, sets)
+	core.BuildFlagsUsage(cmd, sets)
 }
 
 func (p *readParameter) SetupCobraCommandFlags(cmd *cobra.Command) {

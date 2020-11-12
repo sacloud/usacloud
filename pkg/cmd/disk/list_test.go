@@ -19,18 +19,18 @@ import (
 
 	"github.com/sacloud/libsacloud/v2/helper/service/disk"
 	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/stretchr/testify/require"
 )
 
 func TestList_ConvertToServiceRequest(t *testing.T) {
 	in := &listParameter{
-		ZoneParameter: base.ZoneParameter{
+		ZoneParameter: core.ZoneParameter{
 			Zone: "is1b",
 		},
 		Names: []string{"name1", "name2"},
 		Tags:  []string{"tag1", "tag2"},
-		FindParameter: base.FindParameter{
+		FindParameter: core.FindParameter{
 			Count: 1,
 			From:  2,
 		},
