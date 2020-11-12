@@ -12,10 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package cmd
 
-import "github.com/sacloud/usacloud/pkg/cmd"
+import (
+	"os"
 
-func main() {
-	cmd.Run()
+	"github.com/sacloud/usacloud/pkg/cmd/root"
+)
+
+func Run() {
+	initCommands()
+	if err := root.Command.Execute(); err != nil {
+		os.Exit(1)
+	}
 }

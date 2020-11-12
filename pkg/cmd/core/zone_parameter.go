@@ -12,10 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package core
 
-import "github.com/sacloud/usacloud/pkg/cmd"
+type ZoneParameter struct {
+	Zone string `validate:"required"`
+}
 
-func main() {
-	cmd.Run()
+func (p *ZoneParameter) ZoneFlagValue() string {
+	return p.Zone
+}
+
+func (p *ZoneParameter) SetZoneFlagValue(zone string) {
+	p.Zone = zone
 }

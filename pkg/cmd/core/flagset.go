@@ -12,10 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package core
 
-import "github.com/sacloud/usacloud/pkg/cmd"
+import (
+	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
+)
 
-func main() {
-	cmd.Run()
+type FlagSet struct {
+	Title string
+	Flags *pflag.FlagSet
+}
+
+type FlagInitializer interface {
+	SetupCobraCommandFlags(cmd *cobra.Command)
+}
+
+type FlagValueCleaner interface {
+	CleanupEmptyValue(flags *pflag.FlagSet)
 }

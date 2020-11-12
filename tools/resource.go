@@ -17,16 +17,16 @@ package tools
 import (
 	"strings"
 
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/naming"
 )
 
 type Resource struct {
-	*base.Resource
+	*core.Resource
 	Commands []*Command
 }
 
-func NewResource(r *base.Resource) *Resource {
+func NewResource(r *core.Resource) *Resource {
 	resource := &Resource{Resource: r}
 
 	for _, command := range r.Commands() {
@@ -36,7 +36,7 @@ func NewResource(r *base.Resource) *Resource {
 	return resource
 }
 
-func NewResources(resources []*base.Resource) []*Resource {
+func NewResources(resources []*core.Resource) []*Resource {
 	var results []*Resource
 	for _, r := range resources {
 		results = append(results, NewResource(r))

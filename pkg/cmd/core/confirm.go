@@ -12,10 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package core
 
-import "github.com/sacloud/usacloud/pkg/cmd"
+type ConfirmParameter struct {
+	AssumeYes bool `cli:"assumeyes,short=y,category=input,desc=Assume that the answer to any question which would be asked is yes"`
+}
 
-func main() {
-	cmd.Run()
+func (p *ConfirmParameter) AssumeYesFlagValue() bool {
+	return p.AssumeYes
+}
+
+type ConfirmParameterValueHandler interface {
+	AssumeYesFlagValue() bool
 }

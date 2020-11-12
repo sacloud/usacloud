@@ -20,16 +20,16 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
-	"github.com/sacloud/usacloud/pkg/cmd/base"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/tools/clitag"
 )
 
 type Command struct {
-	*base.Command
+	*core.Command
 	Resource *Resource
 }
 
-func NewCommand(r *Resource, c *base.Command) *Command {
+func NewCommand(r *Resource, c *core.Command) *Command {
 	return &Command{Command: c, Resource: r}
 }
 
@@ -103,7 +103,7 @@ func (c *Command) cliFlagDefinitionStatement(parameterVariableName string, field
 
 	statement := ""
 	if isLibsacloudIDType(fieldType) {
-		statement = `VarP(base.NewIDFlag(%s, %s), "%s", "%s", "%s")`
+		statement = `VarP(core.NewIDFlag(%s, %s), "%s", "%s", "%s")`
 		return fmt.Sprintf(statement, fieldPointerVar, fieldPointerVar, name, shorthands, usage)
 	} else {
 		switch fieldType.Kind() {
@@ -119,7 +119,7 @@ func (c *Command) cliFlagDefinitionStatement(parameterVariableName string, field
 			statement = `StringVarP(%s, "%s", "%s", %s, "%s")`
 		case reflect.Slice:
 			if isLibsacloudIDType(fieldType.Elem()) {
-				statement = `VarP(base.NewIDSliceFlag(%s, %s), "%s", "%s", "%s")`
+				statement = `VarP(core.NewIDSliceFlag(%s, %s), "%s", "%s", "%s")`
 				return fmt.Sprintf(statement, fieldPointerVar, fieldPointerVar, name, shorthands, usage)
 			} else {
 				switch fieldType.Elem().Kind() {

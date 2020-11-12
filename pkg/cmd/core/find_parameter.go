@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package core
 
-import "github.com/sacloud/usacloud/pkg/cmd"
-
-func main() {
-	cmd.Run()
+type FindParameter struct {
+	Count int `cli:",aliases=max limit,category=filter"`
+	From  int `cli:",aliases=offset,category=filter"`
 }

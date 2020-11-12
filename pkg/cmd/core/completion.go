@@ -12,23 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate go run github.com/sacloud/usacloud/tools/gen-commands/
-package cmd
+package core
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/pkg/cmd/funcs/authstatus"
-	"github.com/sacloud/usacloud/pkg/cmd/funcs/disk"
+	"os"
+
 	"github.com/sacloud/usacloud/pkg/cmd/root"
+
+	"github.com/spf13/cobra"
 )
 
-var Resources = []*core.Resource{
-	authstatus.Resource,
-	disk.Resource,
+// completionCmd represents the completion command
+var completionCmd = &cobra.Command{
+	Use:   "completion",
+	Short: "Generates bash completion scripts",
+	Long: `To load completion run
+
+. <(usacloud completion)
+
+To configure your bash shell to load completions for each session add to your bashrc
+
+# ~/.bashrc or ~/.profile
+. <(usacloud completion)
+`,
+	Hidden: true,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return root.Command.GenBashCompletion(os.Stdout)
+	},
 }
 
-func initCommands() {
-	for _, r := range Resources {
-		root.Command.AddCommand(r.CLICommand())
-	}
+func init() {
+	root.Command.AddCommand(completionCmd)
 }

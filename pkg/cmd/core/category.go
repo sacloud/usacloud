@@ -12,10 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package core
 
-import "github.com/sacloud/usacloud/pkg/cmd"
+type Category struct {
+	Key         string
+	DisplayName string
+	Order       int
+}
 
-func main() {
-	cmd.Run()
+func (c *Category) Equals(target *Category) bool {
+	return c.Key == target.Key
 }

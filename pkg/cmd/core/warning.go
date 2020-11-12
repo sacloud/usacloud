@@ -12,10 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package core
 
-import "github.com/sacloud/usacloud/pkg/cmd"
+import (
+	"fmt"
+	"io"
 
-func main() {
-	cmd.Run()
+	"github.com/fatih/color"
+)
+
+func (c *Command) printWarning(writer io.Writer, noColor bool, warn string) {
+	if warn == "" {
+		return
+	}
+	if noColor {
+		fmt.Fprintf(writer, "[WARN] %s\n", warn) // nolint
+	} else {
+		out := color.New(color.FgYellow)
+		out.Fprintf(writer, "[WARN] %s\n", warn) // nolint
+	}
 }

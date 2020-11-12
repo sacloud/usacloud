@@ -12,10 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package authstatus
 
-import "github.com/sacloud/usacloud/pkg/cmd"
+import (
+	"reflect"
 
-func main() {
-	cmd.Run()
+	"github.com/sacloud/libsacloud/v2/helper/service/authstatus"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
+)
+
+var Resource = &core.Resource{
+	Name:               "auth-status",
+	ServiceType:        reflect.TypeOf(&authstatus.Service{}),
+	DefaultCommandName: "read",
+	Category:           core.ResourceCategoryAuth,
+	CommandCategories: []core.Category{
+		{
+			Key:         "basics",
+			DisplayName: "Basics",
+			Order:       10,
+		},
+	},
 }
