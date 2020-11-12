@@ -15,7 +15,7 @@
 package base
 
 type ZoneParameter struct {
-	Zone string
+	Zone string `validate:"required"`
 }
 
 func (p *ZoneParameter) ZoneFlagValue() string {

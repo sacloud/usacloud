@@ -51,7 +51,3 @@ func errorMessageFromErr(err validator.FieldError) string {
 	msg := fmt.Sprintf("\t%s: %s", flagName, detail)
 	return msg
 }
-
-func init() {
-	// TODO カスタムバリデーションはここで定義
-}

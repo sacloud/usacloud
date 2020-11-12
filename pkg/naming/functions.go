@@ -104,7 +104,11 @@ func ToCLIFlag(name string) string {
 	if len(name) == 1 {
 		format = "-%s"
 	}
-	return fmt.Sprintf(format, ToKebabCase(name))
+	// HACK nameに"tags[0]"のようなものがきた場合、tags[-0]となる。
+	// さほど登場パターンはないため"[-"を置き換えれば実用に足るはず
+	v := ToKebabCase(name)
+	v = strings.ReplaceAll(v, "[-", "[")
+	return fmt.Sprintf(format, v)
 }
 
 func FlattenStringList(list []string) string {

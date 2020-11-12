@@ -34,10 +34,10 @@ type updateParameter struct {
 	base.IDParameter   `cli:",squash" mapconv:",squash"`
 
 	Name        *string   `cli:",category=disk" validate:"omitempty,min=1"`
-	Description *string   `cli:",category=disk" validate:"omitempty,min=1,max=512"`
-	Tags        *[]string `cli:",category=disk"`
+	Description *string   `cli:",category=disk" validate:"omitempty,description"`
+	Tags        *[]string `cli:",category=disk" validate:"omitempty,tags"`
 	IconID      *types.ID `cli:",category=disk"`
-	Connection  *string   `cli:",category=disk,options=disk_connection"`
+	Connection  *string   `cli:",category=disk,options=disk_connection" validate:"omitempty,disk_connection"`
 
 	base.ConfirmParameter `cli:",squash" mapconv:"-"`
 	base.OutputParameter  `cli:",squash" mapconv:"-"`
