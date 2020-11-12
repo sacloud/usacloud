@@ -12,14 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package tools
+package core
 
-import (
-	"fmt"
-
-	"github.com/sacloud/usacloud/pkg/naming"
-)
-
-func (c *Command) CLICommandGeneratedSourceFile() string {
-	return fmt.Sprintf("zz_%s_gen.go", naming.ToSnakeCase(c.Name))
+// MonitorParameter Monitor系APIで共通のパラメータ
+type MonitorParameter struct {
+	Start string `cli:",category=monitor" mapconv:",omitempty,filters=rfc3339"`
+	End   string `cli:",category=monitor" mapconv:",omitempty,filters=rfc3339"`
 }

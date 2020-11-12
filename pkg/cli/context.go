@@ -179,11 +179,11 @@ func (c *cliContext) Args() []string {
 
 func getOutputWriter(io IO, columnDefs []output.ColumnDef, rawOptions interface{}) output.Output {
 	if rawOptions == nil {
-		return nil // TODO 何かエラーを返した方がいいかも
+		return output.NewDiscardOutput()
 	}
 	options, ok := rawOptions.(output.Option)
 	if !ok {
-		return nil // TODO 何かエラーを返した方がいいかも
+		return output.NewDiscardOutput()
 	}
 
 	out := io.Out()

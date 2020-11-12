@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package tools
+package output
 
-import (
-	"fmt"
+type discardOutput struct{}
 
-	"github.com/sacloud/usacloud/pkg/naming"
-)
+func NewDiscardOutput() Output {
+	return &discardOutput{}
+}
 
-func (c *Command) CLICommandGeneratedSourceFile() string {
-	return fmt.Sprintf("zz_%s_gen.go", naming.ToSnakeCase(c.Name))
+func (o *discardOutput) Print(target interface{}) error {
+	return nil
 }

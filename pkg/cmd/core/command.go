@@ -254,7 +254,7 @@ func (c *Command) expandIDsFromArgs(ctx cli.Context, parameter interface{}, args
 	}
 
 	if c.SelectorType == SelectorTypeRequireSingle && len(resources) > 1 {
-		return nil, fmt.Errorf("target resource not found: query=[%q]", args)
+		return nil, fmt.Errorf("target resource not found: query=%q", args)
 	}
 
 	var ids []types.ID
@@ -266,9 +266,9 @@ func (c *Command) expandIDsFromArgs(ctx cli.Context, parameter interface{}, args
 					ids = append(ids, v.GetID())
 				}
 
-				// Name
+				// Name(部分一致)
 				if name, ok := r.(accessor.Name); ok {
-					if name.GetName() == arg {
+					if strings.Contains(name.GetName(), arg) {
 						ids = append(ids, v.GetID())
 					}
 				}
@@ -284,7 +284,12 @@ func (c *Command) expandIDsFromArgs(ctx cli.Context, parameter interface{}, args
 			}
 		}
 	}
-	return util.UniqIDs(ids), nil
+
+	ids = util.UniqIDs(ids)
+	if len(ids) == 0 {
+		return nil, fmt.Errorf("target resource not found: query=%q", args)
+	}
+	return ids, nil
 }
 
 func (c *Command) exec(ctx cli.Context, ids []types.ID) ([]interface{}, error) {

@@ -104,11 +104,11 @@ func (r *Resource) AddCommand(command *Command) {
 				}
 			}
 			cat.Commands = append(cat.Commands, command)
+			found = true
+			sort.Slice(cat.Commands, func(i, j int) bool {
+				return cat.Commands[i].Order < cat.Commands[j].Order
+			})
 		}
-		sort.Slice(cat.Commands, func(i, j int) bool {
-			return cat.Commands[i].Order < cat.Commands[j].Order
-		})
-		found = true
 	}
 
 	if !found {

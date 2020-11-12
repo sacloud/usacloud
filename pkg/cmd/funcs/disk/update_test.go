@@ -120,7 +120,6 @@ func TestUpdateParameter_Validate(t *testing.T) {
 			err: errors.New(strings.Join([]string{
 				"validation error:",
 				"\t--zone: required",
-				"\t--id: required",
 			}, "\n")),
 		},
 		// valid
