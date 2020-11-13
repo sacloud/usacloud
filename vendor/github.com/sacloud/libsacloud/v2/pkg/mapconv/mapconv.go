@@ -96,12 +96,12 @@ func (d *Decoder) ConvertTo(source interface{}, dest interface{}) error {
 			}
 
 			if tags.Squash {
-				d := Map(make(map[string]interface{}))
-				err := ConvertTo(value, &d)
+				dest := Map(make(map[string]interface{}))
+				err := d.ConvertTo(value, &dest)
 				if err != nil {
 					return err
 				}
-				for k, v := range d {
+				for k, v := range dest {
 					destMap.Set(k, v)
 				}
 				continue
@@ -113,7 +113,7 @@ func (d *Decoder) ConvertTo(source interface{}, dest interface{}) error {
 				for _, v := range values {
 					if structs.IsStruct(v) {
 						destMap := Map(make(map[string]interface{}))
-						if err := ConvertTo(v, &destMap); err != nil {
+						if err := d.ConvertTo(v, &destMap); err != nil {
 							return err
 						}
 						dest = append(dest, destMap)
@@ -208,11 +208,11 @@ func (d *Decoder) ConvertFrom(source interface{}, dest interface{}) error {
 						dest = append(dest, v)
 						continue
 					}
-					d := reflect.New(t).Interface()
-					if err := ConvertFrom(v, d); err != nil {
+					dt := reflect.New(t).Interface()
+					if err := d.ConvertFrom(v, dt); err != nil {
 						return err
 					}
-					dest = append(dest, d)
+					dest = append(dest, dt)
 				}
 
 				if dest != nil {
