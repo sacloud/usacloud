@@ -22,7 +22,7 @@ import (
 // TODO 未実装
 var applyCommand = &core.Command{ // nolint TODO あとでnolintを消す
 	Name:         "apply",
-	Category:     "basics",
+	Category:     "basic",
 	Order:        40,
 	SelectorType: core.SelectorTypeNone, // TODO 将来的には作成(ID不要) + 更新(ID必要)をサポートしたい、この際にSelectorTypeを増やすべきかも
 

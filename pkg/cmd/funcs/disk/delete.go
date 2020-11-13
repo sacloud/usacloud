@@ -21,7 +21,7 @@ import (
 var deleteCommand = &core.Command{
 	Name:         "delete",
 	Aliases:      []string{"rm"},
-	Category:     "basics",
+	Category:     "basic",
 	Order:        50,
 	SelectorType: core.SelectorTypeRequireMulti,
 

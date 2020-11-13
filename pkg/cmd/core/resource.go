@@ -65,6 +65,8 @@ func (r *Resource) CLICommand() *cobra.Command {
 			parameter.SetupCobraCommandFlags(cmd)
 		}
 	}
+
+	buildCommandsUsage(cmd, r.CategorizedCommands())
 	return cmd
 }
 
@@ -75,6 +77,13 @@ func (r *Resource) runDefaultCmd(cmd *cobra.Command, args []string, commandName 
 		return nil
 	}
 	return defaultCmd.RunE(defaultCmd, args)
+}
+
+func (r *Resource) CategorizedCommands() []*CategorizedCommands {
+	sort.Slice(r.categorizedCommands, func(i, j int) bool {
+		return r.categorizedCommands[i].Category.Order < r.categorizedCommands[j].Category.Order
+	})
+	return r.categorizedCommands
 }
 
 func (r *Resource) Commands() []*Command {
