@@ -16,6 +16,7 @@ package conv
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
 
@@ -29,6 +30,7 @@ var converter = &mapconv.Decoder{
 		FilterFuncs: map[string]mapconv.FilterFunc{
 			"disk_plan_to_id": diskPlanToID,
 			"os_type":         strToOSType,
+			"rfc3339":         strToTime,
 		},
 	},
 }
@@ -70,4 +72,26 @@ func strToOSType(v interface{}) (interface{}, error) {
 		return nil, fmt.Errorf("os type %s not found", s)
 	}
 	return ot, nil
+}
+
+func strToTime(v interface{}) (interface{}, error) {
+	s, ok := v.(string)
+	if !ok {
+		return nil, fmt.Errorf("invalid time format: %v", v)
+	}
+	if s == "" {
+		return time.Time{}, nil
+	}
+
+	allowDatetimeFormatList := []string{
+		time.RFC3339,
+	}
+	for _, format := range allowDatetimeFormatList {
+		d, err := time.Parse(format, s)
+		if err == nil {
+			// success
+			return d, nil
+		}
+	}
+	return nil, fmt.Errorf("invalid time format: %v", v)
 }
