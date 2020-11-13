@@ -22,7 +22,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/root"
 )
 
-var Resources = []*core.Resource{
+var Resources = core.Resources{
 	authstatus.Resource,
 	disk.Resource,
 }
@@ -31,4 +31,5 @@ func initCommands() {
 	for _, r := range Resources {
 		root.Command.AddCommand(r.CLICommand())
 	}
+	core.BuildRootCommandsUsage(root.Command, Resources.CategorizedResources())
 }

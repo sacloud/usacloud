@@ -21,7 +21,7 @@ import (
 
 var updateCommand = &core.Command{
 	Name:         "update",
-	Category:     "basics",
+	Category:     "basic",
 	Order:        40,
 	SelectorType: core.SelectorTypeRequireMulti,
 

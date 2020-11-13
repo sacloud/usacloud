@@ -18,13 +18,76 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/sacloud/usacloud/pkg/version"
+
 	"github.com/spf13/cobra"
 )
+
+const originalCommandsUsage = `Available Commands:{{range .Commands}}{{if (or .IsAvailableCommand (eq .Name "help"))}}
+  {{rpad .Name .NamePadding }} {{.Short}}{{end}}{{end}}`
+
+const commandUsageTemplate = ` === %s ===
+%s
+`
+
+const commandUsageWrapperTemplate = `Available Commands:
+%s`
+
+func buildRootCommandUsages(rootCmd *cobra.Command, resources []*Resource) string {
+	line := "    %s %s"
+	var usages []string
+	for _, r := range resources {
+		cmd := lookupCmd(rootCmd, r.Name)
+
+		if cmd.IsAvailableCommand() {
+			t := fmt.Sprintf("%%-%ds", cmd.NamePadding())
+			name := fmt.Sprintf(t, cmd.Name())
+			usages = append(usages, fmt.Sprintf(line, name, cmd.Short))
+		}
+	}
+	return strings.TrimRight(strings.Join(usages, "\n"), "\n")
+}
+
+func BuildRootCommandsUsage(cmd *cobra.Command, commands []*CategorizedResources) {
+	cmd.SetUsageTemplate("")
+	var usages []string
+	for _, c := range commands {
+		usages = append(usages, fmt.Sprintf(commandUsageTemplate, c.Category.DisplayName, buildRootCommandUsages(cmd, c.Resources)))
+	}
+	usage := fmt.Sprintf(commandUsageWrapperTemplate, strings.TrimRight(strings.Join(usages, "\n"), "\n"))
+	cmd.SetUsageTemplate(strings.Replace(cmd.UsageTemplate(), originalCommandsUsage, usage, 1))
+	cmd.SetUsageTemplate(cmd.UsageTemplate() + fmt.Sprintf("\nCopyright %s The Usacloud Authors\n", version.CopyrightYear))
+}
+
+func buildCommandUsages(rootCmd *cobra.Command, commands []*Command) string {
+	line := "    %s %s"
+	var usages []string
+	for _, c := range commands {
+		cmd := lookupCmd(rootCmd, c.Name)
+
+		if cmd.IsAvailableCommand() {
+			t := fmt.Sprintf("%%-%ds", cmd.NamePadding())
+			name := fmt.Sprintf(t, cmd.Name())
+			usages = append(usages, fmt.Sprintf(line, name, cmd.Short))
+		}
+	}
+	return strings.TrimRight(strings.Join(usages, "\n"), "\n")
+}
+
+func buildCommandsUsage(cmd *cobra.Command, commands []*CategorizedCommands) {
+	cmd.SetUsageTemplate("")
+	var usages []string
+	for _, c := range commands {
+		usages = append(usages, fmt.Sprintf(commandUsageTemplate, c.Category.DisplayName, buildCommandUsages(cmd, c.Commands)))
+	}
+	usage := fmt.Sprintf(commandUsageWrapperTemplate, strings.TrimRight(strings.Join(usages, "\n"), "\n"))
+	cmd.SetUsageTemplate(strings.Replace(cmd.UsageTemplate(), originalCommandsUsage, usage, 1))
+}
 
 const originalFlagsUsage = `Flags:
 {{.LocalFlags.FlagUsages | trimTrailingWhitespaces}}`
 
-const flagsUsageTemplate = `  <%s>
+const flagsUsageTemplate = ` === %s ===
 %s`
 
 const flagsUsageWrapperTemplate = `Flags:

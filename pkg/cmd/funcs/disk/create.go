@@ -23,9 +23,8 @@ import (
 
 var createCommand = &core.Command{
 	Name:     "create",
-	Category: "basics",
+	Category: "basic",
 	Order:    20,
-
 	ParameterInitializer: func() interface{} {
 		return newCreateParameter()
 	},

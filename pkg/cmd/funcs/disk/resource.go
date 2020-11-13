@@ -29,33 +29,23 @@ var Resource = &core.Resource{
 	Category:    core.ResourceCategoryStorage,
 	CommandCategories: []core.Category{
 		{
-			Key:         "basics",
-			DisplayName: "Basics",
+			Key:         "basic",
+			DisplayName: "Basic Commands",
 			Order:       10,
 		},
 		{
-			Key:         "edit",
-			DisplayName: "Disk Edit",
+			Key:         "operation",
+			DisplayName: "Disk Operation Commands",
 			Order:       20,
 		},
 		{
-			Key:         "re-install",
-			DisplayName: "Re-Install",
-			Order:       25,
-		},
-		{
-			Key:         "server",
-			DisplayName: "Server Connection Management",
+			Key:         "monitor",
+			DisplayName: "Monitoring Commands",
 			Order:       30,
 		},
 		{
-			Key:         "monitor",
-			DisplayName: "Monitoring",
-			Order:       40,
-		},
-		{
 			Key:         "other",
-			DisplayName: "Other",
+			DisplayName: "Other Commands",
 			Order:       1000,
 		},
 	},

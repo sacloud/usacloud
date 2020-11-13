@@ -21,7 +21,7 @@ import (
 var listCommand = &core.Command{
 	Name:               "list",
 	Aliases:            []string{"ls", "find", "select"},
-	Category:           "basics",
+	Category:           "basic",
 	Order:              10,
 	ServiceFuncAltName: "Find",
 	NoConfirm:          true,

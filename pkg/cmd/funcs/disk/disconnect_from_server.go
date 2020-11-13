@@ -21,7 +21,7 @@ import (
 var disconnectFromServerCommand = &core.Command{
 	Name:         "disconnect-from-server",
 	Aliases:      []string{"server-disconnect"}, // v0との互換用
-	Category:     "server",
+	Category:     "operation",
 	Order:        20,
 	SelectorType: core.SelectorTypeRequireSingle,
 

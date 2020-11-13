@@ -20,7 +20,7 @@ import (
 
 var resizePartitionCommand = &core.Command{
 	Name:         "resize-partition",
-	Category:     "edit",
+	Category:     "operation",
 	Order:        20,
 	SelectorType: core.SelectorTypeRequireSingle,
 

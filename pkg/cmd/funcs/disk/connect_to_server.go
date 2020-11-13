@@ -22,7 +22,7 @@ import (
 var connectToServerCommand = &core.Command{
 	Name:         "connect-to-server",
 	Aliases:      []string{"server-connect"}, // v0との互換用
-	Category:     "server",
+	Category:     "operation",
 	Order:        10,
 	SelectorType: core.SelectorTypeRequireSingle,
 

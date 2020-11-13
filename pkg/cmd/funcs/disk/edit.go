@@ -23,7 +23,7 @@ import (
 // TODO 未実装
 var editCommand = &core.Command{ // nolint TODO あとでnolintを消す
 	Name:         "edit",
-	Category:     "edit",
+	Category:     "operation",
 	Order:        10,
 	SelectorType: core.SelectorTypeRequireSingle,
 
