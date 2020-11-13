@@ -32,22 +32,37 @@ func Exec(parameter interface{}) error {
 			return err
 		}
 
-		var errorMessages []string
+		var errs []error
 		for _, err := range err.(validator.ValidationErrors) {
-			errorMessages = append(errorMessages, errorMessageFromErr(err))
+			errs = append(errs, errorFromValidationErr(err))
 		}
-		return fmt.Errorf("validation error:\n%s", strings.Join(errorMessages, "\n"))
+		return NewValidationError(errs...)
 	}
 	return nil
 }
 
-func errorMessageFromErr(err validator.FieldError) string {
+func NewValidationError(errs ...error) error {
+	if len(errs) == 0 {
+		return nil
+	}
+
+	var errStrings []string
+	for _, err := range errs {
+		errStrings = append(errStrings, "\t"+err.Error())
+	}
+	return fmt.Errorf("validation error:\n%s", strings.Join(errStrings, "\n"))
+}
+
+func NewFlagError(flagName, message string) error {
+	return fmt.Errorf("%s: %s", flagName, message)
+}
+
+func errorFromValidationErr(err validator.FieldError) error {
 	flagName := naming.ToCLIFlag(err.StructField())
 	param := err.Param()
 	detail := err.ActualTag()
 	if param != "" {
 		detail += "=" + param
 	}
-	msg := fmt.Sprintf("\t%s: %s", flagName, detail)
-	return msg
+	return NewFlagError(flagName, detail)
 }
