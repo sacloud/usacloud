@@ -19,8 +19,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sacloud/usacloud/pkg/validate"
-
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 
 	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
@@ -124,10 +122,44 @@ func TestCreateParameter_Validate(t *testing.T) {
 				"\t--tags[0]: max=32",
 			}, "\n")),
 		},
+		// custom validation
+		{
+			in: &createParameter{
+				ZoneParameter: core.ZoneParameter{
+					Zone: "is1a",
+				},
+				Name:            "foobar",
+				DiskPlan:        "ssd",
+				Connection:      "virtio",
+				SourceArchiveID: types.ID(1),
+				SourceDiskID:    types.ID(1),
+			},
+			err: errors.New(strings.Join([]string{
+				"validation error:",
+				"\t--source-archive-id & --source-disk-id: only one of them can be specified",
+			}, "\n")),
+		},
+		// custom validation(with os-type)
+		{
+			in: &createParameter{
+				ZoneParameter: core.ZoneParameter{
+					Zone: "is1a",
+				},
+				Name:            "foobar",
+				DiskPlan:        "ssd",
+				Connection:      "virtio",
+				OSType:          "ubuntu",
+				SourceArchiveID: types.ID(1),
+			},
+			err: errors.New(strings.Join([]string{
+				"validation error:",
+				"\t--os-type & --source-archive-id & --source-disk-id: only one of them can be specified",
+			}, "\n")),
+		},
 	}
 
 	for _, tc := range cases {
-		err := validate.Exec(tc.in)
+		err := validateCreateParameter(nil, tc.in)
 		require.Equal(t, tc.err, err)
 	}
 }

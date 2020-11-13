@@ -16,7 +16,9 @@ package disk
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/validate"
 )
 
 var createCommand = &core.Command{
@@ -27,6 +29,7 @@ var createCommand = &core.Command{
 	ParameterInitializer: func() interface{} {
 		return newCreateParameter()
 	},
+	ValidateFunc: validateCreateParameter,
 }
 
 type createParameter struct {
@@ -47,6 +50,26 @@ type createParameter struct {
 
 	core.ConfirmParameter `cli:",squash" mapconv:"-"`
 	core.OutputParameter  `cli:",squash" mapconv:"-"`
+}
+
+func validateCreateParameter(ctx cli.Context, parameter interface{}) error {
+	if err := validate.Exec(parameter); err != nil {
+		return err
+	}
+	p := parameter.(*createParameter)
+
+	var errs []error
+	// OSTypeとSourceXXXが指定されていたらエラー
+	if p.OSType != "" && (!p.SourceArchiveID.IsEmpty() || !p.SourceDiskID.IsEmpty()) {
+		errs = append(errs, validate.NewFlagError("--os-type & --source-archive-id & --source-disk-id", "only one of them can be specified"))
+	}
+
+	// SourceXXXが両方指定されていたらエラーとする
+	if !p.SourceArchiveID.IsEmpty() && !p.SourceDiskID.IsEmpty() {
+		errs = append(errs, validate.NewFlagError("--source-archive-id & --source-disk-id", "only one of them can be specified"))
+	}
+
+	return validate.NewValidationError(errs...)
 }
 
 func newCreateParameter() *createParameter {
