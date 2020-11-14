@@ -14,12 +14,26 @@
 
 package cli
 
-import "github.com/sacloud/libsacloud/v2/sacloud/types"
+import (
+	"fmt"
+
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
+)
 
 // ResourceContext 現在処理中のリソースの情報
 type ResourceContext struct {
 	ID   types.ID
 	Zone string
+}
+
+func (r *ResourceContext) String() string {
+	if r.ID.IsEmpty() {
+		return ""
+	}
+	if r.Zone == "" {
+		return r.ID.String()
+	}
+	return fmt.Sprintf("[%s] %s", r.Zone, r.ID.String())
 }
 
 type ResourceContexts []ResourceContext
@@ -47,4 +61,15 @@ func (r *ResourceContexts) IDs() []types.ID {
 		}
 	}
 	return ids
+}
+
+func (r *ResourceContexts) Strings() []string {
+	var res []string
+	for _, v := range *r {
+		s := v.String()
+		if s != "" {
+			res = append(res, s)
+		}
+	}
+	return res
 }
