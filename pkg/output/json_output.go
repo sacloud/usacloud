@@ -39,8 +39,8 @@ func NewJSONOutput(out io.Writer, err io.Writer, query string) Output {
 	}
 }
 
-func (o *jsonOutput) Print(target interface{}) error {
-	targets := toSlice(target)
+func (o *jsonOutput) Print(contents Contents) error {
+	targets := contents.Values()
 	if o.out == nil {
 		o.out = os.Stdout
 	}
@@ -71,6 +71,12 @@ func (o *jsonOutput) Print(target interface{}) error {
 
 	if err != nil {
 		return fmt.Errorf("JSONOutput:Print: Create SimpleJSON object is failed: %s", err)
+	}
+	for i := 0; i < len(targets); i++ {
+		row := j.GetIndex(i)
+		if _, ok := row.CheckGet("Zone"); !ok {
+			row.Set("Zone", contents[i].Zone)
+		}
 	}
 
 	b, err := j.EncodePretty()

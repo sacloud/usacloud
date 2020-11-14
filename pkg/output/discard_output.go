@@ -20,6 +20,6 @@ func NewDiscardOutput() Output {
 	return &discardOutput{}
 }
 
-func (o *discardOutput) Print(target interface{}) error {
+func (o *discardOutput) Print(contents Contents) error {
 	return nil
 }

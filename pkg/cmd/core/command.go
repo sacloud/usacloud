@@ -367,7 +367,7 @@ func (c *Command) expandResourceContextsFromArgs(ctx cli.Context, args []string)
 	return results, nil
 }
 
-func (c *Command) exec(ctx cli.Context, ids cli.ResourceContexts) ([]interface{}, error) {
+func (c *Command) exec(ctx cli.Context, ids cli.ResourceContexts) (output.Contents, error) {
 	if c.Func == nil {
 		// use default func
 		fn, ok := services.DefaultServiceFunc(c.ResourceName(), c.Name)
@@ -397,12 +397,12 @@ func (c *Command) exec(ctx cli.Context, ids cli.ResourceContexts) ([]interface{}
 	return c.execParallel(ctx, ids)
 }
 
-func (c *Command) execParallel(ctx cli.Context, ids cli.ResourceContexts) ([]interface{}, error) {
-	var results []interface{}
+func (c *Command) execParallel(ctx cli.Context, ids cli.ResourceContexts) (output.Contents, error) {
+	var results output.Contents
 	var errs []error
 
 	type funcResult struct {
-		results []interface{}
+		results output.Contents
 		err     error
 	}
 	resultCh := make(chan *funcResult)
@@ -442,10 +442,21 @@ func (c *Command) execParallel(ctx cli.Context, ids cli.ResourceContexts) ([]int
 				return
 			}
 
-			resultCh <- &funcResult{results: res}
+			zone := ctx.Zone()
+			if c.resource.IsGlobalResource {
+				zone = ""
+			}
+			var contents = output.Contents{}
+			for _, r := range res {
+				contents = append(contents, &output.Content{Zone: zone, Value: r})
+			}
+
+			resultCh <- &funcResult{results: contents}
 		}(ctx.WithResource(rc.ID, rc.Zone))
 	}
 	wg.Wait()
+
+	results.Sort(ctx.Option().Zones)
 	return results, util.FlattenErrors(errs)
 }
 

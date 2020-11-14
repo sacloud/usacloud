@@ -40,9 +40,9 @@ func TestFreeOutput_Print(t *testing.T) {
 		ID int64
 	}
 
-	values := []interface{}{
-		&dummy{ID: 1},
-		&dummy{ID: 2},
+	values := Contents{
+		{Value: &dummy{ID: 1}},
+		{Value: &dummy{ID: 2}},
 	}
 
 	err := o.Print(values)

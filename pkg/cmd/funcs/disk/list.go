@@ -27,6 +27,8 @@ var listCommand = &core.Command{
 	NoConfirm:          true,
 	NoProgress:         true,
 
+	ColumnDefs: defaultColumnDefs,
+
 	ParameterInitializer: func() interface{} {
 		return newListParameter()
 	},
