@@ -21,7 +21,6 @@ import (
 	"sync"
 
 	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
-	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/accessor"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
@@ -237,7 +236,7 @@ func (c *Command) confirmContinue(ctx cli.Context, resources cli.ResourceContext
 
 func (c *Command) allZoneResourceContext(ctx cli.Context) cli.ResourceContexts {
 	if c.resource.IsGlobalResource {
-		return cli.ResourceContexts{{Zone: sacloud.APIDefaultZone}}
+		return cli.ResourceContexts{}
 	}
 
 	zone := cflag.ZoneFlagValue(c.currentParameter)
@@ -442,13 +441,9 @@ func (c *Command) execParallel(ctx cli.Context, ids cli.ResourceContexts) (outpu
 				return
 			}
 
-			zone := ctx.Zone()
-			if c.resource.IsGlobalResource {
-				zone = ""
-			}
 			var contents = output.Contents{}
 			for _, r := range res {
-				contents = append(contents, &output.Content{Zone: zone, Value: r})
+				contents = append(contents, &output.Content{Zone: ctx.Zone(), Value: r})
 			}
 
 			resultCh <- &funcResult{results: contents}

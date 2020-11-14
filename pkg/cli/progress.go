@@ -64,10 +64,14 @@ func (p *Progress) Exec(f func() error) error {
 }
 
 func (p *Progress) msgPrefix() string {
-	if p.ctx.ID().IsEmpty() {
-		return p.jobName
+	prefix := p.jobName
+	if p.ctx.Zone() != "" {
+		prefix = fmt.Sprintf("[%s] %s", p.ctx.Zone(), prefix)
 	}
-	return fmt.Sprintf("%s(ID:%s)", p.jobName, p.ctx.ID().String())
+	if !p.ctx.ID().IsEmpty() {
+		prefix = fmt.Sprintf("%s (ID:%s)", prefix, p.ctx.ID().String())
+	}
+	return prefix
 }
 
 func (p *Progress) msgStart() string {
