@@ -15,7 +15,7 @@
 package output
 
 type Output interface {
-	Print(interface{}) error
+	Print(Contents) error
 }
 
 type Formatter interface {

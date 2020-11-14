@@ -20,20 +20,17 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/sacloud/usacloud/pkg/validate"
-
-	"github.com/sacloud/usacloud/pkg/cmd/cflag"
-
-	"github.com/sacloud/usacloud/pkg/cmd/services"
-
 	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
+	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/accessor"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/root"
+	"github.com/sacloud/usacloud/pkg/cmd/services"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/term"
 	"github.com/sacloud/usacloud/pkg/util"
+	"github.com/sacloud/usacloud/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
@@ -101,6 +98,18 @@ func (c *Command) ResourceName() string {
 	return c.resource.Name
 }
 
+func (c *Command) completeParameterValue(cmd *cobra.Command, ctx cli.Context, parameter interface{}) {
+	if p, ok := parameter.(FlagValueCleaner); ok {
+		p.CleanupEmptyValue(cmd.Flags())
+	}
+
+	if !c.resource.IsGlobalResource {
+		if zone := cflag.ZoneFlagValue(parameter); zone == "" {
+			cflag.SetZoneFlagValue(parameter, ctx.Option().Zone)
+		}
+	}
+}
+
 func (c *Command) ValidateSchema() error {
 	if c.resource == nil {
 		return fmt.Errorf(`command "%s" has invalid schema: resource required`, c.Name)
@@ -142,47 +151,32 @@ func (c *Command) Run(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	// パラメータの補完処理(ポインタ型のクリアやコンテキストからのパラメータ受け取りなど)
 	c.completeParameterValue(cmd, ctx, c.currentParameter)
 
+	// パラメータバリデーション
 	if err := c.validateParameter(ctx, c.currentParameter); err != nil {
 		return err
 	}
 
 	c.printCommandWarning(ctx)
 
-	if cp, ok := c.currentParameter.(cflag.CommonParameterValueHolder); ok {
-		// パラメータスケルトンの生成
-		if cp.GenerateSkeletonFlagValue() {
-			return generateSkeleton(ctx, c.currentParameter)
-		}
-		// --parameters/--parameter-fileフラグの処理
-		if err := loadParameters(cp); err != nil {
-			return err
-		}
+	if ok, err := c.handleCommonParameters(ctx); !ok || err != nil {
+		return err
 	}
 
-	ids, err := c.expandIDsFromArgs(ctx, c.currentParameter, args)
+	targets, err := c.expandResourceContextsFromArgs(ctx, args)
 	if err != nil {
 		return err
 	}
 
 	// confirm
-	if !c.NoConfirm {
-		if cp, ok := c.currentParameter.(ConfirmParameterValueHandler); ok {
-			if !cp.AssumeYesFlagValue() {
-				if !term.IsTerminal() {
-					return errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
-				}
-				result, err := util.ConfirmContinue(c.confirmMessage(), ctx.IO().In(), ctx.IO().Out(), ids...)
-				if err != nil || !result {
-					return err
-				}
-			}
-		}
+	if ok, err := c.confirmContinue(ctx, targets); !ok || err != nil {
+		return err
 	}
 
 	// 各コマンド独自の処理を実行
-	results, err := c.exec(ctx, ids)
+	results, err := c.exec(ctx, targets)
 	if err != nil {
 		return err
 	}
@@ -200,18 +194,6 @@ func (c *Command) validateParameter(ctx cli.Context, parameter interface{}) erro
 	return validateFunc(ctx, parameter)
 }
 
-func (c *Command) completeParameterValue(cmd *cobra.Command, ctx cli.Context, parameter interface{}) {
-	if p, ok := parameter.(FlagValueCleaner); ok {
-		p.CleanupEmptyValue(cmd.Flags())
-	}
-
-	if zp, ok := parameter.(cflag.ZoneParameterValueHandler); ok {
-		if zp.ZoneFlagValue() == "" {
-			zp.SetZoneFlagValue(ctx.Zone())
-		}
-	}
-}
-
 func (c *Command) printCommandWarning(ctx cli.Context) {
 	if c.resource.Warning != "" {
 		c.printWarning(ctx.IO().Err(), ctx.Option().NoColor, c.resource.Warning)
@@ -222,9 +204,59 @@ func (c *Command) printCommandWarning(ctx cli.Context) {
 	}
 }
 
-func (c *Command) expandIDsFromArgs(ctx cli.Context, parameter interface{}, args []string) ([]types.ID, error) {
+func (c *Command) handleCommonParameters(ctx cli.Context) (bool, error) {
+	if cp, ok := c.currentParameter.(cflag.CommonParameterValueHolder); ok {
+		// パラメータスケルトンの生成
+		if cp.GenerateSkeletonFlagValue() {
+			return false, generateSkeleton(ctx, c.currentParameter)
+		}
+		// --parameters/--parameter-fileフラグの処理
+		if err := loadParameters(cp); err != nil {
+			return false, err
+		}
+	}
+	return true, nil
+}
+
+func (c *Command) confirmContinue(ctx cli.Context, resources cli.ResourceContexts) (bool, error) {
+	if !c.NoConfirm {
+		if cp, ok := c.currentParameter.(ConfirmParameterValueHandler); ok {
+			if !cp.AssumeYesFlagValue() {
+				if !term.IsTerminal() {
+					return false, errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+				}
+				result, err := util.ConfirmContinue(c.confirmMessage(), ctx.IO().In(), ctx.IO().Out(), resources.IDs()...) // TODO cli.Contextを渡す??
+				if err != nil || !result {
+					return result, err
+				}
+			}
+		}
+	}
+	return true, nil
+}
+
+func (c *Command) allZoneResourceContext(ctx cli.Context) cli.ResourceContexts {
+	if c.resource.IsGlobalResource {
+		return cli.ResourceContexts{{Zone: sacloud.APIDefaultZone}}
+	}
+
+	zone := cflag.ZoneFlagValue(c.currentParameter)
+	if zone == "all" {
+		results := cli.ResourceContexts{}
+		for _, z := range ctx.Option().Zones {
+			if z == "all" {
+				continue
+			}
+			results.Append(cli.ResourceContext{Zone: z})
+		}
+		return results
+	}
+	return cli.ResourceContexts{{Zone: zone}}
+}
+
+func (c *Command) expandResourceContextsFromArgs(ctx cli.Context, args []string) (cli.ResourceContexts, error) {
 	if c.SelectorType == SelectorTypeNone {
-		return nil, nil
+		return c.allZoneResourceContext(ctx), nil
 	}
 
 	listFn := c.ListAllFunc
@@ -240,59 +272,102 @@ func (c *Command) expandIDsFromArgs(ctx cli.Context, parameter interface{}, args
 		return nil, fmt.Errorf("ID or Name or Tags arguments are required")
 	}
 
-	// 引数が1つ、かつtypes.IDへの変換が成功した場合は検索せずに返す
-	if len(args) == 1 {
-		id := types.StringID(args[0])
-		if !id.IsEmpty() {
-			return []types.ID{id}, nil
+	// 検索結果
+	var results cli.ResourceContexts
+	var errs []error
+
+	// 検索は各ゾーン単位で非同期なためchanで受け取る
+	type funcResult struct {
+		ids cli.ResourceContexts
+		err error
+	}
+	resultCh := make(chan *funcResult)
+	defer close(resultCh)
+
+	allZones := c.allZoneResourceContext(ctx)
+
+	var wg sync.WaitGroup
+	wg.Add(len(allZones))
+
+	// 非同期で実行されたAPIコールの結果受け取り
+	go func() {
+		for {
+			res := <-resultCh
+			if res == nil {
+				return
+			}
+
+			if res.err != nil {
+				errs = append(errs, res.err)
+			}
+			if res.ids != nil {
+				results.Append(res.ids...)
+			}
+			wg.Done()
 		}
-	}
+	}()
 
-	resources, err := listFn(ctx, parameter)
-	if err != nil {
-		return nil, err
-	}
+	// 各ゾーンごとに非同期にAPIコール実施
+	for _, zoneCtx := range allZones {
+		go func(zone string) {
+			parameter, err := c.parameterWithZone(zone)
+			if err != nil {
+				resultCh <- &funcResult{err: err}
+				return
+			}
 
-	if c.SelectorType == SelectorTypeRequireSingle && len(resources) > 1 {
-		return nil, fmt.Errorf("target resource not found: query=%q", args)
-	}
+			resources, err := listFn(ctx, parameter)
+			if err != nil {
+				resultCh <- &funcResult{err: err}
+				return
+			}
 
-	var ids []types.ID
-	for _, r := range resources {
-		for _, arg := range args {
-			if v, ok := r.(accessor.ID); ok {
-				// ID
-				if v.GetID().String() == arg {
-					ids = append(ids, v.GetID())
-				}
+			ids := cli.ResourceContexts{}
+			for _, r := range resources {
+				for _, arg := range args {
+					if v, ok := r.(accessor.ID); ok {
+						// ID
+						if v.GetID().String() == arg {
+							ids.Append(cli.ResourceContext{ID: v.GetID(), Zone: zone})
+						}
 
-				// Name(部分一致)
-				if name, ok := r.(accessor.Name); ok {
-					if strings.Contains(name.GetName(), arg) {
-						ids = append(ids, v.GetID())
-					}
-				}
+						// Name(部分一致)
+						if name, ok := r.(accessor.Name); ok {
+							if strings.Contains(name.GetName(), arg) {
+								ids.Append(cli.ResourceContext{ID: v.GetID(), Zone: zone})
+							}
+						}
 
-				// Tags
-				if tags, ok := r.(accessor.Tags); ok {
-					for _, tag := range tags.GetTags() {
-						if tag == arg {
-							ids = append(ids, v.GetID())
+						// Tags
+						if tags, ok := r.(accessor.Tags); ok {
+							for _, tag := range tags.GetTags() {
+								if tag == arg {
+									ids.Append(cli.ResourceContext{ID: v.GetID(), Zone: zone})
+								}
+							}
 						}
 					}
 				}
 			}
-		}
+			resultCh <- &funcResult{ids: ids}
+		}(zoneCtx.Zone)
 	}
 
-	ids = util.UniqIDs(ids)
-	if len(ids) == 0 {
+	wg.Wait()
+	if len(errs) > 0 {
+		return nil, util.FlattenErrors(errs)
+	}
+
+	if c.SelectorType == SelectorTypeRequireSingle && len(results) > 1 {
 		return nil, fmt.Errorf("target resource not found: query=%q", args)
 	}
-	return ids, nil
+	if len(results) == 0 {
+		return nil, fmt.Errorf("target resource not found: query=%q", args)
+	}
+	return results, nil
 }
 
-func (c *Command) exec(ctx cli.Context, ids []types.ID) ([]interface{}, error) {
+func (c *Command) exec(ctx cli.Context, ids cli.ResourceContexts) (output.Contents, error) {
 	if c.Func == nil {
 		// use default func
 		fn, ok := services.DefaultServiceFunc(c.ResourceName(), c.Name)
@@ -319,49 +394,101 @@ func (c *Command) exec(ctx cli.Context, ids []types.ID) ([]interface{}, error) {
 		}
 	}
 
-	if len(ids) == 0 {
-		return c.Func(ctx, c.currentParameter)
-	}
 	return c.execParallel(ctx, ids)
 }
 
-func (c *Command) execParallel(ctx cli.Context, ids []types.ID) ([]interface{}, error) {
-	var wg sync.WaitGroup
-	var results []interface{}
+func (c *Command) execParallel(ctx cli.Context, ids cli.ResourceContexts) (output.Contents, error) {
+	var results output.Contents
 	var errs []error
-	for _, id := range ids {
-		wg.Add(1)
-		go func(ctx cli.Context, id types.ID) {
-			p, err := c.parameterWithID(id)
-			if err != nil {
-				errs = append(errs, err)
-			} else {
-				res, err := c.Func(ctx, p)
-				if err != nil {
-					errs = append(errs, err)
-				}
-				results = append(results, res...)
+
+	type funcResult struct {
+		results output.Contents
+		err     error
+	}
+	resultCh := make(chan *funcResult)
+	defer close(resultCh)
+
+	var wg sync.WaitGroup
+	wg.Add(len(ids))
+
+	// 結果の受け取り
+	go func() {
+		for {
+			res := <-resultCh
+			if res == nil {
+				return
+			}
+
+			if res.err != nil {
+				errs = append(errs, res.err)
+			}
+			if res.results != nil {
+				results = append(results, res.results...)
 			}
 			wg.Done()
-		}(ctx.WithID(id), id)
+		}
+	}()
+
+	for _, rc := range ids {
+		go func(ctx cli.Context) {
+			p, err := c.parameterWithResourceContext(ctx)
+			if err != nil {
+				return
+			}
+
+			res, err := c.Func(ctx, p)
+			if err != nil {
+				resultCh <- &funcResult{err: err}
+				return
+			}
+
+			zone := ctx.Zone()
+			if c.resource.IsGlobalResource {
+				zone = ""
+			}
+			var contents = output.Contents{}
+			for _, r := range res {
+				contents = append(contents, &output.Content{Zone: zone, Value: r})
+			}
+
+			resultCh <- &funcResult{results: contents}
+		}(ctx.WithResource(rc.ID, rc.Zone))
 	}
 	wg.Wait()
+
+	results.Sort(ctx.Option().Zones)
 	return results, util.FlattenErrors(errs)
 }
 
 var mapconvDecoder = mapconv.Decoder{Config: &mapconv.DecoderConfig{TagName: "temp"}}
 
-// parameterWithID 現在のパラメータ(c.currentParameter)を複製しidを設定して返す
-func (c *Command) parameterWithID(id types.ID) (interface{}, error) {
+func (c *Command) cloneCurrentParameter() (interface{}, error) {
 	newParameter := c.ParameterInitializer()
-
 	// mapconvDecoderを使うことで元のstructに付けられていたmapconvタグを無視する
 	if err := mapconvDecoder.ConvertTo(c.currentParameter, newParameter); err != nil {
 		return nil, err
 	}
-	if v, ok := newParameter.(IDParameterValueHandler); ok {
-		v.SetIDFlagValue(id)
+	return newParameter, nil
+}
+
+// parameterWithID 現在のパラメータ(c.currentParameter)を複製しidを設定して返す
+func (c *Command) parameterWithResourceContext(ctx cli.Context) (interface{}, error) {
+	newParameter, err := c.cloneCurrentParameter()
+	if err != nil {
+		return nil, err
 	}
+
+	cflag.SetIDFlagValue(newParameter, ctx.ID())
+	cflag.SetZoneFlagValue(newParameter, ctx.Zone())
+	return newParameter, nil
+}
+
+func (c *Command) parameterWithZone(zone string) (interface{}, error) {
+	newParameter, err := c.cloneCurrentParameter()
+	if err != nil {
+		return nil, err
+	}
+	cflag.SetZoneFlagValue(newParameter, zone)
 	return newParameter, nil
 }
 

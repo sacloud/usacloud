@@ -52,6 +52,7 @@ var Resource = &core.Resource{
 }
 
 var defaultColumnDefs = []output.ColumnDef{
+	{Name: "Zone"},
 	{Name: "ID"},
 	{Name: "Name"},
 	{

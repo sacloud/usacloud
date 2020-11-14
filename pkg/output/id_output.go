@@ -39,8 +39,8 @@ func NewIDOutput(out io.Writer, err io.Writer) Output {
 	}
 }
 
-func (o *idOutput) Print(target interface{}) error {
-	targets := toSlice(target)
+func (o *idOutput) Print(contents Contents) error {
+	targets := contents.Values()
 	if o.Out == nil {
 		o.Out = os.Stdout
 	}
@@ -62,7 +62,7 @@ func (o *idOutput) Print(target interface{}) error {
 	if err != nil {
 		return fmt.Errorf("FreeOutput:Print: create simplejson is failed: %s", err)
 	}
-	for i := 0; i < sliceLen(targets); i++ {
+	for i := 0; i < len(targets); i++ {
 		v := j.GetIndex(i)
 		mapValue, err := v.Map()
 		if err != nil {

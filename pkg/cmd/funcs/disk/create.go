@@ -25,6 +25,9 @@ var createCommand = &core.Command{
 	Name:     "create",
 	Category: "basic",
 	Order:    20,
+
+	ColumnDefs: defaultColumnDefs,
+
 	ParameterInitializer: func() interface{} {
 		return newCreateParameter()
 	},

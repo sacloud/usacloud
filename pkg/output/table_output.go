@@ -27,12 +27,10 @@ import (
 )
 
 type tableOutput struct {
-	Out           io.Writer
-	Err           io.Writer
-	IncludeFields []string
-	ExcludeFields []string
-	ColumnDefs    []ColumnDef
-	TableType     TableType
+	Out        io.Writer
+	Err        io.Writer
+	ColumnDefs []ColumnDef
+	TableType  TableType
 }
 
 func NewTableOutput(out io.Writer, err io.Writer, columnDefs []ColumnDef) Output {
@@ -43,8 +41,8 @@ func NewTableOutput(out io.Writer, err io.Writer, columnDefs []ColumnDef) Output
 	}
 }
 
-func (o *tableOutput) Print(target interface{}) error {
-	targets := toSlice(target)
+func (o *tableOutput) Print(contents Contents) error {
+	targets := contents.Values()
 	if o.Out == nil {
 		o.Out = os.Stdout
 	}
@@ -68,7 +66,7 @@ func (o *tableOutput) Print(target interface{}) error {
 	}
 
 	table := newSimpleTableWriter(o.Out, o.ColumnDefs)
-	for i := 0; i < sliceLen(targets); i++ {
+	for i := 0; i < len(targets); i++ {
 		// interface{} -> map[string]interface{}
 		v := j.GetIndex(i)
 		mapValue, err := v.Map()
@@ -83,6 +81,9 @@ func (o *tableOutput) Print(target interface{}) error {
 		}
 
 		flatMap["__ORDER__"] = fmt.Sprintf("%d", i+1)
+		if _, ok := flatMap["Zone"]; !ok {
+			flatMap["Zone"] = contents[i].Zone
+		}
 		table.append(flatMap)
 	}
 

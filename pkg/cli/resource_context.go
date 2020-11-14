@@ -12,33 +12,39 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cflag
+package cli
 
 import "github.com/sacloud/libsacloud/v2/sacloud/types"
 
-type IDParameterValueHandler interface {
-	IDFlagValue() types.ID
-	SetIDFlagValue(id types.ID)
+// ResourceContext 現在処理中のリソースの情報
+type ResourceContext struct {
+	ID   types.ID
+	Zone string
 }
 
-func IDFlagValue(p interface{}) types.ID {
-	if p == nil {
-		return types.ID(0)
+type ResourceContexts []ResourceContext
+
+func (r *ResourceContexts) Append(values ...ResourceContext) {
+	for _, rc := range values {
+		exists := false
+		for _, v := range *r {
+			if v.Zone == rc.Zone && v.ID == rc.ID {
+				exists = true
+				break
+			}
+		}
+		if !exists {
+			*r = append(*r, rc)
+		}
 	}
-	v, ok := p.(IDParameterValueHandler)
-	if !ok {
-		return types.ID(0)
-	}
-	return v.IDFlagValue()
 }
 
-func SetIDFlagValue(p interface{}, id types.ID) {
-	if p == nil {
-		return
+func (r *ResourceContexts) IDs() []types.ID {
+	var ids []types.ID
+	for _, v := range *r {
+		if !v.ID.IsEmpty() {
+			ids = append(ids, v.ID)
+		}
 	}
-	v, ok := p.(IDParameterValueHandler)
-	if !ok {
-		return
-	}
-	v.SetIDFlagValue(id)
+	return ids
 }

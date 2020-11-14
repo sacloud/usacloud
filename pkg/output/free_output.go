@@ -44,8 +44,8 @@ func NewFreeOutput(out io.Writer, err io.Writer, option Option) Output {
 	}
 }
 
-func (o *freeOutput) Print(target interface{}) error {
-	targets := toSlice(target)
+func (o *freeOutput) Print(contents Contents) error {
+	targets := contents.Values()
 	if o.Out == nil {
 		o.Out = os.Stdout
 	}
@@ -82,7 +82,7 @@ func (o *freeOutput) Print(target interface{}) error {
 		return fmt.Errorf("Output format is invalid: %s", err)
 	}
 
-	for i := 0; i < sliceLen(targets); i++ {
+	for i := 0; i < len(targets); i++ {
 		// interface{} -> map[string]interface{}
 		v := j.GetIndex(i)
 		mapValue, err := v.Map()
@@ -90,6 +90,9 @@ func (o *freeOutput) Print(target interface{}) error {
 			return fmt.Errorf("FreeOutput:Print: json format is invalid: %v", err)
 		}
 		mapValue["RowNumber"] = fmt.Sprintf("%d", i+1)
+		if _, ok := mapValue["Zone"]; !ok {
+			mapValue["Zone"] = contents[i].Zone
+		}
 
 		buf := bytes.NewBufferString("")
 		err = t.Execute(buf, mapValue)

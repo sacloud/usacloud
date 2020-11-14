@@ -25,6 +25,8 @@ var updateCommand = &core.Command{
 	Order:        40,
 	SelectorType: core.SelectorTypeRequireMulti,
 
+	ColumnDefs: defaultColumnDefs,
+
 	ParameterInitializer: func() interface{} {
 		return newUpdateParameter()
 	},

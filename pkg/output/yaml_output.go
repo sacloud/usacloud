@@ -15,9 +15,12 @@
 package output
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/bitly/go-simplejson"
 
 	"github.com/sacloud/usacloud/pkg/util"
 
@@ -36,8 +39,8 @@ func NewYAMLOutput(out io.Writer, err io.Writer) Output {
 	}
 }
 
-func (o *yamlOutput) Print(target interface{}) error {
-	targets := toSlice(target)
+func (o *yamlOutput) Print(contents Contents) error {
+	targets := contents.Values()
 	if o.out == nil {
 		o.out = os.Stdout
 	}
@@ -49,7 +52,26 @@ func (o *yamlOutput) Print(target interface{}) error {
 		return nil
 	}
 
-	b, err := yaml.Marshal(targets)
+	// HACK: ゾーンの値を追加するためにsimplejsonにして操作する
+	// targets -> byte[] -> []interface{}
+	rawArray, err := json.Marshal(targets)
+	if err != nil {
+		return fmt.Errorf("YAMLOutput:Print: json.Marshal is failed: %s", err)
+	}
+
+	j, err := simplejson.NewJson(rawArray)
+	if err != nil {
+		return fmt.Errorf("YAMLOutput:Print: create simplejson is failed: %s", err)
+	}
+
+	for i := 0; i < len(targets); i++ {
+		row := j.GetIndex(i)
+		if _, ok := row.CheckGet("Zone"); !ok {
+			row.Set("Zone", contents[i].Zone)
+		}
+	}
+
+	b, err := yaml.Marshal(j)
 	if err != nil {
 		return fmt.Errorf("YAMLOutput:Print: yaml.Marshal is Failed: %s", err)
 	}
