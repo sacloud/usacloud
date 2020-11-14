@@ -224,7 +224,7 @@ func (c *Command) confirmContinue(ctx cli.Context, resources cli.ResourceContext
 				if !term.IsTerminal() {
 					return false, errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
 				}
-				result, err := util.ConfirmContinue(c.confirmMessage(), ctx.IO().In(), ctx.IO().Out(), resources.IDs()...) // TODO cli.Contextを渡す??
+				result, err := util.ConfirmContinue(c.confirmMessage(), ctx.IO().In(), ctx.IO().Out(), resources.Strings()...)
 				if err != nil || !result {
 					return result, err
 				}

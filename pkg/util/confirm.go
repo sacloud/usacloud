@@ -19,8 +19,6 @@ import (
 	"io"
 	"os"
 	"strings"
-
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
 type In interface {
@@ -49,11 +47,11 @@ func Confirm(msg string, in In, out io.Writer) (bool, error) {
 	return input == "y" || input == "yes", nil
 }
 
-func ConfirmContinue(target string, in In, out io.Writer, ids ...types.ID) (bool, error) {
+func ConfirmContinue(target string, in In, out io.Writer, ids ...string) (bool, error) {
 	msg := fmt.Sprintf("Are you sure you want to %s?", target)
 	if len(ids) > 0 {
 		msg = fmt.Sprintf("Target resource IDs => [\n\t%s\n]\nAre you sure you want to %s?",
-			strings.Join(StringIDs(ids), ",\n\t"),
+			strings.Join(ids, ",\n\t"),
 			target,
 		)
 	}
