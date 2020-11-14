@@ -18,3 +18,25 @@ type ZoneParameterValueHandler interface {
 	ZoneFlagValue() string
 	SetZoneFlagValue(zone string)
 }
+
+func ZoneFlagValue(p interface{}) string {
+	if p == nil {
+		return ""
+	}
+	v, ok := p.(ZoneParameterValueHandler)
+	if !ok {
+		return ""
+	}
+	return v.ZoneFlagValue()
+}
+
+func SetZoneFlagValue(p interface{}, zone string) {
+	if p == nil {
+		return
+	}
+	v, ok := p.(ZoneParameterValueHandler)
+	if !ok {
+		return
+	}
+	v.SetZoneFlagValue(zone)
+}

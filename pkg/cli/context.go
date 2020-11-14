@@ -22,12 +22,12 @@ import (
 	"time"
 
 	"github.com/sacloud/libsacloud/v2"
-
 	"github.com/sacloud/libsacloud/v2/helper/api"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
+	"github.com/sacloud/usacloud/pkg/validate"
 	"github.com/sacloud/usacloud/pkg/version"
 	"github.com/spf13/pflag"
 )
@@ -36,7 +36,6 @@ type Context interface {
 	Option() *config.Config
 	Output() output.Output
 	Client() sacloud.APICaller
-	Zone() string
 	IO() IO
 	context.Context
 
@@ -46,8 +45,8 @@ type Context interface {
 	CommandName() string
 
 	ID() types.ID
-	SetID(id types.ID)
-	WithID(id types.ID) Context
+	Zone() string
+	WithResource(id types.ID, zone string) Context
 
 	ExecWithProgress(func() error) error
 }
@@ -61,7 +60,7 @@ type cliContext struct {
 
 	resourceName string
 	commandName  string
-	id           types.ID
+	resource     ResourceContext
 }
 
 func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet, args []string, columnDefs []output.ColumnDef, parameter interface{}) (Context, error) {
@@ -74,6 +73,9 @@ func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet,
 	if err != nil {
 		return nil, err
 	}
+
+	// initialize validator with contextual values
+	validate.InitializeValidator(option.Zones)
 
 	return &cliContext{
 		parentCtx:    ctx,
@@ -107,14 +109,14 @@ func (c *cliContext) CommandName() string {
 }
 
 func (c *cliContext) ID() types.ID {
-	return c.id
+	return c.resource.ID
 }
 
-func (c *cliContext) SetID(id types.ID) {
-	c.id = id
+func (c *cliContext) Zone() string {
+	return c.resource.Zone
 }
 
-func (c *cliContext) WithID(id types.ID) Context {
+func (c *cliContext) WithResource(id types.ID, zone string) Context {
 	return &cliContext{
 		parentCtx:    c,
 		option:       c.option,
@@ -123,7 +125,7 @@ func (c *cliContext) WithID(id types.ID) Context {
 		args:         c.args,
 		resourceName: c.resourceName,
 		commandName:  c.commandName,
-		id:           id,
+		resource:     ResourceContext{ID: id, Zone: zone},
 	}
 }
 
@@ -151,10 +153,6 @@ func (c *cliContext) Client() sacloud.APICaller {
 		FakeMode:             o.FakeMode,
 		FakeStorePath:        o.FakeStorePath,
 	})
-}
-
-func (c *cliContext) Zone() string {
-	return c.Option().Zone
 }
 
 func (c *cliContext) Deadline() (deadline time.Time, ok bool) {

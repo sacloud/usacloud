@@ -96,6 +96,42 @@ func init() {
 			return results, nil
 		},
 	)
+	setDefaultServiceFunc("disk", "resize-partition",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+
+			req := &service.ResizePartitionRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			err := svc.ResizePartitionWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return nil, nil
+
+		},
+	)
+	setDefaultListAllFunc("disk", "resize-partition",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
 	setDefaultServiceFunc("disk", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
@@ -306,42 +342,6 @@ func init() {
 		},
 	)
 	setDefaultListAllFunc("disk", "monitor-disk",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
-			if err != nil {
-				return nil, err
-			}
-
-			var results []interface{}
-			for _, v := range res {
-				results = append(results, v)
-			}
-			return results, nil
-		},
-	)
-	setDefaultServiceFunc("disk", "resize-partition",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
-
-			req := &service.ResizePartitionRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-			if err := req.Validate(); err != nil {
-				return nil, err
-			}
-
-			err := svc.ResizePartitionWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			return nil, nil
-
-		},
-	)
-	setDefaultListAllFunc("disk", "resize-partition",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})

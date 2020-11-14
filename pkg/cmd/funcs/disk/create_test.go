@@ -19,6 +19,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/usacloud/pkg/validate"
+
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 
 	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
@@ -158,6 +161,7 @@ func TestCreateParameter_Validate(t *testing.T) {
 		},
 	}
 
+	validate.InitializeValidator(sacloud.SakuraCloudZones)
 	for _, tc := range cases {
 		err := validateCreateParameter(nil, tc.in)
 		require.Equal(t, tc.err, err)
