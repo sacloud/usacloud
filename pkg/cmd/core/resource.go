@@ -15,11 +15,13 @@
 package core
 
 import (
+	"fmt"
 	"log"
 	"reflect"
 	"sort"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 )
 
 type Resource struct {
@@ -52,7 +54,7 @@ func (r *Resource) CLICommand() *cobra.Command {
 				cmd.HelpFunc()(cmd, args)
 				return nil
 			}
-			return r.runDefaultCmd(cmd, args, r.DefaultCommandName)
+			return r.runDefaultCmd(cmd, args)
 		},
 	}
 	for _, c := range r.Commands() {
@@ -70,13 +72,18 @@ func (r *Resource) CLICommand() *cobra.Command {
 	return cmd
 }
 
-func (r *Resource) runDefaultCmd(cmd *cobra.Command, args []string, commandName string) error {
-	defaultCmd := lookupCmd(cmd, commandName)
-	if defaultCmd == nil {
-		cmd.HelpFunc()(cmd, args)
-		return nil
-	}
-	return defaultCmd.RunE(defaultCmd, args)
+func (r *Resource) runDefaultCmd(cmd *cobra.Command, currentArgs []string) error {
+	// 引数とフラグからデフォルトコマンド用のフラグを組み立て、ルートコマンドを実行
+	args := append([]string{r.Name, r.DefaultCommandName}, currentArgs...)
+	cmd.Flags().VisitAll(func(f *pflag.Flag) {
+		if f.Changed {
+			args = append(args, fmt.Sprintf("--%s", f.Name), f.Value.String())
+		}
+	})
+
+	root := cmd.Root()
+	root.SetArgs(args)
+	return root.Execute()
 }
 
 func (r *Resource) CategorizedCommands() []*CategorizedCommands {
