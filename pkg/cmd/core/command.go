@@ -61,7 +61,7 @@ type Command struct {
 	// パラメータ関連
 	ParameterCategories  []Category
 	ParameterInitializer func() interface{}
-	ServiceFuncAltName   string // デフォルトのlibsacloud service呼び出しコード生成用、空の場合はNameをCamelizeしたものが利用される
+	ServiceFuncAltName   string // デフォルトのlibsacloud service呼び出しコード生成用、空の場合はNameをCamelizeしたものが利用される // TODO libsacloud側で対応すべき
 
 	// テーブル形式での出力対象列。省略した場合はIDとNameが出力される
 	ColumnDefs []output.ColumnDef
@@ -78,7 +78,6 @@ type Command struct {
 	// コマンドの実処理。設定してない場合はデフォルトのlibsacloud service呼び出しが行われる
 	Func func(ctx cli.Context, parameter interface{}) ([]interface{}, error)
 
-	// これらは実行時にセットされる
 	resource         *Resource
 	currentParameter interface{}
 }

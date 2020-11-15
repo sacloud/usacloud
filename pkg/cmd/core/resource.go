@@ -29,18 +29,19 @@ type Resource struct {
 	Aliases []string
 	Usage   string
 
-	CommandCategories   []Category
-	categorizedCommands []*CategorizedCommands
-	DefaultCommandName  string
+	CommandCategories  []Category
+	DefaultCommandName string
 
 	Category            Category
-	SkipApplyConfigFile bool
+	SkipApplyConfigFile bool // TODO 未実装、configコマンド実装時に対応する
 
 	Warning string
 
 	IsGlobalResource bool
 
 	ServiceType reflect.Type // リソースに対応するlibsacloud serviceの型情報、コード生成用
+
+	categorizedCommands []*CategorizedCommands
 }
 
 func (r *Resource) CLICommand() *cobra.Command {
