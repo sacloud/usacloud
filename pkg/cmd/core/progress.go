@@ -12,13 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cli
+package core
 
 import (
 	"fmt"
 	"io"
 	"sync"
 	"time"
+
+	"github.com/sacloud/usacloud/pkg/cli"
 
 	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/pkg/printer"
@@ -27,7 +29,7 @@ import (
 var mutex = sync.Mutex{}
 
 type Progress struct {
-	ctx Context
+	ctx cli.Context
 
 	out     io.Writer
 	printer *printer.Printer
@@ -40,7 +42,7 @@ type Progress struct {
 	elapsed  time.Duration
 }
 
-func NewProgress(ctx Context) *Progress {
+func NewProgress(ctx cli.Context) *Progress {
 	jobName := fmt.Sprintf("%s/%s", ctx.ResourceName(), ctx.CommandName())
 	return &Progress{
 		ctx:      ctx,
