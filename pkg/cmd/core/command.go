@@ -376,7 +376,9 @@ func (c *Command) exec(ctx cli.Context, ids cli.ResourceContexts) (output.Conten
 		fn := c.Func
 		c.Func = func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			var results []interface{}
-			err := NewProgress(ctx).Exec(func() error {
+			progress := NewProgress(ctx)
+			defer progress.Close()
+			err := progress.Exec(func() error {
 				res, err := fn(ctx, parameter)
 				if err != nil {
 					return err
