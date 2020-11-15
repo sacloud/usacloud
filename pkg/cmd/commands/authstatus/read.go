@@ -25,7 +25,7 @@ var readCommand = &core.Command{
 	Aliases:    []string{"show"},
 	Category:   "basics",
 	Order:      10,
-	NoProgress: false,
+	NoProgress: true,
 
 	ColumnDefs: []output.ColumnDef{
 		{Name: "AccountID"},
@@ -42,8 +42,7 @@ var readCommand = &core.Command{
 }
 
 type readParameter struct {
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 
 func newReadParameter() *readParameter {
