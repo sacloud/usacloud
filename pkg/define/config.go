@@ -15,7 +15,7 @@
 package define
 
 import (
-	"github.com/sacloud/usacloud/pkg/config"
+	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
 
@@ -103,7 +103,7 @@ func configEditParam() map[string]*schema.Parameter {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "Target zone of SakuraCloud",
-			ValidateFunc: validateInStrValues(config.AllowZones...),
+			ValidateFunc: validateInStrValues(sacloud.SakuraCloudZones...), // TODO v1での実装時はConfigから値を取得する
 			Category:     "config",
 			Order:        30,
 		},
@@ -111,7 +111,7 @@ func configEditParam() map[string]*schema.Parameter {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "Default output format type",
-			ValidateFunc: validateInStrValues(config.AllowOutputTypes...),
+			ValidateFunc: validateInStrValues("table", "json", "yaml"),
 			Category:     "config",
 			Order:        40,
 		},
