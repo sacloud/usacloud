@@ -15,6 +15,7 @@
 package disk
 
 import (
+	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/output"
 )
@@ -41,12 +42,12 @@ var monitorCommand = &core.Command{
 }
 
 type monitorParameter struct {
-	core.ZoneParameter `cli:",squash" mapconv:",squash"`
-	core.IDParameter   `cli:",squash" mapconv:",squash"`
+	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
 
-	core.MonitorParameter `cli:",squash" mapconv:",squash"`
+	cflag.MonitorParameter `cli:",squash" mapconv:",squash"`
 
-	core.OutputParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 
 func newMonitorParameter() *monitorParameter {

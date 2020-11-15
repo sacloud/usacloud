@@ -16,6 +16,7 @@ package disk
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
@@ -32,12 +33,12 @@ var connectToServerCommand = &core.Command{
 }
 
 type connectToServerParameter struct {
-	core.ZoneParameter `cli:",squash" mapconv:",squash"`
-	core.IDParameter   `cli:",squash" mapconv:",squash"`
+	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
 
 	ServerID types.ID `cli:",category=disk" validate:"required"`
 
-	core.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 }
 
 func newConnectToServerParameter() *connectToServerParameter {

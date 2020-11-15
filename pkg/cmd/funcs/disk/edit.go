@@ -17,6 +17,7 @@ package disk
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
@@ -33,13 +34,13 @@ var editCommand = &core.Command{ // nolint TODO あとでnolintを消す
 }
 
 type editParameter struct {
-	core.ZoneParameter `cli:",squash" mapconv:",squash"`
-	core.IDParameter   `cli:",squash" mapconv:",squash"`
+	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
 
 	EditParameter editServiceParameter `cli:",squash,category=edit" mapconv:",omitempty"`
 
-	core.ConfirmParameter `cli:",squash" mapconv:"-"`
-	core.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 type editServiceParameter struct {

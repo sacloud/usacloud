@@ -15,6 +15,7 @@
 package disk
 
 import (
+	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
@@ -35,13 +36,13 @@ var listCommand = &core.Command{
 }
 
 type listParameter struct {
-	core.ZoneParameter `cli:",squash" mapconv:",squash"`
+	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 
-	Names              []string `cli:",category=filter"`
-	Tags               []string `cli:",category=filter"`
-	core.FindParameter `cli:",squash" mapconv:",squash"`
+	Names               []string `cli:",category=filter"`
+	Tags                []string `cli:",category=filter"`
+	cflag.FindParameter `cli:",squash" mapconv:",squash"`
 
-	core.OutputParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 
 func newListParameter() *listParameter {

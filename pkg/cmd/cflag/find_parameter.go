@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package cflag
 
 type FindParameter struct {
 	Count int `cli:",aliases=max limit,category=filter"`

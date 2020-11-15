@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package cflag
 
 import "github.com/sacloud/libsacloud/v2/sacloud/types"
 
@@ -27,9 +27,4 @@ func (p *IDParameter) IDFlagValue() types.ID {
 
 func (p *IDParameter) SetIDFlagValue(id types.ID) {
 	p.ID = id
-}
-
-type IDParameterValueHandler interface {
-	IDFlagValue() types.ID
-	SetIDFlagValue(id types.ID)
 }

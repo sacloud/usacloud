@@ -56,7 +56,7 @@ type Command struct {
 	// コマンド動作関連
 	SelectorType   SelectorType
 	NoProgress     bool // コマンド実行時のプログレス表示の有無
-	NoConfirm      bool
+	NoConfirm      bool // TODO パラメータがcflag.ConfirmParameterを実装しているかで判定するようにする
 	ConfirmMessage string
 
 	// パラメータ関連
@@ -219,7 +219,7 @@ func (c *Command) handleCommonParameters(ctx cli.Context) (bool, error) {
 
 func (c *Command) confirmContinue(ctx cli.Context, resources cli.ResourceContexts) (bool, error) {
 	if !c.NoConfirm {
-		if cp, ok := c.currentParameter.(ConfirmParameterValueHandler); ok {
+		if cp, ok := c.currentParameter.(cflag.ConfirmParameterValueHandler); ok {
 			if !cp.AssumeYesFlagValue() {
 				if !term.IsTerminal() {
 					return false, errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")

@@ -28,6 +28,7 @@ func (p *readParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 
 func (p *readParameter) buildFlags(fs *pflag.FlagSet) {
 
+	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
@@ -49,6 +50,15 @@ func (p *readParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.N
 
 func (p *readParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Input options",
+			Flags: fs,
+		})
+	}
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)

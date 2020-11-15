@@ -22,10 +22,9 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/usacloud/pkg/validate"
 
-	"github.com/sacloud/usacloud/pkg/cmd/core"
-
 	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
 
+	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/conv"
 
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
@@ -37,7 +36,7 @@ import (
 func TestCreate_ConvertToServiceRequest(t *testing.T) {
 	t.Run("full", func(t *testing.T) {
 		in := &createParameter{
-			ZoneParameter: core.ZoneParameter{Zone: "is1a"},
+			ZoneParameter: cflag.ZoneParameter{Zone: "is1a"},
 			Name:          "name",
 			Description:   "desc",
 			Tags:          []string{"tag1", "tag2"},
@@ -84,7 +83,7 @@ func TestCreateParameter_Validate(t *testing.T) {
 		// minimum
 		{
 			in: &createParameter{
-				ZoneParameter: core.ZoneParameter{
+				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
 				Name:       "foobar",
@@ -96,7 +95,7 @@ func TestCreateParameter_Validate(t *testing.T) {
 		// invalid tags length
 		{
 			in: &createParameter{
-				ZoneParameter: core.ZoneParameter{
+				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
 				Name:       "foobar",
@@ -112,7 +111,7 @@ func TestCreateParameter_Validate(t *testing.T) {
 		// invalid tags body
 		{
 			in: &createParameter{
-				ZoneParameter: core.ZoneParameter{
+				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
 				Name:       "foobar",
@@ -128,7 +127,7 @@ func TestCreateParameter_Validate(t *testing.T) {
 		// custom validation
 		{
 			in: &createParameter{
-				ZoneParameter: core.ZoneParameter{
+				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
 				Name:            "foobar",
@@ -145,7 +144,7 @@ func TestCreateParameter_Validate(t *testing.T) {
 		// custom validation(with os-type)
 		{
 			in: &createParameter{
-				ZoneParameter: core.ZoneParameter{
+				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
 				Name:            "foobar",

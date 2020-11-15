@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package cflag
 
-type ZoneParameter struct {
-	Zone string `validate:"zone"`
+type ConfirmParameter struct {
+	AssumeYes bool `cli:"assumeyes,short=y,category=input,desc=Assume that the answer to any question which would be asked is yes"`
 }
 
-func (p *ZoneParameter) ZoneFlagValue() string {
-	return p.Zone
+func (p *ConfirmParameter) AssumeYesFlagValue() bool {
+	return p.AssumeYes
 }
 
-func (p *ZoneParameter) SetZoneFlagValue(zone string) {
-	p.Zone = zone
+type ConfirmParameterValueHandler interface {
+	AssumeYesFlagValue() bool
 }

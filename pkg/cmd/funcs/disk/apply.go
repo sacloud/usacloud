@@ -16,6 +16,7 @@ package disk
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
@@ -32,8 +33,8 @@ var applyCommand = &core.Command{ // nolint TODO あとでnolintを消す
 }
 
 type applyParameter struct {
-	core.ZoneParameter `cli:",squash" mapconv:",squash"`
-	// core.IDParameter   `cli:",squash" mapconv:",squash"` //TODO SelectorTypeのコメント参照(将来ID使うかも)
+	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
+	// cflag.IDParameter   `cli:",squash" mapconv:",squash"` //TODO SelectorTypeのコメント参照(将来ID使うかも)
 
 	Name            string     `cli:",category=disk" validate:"required"`
 	Description     string     `cli:",category=disk" validate:"description"`
@@ -50,8 +51,8 @@ type applyParameter struct {
 
 	//EditParameter editParameter `cli:",category=edit" mapconv:",omitempty"`
 
-	core.ConfirmParameter `cli:",squash" mapconv:"-"`
-	core.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 func newApplyParameter() *applyParameter {

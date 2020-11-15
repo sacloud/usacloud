@@ -21,8 +21,7 @@ import (
 
 	"github.com/sacloud/usacloud/pkg/validate"
 
-	"github.com/sacloud/usacloud/pkg/cmd/core"
-
+	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/conv"
 
 	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
@@ -35,8 +34,8 @@ import (
 func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 	t.Run("full", func(t *testing.T) {
 		in := &updateParameter{
-			ZoneParameter: core.ZoneParameter{Zone: "is1a"},
-			IDParameter:   core.IDParameter{ID: types.ID(1)},
+			ZoneParameter: cflag.ZoneParameter{Zone: "is1a"},
+			IDParameter:   cflag.IDParameter{ID: types.ID(1)},
 			Name:          pointer.NewString("name"),
 			Description:   pointer.NewString("desc"),
 			Tags:          pointer.NewStringSlice([]string{"tag1", "tag2"}),
@@ -62,8 +61,8 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 
 	t.Run("nil", func(t *testing.T) {
 		in := &updateParameter{
-			ZoneParameter: core.ZoneParameter{Zone: "is1a"},
-			IDParameter:   core.IDParameter{ID: types.ID(1)},
+			ZoneParameter: cflag.ZoneParameter{Zone: "is1a"},
+			IDParameter:   cflag.IDParameter{ID: types.ID(1)},
 			Name:          pointer.NewString("name"),
 		}
 
@@ -84,8 +83,8 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 	})
 	t.Run("empty", func(t *testing.T) {
 		in := &updateParameter{
-			ZoneParameter: core.ZoneParameter{Zone: "is1a"},
-			IDParameter:   core.IDParameter{ID: types.ID(1)},
+			ZoneParameter: cflag.ZoneParameter{Zone: "is1a"},
+			IDParameter:   cflag.IDParameter{ID: types.ID(1)},
 			Name:          pointer.NewString("name"),
 			Description:   pointer.NewString(""),
 			Tags:          pointer.NewStringSlice([]string{}),
@@ -125,8 +124,8 @@ func TestUpdateParameter_Validate(t *testing.T) {
 		// valid
 		{
 			in: &updateParameter{
-				ZoneParameter: core.ZoneParameter{Zone: "is1a"},
-				IDParameter:   core.IDParameter{ID: 1},
+				ZoneParameter: cflag.ZoneParameter{Zone: "is1a"},
+				IDParameter:   cflag.IDParameter{ID: 1},
 				Name:          pointer.NewString("1"),
 				Description:   pointer.NewString(""),
 				Tags:          pointer.NewStringSlice([]string{}),
@@ -137,8 +136,8 @@ func TestUpdateParameter_Validate(t *testing.T) {
 		// name
 		{
 			in: &updateParameter{
-				ZoneParameter: core.ZoneParameter{Zone: "is1a"},
-				IDParameter:   core.IDParameter{ID: 1},
+				ZoneParameter: cflag.ZoneParameter{Zone: "is1a"},
+				IDParameter:   cflag.IDParameter{ID: 1},
 				Name:          pointer.NewString(""),
 			},
 			err: errors.New(strings.Join([]string{

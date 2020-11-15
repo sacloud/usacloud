@@ -15,6 +15,7 @@
 package disk
 
 import (
+	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
@@ -30,10 +31,10 @@ var resizePartitionCommand = &core.Command{
 }
 
 type resizePartitionParameter struct {
-	core.ZoneParameter `cli:",squash" mapconv:",squash"`
-	core.IDParameter   `cli:",squash" mapconv:",squash"`
+	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
 
-	core.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 }
 
 func newResizePartitionParameter() *resizePartitionParameter {

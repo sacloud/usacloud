@@ -12,10 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package cflag
 
-// MonitorParameter Monitor系APIで共通のパラメータ
-type MonitorParameter struct {
-	Start string `cli:",category=monitor" mapconv:",omitempty,filters=rfc3339"`
-	End   string `cli:",category=monitor" mapconv:",omitempty,filters=rfc3339"`
+type ZoneParameter struct {
+	Zone string `validate:"zone"`
+}
+
+func (p *ZoneParameter) ZoneFlagValue() string {
+	return p.Zone
+}
+
+func (p *ZoneParameter) SetZoneFlagValue(zone string) {
+	p.Zone = zone
 }

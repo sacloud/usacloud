@@ -15,6 +15,7 @@
 package disk
 
 import (
+	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
@@ -36,10 +37,10 @@ var readCommand = &core.Command{
 }
 
 type readParameter struct {
-	core.ZoneParameter `cli:",squash" mapconv:",squash"`
-	core.IDParameter   `cli:",squash" mapconv:",squash"`
+	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
 
-	core.OutputParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 
 func newReadParameter() *readParameter {

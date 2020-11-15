@@ -12,16 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package cflag
 
-type ConfirmParameter struct {
-	AssumeYes bool `cli:"assumeyes,short=y,category=input,desc=Assume that the answer to any question which would be asked is yes"`
-}
-
-func (p *ConfirmParameter) AssumeYesFlagValue() bool {
-	return p.AssumeYes
-}
-
-type ConfirmParameterValueHandler interface {
-	AssumeYesFlagValue() bool
+// MonitorParameter Monitor系APIで共通のパラメータ
+type MonitorParameter struct {
+	Start string `cli:",category=monitor" mapconv:",omitempty,filters=rfc3339"`
+	End   string `cli:",category=monitor" mapconv:",omitempty,filters=rfc3339"`
 }
