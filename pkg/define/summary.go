@@ -15,7 +15,7 @@
 package define
 
 import (
-	"github.com/sacloud/usacloud/pkg/config"
+	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 )
@@ -55,7 +55,8 @@ func summaryShowColumns() []output.ColumnDef {
 		{Name: "Name"},
 	}
 
-	for _, zone := range config.AllowZones {
+	// TODO v1での実装の際はConfigからゾーンを取得する
+	for _, zone := range sacloud.SakuraCloudZones {
 		defs = append(defs, output.ColumnDef{Name: zone})
 	}
 

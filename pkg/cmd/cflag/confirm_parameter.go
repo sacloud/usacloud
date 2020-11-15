@@ -12,24 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate go run github.com/sacloud/usacloud/tools/gen-commands/
-package cmd
+package cflag
 
-import (
-	"github.com/sacloud/usacloud/pkg/cmd/commands/authstatus"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/disk"
-	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/pkg/cmd/root"
-)
-
-var Resources = core.Resources{
-	authstatus.Resource,
-	disk.Resource,
+type ConfirmParameter struct {
+	AssumeYes bool `cli:"assumeyes,short=y,category=input,desc=Assume that the answer to any question which would be asked is yes"`
 }
 
-func initCommands() {
-	for _, r := range Resources {
-		root.Command.AddCommand(r.CLICommand())
-	}
-	core.BuildRootCommandsUsage(root.Command, Resources.CategorizedResources())
+func (p *ConfirmParameter) AssumeYesFlagValue() bool {
+	return p.AssumeYes
+}
+
+type ConfirmParameterValueHandler interface {
+	AssumeYesFlagValue() bool
 }

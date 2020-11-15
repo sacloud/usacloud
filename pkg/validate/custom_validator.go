@@ -15,26 +15,11 @@
 package validate
 
 import (
-	"fmt"
-	"strings"
-
-	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/usacloud/pkg/vdef"
 )
 
-func joinWithSpace(values []string) string {
-	return strings.Join(values, " ")
-}
-
 func InitializeValidator(zones []string) { // TODO 実行時に動的に変えたいバリデーションが他に出てきた場合は引数をstructにして対応する
-	var aliases = map[string]string{
-		"description":     "max=512",
-		"tags":            "max=10,dive,max=32",
-		"disk_plan":       fmt.Sprintf("oneof=%s", joinWithSpace(types.DiskPlanStrings)),
-		"disk_connection": fmt.Sprintf("oneof=%s", joinWithSpace(types.DiskConnectionStrings)),
-		"os_type":         fmt.Sprintf("oneof=%s", joinWithSpace(ostype.OSTypeShortNames)),
-		"zone":            fmt.Sprintf("required,oneof=%s", joinWithSpace(zones)),
-	}
+	aliases := vdef.ValidatorAliases(zones)
 	for name, tags := range aliases {
 		validate.RegisterAlias(name, tags)
 	}

@@ -12,24 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate go run github.com/sacloud/usacloud/tools/gen-commands/
-package cmd
+package cflag
 
-import (
-	"github.com/sacloud/usacloud/pkg/cmd/commands/authstatus"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/disk"
-	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/pkg/cmd/root"
-)
+import "github.com/sacloud/libsacloud/v2/sacloud/types"
 
-var Resources = core.Resources{
-	authstatus.Resource,
-	disk.Resource,
+// IDParameter IDを指定して操作する必要があるリソースが実装すべきIDパラメータの定義
+type IDParameter struct {
+	ID types.ID `cli:"-"` // IDは実行時にName or Tagsから検索〜設定されるケースがあるためvalidate:"required"にしない
 }
 
-func initCommands() {
-	for _, r := range Resources {
-		root.Command.AddCommand(r.CLICommand())
-	}
-	core.BuildRootCommandsUsage(root.Command, Resources.CategorizedResources())
+func (p *IDParameter) IDFlagValue() types.ID {
+	return p.ID
+}
+
+func (p *IDParameter) SetIDFlagValue(id types.ID) {
+	p.ID = id
 }

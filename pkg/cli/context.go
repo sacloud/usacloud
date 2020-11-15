@@ -44,11 +44,12 @@ type Context interface {
 	ResourceName() string
 	CommandName() string
 
+	// WithResource 特定のリソース向け作業をする際に呼ばれる。
+	// リソースのIDとゾーンを保持した新しいコンテキストを返す
+	// 新しいコンテキストの親コンテキストには現在のコンテキストが設定される
+	WithResource(id types.ID, zone string) Context
 	ID() types.ID
 	Zone() string
-	WithResource(id types.ID, zone string) Context
-
-	ExecWithProgress(func() error) error
 }
 
 type cliContext struct {
@@ -127,10 +128,6 @@ func (c *cliContext) WithResource(id types.ID, zone string) Context {
 		commandName:  c.commandName,
 		resource:     ResourceContext{ID: id, Zone: zone},
 	}
-}
-
-func (c *cliContext) ExecWithProgress(f func() error) error {
-	return NewProgress(c).Exec(f)
 }
 
 func (c *cliContext) Client() sacloud.APICaller {

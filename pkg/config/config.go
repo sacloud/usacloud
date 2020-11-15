@@ -230,7 +230,7 @@ func (o *Config) Validate(skipCred bool) []error {
 		errs = append(errs, validation.Required("zone", o.Zone)...)
 		errs = append(errs, validation.StringInSlice("zone", o.Zone, o.Zones)...)
 	}
-	errs = append(errs, validation.StringInSlice("default-output-type", o.DefaultOutputType, AllowOutputTypes)...)
+	errs = append(errs, validation.StringInSlice("default-output-type", o.DefaultOutputType, []string{"table", "json", "yaml"})...)
 
 	return errs
 }

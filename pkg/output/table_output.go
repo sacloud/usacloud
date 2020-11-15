@@ -81,8 +81,10 @@ func (o *tableOutput) Print(contents Contents) error {
 		}
 
 		flatMap["__ORDER__"] = fmt.Sprintf("%d", i+1)
-		if _, ok := flatMap["Zone"]; !ok {
-			flatMap["Zone"] = contents[i].Zone
+		if contents[i].Zone != "" {
+			if _, ok := flatMap["Zone"]; !ok {
+				flatMap["Zone"] = contents[i].Zone
+			}
 		}
 		table.append(flatMap)
 	}

@@ -12,24 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate go run github.com/sacloud/usacloud/tools/gen-commands/
-package cmd
+package cflag
 
-import (
-	"github.com/sacloud/usacloud/pkg/cmd/commands/authstatus"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/disk"
-	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/pkg/cmd/root"
-)
-
-var Resources = core.Resources{
-	authstatus.Resource,
-	disk.Resource,
-}
-
-func initCommands() {
-	for _, r := range Resources {
-		root.Command.AddCommand(r.CLICommand())
-	}
-	core.BuildRootCommandsUsage(root.Command, Resources.CategorizedResources())
+// MonitorParameter Monitor系APIで共通のパラメータ
+type MonitorParameter struct {
+	Start string `cli:",category=monitor" mapconv:",omitempty,filters=rfc3339"`
+	End   string `cli:",category=monitor" mapconv:",omitempty,filters=rfc3339"`
 }

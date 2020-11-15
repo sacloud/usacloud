@@ -12,24 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate go run github.com/sacloud/usacloud/tools/gen-commands/
-package cmd
+package vdef
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/commands/authstatus"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/disk"
-	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/pkg/cmd/root"
+	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
-var Resources = core.Resources{
-	authstatus.Resource,
-	disk.Resource,
-}
-
-func initCommands() {
-	for _, r := range Resources {
-		root.Command.AddCommand(r.CLICommand())
-	}
-	core.BuildRootCommandsUsage(root.Command, Resources.CategorizedResources())
+// FlagOptionsMap CLIで指定するフラグでの静的な候補値一覧(cliタグで指定する)
+//
+// Note: コード生成で利用されるため実行時に動的に変化する項目には利用できない
+var FlagOptionsMap = map[string][]string{
+	"disk_connection": types.DiskConnectionStrings,
+	"disk_plan":       types.DiskPlanStrings,
+	"os_type":         ostype.OSTypeShortNames,
 }

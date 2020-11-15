@@ -56,14 +56,12 @@ type Command struct {
 	// コマンド動作関連
 	SelectorType   SelectorType
 	NoProgress     bool // コマンド実行時のプログレス表示の有無
-	NoConfirm      bool
 	ConfirmMessage string
 
 	// パラメータ関連
-	ParameterCategories   []Category
-	ParameterInitializer  func() interface{}
-	ParameterVariableName string // コード生成用/省略可。 省略された場合は"コマンド名+Parameter"が利用される
-	ServiceFuncAltName    string // デフォルトのlibsacloud service呼び出しコード生成用、空の場合はNameをCamelizeしたものが利用される
+	ParameterCategories  []Category
+	ParameterInitializer func() interface{}
+	ServiceFuncAltName   string // デフォルトのlibsacloud service呼び出しコード生成用、空の場合はNameをCamelizeしたものが利用される // TODO libsacloud側で対応すべき
 
 	// テーブル形式での出力対象列。省略した場合はIDとNameが出力される
 	ColumnDefs []output.ColumnDef
@@ -80,7 +78,6 @@ type Command struct {
 	// コマンドの実処理。設定してない場合はデフォルトのlibsacloud service呼び出しが行われる
 	Func func(ctx cli.Context, parameter interface{}) ([]interface{}, error)
 
-	// これらは実行時にセットされる
 	resource         *Resource
 	currentParameter interface{}
 }
@@ -218,16 +215,14 @@ func (c *Command) handleCommonParameters(ctx cli.Context) (bool, error) {
 }
 
 func (c *Command) confirmContinue(ctx cli.Context, resources cli.ResourceContexts) (bool, error) {
-	if !c.NoConfirm {
-		if cp, ok := c.currentParameter.(ConfirmParameterValueHandler); ok {
-			if !cp.AssumeYesFlagValue() {
-				if !term.IsTerminal() {
-					return false, errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
-				}
-				result, err := util.ConfirmContinue(c.confirmMessage(), ctx.IO().In(), ctx.IO().Out(), resources.Strings()...)
-				if err != nil || !result {
-					return result, err
-				}
+	if cp, ok := c.currentParameter.(cflag.ConfirmParameterValueHandler); ok {
+		if !cp.AssumeYesFlagValue() {
+			if !term.IsTerminal() {
+				return false, errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
+			}
+			result, err := util.ConfirmContinue(c.confirmMessage(), ctx.IO().In(), ctx.IO().Out(), resources.Strings()...)
+			if err != nil || !result {
+				return result, err
 			}
 		}
 	}
@@ -381,7 +376,7 @@ func (c *Command) exec(ctx cli.Context, ids cli.ResourceContexts) (output.Conten
 		fn := c.Func
 		c.Func = func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			var results []interface{}
-			err := ctx.ExecWithProgress(func() error {
+			err := NewProgress(ctx).Exec(func() error {
 				res, err := fn(ctx, parameter)
 				if err != nil {
 					return err

@@ -90,8 +90,10 @@ func (o *freeOutput) Print(contents Contents) error {
 			return fmt.Errorf("FreeOutput:Print: json format is invalid: %v", err)
 		}
 		mapValue["RowNumber"] = fmt.Sprintf("%d", i+1)
-		if _, ok := mapValue["Zone"]; !ok {
-			mapValue["Zone"] = contents[i].Zone
+		if contents[i].Zone != "" {
+			if _, ok := mapValue["Zone"]; !ok {
+				mapValue["Zone"] = contents[i].Zone
+			}
 		}
 
 		buf := bytes.NewBufferString("")

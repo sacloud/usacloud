@@ -73,9 +73,11 @@ func (o *jsonOutput) Print(contents Contents) error {
 		return fmt.Errorf("JSONOutput:Print: Create SimpleJSON object is failed: %s", err)
 	}
 	for i := 0; i < len(targets); i++ {
-		row := j.GetIndex(i)
-		if _, ok := row.CheckGet("Zone"); !ok {
-			row.Set("Zone", contents[i].Zone)
+		if contents[i].Zone != "" {
+			row := j.GetIndex(i)
+			if _, ok := row.CheckGet("Zone"); !ok {
+				row.Set("Zone", contents[i].Zone)
+			}
 		}
 	}
 
