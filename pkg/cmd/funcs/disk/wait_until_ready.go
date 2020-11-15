@@ -25,7 +25,6 @@ var waitUntilReadyCommand = &core.Command{
 	Category: "other",
 	Order:    10,
 
-	NoConfirm:    true,
 	SelectorType: core.SelectorTypeRequireMulti,
 
 	ServiceFuncAltName: "WaitReady",

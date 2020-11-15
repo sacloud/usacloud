@@ -25,7 +25,6 @@ var listCommand = &core.Command{
 	Category:           "basic",
 	Order:              10,
 	ServiceFuncAltName: "Find",
-	NoConfirm:          true,
 	NoProgress:         true,
 
 	ColumnDefs: defaultColumnDefs,

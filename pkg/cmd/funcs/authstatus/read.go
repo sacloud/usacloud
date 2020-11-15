@@ -25,7 +25,6 @@ var readCommand = &core.Command{
 	Aliases:    []string{"show"},
 	Category:   "basics",
 	Order:      10,
-	NoConfirm:  false,
 	NoProgress: false,
 
 	ColumnDefs: []output.ColumnDef{

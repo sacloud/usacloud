@@ -25,7 +25,6 @@ var monitorCommand = &core.Command{
 	Aliases:    []string{"monitor"},
 	Category:   "monitor",
 	Order:      10,
-	NoConfirm:  true,
 	NoProgress: true,
 
 	ColumnDefs: []output.ColumnDef{
