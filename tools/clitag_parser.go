@@ -15,13 +15,13 @@
 package tools
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/options"
+	"github.com/sacloud/usacloud/pkg/vdef"
 	"github.com/sacloud/usacloud/tools/clitag"
 )
 
 var clitagParser = &clitag.Parser{
 	Config: &clitag.ParserConfig{
 		TagName:    clitag.DefaultTagName,
-		OptionsMap: options.OptionsMap,
+		OptionsMap: vdef.FlagOptionsMap,
 	},
 }

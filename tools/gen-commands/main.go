@@ -34,7 +34,7 @@ func main() {
 	for _, resource := range ctx.Resources {
 		for _, command := range resource.Commands {
 			// flag関連ソースの生成
-			filePath := filepath.Join(destination, "funcs", resource.PackageDirName(), command.CLICommandGeneratedSourceFile())
+			filePath := filepath.Join(destination, "commands", resource.PackageDirName(), command.CLICommandGeneratedSourceFile())
 			utils.WriteFileWithTemplate(&utils.TemplateConfig{
 				OutputPath: filepath.Join(utils.ProjectRootPath(), filePath),
 				Template:   flagsTemplate,

@@ -15,23 +15,14 @@
 package conv
 
 import (
-	"fmt"
-	"time"
-
-	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
-
 	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/usacloud/pkg/vdef"
 )
 
 var converter = &mapconv.Decoder{
 	Config: &mapconv.DecoderConfig{
-		TagName: mapconv.DefaultMapConvTag,
-		FilterFuncs: map[string]mapconv.FilterFunc{
-			"disk_plan_to_id": diskPlanToID,
-			"os_type":         strToOSType,
-			"rfc3339":         strToTime,
-		},
+		TagName:     mapconv.DefaultMapConvTag,
+		FilterFuncs: vdef.ConverterFilters,
 	},
 }
 
@@ -43,55 +34,4 @@ func ConvertTo(src, dest interface{}) error {
 // ConvertFrom mapconvでの変換
 func ConvertFrom(src, dest interface{}) error {
 	return converter.ConvertFrom(src, dest)
-}
-
-func diskPlanToID(v interface{}) (interface{}, error) {
-	s, ok := v.(string)
-	if !ok {
-		return nil, fmt.Errorf("invalid disk plan: %v", v)
-	}
-	for diskPlanName, id := range types.DiskPlanIDMap {
-		if diskPlanName == s {
-			return id, nil
-		}
-	}
-	return nil, fmt.Errorf("disk plan %s not found", s)
-}
-
-func strToOSType(v interface{}) (interface{}, error) {
-	s, ok := v.(string)
-	if !ok {
-		return nil, fmt.Errorf("invalid os type: %v", v)
-	}
-	if s == "" {
-		return ostype.Custom, nil
-	}
-
-	ot := ostype.StrToOSType(s)
-	if ot == ostype.Custom {
-		return nil, fmt.Errorf("os type %s not found", s)
-	}
-	return ot, nil
-}
-
-func strToTime(v interface{}) (interface{}, error) {
-	s, ok := v.(string)
-	if !ok {
-		return nil, fmt.Errorf("invalid time format: %v", v)
-	}
-	if s == "" {
-		return time.Time{}, nil
-	}
-
-	allowDatetimeFormatList := []string{
-		time.RFC3339,
-	}
-	for _, format := range allowDatetimeFormatList {
-		d, err := time.Parse(format, s)
-		if err == nil {
-			// success
-			return d, nil
-		}
-	}
-	return nil, fmt.Errorf("invalid time format: %v", v)
 }

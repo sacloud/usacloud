@@ -16,9 +16,9 @@
 package cmd
 
 import (
+	"github.com/sacloud/usacloud/pkg/cmd/commands/authstatus"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/disk"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/pkg/cmd/funcs/authstatus"
-	"github.com/sacloud/usacloud/pkg/cmd/funcs/disk"
 	"github.com/sacloud/usacloud/pkg/cmd/root"
 )
 

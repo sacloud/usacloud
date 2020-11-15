@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package options
+package vdef
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
-// OptionsMap CLIで指定するフラグでの静的な候補値一覧(cliタグで指定する)
+// FlagOptionsMap CLIで指定するフラグでの静的な候補値一覧(cliタグで指定する)
 //
 // Note: コード生成で利用されるため実行時に動的に変化する項目には利用できない
-var OptionsMap = map[string][]string{
+var FlagOptionsMap = map[string][]string{
 	"disk_connection": types.DiskConnectionStrings,
 	"disk_plan":       types.DiskPlanStrings,
 	"os_type":         ostype.OSTypeShortNames,
