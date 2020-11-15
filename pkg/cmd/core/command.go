@@ -59,10 +59,9 @@ type Command struct {
 	ConfirmMessage string
 
 	// パラメータ関連
-	ParameterCategories   []Category
-	ParameterInitializer  func() interface{}
-	ParameterVariableName string // コード生成用/省略可。 省略された場合は"コマンド名+Parameter"が利用される
-	ServiceFuncAltName    string // デフォルトのlibsacloud service呼び出しコード生成用、空の場合はNameをCamelizeしたものが利用される
+	ParameterCategories  []Category
+	ParameterInitializer func() interface{}
+	ServiceFuncAltName   string // デフォルトのlibsacloud service呼び出しコード生成用、空の場合はNameをCamelizeしたものが利用される
 
 	// テーブル形式での出力対象列。省略した場合はIDとNameが出力される
 	ColumnDefs []output.ColumnDef
