@@ -94,7 +94,6 @@ func (p *Progress) msgFailed(err error) string {
 
 func (p *Progress) Start() {
 	p.doneCh = make(chan error)
-	defer close(p.doneCh)
 
 	ticker := time.NewTicker(p.duration)
 	defer ticker.Stop()
@@ -129,4 +128,8 @@ func (p *Progress) print(clr *color.Color, msg string) {
 	defer mutex.Unlock()
 	p.printer.Fprint(p.out, clr, msg)
 	p.printer.Fprint(p.out, color.New(color.Reset), "")
+}
+
+func (p *Progress) Close() {
+	close(p.doneCh)
 }
