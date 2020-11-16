@@ -12,35 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package output
+package _define
 
-type Output interface {
-	Print(Contents) error
-}
-
-type Formatter interface {
-	ColumnDefs() []ColumnDef
-}
-
-type DefaultFormatter struct{}
-
-func (f *DefaultFormatter) IncludeFields() []string {
-	return []string{}
-}
-
-func (f *DefaultFormatter) ExcludeFields() []string {
-	return []string{}
-}
-
-func (f *DefaultFormatter) ColumnDefs() []ColumnDef {
-	return []ColumnDef{}
-}
-
-type Option interface {
-	OutputTypeFlagValue() string
-	FormatFlagValue() string
-	FormatFileFlagValue() string
-	QuietFlagValue() bool
-	QueryFlagValue() string
-	QueryFileFlagValue() string
+func formatBoolFunc(key string) func(map[string]string) string {
+	return func(values map[string]string) string {
+		v, ok := values[key]
+		if !ok {
+			return "false"
+		}
+		if v == "true" || v == "True" {
+			return "true"
+		}
+		return "false"
+	}
 }

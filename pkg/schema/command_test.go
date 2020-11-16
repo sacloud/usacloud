@@ -69,35 +69,10 @@ func TestCommand_ParamsHandlerType(t *testing.T) {
 		Type:                CommandList,
 		Params:              params,
 		ListResultFieldName: "foo",
-		TableType:           output.TableSimple,
 		TableColumnDefines:  []output.ColumnDef{{Name: "Test"}},
 	}
 	errs = validCommand.Validate()
 	assert.True(t, len(errs) == 0)
-}
-
-func TestCommand_TableType_ColumnDef(t *testing.T) {
-	var errs []error
-
-	c := &Command{
-		Type:                CommandList,
-		ListResultFieldName: "test",
-	}
-	errs = c.Validate()
-	assert.True(t, len(errs) > 0)
-
-	// commandList required TableColumnDefines and TableSimple
-	c.TableColumnDefines = []output.ColumnDef{
-		{Name: "Test"},
-	}
-	c.TableType = output.TableSimple
-
-	errs = c.Validate()
-	assert.True(t, len(errs) == 0)
-
-	c.TableType = output.TableDetail
-	errs = c.Validate()
-	assert.True(t, len(errs) > 0)
 }
 
 func TestCommand_Categories_Params(t *testing.T) {

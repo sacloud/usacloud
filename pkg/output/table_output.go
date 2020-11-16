@@ -22,7 +22,6 @@ import (
 
 	"github.com/sacloud/usacloud/pkg/util"
 
-	"github.com/astaxie/flatmap"
 	"github.com/bitly/go-simplejson"
 )
 
@@ -30,7 +29,6 @@ type tableOutput struct {
 	Out        io.Writer
 	Err        io.Writer
 	ColumnDefs []ColumnDef
-	TableType  TableType
 }
 
 func NewTableOutput(out io.Writer, err io.Writer, columnDefs []ColumnDef) Output {
@@ -74,19 +72,15 @@ func (o *tableOutput) Print(contents Contents) error {
 			return fmt.Errorf("TableOutput:Print: json format is invalid: %v", err)
 		}
 
-		// to flatmap( map[string]string )
-		flatMap, err := flatmap.Flatten(mapValue)
-		if err != nil {
-			return fmt.Errorf("TableOutput:Print: create flatmap is failed: %v", err)
-		}
-
-		flatMap["__ORDER__"] = fmt.Sprintf("%d", i+1)
+		mapValue["__ORDER__"] = fmt.Sprintf("%d", i+1)
 		if contents[i].Zone != "" {
-			if _, ok := flatMap["Zone"]; !ok {
-				flatMap["Zone"] = contents[i].Zone
+			if _, ok := mapValue["Zone"]; !ok {
+				mapValue["Zone"] = contents[i].Zone
 			}
 		}
-		table.append(flatMap)
+		if err := table.append(mapValue); err != nil {
+			return fmt.Errorf("TableOutput:Print: processing template failed: %v", err)
+		}
 	}
 
 	table.render()

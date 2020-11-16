@@ -15,8 +15,10 @@
 package output
 
 import (
+	"bytes"
 	"fmt"
 	"io"
+	"text/template"
 
 	"github.com/olekukonko/tablewriter"
 )
@@ -36,12 +38,12 @@ type tableHandler interface {
 	Render()
 }
 
-func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) tableWriter {
+func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) *simpleTableWriter {
 	if len(columnDefs) == 0 {
 		columnDefs = []ColumnDef{
-			{Name: "__ORDER__"},
-			{Name: "ID"},
-			{Name: "Name"},
+			{Name: "{{.__ORDER__}}"},
+			{Name: "{{.ID}}"},
+			{Name: "{{.Name}}"},
 		}
 	}
 
@@ -51,12 +53,16 @@ func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) tableWriter {
 	}
 
 	var headers []string
-	for _, def := range columnDefs {
+	for i, def := range columnDefs {
 		name := def.Name
 		if name == "__ORDER__" {
 			name = "#"
 		}
 		headers = append(headers, name)
+
+		if def.Template == "" {
+			columnDefs[i].Template = fmt.Sprintf("{{.%s}}", def.Name)
+		}
 	}
 
 	w.table.SetHeader(headers)
@@ -66,48 +72,25 @@ func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) tableWriter {
 	return w
 }
 
-func (w *simpleTableWriter) append(values map[string]string) {
-	rowValeus := []string{}
+func (w *simpleTableWriter) append(values interface{}) error {
+	var rowValeus []string
 	for _, def := range w.columnDefs {
-		collected := ""
+		t := template.Must(template.New("output").Option("missingkey=zero").Parse(def.Template))
 
-		if def.FormatFunc == nil {
-			exists := false
-			var sources []interface{}
-			// collect source values
-			for i, source := range def.GetSources() {
-				var s string
-				if v, ok := values[source]; ok {
-					s = v
-
-					if i < len(def.ValueMapping) {
-						mapping := def.ValueMapping[i]
-						if mapped, ok := mapping[s]; ok {
-							s = mapped
-						}
-					}
-				}
-				if s != "" {
-					exists = true
-				}
-				sources = append(sources, s)
-			}
-			//format
-			if exists {
-				format := def.GetFormat()
-				collected = fmt.Sprintf(format, sources...)
-			}
-		} else {
-			collected = def.FormatFunc(values)
+		buf := bytes.NewBufferString("")
+		err := t.Execute(buf, values)
+		if err != nil {
+			return err
 		}
-
-		if collected == "" {
-			collected = "-"
+		s := buf.String()
+		if s == "" || s == "<no value>" { // HACK: map[string]interface{}の場合、missingkey=zeroオプションありでもキーがない場合は<no value>となる
+			s = "-"
 		}
-		rowValeus = append(rowValeus, collected)
+		rowValeus = append(rowValeus, s)
 	}
 
 	w.table.Append(rowValeus)
+	return nil
 }
 
 func (w *simpleTableWriter) render() {
