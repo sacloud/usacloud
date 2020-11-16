@@ -18,7 +18,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"text/template"
 
 	"github.com/olekukonko/tablewriter"
 )
@@ -74,12 +73,14 @@ func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) *simpleTableWri
 
 func (w *simpleTableWriter) append(values interface{}) error {
 	var rowValeus []string
+	t := newTemplate()
 	for _, def := range w.columnDefs {
-		t := template.Must(template.New("output").Option("missingkey=zero").Parse(def.Template))
+		if _, err := t.Parse(def.Template); err != nil {
+			return fmt.Errorf("invalid output format %q: %s", def.Template, err)
+		}
 
 		buf := bytes.NewBufferString("")
-		err := t.Execute(buf, values)
-		if err != nil {
+		if err := t.Execute(buf, values); err != nil {
 			return err
 		}
 		s := buf.String()

@@ -19,44 +19,11 @@ import (
 	"time"
 
 	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
-	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
-// ConverterFilters mapconvでの変換時に利用されるフィルターの定義
+// ConverterFilters mapconvでの変換時に利用されるフィルターの定義、definitionsに登録したものは実行時に動的に追加される
 var ConverterFilters = map[string]mapconv.FilterFunc{
-	"disk_plan_to_id": diskPlanToID,
-	"os_type":         strToOSType,
-	"rfc3339":         strToTime,
-}
-
-func diskPlanToID(v interface{}) (interface{}, error) {
-	s, ok := v.(string)
-	if !ok {
-		return nil, fmt.Errorf("invalid disk plan: %v", v)
-	}
-	for diskPlanName, id := range types.DiskPlanIDMap {
-		if diskPlanName == s {
-			return id, nil
-		}
-	}
-	return nil, fmt.Errorf("disk plan %s not found", s)
-}
-
-func strToOSType(v interface{}) (interface{}, error) {
-	s, ok := v.(string)
-	if !ok {
-		return nil, fmt.Errorf("invalid os type: %v", v)
-	}
-	if s == "" {
-		return ostype.Custom, nil
-	}
-
-	ot := ostype.StrToOSType(s)
-	if ot == ostype.Custom {
-		return nil, fmt.Errorf("os type %s not found", s)
-	}
-	return ot, nil
+	"rfc3339": strToTime,
 }
 
 func strToTime(v interface{}) (interface{}, error) {

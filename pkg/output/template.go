@@ -14,7 +14,12 @@
 
 package output
 
-type ColumnDef struct {
-	Name     string
-	Template string
+import (
+	"text/template"
+
+	"github.com/sacloud/usacloud/pkg/vdef"
+)
+
+func newTemplate() *template.Template {
+	return template.New("output").Option("missingkey=zero").Funcs(vdef.TemplateFuncMap)
 }

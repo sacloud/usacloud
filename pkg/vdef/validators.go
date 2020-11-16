@@ -17,17 +17,14 @@ package vdef
 import (
 	"fmt"
 	"strings"
-
-	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
 var validatorAliases = map[string]string{
-	"description":     "max=512",
-	"tags":            "max=10,dive,max=32",
-	"disk_plan":       fmt.Sprintf("oneof=%s", joinWithSpace(types.DiskPlanStrings)),
-	"disk_connection": fmt.Sprintf("oneof=%s", joinWithSpace(types.DiskConnectionStrings)),
-	"os_type":         fmt.Sprintf("oneof=%s", joinWithSpace(ostype.OSTypeShortNames)),
+	"description": "max=512",
+	"tags":        "max=10,dive,max=32",
+	//"disk_plan":       fmt.Sprintf("oneof=%s", joinWithSpace(types.DiskPlanStrings)),
+	//"disk_connection": fmt.Sprintf("oneof=%s", joinWithSpace(types.DiskConnectionStrings)),
+	//"os_type":         fmt.Sprintf("oneof=%s", joinWithSpace(ostype.OSTypeShortNames)),
 	// "zone": ... // NOTE: 実行時に登録される
 }
 

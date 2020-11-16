@@ -12,9 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package output
+package vdef
 
-type ColumnDef struct {
-	Name     string
-	Template string
+import "testing"
+
+func TestConverterFilters_fromDefinitions(t *testing.T) {
+	// definitionsから動的にフィルタ登録されているか?
+	expectFilters := []string{
+		"disk_plan_to_value", "disk_plan_to_key",
+	}
+
+	for _, name := range expectFilters {
+		if _, ok := ConverterFilters[name]; !ok {
+			t.Fatalf("ConverterFilters[%s] not exists", name)
+		}
+	}
 }

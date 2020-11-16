@@ -21,7 +21,6 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
-	"text/template"
 
 	"github.com/sacloud/usacloud/pkg/util"
 
@@ -76,10 +75,9 @@ func (o *freeOutput) Print(contents Contents) error {
 		return fmt.Errorf("FreeOutput:Print: create simplejson is failed: %s", err)
 	}
 
-	t := template.New("t")
-	_, err = t.Parse(o.Format)
+	t, err := newTemplate().Parse(o.Format)
 	if err != nil {
-		return fmt.Errorf("Output format is invalid: %s", err)
+		return fmt.Errorf("invalid output format %q: %s", o.Format, err)
 	}
 
 	for i := 0; i < len(targets); i++ {
@@ -90,6 +88,7 @@ func (o *freeOutput) Print(contents Contents) error {
 			return fmt.Errorf("FreeOutput:Print: json format is invalid: %v", err)
 		}
 		mapValue["RowNumber"] = fmt.Sprintf("%d", i+1)
+		mapValue["__ORDER__"] = fmt.Sprintf("%d", i+1)
 		if contents[i].Zone != "" {
 			if _, ok := mapValue["Zone"]; !ok {
 				mapValue["Zone"] = contents[i].Zone
@@ -97,8 +96,7 @@ func (o *freeOutput) Print(contents Contents) error {
 		}
 
 		buf := bytes.NewBufferString("")
-		err = t.Execute(buf, mapValue)
-		if err != nil {
+		if err := t.Execute(buf, mapValue); err != nil {
 			return err
 		}
 
