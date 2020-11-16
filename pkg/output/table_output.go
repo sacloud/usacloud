@@ -30,7 +30,6 @@ type tableOutput struct {
 	Out        io.Writer
 	Err        io.Writer
 	ColumnDefs []ColumnDef
-	TableType  TableType
 }
 
 func NewTableOutput(out io.Writer, err io.Writer, columnDefs []ColumnDef) Output {

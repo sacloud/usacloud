@@ -22,10 +22,10 @@ import (
 func IPv4Resource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
-			Params:             ipv4ListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find"},
+			Params:  ipv4ListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: ipv4ListColumns(),
 			UseCustomCommand:   true,
 			ArgsUsage:          "IPAddress",

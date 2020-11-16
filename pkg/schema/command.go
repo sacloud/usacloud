@@ -52,7 +52,6 @@ type Command struct {
 
 	NoSelector bool // --selectorオプション利用有無、trueの場合利用しない
 
-	TableType          output.TableType
 	IncludeFields      []string           // for output.TableDetail
 	ExcludeFields      []string           // for output.TableDetail
 	TableColumnDefines []output.ColumnDef // for output.TableSimple
@@ -234,13 +233,14 @@ func (c *Command) Validate() []error {
 		errors = append(errors, fmt.Errorf("command#Type: command type is invalid: (%#v)", c))
 	}
 
-	if c.Type == CommandList && c.TableType != output.TableSimple {
-		errors = append(errors, fmt.Errorf("command#TableType: need output.TableSimple when Command#Type is CommandList"))
-	}
-
-	if c.TableType == output.TableSimple && len(c.TableColumnDefines) == 0 {
-		errors = append(errors, fmt.Errorf("command#TableColumnDefines: required when Command#TableType is output.TableSimple"))
-	}
+	//if c.Type == CommandList && c.TableType != output.TableSimple {
+	//	errors = append(errors, fmt.Errorf("command#TableType: need output.TableSimple when Command#Type is CommandList"))
+	//}
+	//
+	//if c.TableType == output.TableSimple && len(c.TableColumnDefines) == 0 {
+	//	errors = append(errors, fmt.Errorf("command#TableColumnDefines: required when Command#TableType is output.TableSimple"))
+	//}
+	//
 
 	if c.NoSelector && !c.Type.CanUseSelector() {
 		errors = append(errors, fmt.Errorf("command#NoSelector: NoSelector isnot used with CommandType[%s]", c.Type.String()))

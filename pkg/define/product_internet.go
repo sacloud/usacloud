@@ -22,10 +22,10 @@ import (
 func ProductInternetResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
-			Params:             productInternetListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find"},
+			Params:  productInternetListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: productInternetListColumns(),
 			Category:           "basics",
 			Order:              10,

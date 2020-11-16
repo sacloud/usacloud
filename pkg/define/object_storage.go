@@ -22,10 +22,10 @@ import (
 func ObjectStorageResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandCustom,
-			Aliases:            []string{"ls"},
-			Params:             objectStorageListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandCustom,
+			Aliases: []string{"ls"},
+			Params:  objectStorageListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: objectStorageListColumns(),
 			UseCustomCommand:   true,
 			ArgsUsage:          "<remote path>",

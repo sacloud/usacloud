@@ -22,10 +22,10 @@ import (
 func IconResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find", "select"},
-			Params:             iconListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find", "select"},
+			Params:  iconListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: iconListColumns(),
 			Category:           "basics",
 			Order:              10,

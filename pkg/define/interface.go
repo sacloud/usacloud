@@ -22,10 +22,10 @@ import (
 func InterfaceResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
-			Params:             interfaceListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find"},
+			Params:  interfaceListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: interfaceListColumns(),
 			UseCustomCommand:   true, // to ignore appliance(system servers)
 			Category:           "basics",

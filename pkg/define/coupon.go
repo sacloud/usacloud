@@ -22,10 +22,10 @@ import (
 func CouponResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandCustom,
-			Aliases:            []string{"ls", "find"},
-			Params:             couponListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandCustom,
+			Aliases: []string{"ls", "find"},
+			Params:  couponListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: couponListColumns(),
 			UseCustomCommand:   true,
 			NeedlessConfirm:    true,

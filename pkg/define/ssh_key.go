@@ -22,10 +22,10 @@ import (
 func SSHKeyResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
-			Params:             sshKeyListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find"},
+			Params:  sshKeyListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: sshKeyListColumns(),
 			Category:           "basics",
 			Order:              10,

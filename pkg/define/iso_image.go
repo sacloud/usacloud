@@ -22,10 +22,10 @@ import (
 func ISOImageResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find", "select"},
-			Params:             isoImageListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find", "select"},
+			Params:  isoImageListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: isoImageListColumns(),
 			Category:           "basics",
 			Order:              10,

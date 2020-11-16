@@ -22,9 +22,9 @@ import (
 func AuthStatusResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"show": {
-			Type:               schema.CommandCustom,
-			Params:             authShowParam(),
-			TableType:          output.TableSimple,
+			Type:   schema.CommandCustom,
+			Params: authShowParam(),
+			//// TableType:          output.TableSimple,
 			TableColumnDefines: authShowColumns(),
 			UseCustomCommand:   true,
 			NeedlessConfirm:    true,

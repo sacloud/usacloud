@@ -22,10 +22,10 @@ import (
 func ProductLicenseResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
-			Params:             productLicenseListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find"},
+			Params:  productLicenseListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: productLicenseListColumns(),
 			Category:           "basics",
 			Order:              10,

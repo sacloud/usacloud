@@ -36,7 +36,7 @@ type tableHandler interface {
 	Render()
 }
 
-func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) tableWriter {
+func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) *simpleTableWriter {
 	if len(columnDefs) == 0 {
 		columnDefs = []ColumnDef{
 			{Name: "__ORDER__"},

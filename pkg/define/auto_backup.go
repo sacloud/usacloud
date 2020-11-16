@@ -23,10 +23,10 @@ import (
 func AutoBackupResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find", "select"},
-			Params:             autoBackupListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find", "select"},
+			Params:  autoBackupListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: autoBackupListColumns(),
 			Category:           "basics",
 			Order:              10,

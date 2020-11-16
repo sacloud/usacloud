@@ -22,10 +22,10 @@ import (
 func ProductServerResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
-			Params:             productServerListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find"},
+			Params:  productServerListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: productServerListColumns(),
 			Category:           "basics",
 			Order:              10,

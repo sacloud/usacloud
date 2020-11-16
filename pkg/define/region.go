@@ -22,10 +22,10 @@ import (
 func RegionResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
-			Params:             regionListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find"},
+			Params:  regionListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: regionListColumns(),
 			Category:           "basics",
 			Order:              10,

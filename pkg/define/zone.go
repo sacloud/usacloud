@@ -22,10 +22,10 @@ import (
 func ZoneResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
-			Params:             zoneListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find"},
+			Params:  zoneListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: zoneListColumns(),
 			Category:           "basics",
 			Order:              10,

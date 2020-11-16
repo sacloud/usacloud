@@ -22,10 +22,10 @@ import (
 func ProductDiskResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
-			Params:             productDiskListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find"},
+			Params:  productDiskListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: productDiskListColumns(),
 			Category:           "basics",
 			Order:              10,

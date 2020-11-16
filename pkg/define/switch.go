@@ -22,10 +22,10 @@ import (
 func SwitchResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find", "select"},
-			Params:             switchListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find", "select"},
+			Params:  switchListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: switchListColumns(),
 			Category:           "basics",
 			Order:              10,

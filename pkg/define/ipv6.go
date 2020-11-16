@@ -22,10 +22,10 @@ import (
 func IPv6Resource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
-			Params:             ipv6ListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find"},
+			Params:  ipv6ListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: ipv6ListColumns(),
 			UseCustomCommand:   true,
 			ArgsUsage:          "IPAddress",

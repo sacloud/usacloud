@@ -23,10 +23,10 @@ import (
 func SimpleMonitorResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find", "select"},
-			Params:             simpleMonitorListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find", "select"},
+			Params:  simpleMonitorListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: simpleMonitorListColumns(),
 			UseCustomCommand:   true,
 			Category:           "basics",

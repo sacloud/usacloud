@@ -45,7 +45,7 @@ func (w *testSimpleTableWriter) getValues() [][]string {
 
 func newTestSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) *testSimpleTableWriter {
 	w := &testSimpleTableWriter{
-		simpleTableWriter: newSimpleTableWriter(out, columnDefs).(*simpleTableWriter),
+		simpleTableWriter: newSimpleTableWriter(out, columnDefs),
 	}
 
 	t := &testTable{

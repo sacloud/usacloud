@@ -31,7 +31,7 @@ func DiskResource() *schema.Resource {
 			//Parameters:         &disk.ListParameter{}, // TODO v1向け試験実装
 			ServiceFuncAltName: "Find", // TODO v1向け試験実装
 			Params:             diskListParam(),
-			TableType:          output.TableSimple,
+			// TableType:          output.TableSimple,
 			TableColumnDefines: diskListColumns(),
 			Category:           "basics",
 			Order:              10,
@@ -146,9 +146,9 @@ func DiskResource() *schema.Resource {
 			Order:            20,
 		},
 		"monitor": {
-			Type:               schema.CommandRead,
-			Params:             diskMonitorParam(),
-			TableType:          output.TableSimple,
+			Type:   schema.CommandRead,
+			Params: diskMonitorParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: diskMonitorColumns(),
 			UseCustomCommand:   true,
 			Category:           "monitor",

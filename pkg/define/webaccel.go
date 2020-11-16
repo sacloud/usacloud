@@ -22,10 +22,10 @@ import (
 func WebAccelResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find", "select"},
-			Params:             webAccelListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find", "select"},
+			Params:  webAccelListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: webAccelListColumns(),
 			UseCustomCommand:   true,
 			Category:           "basics",
@@ -71,10 +71,10 @@ func WebAccelResource() *schema.Resource {
 			Order:            20,
 		},
 		"delete-cache": {
-			Type:               schema.CommandCustom,
-			Aliases:            []string{"purge"},
-			Params:             webAccelDeleteCacheParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandCustom,
+			Aliases: []string{"purge"},
+			Params:  webAccelDeleteCacheParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: webAccelDeleteCacheColumns(),
 			ArgsUsage:          "[URLs]...",
 			UseCustomCommand:   true,

@@ -22,10 +22,10 @@ import (
 func BridgeResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
-			Params:             bridgeListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find"},
+			Params:  bridgeListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: bridgeListColumns(),
 			Category:           "basics",
 			Order:              10,

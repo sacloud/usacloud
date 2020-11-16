@@ -22,10 +22,10 @@ import (
 func PriceResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
-			Params:             priceListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find"},
+			Params:  priceListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: priceListColumns(),
 			Category:           "basics",
 			Order:              10,

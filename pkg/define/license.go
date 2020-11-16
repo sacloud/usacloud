@@ -22,10 +22,10 @@ import (
 func LicenseResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
-			Params:             licenseListParam(),
-			TableType:          output.TableSimple,
+			Type:    schema.CommandList,
+			Aliases: []string{"ls", "find"},
+			Params:  licenseListParam(),
+			// TableType:          output.TableSimple,
 			TableColumnDefines: licenseListColumns(),
 			Category:           "basics",
 			Order:              10,
