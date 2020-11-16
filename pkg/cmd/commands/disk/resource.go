@@ -56,28 +56,20 @@ var defaultColumnDefs = []output.ColumnDef{
 	{Name: "ID"},
 	{Name: "Name"},
 	{
-		Name:    "Server",
-		Sources: []string{"Server.ID", "Server.Name"},
-		Format:  "%s(%s)",
+		Name:     "Server",
+		Template: "{{ .ServerID }}",
 	},
 	{
-		Name:    "Plan",
-		Sources: []string{"Plan.ID"},
-		ValueMapping: []map[string]string{
-			{
-				"4": "ssd",
-				"2": "hdd",
-			},
-		},
+		Name:     "Plan",
+		Template: "{{.DiskPlanID}}", // TODO IDから名称へのマッピング
 	},
 	{
-		Name:    "Size",
-		Sources: []string{"SizeMB"},
-		Format:  "%sMB",
+		Name:     "Size",
+		Template: "{{.SizeMB}}MB", // TODO MiBからGiBへの変換
 	},
 	{Name: "Connection"},
 	{
-		Name:    "Storage",
-		Sources: []string{"Storage.Name"},
+		Name:     "Storage",
+		Template: "{{.Storage.Name}}",
 	},
 }
