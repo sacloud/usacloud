@@ -16,6 +16,8 @@ package vdef
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
 	"time"
 
 	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
@@ -23,13 +25,18 @@ import (
 
 // ConverterFilters mapconvでの変換時に利用されるフィルターの定義、definitionsに登録したものは実行時に動的に追加される
 var ConverterFilters = map[string]mapconv.FilterFunc{
-	"rfc3339": strToTime,
+	"rfc3339":         strToTime,
+	"path_to_reader":  pathToReader,
+	"path_or_content": pathOrContent,
 }
 
 func strToTime(v interface{}) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
 	s, ok := v.(string)
 	if !ok {
-		return nil, fmt.Errorf("invalid time format: %v", v)
+		return nil, fmt.Errorf("invalid time value: %v", v)
 	}
 	if s == "" {
 		return time.Time{}, nil
@@ -46,4 +53,56 @@ func strToTime(v interface{}) (interface{}, error) {
 		}
 	}
 	return nil, fmt.Errorf("invalid time format: %v", v)
+}
+
+// pathToReader ファイルパスからio.Reader(実体は*os.File)を返す
+//
+// Note: ファイルはここではクローズされないため、このフィルタを適用する先のリクエストでCloseを適切に呼ぶようにする
+// libsacloud serviceの場合はservice内でcloseが呼ばれる
+func pathToReader(v interface{}) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	s, ok := v.(string)
+	if !ok {
+		return nil, fmt.Errorf("invalid filepath value: %v", v)
+	}
+	if s == "" {
+		return nil, nil
+	}
+
+	file, err := os.Open(s)
+	if err != nil {
+		return nil, err
+	}
+
+	return file, nil
+}
+
+// pathOrContent 値がファイルだった場合はファイルの内容を、そうでない場合は値をそのまま返す
+func pathOrContent(v interface{}) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	s, ok := v.(string)
+	if !ok {
+		return nil, fmt.Errorf("invalid filepath value: %v", v)
+	}
+	if s == "" {
+		return nil, nil
+	}
+
+	file, err := os.Open(s)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return s, nil // そのまま返す
+		}
+		return nil, err
+	}
+	defer file.Close()
+	data, err := ioutil.ReadAll(file)
+	if err != nil {
+		return nil, err
+	}
+	return string(data), nil
 }
