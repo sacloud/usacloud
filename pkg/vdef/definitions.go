@@ -24,23 +24,28 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
+type definition struct {
+	key   interface{}
+	value interface{}
+}
+
 // definitions usacloudで使う名称(key)/値(value)のペア
-var definitions = map[string]map[interface{}]interface{}{
+var definitions = map[string][]*definition{
 	"disk_plan": {
-		"ssd": types.DiskPlans.SSD,
-		"hdd": types.DiskPlans.HDD,
+		{key: "ssd", value: types.DiskPlans.SSD},
+		{key: "hdd", value: types.DiskPlans.HDD},
 	},
 	"disk_connection": {
-		types.DiskConnections.VirtIO.String(): types.DiskConnections.VirtIO.String(),
-		types.DiskConnections.IDE.String():    types.DiskConnections.IDE.String(),
+		{key: types.DiskConnections.VirtIO.String(), value: types.DiskConnections.VirtIO.String()},
+		{key: types.DiskConnections.IDE.String(), value: types.DiskConnections.IDE.String()},
 	},
 	"os_type": ostypeDefinition(),
 }
 
-func ostypeDefinition() map[interface{}]interface{} {
-	def := map[interface{}]interface{}{}
+func ostypeDefinition() []*definition {
+	var def []*definition
 	for _, name := range ostype.OSTypeShortNames {
-		def[name] = ostype.StrToOSType(name)
+		def = append(def, &definition{key: name, value: ostype.StrToOSType(name)})
 	}
 	return def
 }
@@ -75,8 +80,8 @@ func registerValidators() {
 	// definitionsの各値からキーを取り出し、"oneof=keyのスペース区切り"というルールを登録する
 	for name, defs := range definitions {
 		var allows []string
-		for key := range defs {
-			switch s := key.(type) {
+		for _, def := range defs {
+			switch s := def.key.(type) {
 			case string:
 				allows = append(allows, s)
 			case fmt.Stringer:
@@ -91,8 +96,8 @@ func registerCLITagOptions() {
 	// definitionsの各値からキーを取り出し、FlagOptionsMapに登録する
 	for name, defs := range definitions {
 		var allows []string
-		for key := range defs {
-			switch s := key.(type) {
+		for _, def := range defs {
+			switch s := def.key.(type) {
 			case string:
 				allows = append(allows, s)
 			case fmt.Stringer:
@@ -103,12 +108,12 @@ func registerCLITagOptions() {
 	}
 }
 
-func convertFuncToValue(defName string, def map[interface{}]interface{}) mapconv.FilterFunc {
+func convertFuncToValue(defName string, defs []*definition) mapconv.FilterFunc {
 	return func(v interface{}) (interface{}, error) {
 		var result interface{}
-		for key, value := range def {
-			if reflect.DeepEqual(v, key) {
-				result = value
+		for _, def := range defs {
+			if reflect.DeepEqual(v, def.key) {
+				result = def.value
 				break
 			}
 		}
@@ -119,12 +124,12 @@ func convertFuncToValue(defName string, def map[interface{}]interface{}) mapconv
 	}
 }
 
-func convertFuncToKey(defName string, def map[interface{}]interface{}) mapconv.FilterFunc {
+func convertFuncToKey(defName string, defs []*definition) mapconv.FilterFunc {
 	return func(v interface{}) (interface{}, error) {
 		var result interface{}
-		for key, value := range def {
-			if reflect.DeepEqual(v, value) {
-				result = key
+		for _, def := range defs {
+			if reflect.DeepEqual(v, def.value) {
+				result = def.key
 				break
 			}
 		}
@@ -135,23 +140,23 @@ func convertFuncToKey(defName string, def map[interface{}]interface{}) mapconv.F
 	}
 }
 
-func templateFuncToValue(def map[interface{}]interface{}) func(interface{}) interface{} {
+func templateFuncToValue(defs []*definition) func(interface{}) interface{} {
 	return func(raw interface{}) interface{} {
 		in := ""
 		if v, ok := raw.(json.Number); ok {
 			in = v.String()
 		}
 		var result interface{}
-		for key, value := range def {
-			switch ky := key.(type) {
+		for _, def := range defs {
+			switch ky := def.key.(type) {
 			case fmt.Stringer:
 				if reflect.DeepEqual(in, ky.String()) {
-					result = value
+					result = def.value
 					break
 				}
 			default:
-				if reflect.DeepEqual(in, key) {
-					result = value
+				if reflect.DeepEqual(in, def.key) {
+					result = def.value
 					break
 				}
 			}
@@ -160,23 +165,23 @@ func templateFuncToValue(def map[interface{}]interface{}) func(interface{}) inte
 	}
 }
 
-func templateFuncToKey(def map[interface{}]interface{}) func(interface{}) interface{} {
+func templateFuncToKey(defs []*definition) func(interface{}) interface{} {
 	return func(raw interface{}) interface{} {
 		in := ""
 		if v, ok := raw.(json.Number); ok {
 			in = v.String()
 		}
 		var result interface{}
-		for key, value := range def {
-			switch val := value.(type) {
+		for _, def := range defs {
+			switch val := def.value.(type) {
 			case fmt.Stringer:
 				if reflect.DeepEqual(in, val.String()) {
-					result = key
+					result = def.key
 					break
 				}
 			default:
-				if reflect.DeepEqual(in, value) {
-					result = key
+				if reflect.DeepEqual(in, def.value) {
+					result = def.key
 					break
 				}
 			}
