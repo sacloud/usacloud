@@ -61,11 +61,11 @@ var defaultColumnDefs = []output.ColumnDef{
 	},
 	{
 		Name:     "Plan",
-		Template: "{{.DiskPlanID}}", // TODO IDから名称へのマッピング
+		Template: "{{disk_plan_to_key .DiskPlanID}}",
 	},
 	{
 		Name:     "Size",
-		Template: "{{.SizeMB}}MB", // TODO MiBからGiBへの変換
+		Template: "{{ mib_to_gib .SizeMB}}GB",
 	},
 	{Name: "Connection"},
 	{
