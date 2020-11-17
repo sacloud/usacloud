@@ -22,7 +22,7 @@ import (
 
 func TestDefinition_initialize(t *testing.T) {
 	// definitionsのinitで各所にfunc登録されるか
-	definitions["test"] = map[interface{}]interface{}{}
+	definitions["test"] = []*definition{}
 	registerFunctions()
 
 	testNames := []string{
@@ -44,10 +44,10 @@ func TestDefinition_initialize(t *testing.T) {
 }
 
 func TestConverterFuncGenerator(t *testing.T) {
-	def := map[interface{}]interface{}{
-		"string": "stringValue",
-		1:        "intValue",
-		"intKey": 1,
+	def := []*definition{
+		{key: "string", value: "stringValue"},
+		{key: 1, value: "intValue"},
+		{key: "intKey", value: 1},
 	}
 
 	t.Run("convertFuncToValue", func(t *testing.T) {
