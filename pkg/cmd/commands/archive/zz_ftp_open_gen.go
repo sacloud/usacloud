@@ -54,6 +54,16 @@ func (p *ftpOpenParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("archive", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("change-password"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Archive options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
 		sets = append(sets, &core.FlagSet{
@@ -72,16 +82,6 @@ func (p *ftpOpenParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
-			Flags: fs,
-		})
-	}
-	{
-		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("default", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("change-password"))
-		sets = append(sets, &core.FlagSet{
-			Title: "Other options",
 			Flags: fs,
 		})
 	}

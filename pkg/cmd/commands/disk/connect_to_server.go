@@ -36,7 +36,7 @@ type connectToServerParameter struct {
 	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
 
-	ServerID types.ID `cli:",category=disk" validate:"required"`
+	ServerID types.ID `validate:"required"`
 
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 }

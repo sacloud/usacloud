@@ -62,6 +62,15 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("disk", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Disk options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("filter", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("names"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
@@ -83,15 +92,6 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
-			Flags: fs,
-		})
-	}
-	{
-		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("default", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
-		sets = append(sets, &core.FlagSet{
-			Title: "Other options",
 			Flags: fs,
 		})
 	}

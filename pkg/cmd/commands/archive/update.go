@@ -37,10 +37,10 @@ type updateParameter struct {
 	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
 
-	Name        *string   `cli:",category=archive" validate:"omitempty,min=1"`
-	Description *string   `cli:",category=archive" validate:"omitempty,description"`
-	Tags        *[]string `cli:",category=archive" validate:"omitempty,tags"`
-	IconID      *types.ID `cli:",category=archive"`
+	Name        *string   `validate:"omitempty,min=1"`
+	Description *string   `validate:"omitempty,description"`
+	Tags        *[]string `validate:"omitempty,tags"`
+	IconID      *types.ID
 
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`

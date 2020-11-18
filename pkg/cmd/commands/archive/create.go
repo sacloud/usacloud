@@ -38,15 +38,15 @@ var createCommand = &core.Command{
 type createParameter struct {
 	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 
-	Name        string   `cli:",category=archive" validate:"required"`
-	Description string   `cli:",category=archive" validate:"description"`
-	Tags        []string `cli:",category=archive" validate:"tags"`
-	IconID      types.ID `cli:",category=archive"`
-	SizeGB      int      `cli:"size,category=archive" validate:"required_with=SourceFile"`
+	Name        string   `validate:"required"`
+	Description string   `validate:"description"`
+	Tags        []string `validate:"tags"`
+	IconID      types.ID
+	SizeGB      int `cli:"size" validate:"required_with=SourceFile"`
 
-	SourceFile      string   `cli:",category=archive" mapconv:"SourceReader,filters=path_to_reader" validate:"omitempty,file"` // TODO 標準入力(パイプも)への対応
-	SourceDiskID    types.ID `cli:",category=archive"`
-	SourceArchiveID types.ID `cli:",category=archive"`
+	SourceFile      string `mapconv:"SourceReader,filters=path_to_reader" validate:"omitempty,file"` // TODO 標準入力(パイプも)への対応
+	SourceDiskID    types.ID
+	SourceArchiveID types.ID
 
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`

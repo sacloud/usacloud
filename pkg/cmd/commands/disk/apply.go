@@ -36,18 +36,18 @@ type applyParameter struct {
 	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 	// cflag.IDParameter   `cli:",squash" mapconv:",squash"` //TODO SelectorTypeのコメント参照(将来ID使うかも)
 
-	Name            string     `cli:",category=disk" validate:"required"`
-	Description     string     `cli:",category=disk" validate:"description"`
-	Tags            []string   `cli:",category=disk" validate:"tags"`
-	IconID          types.ID   `cli:",category=disk"`
-	DiskPlan        string     `cli:",category=disk,options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"required,disk_plan"`
-	Connection      string     `cli:",category=disk,options=disk_connection" validate:"required,disk_connection"`
-	SourceDiskID    types.ID   `cli:",category=disk"`
-	SourceArchiveID types.ID   `cli:",category=disk"`
-	ServerID        types.ID   `cli:",category=disk"`
-	SizeGB          int        `cli:"size,category=disk"`
-	DistantFrom     []types.ID `cli:",category=disk"`
-	OSType          string     `cli:",category=disk,options=os_type" mapconv:",filters=os_type_to_value" validate:"omitempty,os_type"`
+	Name            string   `validate:"required"`
+	Description     string   `validate:"description"`
+	Tags            []string `validate:"tags"`
+	IconID          types.ID
+	DiskPlan        string `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"required,disk_plan"`
+	Connection      string `cli:",options=disk_connection" validate:"required,disk_connection"`
+	SourceDiskID    types.ID
+	SourceArchiveID types.ID
+	ServerID        types.ID
+	SizeGB          int `cli:"size"`
+	DistantFrom     []types.ID
+	OSType          string `cli:",options=os_type" mapconv:",filters=os_type_to_value" validate:"omitempty,os_type"`
 
 	//EditParameter editParameter `cli:",category=edit" mapconv:",omitempty"`
 

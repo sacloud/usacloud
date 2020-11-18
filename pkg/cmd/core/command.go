@@ -501,8 +501,6 @@ func (c *Command) parameterWithZone(zone string) (interface{}, error) {
 
 func (c *Command) ParameterCategoryBy(key string) *Category {
 	switch key {
-	case "":
-		return ParameterCategoryDefault
 	case "output":
 		return ParameterCategoryOutput
 	case "input":
@@ -516,7 +514,8 @@ func (c *Command) ParameterCategoryBy(key string) *Category {
 	case "filter":
 		return ParameterCategoryFilter
 	default:
-		if len(c.ParameterCategories) == 0 {
+		if key == "" || len(c.ParameterCategories) == 0 {
+			key = c.resource.Name
 			return &Category{
 				Key:         key,
 				DisplayName: fmt.Sprintf("%s options", strings.Title(key)),
