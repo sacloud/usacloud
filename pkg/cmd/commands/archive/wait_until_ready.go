@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package disk
+package archive
 
 import (
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
@@ -20,11 +20,10 @@ import (
 )
 
 var waitUntilReadyCommand = &core.Command{
-	Name:     "wait-until-ready",
-	Aliases:  []string{"wait", "wait-for-copy"}, // v0との互換用
-	Category: "other",
-	Order:    10,
-
+	Name:         "wait-until-ready",
+	Aliases:      []string{"wait", "wait-for-copy"}, // v0との互換用
+	Category:     "other",
+	Order:        10,
 	SelectorType: core.SelectorTypeRequireMulti,
 
 	ServiceFuncAltName: "WaitReady",

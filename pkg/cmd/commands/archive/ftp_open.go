@@ -12,37 +12,48 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package disk
+package archive
 
 import (
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/output"
 )
 
-var waitUntilReadyCommand = &core.Command{
-	Name:     "wait-until-ready",
-	Aliases:  []string{"wait", "wait-for-copy"}, // v0との互換用
-	Category: "other",
-	Order:    10,
+var ftpOpenCommand = &core.Command{
+	Name:               "ftp-open",
+	Aliases:            []string{"open-ftp"},
+	ServiceFuncAltName: "OpenFTP", // v0との互換用、コマンド名をopen-ftpではなくftp-openにしているためにこれが必要
+	Category:           "operation",
+	Order:              30,
+	SelectorType:       core.SelectorTypeRequireMulti,
 
-	SelectorType: core.SelectorTypeRequireMulti,
-
-	ServiceFuncAltName: "WaitReady",
+	ColumnDefs: []output.ColumnDef{
+		{Name: "HostName"},
+		{Name: "IPAddress"},
+		{Name: "User"},
+		{Name: "Password"},
+	},
 
 	ParameterInitializer: func() interface{} {
-		return newWaitUntilReadyParameter()
+		return newFTPOpenParameter()
 	},
 }
 
-type waitUntilReadyParameter struct {
+type ftpOpenParameter struct {
 	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
+
+	ChangePassword bool
+
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
-func newWaitUntilReadyParameter() *waitUntilReadyParameter {
-	return &waitUntilReadyParameter{}
+func newFTPOpenParameter() *ftpOpenParameter {
+	return &ftpOpenParameter{}
 }
 
 func init() {
-	Resource.AddCommand(waitUntilReadyCommand)
+	Resource.AddCommand(ftpOpenCommand)
 }

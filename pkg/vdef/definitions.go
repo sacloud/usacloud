@@ -39,6 +39,10 @@ var definitions = map[string][]*definition{
 		{key: types.DiskConnections.VirtIO.String(), value: types.DiskConnections.VirtIO.String()},
 		{key: types.DiskConnections.IDE.String(), value: types.DiskConnections.IDE.String()},
 	},
+	"scope": {
+		{key: types.Scopes.User.String(), value: types.Scopes.User},
+		{key: types.Scopes.Shared.String(), value: types.Scopes.Shared},
+	},
 	"os_type": ostypeDefinition(),
 }
 
@@ -142,7 +146,7 @@ func convertFuncToKey(defName string, defs []*definition) mapconv.FilterFunc {
 
 func templateFuncToValue(defs []*definition) func(interface{}) interface{} {
 	return func(raw interface{}) interface{} {
-		in := ""
+		in := raw
 		if v, ok := raw.(json.Number); ok {
 			in = v.String()
 		}
@@ -167,7 +171,7 @@ func templateFuncToValue(defs []*definition) func(interface{}) interface{} {
 
 func templateFuncToKey(defs []*definition) func(interface{}) interface{} {
 	return func(raw interface{}) interface{} {
-		in := ""
+		in := raw
 		if v, ok := raw.(json.Number); ok {
 			in = v.String()
 		}

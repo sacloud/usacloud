@@ -12,37 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package disk
+package archive
 
 import (
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
-var waitUntilReadyCommand = &core.Command{
-	Name:     "wait-until-ready",
-	Aliases:  []string{"wait", "wait-for-copy"}, // v0との互換用
-	Category: "other",
-	Order:    10,
+var readCommand = &core.Command{
+	Name:       "read",
+	Aliases:    []string{"show"},
+	Category:   "basic",
+	Order:      30,
+	NoProgress: true,
+
+	ColumnDefs: defaultColumnDefs,
 
 	SelectorType: core.SelectorTypeRequireMulti,
 
-	ServiceFuncAltName: "WaitReady",
-
 	ParameterInitializer: func() interface{} {
-		return newWaitUntilReadyParameter()
+		return newReadParameter()
 	},
 }
 
-type waitUntilReadyParameter struct {
+type readParameter struct {
 	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
+
+	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 
-func newWaitUntilReadyParameter() *waitUntilReadyParameter {
-	return &waitUntilReadyParameter{}
+func newReadParameter() *readParameter {
+	return &readParameter{
+		// TODO デフォルト値はここで設定する
+	}
 }
 
 func init() {
-	Resource.AddCommand(waitUntilReadyCommand)
+	Resource.AddCommand(readCommand)
 }

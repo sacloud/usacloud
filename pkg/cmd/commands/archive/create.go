@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package disk
+package archive
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
@@ -38,18 +38,15 @@ var createCommand = &core.Command{
 type createParameter struct {
 	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 
-	Name            string     `cli:",category=disk" validate:"required"`
-	Description     string     `cli:",category=disk" validate:"description"`
-	Tags            []string   `cli:",category=disk" validate:"tags"`
-	IconID          types.ID   `cli:",category=disk"`
-	DiskPlan        string     `cli:",category=disk,options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"required,disk_plan"`
-	Connection      string     `cli:",category=disk,options=disk_connection" validate:"required,disk_connection"`
-	SourceDiskID    types.ID   `cli:",category=disk"`
-	SourceArchiveID types.ID   `cli:",category=disk"`
-	ServerID        types.ID   `cli:",category=disk"`
-	SizeGB          int        `cli:"size,category=disk"`
-	DistantFrom     []types.ID `cli:",category=disk"`
-	OSType          string     `cli:",category=disk,options=os_type" mapconv:",filters=os_type_to_value" validate:"omitempty,os_type"`
+	Name        string   `cli:",category=archive" validate:"required"`
+	Description string   `cli:",category=archive" validate:"description"`
+	Tags        []string `cli:",category=archive" validate:"tags"`
+	IconID      types.ID `cli:",category=archive"`
+	SizeGB      int      `cli:"size,category=archive" validate:"required_with=SourceFile"`
+
+	SourceFile      string   `cli:",category=archive" mapconv:"SourceReader,filters=path_to_reader" validate:"omitempty,file"` // TODO 標準入力(パイプも)への対応
+	SourceDiskID    types.ID `cli:",category=archive"`
+	SourceArchiveID types.ID `cli:",category=archive"`
 
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
@@ -62,8 +59,9 @@ func validateCreateParameter(ctx cli.Context, parameter interface{}) error {
 	p := parameter.(*createParameter)
 
 	var errs []error
+	// conflict with
 	targets := []*validate.Target{
-		{FlagName: "--os-type", Value: p.OSType},
+		{FlagName: "--source-file", Value: p.SourceFile},
 		{FlagName: "--source-archive-id", Value: p.SourceArchiveID},
 		{FlagName: "--source-disk-id", Value: p.SourceDiskID},
 	}
@@ -75,11 +73,7 @@ func validateCreateParameter(ctx cli.Context, parameter interface{}) error {
 }
 
 func newCreateParameter() *createParameter {
-	return &createParameter{
-		DiskPlan:   "ssd",
-		Connection: "virtio",
-		SizeGB:     20,
-	}
+	return &createParameter{}
 }
 
 func init() {
