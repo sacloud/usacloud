@@ -440,7 +440,7 @@ func (c *Command) execParallel(ctx cli.Context, ids cli.ResourceContexts) (outpu
 
 			var contents = output.Contents{}
 			for _, r := range res {
-				contents = append(contents, &output.Content{Zone: ctx.Zone(), Value: r})
+				contents = append(contents, &output.Content{Zone: ctx.Zone(), ID: ctx.ID(), Value: r})
 			}
 
 			resultCh <- &funcResult{results: contents}

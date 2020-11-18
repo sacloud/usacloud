@@ -29,6 +29,8 @@ var ftpOpenCommand = &core.Command{
 	SelectorType:       core.SelectorTypeRequireMulti,
 
 	ColumnDefs: []output.ColumnDef{
+		{Name: "Zone"},
+		{Name: "ID"},
 		{Name: "HostName"},
 		{Name: "IPAddress"},
 		{Name: "User"},

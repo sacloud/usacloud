@@ -79,6 +79,12 @@ func (o *jsonOutput) Print(contents Contents) error {
 				row.Set("Zone", contents[i].Zone)
 			}
 		}
+		if !contents[i].ID.IsEmpty() {
+			row := j.GetIndex(i)
+			if _, ok := row.CheckGet("ID"); !ok {
+				row.Set("ID", contents[i].ID)
+			}
+		}
 	}
 
 	b, err := j.EncodePretty()
