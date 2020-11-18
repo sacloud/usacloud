@@ -18,10 +18,12 @@ import (
 	"sort"
 
 	"github.com/sacloud/libsacloud/v2/sacloud/accessor"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
 type Content struct {
 	Zone  string
+	ID    types.ID
 	Value interface{}
 }
 
@@ -43,11 +45,18 @@ func (c *Contents) Sort(zones []string) {
 	}
 
 	values := *c
+	// 優先度: ゾーン => ID(Content内の) => ID(Content.Valueの)
 	sort.Slice(values, func(i, j int) bool {
 		o1 := zoneOrder[values[i].Zone]
 		o2 := zoneOrder[values[j].Zone]
 		if o1 != o2 {
 			return o1 < o2
+		}
+
+		cid1 := values[i].ID
+		cid2 := values[j].ID
+		if cid1 != cid2 {
+			return cid1 < cid2
 		}
 
 		id1 := c.forceID(values[i].Value)

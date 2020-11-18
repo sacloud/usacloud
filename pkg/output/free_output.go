@@ -94,6 +94,11 @@ func (o *freeOutput) Print(contents Contents) error {
 				mapValue["Zone"] = contents[i].Zone
 			}
 		}
+		if !contents[i].ID.IsEmpty() {
+			if _, ok := mapValue["ID"]; !ok {
+				mapValue["ID"] = contents[i].ID
+			}
+		}
 
 		buf := bytes.NewBufferString("")
 		if err := t.Execute(buf, mapValue); err != nil {

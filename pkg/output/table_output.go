@@ -78,6 +78,11 @@ func (o *tableOutput) Print(contents Contents) error {
 				mapValue["Zone"] = contents[i].Zone
 			}
 		}
+		if !contents[i].ID.IsEmpty() {
+			if _, ok := mapValue["ID"]; !ok {
+				mapValue["ID"] = contents[i].ID
+			}
+		}
 		if err := table.append(mapValue); err != nil {
 			return fmt.Errorf("TableOutput:Print: processing template failed: %v", err)
 		}
