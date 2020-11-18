@@ -17,9 +17,11 @@ package core
 import (
 	"errors"
 	"fmt"
+	"os"
 	"strings"
 	"sync"
 
+	"github.com/fatih/color"
 	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
 	"github.com/sacloud/libsacloud/v2/sacloud/accessor"
 	"github.com/sacloud/usacloud/pkg/cli"
@@ -27,6 +29,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/root"
 	"github.com/sacloud/usacloud/pkg/cmd/services"
 	"github.com/sacloud/usacloud/pkg/output"
+	"github.com/sacloud/usacloud/pkg/printer"
 	"github.com/sacloud/usacloud/pkg/term"
 	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/sacloud/usacloud/pkg/validate"
@@ -124,7 +127,24 @@ func (c *Command) CLICommand() *cobra.Command {
 		Short:        c.Usage,
 		Long:         c.Usage,
 		SilenceUsage: true,
-		RunE:         c.Run,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			// コンテキスト構築
+			ctx, err := cli.NewCLIContext(c.resource.Name, c.Name, root.Command.PersistentFlags(), args, c.ColumnDefs, c.currentParameter)
+			if err != nil {
+				// この段階ではctx.IO()が参照できないため標準エラーに出力する
+				fmt.Fprintln(os.Stderr, err) // nolint
+				return err
+			}
+
+			// エラー出力(可能ならカラーで出力)
+			if err := c.Run(ctx, cmd, args); err != nil {
+				out := ctx.IO().Err()
+				(&printer.Printer{NoColor: ctx.Option().NoColor}).Fprint(out, color.New(color.FgHiRed), err)
+				fmt.Fprintln(out, "") // nolint // エラーのあとは常に改行させる
+				return err
+			}
+			return nil
+		},
 	}
 
 	if c, ok := c.currentParameter.(FlagInitializer); ok {
@@ -141,12 +161,7 @@ func (c *Command) confirmMessage() string {
 	return c.Name
 }
 
-func (c *Command) Run(cmd *cobra.Command, args []string) error {
-	ctx, err := cli.NewCLIContext(c.resource.Name, c.Name, root.Command.PersistentFlags(), args, c.ColumnDefs, c.currentParameter)
-	if err != nil {
-		return err
-	}
-
+func (c *Command) Run(ctx cli.Context, cmd *cobra.Command, args []string) error {
 	// パラメータの補完処理(ポインタ型のクリアやコンテキストからのパラメータ受け取りなど)
 	c.completeParameterValue(cmd, ctx, c.currentParameter)
 

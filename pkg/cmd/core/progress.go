@@ -20,9 +20,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sacloud/usacloud/pkg/cli"
-
 	"github.com/fatih/color"
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/printer"
 )
 
@@ -56,12 +55,9 @@ func NewProgress(ctx cli.Context) *Progress {
 
 func (p *Progress) Exec(f func() error) error {
 	go p.Start()
-	defer p.Stop()
 
 	err := f()
-	if err != nil {
-		p.doneCh <- err
-	}
+	p.doneCh <- err
 	return err
 }
 
@@ -88,9 +84,9 @@ func (p *Progress) msgComplete() string {
 	return fmt.Sprintf("%s: done\n", p.msgPrefix())
 }
 
-func (p *Progress) msgFailed(err error) string {
-	return fmt.Sprintf("%s: failed: %s\n", p.msgPrefix(), err)
-}
+//func (p *Progress) msgFailed(err error) string {
+//	return fmt.Sprintf("%s: failed: %s\n", p.msgPrefix(), err)
+//}
 
 func (p *Progress) Start() {
 	p.doneCh = make(chan error)
@@ -106,7 +102,6 @@ func (p *Progress) Start() {
 			p.print(color.New(color.FgWhite), p.msgProgress())
 		case err := <-p.doneCh:
 			if err != nil {
-				p.print(color.New(color.FgHiRed), p.msgFailed(err))
 				return
 			}
 			p.print(color.New(color.FgHiGreen), p.msgComplete())
@@ -119,10 +114,6 @@ func (p *Progress) Start() {
 	}
 }
 
-func (p *Progress) Stop() {
-	p.doneCh <- nil
-}
-
 func (p *Progress) print(clr *color.Color, msg string) {
 	mutex.Lock()
 	defer mutex.Unlock()
@@ -132,4 +123,5 @@ func (p *Progress) print(clr *color.Color, msg string) {
 
 func (p *Progress) Close() {
 	close(p.doneCh)
+	p.printer.Fprint(p.out, color.New(color.Reset), "") // 念のため色をリセットしておく
 }
