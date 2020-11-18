@@ -12,37 +12,46 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package disk
+package archive
 
 import (
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
-var waitUntilReadyCommand = &core.Command{
-	Name:     "wait-until-ready",
-	Aliases:  []string{"wait", "wait-for-copy"}, // v0との互換用
-	Category: "other",
-	Order:    10,
-
+var updateCommand = &core.Command{
+	Name:         "update",
+	Category:     "basic",
+	Order:        40,
 	SelectorType: core.SelectorTypeRequireMulti,
 
-	ServiceFuncAltName: "WaitReady",
+	ColumnDefs: defaultColumnDefs,
 
 	ParameterInitializer: func() interface{} {
-		return newWaitUntilReadyParameter()
+		return newUpdateParameter()
 	},
 }
 
-type waitUntilReadyParameter struct {
+type updateParameter struct {
 	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
+
+	Name        *string   `cli:",category=archive" validate:"omitempty,min=1"`
+	Description *string   `cli:",category=archive" validate:"omitempty,description"`
+	Tags        *[]string `cli:",category=archive" validate:"omitempty,tags"`
+	IconID      *types.ID `cli:",category=archive"`
+
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
-func newWaitUntilReadyParameter() *waitUntilReadyParameter {
-	return &waitUntilReadyParameter{}
+func newUpdateParameter() *updateParameter {
+	return &updateParameter{
+		// TODO デフォルト値はここで設定する
+	}
 }
 
 func init() {
-	Resource.AddCommand(waitUntilReadyCommand)
+	Resource.AddCommand(updateCommand)
 }

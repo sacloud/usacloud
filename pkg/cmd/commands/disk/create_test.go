@@ -138,7 +138,7 @@ func TestCreateParameter_Validate(t *testing.T) {
 			},
 			err: errors.New(strings.Join([]string{
 				"validation error:",
-				"\t--source-archive-id & --source-disk-id: only one of them can be specified",
+				"\t--os-type & --source-archive-id & --source-disk-id: only one of them can be specified",
 			}, "\n")),
 		},
 		// custom validation(with os-type)

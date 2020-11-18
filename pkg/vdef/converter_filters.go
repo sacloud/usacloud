@@ -27,6 +27,7 @@ import (
 var ConverterFilters = map[string]mapconv.FilterFunc{
 	"rfc3339":         strToTime,
 	"path_to_reader":  pathToReader,
+	"path_to_writer":  pathToWriter,
 	"path_or_content": pathOrContent,
 }
 
@@ -55,7 +56,7 @@ func strToTime(v interface{}) (interface{}, error) {
 	return nil, fmt.Errorf("invalid time format: %v", v)
 }
 
-// pathToReader ファイルパスからio.Reader(実体は*os.File)を返す
+// pathToReader ファイルパスから*os.File(O_RDONLY)を返す
 //
 // Note: ファイルはここではクローズされないため、このフィルタを適用する先のリクエストでCloseを適切に呼ぶようにする
 // libsacloud serviceの場合はservice内でcloseが呼ばれる
@@ -72,6 +73,31 @@ func pathToReader(v interface{}) (interface{}, error) {
 	}
 
 	file, err := os.Open(s)
+	if err != nil {
+		return nil, err
+	}
+
+	return file, nil
+}
+
+// pathToWriter ファイルパスから*os.File(O_RDWR|O_CREATE|O_TRUNC、パーミッション:0666)を返す
+//
+// Note: os.Create(path)を使用するため、バリデーションで上書き確認を行うこと
+// Note: ファイルはここではクローズされないため、このフィルタを適用する先のリクエストでCloseを適切に呼ぶようにする
+// libsacloud serviceの場合はservice内でcloseが呼ばれる
+func pathToWriter(v interface{}) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+	s, ok := v.(string)
+	if !ok {
+		return nil, fmt.Errorf("invalid filepath value: %v", v)
+	}
+	if s == "" {
+		return nil, nil
+	}
+
+	file, err := os.Create(s)
 	if err != nil {
 		return nil, err
 	}

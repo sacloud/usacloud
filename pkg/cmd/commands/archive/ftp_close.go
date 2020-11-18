@@ -12,37 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package disk
+package archive
 
 import (
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
-var waitUntilReadyCommand = &core.Command{
-	Name:     "wait-until-ready",
-	Aliases:  []string{"wait", "wait-for-copy"}, // v0との互換用
-	Category: "other",
-	Order:    10,
-
-	SelectorType: core.SelectorTypeRequireMulti,
-
-	ServiceFuncAltName: "WaitReady",
+var ftpCloseCommand = &core.Command{
+	Name:               "ftp-close",
+	Aliases:            []string{"close-ftp"},
+	ServiceFuncAltName: "CloseFTP", // v0との互換用、コマンド名をclose-ftpではなくftp-closeにしているためにこれが必要
+	Category:           "operation",
+	Order:              40,
+	SelectorType:       core.SelectorTypeRequireMulti,
 
 	ParameterInitializer: func() interface{} {
-		return newWaitUntilReadyParameter()
+		return newFTPCloseParameter()
 	},
 }
 
-type waitUntilReadyParameter struct {
+type ftpCloseParameter struct {
 	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
+
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 }
 
-func newWaitUntilReadyParameter() *waitUntilReadyParameter {
-	return &waitUntilReadyParameter{}
+func newFTPCloseParameter() *ftpCloseParameter {
+	return &ftpCloseParameter{}
 }
 
 func init() {
-	Resource.AddCommand(waitUntilReadyCommand)
+	Resource.AddCommand(ftpCloseCommand)
 }

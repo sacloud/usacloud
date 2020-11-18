@@ -12,37 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package disk
+package archive
 
 import (
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
-var waitUntilReadyCommand = &core.Command{
-	Name:     "wait-until-ready",
-	Aliases:  []string{"wait", "wait-for-copy"}, // v0との互換用
-	Category: "other",
-	Order:    10,
-
+var uploadCommand = &core.Command{
+	Name:         "upload",
+	Category:     "operation",
+	Order:        10,
 	SelectorType: core.SelectorTypeRequireMulti,
 
-	ServiceFuncAltName: "WaitReady",
-
 	ParameterInitializer: func() interface{} {
-		return newWaitUntilReadyParameter()
+		return newUploadParameter()
 	},
 }
 
-type waitUntilReadyParameter struct {
+type uploadParameter struct {
 	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
+
+	SourceFile string `cli:",category=archive" mapconv:"Reader,filters=path_to_reader" validate:"omitempty,file"`
+
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 }
 
-func newWaitUntilReadyParameter() *waitUntilReadyParameter {
-	return &waitUntilReadyParameter{}
+func newUploadParameter() *uploadParameter {
+	return &uploadParameter{}
 }
 
 func init() {
-	Resource.AddCommand(waitUntilReadyCommand)
+	Resource.AddCommand(uploadCommand)
 }
