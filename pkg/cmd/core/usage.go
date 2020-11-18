@@ -87,10 +87,12 @@ func buildCommandsUsage(cmd *cobra.Command, commands []*CategorizedCommands) {
 const originalFlagsUsage = `Flags:
 {{.LocalFlags.FlagUsages | trimTrailingWhitespaces}}`
 
-const flagsUsageTemplate = ` === %s ===
+const flagsUsageTemplate = `  === %s ===
+
 %s`
 
 const flagsUsageWrapperTemplate = `Flags:
+
 %s`
 
 func BuildFlagsUsage(cmd *cobra.Command, sets []*FlagSet) {
