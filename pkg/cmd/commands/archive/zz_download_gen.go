@@ -48,7 +48,9 @@ func (p *downloadParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("archive", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("destination"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("force"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Archive options",
 			Flags: fs,
@@ -60,16 +62,6 @@ func (p *downloadParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
-			Flags: fs,
-		})
-	}
-	{
-		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("default", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("force"))
-		sets = append(sets, &core.FlagSet{
-			Title: "Other options",
 			Flags: fs,
 		})
 	}

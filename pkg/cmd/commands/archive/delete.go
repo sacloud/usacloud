@@ -35,7 +35,7 @@ type deleteParameter struct {
 	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
 
-	FailIfNotFound bool `cli:",category=archive"`
+	FailIfNotFound bool
 
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`

@@ -43,6 +43,7 @@ func (p *connectToServerParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("disk", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("server-id"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Disk options",
@@ -55,15 +56,6 @@ func (p *connectToServerParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
-			Flags: fs,
-		})
-	}
-	{
-		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("default", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
-		sets = append(sets, &core.FlagSet{
-			Title: "Other options",
 			Flags: fs,
 		})
 	}

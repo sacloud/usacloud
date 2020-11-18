@@ -37,26 +37,26 @@ type editParameter struct {
 	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
 
-	EditParameter editServiceParameter `cli:",squash,category=edit" mapconv:",omitempty"`
+	EditParameter editServiceParameter `cli:",squash" mapconv:",omitempty"`
 
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 type editServiceParameter struct {
-	HostName string `cli:",category=edit"`
-	Password string `cli:",category=edit"`
+	HostName string
+	Password string
 
-	DisablePWAuth       bool `cli:",category=edit"`
-	EnableDHCP          bool `cli:",category=edit"`
-	ChangePartitionUUID bool `cli:",category=edit"`
+	DisablePWAuth       bool
+	EnableDHCP          bool
+	ChangePartitionUUID bool
 
-	IPAddress      string `cli:",category=edit"`
-	NetworkMaskLen int    `cli:",category=edit"`
-	DefaultRoute   string `cli:",category=edit"`
+	IPAddress      string
+	NetworkMaskLen int
+	DefaultRoute   string
 
-	SSHKeys   []string   `cli:",category=edit"`
-	SSHKeyIDs []types.ID `cli:",category=edit"`
+	SSHKeys   []string
+	SSHKeyIDs []types.ID
 
 	Notes []*sacloud.DiskEditNote // TODO 2段階以上にネストしたパラメータをどう扱うか? => https://github.com/sacloud/usacloud/issues/568
 }

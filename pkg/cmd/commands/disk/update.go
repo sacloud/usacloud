@@ -37,11 +37,11 @@ type updateParameter struct {
 	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
 
-	Name        *string   `cli:",category=disk" validate:"omitempty,min=1"`
-	Description *string   `cli:",category=disk" validate:"omitempty,description"`
-	Tags        *[]string `cli:",category=disk" validate:"omitempty,tags"`
-	IconID      *types.ID `cli:",category=disk"`
-	Connection  *string   `cli:",category=disk,options=disk_connection" validate:"omitempty,disk_connection"`
+	Name        *string   `validate:"omitempty,min=1"`
+	Description *string   `validate:"omitempty,description"`
+	Tags        *[]string `validate:"omitempty,tags"`
+	IconID      *types.ID
+	Connection  *string `cli:",options=disk_connection" validate:"omitempty,disk_connection"`
 
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`

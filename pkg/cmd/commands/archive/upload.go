@@ -34,7 +34,7 @@ type uploadParameter struct {
 	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
 
-	SourceFile string `cli:",category=archive" mapconv:"Reader,filters=path_to_reader" validate:"omitempty,file"`
+	SourceFile string `mapconv:"Reader,filters=path_to_reader" validate:"omitempty,file"`
 
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 }
