@@ -17,7 +17,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.0-20180506121414-d4647c9c7a84
 	github.com/sacloud/go-jmespath v0.0.0-20190125082617-862639817e08
-	github.com/sacloud/libsacloud/v2 v2.8.9-0.20201113055740-e862733551c8
+	github.com/sacloud/libsacloud/v2 v2.8.11-0.20201120031150-fb22798fc6db
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.6.1
