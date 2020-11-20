@@ -53,7 +53,7 @@ func BytesFromPathOrContent(pathOrContent string) ([]byte, error) {
 	return data, nil
 }
 
-func isJSON(s string)bool {
+func isJSON(s string) bool {
 	m := make(map[string]interface{})
 	return json.Unmarshal([]byte(s), &m) == nil
 }
