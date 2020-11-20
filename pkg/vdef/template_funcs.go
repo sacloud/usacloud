@@ -19,6 +19,7 @@ import (
 	"text/template"
 
 	"github.com/sacloud/libsacloud/v2/pkg/size"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 var TemplateFuncMap = template.FuncMap{
@@ -48,5 +49,16 @@ var TemplateFuncMap = template.FuncMap{
 			num = int(n)
 		}
 		return size.MiBToGiB(num)
+	},
+	"ignore_empty": func(value interface{}) interface{} {
+		if util.IsEmpty(value) {
+			return ""
+		}
+		if v, ok := value.(json.Number); ok {
+			if v.String() == "0" {
+				return ""
+			}
+		}
+		return value
 	},
 }
