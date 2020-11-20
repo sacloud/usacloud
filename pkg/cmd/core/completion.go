@@ -15,6 +15,7 @@
 package core
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/sacloud/usacloud/pkg/cmd/root"
@@ -24,20 +25,57 @@ import (
 
 // completionCmd represents the completion command
 var completionCmd = &cobra.Command{
-	Use:   "completion",
-	Short: "Generates bash completion scripts",
-	Long: `To load completion run
+	Use:   "completion [bash|zsh|fish|powershell]",
+	Short: "Generate completion script",
+	Long: `To load completions:
 
-. <(usacloud completion)
+Bash:
 
-To configure your bash shell to load completions for each session add to your bashrc
+$ source <(usacloud completion bash)
 
-# ~/.bashrc or ~/.profile
-. <(usacloud completion)
+# To load completions for each session, execute once:
+Linux:
+  $ usacloud completion bash > /etc/bash_completion.d/usacloud
+MacOS:
+  $ usacloud completion bash > /usr/local/etc/bash_completion.d/usacloud
+
+Zsh:
+
+# If shell completion is not already enabled in your environment you will need
+# to enable it.  You can execute the following once:
+
+$ echo "autoload -U compinit; compinit" >> ~/.zshrc
+
+# To load completions for each session, execute once:
+$ usacloud completion zsh > "${fpath[1]}/_usacloud"
+
+# You will need to start a new shell for this setup to take effect.
+
+Fish:
+
+$ usacloud completion fish | source
+
+# To load completions for each session, execute once:
+$ usacloud completion fish > ~/.config/fish/completions/usacloud.fish
 `,
-	Hidden: true,
-	RunE: func(cmd *cobra.Command, args []string) error {
-		return root.Command.GenBashCompletion(os.Stdout)
+	DisableFlagsInUseLine: true,
+	ValidArgs:             []string{"bash", "zsh", "fish", "powershell"},
+	Args:                  cobra.ExactValidArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		var err error
+		switch args[0] {
+		case "bash":
+			err = cmd.Root().GenBashCompletion(os.Stdout)
+		case "zsh":
+			err = cmd.Root().GenZshCompletion(os.Stdout)
+		case "fish":
+			err = cmd.Root().GenFishCompletion(os.Stdout, true)
+		case "powershell":
+			err = cmd.Root().GenPowerShellCompletion(os.Stdout)
+		}
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err) // nolint
+		}
 	},
 }
 
