@@ -16,6 +16,5 @@ package cflag
 
 type CommonParameterValueHolder interface {
 	ParametersFlagValue() string
-	ParameterFileFlagValue() string
 	GenerateSkeletonFlagValue() bool
 }

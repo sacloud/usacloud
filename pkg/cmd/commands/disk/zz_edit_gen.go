@@ -30,7 +30,6 @@ func (p *editParameter) buildFlags(fs *pflag.FlagSet) {
 
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
-	fs.StringVarP(&p.ParameterFile, "parameter-file", "", p.ParameterFile, "Input parameters in JSON format(from file)")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.StringVarP(&p.HostName, "host-name", "", p.HostName, "")
@@ -93,7 +92,6 @@ func (p *editParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("parameter-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
 		sets = append(sets, &core.FlagSet{
