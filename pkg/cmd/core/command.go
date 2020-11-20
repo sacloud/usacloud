@@ -176,6 +176,12 @@ func (c *Command) Run(ctx cli.Context, cmd *cobra.Command, args []string) error 
 		return err
 	}
 
+	if customizer, ok := c.currentParameter.(ParameterCustomizer); ok {
+		if err := customizer.Customize(); err != nil {
+			return err
+		}
+	}
+
 	targets, err := c.expandResourceContextsFromArgs(ctx, args)
 	if err != nil {
 		return err

@@ -21,17 +21,8 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 )
 
-type SkeletonHandler interface {
-	FillValueToSkeleton()
-}
-
 func generateSkeleton(ctx cli.Context, params interface{}) error {
-	v, ok := params.(SkeletonHandler)
-	if ok {
-		v.FillValueToSkeleton()
-	}
-
-	data, err := json.MarshalIndent(v, "", "\t")
+	data, err := json.MarshalIndent(params, "", "\t")
 	if err != nil {
 		return fmt.Errorf("marshaling to JSON is failed: %s", err)
 	}

@@ -16,29 +16,21 @@ package core
 
 import (
 	"encoding/json"
-	"fmt"
-	"io/ioutil"
 
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 func loadParameters(parameters cflag.CommonParameterValueHolder) error {
 	p := parameters.ParametersFlagValue()
-	pf := parameters.ParameterFileFlagValue()
 
-	if p == "" && pf == "" {
+	if p == "" {
 		return nil
 	}
 
-	strParameter := p
-	if strParameter == "" {
-		// Note: この段階ではファイルサイズのバリデーションは済んでいる前提
-		b, err := ioutil.ReadFile(pf)
-		if err != nil {
-			return fmt.Errorf("reading parameters from %s is failed: %s", pf, err)
-		}
-		strParameter = string(b)
+	data, err := util.BytesFromPathOrContent(p)
+	if err != nil {
+		return err
 	}
-
-	return json.Unmarshal([]byte(strParameter), parameters)
+	return json.Unmarshal(data, parameters)
 }

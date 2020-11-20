@@ -16,9 +16,10 @@ package vdef
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"time"
+
+	"github.com/sacloud/usacloud/pkg/util"
 
 	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
 )
@@ -118,17 +119,5 @@ func pathOrContent(v interface{}) (interface{}, error) {
 		return nil, nil
 	}
 
-	file, err := os.Open(s)
-	if err != nil {
-		if os.IsNotExist(err) {
-			return s, nil // そのまま返す
-		}
-		return nil, err
-	}
-	defer file.Close()
-	data, err := ioutil.ReadAll(file)
-	if err != nil {
-		return nil, err
-	}
-	return string(data), nil
+	return util.StringFromPathOrContent(s)
 }
