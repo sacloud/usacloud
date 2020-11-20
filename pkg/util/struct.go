@@ -18,7 +18,6 @@ import (
 	"encoding/json"
 	"errors"
 	"io/ioutil"
-	"os"
 )
 
 func MarshalJSONFromPathOrContent(pathOrContent string, destination interface{}) error {
@@ -42,18 +41,19 @@ func BytesFromPathOrContent(pathOrContent string) ([]byte, error) {
 	if pathOrContent == "" {
 		return nil, errors.New("pathOrContent required")
 	}
-	file, err := os.Open(pathOrContent)
-	if err != nil {
-		if os.IsNotExist(err) {
-			return []byte(pathOrContent), nil // そのまま返す
-		}
-		return nil, err
-	}
-	defer file.Close() // nolint
 
-	data, err := ioutil.ReadAll(file)
+	if isJSON(pathOrContent) {
+		return []byte(pathOrContent), nil
+	}
+
+	data, err := ioutil.ReadFile(pathOrContent)
 	if err != nil {
 		return nil, err
 	}
 	return data, nil
+}
+
+func isJSON(s string)bool {
+	m := make(map[string]interface{})
+	return json.Unmarshal([]byte(s), &m) == nil
 }
