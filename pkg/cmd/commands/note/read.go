@@ -12,28 +12,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate go run github.com/sacloud/usacloud/tools/gen-commands/
-package cmd
+package note
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/commands/archive"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/authstatus"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/disk"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
+	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/pkg/cmd/root"
 )
 
-var Resources = core.Resources{
-	archive.Resource,
-	authstatus.Resource,
-	disk.Resource,
-	note.Resource,
+var readCommand = &core.Command{
+	Name:       "read",
+	Aliases:    []string{"show"},
+	Category:   "basic",
+	Order:      30,
+	NoProgress: true,
+
+	ColumnDefs: defaultColumnDefs,
+
+	SelectorType: core.SelectorTypeRequireMulti,
+
+	ParameterInitializer: func() interface{} {
+		return newReadParameter()
+	},
 }
 
-func initCommands() {
-	for _, r := range Resources {
-		root.Command.AddCommand(r.CLICommand())
+type readParameter struct {
+	cflag.IDParameter `cli:",squash" mapconv:",squash"`
+
+	cflag.OutputParameter `cli:",squash" mapconv:"-"`
+}
+
+func newReadParameter() *readParameter {
+	return &readParameter{
+		// TODO デフォルト値はここで設定する
 	}
-	core.BuildRootCommandsUsage(root.Command, Resources.CategorizedResources())
+}
+
+func init() {
+	Resource.AddCommand(readCommand)
 }

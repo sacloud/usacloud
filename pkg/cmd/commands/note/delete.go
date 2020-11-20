@@ -12,28 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate go run github.com/sacloud/usacloud/tools/gen-commands/
-package cmd
+package note
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/commands/archive"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/authstatus"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/disk"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
+	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/pkg/cmd/root"
 )
 
-var Resources = core.Resources{
-	archive.Resource,
-	authstatus.Resource,
-	disk.Resource,
-	note.Resource,
+var deleteCommand = &core.Command{
+	Name:         "delete",
+	Aliases:      []string{"rm"},
+	Category:     "basic",
+	Order:        50,
+	SelectorType: core.SelectorTypeRequireMulti,
+
+	ParameterInitializer: func() interface{} {
+		return newDeleteParameter()
+	},
 }
 
-func initCommands() {
-	for _, r := range Resources {
-		root.Command.AddCommand(r.CLICommand())
-	}
-	core.BuildRootCommandsUsage(root.Command, Resources.CategorizedResources())
+type deleteParameter struct {
+	cflag.IDParameter `cli:",squash" mapconv:",squash"`
+
+	FailIfNotFound bool
+
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
+}
+
+func newDeleteParameter() *deleteParameter {
+	return &deleteParameter{}
+}
+
+func init() {
+	Resource.AddCommand(deleteCommand)
 }
