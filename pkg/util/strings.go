@@ -25,3 +25,32 @@ func FirstNonEmptyString(values ...string) string {
 	}
 	return values[len(values)-1]
 }
+
+func UniqStrings(elements []string) []string {
+	encountered := map[string]bool{}
+	var result []string
+	for v := range elements {
+		if !encountered[elements[v]] {
+			encountered[elements[v]] = true
+			result = append(result, elements[v])
+		}
+	}
+	return result
+}
+
+func RemoveStringsFromSlice(elements []string, remove []string) []string {
+	var results []string
+	for _, e := range elements {
+		exists := false
+		for _, r := range remove {
+			if e == r {
+				exists = true
+				break
+			}
+		}
+		if !exists {
+			results = append(results, e)
+		}
+	}
+	return results
+}

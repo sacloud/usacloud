@@ -18,6 +18,7 @@ package note
 
 import (
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -87,6 +88,8 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 			Flags: fs,
 		})
 	}
+
+	cmd.RegisterFlagCompletionFunc("scope", util.FlagCompletionFunc("user", "shared"))
 
 	core.BuildFlagsUsage(cmd, sets)
 }

@@ -24,6 +24,7 @@ import (
 	"github.com/fatih/color"
 	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
 	"github.com/sacloud/libsacloud/v2/sacloud/accessor"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/root"
@@ -144,6 +145,18 @@ func (c *Command) CLICommand() *cobra.Command {
 				return
 			}
 		},
+		ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+			if c.SelectorType == SelectorTypeNone {
+				return nil, cobra.ShellCompDirectiveNoFileComp
+			}
+
+			// コンテキスト構築
+			ctx, err := cli.NewCLIContext(c.resource.Name, c.Name, root.Command.PersistentFlags(), args, c.ColumnDefs, c.currentParameter)
+			if err != nil {
+				return nil, cobra.ShellCompDirectiveError
+			}
+			return c.CompleteArgs(ctx, cmd, args, toComplete)
+		},
 	}
 
 	if c, ok := c.currentParameter.(FlagInitializer); ok {
@@ -160,25 +173,34 @@ func (c *Command) confirmMessage() string {
 	return c.Name
 }
 
+func (c *Command) CompleteArgs(ctx cli.Context, cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+	if ok, err := c.initRunCommandContext(ctx, cmd); !ok || err != nil {
+		return nil, cobra.ShellCompDirectiveError
+	}
+
+	// 各リソースのListAllFuncをコールし、toCompleteと前方一致するリソースを抽出
+	zoned, err := c.collectResources(ctx)
+	if err != nil {
+		return nil, cobra.ShellCompDirectiveError
+	}
+
+	// ゾーンごとに分かれているため1つにまとめる
+	var resources []interface{}
+	for _, z := range zoned {
+		resources = append(resources, z.resources...)
+	}
+
+	var results []string
+	for _, r := range resources {
+		results = append(results, c.collectCompletionValuesFromResource(r, toComplete)...)
+	}
+
+	return util.RemoveStringsFromSlice(util.UniqStrings(results), args), cobra.ShellCompDirectiveNoFileComp
+}
+
 func (c *Command) Run(ctx cli.Context, cmd *cobra.Command, args []string) error {
-	// パラメータの補完処理(ポインタ型のクリアやコンテキストからのパラメータ受け取りなど)
-	c.completeParameterValue(cmd, ctx, c.currentParameter)
-
-	// パラメータバリデーション
-	if err := c.validateParameter(ctx, c.currentParameter); err != nil {
+	if ok, err := c.initRunCommandContext(ctx, cmd); !ok || err != nil {
 		return err
-	}
-
-	c.printCommandWarning(ctx)
-
-	if ok, err := c.handleCommonParameters(ctx); !ok || err != nil {
-		return err
-	}
-
-	if customizer, ok := c.currentParameter.(ParameterCustomizer); ok {
-		if err := customizer.Customize(); err != nil {
-			return err
-		}
 	}
 
 	targets, err := c.expandResourceContextsFromArgs(ctx, args)
@@ -197,6 +219,56 @@ func (c *Command) Run(ctx cli.Context, cmd *cobra.Command, args []string) error 
 		return err
 	}
 	return ctx.Output().Print(results)
+}
+
+func (c *Command) collectCompletionValuesFromResource(resource interface{}, prefix string) []string {
+	var results []string
+	if v, ok := resource.(accessor.ID); ok {
+		// ID
+		if prefix == "" || strings.HasPrefix(v.GetID().String(), prefix) {
+			results = append(results, v.GetID().String())
+		}
+
+		// Name(部分一致)
+		if name, ok := resource.(accessor.Name); ok {
+			if prefix == "" || strings.HasPrefix(name.GetName(), prefix) {
+				results = append(results, name.GetName())
+			}
+		}
+
+		// Tags
+		if tags, ok := resource.(accessor.Tags); ok {
+			for _, tag := range tags.GetTags() {
+				if prefix == "" || strings.HasPrefix(tag, prefix) {
+					results = append(results, tag)
+				}
+			}
+		}
+	}
+	return results
+}
+
+func (c *Command) initRunCommandContext(ctx cli.Context, cmd *cobra.Command) (bool, error) {
+	// パラメータの補完処理(ポインタ型のクリアやコンテキストからのパラメータ受け取りなど)
+	c.completeParameterValue(cmd, ctx, c.currentParameter)
+
+	// パラメータバリデーション
+	if err := c.validateParameter(ctx, c.currentParameter); err != nil {
+		return false, err
+	}
+
+	c.printCommandWarning(ctx)
+
+	if ok, err := c.handleCommonParameters(ctx); !ok || err != nil {
+		return ok, err
+	}
+
+	if customizer, ok := c.currentParameter.(ParameterCustomizer); ok {
+		if err := customizer.Customize(); err != nil {
+			return false, err
+		}
+	}
+	return true, nil
 }
 
 func (c *Command) validateParameter(ctx cli.Context, parameter interface{}) error {
@@ -273,103 +345,25 @@ func (c *Command) expandResourceContextsFromArgs(ctx cli.Context, args []string)
 		return c.allZoneResourceContext(ctx), nil
 	}
 
-	listFn := c.ListAllFunc
-	if listFn == nil {
-		fn, ok := services.DefaultListAllFunc(c.ResourceName(), c.Name)
-		if !ok {
-			return nil, errors.New("ListAllFunc is not set")
-		}
-		listFn = fn
-	}
-
 	if len(args) == 0 {
 		return nil, fmt.Errorf("ID or Name or Tags arguments are required")
 	}
 
-	// 検索結果
-	var results cli.ResourceContexts
-	var errs []error
-
-	// 検索は各ゾーン単位で非同期なためchanで受け取る
-	type funcResult struct {
-		ids cli.ResourceContexts
-		err error
+	collected, err := c.collectResources(ctx)
+	if err != nil {
+		return nil, err
 	}
-	resultCh := make(chan *funcResult)
-	defer close(resultCh)
 
-	allZones := c.allZoneResourceContext(ctx)
+	results := cli.ResourceContexts{}
+	for _, zonedResources := range collected {
+		zone := zonedResources.zone
+		resources := zonedResources.resources
 
-	var wg sync.WaitGroup
-	wg.Add(len(allZones))
-
-	// 非同期で実行されたAPIコールの結果受け取り
-	go func() {
-		for {
-			res := <-resultCh
-			if res == nil {
-				return
+		for _, r := range resources {
+			if id, ok := c.extractMatchedResourceID(r, args); ok {
+				results.Append(cli.ResourceContext{ID: id, Zone: zone})
 			}
-
-			if res.err != nil {
-				errs = append(errs, res.err)
-			}
-			if res.ids != nil {
-				results.Append(res.ids...)
-			}
-			wg.Done()
 		}
-	}()
-
-	// 各ゾーンごとに非同期にAPIコール実施
-	for _, zoneCtx := range allZones {
-		go func(zone string) {
-			parameter, err := c.parameterWithZone(zone)
-			if err != nil {
-				resultCh <- &funcResult{err: err}
-				return
-			}
-
-			resources, err := listFn(ctx, parameter)
-			if err != nil {
-				resultCh <- &funcResult{err: err}
-				return
-			}
-
-			ids := cli.ResourceContexts{}
-			for _, r := range resources {
-				for _, arg := range args {
-					if v, ok := r.(accessor.ID); ok {
-						// ID
-						if v.GetID().String() == arg {
-							ids.Append(cli.ResourceContext{ID: v.GetID(), Zone: zone})
-						}
-
-						// Name(部分一致)
-						if name, ok := r.(accessor.Name); ok {
-							if strings.Contains(name.GetName(), arg) {
-								ids.Append(cli.ResourceContext{ID: v.GetID(), Zone: zone})
-							}
-						}
-
-						// Tags
-						if tags, ok := r.(accessor.Tags); ok {
-							for _, tag := range tags.GetTags() {
-								if tag == arg {
-									ids.Append(cli.ResourceContext{ID: v.GetID(), Zone: zone})
-								}
-							}
-						}
-					}
-				}
-			}
-			resultCh <- &funcResult{ids: ids}
-		}(zoneCtx.Zone)
-	}
-
-	wg.Wait()
-	if len(errs) > 0 {
-		return nil, util.FlattenErrors(errs)
 	}
 
 	if c.SelectorType == SelectorTypeRequireSingle && len(results) > 1 {
@@ -379,6 +373,34 @@ func (c *Command) expandResourceContextsFromArgs(ctx cli.Context, args []string)
 		return nil, fmt.Errorf("target resource not found: query=%q", args)
 	}
 	return results, nil
+}
+
+func (c *Command) extractMatchedResourceID(r interface{}, idOrNameOrTag []string) (types.ID, bool) {
+	if v, ok := r.(accessor.ID); ok {
+		for _, cond := range idOrNameOrTag {
+			// ID
+			if v.GetID().String() == cond {
+				return v.GetID(), true
+			}
+
+			// Name(部分一致)
+			if name, ok := r.(accessor.Name); ok {
+				if strings.Contains(name.GetName(), cond) {
+					return v.GetID(), true
+				}
+			}
+
+			// Tags
+			if tags, ok := r.(accessor.Tags); ok {
+				for _, tag := range tags.GetTags() {
+					if tag == cond {
+						return v.GetID(), true
+					}
+				}
+			}
+		}
+	}
+	return types.ID(0), false
 }
 
 func (c *Command) exec(ctx cli.Context, ids cli.ResourceContexts) (output.Contents, error) {
@@ -535,4 +557,79 @@ func (c *Command) ParameterCategoryBy(key string) *Category {
 		}
 		return nil
 	}
+}
+
+type collectedResources struct {
+	zone      string
+	resources []interface{}
+}
+
+func (c *Command) collectResources(ctx cli.Context) ([]*collectedResources, error) {
+	listFn := c.ListAllFunc
+	if listFn == nil {
+		fn, ok := services.DefaultListAllFunc(c.ResourceName(), c.Name)
+		if !ok {
+			return nil, errors.New("ListAllFunc is not set")
+		}
+		listFn = fn
+	}
+
+	// 検索結果
+	var results []*collectedResources
+	var errs []error
+
+	// 検索は各ゾーン単位で非同期なためchanで受け取る
+	type funcResult struct {
+		results *collectedResources
+		err     error
+	}
+	resultCh := make(chan *funcResult)
+	defer close(resultCh)
+
+	allZones := c.allZoneResourceContext(ctx)
+
+	var wg sync.WaitGroup
+	wg.Add(len(allZones))
+
+	// 非同期で実行されたAPIコールの結果受け取り
+	go func() {
+		for {
+			res := <-resultCh
+			if res == nil {
+				return
+			}
+
+			if res.err != nil {
+				errs = append(errs, res.err)
+			}
+			if res.results != nil {
+				results = append(results, res.results)
+			}
+			wg.Done()
+		}
+	}()
+
+	// 各ゾーンごとに非同期にAPIコール実施
+	for _, zoneCtx := range allZones {
+		go func(zone string) {
+			parameter, err := c.parameterWithZone(zone)
+			if err != nil {
+				resultCh <- &funcResult{err: err}
+				return
+			}
+
+			resources, err := listFn(ctx, parameter)
+			if err != nil {
+				resultCh <- &funcResult{err: err}
+				return
+			}
+			resultCh <- &funcResult{results: &collectedResources{zone: zone, resources: resources}}
+		}(zoneCtx.Zone)
+	}
+
+	wg.Wait()
+	if len(errs) > 0 {
+		return nil, util.FlattenErrors(errs)
+	}
+	return results, nil
 }
