@@ -127,13 +127,13 @@ func (c *Command) CLICommand() *cobra.Command {
 		Short:        c.Usage,
 		Long:         c.Usage,
 		SilenceUsage: true,
-		RunE: func(cmd *cobra.Command, args []string) error {
+		Run: func(cmd *cobra.Command, args []string) {
 			// コンテキスト構築
 			ctx, err := cli.NewCLIContext(c.resource.Name, c.Name, root.Command.PersistentFlags(), args, c.ColumnDefs, c.currentParameter)
 			if err != nil {
 				// この段階ではctx.IO()が参照できないため標準エラーに出力する
 				fmt.Fprintln(os.Stderr, err) // nolint
-				return err
+				return
 			}
 
 			// エラー出力(可能ならカラーで出力)
@@ -141,9 +141,8 @@ func (c *Command) CLICommand() *cobra.Command {
 				out := ctx.IO().Err()
 				(&printer.Printer{NoColor: ctx.Option().NoColor}).Fprint(out, color.New(color.FgHiRed), err)
 				fmt.Fprintln(out, "") // nolint // エラーのあとは常に改行させる
-				return err
+				return
 			}
-			return nil
 		},
 	}
 

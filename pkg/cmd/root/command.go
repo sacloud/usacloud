@@ -24,8 +24,6 @@ var Command = &cobra.Command{
 	Use:   "usacloud [global options] <command> <sub-command> [options] [arguments]",
 	Short: "Usacloud is CLI for manage to resources on the SAKURA Cloud",
 	Long:  `CLI to manage to resources on the SAKURA Cloud`,
-	// TODO 一旦off
-	//SilenceErrors: true, // core.Commandでエラー出力を制御するためtrueにしておく
 }
 
 func init() {
