@@ -49,7 +49,7 @@ type createParameter struct {
 	ServerID        types.ID
 	SizeGB          int `cli:"size"`
 	DistantFrom     []types.ID
-	OSType          string `cli:",options=os_type" mapconv:",filters=os_type_to_value" validate:"omitempty,os_type"`
+	OSType          string `cli:",options=os_type" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
 
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`

@@ -57,19 +57,19 @@ var defaultColumnDefs = []output.ColumnDef{
 	{Name: "Name"},
 	{
 		Name:     "Server",
-		Template: "{{ .ServerID }}",
+		Template: "{{ ignore_empty .ServerID }}",
 	},
 	{
 		Name:     "Plan",
-		Template: "{{disk_plan_to_key .DiskPlanID}}",
+		Template: "{{ disk_plan_to_key .DiskPlanID }}",
 	},
 	{
 		Name:     "Size",
-		Template: "{{ mib_to_gib .SizeMB}}GB",
+		Template: "{{ mib_to_gib .SizeMB }}GB",
 	},
 	{Name: "Connection"},
 	{
 		Name:     "Storage",
-		Template: "{{.Storage.Name}}",
+		Template: "{{ .Storage.Name }}",
 	},
 }
