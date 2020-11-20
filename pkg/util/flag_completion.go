@@ -12,9 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package vdef
+package util
 
-// FlagOptionsMap CLIで指定するフラグでの静的な候補値一覧(cliタグで指定する)
-//
-// Note: コード生成で利用されるため実行時に動的に変化する項目には利用できない
-var FlagOptionsMap = map[string][]string{}
+import (
+	"strings"
+
+	"github.com/spf13/cobra"
+)
+
+func FlagCompletionFunc(options ...string) func(*cobra.Command, []string, string) ([]string, cobra.ShellCompDirective) {
+	return func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+		var results []string
+		for _, v := range options {
+			if toComplete == "" || strings.HasPrefix(v, toComplete) {
+				results = append(results, v)
+			}
+		}
+		return results, cobra.ShellCompDirectiveDefault
+	}
+}

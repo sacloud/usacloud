@@ -20,6 +20,7 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -123,6 +124,8 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 			Flags: fs,
 		})
 	}
+
+	cmd.RegisterFlagCompletionFunc("connection", util.FlagCompletionFunc("virtio", "ide"))
 
 	core.BuildFlagsUsage(cmd, sets)
 }

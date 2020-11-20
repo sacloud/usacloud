@@ -20,6 +20,7 @@ package {{ .PackageDirName }}
 
 import (
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -60,6 +61,11 @@ func (p *{{.CLICommandParameterTypeName}}) buildFlagsUsage(cmd *cobra.Command) {
 			Flags: fs,
 		})
 	}
+	{{ end }}
+	{{ range .Fields -}}
+	{{ if .Options -}}
+	cmd.RegisterFlagCompletionFunc("{{ .FlagName }}", util.FlagCompletionFunc({{ range .Options }}"{{ . }}",{{ end }}))
+	{{ end -}}
 	{{ end }}
 	core.BuildFlagsUsage(cmd, sets)
 }
