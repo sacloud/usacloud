@@ -32,7 +32,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
 	fs.StringVarP(&p.Class, "class", "", p.Class, "options: [shell/yaml_cloud_config]")
-	fs.StringVarP(&p.Content, "content", "", p.Content, "(aliases: --contents)")
+	fs.StringVarP(&p.Content, "content", "", p.Content, "(aliases: --contents, --script, --scripts)")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -46,6 +46,10 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 func (p *createParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.NormalizedName {
 	switch name {
 	case "contents":
+		name = "content"
+	case "script":
+		name = "content"
+	case "scripts":
 		name = "content"
 	case "out":
 		name = "output-type"
