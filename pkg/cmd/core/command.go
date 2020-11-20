@@ -252,7 +252,7 @@ func (c *Command) confirmContinue(ctx cli.Context, resources cli.ResourceContext
 
 func (c *Command) allZoneResourceContext(ctx cli.Context) cli.ResourceContexts {
 	if c.resource.IsGlobalResource {
-		return cli.ResourceContexts{}
+		return cli.ResourceContexts{{Zone: ""}}
 	}
 
 	zone := cflag.ZoneFlagValue(c.currentParameter)
