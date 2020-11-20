@@ -38,7 +38,7 @@ type createParameter struct {
 	Tags    []string `validate:"tags"`
 	IconID  types.ID
 	Class   string `cli:",options=note_class" validate:"required,note_class"`
-	Content string `cli:",aliases=contents" validate:"required"`
+	Content string `cli:",aliases=contents script scripts" validate:"required" mapconv:",filters=path_or_content"`
 
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`

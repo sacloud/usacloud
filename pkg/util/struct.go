@@ -42,18 +42,9 @@ func BytesFromPathOrContent(pathOrContent string) ([]byte, error) {
 		return nil, errors.New("pathOrContent required")
 	}
 
-	if isJSON(pathOrContent) {
-		return []byte(pathOrContent), nil
-	}
-
 	data, err := ioutil.ReadFile(pathOrContent)
 	if err != nil {
-		return nil, err
+		return []byte(pathOrContent), nil // ファイルを読んでみてエラーだった場合はJSONなどのコンテンツと判定する
 	}
 	return data, nil
-}
-
-func isJSON(s string) bool {
-	m := make(map[string]interface{})
-	return json.Unmarshal([]byte(s), &m) == nil
 }
