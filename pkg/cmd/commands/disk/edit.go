@@ -15,12 +15,11 @@
 package disk
 
 import (
-	"encoding/json"
-
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 var editCommand = &core.Command{
@@ -77,7 +76,7 @@ func init() {
 func (p *editParameter) Customize() error {
 	var notes []*sacloud.DiskEditNote
 	if p.NotesData != "" {
-		if err := json.Unmarshal([]byte(p.NotesData), &notes); err != nil {
+		if err := util.MarshalJSONFromPathOrContent(p.NotesData, &notes); err != nil {
 			return err
 		}
 	}
