@@ -15,13 +15,11 @@
 package output
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"os"
 
-	"github.com/astaxie/flatmap"
-	"github.com/bitly/go-simplejson"
+	"github.com/fatih/structs"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -30,7 +28,7 @@ type idOutput struct {
 	Err io.Writer
 }
 
-var idOutputTargetColumns = []string{"ID", "Current.ID", "Key", "BillID", "Index", "RowNumber"}
+var idOutputTargetColumns = []string{"ID", "Current.ID", "Key", "AccountID", "BillID", "Index", "RowNumber"}
 
 func NewIDOutput(out io.Writer, err io.Writer) Output {
 	return &idOutput{
@@ -53,42 +51,26 @@ func (o *idOutput) Print(contents Contents) error {
 	}
 
 	// targets -> byte[] -> []interface{}
-	rawArray, err := json.Marshal(targets)
-	if err != nil {
-		return fmt.Errorf("FreeOutput:Print: json.Marshal is failed: %s", err)
-	}
-
-	j, err := simplejson.NewJson(rawArray)
-	if err != nil {
-		return fmt.Errorf("FreeOutput:Print: create simplejson is failed: %s", err)
-	}
-	for i := 0; i < len(targets); i++ {
-		v := j.GetIndex(i)
-		mapValue, err := v.Map()
-		if err != nil {
-			return fmt.Errorf("FreeOutput:Print: json format is invalid: %v", err)
+	for i, v := range targets {
+		if !structs.IsStruct(v) {
+			continue
 		}
+		mapValue := structs.Map(v)
 
-		// to flatmap( map[string]string )
-		flatMap, err := flatmap.Flatten(mapValue)
-		if err != nil {
-			return fmt.Errorf("FreeOutput:Print: create flatmap is failed: %v", err)
-		}
-
-		value := ""
+		var value interface{}
 		for _, key := range idOutputTargetColumns {
 			if key == "RowNumber" {
 				value = fmt.Sprintf("%d", i+1)
 				break
 			} else {
-				if v, ok := flatMap[key]; ok {
-					value = v
+				if id, ok := mapValue[key]; ok {
+					value = id
 					break
 				}
 			}
 		}
 
-		fmt.Fprintf(o.Out, "%s\n", value)
+		fmt.Fprintf(o.Out, "%v\n", value)
 	}
 
 	return nil

@@ -3,9 +3,6 @@ module github.com/sacloud/usacloud
 go 1.13
 
 require (
-	github.com/astaxie/flatmap v0.0.0-20160505145528-c0e84c00d8d5
-	github.com/bitly/go-simplejson v0.5.0
-	github.com/bmizerany/assert v0.0.0-20160611221934-b7ed37b82869 // indirect
 	github.com/fatih/color v1.7.0
 	github.com/fatih/structs v1.1.0
 	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32
