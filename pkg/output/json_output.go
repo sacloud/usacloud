@@ -21,7 +21,7 @@ import (
 	"os"
 
 	"github.com/fatih/structs"
-	"github.com/sacloud/go-jmespath"
+	"github.com/jmespath/go-jmespath"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 

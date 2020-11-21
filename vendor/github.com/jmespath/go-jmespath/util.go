@@ -145,43 +145,15 @@ func toArrayNum(data interface{}) ([]float64, bool) {
 	if d, ok := data.([]interface{}); ok {
 		result := make([]float64, len(d))
 		for i, el := range d {
-			v := reflect.ValueOf(el)
-			if isFloat(v) {
-				result[i] = getReflectValue(v).Float()
-			} else if isInteger(v) {
-				result[i] = float64(getReflectValue(v).Int())
-			} else {
+			item, ok := el.(float64)
+			if !ok {
 				return nil, false
 			}
+			result[i] = item
 		}
 		return result, true
 	}
 	return nil, false
-}
-
-func getReflectValue(v reflect.Value) reflect.Value {
-	if v.IsValid() && v.Kind() == reflect.Ptr {
-		return v.Elem()
-	}
-	return v
-}
-
-func isFloat(v reflect.Value) bool {
-	return getReflectValue(v).Kind() == reflect.Float32 ||
-		getReflectValue(v).Kind() == reflect.Float64
-}
-
-func isInteger(v reflect.Value) bool {
-	return getReflectValue(v).Kind() == reflect.Int ||
-		getReflectValue(v).Kind() == reflect.Int8 ||
-		getReflectValue(v).Kind() == reflect.Int16 ||
-		getReflectValue(v).Kind() == reflect.Int32 ||
-		getReflectValue(v).Kind() == reflect.Int64 ||
-		getReflectValue(v).Kind() == reflect.Uint ||
-		getReflectValue(v).Kind() == reflect.Uint8 ||
-		getReflectValue(v).Kind() == reflect.Uint16 ||
-		getReflectValue(v).Kind() == reflect.Uint32 ||
-		getReflectValue(v).Kind() == reflect.Uint64
 }
 
 // ToArrayStr converts an empty interface type to a slice of strings.

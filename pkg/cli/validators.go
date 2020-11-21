@@ -19,7 +19,7 @@ import (
 	"io/ioutil"
 	"strings"
 
-	"github.com/sacloud/go-jmespath"
+	"github.com/jmespath/go-jmespath"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
