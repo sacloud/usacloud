@@ -17,7 +17,7 @@ package cflag
 // CommonParameter 全コマンド共通フィールド
 type CommonParameter struct {
 	Parameters       string `cli:",category=input,desc=Input parameters in JSON format" json:"-"`
-	GenerateSkeleton bool   `cli:",category=input,desc=Output skeleton of parameters with JSON format" json:"-"`
+	GenerateSkeleton bool   `cli:",category=input,aliases=skeleton,desc=Output skeleton of parameters with JSON format" json:"-"`
 }
 
 func (p *CommonParameter) ParametersFlagValue() string {

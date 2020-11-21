@@ -29,6 +29,8 @@ func (p *deleteParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 func (p *deleteParameter) buildFlags(fs *pflag.FlagSet) {
 
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
+	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
+	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.FailIfNotFound, "fail-if-not-found", "", p.FailIfNotFound, "")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
@@ -42,6 +44,8 @@ func (p *deleteParameter) buildFlags(fs *pflag.FlagSet) {
 
 func (p *deleteParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.NormalizedName {
 	switch name {
+	case "skeleton":
+		name = "generate-skeleton"
 	case "out":
 		name = "output-type"
 	case "fmt":
@@ -65,6 +69,8 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",

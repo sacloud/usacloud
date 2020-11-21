@@ -36,9 +36,9 @@ var readCommand = &core.Command{
 }
 
 type readParameter struct {
-	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
-
+	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 

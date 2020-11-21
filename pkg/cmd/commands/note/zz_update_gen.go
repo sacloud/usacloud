@@ -52,6 +52,8 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.Content == nil {
 		p.Content = pointer.NewString("")
 	}
+	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
+	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.StringVarP(p.Name, "name", "", "", "")
 	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
@@ -68,6 +70,8 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 
 func (p *updateParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.NormalizedName {
 	switch name {
+	case "skeleton":
+		name = "generate-skeleton"
 	case "contents":
 		name = "content"
 	case "out":
@@ -95,6 +99,8 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",

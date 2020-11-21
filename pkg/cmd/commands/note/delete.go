@@ -32,7 +32,8 @@ var deleteCommand = &core.Command{
 }
 
 type deleteParameter struct {
-	cflag.IDParameter `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 
 	FailIfNotFound bool
 

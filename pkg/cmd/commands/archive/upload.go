@@ -31,8 +31,9 @@ var uploadCommand = &core.Command{
 }
 
 type uploadParameter struct {
-	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
+	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 
 	SourceFile string `mapconv:"Reader,filters=path_to_reader" validate:"omitempty,file"`
 

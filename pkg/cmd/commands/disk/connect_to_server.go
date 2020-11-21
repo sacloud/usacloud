@@ -33,8 +33,9 @@ var connectToServerCommand = &core.Command{
 }
 
 type connectToServerParameter struct {
-	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
+	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 
 	ServerID types.ID `validate:"required"`
 

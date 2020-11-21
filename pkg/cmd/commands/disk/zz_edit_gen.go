@@ -30,7 +30,7 @@ func (p *editParameter) buildFlags(fs *pflag.FlagSet) {
 
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
-	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format")
+	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.StringVarP(&p.HostName, "host-name", "", p.HostName, "")
 	fs.StringVarP(&p.Password, "password", "", p.Password, "")
@@ -56,6 +56,8 @@ func (p *editParameter) buildFlags(fs *pflag.FlagSet) {
 
 func (p *editParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.NormalizedName {
 	switch name {
+	case "skeleton":
+		name = "generate-skeleton"
 	case "out":
 		name = "output-type"
 	case "fmt":
