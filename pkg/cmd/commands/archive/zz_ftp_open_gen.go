@@ -89,7 +89,12 @@ func (p *ftpOpenParameter) buildFlagsUsage(cmd *cobra.Command) {
 	core.BuildFlagsUsage(cmd, sets)
 }
 
+func (p *ftpOpenParameter) setCompletionFunc(cmd *cobra.Command) {
+
+}
+
 func (p *ftpOpenParameter) SetupCobraCommandFlags(cmd *cobra.Command) {
 	p.buildFlags(cmd.Flags())
 	p.buildFlagsUsage(cmd)
+	p.setCompletionFunc(cmd)
 }

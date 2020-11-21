@@ -61,7 +61,12 @@ func (p *disconnectFromServerParameter) buildFlagsUsage(cmd *cobra.Command) {
 	core.BuildFlagsUsage(cmd, sets)
 }
 
+func (p *disconnectFromServerParameter) setCompletionFunc(cmd *cobra.Command) {
+
+}
+
 func (p *disconnectFromServerParameter) SetupCobraCommandFlags(cmd *cobra.Command) {
 	p.buildFlags(cmd.Flags())
 	p.buildFlagsUsage(cmd)
+	p.setCompletionFunc(cmd)
 }

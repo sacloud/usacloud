@@ -125,12 +125,16 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		})
 	}
 
+	core.BuildFlagsUsage(cmd, sets)
+}
+
+func (p *updateParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("connection", util.FlagCompletionFunc("virtio", "ide"))
 
-	core.BuildFlagsUsage(cmd, sets)
 }
 
 func (p *updateParameter) SetupCobraCommandFlags(cmd *cobra.Command) {
 	p.buildFlags(cmd.Flags())
 	p.buildFlagsUsage(cmd)
+	p.setCompletionFunc(cmd)
 }
