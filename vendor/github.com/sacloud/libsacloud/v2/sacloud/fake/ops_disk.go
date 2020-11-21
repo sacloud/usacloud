@@ -46,6 +46,11 @@ func (o *DiskOp) Create(ctx context.Context, zone string, param *sacloud.DiskCre
 	copySameNameField(param, result)
 	fill(result, fillID, fillCreatedAt, fillDiskPlan)
 
+	result.Storage = &sacloud.Storage{
+		ID:   types.ID(123456789012),
+		Name: "dummy",
+	}
+
 	if result.Connection == types.EDiskConnection("") {
 		result.Connection = types.DiskConnections.VirtIO
 	}
@@ -242,6 +247,7 @@ func (o *DiskOp) ConnectToServer(ctx context.Context, zone string, id types.ID, 
 	server.Disks = append(server.Disks, connectedDisk)
 	putServer(zone, server)
 	value.ServerID = serverID
+	value.ServerName = server.Name
 	putDisk(zone, value)
 
 	return nil
@@ -280,6 +286,7 @@ func (o *DiskOp) DisconnectFromServer(ctx context.Context, zone string, id types
 	server.Disks = disks
 	putServer(zone, server)
 	value.ServerID = types.ID(0)
+	value.ServerName = ""
 	putDisk(zone, value)
 
 	return nil

@@ -5923,8 +5923,8 @@ func (o *CPUTimeActivity) SetValues(v []*MonitorCPUTimeValue) {
 
 // MonitorCPUTimeValue represents API parameter/response structure
 type MonitorCPUTimeValue struct {
-	Time    time.Time `json:",omitempty" mapconv:",omitempty"`
-	CPUTime float64   `json:",omitempty" mapconv:",omitempty"`
+	Time    time.Time `mapconv:",omitempty"`
+	CPUTime float64   `mapconv:",omitempty"`
 }
 
 // Validate validates by field tags
@@ -5935,8 +5935,8 @@ func (o *MonitorCPUTimeValue) Validate() error {
 // setDefaults implements sacloud.argumentDefaulter
 func (o *MonitorCPUTimeValue) setDefaults() interface{} {
 	return &struct {
-		Time    time.Time `json:",omitempty" mapconv:",omitempty"`
-		CPUTime float64   `json:",omitempty" mapconv:",omitempty"`
+		Time    time.Time `mapconv:",omitempty"`
+		CPUTime float64   `mapconv:",omitempty"`
 	}{
 		Time:    o.GetTime(),
 		CPUTime: o.GetCPUTime(),
@@ -6054,9 +6054,9 @@ func (o *DiskActivity) SetValues(v []*MonitorDiskValue) {
 
 // MonitorDiskValue represents API parameter/response structure
 type MonitorDiskValue struct {
-	Time  time.Time `json:",omitempty" mapconv:",omitempty"`
-	Read  float64   `json:",omitempty" mapconv:",omitempty"`
-	Write float64   `json:",omitempty" mapconv:",omitempty"`
+	Time  time.Time `mapconv:",omitempty"`
+	Read  float64   `mapconv:",omitempty"`
+	Write float64   `mapconv:",omitempty"`
 }
 
 // Validate validates by field tags
@@ -6067,9 +6067,9 @@ func (o *MonitorDiskValue) Validate() error {
 // setDefaults implements sacloud.argumentDefaulter
 func (o *MonitorDiskValue) setDefaults() interface{} {
 	return &struct {
-		Time  time.Time `json:",omitempty" mapconv:",omitempty"`
-		Read  float64   `json:",omitempty" mapconv:",omitempty"`
-		Write float64   `json:",omitempty" mapconv:",omitempty"`
+		Time  time.Time `mapconv:",omitempty"`
+		Read  float64   `mapconv:",omitempty"`
+		Write float64   `mapconv:",omitempty"`
 	}{
 		Time:  o.GetTime(),
 		Read:  o.GetRead(),
@@ -6146,9 +6146,9 @@ func (o *InterfaceActivity) SetValues(v []*MonitorInterfaceValue) {
 
 // MonitorInterfaceValue represents API parameter/response structure
 type MonitorInterfaceValue struct {
-	Time    time.Time `json:",omitempty" mapconv:",omitempty"`
-	Receive float64   `json:",omitempty" mapconv:",omitempty"`
-	Send    float64   `json:",omitempty" mapconv:",omitempty"`
+	Time    time.Time `mapconv:",omitempty"`
+	Receive float64   `mapconv:",omitempty"`
+	Send    float64   `mapconv:",omitempty"`
 }
 
 // Validate validates by field tags
@@ -6159,9 +6159,9 @@ func (o *MonitorInterfaceValue) Validate() error {
 // setDefaults implements sacloud.argumentDefaulter
 func (o *MonitorInterfaceValue) setDefaults() interface{} {
 	return &struct {
-		Time    time.Time `json:",omitempty" mapconv:",omitempty"`
-		Receive float64   `json:",omitempty" mapconv:",omitempty"`
-		Send    float64   `json:",omitempty" mapconv:",omitempty"`
+		Time    time.Time `mapconv:",omitempty"`
+		Receive float64   `mapconv:",omitempty"`
+		Send    float64   `mapconv:",omitempty"`
 	}{
 		Time:    o.GetTime(),
 		Receive: o.GetReceive(),
@@ -6238,15 +6238,15 @@ func (o *DatabaseActivity) SetValues(v []*MonitorDatabaseValue) {
 
 // MonitorDatabaseValue represents API parameter/response structure
 type MonitorDatabaseValue struct {
-	Time              time.Time `json:",omitempty" mapconv:",omitempty"`
-	TotalMemorySize   float64   `json:",omitempty" mapconv:",omitempty"`
-	UsedMemorySize    float64   `json:",omitempty" mapconv:",omitempty"`
-	TotalDisk1Size    float64   `json:",omitempty" mapconv:",omitempty"`
-	UsedDisk1Size     float64   `json:",omitempty" mapconv:",omitempty"`
-	TotalDisk2Size    float64   `json:",omitempty" mapconv:",omitempty"`
-	UsedDisk2Size     float64   `json:",omitempty" mapconv:",omitempty"`
-	BinlogUsedSizeKiB float64   `json:",omitempty" mapconv:",omitempty"`
-	DelayTimeSec      float64   `json:",omitempty" mapconv:",omitempty"`
+	Time              time.Time `mapconv:",omitempty"`
+	TotalMemorySize   float64   `mapconv:",omitempty"`
+	UsedMemorySize    float64   `mapconv:",omitempty"`
+	TotalDisk1Size    float64   `mapconv:",omitempty"`
+	UsedDisk1Size     float64   `mapconv:",omitempty"`
+	TotalDisk2Size    float64   `mapconv:",omitempty"`
+	UsedDisk2Size     float64   `mapconv:",omitempty"`
+	BinlogUsedSizeKiB float64   `mapconv:",omitempty"`
+	DelayTimeSec      float64   `mapconv:",omitempty"`
 }
 
 // Validate validates by field tags
@@ -6257,15 +6257,15 @@ func (o *MonitorDatabaseValue) Validate() error {
 // setDefaults implements sacloud.argumentDefaulter
 func (o *MonitorDatabaseValue) setDefaults() interface{} {
 	return &struct {
-		Time              time.Time `json:",omitempty" mapconv:",omitempty"`
-		TotalMemorySize   float64   `json:",omitempty" mapconv:",omitempty"`
-		UsedMemorySize    float64   `json:",omitempty" mapconv:",omitempty"`
-		TotalDisk1Size    float64   `json:",omitempty" mapconv:",omitempty"`
-		UsedDisk1Size     float64   `json:",omitempty" mapconv:",omitempty"`
-		TotalDisk2Size    float64   `json:",omitempty" mapconv:",omitempty"`
-		UsedDisk2Size     float64   `json:",omitempty" mapconv:",omitempty"`
-		BinlogUsedSizeKiB float64   `json:",omitempty" mapconv:",omitempty"`
-		DelayTimeSec      float64   `json:",omitempty" mapconv:",omitempty"`
+		Time              time.Time `mapconv:",omitempty"`
+		TotalMemorySize   float64   `mapconv:",omitempty"`
+		UsedMemorySize    float64   `mapconv:",omitempty"`
+		TotalDisk1Size    float64   `mapconv:",omitempty"`
+		UsedDisk1Size     float64   `mapconv:",omitempty"`
+		TotalDisk2Size    float64   `mapconv:",omitempty"`
+		UsedDisk2Size     float64   `mapconv:",omitempty"`
+		BinlogUsedSizeKiB float64   `mapconv:",omitempty"`
+		DelayTimeSec      float64   `mapconv:",omitempty"`
 	}{
 		Time:              o.GetTime(),
 		TotalMemorySize:   o.GetTotalMemorySize(),
@@ -6723,6 +6723,7 @@ type Disk struct {
 	BundleInfo                *BundleInfo         `json:",omitempty" mapconv:",omitempty,recursive"`
 	Storage                   *Storage            `json:",omitempty" mapconv:",omitempty,recursive"`
 	ServerID                  types.ID            `mapconv:"Server.ID,omitempty"`
+	ServerName                string              `mapconv:"Server.Name,omitempty"`
 	IconID                    types.ID            `mapconv:"Icon.ID"`
 	CreatedAt                 time.Time
 	ModifiedAt                time.Time
@@ -6757,6 +6758,7 @@ func (o *Disk) setDefaults() interface{} {
 		BundleInfo                *BundleInfo         `json:",omitempty" mapconv:",omitempty,recursive"`
 		Storage                   *Storage            `json:",omitempty" mapconv:",omitempty,recursive"`
 		ServerID                  types.ID            `mapconv:"Server.ID,omitempty"`
+		ServerName                string              `mapconv:"Server.Name,omitempty"`
 		IconID                    types.ID            `mapconv:"Icon.ID"`
 		CreatedAt                 time.Time
 		ModifiedAt                time.Time
@@ -6782,6 +6784,7 @@ func (o *Disk) setDefaults() interface{} {
 		BundleInfo:                o.GetBundleInfo(),
 		Storage:                   o.GetStorage(),
 		ServerID:                  o.GetServerID(),
+		ServerName:                o.GetServerName(),
 		IconID:                    o.GetIconID(),
 		CreatedAt:                 o.GetCreatedAt(),
 		ModifiedAt:                o.GetModifiedAt(),
@@ -7051,6 +7054,16 @@ func (o *Disk) GetServerID() types.ID {
 // SetServerID sets value to ServerID
 func (o *Disk) SetServerID(v types.ID) {
 	o.ServerID = v
+}
+
+// GetServerName returns value of ServerName
+func (o *Disk) GetServerName() string {
+	return o.ServerName
+}
+
+// SetServerName sets value to ServerName
+func (o *Disk) SetServerName(v string) {
+	o.ServerName = v
 }
 
 // GetIconID returns value of IconID
@@ -11651,9 +11664,9 @@ func (o *RouterActivity) SetValues(v []*MonitorRouterValue) {
 
 // MonitorRouterValue represents API parameter/response structure
 type MonitorRouterValue struct {
-	Time time.Time `json:",omitempty" mapconv:",omitempty"`
-	In   float64   `json:",omitempty" mapconv:",omitempty"`
-	Out  float64   `json:",omitempty" mapconv:",omitempty"`
+	Time time.Time `mapconv:",omitempty"`
+	In   float64   `mapconv:",omitempty"`
+	Out  float64   `mapconv:",omitempty"`
 }
 
 // Validate validates by field tags
@@ -11664,9 +11677,9 @@ func (o *MonitorRouterValue) Validate() error {
 // setDefaults implements sacloud.argumentDefaulter
 func (o *MonitorRouterValue) setDefaults() interface{} {
 	return &struct {
-		Time time.Time `json:",omitempty" mapconv:",omitempty"`
-		In   float64   `json:",omitempty" mapconv:",omitempty"`
-		Out  float64   `json:",omitempty" mapconv:",omitempty"`
+		Time time.Time `mapconv:",omitempty"`
+		In   float64   `mapconv:",omitempty"`
+		Out  float64   `mapconv:",omitempty"`
 	}{
 		Time: o.GetTime(),
 		In:   o.GetIn(),
@@ -14559,9 +14572,9 @@ func (o *LocalRouterActivity) SetValues(v []*MonitorLocalRouterValue) {
 
 // MonitorLocalRouterValue represents API parameter/response structure
 type MonitorLocalRouterValue struct {
-	Time               time.Time `json:",omitempty" mapconv:",omitempty"`
-	ReceiveBytesPerSec float64   `json:",omitempty" mapconv:",omitempty"`
-	SendBytesPerSec    float64   `json:",omitempty" mapconv:",omitempty"`
+	Time               time.Time `mapconv:",omitempty"`
+	ReceiveBytesPerSec float64   `mapconv:",omitempty"`
+	SendBytesPerSec    float64   `mapconv:",omitempty"`
 }
 
 // Validate validates by field tags
@@ -14572,9 +14585,9 @@ func (o *MonitorLocalRouterValue) Validate() error {
 // setDefaults implements sacloud.argumentDefaulter
 func (o *MonitorLocalRouterValue) setDefaults() interface{} {
 	return &struct {
-		Time               time.Time `json:",omitempty" mapconv:",omitempty"`
-		ReceiveBytesPerSec float64   `json:",omitempty" mapconv:",omitempty"`
-		SendBytesPerSec    float64   `json:",omitempty" mapconv:",omitempty"`
+		Time               time.Time `mapconv:",omitempty"`
+		ReceiveBytesPerSec float64   `mapconv:",omitempty"`
+		SendBytesPerSec    float64   `mapconv:",omitempty"`
 	}{
 		Time:               o.GetTime(),
 		ReceiveBytesPerSec: o.GetReceiveBytesPerSec(),
@@ -17000,8 +17013,8 @@ func (o *FreeDiskSizeActivity) SetValues(v []*MonitorFreeDiskSizeValue) {
 
 // MonitorFreeDiskSizeValue represents API parameter/response structure
 type MonitorFreeDiskSizeValue struct {
-	Time         time.Time `json:",omitempty" mapconv:",omitempty"`
-	FreeDiskSize float64   `json:",omitempty" mapconv:",omitempty"`
+	Time         time.Time `mapconv:",omitempty"`
+	FreeDiskSize float64   `mapconv:",omitempty"`
 }
 
 // Validate validates by field tags
@@ -17012,8 +17025,8 @@ func (o *MonitorFreeDiskSizeValue) Validate() error {
 // setDefaults implements sacloud.argumentDefaulter
 func (o *MonitorFreeDiskSizeValue) setDefaults() interface{} {
 	return &struct {
-		Time         time.Time `json:",omitempty" mapconv:",omitempty"`
-		FreeDiskSize float64   `json:",omitempty" mapconv:",omitempty"`
+		Time         time.Time `mapconv:",omitempty"`
+		FreeDiskSize float64   `mapconv:",omitempty"`
 	}{
 		Time:         o.GetTime(),
 		FreeDiskSize: o.GetFreeDiskSize(),
@@ -20243,9 +20256,9 @@ func (o *ConnectionActivity) SetValues(v []*MonitorConnectionValue) {
 
 // MonitorConnectionValue represents API parameter/response structure
 type MonitorConnectionValue struct {
-	Time              time.Time `json:",omitempty" mapconv:",omitempty"`
-	ActiveConnections float64   `json:",omitempty" mapconv:",omitempty"`
-	ConnectionsPerSec float64   `json:",omitempty" mapconv:",omitempty"`
+	Time              time.Time `mapconv:",omitempty"`
+	ActiveConnections float64   `mapconv:",omitempty"`
+	ConnectionsPerSec float64   `mapconv:",omitempty"`
 }
 
 // Validate validates by field tags
@@ -20256,9 +20269,9 @@ func (o *MonitorConnectionValue) Validate() error {
 // setDefaults implements sacloud.argumentDefaulter
 func (o *MonitorConnectionValue) setDefaults() interface{} {
 	return &struct {
-		Time              time.Time `json:",omitempty" mapconv:",omitempty"`
-		ActiveConnections float64   `json:",omitempty" mapconv:",omitempty"`
-		ConnectionsPerSec float64   `json:",omitempty" mapconv:",omitempty"`
+		Time              time.Time `mapconv:",omitempty"`
+		ActiveConnections float64   `mapconv:",omitempty"`
+		ConnectionsPerSec float64   `mapconv:",omitempty"`
 	}{
 		Time:              o.GetTime(),
 		ActiveConnections: o.GetActiveConnections(),
@@ -23223,9 +23236,9 @@ func (o *LinkActivity) SetValues(v []*MonitorLinkValue) {
 
 // MonitorLinkValue represents API parameter/response structure
 type MonitorLinkValue struct {
-	Time        time.Time `json:",omitempty" mapconv:",omitempty"`
-	UplinkBPS   float64   `json:",omitempty" mapconv:",omitempty"`
-	DownlinkBPS float64   `json:",omitempty" mapconv:",omitempty"`
+	Time        time.Time `mapconv:",omitempty"`
+	UplinkBPS   float64   `mapconv:",omitempty"`
+	DownlinkBPS float64   `mapconv:",omitempty"`
 }
 
 // Validate validates by field tags
@@ -23236,9 +23249,9 @@ func (o *MonitorLinkValue) Validate() error {
 // setDefaults implements sacloud.argumentDefaulter
 func (o *MonitorLinkValue) setDefaults() interface{} {
 	return &struct {
-		Time        time.Time `json:",omitempty" mapconv:",omitempty"`
-		UplinkBPS   float64   `json:",omitempty" mapconv:",omitempty"`
-		DownlinkBPS float64   `json:",omitempty" mapconv:",omitempty"`
+		Time        time.Time `mapconv:",omitempty"`
+		UplinkBPS   float64   `mapconv:",omitempty"`
+		DownlinkBPS float64   `mapconv:",omitempty"`
 	}{
 		Time:        o.GetTime(),
 		UplinkBPS:   o.GetUplinkBPS(),
@@ -24379,8 +24392,8 @@ func (o *ResponseTimeSecActivity) SetValues(v []*MonitorResponseTimeSecValue) {
 
 // MonitorResponseTimeSecValue represents API parameter/response structure
 type MonitorResponseTimeSecValue struct {
-	Time            time.Time `json:",omitempty" mapconv:",omitempty"`
-	ResponseTimeSec float64   `json:",omitempty" mapconv:",omitempty"`
+	Time            time.Time `mapconv:",omitempty"`
+	ResponseTimeSec float64   `mapconv:",omitempty"`
 }
 
 // Validate validates by field tags
@@ -24391,8 +24404,8 @@ func (o *MonitorResponseTimeSecValue) Validate() error {
 // setDefaults implements sacloud.argumentDefaulter
 func (o *MonitorResponseTimeSecValue) setDefaults() interface{} {
 	return &struct {
-		Time            time.Time `json:",omitempty" mapconv:",omitempty"`
-		ResponseTimeSec float64   `json:",omitempty" mapconv:",omitempty"`
+		Time            time.Time `mapconv:",omitempty"`
+		ResponseTimeSec float64   `mapconv:",omitempty"`
 	}{
 		Time:            o.GetTime(),
 		ResponseTimeSec: o.GetResponseTimeSec(),
