@@ -37,8 +37,9 @@ var downloadCommand = &core.Command{
 }
 
 type downloadParameter struct {
-	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
+	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 
 	Destination string `cli:",aliases=dest" mapconv:"Writer,omitempty,filters=path_to_writer"` // 省略時は標準出力
 	Force       bool   `cli:",short=f,desc=overwrite file when --destination file is already exist"`

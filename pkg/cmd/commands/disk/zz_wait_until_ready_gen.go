@@ -29,10 +29,16 @@ func (p *waitUntilReadyParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 func (p *waitUntilReadyParameter) buildFlags(fs *pflag.FlagSet) {
 
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
+	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
+	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
 func (p *waitUntilReadyParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.NormalizedName {
+	switch name {
+	case "skeleton":
+		name = "generate-skeleton"
+	}
 	return pflag.NormalizedName(name)
 }
 
@@ -44,6 +50,16 @@ func (p *waitUntilReadyParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Disk options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Input options",
 			Flags: fs,
 		})
 	}

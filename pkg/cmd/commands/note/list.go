@@ -35,6 +35,8 @@ var listCommand = &core.Command{
 }
 
 type listParameter struct {
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+
 	Names []string `cli:",category=filter" validate:"omitempty"`
 	Tags  []string `cli:",category=filter" validate:"omitempty"`
 	Scope string   `cli:",category=filter,options=scope" mapconv:",omitempty,filters=scope_to_value" validate:"omitempty,scope"`

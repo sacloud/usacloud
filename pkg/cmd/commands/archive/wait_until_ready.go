@@ -34,8 +34,9 @@ var waitUntilReadyCommand = &core.Command{
 }
 
 type waitUntilReadyParameter struct {
-	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
+	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 }
 
 func newWaitUntilReadyParameter() *waitUntilReadyParameter {

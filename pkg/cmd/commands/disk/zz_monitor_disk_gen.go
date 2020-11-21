@@ -29,6 +29,8 @@ func (p *monitorParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 func (p *monitorParameter) buildFlags(fs *pflag.FlagSet) {
 
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
+	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
+	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.StringVarP(&p.Start, "start", "", p.Start, "")
 	fs.StringVarP(&p.End, "end", "", p.End, "")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
@@ -42,6 +44,8 @@ func (p *monitorParameter) buildFlags(fs *pflag.FlagSet) {
 
 func (p *monitorParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.NormalizedName {
 	switch name {
+	case "skeleton":
+		name = "generate-skeleton"
 	case "out":
 		name = "output-type"
 	case "fmt":
@@ -68,6 +72,16 @@ func (p *monitorParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("end"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Disk options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Input options",
 			Flags: fs,
 		})
 	}

@@ -33,6 +33,8 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+
 	Name string `validate:"required"`
 
 	Tags    []string `validate:"tags"`

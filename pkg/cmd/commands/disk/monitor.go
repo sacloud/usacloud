@@ -41,12 +41,11 @@ var monitorCommand = &core.Command{
 }
 
 type monitorParameter struct {
-	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter   `cli:",squash" mapconv:",squash"`
-
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.MonitorParameter `cli:",squash" mapconv:",squash"`
-
-	cflag.OutputParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 func newMonitorParameter() *monitorParameter {

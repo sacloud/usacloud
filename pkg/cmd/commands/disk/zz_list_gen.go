@@ -29,6 +29,8 @@ func (p *listParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 func (p *listParameter) buildFlags(fs *pflag.FlagSet) {
 
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
+	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
+	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.StringSliceVarP(&p.Names, "names", "", p.Names, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.IntVarP(&p.Count, "count", "", p.Count, "(aliases: --max, --limit)")
@@ -44,6 +46,8 @@ func (p *listParameter) buildFlags(fs *pflag.FlagSet) {
 
 func (p *listParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.NormalizedName {
 	switch name {
+	case "skeleton":
+		name = "generate-skeleton"
 	case "max":
 		name = "count"
 	case "limit":
@@ -78,6 +82,16 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("from"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Filter options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Input options",
 			Flags: fs,
 		})
 	}
