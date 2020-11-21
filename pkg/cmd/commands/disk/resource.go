@@ -17,8 +17,6 @@ package disk
 import (
 	"reflect"
 
-	"github.com/sacloud/usacloud/pkg/output"
-
 	"github.com/sacloud/libsacloud/v2/helper/service/disk"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
@@ -48,28 +46,5 @@ var Resource = &core.Resource{
 			DisplayName: "Other Commands",
 			Order:       1000,
 		},
-	},
-}
-
-var defaultColumnDefs = []output.ColumnDef{
-	{Name: "Zone"},
-	{Name: "ID"},
-	{Name: "Name"},
-	{
-		Name:     "Server",
-		Template: "{{ ignore_empty .ServerID }}",
-	},
-	{
-		Name:     "Plan",
-		Template: "{{ disk_plan_to_key .DiskPlanID }}",
-	},
-	{
-		Name:     "Size",
-		Template: "{{ mib_to_gib .SizeMB }}GB",
-	},
-	{Name: "Connection"},
-	{
-		Name:     "Storage",
-		Template: "{{ .Storage.Name }}",
 	},
 }
