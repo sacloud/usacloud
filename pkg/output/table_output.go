@@ -15,14 +15,12 @@
 package output
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"os"
 
+	"github.com/fatih/structs"
 	"github.com/sacloud/usacloud/pkg/util"
-
-	"github.com/bitly/go-simplejson"
 )
 
 type tableOutput struct {
@@ -52,32 +50,24 @@ func (o *tableOutput) Print(contents Contents) error {
 		return nil
 	}
 
-	// targets -> byte[] -> []interface{}
-	rawArray, err := json.Marshal(targets)
-	if err != nil {
-		return fmt.Errorf("TableOutput:Print: json.Marshal is failed: %s", err)
-	}
-
-	j, err := simplejson.NewJson(rawArray)
-	if err != nil {
-		return fmt.Errorf("TableOutput:Print: create simplejson is failed: %s", err)
-	}
-
 	table := newSimpleTableWriter(o.Out, o.ColumnDefs)
-	for i := 0; i < len(targets); i++ {
-		// interface{} -> map[string]interface{}
-		v := j.GetIndex(i)
-		mapValue, err := v.Map()
-		if err != nil {
-			return fmt.Errorf("TableOutput:Print: json format is invalid: %v", err)
+	for i, v := range targets {
+		if !structs.IsStruct(v) {
+			continue
 		}
+		mapValue := structs.Map(v)
 
+		// magic column
 		mapValue["__ORDER__"] = fmt.Sprintf("%d", i+1)
+
+		// zone
 		if contents[i].Zone != "" {
 			if _, ok := mapValue["Zone"]; !ok {
 				mapValue["Zone"] = contents[i].Zone
 			}
 		}
+
+		// ID
 		if !contents[i].ID.IsEmpty() {
 			if _, ok := mapValue["ID"]; !ok {
 				mapValue["ID"] = contents[i].ID

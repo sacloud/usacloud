@@ -22,7 +22,7 @@ var defaultColumnDefs = []output.ColumnDef{
 	{Name: "Name"},
 	{
 		Name:     "Server",
-		Template: `{{ if ne .ServerID "0" }}{{ .ServerID }}({{ .ServerName }}){{ end }}`,
+		Template: `{{ if .ServerID }}{{ .ServerID }}({{ .ServerName }}){{ end }}`,
 	},
 	{
 		Name:     "Plan",

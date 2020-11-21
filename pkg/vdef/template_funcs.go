@@ -54,11 +54,6 @@ var TemplateFuncMap = template.FuncMap{
 		if util.IsEmpty(value) {
 			return ""
 		}
-		if v, ok := value.(json.Number); ok {
-			if v.String() == "0" {
-				return ""
-			}
-		}
 		return value
 	},
 }

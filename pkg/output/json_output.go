@@ -20,8 +20,8 @@ import (
 	"io"
 	"os"
 
-	"github.com/bitly/go-simplejson"
-	"github.com/sacloud/go-jmespath"
+	"github.com/fatih/structs"
+	"github.com/jmespath/go-jmespath"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -52,45 +52,49 @@ func (o *jsonOutput) Print(contents Contents) error {
 		return nil
 	}
 
-	var values interface{} = targets
-
 	if o.query != "" {
 		v, err := o.searchByJMESPath(targets)
 		if err != nil {
 			return fmt.Errorf("JSONOutput:Query: jmespath.Search is Failed: %s", err)
 		}
-		values = v
+
+		switch v := v.(type) {
+		case []interface{}:
+			targets = v
+		default:
+			targets = []interface{}{v}
+		}
 	}
 
-	rawArray, err := json.Marshal(values)
-	if err != nil {
-		return fmt.Errorf("JSONOutput:Print: json.Marshal is Failed: %s", err)
-	}
+	var results []interface{}
+	for i, v := range targets {
+		if !structs.IsStruct(v) {
+			results = append(results, v)
+			continue
+		}
 
-	j, err := simplejson.NewJson(rawArray)
-
-	if err != nil {
-		return fmt.Errorf("JSONOutput:Print: Create SimpleJSON object is failed: %s", err)
-	}
-	for i := 0; i < len(targets); i++ {
+		mapValue := structs.Map(v)
+		// zone
 		if contents[i].Zone != "" {
-			row := j.GetIndex(i)
-			if _, ok := row.CheckGet("Zone"); !ok {
-				row.Set("Zone", contents[i].Zone)
+			if _, ok := mapValue["Zone"]; !ok {
+				mapValue["Zone"] = contents[i].Zone
 			}
 		}
+
+		// ID
 		if !contents[i].ID.IsEmpty() {
-			row := j.GetIndex(i)
-			if _, ok := row.CheckGet("ID"); !ok {
-				row.Set("ID", contents[i].ID)
+			if _, ok := mapValue["ID"]; !ok {
+				mapValue["ID"] = contents[i].ID
 			}
 		}
+		results = append(results, mapValue)
 	}
 
-	b, err := j.EncodePretty()
+	b, err := json.MarshalIndent(results, "", "  ")
 	if err != nil {
-		return fmt.Errorf("JSONOutput:Print: Print pretty JSON is failed: %s", err)
+		return fmt.Errorf("JSONOutput:Print: MarshalIndent failed: %s", err)
 	}
+
 	o.out.Write(b) // nolint
 	fmt.Fprintln(o.out, "")
 	return nil

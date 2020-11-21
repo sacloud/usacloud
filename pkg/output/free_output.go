@@ -16,15 +16,13 @@ package output
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
 
+	"github.com/fatih/structs"
 	"github.com/sacloud/usacloud/pkg/util"
-
-	"github.com/bitly/go-simplejson"
 )
 
 type freeOutput struct {
@@ -64,29 +62,17 @@ func (o *freeOutput) Print(contents Contents) error {
 		o.Format = string(format)
 	}
 
-	// targets -> byte[] -> []interface{}
-	rawArray, err := json.Marshal(targets)
-	if err != nil {
-		return fmt.Errorf("FreeOutput:Print: json.Marshal is failed: %s", err)
-	}
-
-	j, err := simplejson.NewJson(rawArray)
-	if err != nil {
-		return fmt.Errorf("FreeOutput:Print: create simplejson is failed: %s", err)
-	}
-
 	t, err := newTemplate().Parse(o.Format)
 	if err != nil {
 		return fmt.Errorf("invalid output format %q: %s", o.Format, err)
 	}
 
-	for i := 0; i < len(targets); i++ {
-		// interface{} -> map[string]interface{}
-		v := j.GetIndex(i)
-		mapValue, err := v.Map()
-		if err != nil {
-			return fmt.Errorf("FreeOutput:Print: json format is invalid: %v", err)
+	for i, v := range targets {
+		if !structs.IsStruct(v) {
+			continue
 		}
+		mapValue := structs.Map(v)
+
 		mapValue["RowNumber"] = fmt.Sprintf("%d", i+1)
 		mapValue["__ORDER__"] = fmt.Sprintf("%d", i+1)
 		if contents[i].Zone != "" {

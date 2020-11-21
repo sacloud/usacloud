@@ -15,16 +15,13 @@
 package output
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"os"
 
-	"github.com/bitly/go-simplejson"
-
-	"github.com/sacloud/usacloud/pkg/util"
-
+	"github.com/fatih/structs"
 	"github.com/ghodss/yaml"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 type yamlOutput struct {
@@ -52,34 +49,30 @@ func (o *yamlOutput) Print(contents Contents) error {
 		return nil
 	}
 
-	// HACK: ゾーンの値を追加するためにsimplejsonにして操作する
-	// targets -> byte[] -> []interface{}
-	rawArray, err := json.Marshal(targets)
-	if err != nil {
-		return fmt.Errorf("YAMLOutput:Print: json.Marshal is failed: %s", err)
-	}
+	var results []interface{}
+	for i, v := range targets {
+		if !structs.IsStruct(v) {
+			continue
+		}
+		mapValue := structs.Map(v)
 
-	j, err := simplejson.NewJson(rawArray)
-	if err != nil {
-		return fmt.Errorf("YAMLOutput:Print: create simplejson is failed: %s", err)
-	}
-
-	for i := 0; i < len(targets); i++ {
+		// zone
 		if contents[i].Zone != "" {
-			row := j.GetIndex(i)
-			if _, ok := row.CheckGet("Zone"); !ok {
-				row.Set("Zone", contents[i].Zone)
+			if _, ok := mapValue["Zone"]; !ok {
+				mapValue["Zone"] = contents[i].Zone
 			}
 		}
+
+		// ID
 		if !contents[i].ID.IsEmpty() {
-			row := j.GetIndex(i)
-			if _, ok := row.CheckGet("ID"); !ok {
-				row.Set("ID", contents[i].ID)
+			if _, ok := mapValue["ID"]; !ok {
+				mapValue["ID"] = contents[i].ID
 			}
 		}
+		results = append(results, mapValue)
 	}
 
-	b, err := yaml.Marshal(j)
+	b, err := yaml.Marshal(results)
 	if err != nil {
 		return fmt.Errorf("YAMLOutput:Print: yaml.Marshal is Failed: %s", err)
 	}
