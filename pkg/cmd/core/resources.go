@@ -18,11 +18,6 @@ import "sort"
 
 type Resources []*Resource
 
-type CategorizedResources struct {
-	Category  Category
-	Resources []*Resource
-}
-
 func (r Resources) CategorizedResources() []*CategorizedResources {
 	categories := ResourceCategories
 	sort.Slice(categories, func(i, j int) bool {

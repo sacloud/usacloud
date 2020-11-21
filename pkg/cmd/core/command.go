@@ -22,7 +22,6 @@ import (
 	"sync"
 
 	"github.com/fatih/color"
-	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
 	"github.com/sacloud/libsacloud/v2/sacloud/accessor"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
@@ -86,30 +85,6 @@ type Command struct {
 	currentParameter interface{}
 }
 
-type CategorizedCommands struct {
-	Category Category
-	Commands []*Command
-}
-
-func (c *Command) ResourceName() string {
-	if c.resource == nil {
-		return ""
-	}
-	return c.resource.Name
-}
-
-func (c *Command) completeParameterValue(cmd *cobra.Command, ctx cli.Context, parameter interface{}) {
-	if p, ok := parameter.(FlagValueCleaner); ok {
-		p.CleanupEmptyValue(cmd.Flags())
-	}
-
-	if !c.resource.IsGlobalResource {
-		if zone := cflag.ZoneFlagValue(parameter); zone == "" {
-			cflag.SetZoneFlagValue(parameter, ctx.Option().Zone)
-		}
-	}
-}
-
 func (c *Command) ValidateSchema() error {
 	if c.resource == nil {
 		return fmt.Errorf(`command "%s" has invalid schema: resource required`, c.Name)
@@ -130,10 +105,13 @@ func (c *Command) CLICommand() *cobra.Command {
 		SilenceUsage: true,
 		Run: func(cmd *cobra.Command, args []string) {
 			// コンテキスト構築
-			ctx, err := cli.NewCLIContext(c.resource.Name, c.Name, root.Command.PersistentFlags(), args, c.ColumnDefs, c.currentParameter)
+			ctx, needContinue, err := c.initCommandContext(cmd, args)
 			if err != nil {
 				// この段階ではctx.IO()が参照できないため標準エラーに出力する
 				fmt.Fprintln(os.Stderr, err) // nolint
+				return
+			}
+			if !needContinue {
 				return
 			}
 
@@ -151,10 +129,11 @@ func (c *Command) CLICommand() *cobra.Command {
 			}
 
 			// コンテキスト構築
-			ctx, err := cli.NewCLIContext(c.resource.Name, c.Name, root.Command.PersistentFlags(), args, c.ColumnDefs, c.currentParameter)
-			if err != nil {
+			ctx, needContinue, err := c.initCommandContext(cmd, args)
+			if !needContinue || err != nil {
 				return nil, cobra.ShellCompDirectiveError
 			}
+
 			return c.CompleteArgs(ctx, cmd, args, toComplete)
 		},
 	}
@@ -165,19 +144,7 @@ func (c *Command) CLICommand() *cobra.Command {
 	return cmd
 }
 
-func (c *Command) confirmMessage() string {
-	if c.ConfirmMessage != "" {
-		return c.ConfirmMessage
-	}
-
-	return c.Name
-}
-
 func (c *Command) CompleteArgs(ctx cli.Context, cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-	if ok, err := c.initRunCommandContext(ctx, cmd); !ok || err != nil {
-		return nil, cobra.ShellCompDirectiveError
-	}
-
 	// 各リソースのListAllFuncをコールし、toCompleteと前方一致するリソースを抽出
 	zoned, err := c.collectResources(ctx)
 	if err != nil {
@@ -199,8 +166,14 @@ func (c *Command) CompleteArgs(ctx cli.Context, cmd *cobra.Command, args []strin
 }
 
 func (c *Command) Run(ctx cli.Context, cmd *cobra.Command, args []string) error {
-	if ok, err := c.initRunCommandContext(ctx, cmd); !ok || err != nil {
+	if err := c.validateParameter(ctx, c.currentParameter); err != nil {
 		return err
+	}
+
+	if customizer, ok := c.currentParameter.(ParameterCustomizer); ok {
+		if err := customizer.Customize(); err != nil {
+			return err
+		}
 	}
 
 	targets, err := c.expandResourceContextsFromArgs(ctx, args)
@@ -219,6 +192,33 @@ func (c *Command) Run(ctx cli.Context, cmd *cobra.Command, args []string) error 
 		return err
 	}
 	return ctx.Output().Print(results)
+}
+
+func (c *Command) resourceName() string {
+	if c.resource == nil {
+		return ""
+	}
+	return c.resource.Name
+}
+
+func (c *Command) completeParameterValue(cmd *cobra.Command, ctx cli.Context, parameter interface{}) {
+	if p, ok := parameter.(FlagValueCleaner); ok {
+		p.CleanupEmptyValue(cmd.Flags())
+	}
+
+	if !c.resource.IsGlobalResource {
+		if zone := cflag.ZoneFlagValue(parameter); zone == "" {
+			cflag.SetZoneFlagValue(parameter, ctx.Option().Zone)
+		}
+	}
+}
+
+func (c *Command) confirmMessage() string {
+	if c.ConfirmMessage != "" {
+		return c.ConfirmMessage
+	}
+
+	return c.Name
 }
 
 func (c *Command) collectCompletionValuesFromResource(resource interface{}, prefix string) []string {
@@ -248,27 +248,20 @@ func (c *Command) collectCompletionValuesFromResource(resource interface{}, pref
 	return results
 }
 
-func (c *Command) initRunCommandContext(ctx cli.Context, cmd *cobra.Command) (bool, error) {
-	// パラメータの補完処理(ポインタ型のクリアやコンテキストからのパラメータ受け取りなど)
-	c.completeParameterValue(cmd, ctx, c.currentParameter)
-
-	// パラメータバリデーション
-	if err := c.validateParameter(ctx, c.currentParameter); err != nil {
-		return false, err
+func (c *Command) initCommandContext(cmd *cobra.Command, args []string) (cli.Context, bool, error) {
+	ctx, err := cli.NewCLIContext(c.resource.Name, c.Name, root.Command.PersistentFlags(), args, c.ColumnDefs, c.currentParameter)
+	if err != nil {
+		return nil, false, err
 	}
 
 	c.printCommandWarning(ctx)
 
-	if ok, err := c.handleCommonParameters(ctx); !ok || err != nil {
-		return ok, err
-	}
+	// パラメータの補完処理(ポインタ型のクリアやコンテキストからのパラメータデフォルト値受け取りなど)
+	c.completeParameterValue(cmd, ctx, c.currentParameter)
 
-	if customizer, ok := c.currentParameter.(ParameterCustomizer); ok {
-		if err := customizer.Customize(); err != nil {
-			return false, err
-		}
-	}
-	return true, nil
+	// パラメータファイルの処理やスケルトン出力など
+	needContinue, err := c.handleCommonParameters(ctx)
+	return ctx, needContinue, err
 }
 
 func (c *Command) validateParameter(ctx cli.Context, parameter interface{}) error {
@@ -406,9 +399,9 @@ func (c *Command) extractMatchedResourceID(r interface{}, idOrNameOrTag []string
 func (c *Command) exec(ctx cli.Context, ids cli.ResourceContexts) (output.Contents, error) {
 	if c.Func == nil {
 		// use default func
-		fn, ok := services.DefaultServiceFunc(c.ResourceName(), c.Name)
+		fn, ok := services.DefaultServiceFunc(c.resourceName(), c.Name)
 		if !ok {
-			return nil, fmt.Errorf("default service func not found: resource:%s command:%s", c.ResourceName(), c.Name)
+			return nil, fmt.Errorf("default service func not found: resource:%s command:%s", c.resourceName(), c.Name)
 		}
 		c.Func = fn
 	}
@@ -494,12 +487,10 @@ func (c *Command) execParallel(ctx cli.Context, ids cli.ResourceContexts) (outpu
 	return results, util.FlattenErrors(errs)
 }
 
-var mapconvDecoder = mapconv.Decoder{Config: &mapconv.DecoderConfig{TagName: "temp"}}
-
 func (c *Command) cloneCurrentParameter() (interface{}, error) {
 	newParameter := c.ParameterInitializer()
 	// mapconvDecoderを使うことで元のstructに付けられていたmapconvタグを無視する
-	if err := mapconvDecoder.ConvertTo(c.currentParameter, newParameter); err != nil {
+	if err := cloneParameter(c.currentParameter, newParameter); err != nil {
 		return nil, err
 	}
 	return newParameter, nil
@@ -567,7 +558,7 @@ type collectedResources struct {
 func (c *Command) collectResources(ctx cli.Context) ([]*collectedResources, error) {
 	listFn := c.ListAllFunc
 	if listFn == nil {
-		fn, ok := services.DefaultListAllFunc(c.ResourceName(), c.Name)
+		fn, ok := services.DefaultListAllFunc(c.resourceName(), c.Name)
 		if !ok {
 			return nil, errors.New("ListAllFunc is not set")
 		}
