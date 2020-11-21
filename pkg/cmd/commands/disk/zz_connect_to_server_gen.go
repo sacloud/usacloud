@@ -63,7 +63,12 @@ func (p *connectToServerParameter) buildFlagsUsage(cmd *cobra.Command) {
 	core.BuildFlagsUsage(cmd, sets)
 }
 
+func (p *connectToServerParameter) setCompletionFunc(cmd *cobra.Command) {
+
+}
+
 func (p *connectToServerParameter) SetupCobraCommandFlags(cmd *cobra.Command) {
 	p.buildFlags(cmd.Flags())
 	p.buildFlagsUsage(cmd)
+	p.setCompletionFunc(cmd)
 }

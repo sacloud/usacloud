@@ -99,12 +99,16 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		})
 	}
 
+	core.BuildFlagsUsage(cmd, sets)
+}
+
+func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("class", util.FlagCompletionFunc("shell", "yaml_cloud_config"))
 
-	core.BuildFlagsUsage(cmd, sets)
 }
 
 func (p *createParameter) SetupCobraCommandFlags(cmd *cobra.Command) {
 	p.buildFlags(cmd.Flags())
 	p.buildFlagsUsage(cmd)
+	p.setCompletionFunc(cmd)
 }

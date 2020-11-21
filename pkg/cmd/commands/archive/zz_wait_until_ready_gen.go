@@ -51,7 +51,12 @@ func (p *waitUntilReadyParameter) buildFlagsUsage(cmd *cobra.Command) {
 	core.BuildFlagsUsage(cmd, sets)
 }
 
+func (p *waitUntilReadyParameter) setCompletionFunc(cmd *cobra.Command) {
+
+}
+
 func (p *waitUntilReadyParameter) SetupCobraCommandFlags(cmd *cobra.Command) {
 	p.buildFlags(cmd.Flags())
 	p.buildFlagsUsage(cmd)
+	p.setCompletionFunc(cmd)
 }

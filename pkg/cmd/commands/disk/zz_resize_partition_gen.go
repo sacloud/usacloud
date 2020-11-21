@@ -61,7 +61,12 @@ func (p *resizePartitionParameter) buildFlagsUsage(cmd *cobra.Command) {
 	core.BuildFlagsUsage(cmd, sets)
 }
 
+func (p *resizePartitionParameter) setCompletionFunc(cmd *cobra.Command) {
+
+}
+
 func (p *resizePartitionParameter) SetupCobraCommandFlags(cmd *cobra.Command) {
 	p.buildFlags(cmd.Flags())
 	p.buildFlagsUsage(cmd)
+	p.setCompletionFunc(cmd)
 }

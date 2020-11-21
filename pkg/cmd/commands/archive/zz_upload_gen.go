@@ -63,7 +63,12 @@ func (p *uploadParameter) buildFlagsUsage(cmd *cobra.Command) {
 	core.BuildFlagsUsage(cmd, sets)
 }
 
+func (p *uploadParameter) setCompletionFunc(cmd *cobra.Command) {
+
+}
+
 func (p *uploadParameter) SetupCobraCommandFlags(cmd *cobra.Command) {
 	p.buildFlags(cmd.Flags())
 	p.buildFlagsUsage(cmd)
+	p.setCompletionFunc(cmd)
 }

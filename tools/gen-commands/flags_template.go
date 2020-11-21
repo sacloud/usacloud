@@ -62,16 +62,20 @@ func (p *{{.CLICommandParameterTypeName}}) buildFlagsUsage(cmd *cobra.Command) {
 		})
 	}
 	{{ end }}
+	core.BuildFlagsUsage(cmd, sets)
+}
+
+func (p *{{.CLICommandParameterTypeName}}) setCompletionFunc(cmd *cobra.Command) {
 	{{ range .Fields -}}
 	{{ if .Options -}}
 	cmd.RegisterFlagCompletionFunc("{{ .FlagName }}", util.FlagCompletionFunc({{ range .Options }}"{{ . }}",{{ end }}))
 	{{ end -}}
 	{{ end }}
-	core.BuildFlagsUsage(cmd, sets)
 }
 
 func (p *{{.CLICommandParameterTypeName}}) SetupCobraCommandFlags(cmd *cobra.Command) {
 	p.buildFlags(cmd.Flags())
 	p.buildFlagsUsage(cmd)
+	p.setCompletionFunc(cmd)
 }
 `

@@ -89,7 +89,12 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 	core.BuildFlagsUsage(cmd, sets)
 }
 
+func (p *deleteParameter) setCompletionFunc(cmd *cobra.Command) {
+
+}
+
 func (p *deleteParameter) SetupCobraCommandFlags(cmd *cobra.Command) {
 	p.buildFlags(cmd.Flags())
 	p.buildFlagsUsage(cmd)
+	p.setCompletionFunc(cmd)
 }
