@@ -64,5 +64,12 @@ func errorFromValidationErr(err validator.FieldError) error {
 	if param != "" {
 		detail += "=" + param
 	}
+
+	// detailがvalidatorのタグ名だけの場合の対応をここで行う。
+	switch detail {
+	case "file":
+		detail = fmt.Sprintf("invalid file path: %v", err.Value())
+	}
+
 	return NewFlagError(flagName, detail)
 }
