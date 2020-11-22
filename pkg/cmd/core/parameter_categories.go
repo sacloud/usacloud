@@ -31,16 +31,22 @@ var DefaultCommandCategory = &Category{
 var ParameterCategoryFilter = &Category{
 	Key:         "filter",
 	DisplayName: "Filter options",
-	Order:       math.MaxInt32 - 60,
+	Order:       math.MaxInt32 - 70,
 }
 var ParameterCategoryLimitOffset = &Category{
 	Key:         "limit-offset",
 	DisplayName: "Limit/Offset options",
-	Order:       math.MaxInt32 - 50,
+	Order:       math.MaxInt32 - 60,
 }
 var ParameterCategorySort = &Category{
 	Key:         "sort",
 	DisplayName: "Sort options",
+	Order:       math.MaxInt32 - 50,
+}
+
+var ParameterCategoryMonitor = &Category{
+	Key:         "monitor",
+	DisplayName: "Monitor options",
 	Order:       math.MaxInt32 - 40,
 }
 
