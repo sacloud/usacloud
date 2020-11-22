@@ -50,7 +50,7 @@ func (o *tableOutput) Print(contents Contents) error {
 		return nil
 	}
 
-	table := newSimpleTableWriter(o.Out, o.ColumnDefs)
+	table := NewSimpleTableWriter(o.Out, o.ColumnDefs)
 	for i, v := range targets {
 		if !structs.IsStruct(v) {
 			continue

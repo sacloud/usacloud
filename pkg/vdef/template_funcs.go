@@ -16,6 +16,8 @@ package vdef
 
 import (
 	"encoding/json"
+	"fmt"
+	"strings"
 	"text/template"
 
 	"github.com/sacloud/libsacloud/v2/pkg/size"
@@ -56,4 +58,17 @@ var TemplateFuncMap = template.FuncMap{
 		}
 		return value
 	},
+	"ellipsis": ellipsis,
+	"to_single_line": func(value interface{}) interface{} {
+		v := fmt.Sprintf("%v", value)
+		return strings.ReplaceAll(v, "\n", "\\n")
+	},
+}
+
+func ellipsis(length int, value interface{}) interface{} {
+	runes := []rune(fmt.Sprintf("%v", value))
+	if len(runes) > length {
+		return string(runes[0:length]) + "..."
+	}
+	return string(runes)
 }

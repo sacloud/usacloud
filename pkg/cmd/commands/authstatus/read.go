@@ -17,7 +17,6 @@ package authstatus
 import (
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/pkg/output"
 )
 
 var readCommand = &core.Command{
@@ -27,14 +26,7 @@ var readCommand = &core.Command{
 	Order:      10,
 	NoProgress: true,
 
-	ColumnDefs: []output.ColumnDef{
-		{Name: "AccountID"},
-		{Name: "AccountCode"},
-		{Name: "AccountName"},
-		{Name: "MemberCode"},
-		{Name: "Permission"},
-		{Name: "ExternalPermission"},
-	},
+	ColumnDefs: defaultColumns,
 
 	ParameterInitializer: func() interface{} {
 		return newReadParameter()
