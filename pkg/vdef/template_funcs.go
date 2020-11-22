@@ -20,6 +20,8 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
+
 	"github.com/sacloud/libsacloud/v2/pkg/size"
 	"github.com/sacloud/usacloud/pkg/util"
 )
@@ -62,6 +64,24 @@ var TemplateFuncMap = template.FuncMap{
 	"to_single_line": func(value interface{}) interface{} {
 		v := fmt.Sprintf("%v", value)
 		return strings.ReplaceAll(v, "\n", "\\n")
+	},
+	"weekdays": func(value interface{}) interface{} {
+		if value == nil {
+			return nil
+		}
+		weekdays, ok := value.([]types.EBackupSpanWeekday)
+		if !ok {
+			return nil
+		}
+		if len(weekdays) == 7 {
+			return "all"
+		}
+
+		var results []string
+		for _, d := range weekdays {
+			results = append(results, d.String())
+		}
+		return results
 	},
 }
 

@@ -47,6 +47,16 @@ var definitions = map[string][]*definition{
 		{key: "shell", value: "shell"},
 		{key: "yaml_cloud_config", value: "sheyaml_cloud_configll"},
 	},
+	"weekdays": {
+		{key: "all", value: "all"},
+		{key: types.BackupSpanWeekdays.Sunday.String(), value: types.BackupSpanWeekdays.Sunday},
+		{key: types.BackupSpanWeekdays.Monday.String(), value: types.BackupSpanWeekdays.Monday},
+		{key: types.BackupSpanWeekdays.Tuesday.String(), value: types.BackupSpanWeekdays.Tuesday},
+		{key: types.BackupSpanWeekdays.Wednesday.String(), value: types.BackupSpanWeekdays.Wednesday},
+		{key: types.BackupSpanWeekdays.Thursday.String(), value: types.BackupSpanWeekdays.Thursday},
+		{key: types.BackupSpanWeekdays.Friday.String(), value: types.BackupSpanWeekdays.Friday},
+		{key: types.BackupSpanWeekdays.Saturday.String(), value: types.BackupSpanWeekdays.Saturday},
+	},
 }
 
 func ostypeDefinition() []*definition {
@@ -71,21 +81,32 @@ func registerFunctions() {
 
 func registerConverterFilters() {
 	for name, defs := range definitions {
-		ConverterFilters[name+"_to_value"] = convertFuncToValue(name, defs)
-		ConverterFilters[name+"_to_key"] = convertFuncToKey(name, defs)
+		if _, ok := ConverterFilters[name+"_to_value"]; !ok {
+			ConverterFilters[name+"_to_value"] = convertFuncToValue(name, defs)
+		}
+		if _, ok := ConverterFilters[name+"_to_key"]; !ok {
+			ConverterFilters[name+"_to_key"] = convertFuncToKey(name, defs)
+		}
 	}
 }
 
 func registerTemplateFuncMap() {
 	for name, defs := range definitions {
-		TemplateFuncMap[name+"_to_value"] = templateFuncToValue(defs)
-		TemplateFuncMap[name+"_to_key"] = templateFuncToKey(defs)
+		if _, ok := TemplateFuncMap[name+"_to_value"]; !ok {
+			TemplateFuncMap[name+"_to_value"] = templateFuncToValue(defs)
+		}
+		if _, ok := TemplateFuncMap[name+"_to_key"]; !ok {
+			TemplateFuncMap[name+"_to_key"] = templateFuncToKey(defs)
+		}
 	}
 }
 
 func registerValidators() {
 	// definitionsの各値からキーを取り出し、"oneof=keyのスペース区切り"というルールを登録する
 	for name, defs := range definitions {
+		if _, ok := validatorAliases[name]; ok {
+			continue
+		}
 		var allows []string
 		for _, def := range defs {
 			switch s := def.key.(type) {
@@ -102,6 +123,9 @@ func registerValidators() {
 func registerCLITagOptions() {
 	// definitionsの各値からキーを取り出し、FlagOptionsMapに登録する
 	for name, defs := range definitions {
+		if _, ok := FlagOptionsMap[name]; ok {
+			continue
+		}
 		var allows []string
 		for _, def := range defs {
 			switch s := def.key.(type) {
