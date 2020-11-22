@@ -73,6 +73,10 @@ func TestConverterFuncGenerator(t *testing.T) {
 				err: "key 1 not found in test",
 			},
 			{
+				in:     []interface{}{"string", 1},
+				expect: []interface{}{"stringValue", "intValue"},
+			},
+			{
 				in:     "foobar",
 				expect: nil,
 				err:    `key foobar not found in test`,
@@ -114,6 +118,10 @@ func TestConverterFuncGenerator(t *testing.T) {
 				in:     int64(1),
 				expect: "intKey",
 				err:    `value 1 not found in test`,
+			},
+			{
+				in:     []interface{}{"stringValue", "intValue"},
+				expect: []interface{}{"string", 1},
 			},
 			{
 				in:  "foobar",
