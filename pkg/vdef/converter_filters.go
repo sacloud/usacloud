@@ -19,6 +19,10 @@ import (
 	"os"
 	"time"
 
+	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
+
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
+
 	"github.com/sacloud/usacloud/pkg/util"
 
 	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
@@ -30,6 +34,7 @@ var ConverterFilters = map[string]mapconv.FilterFunc{
 	"path_to_reader":  pathToReader,
 	"path_to_writer":  pathToWriter,
 	"path_or_content": pathOrContent,
+	"weekdays":        weekdaysFilter,
 }
 
 func strToTime(v interface{}) (interface{}, error) {
@@ -120,4 +125,38 @@ func pathOrContent(v interface{}) (interface{}, error) {
 	}
 
 	return util.StringFromPathOrContent(s)
+}
+
+func weekdaysFilter(v interface{}) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+
+	var days *[]string
+	switch v := v.(type) {
+	case []string:
+		days = pointer.NewStringSlice(v)
+	case *[]string:
+		days = v
+	default:
+		return nil, fmt.Errorf("invalid weekdays value: %v", v)
+	}
+
+	var results []types.EBackupSpanWeekday
+	for _, d := range *days {
+		// 途中に"all"が見つかった場合は全曜日とする
+		if d == "all" {
+			return []types.EBackupSpanWeekday{
+				types.BackupSpanWeekdays.Sunday,
+				types.BackupSpanWeekdays.Monday,
+				types.BackupSpanWeekdays.Tuesday,
+				types.BackupSpanWeekdays.Wednesday,
+				types.BackupSpanWeekdays.Thursday,
+				types.BackupSpanWeekdays.Friday,
+				types.BackupSpanWeekdays.Saturday,
+			}, nil
+		}
+		results = append(results, types.EBackupSpanWeekday(d))
+	}
+	return results, nil
 }

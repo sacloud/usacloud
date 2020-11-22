@@ -1,4 +1,4 @@
-// Copyright 2017-2020 The Usacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,28 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package vdef
+package autobackup
 
 import (
-	"fmt"
-	"strings"
-
+	"github.com/sacloud/libsacloud/v2/helper/validate"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
-var validatorAliases = map[string]string{
-	"description": "max=512",
-	"tags":        "max=10,dive,max=32",
-	"weekdays":    fmt.Sprintf("unique,dive,oneof=%s", joinWithSpace(append([]string{"all"}, types.BackupWeekdayStrings...))),
-	// "zone": ... // NOTE: 実行時に登録される
+type DeleteRequest struct {
+	Zone string   `request:"-" validate:"required"`
+	ID   types.ID `request:"-" validate:"required"`
+
+	FailIfNotFound bool `request:"-"`
 }
 
-func ValidatorAliases(zones []string) map[string]string {
-	aliases := validatorAliases
-	aliases["zone"] = fmt.Sprintf("required,oneof=%s", joinWithSpace(zones))
-	return aliases
-}
-
-func joinWithSpace(values []string) string {
-	return strings.Join(values, " ")
+func (req *DeleteRequest) Validate() error {
+	return validate.Struct(req)
 }
