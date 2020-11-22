@@ -444,12 +444,10 @@ func (c *Command) execParallel(ctx cli.Context, ids cli.ResourceContexts) (outpu
 
 	// 結果の受け取り
 	go func() {
-		for {
-			res := <-resultCh
+		for res := range resultCh {
 			if res == nil {
 				return
 			}
-
 			if res.err != nil {
 				errs = append(errs, res.err)
 			}
@@ -586,12 +584,10 @@ func (c *Command) collectResources(ctx cli.Context) ([]*collectedResources, erro
 
 	// 非同期で実行されたAPIコールの結果受け取り
 	go func() {
-		for {
-			res := <-resultCh
+		for res := range resultCh {
 			if res == nil {
 				return
 			}
-
 			if res.err != nil {
 				errs = append(errs, res.err)
 			}
