@@ -140,7 +140,22 @@ func registerCLITagOptions() {
 }
 
 func convertFuncToValue(defName string, defs []*definition) mapconv.FilterFunc {
-	return func(v interface{}) (interface{}, error) {
+	var fn func(interface{}) (interface{}, error)
+	fn = func(v interface{}) (interface{}, error) {
+		// スライスの場合は再帰処理
+		vt := reflect.ValueOf(v)
+		if vt.Kind() == reflect.Slice || vt.Kind() == reflect.Array {
+			var results []interface{}
+			for i := 0; i < vt.Len(); i++ {
+				res, err := fn(vt.Index(i).Interface())
+				if err != nil {
+					return nil, err
+				}
+				results = append(results, res)
+			}
+			return results, nil
+		}
+
 		var result interface{}
 		for _, def := range defs {
 			if reflect.DeepEqual(v, def.key) {
@@ -153,10 +168,26 @@ func convertFuncToValue(defName string, defs []*definition) mapconv.FilterFunc {
 		}
 		return result, nil
 	}
+	return fn
 }
 
 func convertFuncToKey(defName string, defs []*definition) mapconv.FilterFunc {
-	return func(v interface{}) (interface{}, error) {
+	var fn func(interface{}) (interface{}, error)
+	fn = func(v interface{}) (interface{}, error) {
+		// スライスの場合は再帰処理
+		vt := reflect.ValueOf(v)
+		if vt.Kind() == reflect.Slice || vt.Kind() == reflect.Array {
+			var results []interface{}
+			for i := 0; i < vt.Len(); i++ {
+				res, err := fn(vt.Index(i).Interface())
+				if err != nil {
+					return nil, err
+				}
+				results = append(results, res)
+			}
+			return results, nil
+		}
+
 		var result interface{}
 		for _, def := range defs {
 			if reflect.DeepEqual(v, def.value) {
@@ -169,6 +200,7 @@ func convertFuncToKey(defName string, defs []*definition) mapconv.FilterFunc {
 		}
 		return result, nil
 	}
+	return fn
 }
 
 func templateFuncToValue(defs []*definition) func(interface{}) interface{} {
