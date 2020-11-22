@@ -19,6 +19,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/archive"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/authstatus"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/autobackup"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/bill"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/disk"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -29,6 +30,7 @@ var Resources = core.Resources{
 	archive.Resource,
 	authstatus.Resource,
 	autobackup.Resource,
+	bill.Resource,
 	disk.Resource,
 	note.Resource,
 }
