@@ -59,7 +59,6 @@ func initCredentialConfig(fs *pflag.FlagSet) {
 	fs.StringP("profile", "", "default", "the name of saved credentials")
 	fs.StringP("token", "", "", "the API token used when calling SAKURA Cloud API")
 	fs.StringP("secret", "", "", "the API secret used when calling SAKURA Cloud API")
-	fs.StringP("zone", "", "", "target zone name")
 	fs.StringSliceP("zones", "", []string{}, "permitted zone names")
 }
 
@@ -136,14 +135,6 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 			return
 		}
 		o.AccessTokenSecret = v
-	}
-	if flags.Changed("zone") {
-		v, err := flags.GetString("zone")
-		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "zone", err) // nolint
-			return
-		}
-		o.Zone = v
 	}
 	if flags.Changed("zones") {
 		v, err := flags.GetStringSlice("zones")
@@ -227,8 +218,6 @@ func (o *Config) Validate(skipCred bool) []error {
 	if !skipCred {
 		errs = append(errs, validation.Required("token", o.AccessToken)...)
 		errs = append(errs, validation.Required("secret", o.AccessTokenSecret)...)
-		errs = append(errs, validation.Required("zone", o.Zone)...)
-		errs = append(errs, validation.StringInSlice("zone", o.Zone, o.Zones)...)
 	}
 	errs = append(errs, validation.StringInSlice("default-output-type", o.DefaultOutputType, []string{"table", "json", "yaml"})...)
 
