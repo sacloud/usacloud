@@ -531,6 +531,8 @@ func (c *Command) ParameterCategoryBy(key string) *Category {
 		return ParameterCategoryLimitOffset
 	case "filter":
 		return ParameterCategoryFilter
+	case "monitor":
+		return ParameterCategoryMonitor
 	default:
 		if key == "" || len(c.ParameterCategories) == 0 {
 			key = c.resource.Name

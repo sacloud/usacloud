@@ -59,8 +59,7 @@ func (p *monitorParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("disk", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("start"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("end"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Disk options",
 			Flags: fs,
@@ -68,10 +67,11 @@ func (p *monitorParameter) buildFlagsUsage(cmd *cobra.Command) {
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("disk", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		fs = pflag.NewFlagSet("monitor", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("start"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("end"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Disk options",
+			Title: "Monitor options",
 			Flags: fs,
 		})
 	}
