@@ -14,11 +14,15 @@
 
 package note
 
-import "github.com/sacloud/usacloud/pkg/output"
+import (
+	"github.com/sacloud/usacloud/pkg/cmd/ccol"
+	"github.com/sacloud/usacloud/pkg/output"
+)
 
 var defaultColumnDefs = []output.ColumnDef{
-	{Name: "ID"},
-	{Name: "Scope"},
-	{Name: "Class"},
-	{Name: "Name"},
+	ccol.ID,
+	ccol.Scope,
+	ccol.Name,
+	ccol.Tags,
+	ccol.Description,
 }

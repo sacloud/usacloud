@@ -15,7 +15,6 @@
 package vdef
 
 import (
-	"encoding/json"
 	"fmt"
 	"reflect"
 
@@ -151,7 +150,7 @@ func convertFuncToKey(defName string, defs []*definition) mapconv.FilterFunc {
 func templateFuncToValue(defs []*definition) func(interface{}) interface{} {
 	return func(raw interface{}) interface{} {
 		in := raw
-		if v, ok := raw.(json.Number); ok {
+		if v, ok := raw.(fmt.Stringer); ok {
 			in = v.String()
 		}
 		var result interface{}
@@ -176,7 +175,7 @@ func templateFuncToValue(defs []*definition) func(interface{}) interface{} {
 func templateFuncToKey(defs []*definition) func(interface{}) interface{} {
 	return func(raw interface{}) interface{} {
 		in := raw
-		if v, ok := raw.(json.Number); ok {
+		if v, ok := raw.(fmt.Stringer); ok {
 			in = v.String()
 		}
 		var result interface{}

@@ -18,26 +18,21 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"sync"
+	"text/template"
 
 	"github.com/olekukonko/tablewriter"
 )
 
-// simpleTableWriter is write table that output one line for each value
-type simpleTableWriter struct {
-	table      tableHandler
+// SimpleTableWriter is write table that output one line for each value
+type SimpleTableWriter struct {
+	table      *tablewriter.Table
 	columnDefs []ColumnDef
+	template   *template.Template
+	initOnce   sync.Once
 }
 
-type tableHandler interface {
-	SetHeader(keys []string)
-	SetAlignment(align int)
-	SetAutoWrapText(auto bool)
-	SetAutoFormatHeaders(auto bool)
-	Append(row []string)
-	Render()
-}
-
-func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) *simpleTableWriter {
+func NewSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) *SimpleTableWriter {
 	if len(columnDefs) == 0 {
 		columnDefs = []ColumnDef{
 			{Name: "{{.__ORDER__}}"},
@@ -46,7 +41,7 @@ func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) *simpleTableWri
 		}
 	}
 
-	w := &simpleTableWriter{
+	w := &SimpleTableWriter{
 		table:      tablewriter.NewWriter(out),
 		columnDefs: columnDefs,
 	}
@@ -71,21 +66,35 @@ func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) *simpleTableWri
 	return w
 }
 
-func (w *simpleTableWriter) append(values interface{}) error {
-	var rowValeus []string
-	t := newTemplate()
-	for _, def := range w.columnDefs {
-		if _, err := t.Parse(def.Template); err != nil {
-			return fmt.Errorf("invalid output format %q: %s", def.Template, err)
-		}
+// CellValue 指定のColumnDefを用いてvから出力を組み立てる
+//
+// NOTE: pkg/cmd/commands/*でColumnDefのテストをするためにエクスポートしている
+func (w *SimpleTableWriter) CellValue(v interface{}, def ColumnDef) (string, error) {
+	w.initOnce.Do(func() {
+		w.template = newTemplate()
+	})
 
-		buf := bytes.NewBufferString("")
-		if err := t.Execute(buf, values); err != nil {
+	if _, err := w.template.Parse(def.Template); err != nil {
+		return "", fmt.Errorf("invalid output format %q: %s", def.Template, err)
+	}
+
+	buf := bytes.NewBufferString("")
+	if err := w.template.Execute(buf, v); err != nil {
+		return "", err
+	}
+	s := buf.String()
+	if s == "" || s == "<no value>" { // HACK: map[string]interface{}の場合、missingkey=zeroオプションありでもキーがない場合は<no value>となる
+		s = "-"
+	}
+	return s, nil
+}
+
+func (w *SimpleTableWriter) append(values interface{}) error {
+	var rowValeus []string
+	for _, def := range w.columnDefs {
+		s, err := w.CellValue(values, def)
+		if err != nil {
 			return err
-		}
-		s := buf.String()
-		if s == "" || s == "<no value>" { // HACK: map[string]interface{}の場合、missingkey=zeroオプションありでもキーがない場合は<no value>となる
-			s = "-"
 		}
 		rowValeus = append(rowValeus, s)
 	}
@@ -94,6 +103,6 @@ func (w *simpleTableWriter) append(values interface{}) error {
 	return nil
 }
 
-func (w *simpleTableWriter) render() {
+func (w *SimpleTableWriter) render() {
 	w.table.Render()
 }

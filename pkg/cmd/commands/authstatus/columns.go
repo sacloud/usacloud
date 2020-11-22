@@ -12,30 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package disk
+package authstatus
 
-import (
-	"github.com/sacloud/usacloud/pkg/cmd/ccol"
-	"github.com/sacloud/usacloud/pkg/output"
-)
+import "github.com/sacloud/usacloud/pkg/output"
 
-var defaultColumnDefs = []output.ColumnDef{
-	ccol.Zone,
-	ccol.ID,
-	ccol.Name,
-	ccol.Tags,
-	{
-		Name:     "Server",
-		Template: `{{ if .ServerID }}{{ .ServerID }}({{ .ServerName }}){{ end }}`,
-	},
-	{
-		Name:     "Plan",
-		Template: "{{ disk_plan_to_key .DiskPlanID }}",
-	},
-	ccol.Size,
-	{Name: "Connection"},
-	{
-		Name:     "Storage",
-		Template: "{{ .Storage.Name }}",
-	},
+var defaultColumns = []output.ColumnDef{
+	{Name: "AccountID"},
+	{Name: "AccountCode"},
+	{Name: "AccountName"},
+	{Name: "MemberCode"},
+	{Name: "Permission"},
+	{Name: "ExternalPermission"},
 }

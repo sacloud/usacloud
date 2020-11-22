@@ -19,7 +19,6 @@ import (
 
 	"github.com/sacloud/libsacloud/v2/helper/service/archive"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/pkg/output"
 )
 
 var Resource = &core.Resource{
@@ -43,11 +42,4 @@ var Resource = &core.Resource{
 			Order:       1000,
 		},
 	},
-}
-
-var defaultColumnDefs = []output.ColumnDef{
-	{Name: "Zone"},
-	{Name: "ID"},
-	{Name: "Name"},
-	{Name: "Scope", Template: "{{ scope_to_key .Scope }}"},
 }
