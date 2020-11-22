@@ -18,6 +18,7 @@ import (
 	"context"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"time"
 
@@ -132,6 +133,11 @@ func (c *cliContext) WithResource(id types.ID, zone string) Context {
 
 func (c *cliContext) Client() sacloud.APICaller {
 	o := c.Option()
+	if o.FakeMode {
+		// libsacloud fakeドライバはlogパッケージにシステムログを出すがusacloudからは利用しないため出力を抑制する
+		log.SetOutput(ioutil.Discard)
+	}
+
 	return api.NewCaller(&api.CallerOptions{
 		AccessToken:          o.AccessToken,
 		AccessTokenSecret:    o.AccessTokenSecret,
