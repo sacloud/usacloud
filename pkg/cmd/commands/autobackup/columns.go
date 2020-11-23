@@ -30,4 +30,5 @@ var defaultColumnDefs = []output.ColumnDef{
 		Name:     "Weekdays",
 		Template: "{{ weekdays .BackupSpanWeekdays }}",
 	},
+	ccol.Description,
 }
