@@ -72,8 +72,14 @@ var (
 		Order:       75,
 	}
 
+	ResourceCategoryLab = Category{
+		Key:         "lab",
+		DisplayName: "Lab",
+		Order:       78,
+	}
+
 	ResourceCategoryOther = Category{
-		Key:         "saas",
+		Key:         "misc",
 		DisplayName: "Other services",
 		Order:       80,
 	}

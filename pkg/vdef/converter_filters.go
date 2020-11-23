@@ -17,6 +17,7 @@ package vdef
 import (
 	"fmt"
 	"os"
+	"reflect"
 	"time"
 
 	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
@@ -35,6 +36,7 @@ var ConverterFilters = map[string]mapconv.FilterFunc{
 	"path_to_writer":  pathToWriter,
 	"path_or_content": pathOrContent,
 	"weekdays":        weekdaysFilter,
+	"dereference":     dereferenceFilter,
 }
 
 func strToTime(v interface{}) (interface{}, error) {
@@ -159,4 +161,16 @@ func weekdaysFilter(v interface{}) (interface{}, error) {
 		results = append(results, types.EBackupSpanWeekday(d))
 	}
 	return results, nil
+}
+
+func dereferenceFilter(v interface{}) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+
+	vt := reflect.ValueOf(v)
+	if vt.Kind() != reflect.Ptr {
+		return v, nil
+	}
+	return vt.Elem().Interface(), nil
 }
