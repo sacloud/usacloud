@@ -24,7 +24,7 @@ import (
 var Resource = &core.Resource{
 	Name:        "bridge",
 	ServiceType: reflect.TypeOf(&bridge.Service{}),
-	Category:    core.ResourceCategoryStorage,
+	Category:    core.ResourceCategoryNetworking,
 	CommandCategories: []core.Category{
 		{
 			Key:         "basic",
