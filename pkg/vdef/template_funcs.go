@@ -20,6 +20,8 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/sacloud/libsacloud/v2/sacloud"
+
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 
 	"github.com/sacloud/libsacloud/v2/pkg/size"
@@ -82,6 +84,19 @@ var TemplateFuncMap = template.FuncMap{
 			results = append(results, d.String())
 		}
 		return results
+	},
+	"switch_type": func(value interface{}) string {
+		if value == nil {
+			return "unknown"
+		}
+		v, ok := value.(*sacloud.Switch)
+		if !ok {
+			return "unknown"
+		}
+		if len(v.Subnets) > 0 && v.Subnets[0].Internet != nil {
+			return "switch+router"
+		}
+		return "switch"
 	},
 }
 
