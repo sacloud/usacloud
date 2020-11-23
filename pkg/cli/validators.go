@@ -16,29 +16,11 @@ package cli
 
 import (
 	"fmt"
-	"io/ioutil"
-	"strings"
 
 	"github.com/jmespath/go-jmespath"
 	"github.com/sacloud/usacloud/pkg/output"
-	"github.com/sacloud/usacloud/pkg/schema"
 	"github.com/sacloud/usacloud/pkg/util"
 )
-
-func ValidateInStrValues(fieldName string, object interface{}, allowValues ...string) []error {
-	return schema.ValidateInStrValues(allowValues...)(fieldName, object)
-}
-
-func ValidateRequired(fieldName string, object interface{}) []error {
-	if util.IsEmpty(object) {
-		return []error{fmt.Errorf("%q: is required", fieldName)}
-	}
-	return []error{}
-}
-
-func ValidateSakuraID(fieldName string, object interface{}) []error {
-	return schema.ValidateSakuraID()(fieldName, object)
-}
 
 func ValidateSetProhibited(fieldName string, object interface{}) []error {
 	if !util.IsEmpty(object) {
@@ -47,106 +29,17 @@ func ValidateSetProhibited(fieldName string, object interface{}) []error {
 	return []error{}
 }
 
-func ValidateIPv4Address(fieldName string, object interface{}) []error {
-	return schema.ValidateIPv4Address()(fieldName, object)
-}
-
-func ValidateIPv6Address(fieldName string, object interface{}) []error {
-	return schema.ValidateIPv6Address()(fieldName, object)
-}
-
-func ValidateExistsFileOrStdIn(fieldName string, object interface{}) []error {
-	return schema.ValidateMultiOr(schema.ValidateFileExists(), schema.ValidateStdinExists())(fieldName, object)
-}
-
-func ValidateConflicts(fieldName string, object interface{}, values map[string]interface{}) []error {
-	if !util.IsEmpty(object) {
-		for _, v := range values {
-			if !util.IsEmpty(v) {
-				keys := []string{}
-				for k := range values {
-					keys = append(keys, fmt.Sprintf("%q", k))
-				}
-				return []error{fmt.Errorf("%q: is conflict with %s", fieldName, strings.Join(keys, " or "))}
-			}
-		}
-	}
-	return []error{}
-}
-
-func ValidateConflictValues(fieldName string, object interface{}, values map[string]interface{}) []error {
-	if !util.IsEmpty(object) {
-		for _, v := range values {
-			if !util.IsEmpty(v) {
-				keys := []string{}
-				for k := range values {
-					keys = append(keys, fmt.Sprintf("%q", k))
-				}
-				return []error{fmt.Errorf("%q(%#v): is conflict with %s", fieldName, object, strings.Join(keys, " or "))}
-			}
-		}
-	}
-	return []error{}
-}
-
-func ValidateBetween(fieldName string, object interface{}, min int, max int) []error {
-	if object == nil {
-		object = []int64{}
-	}
-
-	isSlice := func(object interface{}) bool {
-		_, ok1 := object.([]int64)
-		_, ok2 := object.([]string)
-
-		return ok1 || ok2
-	}
-
-	if isSlice(object) {
-		sliceLen := 0
-		if s, ok := object.([]int64); ok {
-			sliceLen = len(s)
-		} else {
-			s := object.([]string)
-			sliceLen = len(s)
-		}
-
-		if max <= 0 {
-			if sliceLen < min {
-				return []error{fmt.Errorf("%q: slice length must be %d or more", fieldName, min)}
-			}
-		} else {
-			if !(min <= sliceLen && sliceLen <= max) {
-				return []error{fmt.Errorf("%q: slice length must be beetween %d and %d", fieldName, min, max)}
-			}
-		}
-	}
-
-	return []error{}
-}
-
 func ValidateOutputOption(o output.Option, defaultOutputType string) []error {
 	outputType := o.OutputTypeFlagValue()
 	//columns := o.GetColumn()
 	format := o.FormatFlagValue()
-	formatFile := o.FormatFileFlagValue()
 	quiet := o.QuietFlagValue()
 	query := o.QueryFlagValue()
-	queryFile := o.QueryFileFlagValue()
-
-	// format and format-file
-	if format != "" && formatFile != "" {
-		return []error{fmt.Errorf("%q: can't set with --format-file", "--format")}
-	}
-	// query and query-file
-	if query != "" && queryFile != "" {
-		return []error{fmt.Errorf("%q: can't set with --query-file", "--query")}
-	}
 
 	// format(or format-file) with output-type
 	if outputType != defaultOutputType {
 		cannotWith := map[string]string{
-			"--format":      format,
-			"--format-file": formatFile,
+			"--format": format,
 		}
 		for k, v := range cannotWith {
 			if v != "" {
@@ -155,19 +48,10 @@ func ValidateOutputOption(o output.Option, defaultOutputType string) []error {
 		}
 	}
 
-	// format-file is exists?
-	if formatFile != "" {
-		errs := schema.ValidateFileExists()("--format-file", formatFile)
-		if len(errs) > 0 {
-			return errs
-		}
-	}
-
 	// with quiet
 	if quiet {
 		cannotWith := map[string]string{
-			"--format":      format,
-			"--format-file": formatFile,
+			"--format": format,
 		}
 		for k, v := range cannotWith {
 			if v != "" {
@@ -181,36 +65,15 @@ func ValidateOutputOption(o output.Option, defaultOutputType string) []error {
 		}
 	}
 
-	// query-file is exists?
-	if queryFile != "" {
-		errs := schema.ValidateFileExists()("--query-file", formatFile)
-		if len(errs) > 0 {
-			return errs
-		}
-	}
 	// query only allow when outputType is json
 	if outputType != "json" && len(query) > 0 {
 		return []error{fmt.Errorf("%q: can't set when --output-type is not json", "--query")}
-	}
-	if outputType != "json" && len(queryFile) > 0 {
-		return []error{fmt.Errorf("%q: can't set when --output-type is not json", "--query-file")}
 	}
 
 	if outputType == "json" && len(query) > 0 {
 		_, err := jmespath.Compile(query)
 		if err != nil {
 			return []error{fmt.Errorf("%q: invalid JMESPath: %s", "--query", err)}
-		}
-	}
-
-	if outputType == "json" && len(queryFile) > 0 {
-		bQuery, err := ioutil.ReadFile(queryFile)
-		if err != nil {
-			return []error{fmt.Errorf("%q: can't open query file: %s", "--query-file", err)}
-		}
-		_, err = jmespath.Compile(string(bQuery))
-		if err != nil {
-			return []error{fmt.Errorf("%q: invalid JMESPath: %s", "--query-file", err)}
 		}
 	}
 

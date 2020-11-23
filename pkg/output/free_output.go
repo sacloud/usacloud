@@ -18,7 +18,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 
 	"github.com/fatih/structs"
@@ -26,18 +25,16 @@ import (
 )
 
 type freeOutput struct {
-	Out        io.Writer
-	Err        io.Writer
-	Format     string
-	FormatFile string
+	Out    io.Writer
+	Err    io.Writer
+	Format string
 }
 
 func NewFreeOutput(out io.Writer, err io.Writer, option Option) Output {
 	return &freeOutput{
-		Out:        out,
-		Err:        err,
-		Format:     option.FormatFlagValue(),
-		FormatFile: option.FormatFileFlagValue(),
+		Out:    out,
+		Err:    err,
+		Format: option.FormatFlagValue(),
 	}
 }
 
@@ -54,17 +51,14 @@ func (o *freeOutput) Print(contents Contents) error {
 		return nil
 	}
 
-	if o.FormatFile != "" {
-		format, err := ioutil.ReadFile(o.FormatFile)
-		if err != nil {
-			return fmt.Errorf("FreeOutput:Print: read format-file is failed: %s", err)
-		}
-		o.Format = string(format)
+	format, err := util.StringFromPathOrContent(o.Format)
+	if err != nil {
+		return fmt.Errorf("FreeOutput:Print: load format from %q failed failed: %s", o.Format, err)
 	}
 
-	t, err := newTemplate().Parse(o.Format)
+	t, err := newTemplate().Parse(format)
 	if err != nil {
-		return fmt.Errorf("invalid output format %q: %s", o.Format, err)
+		return fmt.Errorf("invalid output format %q: %s", format, err)
 	}
 
 	for i, v := range targets {

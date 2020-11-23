@@ -53,7 +53,12 @@ func (o *jsonOutput) Print(contents Contents) error {
 	}
 
 	if o.query != "" {
-		v, err := o.searchByJMESPath(targets)
+		query, err := util.StringFromPathOrContent(o.query)
+		if err != nil {
+			return fmt.Errorf("JSONOutput:Query: loading query from %q Failed: %s", o.query, err)
+		}
+
+		v, err := o.searchByJMESPath(targets, query)
 		if err != nil {
 			return fmt.Errorf("JSONOutput:Query: jmespath.Search is Failed: %s", err)
 		}
@@ -100,7 +105,7 @@ func (o *jsonOutput) Print(contents Contents) error {
 	return nil
 }
 
-func (o *jsonOutput) searchByJMESPath(v interface{}) (result interface{}, err error) {
+func (o *jsonOutput) searchByJMESPath(v interface{}, query string) (result interface{}, err error) {
 	defer func() {
 		ret := recover()
 		if ret != nil {
@@ -108,6 +113,6 @@ func (o *jsonOutput) searchByJMESPath(v interface{}) (result interface{}, err er
 			err = fmt.Errorf("jmespath.Search failed: %s", ret)
 		}
 	}()
-	result, err = jmespath.Search(o.query, v)
+	result, err = jmespath.Search(query, v)
 	return
 }
