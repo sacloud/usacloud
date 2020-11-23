@@ -25,4 +25,5 @@ var defaultColumnDefs = []output.ColumnDef{
 	ccol.Name,
 	ccol.Tags,
 	ccol.Scope,
+	ccol.Description,
 }

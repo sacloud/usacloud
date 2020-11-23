@@ -27,4 +27,5 @@ var defaultColumnDefs = []output.ColumnDef{
 		Name:     "Switch",
 		Template: "{{ if .SwitchInZone }}{{ .SwitchInZone.ID }}({{ .SwitchInZone.Name }}){{ end }}",
 	},
+	ccol.Description,
 }

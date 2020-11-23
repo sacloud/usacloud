@@ -38,4 +38,5 @@ var defaultColumnDefs = []output.ColumnDef{
 		Name:     "Storage",
 		Template: "{{ .Storage.Name }}",
 	},
+	ccol.Description,
 }
