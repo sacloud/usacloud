@@ -35,14 +35,6 @@ func (p *OutputParameter) FormatFlagValue() string {
 	return p.Format
 }
 
-func (p *OutputParameter) FormatFileFlagValue() string {
-	return p.FormatFile
-}
-
 func (p *OutputParameter) QueryFlagValue() string {
 	return p.Query
-}
-
-func (p *OutputParameter) QueryFileFlagValue() string {
-	return p.QueryFile
 }

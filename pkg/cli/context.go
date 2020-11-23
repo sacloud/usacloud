@@ -193,17 +193,12 @@ func getOutputWriter(io IO, columnDefs []output.ColumnDef, rawOptions interface{
 	if options.QuietFlagValue() {
 		return output.NewIDOutput(out, err)
 	}
-	if options.FormatFlagValue() != "" || options.FormatFileFlagValue() != "" {
+	if options.FormatFlagValue() != "" {
 		return output.NewFreeOutput(out, err, options)
 	}
 	switch options.OutputTypeFlagValue() {
 	case "json":
-		query := options.QueryFlagValue()
-		if query == "" {
-			bQuery, _ := ioutil.ReadFile(options.QueryFileFlagValue()) // nolint: err was already checked
-			query = string(bQuery)
-		}
-		return output.NewJSONOutput(out, err, query)
+		return output.NewJSONOutput(out, err, options.QueryFlagValue())
 	case "yaml":
 		return output.NewYAMLOutput(out, err)
 	default:

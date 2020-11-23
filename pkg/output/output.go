@@ -39,8 +39,6 @@ func (f *DefaultFormatter) ColumnDefs() []ColumnDef {
 type Option interface {
 	OutputTypeFlagValue() string
 	FormatFlagValue() string
-	FormatFileFlagValue() string
 	QuietFlagValue() bool
 	QueryFlagValue() string
-	QueryFileFlagValue() string
 }
