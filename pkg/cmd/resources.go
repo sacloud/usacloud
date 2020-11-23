@@ -23,6 +23,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/bridge"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/cdrom"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/containerregistry"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/coupon"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/disk"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -36,6 +37,7 @@ var Resources = core.Resources{
 	bridge.Resource,
 	cdrom.Resource,
 	containerregistry.Resource,
+	coupon.Resource,
 	bill.Resource,
 	disk.Resource,
 	note.Resource,
