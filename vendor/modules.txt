@@ -48,7 +48,9 @@ github.com/sacloud/libsacloud/v2
 github.com/sacloud/libsacloud/v2/helper/api
 github.com/sacloud/libsacloud/v2/helper/builder
 github.com/sacloud/libsacloud/v2/helper/builder/archive
+github.com/sacloud/libsacloud/v2/helper/builder/database
 github.com/sacloud/libsacloud/v2/helper/builder/disk
+github.com/sacloud/libsacloud/v2/helper/power
 github.com/sacloud/libsacloud/v2/helper/query
 github.com/sacloud/libsacloud/v2/helper/service
 github.com/sacloud/libsacloud/v2/helper/service/archive
@@ -59,6 +61,7 @@ github.com/sacloud/libsacloud/v2/helper/service/bridge
 github.com/sacloud/libsacloud/v2/helper/service/cdrom
 github.com/sacloud/libsacloud/v2/helper/service/containerregistry
 github.com/sacloud/libsacloud/v2/helper/service/coupon
+github.com/sacloud/libsacloud/v2/helper/service/database
 github.com/sacloud/libsacloud/v2/helper/service/disk
 github.com/sacloud/libsacloud/v2/helper/service/note
 github.com/sacloud/libsacloud/v2/helper/setup

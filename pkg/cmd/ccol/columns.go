@@ -17,11 +17,12 @@ package ccol
 import "github.com/sacloud/usacloud/pkg/output"
 
 var (
-	Zone        = output.ColumnDef{Name: "Zone"}
-	ID          = output.ColumnDef{Name: "ID"}
-	Name        = output.ColumnDef{Name: "Name", Template: "{{ .Name | ellipsis 30 }}"}
-	Tags        = output.ColumnDef{Name: "Tags", Template: "{{ if .Tags }}{{ .Tags | ellipsis 20 }}{{ end }}"}
-	Description = output.ColumnDef{Name: "Description", Template: "{{ .Description | ellipsis 20 | to_single_line}}"}
-	Size        = output.ColumnDef{Name: "Size", Template: "{{ .SizeMB | mib_to_gib }}GB"}
-	Scope       = output.ColumnDef{Name: "Scope", Template: "{{ .Scope | scope_to_key }}"}
+	Zone           = output.ColumnDef{Name: "Zone"}
+	ID             = output.ColumnDef{Name: "ID"}
+	Name           = output.ColumnDef{Name: "Name", Template: "{{ .Name | ellipsis 30 }}"}
+	Tags           = output.ColumnDef{Name: "Tags", Template: "{{ if .Tags }}{{ .Tags | ellipsis 20 }}{{ end }}"}
+	Description    = output.ColumnDef{Name: "Description", Template: "{{ .Description | ellipsis 20 | to_single_line}}"}
+	Size           = output.ColumnDef{Name: "Size", Template: "{{ .SizeMB | mib_to_gib }}GB"}
+	Scope          = output.ColumnDef{Name: "Scope", Template: "{{ .Scope | scope_to_key }}"}
+	InstanceStatus = output.ColumnDef{Name: "InstanceStatus", Template: "{{ .InstanceStatus }}"}
 )

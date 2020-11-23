@@ -30,6 +30,12 @@ type definition struct {
 
 // definitions usacloudで使う名称(key)/値(value)のペア
 var definitions = map[string][]*definition{
+	"backup_start_minute": {
+		{key: 0, value: 0},
+		{key: 15, value: 15},
+		{key: 30, value: 30},
+		{key: 45, value: 45},
+	},
 	"cdrom_sizes": {
 		{key: 5, value: 5},
 		{key: 10, value: 10},
@@ -38,6 +44,18 @@ var definitions = map[string][]*definition{
 		{key: types.ContainerRegistryAccessLevels.ReadWrite.String(), value: types.ContainerRegistryAccessLevels.ReadWrite},
 		{key: types.ContainerRegistryAccessLevels.ReadOnly.String(), value: types.ContainerRegistryAccessLevels.ReadOnly},
 		{key: types.ContainerRegistryAccessLevels.None.String(), value: types.ContainerRegistryAccessLevels.None},
+	},
+	"database_plan": {
+		{key: "10g", value: types.DatabasePlans.DB10GB},
+		{key: "30g", value: types.DatabasePlans.DB30GB},
+		{key: "90g", value: types.DatabasePlans.DB90GB},
+		{key: "240g", value: types.DatabasePlans.DB240GB},
+		{key: "500g", value: types.DatabasePlans.DB500GB},
+		{key: "1t", value: types.DatabasePlans.DB1TB},
+	},
+	"database_type": {
+		{key: "postgresql", value: "postgresql"},
+		{key: "mariadb", value: "mariadb"},
 	},
 	"disk_plan": {
 		{key: "ssd", value: types.DiskPlans.SSD},
