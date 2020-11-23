@@ -25,6 +25,8 @@ type DownloadRequest struct {
 	Zone string   `request:"-" validate:"required"`
 	ID   types.ID `request:"-" validate:"required"`
 
+	ChangePassword bool
+
 	Path   string    `request:"-"`
 	Writer io.Writer `request:"-"`
 }

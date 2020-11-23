@@ -44,7 +44,7 @@ func (s *Service) DownloadWithContext(ctx context.Context, req *DownloadRequest)
 		return fmt.Errorf("CDROM[%s] is not allowed to download", req.ID)
 	}
 
-	ftpServer, err := client.OpenFTP(ctx, req.Zone, req.ID, &sacloud.OpenFTPRequest{ChangePassword: true})
+	ftpServer, err := client.OpenFTP(ctx, req.Zone, req.ID, &sacloud.OpenFTPRequest{ChangePassword: req.ChangePassword})
 	if err != nil {
 		return fmt.Errorf("requesting FTP server information failed: %s", err)
 	}
