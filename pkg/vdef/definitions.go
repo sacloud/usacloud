@@ -30,6 +30,10 @@ type definition struct {
 
 // definitions usacloudで使う名称(key)/値(value)のペア
 var definitions = map[string][]*definition{
+	"cdrom_sizes": {
+		{key: 5, value: 5},
+		{key: 10, value: 10},
+	},
 	"disk_plan": {
 		{key: "ssd", value: types.DiskPlans.SSD},
 		{key: "hdd", value: types.DiskPlans.HDD},
@@ -114,6 +118,8 @@ func registerValidators() {
 				allows = append(allows, s)
 			case fmt.Stringer:
 				allows = append(allows, s.String())
+			default:
+				allows = append(allows, fmt.Sprintf("%v", s))
 			}
 		}
 		validatorAliases[name] = fmt.Sprintf("oneof=%s", joinWithSpace(allows))
