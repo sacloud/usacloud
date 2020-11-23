@@ -34,6 +34,11 @@ var definitions = map[string][]*definition{
 		{key: 5, value: 5},
 		{key: 10, value: 10},
 	},
+	"container_registry_access_levels": {
+		{key: types.ContainerRegistryAccessLevels.ReadWrite.String(), value: types.ContainerRegistryAccessLevels.ReadWrite},
+		{key: types.ContainerRegistryAccessLevels.ReadOnly.String(), value: types.ContainerRegistryAccessLevels.ReadOnly},
+		{key: types.ContainerRegistryAccessLevels.None.String(), value: types.ContainerRegistryAccessLevels.None},
+	},
 	"disk_plan": {
 		{key: "ssd", value: types.DiskPlans.SSD},
 		{key: "hdd", value: types.DiskPlans.HDD},
