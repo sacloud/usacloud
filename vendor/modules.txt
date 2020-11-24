@@ -65,6 +65,7 @@ github.com/sacloud/libsacloud/v2/helper/service/database
 github.com/sacloud/libsacloud/v2/helper/service/disk
 github.com/sacloud/libsacloud/v2/helper/service/diskplan
 github.com/sacloud/libsacloud/v2/helper/service/dns
+github.com/sacloud/libsacloud/v2/helper/service/esme
 github.com/sacloud/libsacloud/v2/helper/service/internetplan
 github.com/sacloud/libsacloud/v2/helper/service/licenseinfo
 github.com/sacloud/libsacloud/v2/helper/service/note
