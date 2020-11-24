@@ -31,6 +31,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/licenseinfo"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/privatehostplan"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/serverplan"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/swytch"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/cmd/root"
@@ -52,6 +53,7 @@ var Resources = core.Resources{
 	licenseinfo.Resource,
 	note.Resource,
 	privatehostplan.Resource,
+	serverplan.Resource,
 	swytch.Resource,
 }
 
