@@ -87,7 +87,8 @@ func TestParser_Parse(t *testing.T) {
 				{
 					StructField: reflect.TypeOf(simple{}).Field(0),
 					Tag: Tag{
-						FlagName: "example-field1",
+						FieldName: "Field1",
+						FlagName:  "example-field1",
 					},
 				},
 			},
@@ -98,7 +99,8 @@ func TestParser_Parse(t *testing.T) {
 				{
 					StructField: reflect.TypeOf(simple{}).Field(0),
 					Tag: Tag{
-						FlagName: "example-field1",
+						FieldName: "Field1",
+						FlagName:  "example-field1",
 					},
 				},
 			},
@@ -113,7 +115,8 @@ func TestParser_Parse(t *testing.T) {
 				{
 					StructField: reflect.TypeOf(noTag{}).Field(0),
 					Tag: Tag{
-						FlagName: "no-tag",
+						FieldName: "NoTag",
+						FlagName:  "no-tag",
 					},
 				},
 			},
@@ -128,13 +131,15 @@ func TestParser_Parse(t *testing.T) {
 				{
 					StructField: reflect.TypeOf(nested1{}).Field(0),
 					Tag: Tag{
-						FlagName: "nested-1-field-1",
+						FieldName: "Nested1.Field1",
+						FlagName:  "nested-1-field-1",
 					},
 				},
 				{
 					StructField: reflect.TypeOf(nested2{}).Field(0),
 					Tag: Tag{
-						FlagName: "nested-1-field-2-field-1",
+						FieldName: "Nested1.Field2.Field1",
+						FlagName:  "nested-1-field-2-field-1",
 					},
 				},
 			},
@@ -145,25 +150,29 @@ func TestParser_Parse(t *testing.T) {
 				{
 					StructField: reflect.TypeOf(nested1{}).Field(0),
 					Tag: Tag{
-						FlagName: "field-1",
+						FieldName: "Field1",
+						FlagName:  "field-1",
 					},
 				},
 				{
 					StructField: reflect.TypeOf(nested2{}).Field(0),
 					Tag: Tag{
-						FlagName: "field-2-field-1",
+						FieldName: "Field2.Field1",
+						FlagName:  "field-2-field-1",
 					},
 				},
 				{
 					StructField: reflect.TypeOf(nested1{}).Field(0),
 					Tag: Tag{
-						FlagName: "nested-2-field-1",
+						FieldName: "Nested2.Field1",
+						FlagName:  "nested-2-field-1",
 					},
 				},
 				{
 					StructField: reflect.TypeOf(nested2{}).Field(0),
 					Tag: Tag{
-						FlagName: "nested-2-field-2-field-1",
+						FieldName: "Nested2.Field2.Field1",
+						FlagName:  "nested-2-field-2-field-1",
 					},
 				},
 			},
