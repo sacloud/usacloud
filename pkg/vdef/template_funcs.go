@@ -98,6 +98,10 @@ var TemplateFuncMap = template.FuncMap{
 		}
 		return "switch"
 	},
+	"user_friendly_price": userFriendlyPriceString,
+	"join": func(sep string, values []string) string {
+		return strings.Join(values, sep)
+	},
 }
 
 func ellipsis(length int, value interface{}) interface{} {
@@ -106,4 +110,55 @@ func ellipsis(length int, value interface{}) interface{} {
 		return string(runes[0:length]) + "..."
 	}
 	return string(runes)
+}
+
+func userFriendlyPriceString(value interface{}) string {
+	if value == nil {
+		return ""
+	}
+	v, ok := value.(*sacloud.Price)
+	if !ok {
+		return ""
+	}
+
+	var results []string
+
+	if v.Base > 0 {
+		results = append(results, fmt.Sprintf("Base:%d", v.Base))
+	}
+	if v.Daily > 0 {
+		results = append(results, fmt.Sprintf("Daily:%d", v.Daily))
+	}
+	if v.Hourly > 0 {
+		results = append(results, fmt.Sprintf("Hourly:%d", v.Hourly))
+	}
+	if v.Monthly > 0 {
+		results = append(results, fmt.Sprintf("Monthly:%d", v.Monthly))
+	}
+	if v.PerUse > 0 {
+		results = append(results, fmt.Sprintf("PerUse:%d", v.PerUse))
+	}
+	if v.Basic > 0 {
+		results = append(results, fmt.Sprintf("Basic:%d", v.Basic))
+	}
+	if v.Traffic > 0 {
+		results = append(results, fmt.Sprintf("Traffic:%d", v.Traffic))
+	}
+	if v.DocomoTraffic > 0 {
+		results = append(results, fmt.Sprintf("DocomoTraffic:%d", v.DocomoTraffic))
+	}
+	if v.KddiTraffic > 0 {
+		results = append(results, fmt.Sprintf("KddiTraffic:%d", v.KddiTraffic))
+	}
+	if v.SbTraffic > 0 {
+		results = append(results, fmt.Sprintf("SbTraffic:%d", v.SbTraffic))
+	}
+	if v.SimSheet > 0 {
+		results = append(results, fmt.Sprintf("SimSheet:%d", v.SimSheet))
+	}
+	if v.Zone != "" {
+		results = append(results, fmt.Sprintf("Zone:%s", v.Zone))
+	}
+
+	return strings.Join(results, " / ")
 }

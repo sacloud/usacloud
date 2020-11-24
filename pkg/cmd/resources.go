@@ -27,8 +27,14 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/database"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/disk"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/diskplan"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/internetplan"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/licenseinfo"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/privatehostplan"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/serverplan"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/serviceclass"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/swytch"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/zone"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/cmd/root"
 )
@@ -45,8 +51,14 @@ var Resources = core.Resources{
 	database.Resource,
 	disk.Resource,
 	diskplan.Resource,
+	internetplan.Resource,
+	licenseinfo.Resource,
 	note.Resource,
+	privatehostplan.Resource,
+	serverplan.Resource,
+	serviceclass.Resource,
 	swytch.Resource,
+	zone.Resource,
 }
 
 func initCommands() {
