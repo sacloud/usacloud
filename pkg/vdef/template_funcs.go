@@ -99,6 +99,9 @@ var TemplateFuncMap = template.FuncMap{
 		return "switch"
 	},
 	"user_friendly_price": userFriendlyPriceString,
+	"join": func(sep string, values []string) string {
+		return strings.Join(values, sep)
+	},
 }
 
 func ellipsis(length int, value interface{}) interface{} {

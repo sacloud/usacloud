@@ -71,6 +71,7 @@ github.com/sacloud/libsacloud/v2/helper/service/privatehostplan
 github.com/sacloud/libsacloud/v2/helper/service/serverplan
 github.com/sacloud/libsacloud/v2/helper/service/serviceclass
 github.com/sacloud/libsacloud/v2/helper/service/swytch
+github.com/sacloud/libsacloud/v2/helper/service/zone
 github.com/sacloud/libsacloud/v2/helper/setup
 github.com/sacloud/libsacloud/v2/helper/validate
 github.com/sacloud/libsacloud/v2/helper/wait
