@@ -53,18 +53,18 @@ func (p *Parser) Parse(v interface{}) ([]StructField, error) {
 	case reflect.Ptr:
 		return p.Parse(rv.Elem().Interface()) // dereference pointer
 	case reflect.Struct:
-		return p.parseFields("", reflect.TypeOf(v))
+		return p.parseFields("", "", reflect.TypeOf(v))
 	default:
 		return nil, fmt.Errorf("unsupported value: %#v", v)
 	}
 }
 
-func (p *Parser) parseFields(prefix string, tp reflect.Type) ([]StructField, error) {
+func (p *Parser) parseFields(flagPrefix, fieldPrefix string, tp reflect.Type) ([]StructField, error) {
 	var fields []StructField
 	for i := 0; i < tp.NumField(); i++ {
 		f := tp.Field(i)
 		if f.PkgPath == "" { // exported?
-			parsed, err := p.parseField(prefix, f)
+			parsed, err := p.parseField(flagPrefix, fieldPrefix, f)
 			if err != nil {
 				return nil, err
 			}
@@ -74,7 +74,7 @@ func (p *Parser) parseFields(prefix string, tp reflect.Type) ([]StructField, err
 	return fields, nil
 }
 
-func (p *Parser) parseField(prefix string, f reflect.StructField) ([]StructField, error) {
+func (p *Parser) parseField(flagPrefix, fieldPrefix string, f reflect.StructField) ([]StructField, error) {
 	tag, err := p.parseTag(f.Tag.Get(p.Config.TagName))
 	if err != nil {
 		return nil, err
@@ -87,21 +87,29 @@ func (p *Parser) parseField(prefix string, f reflect.StructField) ([]StructField
 	if tag.FlagName == "" {
 		tag.FlagName = naming.ToKebabCase(f.Name)
 	}
+	if tag.FieldName == "" {
+		tag.FieldName = f.Name
+	}
 	if !tag.Squash {
-		if prefix != "" && tag.FlagName != "" {
-			tag.FlagName = fmt.Sprintf("%s-%s", prefix, tag.FlagName)
+		if flagPrefix != "" && tag.FlagName != "" {
+			tag.FlagName = fmt.Sprintf("%s-%s", flagPrefix, tag.FlagName)
 		}
-		prefix = tag.FlagName
+		flagPrefix = tag.FlagName
+
+		if fieldPrefix != "" && tag.FieldName != "" {
+			tag.FieldName = fmt.Sprintf("%s.%s", fieldPrefix, tag.FieldName)
+		}
+		fieldPrefix = tag.FieldName
 	}
 
 	kind := f.Type.Kind()
 	switch kind {
 	case reflect.Ptr:
 		if f.Type.Elem().Kind() == reflect.Struct {
-			return p.parseFields(prefix, f.Type.Elem())
+			return p.parseFields(flagPrefix, fieldPrefix, f.Type.Elem())
 		}
 	case reflect.Struct:
-		return p.parseFields(prefix, f.Type)
+		return p.parseFields(flagPrefix, fieldPrefix, f.Type)
 	}
 
 	return []StructField{{StructField: f, Tag: tag}}, nil

@@ -39,6 +39,7 @@ type StructField struct {
 // - Order: 0
 type Tag struct {
 	FlagName    string
+	FieldName   string
 	Aliases     []string
 	Shorthand   string
 	Description string

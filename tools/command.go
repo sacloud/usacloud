@@ -76,7 +76,7 @@ func (c *Command) CLIFlagDefinitionStatements(parameterVariableName, flagSetVari
 }
 
 func (c *Command) cliFlagDefinitionStatement(parameterVariableName string, field clitag.StructField) string {
-	fieldVar := fmt.Sprintf("%s.%s", parameterVariableName, field.Name)
+	fieldVar := fmt.Sprintf("%s.%s", parameterVariableName, field.FieldName)
 	fieldPointerVar := fieldVar
 	fieldType := dereferencePtrType(field.Type)
 	if field.Type.Kind() == reflect.Ptr {
@@ -90,7 +90,7 @@ func (c *Command) cliFlagDefinitionStatement(parameterVariableName string, field
 		case reflect.Slice:
 			fieldVar = "nil"
 		default:
-			panic(fmt.Sprintf("unsupported type: field: %s, type: %s", field.Name, fieldType.Kind().String()))
+			panic(fmt.Sprintf("unsupported type: field: %s, type: %s", field.FieldName, fieldType.Kind().String()))
 		}
 	} else {
 		fieldPointerVar = "&" + fieldPointerVar
@@ -128,11 +128,11 @@ func (c *Command) cliFlagDefinitionStatement(parameterVariableName string, field
 				case reflect.String:
 					statement = `StringSliceVarP(%s, "%s", "%s", %s, "%s")`
 				default:
-					panic(fmt.Sprintf("unsupported type: field: %s, type: []%s", field.Name, fieldType.Elem().Kind().String()))
+					panic(fmt.Sprintf("unsupported type: field: %s, type: []%s", field.FieldName, fieldType.Elem().Kind().String()))
 				}
 			}
 		default:
-			panic(fmt.Sprintf("unsupported type: field: %s, type: %s", field.Name, fieldType.Kind().String()))
+			panic(fmt.Sprintf("unsupported type: field: %s, type: %s", field.FieldName, fieldType.Kind().String()))
 		}
 	}
 
@@ -155,7 +155,7 @@ func (c *Command) CLIFlagInitializePointerStatement(parameterVariableName, flagS
 }
 
 func (c *Command) cliFlagInitializePointerStatement(parameterVariableName string, field clitag.StructField) string {
-	fieldVar := fmt.Sprintf("%s.%s", parameterVariableName, field.Name)
+	fieldVar := fmt.Sprintf("%s.%s", parameterVariableName, field.FieldName)
 	fieldType := dereferencePtrType(field.Type)
 	if field.Type.Kind() != reflect.Ptr {
 		return ""
@@ -190,11 +190,11 @@ func (c *Command) cliFlagInitializePointerStatement(parameterVariableName string
 				case reflect.String:
 					statement = "pointer.NewStringSlice([]string{})"
 				default:
-					panic(fmt.Sprintf("unsupported type: field: %s, type: []%s", field.Name, fieldType.Elem().Kind().String()))
+					panic(fmt.Sprintf("unsupported type: field: %s, type: []%s", field.FieldName, fieldType.Elem().Kind().String()))
 				}
 			}
 		default:
-			panic(fmt.Sprintf("unsupported type: field: %s, type: %s", field.Name, fieldType.Kind().String()))
+			panic(fmt.Sprintf("unsupported type: field: %s, type: %s", field.FieldName, fieldType.Kind().String()))
 		}
 	}
 	return fmt.Sprintf(srcTemplate, fieldVar, fieldVar, statement)
@@ -216,7 +216,7 @@ func (c *Command) CLIFlagCleanupEmptyStatement(parameterVariableName, flagSetVar
 }
 
 func (c *Command) cliFlagCleanupEmptyStatement(parameterVariableName, flagSetVariableName string, field clitag.StructField) string {
-	fieldVar := fmt.Sprintf("%s.%s", parameterVariableName, field.Name)
+	fieldVar := fmt.Sprintf("%s.%s", parameterVariableName, field.FieldName)
 	if field.Type.Kind() != reflect.Ptr {
 		return ""
 	}
