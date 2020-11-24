@@ -24,8 +24,10 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/cdrom"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/containerregistry"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/coupon"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/database"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/disk"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/swytch"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/cmd/root"
 )
@@ -34,13 +36,15 @@ var Resources = core.Resources{
 	archive.Resource,
 	authstatus.Resource,
 	autobackup.Resource,
+	bill.Resource,
 	bridge.Resource,
 	cdrom.Resource,
 	containerregistry.Resource,
 	coupon.Resource,
-	bill.Resource,
+	database.Resource,
 	disk.Resource,
 	note.Resource,
+	swytch.Resource,
 }
 
 func initCommands() {

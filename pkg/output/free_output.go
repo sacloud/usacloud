@@ -67,6 +67,10 @@ func (o *freeOutput) Print(contents Contents) error {
 		}
 		mapValue := structs.Map(v)
 
+		// original value
+		if _, ok := mapValue["OriginalValue"]; !ok {
+			mapValue["OriginalValue"] = v
+		}
 		mapValue["RowNumber"] = fmt.Sprintf("%d", i+1)
 		mapValue["__ORDER__"] = fmt.Sprintf("%d", i+1)
 		if contents[i].Zone != "" {

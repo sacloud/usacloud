@@ -57,6 +57,11 @@ func (o *tableOutput) Print(contents Contents) error {
 		}
 		mapValue := structs.Map(v)
 
+		// original value
+		if _, ok := mapValue["OriginalValue"]; !ok {
+			mapValue["OriginalValue"] = v
+		}
+
 		// magic column
 		mapValue["__ORDER__"] = fmt.Sprintf("%d", i+1)
 
