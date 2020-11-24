@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package internetplan
+package licenseinfo
 
 import (
 	"github.com/sacloud/usacloud/pkg/cmd/ccol"
@@ -20,9 +20,10 @@ import (
 )
 
 var defaultColumnDefs = []output.ColumnDef{
-	ccol.Zone,
 	ccol.ID,
 	ccol.Name,
-	{Name: "BandWidthMbps"},
-	{Name: "Availability"},
+	{
+		Name:     "TermsOfUse",
+		Template: "{{ .TermsOfUse | ellipsis 40 }}",
+	},
 }

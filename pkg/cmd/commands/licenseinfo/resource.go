@@ -12,17 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package internetplan
+package licenseinfo
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/ccol"
-	"github.com/sacloud/usacloud/pkg/output"
+	"reflect"
+
+	"github.com/sacloud/libsacloud/v2/helper/service/licenseinfo"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
-var defaultColumnDefs = []output.ColumnDef{
-	ccol.Zone,
-	ccol.ID,
-	ccol.Name,
-	{Name: "BandWidthMbps"},
-	{Name: "Availability"},
+var Resource = &core.Resource{
+	Name:             "license-info",
+	Aliases:          []string{"licenseinfo"},
+	ServiceType:      reflect.TypeOf(&licenseinfo.Service{}),
+	IsGlobalResource: true,
+	Category:         core.ResourceCategoryInformation,
+	CommandCategories: []core.Category{
+		{
+			Key:         "basic",
+			DisplayName: "Basic Commands",
+			Order:       10,
+		},
+		{
+			Key:         "other",
+			DisplayName: "Other Commands",
+			Order:       1000,
+		},
+	},
 }

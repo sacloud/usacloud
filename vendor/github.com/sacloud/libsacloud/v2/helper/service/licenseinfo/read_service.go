@@ -1,4 +1,4 @@
-// Copyright 2017-2020 The Usacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,17 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package internetplan
+package licenseinfo
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/ccol"
-	"github.com/sacloud/usacloud/pkg/output"
+	"context"
+
+	"github.com/sacloud/libsacloud/v2/sacloud"
 )
 
-var defaultColumnDefs = []output.ColumnDef{
-	ccol.Zone,
-	ccol.ID,
-	ccol.Name,
-	{Name: "BandWidthMbps"},
-	{Name: "Availability"},
+func (s *Service) Read(req *ReadRequest) (*sacloud.LicenseInfo, error) {
+	return s.ReadWithContext(context.Background(), req)
+}
+
+func (s *Service) ReadWithContext(ctx context.Context, req *ReadRequest) (*sacloud.LicenseInfo, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	client := sacloud.NewLicenseInfoOp(s.caller)
+	return client.Read(ctx, req.ID)
 }
