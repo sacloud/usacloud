@@ -35,7 +35,7 @@ var defaultColumnDefs = []output.ColumnDef{
 	},
 	{
 		Name:     "IPAddresses",
-		Template: "{{ $maskLen := .NetworkMaskLen }}{{ range .IPAddresses }}{{ . }}/{{ $masklen }} {{ end }}",
+		Template: "{{ $maskLen := .NetworkMaskLen }}{{ range .IPAddresses }}{{ . }}/{{ $maskLen }} {{ end }}",
 	},
 	ccol.InstanceStatus,
 }

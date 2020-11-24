@@ -24,5 +24,5 @@ var (
 	Description    = output.ColumnDef{Name: "Description", Template: "{{ .Description | ellipsis 20 | to_single_line}}"}
 	Size           = output.ColumnDef{Name: "Size", Template: "{{ .SizeMB | mib_to_gib }}GB"}
 	Scope          = output.ColumnDef{Name: "Scope", Template: "{{ .Scope | scope_to_key }}"}
-	InstanceStatus = output.ColumnDef{Name: "InstanceStatus", Template: "{{ .InstanceStatus }}"}
+	InstanceStatus = output.ColumnDef{Name: "InstanceStatus", Template: `{{ .InstanceStatus }}{{ if ne .Availability "available" }}({{ .Availability }}){{ end }}`}
 )

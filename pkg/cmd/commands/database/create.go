@@ -44,7 +44,7 @@ type createParameter struct {
 	IconID         types.ID
 	PlanID         string   `cli:"plan,options=database_plan" mapconv:",filters=database_plan_to_value" validate:"required,database_plan"`
 	SwitchID       types.ID `validate:"required"`
-	IPAddresses    []string `validate:"required,min=1,max=2,dive,ipv4"`
+	IPAddresses    []string `cli:"ip-address,aliases=ipaddress" validate:"required,min=1,max=2,dive,ipv4"`
 	NetworkMaskLen int      `validate:"required,min=1,max=32"`
 	DefaultRoute   string   `validate:"omitempty,ipv4"`
 	Port           int      `validate:"omitempty,min=1,max=65535"`

@@ -45,7 +45,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
 	fs.StringVarP(&p.PlanID, "plan", "", p.PlanID, "options: [10g/30g/90g/240g/500g/1t]")
 	fs.VarP(core.NewIDFlag(&p.SwitchID, &p.SwitchID), "switch-id", "", "")
-	fs.StringSliceVarP(&p.IPAddresses, "ip-addresses", "", p.IPAddresses, "")
+	fs.StringSliceVarP(&p.IPAddresses, "ip-address", "", p.IPAddresses, "(aliases: --ipaddress)")
 	fs.IntVarP(&p.NetworkMaskLen, "network-mask-len", "", p.NetworkMaskLen, "")
 	fs.StringVarP(&p.DefaultRoute, "default-route", "", p.DefaultRoute, "")
 	fs.IntVarP(&p.Port, "port", "", p.Port, "")
@@ -71,6 +71,8 @@ func (p *createParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 		name = "output-type"
 	case "fmt":
 		name = "format"
+	case "ipaddress":
+		name = "ip-address"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -87,7 +89,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("switch-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("ip-addresses"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("ip-address"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("port"))
