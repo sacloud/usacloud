@@ -27,6 +27,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/database"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/disk"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/diskplan"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/internetplan"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/swytch"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -46,6 +47,7 @@ var Resources = core.Resources{
 	disk.Resource,
 	diskplan.Resource,
 	note.Resource,
+	internetplan.Resource,
 	swytch.Resource,
 }
 
