@@ -15,6 +15,7 @@
 package vdef
 
 import (
+	"encoding/base64"
 	"fmt"
 	"os"
 	"reflect"
@@ -37,6 +38,7 @@ var ConverterFilters = map[string]mapconv.FilterFunc{
 	"path_or_content": pathOrContent,
 	"weekdays":        weekdaysFilter,
 	"dereference":     dereferenceFilter,
+	"base64encode":    base64Encode,
 }
 
 func strToTime(v interface{}) (interface{}, error) {
@@ -173,4 +175,22 @@ func dereferenceFilter(v interface{}) (interface{}, error) {
 		return v, nil
 	}
 	return vt.Elem().Interface(), nil
+}
+
+func base64Encode(v interface{}) (interface{}, error) {
+	if v == nil {
+		return nil, nil
+	}
+
+	var data []byte
+	switch value := v.(type) {
+	case string:
+		data = []byte(value)
+	case []byte:
+		data = value
+	default:
+		return nil, fmt.Errorf("invalid based64 target: %v", v)
+	}
+
+	return base64.StdEncoding.EncodeToString(data), nil
 }

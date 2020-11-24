@@ -30,6 +30,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/dns"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/esme"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/gslb"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/icon"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/internetplan"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/licenseinfo"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
@@ -57,6 +58,7 @@ var Resources = core.Resources{
 	dns.Resource,
 	esme.Resource,
 	gslb.Resource,
+	icon.Resource,
 	internetplan.Resource,
 	licenseinfo.Resource,
 	note.Resource,
