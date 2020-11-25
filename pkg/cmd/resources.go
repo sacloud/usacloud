@@ -37,6 +37,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/ipaddress"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/ipv6addr"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/ipv6net"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/license"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/licenseinfo"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/privatehostplan"
@@ -70,6 +71,7 @@ var Resources = core.Resources{
 	ipaddress.Resource,
 	ipv6addr.Resource,
 	ipv6net.Resource,
+	license.Resource,
 	licenseinfo.Resource,
 	note.Resource,
 	privatehostplan.Resource,
