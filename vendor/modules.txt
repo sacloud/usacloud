@@ -72,6 +72,7 @@ github.com/sacloud/libsacloud/v2/helper/service/iface
 github.com/sacloud/libsacloud/v2/helper/service/internet
 github.com/sacloud/libsacloud/v2/helper/service/internetplan
 github.com/sacloud/libsacloud/v2/helper/service/ipaddress
+github.com/sacloud/libsacloud/v2/helper/service/ipv6addr
 github.com/sacloud/libsacloud/v2/helper/service/licenseinfo
 github.com/sacloud/libsacloud/v2/helper/service/note
 github.com/sacloud/libsacloud/v2/helper/service/privatehostplan
