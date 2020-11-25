@@ -89,6 +89,10 @@ var definitions = map[string][]*definition{
 		{key: 3000, value: 3000},
 		{key: 5000, value: 5000},
 	},
+	"loadbalancer_plan": {
+		{key: "standard", value: types.LoadBalancerPlans.Standard},
+		{key: "highspec", value: types.LoadBalancerPlans.HighSpec},
+	},
 	"scope": {
 		{key: types.Scopes.User.String(), value: types.Scopes.User},
 		{key: types.Scopes.Shared.String(), value: types.Scopes.Shared},
