@@ -34,6 +34,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/iface"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/internet"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/internetplan"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/ipaddress"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/licenseinfo"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/privatehostplan"
@@ -64,6 +65,7 @@ var Resources = core.Resources{
 	iface.Resource,
 	internet.Resource,
 	internetplan.Resource,
+	ipaddress.Resource,
 	licenseinfo.Resource,
 	note.Resource,
 	privatehostplan.Resource,
