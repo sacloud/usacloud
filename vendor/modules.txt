@@ -69,6 +69,7 @@ github.com/sacloud/libsacloud/v2/helper/service/esme
 github.com/sacloud/libsacloud/v2/helper/service/gslb
 github.com/sacloud/libsacloud/v2/helper/service/icon
 github.com/sacloud/libsacloud/v2/helper/service/iface
+github.com/sacloud/libsacloud/v2/helper/service/internet
 github.com/sacloud/libsacloud/v2/helper/service/internetplan
 github.com/sacloud/libsacloud/v2/helper/service/licenseinfo
 github.com/sacloud/libsacloud/v2/helper/service/note
