@@ -76,6 +76,7 @@ github.com/sacloud/libsacloud/v2/helper/service/ipv6addr
 github.com/sacloud/libsacloud/v2/helper/service/ipv6net
 github.com/sacloud/libsacloud/v2/helper/service/license
 github.com/sacloud/libsacloud/v2/helper/service/licenseinfo
+github.com/sacloud/libsacloud/v2/helper/service/loadbalancer
 github.com/sacloud/libsacloud/v2/helper/service/note
 github.com/sacloud/libsacloud/v2/helper/service/privatehostplan
 github.com/sacloud/libsacloud/v2/helper/service/serverplan
