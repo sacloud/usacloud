@@ -32,6 +32,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/gslb"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/icon"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/iface"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/internet"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/internetplan"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/licenseinfo"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
@@ -61,6 +62,7 @@ var Resources = core.Resources{
 	gslb.Resource,
 	icon.Resource,
 	iface.Resource,
+	internet.Resource,
 	internetplan.Resource,
 	licenseinfo.Resource,
 	note.Resource,
