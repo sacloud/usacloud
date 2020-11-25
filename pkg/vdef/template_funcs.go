@@ -102,6 +102,14 @@ var TemplateFuncMap = template.FuncMap{
 	"join": func(sep string, values []string) string {
 		return strings.Join(values, sep)
 	},
+	"first_non_empty": func(values ...interface{}) interface{} {
+		for _, v := range values {
+			if !util.IsEmpty(v) {
+				return v
+			}
+		}
+		return nil
+	},
 }
 
 func ellipsis(length int, value interface{}) interface{} {
