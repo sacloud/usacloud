@@ -150,28 +150,28 @@ func TestParser_Parse(t *testing.T) {
 				{
 					StructField: reflect.TypeOf(nested1{}).Field(0),
 					Tag: Tag{
-						FieldName: "Field1",
+						FieldName: "Nested1.Field1",
 						FlagName:  "field-1",
 					},
 				},
 				{
 					StructField: reflect.TypeOf(nested2{}).Field(0),
 					Tag: Tag{
-						FieldName: "Field2.Field1",
+						FieldName: "Nested1.Field2.Field1",
 						FlagName:  "field-2-field-1",
 					},
 				},
 				{
 					StructField: reflect.TypeOf(nested1{}).Field(0),
 					Tag: Tag{
-						FieldName: "Nested2.Field1",
+						FieldName: "Nested2.Nested1.Field1",
 						FlagName:  "nested-2-field-1",
 					},
 				},
 				{
 					StructField: reflect.TypeOf(nested2{}).Field(0),
 					Tag: Tag{
-						FieldName: "Nested2.Field2.Field1",
+						FieldName: "Nested2.Nested1.Field2.Field1",
 						FlagName:  "nested-2-field-2-field-1",
 					},
 				},
