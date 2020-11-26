@@ -12,10 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package sim
 
-import "github.com/sacloud/usacloud/pkg/cli"
+import (
+	"github.com/sacloud/usacloud/pkg/cmd/ccol"
+	"github.com/sacloud/usacloud/pkg/output"
+)
 
-type ParameterCustomizer interface {
-	Customize(ctx cli.Context) error
+var defaultColumnDefs = []output.ColumnDef{
+	ccol.ID,
+	ccol.Name,
+	ccol.Tags,
+	ccol.Description,
+	{Name: "Status", Template: `{{ if .Info }}{{ .SessionStatus }}{{ end }}`},
+	{Name: "Activated", Template: `{{ if .Info }}{{ .Activated }}{{ end }}`},
+	{Name: "IMEILock", Template: `{{ if .Info }}{{ .IMEILock }}{{ end }}`},
+	{Name: "IPAddress", Template: `{{ if .Info }}{{ .IP }}{{ end }}`},
 }

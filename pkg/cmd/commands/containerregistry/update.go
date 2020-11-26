@@ -17,6 +17,7 @@ package containerregistry
 import (
 	"github.com/sacloud/libsacloud/v2/helper/service/containerregistry"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -65,7 +66,7 @@ func init() {
 }
 
 // Customize パラメータ変換処理
-func (p *updateParameter) Customize() error {
+func (p *updateParameter) Customize(_ cli.Context) error {
 	var users []*containerregistry.User
 	if p.UsersData != nil && *p.UsersData != "" {
 		if err := util.MarshalJSONFromPathOrContent(*p.UsersData, &users); err != nil {

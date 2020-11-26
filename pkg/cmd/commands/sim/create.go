@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package containerregistry
+package sim
 
 import (
-	"github.com/sacloud/libsacloud/v2/helper/service/containerregistry"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
-	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/pkg/util"
 )
 
 var createCommand = &core.Command{
@@ -45,12 +42,8 @@ type createParameter struct {
 	Tags        []string `validate:"tags"`
 	IconID      types.ID
 
-	AccessLevel    string `cli:",options=container_registry_access_levels" mapconv:",filters=container_registry_access_levels_to_value" validate:"required,container_registry_access_levels"`
-	SubDomainLabel string `validate:"required"`
-	VirtualDomain  string `validate:"omitempty,fqdn"`
-
-	UsersData string                    `cli:"users" mapconv:"-"`
-	Users     []*containerregistry.User `cli:"-"` // --parametersでファイルからパラメータ指定する場合向け
+	ICCID    string `cli:"iccid" validate:"required"`
+	PassCode string `cli:"passcode,aliases=pass-code" validate:"required"`
 }
 
 func newCreateParameter() *createParameter {
@@ -59,17 +52,4 @@ func newCreateParameter() *createParameter {
 
 func init() {
 	Resource.AddCommand(createCommand)
-}
-
-// Customize パラメータ変換処理
-func (p *createParameter) Customize(_ cli.Context) error {
-	var users []*containerregistry.User
-	if p.UsersData != "" {
-		if err := util.MarshalJSONFromPathOrContent(p.UsersData, &users); err != nil {
-			return err
-		}
-	}
-
-	p.Users = append(p.Users, users...)
-	return nil
 }

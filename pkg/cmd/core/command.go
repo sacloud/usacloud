@@ -171,7 +171,7 @@ func (c *Command) Run(ctx cli.Context, cmd *cobra.Command, args []string) error 
 	}
 
 	if customizer, ok := c.currentParameter.(ParameterCustomizer); ok {
-		if err := customizer.Customize(); err != nil {
+		if err := customizer.Customize(ctx); err != nil {
 			return err
 		}
 	}

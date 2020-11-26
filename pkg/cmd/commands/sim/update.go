@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package gslb
+package sim
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
-	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/pkg/util"
 )
 
 var updateCommand = &core.Command{
@@ -46,23 +43,6 @@ type updateParameter struct {
 	Description *string   `validate:"omitempty,description"`
 	Tags        *[]string `validate:"omitempty,tags"`
 	IconID      *types.ID
-
-	HealthCheck struct {
-		Protocol     *string `validate:"omitempty,gslb_protocol"`
-		HostHeader   *string
-		Path         *string
-		ResponseCode *int
-		Port         *int `validate:"omitempty,min=1,max=65535"`
-	} `mapconv:",omitempty"`
-
-	DelayLoop   *int `validate:"omitempty,min=10,max=60"`
-	Weighted    *bool
-	SorryServer *string `validate:"omitempty,ipv4"`
-
-	ServersData        *string              `cli:"servers" mapconv:"-"`
-	DestinationServers *sacloud.GSLBServers `cli:"-"`
-
-	SettingsHash string
 }
 
 func newUpdateParameter() *updateParameter {
@@ -73,20 +53,4 @@ func newUpdateParameter() *updateParameter {
 
 func init() {
 	Resource.AddCommand(updateCommand)
-}
-
-// Customize パラメータ変換処理
-func (p *updateParameter) Customize(_ cli.Context) error {
-	if p.ServersData != nil && *p.ServersData != "" {
-		var servers sacloud.GSLBServers
-		if err := util.MarshalJSONFromPathOrContent(*p.ServersData, &servers); err != nil {
-			return err
-		}
-		if p.DestinationServers == nil {
-			p.DestinationServers = &sacloud.GSLBServers{}
-		}
-		*p.DestinationServers = append(*p.DestinationServers, servers...)
-	}
-
-	return nil
 }

@@ -1,4 +1,4 @@
-// Copyright 2017-2020 The Usacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,10 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package sim
 
-import "github.com/sacloud/usacloud/pkg/cli"
+import "github.com/sacloud/libsacloud/v2/sacloud"
 
-type ParameterCustomizer interface {
-	Customize(ctx cli.Context) error
+// Service provides a high-level API of for SIM
+type Service struct {
+	caller sacloud.APICaller
+}
+
+// New returns new service instance of SIM
+func New(caller sacloud.APICaller) *Service {
+	return &Service{caller: caller}
 }

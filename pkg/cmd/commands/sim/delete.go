@@ -12,67 +12,50 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dns
+package sim
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/pkg/util"
 )
 
-var updateCommand = &core.Command{
-	Name:         "update",
+var deleteCommand = &core.Command{
+	Name:         "delete",
+	Aliases:      []string{"rm"},
 	Category:     "basic",
-	Order:        40,
+	Order:        50,
 	SelectorType: core.SelectorTypeRequireMulti,
 
-	ColumnDefs: defaultColumnDefs,
-
 	ParameterInitializer: func() interface{} {
-		return newUpdateParameter()
+		return newDeleteParameter()
 	},
 }
 
-type updateParameter struct {
+type deleteParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
 	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name        *string   `validate:"omitempty,min=1"`
-	Description *string   `validate:"omitempty,description"`
-	Tags        *[]string `validate:"omitempty,tags"`
-	IconID      *types.ID
+	FailIfNotFound bool
 
-	RecordsData *string             `cli:"records" mapconv:"-"`
-	Records     *sacloud.DNSRecords `cli:"-"`
+	WaitForRelease        bool
+	WaitForReleaseTimeout int
+	WaitForReleaseTick    int
+	Zones                 []string `cli:"-"` // Note: Customizeの中でctxから受け取る
 }
 
-func newUpdateParameter() *updateParameter {
-	return &updateParameter{
-		// TODO デフォルト値はここで設定する
-	}
+func newDeleteParameter() *deleteParameter {
+	return &deleteParameter{}
 }
 
 func init() {
-	Resource.AddCommand(updateCommand)
+	Resource.AddCommand(deleteCommand)
 }
 
 // Customize パラメータ変換処理
-func (p *updateParameter) Customize(_ cli.Context) error {
-	if p.RecordsData != nil && *p.RecordsData != "" {
-		var records sacloud.DNSRecords
-		if err := util.MarshalJSONFromPathOrContent(*p.RecordsData, &records); err != nil {
-			return err
-		}
-		if p.Records == nil {
-			p.Records = &sacloud.DNSRecords{}
-		}
-		*p.Records = append(*p.Records, records...)
-	}
-
+func (p *deleteParameter) Customize(ctx cli.Context) error {
+	p.Zones = ctx.Option().Zones
 	return nil
 }

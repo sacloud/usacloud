@@ -48,6 +48,12 @@ var (
 		DisplayName: "Appliance",
 		Order:       40,
 	}
+
+	ResourceCategorySecureMobile = Category{
+		Key:         "securemobile",
+		DisplayName: "SecureMobile",
+		Order:       45,
+	}
 	ResourceCategoryCommonServiceItem = Category{
 		Key:         "commonserviceitem",
 		DisplayName: "Common service items",

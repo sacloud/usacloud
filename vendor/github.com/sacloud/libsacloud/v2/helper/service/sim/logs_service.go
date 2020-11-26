@@ -1,4 +1,4 @@
-// Copyright 2017-2020 The Usacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,10 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package sim
 
-import "github.com/sacloud/usacloud/pkg/cli"
+import (
+	"context"
 
-type ParameterCustomizer interface {
-	Customize(ctx cli.Context) error
+	"github.com/sacloud/libsacloud/v2/sacloud"
+)
+
+func (s *Service) Logs(req *LogsRequest) ([]*sacloud.SIMLog, error) {
+	return s.LogsWithContext(context.Background(), req)
+}
+
+func (s *Service) LogsWithContext(ctx context.Context, req *LogsRequest) ([]*sacloud.SIMLog, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+
+	client := sacloud.NewSIMOp(s.caller)
+	results, err := client.Logs(ctx, req.ID)
+	if err != nil {
+		return nil, err
+	}
+	return results.Logs, nil
 }
