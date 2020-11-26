@@ -1,4 +1,4 @@
-// Copyright 2017-2020 The Usacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,10 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package sim
 
-import "github.com/sacloud/usacloud/pkg/cli"
+import (
+	"time"
 
-type ParameterCustomizer interface {
-	Customize(ctx cli.Context) error
+	"github.com/sacloud/libsacloud/v2/helper/validate"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
+)
+
+type MonitorSIMRequest struct {
+	ID types.ID `request:"-" validate:"required"`
+
+	Start time.Time
+	End   time.Time
+}
+
+func (req *MonitorSIMRequest) Validate() error {
+	return validate.Struct(req)
 }

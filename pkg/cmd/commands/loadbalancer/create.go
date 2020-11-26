@@ -17,6 +17,7 @@ package loadbalancer
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/util"
@@ -68,7 +69,7 @@ func init() {
 }
 
 // Customize パラメータ変換処理
-func (p *createParameter) Customize() error {
+func (p *createParameter) Customize(_ cli.Context) error {
 	if p.VirtualIPAddressesData != "" {
 		var vips sacloud.LoadBalancerVirtualIPAddresses
 		if err := util.MarshalJSONFromPathOrContent(p.VirtualIPAddressesData, &vips); err != nil {
