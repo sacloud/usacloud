@@ -41,6 +41,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/licenseinfo"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/loadbalancer"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/localrouter"
+	mobilegateway "github.com/sacloud/usacloud/pkg/cmd/commands/mobilegateway"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/privatehostplan"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/serverplan"
@@ -78,6 +79,7 @@ var Resources = core.Resources{
 	licenseinfo.Resource,
 	loadbalancer.Resource,
 	localrouter.Resource,
+	mobilegateway.Resource,
 	note.Resource,
 	privatehostplan.Resource,
 	serverplan.Resource,

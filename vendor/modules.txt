@@ -51,6 +51,7 @@ github.com/sacloud/libsacloud/v2/helper/builder/archive
 github.com/sacloud/libsacloud/v2/helper/builder/database
 github.com/sacloud/libsacloud/v2/helper/builder/disk
 github.com/sacloud/libsacloud/v2/helper/builder/localrouter
+github.com/sacloud/libsacloud/v2/helper/builder/mobilegateway
 github.com/sacloud/libsacloud/v2/helper/builder/sim
 github.com/sacloud/libsacloud/v2/helper/cleanup
 github.com/sacloud/libsacloud/v2/helper/power
@@ -81,6 +82,7 @@ github.com/sacloud/libsacloud/v2/helper/service/license
 github.com/sacloud/libsacloud/v2/helper/service/licenseinfo
 github.com/sacloud/libsacloud/v2/helper/service/loadbalancer
 github.com/sacloud/libsacloud/v2/helper/service/localrouter
+github.com/sacloud/libsacloud/v2/helper/service/mobilegateway
 github.com/sacloud/libsacloud/v2/helper/service/note
 github.com/sacloud/libsacloud/v2/helper/service/privatehostplan
 github.com/sacloud/libsacloud/v2/helper/service/serverplan
