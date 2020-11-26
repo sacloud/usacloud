@@ -12,36 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package internet
+package localrouter
 
 import (
 	"context"
 
-	"github.com/sacloud/libsacloud/v2/helper/cleanup"
 	"github.com/sacloud/libsacloud/v2/helper/service"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 )
 
-func (s *Service) Delete(req *DeleteRequest) error {
-	return s.DeleteWithContext(context.Background(), req)
+func (s *Service) MonitorLocalRouter(req *MonitorLocalRouterRequest) ([]*sacloud.MonitorLocalRouterValue, error) {
+	return s.MonitorLocalRouterWithContext(context.Background(), req)
 }
 
-func (s *Service) DeleteWithContext(ctx context.Context, req *DeleteRequest) error {
+func (s *Service) MonitorLocalRouterWithContext(ctx context.Context, req *MonitorLocalRouterRequest) ([]*sacloud.MonitorLocalRouterValue, error) {
 	if err := req.Validate(); err != nil {
-		return err
+		return nil, err
 	}
 
-	client := sacloud.NewInternetOp(s.caller)
-
-	if req.Force {
-		if err := cleanup.DeleteInternet(ctx, client, req.Zone, req.ID); err != nil {
-			return service.HandleNotFoundError(err, !req.FailIfNotFound)
-		}
-	} else {
-		if err := client.Delete(ctx, req.Zone, req.ID); err != nil {
-			return service.HandleNotFoundError(err, !req.FailIfNotFound)
-		}
+	client := sacloud.NewLocalRouterOp(s.caller)
+	cond, err := service.MonitorCondition(req.Start, req.End)
+	if err != nil {
+		return nil, err
 	}
 
-	return nil
+	values, err := client.MonitorLocalRouter(ctx, req.ID, cond)
+	if err != nil {
+		return nil, err
+	}
+	return values.Values, nil
 }

@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package database
+package cleanup
 
 import (
-	"github.com/sacloud/libsacloud/v2/helper/validate"
+	"context"
+	"fmt"
+
+	"github.com/sacloud/libsacloud/v2/helper/query"
+	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
-type DeleteRequest struct {
-	Zone string   `request:"-" validate:"required"`
-	ID   types.ID `request:"-" validate:"required"`
-
-	FailIfNotFound bool `request:"-"`
-	Force          bool `request:"-"` // trueの場合は電源OFF(強制終了)してから削除
-}
-
-func (req *DeleteRequest) Validate() error {
-	return validate.Struct(req)
+// DeleteSwitch 他のリソースから参照されていないかを確認した上で削除する
+func DeleteSwitch(ctx context.Context, caller sacloud.APICaller, zone string, id types.ID, option query.CheckReferencedOption) error {
+	if err := query.WaitWhileSwitchIsReferenced(ctx, caller, zone, id, option); err != nil {
+		return fmt.Errorf("Switch[%s] is still being used by other resources: %s", id, err)
+	}
+	return sacloud.NewSwitchOp(caller).Delete(ctx, zone, id)
 }

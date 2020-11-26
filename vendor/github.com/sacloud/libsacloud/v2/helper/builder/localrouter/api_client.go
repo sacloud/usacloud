@@ -12,21 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package database
+package localrouter
 
-import (
-	"github.com/sacloud/libsacloud/v2/helper/validate"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
-)
+import "github.com/sacloud/libsacloud/v2/sacloud"
 
-type DeleteRequest struct {
-	Zone string   `request:"-" validate:"required"`
-	ID   types.ID `request:"-" validate:"required"`
-
-	FailIfNotFound bool `request:"-"`
-	Force          bool `request:"-"` // trueの場合は電源OFF(強制終了)してから削除
+// APIClient builderが利用するAPIクライアント
+type APIClient struct {
+	LocalRouter sacloud.LocalRouterAPI
 }
 
-func (req *DeleteRequest) Validate() error {
-	return validate.Struct(req)
+// NewAPIClient builderが利用するAPIクライアントを返す
+func NewAPIClient(caller sacloud.APICaller) *APIClient {
+	return &APIClient{
+		LocalRouter: sacloud.NewLocalRouterOp(caller),
+	}
 }

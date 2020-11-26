@@ -24,6 +24,10 @@ type DeleteRequest struct {
 	ID   types.ID `request:"-" validate:"required"`
 
 	FailIfNotFound bool `request:"-"`
+
+	WaitForRelease        bool `request:"-"` // trueの場合、他リソースから参照されている間は削除を待ち合わせし続ける
+	WaitForReleaseTimeout int  // WaitForReleaseがtrueの場合の待ち時間タイムアウト(デフォルト:1時間)
+	WaitForReleaseTick    int  // WaitForReleaseがtrueの場合の待ち処理のポーリング間隔(デフォルト:5秒)
 }
 
 func (req *DeleteRequest) Validate() error {

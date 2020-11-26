@@ -12,24 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package disk
+package localrouter
 
 import (
 	"github.com/sacloud/libsacloud/v2/helper/validate"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
-type DeleteRequest struct {
-	Zone string   `request:"-" validate:"required"`
-	ID   types.ID `request:"-" validate:"required"`
-
-	FailIfNotFound bool `request:"-"`
-
-	WaitForRelease        bool `request:"-"` // trueの場合、他リソースから参照されている間は削除を待ち合わせし続ける
-	WaitForReleaseTimeout int  // WaitForReleaseがtrueの場合の待ち時間タイムアウト(デフォルト:1時間)
-	WaitForReleaseTick    int  // WaitForReleaseがtrueの場合の待ち処理のポーリング間隔(デフォルト:5秒)
+type ReadRequest struct {
+	ID types.ID `request:"-" validate:"required"`
 }
 
-func (req *DeleteRequest) Validate() error {
+func (req *ReadRequest) Validate() error {
 	return validate.Struct(req)
 }

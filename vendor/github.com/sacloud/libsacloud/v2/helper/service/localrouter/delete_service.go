@@ -12,14 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package disk
+package localrouter
 
 import (
 	"context"
-	"time"
 
-	"github.com/sacloud/libsacloud/v2/helper/cleanup"
-	"github.com/sacloud/libsacloud/v2/helper/query"
 	"github.com/sacloud/libsacloud/v2/helper/service"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 )
@@ -33,19 +30,9 @@ func (s *Service) DeleteWithContext(ctx context.Context, req *DeleteRequest) err
 		return err
 	}
 
-	if req.WaitForRelease {
-		opt := query.CheckReferencedOption{
-			Timeout: time.Duration(req.WaitForReleaseTimeout) * time.Second,
-			Tick:    time.Duration(req.WaitForReleaseTick) * time.Second,
-		}
-		if err := cleanup.DeleteDisk(ctx, s.caller, req.Zone, req.ID, opt); err != nil {
-			return service.HandleNotFoundError(err, !req.FailIfNotFound)
-		}
-	} else {
-		client := sacloud.NewDiskOp(s.caller)
-		if err := client.Delete(ctx, req.Zone, req.ID); err != nil {
-			return service.HandleNotFoundError(err, !req.FailIfNotFound)
-		}
+	client := sacloud.NewLocalRouterOp(s.caller)
+	if err := client.Delete(ctx, req.ID); err != nil {
+		return service.HandleNotFoundError(err, !req.FailIfNotFound)
 	}
 	return nil
 }

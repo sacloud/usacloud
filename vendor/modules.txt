@@ -43,13 +43,15 @@ github.com/olekukonko/tablewriter
 github.com/pmezard/go-difflib/difflib
 # github.com/sacloud/ftps v1.1.0
 github.com/sacloud/ftps
-# github.com/sacloud/libsacloud/v2 v2.8.11-0.20201125052508-22421a0f8f07
+# github.com/sacloud/libsacloud/v2 v2.8.11-0.20201126074100-05e0c61e131b
 github.com/sacloud/libsacloud/v2
 github.com/sacloud/libsacloud/v2/helper/api
 github.com/sacloud/libsacloud/v2/helper/builder
 github.com/sacloud/libsacloud/v2/helper/builder/archive
 github.com/sacloud/libsacloud/v2/helper/builder/database
 github.com/sacloud/libsacloud/v2/helper/builder/disk
+github.com/sacloud/libsacloud/v2/helper/builder/localrouter
+github.com/sacloud/libsacloud/v2/helper/cleanup
 github.com/sacloud/libsacloud/v2/helper/power
 github.com/sacloud/libsacloud/v2/helper/query
 github.com/sacloud/libsacloud/v2/helper/service
@@ -77,6 +79,7 @@ github.com/sacloud/libsacloud/v2/helper/service/ipv6net
 github.com/sacloud/libsacloud/v2/helper/service/license
 github.com/sacloud/libsacloud/v2/helper/service/licenseinfo
 github.com/sacloud/libsacloud/v2/helper/service/loadbalancer
+github.com/sacloud/libsacloud/v2/helper/service/localrouter
 github.com/sacloud/libsacloud/v2/helper/service/note
 github.com/sacloud/libsacloud/v2/helper/service/privatehostplan
 github.com/sacloud/libsacloud/v2/helper/service/serverplan

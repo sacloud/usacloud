@@ -12,21 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package database
+package localrouter
 
 import (
-	"github.com/sacloud/libsacloud/v2/helper/validate"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"context"
+
+	"github.com/sacloud/libsacloud/v2/sacloud"
 )
 
-type DeleteRequest struct {
-	Zone string   `request:"-" validate:"required"`
-	ID   types.ID `request:"-" validate:"required"`
-
-	FailIfNotFound bool `request:"-"`
-	Force          bool `request:"-"` // trueの場合は電源OFF(強制終了)してから削除
+func (s *Service) Update(req *UpdateRequest) (*sacloud.LocalRouter, error) {
+	return s.UpdateWithContext(context.Background(), req)
 }
 
-func (req *DeleteRequest) Validate() error {
-	return validate.Struct(req)
+func (s *Service) UpdateWithContext(ctx context.Context, req *UpdateRequest) (*sacloud.LocalRouter, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+
+	builder, err := req.Builder(ctx, s.caller)
+	if err != nil {
+		return nil, err
+	}
+	return builder.Build(ctx)
 }

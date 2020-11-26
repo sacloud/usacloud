@@ -90,12 +90,15 @@ func (p *Parser) parseField(flagPrefix, fieldPrefix string, f reflect.StructFiel
 	if tag.FieldName == "" {
 		tag.FieldName = f.Name
 	}
+
 	if !tag.Squash {
 		if flagPrefix != "" && tag.FlagName != "" {
 			tag.FlagName = fmt.Sprintf("%s-%s", flagPrefix, tag.FlagName)
 		}
 		flagPrefix = tag.FlagName
+	}
 
+	if !f.Anonymous {
 		if fieldPrefix != "" && tag.FieldName != "" {
 			tag.FieldName = fmt.Sprintf("%s.%s", fieldPrefix, tag.FieldName)
 		}
