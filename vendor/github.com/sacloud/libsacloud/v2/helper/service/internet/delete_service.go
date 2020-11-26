@@ -17,6 +17,7 @@ package internet
 import (
 	"context"
 
+	"github.com/sacloud/libsacloud/v2/helper/cleanup"
 	"github.com/sacloud/libsacloud/v2/helper/service"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 )
@@ -31,8 +32,16 @@ func (s *Service) DeleteWithContext(ctx context.Context, req *DeleteRequest) err
 	}
 
 	client := sacloud.NewInternetOp(s.caller)
-	if err := client.Delete(ctx, req.Zone, req.ID); err != nil {
-		return service.HandleNotFoundError(err, !req.FailIfNotFound)
+
+	if req.Force {
+		if err := cleanup.DeleteInternet(ctx, client, req.Zone, req.ID); err != nil {
+			return service.HandleNotFoundError(err, !req.FailIfNotFound)
+		}
+	} else {
+		if err := client.Delete(ctx, req.Zone, req.ID); err != nil {
+			return service.HandleNotFoundError(err, !req.FailIfNotFound)
+		}
 	}
+
 	return nil
 }

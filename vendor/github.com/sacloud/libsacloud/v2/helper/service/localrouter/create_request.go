@@ -25,8 +25,8 @@ type CreateRequest struct {
 	Description  string `validate:"min=0,max=512"`
 	Tags         types.Tags
 	IconID       types.ID
-	Switch       *sacloud.LocalRouterSwitch    `validate:"required_with=Interface"`
-	Interface    *sacloud.LocalRouterInterface `validate:"required_with=Switch"`
+	Switch       *sacloud.LocalRouterSwitch    `request:",omitempty" validate:"required_with=Interface"`
+	Interface    *sacloud.LocalRouterInterface `request:",omitempty" validate:"required_with=Switch"`
 	Peers        []*sacloud.LocalRouterPeer
 	StaticRoutes []*sacloud.LocalRouterStaticRoute
 }

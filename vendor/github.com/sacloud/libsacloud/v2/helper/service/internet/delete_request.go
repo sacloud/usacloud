@@ -24,6 +24,7 @@ type DeleteRequest struct {
 	ID   types.ID `request:"-" validate:"required"`
 
 	FailIfNotFound bool `request:"-"`
+	Force          bool `request:"-"` // trueの場合IPv6やサブネットも一緒に削除する(falseの場合これらがあるとDeleteでエラーとなる)
 }
 
 func (req *DeleteRequest) Validate() error {
