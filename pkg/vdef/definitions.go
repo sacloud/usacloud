@@ -98,6 +98,10 @@ var definitions = map[string][]*definition{
 		{key: types.Scopes.Shared.String(), value: types.Scopes.Shared},
 	},
 	"os_type": ostypeDefinition(),
+	"nfs_plan": {
+		{key: "ssd", value: types.NFSPlans.SSD},
+		{key: "hdd", value: types.NFSPlans.HDD},
+	},
 	"note_class": {
 		{key: "shell", value: "shell"},
 		{key: "yaml_cloud_config", value: "sheyaml_cloud_configll"},
