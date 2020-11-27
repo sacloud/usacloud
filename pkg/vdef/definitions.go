@@ -102,6 +102,25 @@ var definitions = map[string][]*definition{
 		{key: "dynamic", value: "dynamic"},
 		{key: "ms_windows", value: "ms_windows"},
 	},
+	"proxylb_plan": {
+		{key: types.ProxyLBPlans.CPS100.String(), value: types.ProxyLBPlans.CPS100},
+		{key: types.ProxyLBPlans.CPS500.String(), value: types.ProxyLBPlans.CPS500},
+		{key: types.ProxyLBPlans.CPS1000.String(), value: types.ProxyLBPlans.CPS1000},
+		{key: types.ProxyLBPlans.CPS5000.String(), value: types.ProxyLBPlans.CPS5000},
+		{key: types.ProxyLBPlans.CPS10000.String(), value: types.ProxyLBPlans.CPS10000},
+		{key: types.ProxyLBPlans.CPS50000.String(), value: types.ProxyLBPlans.CPS50000},
+		{key: types.ProxyLBPlans.CPS100000.String(), value: types.ProxyLBPlans.CPS100000},
+	},
+	"proxylb_protocol": {
+		{key: types.ProxyLBProtocols.HTTP.String(), value: types.ProxyLBProtocols.HTTP},
+		{key: types.ProxyLBProtocols.TCP.String(), value: types.ProxyLBProtocols.TCP},
+	},
+	"proxylb_region": {
+		{key: types.ProxyLBRegions.TK1.String(), value: types.ProxyLBRegions.TK1},
+		{key: types.ProxyLBRegions.IS1.String(), value: types.ProxyLBRegions.IS1},
+		{key: types.ProxyLBRegions.Anycast.String(), value: types.ProxyLBRegions.Anycast},
+	},
+
 	"nfs_plan": {
 		{key: "ssd", value: types.NFSPlans.SSD},
 		{key: "hdd", value: types.NFSPlans.HDD},

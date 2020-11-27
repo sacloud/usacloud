@@ -17,14 +17,13 @@
 package services
 
 import (
-	service "github.com/sacloud/libsacloud/v2/helper/service/packetfilter"
+	service "github.com/sacloud/libsacloud/v2/helper/service/proxylb"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/conv"
 )
 
 func init() {
-	setDefaultServiceFunc("packetfilter", "list",
+	setDefaultServiceFunc("proxy-lb", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
 
@@ -49,10 +48,10 @@ func init() {
 
 		},
 	)
-	setDefaultListAllFunc("packetfilter", "list",
+	setDefaultListAllFunc("proxy-lb", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
 			if err != nil {
 				return nil, err
 			}
@@ -64,7 +63,7 @@ func init() {
 			return results, nil
 		},
 	)
-	setDefaultServiceFunc("packetfilter", "create",
+	setDefaultServiceFunc("proxy-lb", "create",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
 
@@ -85,10 +84,10 @@ func init() {
 
 		},
 	)
-	setDefaultListAllFunc("packetfilter", "create",
+	setDefaultListAllFunc("proxy-lb", "create",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
 			if err != nil {
 				return nil, err
 			}
@@ -100,7 +99,7 @@ func init() {
 			return results, nil
 		},
 	)
-	setDefaultServiceFunc("packetfilter", "read",
+	setDefaultServiceFunc("proxy-lb", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
 
@@ -121,10 +120,10 @@ func init() {
 
 		},
 	)
-	setDefaultListAllFunc("packetfilter", "read",
+	setDefaultListAllFunc("proxy-lb", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
 			if err != nil {
 				return nil, err
 			}
@@ -136,7 +135,7 @@ func init() {
 			return results, nil
 		},
 	)
-	setDefaultServiceFunc("packetfilter", "update",
+	setDefaultServiceFunc("proxy-lb", "update",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
 
@@ -157,10 +156,10 @@ func init() {
 
 		},
 	)
-	setDefaultListAllFunc("packetfilter", "update",
+	setDefaultListAllFunc("proxy-lb", "update",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
 			if err != nil {
 				return nil, err
 			}
@@ -172,7 +171,7 @@ func init() {
 			return results, nil
 		},
 	)
-	setDefaultServiceFunc("packetfilter", "delete",
+	setDefaultServiceFunc("proxy-lb", "delete",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
 
@@ -193,10 +192,122 @@ func init() {
 
 		},
 	)
-	setDefaultListAllFunc("packetfilter", "delete",
+	setDefaultListAllFunc("proxy-lb", "delete",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	setDefaultServiceFunc("proxy-lb", "health-status",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+
+			req := &service.HealthStatusRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			res, err := svc.HealthStatusWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return []interface{}{res}, nil
+
+		},
+	)
+	setDefaultListAllFunc("proxy-lb", "health-status",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	setDefaultServiceFunc("proxy-lb", "renew-lets-encrypt-cert",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+
+			req := &service.RenewLetsEncryptCertRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			err := svc.RenewLetsEncryptCertWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return nil, nil
+
+		},
+	)
+	setDefaultListAllFunc("proxy-lb", "renew-lets-encrypt-cert",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	setDefaultServiceFunc("proxy-lb", "monitor-connection",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+
+			req := &service.MonitorConnectionRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			res, err := svc.MonitorConnectionWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+
+		},
+	)
+	setDefaultListAllFunc("proxy-lb", "monitor-connection",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
 			if err != nil {
 				return nil, err
 			}
