@@ -98,6 +98,10 @@ var definitions = map[string][]*definition{
 		{key: types.Scopes.Shared.String(), value: types.Scopes.Shared},
 	},
 	"os_type": ostypeDefinition(),
+	"private_host_class": {
+		{key: "dynamic", value: "dynamic"},
+		{key: "ms_windows", value: "ms_windows"},
+	},
 	"nfs_plan": {
 		{key: "ssd", value: types.NFSPlans.SSD},
 		{key: "hdd", value: types.NFSPlans.HDD},

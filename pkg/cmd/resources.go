@@ -45,6 +45,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/nfs"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/packetfilter"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/privatehost"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/privatehostplan"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/serverplan"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/serviceclass"
@@ -85,6 +86,7 @@ var Resources = core.Resources{
 	nfs.Resource,
 	note.Resource,
 	packetfilter.Resource,
+	privatehost.Resource,
 	privatehostplan.Resource,
 	serverplan.Resource,
 	serviceclass.Resource,
