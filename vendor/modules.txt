@@ -96,6 +96,7 @@ github.com/sacloud/libsacloud/v2/helper/service/serverplan
 github.com/sacloud/libsacloud/v2/helper/service/serviceclass
 github.com/sacloud/libsacloud/v2/helper/service/sim
 github.com/sacloud/libsacloud/v2/helper/service/simplemonitor
+github.com/sacloud/libsacloud/v2/helper/service/sshkey
 github.com/sacloud/libsacloud/v2/helper/service/swytch
 github.com/sacloud/libsacloud/v2/helper/service/zone
 github.com/sacloud/libsacloud/v2/helper/setup
