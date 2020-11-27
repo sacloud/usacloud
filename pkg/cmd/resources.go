@@ -44,6 +44,7 @@ import (
 	mobilegateway "github.com/sacloud/usacloud/pkg/cmd/commands/mobilegateway"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/nfs"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/note"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/packetfilter"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/privatehostplan"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/serverplan"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/serviceclass"
@@ -83,6 +84,7 @@ var Resources = core.Resources{
 	mobilegateway.Resource,
 	nfs.Resource,
 	note.Resource,
+	packetfilter.Resource,
 	privatehostplan.Resource,
 	serverplan.Resource,
 	serviceclass.Resource,
