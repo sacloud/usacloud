@@ -86,6 +86,7 @@ github.com/sacloud/libsacloud/v2/helper/service/mobilegateway
 github.com/sacloud/libsacloud/v2/helper/service/nfs
 github.com/sacloud/libsacloud/v2/helper/service/note
 github.com/sacloud/libsacloud/v2/helper/service/packetfilter
+github.com/sacloud/libsacloud/v2/helper/service/privatehost
 github.com/sacloud/libsacloud/v2/helper/service/privatehostplan
 github.com/sacloud/libsacloud/v2/helper/service/serverplan
 github.com/sacloud/libsacloud/v2/helper/service/serviceclass
