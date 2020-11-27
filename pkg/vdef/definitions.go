@@ -137,7 +137,18 @@ var definitions = map[string][]*definition{
 		{key: "g100", value: types.PlanGenerations.G100},
 		{key: "g200", value: types.PlanGenerations.G200},
 	},
-
+	"simple_monitor_protocol": {
+		{key: types.SimpleMonitorProtocols.HTTP.String(), value: types.SimpleMonitorProtocols.HTTP},
+		{key: types.SimpleMonitorProtocols.HTTPS.String(), value: types.SimpleMonitorProtocols.HTTPS},
+		{key: types.SimpleMonitorProtocols.Ping.String(), value: types.SimpleMonitorProtocols.Ping},
+		{key: types.SimpleMonitorProtocols.TCP.String(), value: types.SimpleMonitorProtocols.TCP},
+		{key: types.SimpleMonitorProtocols.DNS.String(), value: types.SimpleMonitorProtocols.DNS},
+		{key: types.SimpleMonitorProtocols.SSH.String(), value: types.SimpleMonitorProtocols.SSH},
+		{key: types.SimpleMonitorProtocols.SMTP.String(), value: types.SimpleMonitorProtocols.SMTP},
+		{key: types.SimpleMonitorProtocols.POP3.String(), value: types.SimpleMonitorProtocols.POP3},
+		{key: types.SimpleMonitorProtocols.SNMP.String(), value: types.SimpleMonitorProtocols.SNMP},
+		{key: types.SimpleMonitorProtocols.SSLCertificate.String(), value: types.SimpleMonitorProtocols.SSLCertificate},
+	},
 	"weekdays": {
 		{key: "all", value: "all"},
 		{key: types.BackupSpanWeekdays.Sunday.String(), value: types.BackupSpanWeekdays.Sunday},

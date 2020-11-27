@@ -53,6 +53,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/serverplan"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/serviceclass"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/sim"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/simplemonitor"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/swytch"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/zone"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -97,6 +98,7 @@ var Resources = core.Resources{
 	serverplan.Resource,
 	serviceclass.Resource,
 	sim.Resource,
+	simplemonitor.Resource,
 	swytch.Resource,
 	zone.Resource,
 }
