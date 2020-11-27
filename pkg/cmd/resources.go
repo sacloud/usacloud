@@ -49,6 +49,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/privatehostplan"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/proxylb"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/region"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/server"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/serverplan"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/serviceclass"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/sim"
@@ -92,6 +93,7 @@ var Resources = core.Resources{
 	privatehostplan.Resource,
 	proxylb.Resource,
 	region.Resource,
+	server.Resource,
 	serverplan.Resource,
 	serviceclass.Resource,
 	sim.Resource,

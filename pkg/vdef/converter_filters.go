@@ -21,6 +21,8 @@ import (
 	"reflect"
 	"time"
 
+	"github.com/sacloud/libsacloud/v2/pkg/size"
+
 	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
 
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
@@ -39,6 +41,16 @@ var ConverterFilters = map[string]mapconv.FilterFunc{
 	"weekdays":        weekdaysFilter,
 	"dereference":     dereferenceFilter,
 	"base64encode":    base64Encode,
+	"gib_to_mib": func(v interface{}) (interface{}, error) {
+		if v == nil {
+			return nil, nil
+		}
+		sv, ok := v.(int)
+		if !ok {
+			return nil, fmt.Errorf("invalid value: %v", v)
+		}
+		return size.GiBToMiB(sv), nil
+	},
 }
 
 func strToTime(v interface{}) (interface{}, error) {
