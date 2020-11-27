@@ -93,9 +93,13 @@ var definitions = map[string][]*definition{
 		{key: "standard", value: types.LoadBalancerPlans.Standard},
 		{key: "highspec", value: types.LoadBalancerPlans.HighSpec},
 	},
-	"scope": {
-		{key: types.Scopes.User.String(), value: types.Scopes.User},
-		{key: types.Scopes.Shared.String(), value: types.Scopes.Shared},
+	"nfs_plan": {
+		{key: "ssd", value: types.NFSPlans.SSD},
+		{key: "hdd", value: types.NFSPlans.HDD},
+	},
+	"note_class": {
+		{key: "shell", value: "shell"},
+		{key: "yaml_cloud_config", value: "sheyaml_cloud_configll"},
 	},
 	"os_type": ostypeDefinition(),
 	"private_host_class": {
@@ -120,15 +124,20 @@ var definitions = map[string][]*definition{
 		{key: types.ProxyLBRegions.IS1.String(), value: types.ProxyLBRegions.IS1},
 		{key: types.ProxyLBRegions.Anycast.String(), value: types.ProxyLBRegions.Anycast},
 	},
+	"scope": {
+		{key: types.Scopes.User.String(), value: types.Scopes.User},
+		{key: types.Scopes.Shared.String(), value: types.Scopes.Shared},
+	},
+	"server_plan_commitment": {
+		{key: types.Commitments.Standard.String(), value: types.Commitments.Standard},
+		{key: types.Commitments.DedicatedCPU.String(), value: types.Commitments.DedicatedCPU},
+	},
+	"server_plan_generation": {
+		{key: "default", value: types.PlanGenerations.Default},
+		{key: "g100", value: types.PlanGenerations.G100},
+		{key: "g200", value: types.PlanGenerations.G200},
+	},
 
-	"nfs_plan": {
-		{key: "ssd", value: types.NFSPlans.SSD},
-		{key: "hdd", value: types.NFSPlans.HDD},
-	},
-	"note_class": {
-		{key: "shell", value: "shell"},
-		{key: "yaml_cloud_config", value: "sheyaml_cloud_configll"},
-	},
 	"weekdays": {
 		{key: "all", value: "all"},
 		{key: types.BackupSpanWeekdays.Sunday.String(), value: types.BackupSpanWeekdays.Sunday},
