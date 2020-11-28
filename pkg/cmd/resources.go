@@ -57,6 +57,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/sshkey"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/subnet"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/swytch"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/vpcrouter"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/zone"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/cmd/root"
@@ -104,6 +105,7 @@ var Resources = core.Resources{
 	sshkey.Resource,
 	subnet.Resource,
 	swytch.Resource,
+	vpcrouter.Resource,
 	zone.Resource,
 }
 

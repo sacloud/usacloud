@@ -54,6 +54,7 @@ github.com/sacloud/libsacloud/v2/helper/builder/localrouter
 github.com/sacloud/libsacloud/v2/helper/builder/mobilegateway
 github.com/sacloud/libsacloud/v2/helper/builder/server
 github.com/sacloud/libsacloud/v2/helper/builder/sim
+github.com/sacloud/libsacloud/v2/helper/builder/vpcrouter
 github.com/sacloud/libsacloud/v2/helper/cleanup
 github.com/sacloud/libsacloud/v2/helper/power
 github.com/sacloud/libsacloud/v2/helper/query
@@ -99,6 +100,7 @@ github.com/sacloud/libsacloud/v2/helper/service/simplemonitor
 github.com/sacloud/libsacloud/v2/helper/service/sshkey
 github.com/sacloud/libsacloud/v2/helper/service/subnet
 github.com/sacloud/libsacloud/v2/helper/service/swytch
+github.com/sacloud/libsacloud/v2/helper/service/vpcrouter
 github.com/sacloud/libsacloud/v2/helper/service/zone
 github.com/sacloud/libsacloud/v2/helper/setup
 github.com/sacloud/libsacloud/v2/helper/validate

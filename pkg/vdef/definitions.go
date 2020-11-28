@@ -149,6 +149,12 @@ var definitions = map[string][]*definition{
 		{key: types.SimpleMonitorProtocols.SNMP.String(), value: types.SimpleMonitorProtocols.SNMP},
 		{key: types.SimpleMonitorProtocols.SSLCertificate.String(), value: types.SimpleMonitorProtocols.SSLCertificate},
 	},
+	"vpc_router_plan": {
+		{key: "standard", value: types.VPCRouterPlans.Standard},
+		{key: "premium", value: types.VPCRouterPlans.Premium},
+		{key: "highspec", value: types.VPCRouterPlans.HighSpec},
+		{key: "highspec4000", value: types.VPCRouterPlans.HighSpec4000},
+	},
 	"weekdays": {
 		{key: "all", value: "all"},
 		{key: types.BackupSpanWeekdays.Sunday.String(), value: types.BackupSpanWeekdays.Sunday},
