@@ -25,7 +25,7 @@ var Resource = &core.Resource{
 	Name:        "private-host",
 	Aliases:     []string{"privatehost"},
 	ServiceType: reflect.TypeOf(&privatehost.Service{}),
-	Category:    core.ResourceCategoryNetworking,
+	Category:    core.ResourceCategoryComputing,
 	CommandCategories: []core.Category{
 		{
 			Key:         "basic",
