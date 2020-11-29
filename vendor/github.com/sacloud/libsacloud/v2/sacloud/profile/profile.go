@@ -133,19 +133,19 @@ type ConfigValue struct {
 	// UserAgent ユーザーエージェント
 	UserAgent string `json:",omitempty"`
 	// AcceptLanguage リクエスト時のAccept-Languageヘッダ
-	AcceptLanguage string `json:",omitempty"`
+	AcceptLanguage string
 
 	// RetryMax 423/503時のリトライ回数
-	RetryMax int `json:",omitempty"`
+	RetryMax int
 	// RetryMin 423/503時のリトライ間隔(最小) 単位:秒
-	RetryWaitMin int `json:",omitempty"`
+	RetryWaitMin int
 	// RetryMax 423/503時のリトライ間隔(最大) 単位:秒
-	RetryWaitMax int `json:",omitempty"`
+	RetryWaitMax int
 
 	// StatePollingTimeout StatePollWaiterでのタイムアウト 単位:秒
-	StatePollingTimeout int `json:",omitempty"`
+	StatePollingTimeout int
 	// StatePollingInterval StatePollWaiterでのポーリング間隔 単位:秒
-	StatePollingInterval int `json:",omitempty"`
+	StatePollingInterval int
 
 	// HTTPRequestTimeout APIリクエスト時のHTTPタイムアウト 単位:秒
 	HTTPRequestTimeout int
@@ -153,17 +153,17 @@ type ConfigValue struct {
 	HTTPRequestRateLimit int
 
 	// APIRootURL APIのルートURL
-	APIRootURL string `json:",omitempty"`
+	APIRootURL string
 
 	// DefaultZone グローバルリソースAPIを呼ぶ際に指定するゾーン
-	DefaultZone string `json:",omitempty"`
+	DefaultZone string
 
 	// TraceMode トレースモード
-	TraceMode string `json:",omitempty"`
+	TraceMode string
 	// FakeMode フェイクモード有効化
-	FakeMode bool `json:",omitempty"`
+	FakeMode bool
 	// FakeStorePath フェイクモードでのファイルストアパス
-	FakeStorePath string `json:",omitempty"`
+	FakeStorePath string
 }
 
 func (o *ConfigValue) traceModeValue() string {

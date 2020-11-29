@@ -16,21 +16,24 @@ package vdef
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
 var validatorAliases = map[string]string{
-	"description": "max=512",
-	"tags":        "max=10,dive,max=32",
-	"weekdays":    fmt.Sprintf("unique,dive,oneof=%s", joinWithSpace(append([]string{"all"}, types.BackupWeekdayStrings...))),
+	"description":  "max=512",
+	"tags":         "max=10,dive,max=32",
+	"profile_name": fmt.Sprintf("excludesrune=%s", string(os.PathListSeparator)),
+	"output_type":  "oneof=table json yaml",
+	"weekdays":     fmt.Sprintf("unique,dive,oneof=%s", joinWithSpace(append([]string{"all"}, types.BackupWeekdayStrings...))),
 	// "zone": ... // NOTE: 実行時に登録される
 }
 
 func ValidatorAliases(zones []string) map[string]string {
 	aliases := validatorAliases
-	aliases["zone"] = fmt.Sprintf("required,oneof=%s", joinWithSpace(zones))
+	aliases["zone"] = fmt.Sprintf("required,oneof=all %s", joinWithSpace(zones))
 	return aliases
 }
 

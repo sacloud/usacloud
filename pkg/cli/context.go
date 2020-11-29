@@ -65,13 +65,13 @@ type cliContext struct {
 	resource     ResourceContext
 }
 
-func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet, args []string, columnDefs []output.ColumnDef, parameter interface{}) (Context, error) {
+func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet, args []string, columnDefs []output.ColumnDef, parameter interface{}, skipLoadingProfile bool) (Context, error) {
 	// TODO あとでグローバルなタイムアウトなどを実装する
 	ctx := context.TODO()
 
 	io := newIO()
 
-	option, err := config.LoadConfigValue(globalFlags, io.Err())
+	option, err := config.LoadConfigValue(globalFlags, io.Err(), skipLoadingProfile)
 	if err != nil {
 		return nil, err
 	}

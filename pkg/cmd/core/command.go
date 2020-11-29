@@ -75,6 +75,9 @@ type Command struct {
 	// 操作対象リソースの一覧取得用。通常はResourceに紐づけられたfuncを利用する
 	ListAllFunc func(ctx cli.Context, parameter interface{}) ([]interface{}, error)
 
+	// 特殊な引数補完をしたい場合に設定する
+	CustomCompletionFunc func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective)
+
 	// カスタムバリデーション用。空の場合usacloud/pkg/validate.Execが実行される
 	ValidateFunc ValidateFunc
 
@@ -124,6 +127,11 @@ func (c *Command) CLICommand() *cobra.Command {
 			}
 		},
 		ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
+			// カスタムFuncが登録されていたらそちらを優先
+			if c.CustomCompletionFunc != nil {
+				return c.CustomCompletionFunc(cmd, args, toComplete)
+			}
+
 			if c.SelectorType == SelectorTypeNone {
 				return nil, cobra.ShellCompDirectiveNoFileComp
 			}
@@ -249,7 +257,7 @@ func (c *Command) collectCompletionValuesFromResource(resource interface{}, pref
 }
 
 func (c *Command) initCommandContext(cmd *cobra.Command, args []string) (cli.Context, bool, error) {
-	ctx, err := cli.NewCLIContext(c.resource.Name, c.Name, root.Command.PersistentFlags(), args, c.ColumnDefs, c.currentParameter)
+	ctx, err := cli.NewCLIContext(c.resource.Name, c.Name, root.Command.PersistentFlags(), args, c.ColumnDefs, c.currentParameter, c.resource.SkipLoadingProfile)
 	if err != nil {
 		return nil, false, err
 	}

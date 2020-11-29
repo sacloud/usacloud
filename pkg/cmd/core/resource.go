@@ -25,21 +25,16 @@ import (
 )
 
 type Resource struct {
-	Name    string
-	Aliases []string
-	Usage   string
-
+	Name               string
+	Aliases            []string
+	Usage              string
 	CommandCategories  []Category
 	DefaultCommandName string
-
-	Category            Category
-	SkipApplyConfigFile bool // TODO 未実装、configコマンド実装時に対応する
-
-	Warning string
-
-	IsGlobalResource bool
-
-	ServiceType reflect.Type // リソースに対応するlibsacloud serviceの型情報、コード生成用
+	Category           Category
+	Warning            string
+	IsGlobalResource   bool
+	ServiceType        reflect.Type // リソースに対応するlibsacloud serviceの型情報、コード生成用
+	SkipLoadingProfile bool
 
 	categorizedCommands []*CategorizedCommands
 }
