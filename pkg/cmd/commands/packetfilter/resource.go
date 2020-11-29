@@ -25,7 +25,7 @@ var Resource = &core.Resource{
 	Name:        "packet-filter",
 	Aliases:     []string{"packetfilter"},
 	ServiceType: reflect.TypeOf(&packetfilter.Service{}),
-	Category:    core.ResourceCategoryStorage,
+	Category:    core.ResourceCategoryNetworking,
 	CommandCategories: []core.Category{
 		{
 			Key:         "basic",
