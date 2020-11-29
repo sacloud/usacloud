@@ -24,6 +24,18 @@ var Command = &cobra.Command{
 	Use:   "usacloud [global options] <command> <sub-command> [options] [arguments]",
 	Short: "Usacloud is CLI for manage to resources on the SAKURA Cloud",
 	Long:  `CLI to manage to resources on the SAKURA Cloud`,
+
+	RunE: func(cmd *cobra.Command, args []string) error {
+		v, err := cmd.Flags().GetBool("version")
+		if err != nil {
+			return err
+		}
+		if v {
+			cmd.Root().SetArgs([]string{"version"})
+			return cmd.Root().Execute()
+		}
+		return cmd.Help()
+	},
 }
 
 func init() {

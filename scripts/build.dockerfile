@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM golang:1.13
+FROM golang:1.14
 MAINTAINER Kazumichi Yamamoto <yamamoto.febc@gmail.com>
 
 RUN  apt-get update && apt-get -y install \
