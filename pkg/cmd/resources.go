@@ -22,6 +22,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/bill"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/bridge"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/cdrom"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/config"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/containerregistry"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/coupon"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/database"
@@ -64,6 +65,7 @@ import (
 )
 
 var Resources = core.Resources{
+	// libsacloud services
 	archive.Resource,
 	authstatus.Resource,
 	autobackup.Resource,
@@ -107,6 +109,8 @@ var Resources = core.Resources{
 	swytch.Resource,
 	vpcrouter.Resource,
 	zone.Resource,
+	// libsacloud service以外のマニュアル実装分
+	config.Resource,
 }
 
 func initCommands() {

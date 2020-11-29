@@ -48,15 +48,22 @@ func InitConfig(flags *pflag.FlagSet) {
 }
 
 // LoadConfigValue 指定のフラグセットからフラグを読み取り*Flagsを組み立てて返す
-func LoadConfigValue(flags *pflag.FlagSet, errW io.Writer) (*Config, error) {
-	o := &Config{}
-	o.loadConfig(flags, errW)
+func LoadConfigValue(flags *pflag.FlagSet, errW io.Writer, skipLoadingProfile bool) (*Config, error) {
+	o := &Config{
+		ConfigValue: profile.ConfigValue{
+			Zones: append(sacloud.SakuraCloudZones, "all"),
+		},
+	}
+	if skipLoadingProfile {
+		return o, nil
+	}
 
+	o.loadConfig(flags, errW)
 	return o, util.FlattenErrors(o.Validate(true))
 }
 
 func initCredentialConfig(fs *pflag.FlagSet) {
-	fs.StringP("profile", "", "default", "the name of saved credentials")
+	fs.StringP("profile", "", "", "the name of saved credentials")
 	fs.StringP("token", "", "", "the API token used when calling SAKURA Cloud API")
 	fs.StringP("secret", "", "", "the API secret used when calling SAKURA Cloud API")
 	fs.StringSliceP("zones", "", []string{}, "permitted zone names")
@@ -79,8 +86,8 @@ func (o *Config) IsEmpty() bool {
 }
 
 func (o *Config) loadConfig(flags *pflag.FlagSet, errW io.Writer) {
+	o.loadFromProfile(flags, errW)
 	o.loadFromEnv()
-	o.loadFromProfile(errW)
 	o.loadFromFlags(flags, errW)
 	o.fillDefaults()
 }
@@ -92,30 +99,78 @@ func (o *Config) fillDefaults() {
 }
 
 func (o *Config) loadFromEnv() {
-	o.Profile = stringFromEnv("SAKURACLOUD_PROFILE", "default")
-	o.AccessToken = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN", "")
-	o.AccessTokenSecret = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN_SECRET", "")
-	o.Zone = stringFromEnv("SAKURACLOUD_ZONE", "")
-	o.Zones = stringSliceFromEnv("SAKURACLOUD_ZONES", append(sacloud.SakuraCloudZones, "all"))
-	o.AcceptLanguage = stringFromEnv("SAKURACLOUD_ACCEPT_LANGUAGE", "")
-	o.RetryMax = intFromEnv("SAKURACLOUD_RETRY_MAX", sacloud.APIDefaultRetryMax)
-	o.RetryWaitMax = intFromEnv("SAKURACLOUD_RETRY_WAIT_MAX", 64)
-	o.RetryWaitMin = intFromEnv("SAKURACLOUD_RETRY_WAIT_MIN", 1)
-	o.HTTPRequestTimeout = intFromEnv("SAKURACLOUD_API_REQUEST_TIMEOUT", 300)
-	o.HTTPRequestRateLimit = intFromEnv("SAKURACLOUD_API_REQUEST_RATE_LIMIT", 5) // デフォルト5ゾーン分(is1a/is1b/tk1a/tk1b/tk1v)
-	o.APIRootURL = stringFromEnv("SAKURACLOUD_API_ROOT_URL", sacloud.SakuraCloudAPIRoot)
-	o.DefaultZone = stringFromEnv("SAKURACLOUD_DEFAULT_ZONE", sacloud.APIDefaultZone)
-	o.TraceMode = stringFromEnv("SAKURACLOUD_TRACE", "")
-	o.FakeMode = os.Getenv("SAKURACLOUD_FAKE_MODE") != ""
-	o.FakeStorePath = stringFromEnv("SAKURACLOUD_FAKE_STORE_PATH", "")
+	if o.Profile == "" {
+		o.Profile = stringFromEnv("SAKURACLOUD_PROFILE", "default")
+	}
+	if o.AccessToken == "" {
+		o.AccessToken = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN", "")
+	}
+	if o.AccessTokenSecret == "" {
+		o.AccessTokenSecret = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN_SECRET", "")
+	}
+	if o.Zone == "" {
+		o.Zone = stringFromEnv("SAKURACLOUD_ZONE", "")
+	}
+	if len(o.Zones) == 0 {
+		o.Zones = stringSliceFromEnv("SAKURACLOUD_ZONES", append(sacloud.SakuraCloudZones, "all"))
+	}
+	if o.AcceptLanguage == "" {
+		o.AcceptLanguage = stringFromEnv("SAKURACLOUD_ACCEPT_LANGUAGE", "")
+	}
+	if o.RetryMax <= 0 {
+		o.RetryMax = intFromEnv("SAKURACLOUD_RETRY_MAX", sacloud.APIDefaultRetryMax)
+	}
+	if o.RetryWaitMax <= 0 {
+		o.RetryWaitMax = intFromEnv("SAKURACLOUD_RETRY_WAIT_MAX", 64)
+	}
+	if o.RetryWaitMin <= 0 {
+		o.RetryWaitMin = intFromEnv("SAKURACLOUD_RETRY_WAIT_MIN", 1)
+	}
+	if o.HTTPRequestTimeout <= 0 {
+		o.HTTPRequestTimeout = intFromEnv("SAKURACLOUD_API_REQUEST_TIMEOUT", 300)
+	}
+	if o.HTTPRequestRateLimit <= 0 {
+		o.HTTPRequestRateLimit = intFromEnv("SAKURACLOUD_API_REQUEST_RATE_LIMIT", 5) // デフォルト5ゾーン分(is1a/is1b/tk1a/tk1b/tk1v)
+	}
+	if o.APIRootURL == "" {
+		o.APIRootURL = stringFromEnv("SAKURACLOUD_API_ROOT_URL", sacloud.SakuraCloudAPIRoot)
+	}
+	if o.DefaultZone == "" {
+		o.DefaultZone = stringFromEnv("SAKURACLOUD_DEFAULT_ZONE", sacloud.APIDefaultZone)
+	}
+	if o.TraceMode == "" {
+		o.TraceMode = stringFromEnv("SAKURACLOUD_TRACE", "")
+	}
+	if !o.FakeMode {
+		o.FakeMode = os.Getenv("SAKURACLOUD_FAKE_MODE") != ""
+	}
+	if o.FakeStorePath == "" {
+		o.FakeStorePath = stringFromEnv("SAKURACLOUD_FAKE_STORE_PATH", "")
+	}
 }
 
-func (o *Config) loadFromProfile(errW io.Writer) {
-	if o.Profile != "" {
-		if err := profile.Load(o.Profile, o); err != nil {
-			fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", o.Profile, err) // nolint
+func (o *Config) loadFromProfile(flags *pflag.FlagSet, errW io.Writer) {
+	if flags.Changed("profile") {
+		v, err := flags.GetString("profile")
+		if err != nil {
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err) // nolint
 			return
 		}
+		o.Profile = v
+	}
+
+	profileName := o.Profile
+	if profileName == "" {
+		current, err := profile.CurrentName()
+		if err != nil {
+			fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err) // nolint
+			return
+		}
+		profileName = current
+	}
+	if err := profile.Load(profileName, o); err != nil {
+		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err) // nolint
+		return
 	}
 }
 
