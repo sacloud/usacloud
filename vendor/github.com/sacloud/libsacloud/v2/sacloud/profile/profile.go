@@ -216,9 +216,36 @@ func Save(profileName string, val interface{}) error {
 		}
 	}
 
-	rawBody, err := json.MarshalIndent(val, "", "\t")
+	rawBody, err := json.MarshalIndent(val, "", "  ")
 	if err != nil {
 		return fmt.Errorf("marshalling config to JSON is failed: %s", err)
+	}
+
+	// merge new value if current config exists
+	if _, err := os.Stat(path); err == nil {
+		currentData, err := ioutil.ReadFile(path)
+		if err != nil {
+			return fmt.Errorf("reading current config %q failed: %s", path, err)
+		}
+		var currentDataMap map[string]interface{}
+		if err := json.Unmarshal(currentData, &currentDataMap); err != nil {
+			return fmt.Errorf("unmarshaling current config %q failed: %s", path, err)
+		}
+
+		var newDataMap map[string]interface{}
+		if err := json.Unmarshal(rawBody, &newDataMap); err != nil {
+			return fmt.Errorf("unmarshaling new config %q failed: %s", path, err)
+		}
+
+		// merge
+		for k, v := range newDataMap {
+			currentDataMap[k] = v
+		}
+
+		rawBody, err = json.MarshalIndent(currentDataMap, "", "  ")
+		if err != nil {
+			return fmt.Errorf("marshalling new config to JSON failed: %s", err)
+		}
 	}
 
 	err = ioutil.WriteFile(path, rawBody, 0600)

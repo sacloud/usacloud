@@ -13,7 +13,7 @@ require (
 	github.com/mattn/go-isatty v0.0.7
 	github.com/mattn/go-runewidth v0.0.4 // indirect
 	github.com/olekukonko/tablewriter v0.0.0-20180506121414-d4647c9c7a84
-	github.com/sacloud/libsacloud/v2 v2.8.11-0.20201129115208-32ac09fdbae6
+	github.com/sacloud/libsacloud/v2 v2.8.11-0.20201129153055-ff232376702b
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.6.1
