@@ -45,6 +45,8 @@ func InitConfig(flags *pflag.FlagSet) {
 	initCredentialConfig(flags)
 	initOutputConfig(flags)
 	initDebugConfig(flags)
+	// misc flags
+	flags.BoolP("version", "v", false, "show version info")
 }
 
 // LoadConfigValue 指定のフラグセットからフラグを読み取り*Flagsを組み立てて返す
