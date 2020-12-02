@@ -12,27 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package mobilegateway
+package internet
 
-import (
-	"context"
-	"fmt"
+import "github.com/sacloud/libsacloud/v2/sacloud"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
-)
-
-func (s *Service) Update(req *UpdateRequest) (*sacloud.MobileGateway, error) {
-	return s.UpdateWithContext(context.Background(), req)
+// APIClient builderが利用するAPIクライアント
+type APIClient struct {
+	Internet sacloud.InternetAPI
 }
 
-func (s *Service) UpdateWithContext(ctx context.Context, req *UpdateRequest) (*sacloud.MobileGateway, error) {
-	if err := req.Validate(); err != nil {
-		return nil, err
+// NewAPIClient builderが利用するAPIクライアントを返す
+func NewAPIClient(caller sacloud.APICaller) *APIClient {
+	return &APIClient{
+		Internet: sacloud.NewInternetOp(caller),
 	}
-
-	applyRequest, err := req.ApplyRequest(ctx, s.caller)
-	if err != nil {
-		return nil, fmt.Errorf("processing request parameter failed: %s", err)
-	}
-	return s.ApplyWithContext(ctx, applyRequest)
 }

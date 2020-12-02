@@ -27,7 +27,7 @@ type ApplyRequest struct {
 	Tags        types.Tags
 	IconID      types.ID
 	ICCID       string `validate:"required"`
-	PassCode    string `validate:"required"`
+	PassCode    string // Update時などは空になるためrequiredをはずしておく
 	Activate    bool
 	IMEI        string
 	Carriers    []*sacloud.SIMNetworkOperatorConfig

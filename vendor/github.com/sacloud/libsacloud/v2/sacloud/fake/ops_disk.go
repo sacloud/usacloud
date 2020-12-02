@@ -45,6 +45,7 @@ func (o *DiskOp) Create(ctx context.Context, zone string, param *sacloud.DiskCre
 	result := &sacloud.Disk{}
 	copySameNameField(param, result)
 	fill(result, fillID, fillCreatedAt, fillDiskPlan)
+	result.Availability = types.Availabilities.Migrating
 
 	result.Storage = &sacloud.Storage{
 		ID:   types.ID(123456789012),

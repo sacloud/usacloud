@@ -15,46 +15,74 @@
 package server
 
 import (
+	"errors"
+
 	diskBuilder "github.com/sacloud/libsacloud/v2/helper/builder/disk"
 	serverBuilder "github.com/sacloud/libsacloud/v2/helper/builder/server"
 	diskService "github.com/sacloud/libsacloud/v2/helper/service/disk"
 
 	"github.com/sacloud/libsacloud/v2/helper/validate"
-	"github.com/sacloud/libsacloud/v2/pkg/size"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
 type ApplyRequest struct {
-	Zone string   `request:"-" validate:"required"`
-	ID   types.ID `request:"-"`
+	Zone string `validate:"required"`
+	ID   types.ID
 
-	Name                 string `validate:"required"`
-	Description          string `validate:"min=0,max=512"`
-	Tags                 types.Tags
-	IconID               types.ID
-	CPU                  int
-	MemoryMB             int
-	ServerPlanCommitment types.ECommitment
-	ServerPlanGeneration types.EPlanGeneration
-	ConnectedSwitches    []*sacloud.ConnectedSwitch
-	InterfaceDriver      types.EInterfaceDriver
+	Name            string `validate:"required"`
+	Description     string `validate:"min=0,max=512"`
+	Tags            types.Tags
+	IconID          types.ID
+	CPU             int
+	MemoryGB        int
+	Commitment      types.ECommitment
+	Generation      types.EPlanGeneration
+	InterfaceDriver types.EInterfaceDriver
 
 	BootAfterCreate bool
 	CDROMID         types.ID
 	PrivateHostID   types.ID
 
-	// TODO builderパッケージを移植するまではserverBuilderへ依存させておく
-
-	NIC            serverBuilder.NICSettingHolder
-	AdditionalNICs []serverBuilder.AdditionalNICSettingHolder
-	Disks          []*diskService.ApplyRequest
+	NetworkInterfaces []*NetworkInterface
+	Disks             []*diskService.ApplyRequest
+	NoWait            bool
 
 	ForceShutdown bool
 }
 
 func (req *ApplyRequest) Validate() error {
-	return validate.Struct(req)
+	if err := validate.Struct(req); err != nil {
+		return err
+	}
+	// nic
+	for i, nic := range req.NetworkInterfaces {
+		if err := nic.Validate(); err != nil {
+			return err
+		}
+		if i != 0 && nic.Upstream == "shared" {
+			return errors.New("upstream=shared is not supported for additional NICs")
+		}
+	}
+	return nil
+}
+
+func (req *ApplyRequest) nicSetting() serverBuilder.NICSettingHolder {
+	if len(req.NetworkInterfaces) == 0 {
+		return nil
+	}
+	return req.NetworkInterfaces[0].NICSettingHolder()
+}
+
+func (req *ApplyRequest) additionalNICSetting() []serverBuilder.AdditionalNICSettingHolder {
+	var results []serverBuilder.AdditionalNICSettingHolder
+	for i, s := range req.NetworkInterfaces {
+		if i == 0 {
+			continue
+		}
+		results = append(results, s.AdditionalNICSettingHolder())
+	}
+	return results
 }
 
 func (req *ApplyRequest) Builder(caller sacloud.APICaller) (*serverBuilder.Builder, error) {
@@ -70,9 +98,9 @@ func (req *ApplyRequest) Builder(caller sacloud.APICaller) (*serverBuilder.Build
 	return &serverBuilder.Builder{
 		Name:            req.Name,
 		CPU:             req.CPU,
-		MemoryGB:        req.MemoryMB * size.GiB,
-		Commitment:      req.ServerPlanCommitment,
-		Generation:      req.ServerPlanGeneration,
+		MemoryGB:        req.MemoryGB,
+		Commitment:      req.Commitment,
+		Generation:      req.Generation,
 		InterfaceDriver: req.InterfaceDriver,
 		Description:     req.Description,
 		IconID:          req.IconID,
@@ -80,11 +108,12 @@ func (req *ApplyRequest) Builder(caller sacloud.APICaller) (*serverBuilder.Build
 		BootAfterCreate: req.BootAfterCreate,
 		CDROMID:         req.CDROMID,
 		PrivateHostID:   req.PrivateHostID,
-		NIC:             req.NIC,
-		AdditionalNICs:  req.AdditionalNICs,
+		NIC:             req.nicSetting(),
+		AdditionalNICs:  req.additionalNICSetting(),
 		DiskBuilders:    diskBuilders,
 		Client:          serverBuilder.NewBuildersAPIClient(caller),
 		ServerID:        req.ID,
 		ForceShutdown:   req.ForceShutdown,
+		NoWait:          req.NoWait,
 	}, nil
 }

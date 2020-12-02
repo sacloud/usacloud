@@ -16,7 +16,6 @@ package internet
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/sacloud/libsacloud/v2/sacloud"
 )
@@ -30,32 +29,9 @@ func (s *Service) UpdateWithContext(ctx context.Context, req *UpdateRequest) (*s
 		return nil, err
 	}
 
-	client := sacloud.NewInternetOp(s.caller)
-	current, err := client.Read(ctx, req.Zone, req.ID)
+	builder, err := req.Builder(ctx, s.caller)
 	if err != nil {
-		return nil, fmt.Errorf("reading Internet[%s] failed: %s", req.ID, err)
+		return nil, err
 	}
-
-	var ret *sacloud.Internet
-	if req.BasicParameterChanged() {
-		params, err := req.ToRequestParameter(current)
-		if err != nil {
-			return nil, fmt.Errorf("processing request parameter failed: %s", err)
-		}
-
-		updated, err := client.Update(ctx, req.Zone, req.ID, params)
-		if err != nil {
-			return nil, err
-		}
-		ret = updated
-	}
-
-	if req.BandWidthChanged() {
-		updated, err := client.UpdateBandWidth(ctx, req.Zone, req.ID, &sacloud.InternetUpdateBandWidthRequest{BandWidthMbps: *req.BandWidthMbps})
-		if err != nil {
-			return nil, err
-		}
-		ret = updated
-	}
-	return ret, nil
+	return builder.Update(ctx, req.Zone, req.ID)
 }

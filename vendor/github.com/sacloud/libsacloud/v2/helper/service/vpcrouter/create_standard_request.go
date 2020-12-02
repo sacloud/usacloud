@@ -19,7 +19,7 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
-type CreateRequest struct {
+type CreateStandardRequest struct {
 	Zone string `request:"-" validate:"required"`
 
 	Name        string `validate:"required"`
@@ -27,19 +27,17 @@ type CreateRequest struct {
 	Tags        types.Tags
 	IconID      types.ID
 
-	PlanID                types.ID `validate:"required"`
-	NICSetting            *PremiumNICSetting
-	AdditionalNICSettings []*AdditionalPremiumNICSetting
+	AdditionalNICSettings []*AdditionalStandardNICSetting
 	RouterSetting         *RouterSetting
 	NoWait                bool
 	BootAfterCreate       bool
 }
 
-func (req *CreateRequest) Validate() error {
+func (req *CreateStandardRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *CreateRequest) ApplyRequest() *ApplyRequest {
+func (req *CreateStandardRequest) ApplyRequest() *ApplyRequest {
 	var additionalNICs []AdditionalNICSettingHolder
 	for _, nic := range req.AdditionalNICSettings {
 		additionalNICs = append(additionalNICs, nic)
@@ -50,8 +48,8 @@ func (req *CreateRequest) ApplyRequest() *ApplyRequest {
 		Description:           req.Description,
 		Tags:                  req.Tags,
 		IconID:                req.IconID,
-		PlanID:                req.PlanID,
-		NICSetting:            req.NICSetting,
+		PlanID:                types.VPCRouterPlans.Standard,
+		NICSetting:            &StandardNICSetting{},
 		AdditionalNICSettings: additionalNICs,
 		RouterSetting:         req.RouterSetting,
 		NoWait:                req.NoWait,

@@ -15,7 +15,7 @@
 package database
 
 import (
-	"fmt"
+	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
 
 	"github.com/sacloud/libsacloud/v2/helper/validate"
 	"github.com/sacloud/libsacloud/v2/sacloud"
@@ -47,6 +47,8 @@ type ApplyRequest struct {
 	BackupWeekdays        []types.EBackupSpanWeekday `validate:"required_with=EnableBackup,max=7"`
 	BackupStartTimeHour   int                        `validate:"omitempty,min=0,max=23"`
 	BackupStartTimeMinute int                        `validate:"omitempty,oneof=0 15 30 45"`
+
+	NoWait bool
 }
 
 func (req *ApplyRequest) Validate() error {
@@ -54,43 +56,9 @@ func (req *ApplyRequest) Validate() error {
 }
 
 func (req *ApplyRequest) Builder(caller sacloud.APICaller) (*Builder, error) {
-	builder := &Builder{
-		PlanID:         req.PlanID,
-		SwitchID:       req.SwitchID,
-		IPAddresses:    req.IPAddresses,
-		NetworkMaskLen: req.NetworkMaskLen,
-		DefaultRoute:   req.DefaultRoute,
-		Conf: &sacloud.DatabaseRemarkDBConfCommon{
-			DatabaseName:     types.RDBMSVersions[types.RDBMSTypesPostgreSQL].Name,
-			DatabaseVersion:  types.RDBMSVersions[types.RDBMSTypesPostgreSQL].Version,
-			DatabaseRevision: types.RDBMSVersions[types.RDBMSTypesPostgreSQL].Revision,
-		},
-		CommonSetting: &sacloud.DatabaseSettingCommon{
-			WebUI:           types.ToWebUI(req.EnableWebUI),
-			ServicePort:     req.Port,
-			SourceNetwork:   req.SourceNetwork,
-			DefaultUser:     req.Username,
-			UserPassword:    req.Password,
-			ReplicaUser:     "",
-			ReplicaPassword: req.ReplicaUserPassword,
-		},
-		Name:        req.Name,
-		Description: req.Description,
-		Tags:        req.Tags,
-		IconID:      req.IconID,
-		Caller:      caller,
-	}
-
-	if req.EnableBackup {
-		builder.BackupSetting = &sacloud.DatabaseSettingBackup{
-			Time:      fmt.Sprintf("%02d:%02d", req.BackupStartTimeHour, req.BackupStartTimeMinute),
-			DayOfWeek: req.BackupWeekdays,
-		}
-	}
-	if req.EnableReplication {
-		builder.ReplicationSetting = &sacloud.DatabaseReplicationSetting{
-			Model: types.DatabaseReplicationModels.MasterSlave,
-		}
+	builder := &Builder{Caller: caller}
+	if err := mapconv.ConvertTo(req, builder); err != nil {
+		return nil, err
 	}
 	return builder, nil
 }

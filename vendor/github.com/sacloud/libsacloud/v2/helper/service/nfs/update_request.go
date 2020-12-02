@@ -17,6 +17,8 @@ package nfs
 import (
 	"context"
 
+	"github.com/sacloud/libsacloud/v2/helper/query"
+
 	"github.com/sacloud/libsacloud/v2/helper/service"
 	"github.com/sacloud/libsacloud/v2/helper/validate"
 	"github.com/sacloud/libsacloud/v2/sacloud"
@@ -24,8 +26,8 @@ import (
 )
 
 type UpdateRequest struct {
-	Zone string   `request:"-" validate:"required"`
-	ID   types.ID `request:"-" validate:"required"`
+	Zone string   `validate:"required"`
+	ID   types.ID `validate:"required"`
 
 	Name        *string     `request:",omitempty" validate:"omitempty,min=1"`
 	Description *string     `request:",omitempty" validate:"omitempty,min=1,max=512"`
@@ -37,14 +39,35 @@ func (req *UpdateRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *UpdateRequest) Builder(ctx context.Context, caller sacloud.APICaller) (*Builder, error) {
-	builder, err := BuilderFromResource(ctx, caller, req.Zone, req.ID)
+func (req *UpdateRequest) ApplyRequest(ctx context.Context, caller sacloud.APICaller) (*ApplyRequest, error) {
+	client := sacloud.NewNFSOp(caller)
+	current, err := client.Read(ctx, req.Zone, req.ID)
 	if err != nil {
 		return nil, err
 	}
 
-	if err := service.RequestConvertTo(req, builder); err != nil {
+	// find plan
+	plan, err := query.GetNFSPlanInfo(ctx, sacloud.NewNoteOp(caller), current.PlanID)
+	if err != nil {
 		return nil, err
 	}
-	return builder, nil
+
+	applyRequest := &ApplyRequest{
+		ID:             current.ID,
+		Zone:           req.Zone,
+		Name:           current.Name,
+		Description:    current.Description,
+		Tags:           current.Tags,
+		IconID:         current.IconID,
+		SwitchID:       current.SwitchID,
+		Plan:           plan.DiskPlanID,
+		Size:           plan.Size,
+		IPAddresses:    current.IPAddresses,
+		NetworkMaskLen: current.NetworkMaskLen,
+		DefaultRoute:   current.DefaultRoute,
+	}
+	if err := service.RequestConvertTo(req, applyRequest); err != nil {
+		return nil, err
+	}
+	return applyRequest, nil
 }

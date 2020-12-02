@@ -40,13 +40,40 @@ func (req *UpdateRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *UpdateRequest) Builder(ctx context.Context, caller sacloud.APICaller) (*Builder, error) {
-	builder, err := BuilderFromResource(ctx, caller, req.ID)
+func (req *UpdateRequest) ApplyRequest(ctx context.Context, caller sacloud.APICaller) (*ApplyRequest, error) {
+	client := sacloud.NewContainerRegistryOp(caller)
+	current, err := client.Read(ctx, req.ID)
 	if err != nil {
 		return nil, err
 	}
-	if err := service.RequestConvertTo(req, builder); err != nil {
+	users, err := client.ListUsers(ctx, req.ID) // NOTE: ユーザーが登録されていなくても200が返る
+	if err != nil {
 		return nil, err
 	}
-	return builder, nil
+
+	applyRequest := &ApplyRequest{
+		ID:             req.ID,
+		Name:           current.Name,
+		Description:    current.Description,
+		Tags:           current.Tags,
+		IconID:         current.IconID,
+		AccessLevel:    current.AccessLevel,
+		VirtualDomain:  current.VirtualDomain,
+		SubDomainLabel: current.SubDomainLabel,
+		SettingsHash:   current.SettingsHash,
+	}
+	if users != nil {
+		for _, user := range users.Users {
+			applyRequest.Users = append(applyRequest.Users, &User{
+				UserName:   user.UserName,
+				Password:   "", // パスワードは参照できないため常に空
+				Permission: user.Permission,
+			})
+		}
+	}
+
+	if err := service.RequestConvertTo(req, applyRequest); err != nil {
+		return nil, err
+	}
+	return applyRequest, nil
 }

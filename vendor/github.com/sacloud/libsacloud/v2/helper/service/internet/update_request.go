@@ -15,9 +15,11 @@
 package internet
 
 import (
+	"context"
+
+	internetBuilder "github.com/sacloud/libsacloud/v2/helper/builder/internet"
 	"github.com/sacloud/libsacloud/v2/helper/service"
 	"github.com/sacloud/libsacloud/v2/helper/validate"
-	"github.com/sacloud/libsacloud/v2/pkg/util"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
@@ -31,30 +33,32 @@ type UpdateRequest struct {
 	Tags          *types.Tags `request:",omitempty"`
 	IconID        *types.ID   `request:",omitempty"`
 	BandWidthMbps *int        `request:",omitempty"`
+	EnableIPv6    *bool       `request:",omitempty"`
 }
 
 func (req *UpdateRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *UpdateRequest) ToRequestParameter(current *sacloud.Internet) (*sacloud.InternetUpdateRequest, error) {
-	r := &sacloud.InternetUpdateRequest{}
-	if err := service.RequestConvertTo(current, r); err != nil {
+func (req *UpdateRequest) Builder(ctx context.Context, caller sacloud.APICaller) (*internetBuilder.Builder, error) {
+	current, err := sacloud.NewInternetOp(caller).Read(ctx, req.Zone, req.ID)
+	if err != nil {
 		return nil, err
 	}
-	if err := service.RequestConvertTo(req, r); err != nil {
+
+	builder := &internetBuilder.Builder{
+		Name:           current.Name,
+		Description:    current.Description,
+		Tags:           current.Tags,
+		IconID:         current.IconID,
+		NetworkMaskLen: current.NetworkMaskLen,
+		BandWidthMbps:  current.BandWidthMbps,
+		EnableIPv6:     len(current.Switch.IPv6Nets) > 0,
+		Client:         internetBuilder.NewAPIClient(caller),
+	}
+
+	if err := service.RequestConvertTo(req, builder); err != nil {
 		return nil, err
 	}
-	return r, nil
-}
-
-func (req *UpdateRequest) BasicParameterChanged() bool {
-	return !util.IsEmpty(req.Name) ||
-		!util.IsEmpty(req.Description) ||
-		!util.IsEmpty(req.Tags) ||
-		!util.IsEmpty(req.IconID)
-}
-
-func (req *UpdateRequest) BandWidthChanged() bool {
-	return !util.IsEmpty(req.BandWidthMbps)
+	return builder, nil
 }

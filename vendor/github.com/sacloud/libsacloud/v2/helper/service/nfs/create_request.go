@@ -33,6 +33,7 @@ type CreateRequest struct {
 	IPAddresses    []string       `validate:"required,min=1,max=2,dive,ipv4"`
 	NetworkMaskLen int            `validate:"required"`
 	DefaultRoute   string         `validate:"omitempty,ipv4"`
+	NoWait         bool
 }
 
 func (req *CreateRequest) Validate() error {
@@ -53,6 +54,6 @@ func (req *CreateRequest) Builder(caller sacloud.APICaller) *Builder {
 		NetworkMaskLen: req.NetworkMaskLen,
 		DefaultRoute:   req.DefaultRoute,
 		Caller:         caller,
-		NoWait:         true,
+		NoWait:         req.NoWait,
 	}
 }

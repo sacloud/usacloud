@@ -15,6 +15,9 @@
 package disk
 
 import (
+	"context"
+	"fmt"
+
 	"github.com/sacloud/libsacloud/v2/helper/service"
 	"github.com/sacloud/libsacloud/v2/helper/validate"
 	"github.com/sacloud/libsacloud/v2/sacloud"
@@ -25,24 +28,47 @@ type UpdateRequest struct {
 	Zone string   `request:"-" validate:"required"`
 	ID   types.ID `request:"-" validate:"required"`
 
-	Name        *string                `request:",omitempty" validate:"omitempty,min=1"`
-	Description *string                `request:",omitempty" validate:"omitempty,min=1,max=512"`
-	Tags        *types.Tags            `request:",omitempty"`
-	IconID      *types.ID              `request:",omitempty"`
-	Connection  *types.EDiskConnection `request:",omitempty"`
+	Name          *string                `request:",omitempty" validate:"omitempty,min=1"`
+	Description   *string                `request:",omitempty" validate:"omitempty,min=1,max=512"`
+	Tags          *types.Tags            `request:",omitempty"`
+	IconID        *types.ID              `request:",omitempty"`
+	Connection    *types.EDiskConnection `request:",omitempty"`
+	EditParameter *EditParameter         `request:",omitempty"`
+
+	NoWait bool
 }
 
 func (req *UpdateRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *UpdateRequest) ToRequestParameter(current *sacloud.Disk) (*sacloud.DiskUpdateRequest, error) {
-	r := &sacloud.DiskUpdateRequest{}
-	if err := service.RequestConvertTo(current, r); err != nil {
+func (req *UpdateRequest) ApplyRequest(ctx context.Context, caller sacloud.APICaller) (*ApplyRequest, error) {
+	current, err := sacloud.NewDiskOp(caller).Read(ctx, req.Zone, req.ID)
+	if err != nil {
 		return nil, err
 	}
-	if err := service.RequestConvertTo(req, r); err != nil {
+	if current.Availability != types.Availabilities.Available {
+		return nil, fmt.Errorf("target has invalid Availability: Zone=%s ID=%s Availability=%v", req.Zone, req.ID.String(), current.Availability)
+	}
+
+	applyRequest := &ApplyRequest{
+		Zone:            req.Zone,
+		ID:              req.ID,
+		Name:            current.Name,
+		Description:     current.Description,
+		Tags:            current.Tags,
+		IconID:          current.IconID,
+		DiskPlanID:      current.DiskPlanID,
+		Connection:      current.Connection,
+		SourceDiskID:    current.SourceDiskID,
+		SourceArchiveID: current.SourceArchiveID,
+		ServerID:        current.ServerID,
+		SizeGB:          current.GetSizeGB(),
+		NoWait:          req.NoWait,
+	}
+
+	if err := service.RequestConvertTo(req, applyRequest); err != nil {
 		return nil, err
 	}
-	return r, nil
+	return applyRequest, nil
 }

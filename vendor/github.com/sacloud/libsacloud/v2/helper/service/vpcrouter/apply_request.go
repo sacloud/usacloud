@@ -15,6 +15,7 @@
 package vpcrouter
 
 import (
+	"github.com/sacloud/libsacloud/v2/helper/builder"
 	vpcRouterBuilder "github.com/sacloud/libsacloud/v2/helper/builder/vpcrouter"
 	"github.com/sacloud/libsacloud/v2/helper/validate"
 	"github.com/sacloud/libsacloud/v2/sacloud"
@@ -38,6 +39,8 @@ type ApplyRequest struct {
 	NICSetting            NICSettingHolder             // StandardNICSetting または PremiumNICSetting を指定する
 	AdditionalNICSettings []AdditionalNICSettingHolder // AdditionalStandardNICSetting または AdditionalPremiumNICSetting を指定する
 	RouterSetting         *RouterSetting
+	NoWait                bool
+	BootAfterCreate       bool
 }
 
 func (req *ApplyRequest) Validate() error {
@@ -71,7 +74,11 @@ func (req *ApplyRequest) Builder(caller sacloud.APICaller) *vpcRouterBuilder.Bui
 		NICSetting:            req.nicSetting(),
 		AdditionalNICSettings: req.additionalNICSetting(),
 		RouterSetting:         req.routerSetting(),
+		NoWait:                req.NoWait,
 		Client:                sacloud.NewVPCRouterOp(caller),
+		SetupOptions: &builder.RetryableSetupParameter{
+			BootAfterBuild: req.BootAfterCreate,
+		},
 	}
 }
 
@@ -104,8 +111,7 @@ func (req *ApplyRequest) nicSetting() vpcRouterBuilder.NICSettingHolder {
 	case *PremiumNICSetting:
 		return &vpcRouterBuilder.PremiumNICSetting{
 			SwitchID:         v.SwitchID,
-			IPAddress1:       v.IPAddress1,
-			IPAddress2:       v.IPAddress2,
+			IPAddresses:      v.IPAddresses,
 			VirtualIPAddress: v.VirtualIPAddress,
 			IPAliases:        v.IPAliases,
 		}
@@ -128,8 +134,7 @@ func (req *ApplyRequest) additionalNICSetting() []vpcRouterBuilder.AdditionalNIC
 		case *AdditionalPremiumNICSetting:
 			settings = append(settings, &vpcRouterBuilder.AdditionalPremiumNICSetting{
 				SwitchID:         v.SwitchID,
-				IPAddress1:       v.IPAddress1,
-				IPAddress2:       v.IPAddress2,
+				IPAddresses:      v.IPAddresses,
 				VirtualIPAddress: v.VirtualIPAddress,
 				NetworkMaskLen:   v.NetworkMaskLen,
 				Index:            v.Index,

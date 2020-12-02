@@ -15,7 +15,6 @@
 package loadbalancer
 
 import (
-	"github.com/sacloud/libsacloud/v2/helper/service"
 	"github.com/sacloud/libsacloud/v2/helper/validate"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
@@ -35,16 +34,29 @@ type CreateRequest struct {
 	NetworkMaskLen     int      `validate:"required"`
 	DefaultRoute       string   `validate:"omitempty,ipv4"`
 	VirtualIPAddresses sacloud.LoadBalancerVirtualIPAddresses
+
+	NoWait bool
 }
 
 func (req *CreateRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *CreateRequest) ToRequestParameter() (*sacloud.LoadBalancerCreateRequest, error) {
-	params := &sacloud.LoadBalancerCreateRequest{}
-	if err := service.RequestConvertTo(req, params); err != nil {
-		return nil, err
+func (req *CreateRequest) ApplyRequest() *ApplyRequest {
+	return &ApplyRequest{
+		Zone:               req.Zone,
+		Name:               req.Name,
+		Description:        req.Description,
+		Tags:               req.Tags,
+		IconID:             req.IconID,
+		SwitchID:           req.SwitchID,
+		PlanID:             req.PlanID,
+		VRID:               req.VRID,
+		IPAddresses:        req.IPAddresses,
+		NetworkMaskLen:     req.NetworkMaskLen,
+		DefaultRoute:       req.DefaultRoute,
+		VirtualIPAddresses: req.VirtualIPAddresses,
+		SettingsHash:       "",
+		NoWait:             req.NoWait,
 	}
-	return params, nil
 }

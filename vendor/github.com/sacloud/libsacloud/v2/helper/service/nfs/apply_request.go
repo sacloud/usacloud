@@ -12,52 +12,51 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package internet
+package nfs
 
 import (
-	"errors"
-
-	internetBuilder "github.com/sacloud/libsacloud/v2/helper/builder/internet"
 	"github.com/sacloud/libsacloud/v2/helper/validate"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
-type CreateRequest struct {
-	Zone string `request:"-" validate:"required"`
+type ApplyRequest struct {
+	ID   types.ID // for update
+	Zone string   `request:"-" validate:"required"`
 
 	Name           string `validate:"required"`
 	Description    string `validate:"min=0,max=512"`
 	Tags           types.Tags
 	IconID         types.ID
-	NetworkMaskLen int
-	BandWidthMbps  int
-	EnableIPv6     bool
-	NoWait         bool
-	NotFoundRetry  int // スイッチ+ルータは作成直後だと404を返すことがあることへの対応でリトライする際のリトライ上限回数、省略時はDefaultNotFoundRetry
+	SwitchID       types.ID       `validate:"required"`
+	Plan           types.ID       `validate:"required,oneof=1 2"` // types.NFSPlans.HDD or types.NFSPlans.SSD
+	Size           types.ENFSSize `validate:"required"`           // types.NFSPlans.HDD or types.NFSPlans.SSD
+	IPAddresses    []string       `validate:"required,min=1,max=2,dive,ipv4"`
+	NetworkMaskLen int            `validate:"required"`
+	DefaultRoute   string         `validate:"omitempty,ipv4"`
+
+	NoWait bool
 }
 
-func (req *CreateRequest) Validate() error {
-	if err := validate.Struct(req); err != nil {
-		return err
-	}
-	if req.EnableIPv6 && req.NoWait {
-		return errors.New("NoWait=true is not supported when EnableIPv6=true")
-	}
-	return nil
+func (req *ApplyRequest) Validate() error {
+	return validate.Struct(req)
 }
 
-func (req *CreateRequest) Builder(caller sacloud.APICaller) *internetBuilder.Builder {
-	return &internetBuilder.Builder{
+func (req *ApplyRequest) Builder(caller sacloud.APICaller) *Builder {
+	return &Builder{
+		ID:             req.ID,
+		Zone:           req.Zone,
 		Name:           req.Name,
 		Description:    req.Description,
 		Tags:           req.Tags,
 		IconID:         req.IconID,
+		SwitchID:       req.SwitchID,
+		Plan:           req.Plan,
+		Size:           req.Size,
+		IPAddresses:    req.IPAddresses,
 		NetworkMaskLen: req.NetworkMaskLen,
-		BandWidthMbps:  req.BandWidthMbps,
-		EnableIPv6:     req.EnableIPv6,
-		NotFoundRetry:  req.NotFoundRetry,
+		DefaultRoute:   req.DefaultRoute,
+		Caller:         caller,
 		NoWait:         req.NoWait,
-		Client:         internetBuilder.NewAPIClient(caller),
 	}
 }

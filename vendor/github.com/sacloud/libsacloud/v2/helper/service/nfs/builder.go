@@ -47,36 +47,6 @@ type Builder struct {
 	NoWait bool
 }
 
-func BuilderFromResource(ctx context.Context, caller sacloud.APICaller, zone string, id types.ID) (*Builder, error) {
-	client := sacloud.NewNFSOp(caller)
-	current, err := client.Read(ctx, zone, id)
-	if err != nil {
-		return nil, err
-	}
-
-	// find plan
-	plan, err := query.GetNFSPlanInfo(ctx, sacloud.NewNoteOp(caller), current.PlanID)
-	if err != nil {
-		return nil, err
-	}
-
-	return &Builder{
-		ID:             current.ID,
-		Zone:           zone,
-		Name:           current.Name,
-		Description:    current.Description,
-		Tags:           current.Tags,
-		IconID:         current.IconID,
-		SwitchID:       current.SwitchID,
-		Plan:           plan.DiskPlanID,
-		Size:           plan.Size,
-		IPAddresses:    current.IPAddresses,
-		NetworkMaskLen: current.NetworkMaskLen,
-		DefaultRoute:   current.DefaultRoute,
-		Caller:         caller,
-	}, nil
-}
-
 func (b *Builder) Build(ctx context.Context) (*sacloud.NFS, error) {
 	if b.ID.IsEmpty() {
 		return b.create(ctx)

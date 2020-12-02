@@ -17,8 +17,6 @@ package mobilegateway
 import (
 	"context"
 
-	mobileGatewayBuilder "github.com/sacloud/libsacloud/v2/helper/builder/mobilegateway"
-	"github.com/sacloud/libsacloud/v2/helper/service"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 )
 
@@ -31,12 +29,7 @@ func (s *Service) ApplyWithContext(ctx context.Context, req *ApplyRequest) (*sac
 		return nil, err
 	}
 
-	builder := &mobileGatewayBuilder.Builder{}
-	if err := service.RequestConvertTo(req, builder); err != nil {
-		return nil, err
-	}
-	builder.Client = mobileGatewayBuilder.NewAPIClient(s.caller)
-
+	builder := req.Builder(s.caller)
 	if err := builder.Validate(ctx, req.Zone); err != nil {
 		return nil, err
 	}

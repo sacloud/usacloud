@@ -24,7 +24,7 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
-type UpdateRequest struct {
+type UpdateStandardRequest struct {
 	Zone string   `request:"-" validate:"required"`
 	ID   types.ID `request:"-" validate:"required"`
 
@@ -33,26 +33,25 @@ type UpdateRequest struct {
 	Tags        *types.Tags `request:",omitempty"`
 	IconID      *types.ID   `request:",omitempty"`
 
-	NICSetting            *PremiumNICSetting             `request:",omitempty"`
-	AdditionalNICSettings *[]AdditionalPremiumNICSetting `request:",omitempty"`
-	RouterSetting         *RouterSetting                 `request:",omitempty"`
+	AdditionalNICSettings *[]AdditionalStandardNICSetting `request:",omitempty"`
+	RouterSetting         *RouterSetting                  `request:",omitempty"`
 	NoWait                bool
 
 	SettingsHash string
 }
 
-func (req *UpdateRequest) Validate() error {
+func (req *UpdateStandardRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *UpdateRequest) ApplyRequest(ctx context.Context, caller sacloud.APICaller) (*ApplyRequest, error) {
+func (req *UpdateStandardRequest) ApplyRequest(ctx context.Context, caller sacloud.APICaller) (*ApplyRequest, error) {
 	current, err := sacloud.NewVPCRouterOp(caller).Read(ctx, req.Zone, req.ID)
 	if err != nil {
 		return nil, err
 	}
 
-	if current.PlanID == types.VPCRouterPlans.Standard {
-		return nil, fmt.Errorf("target is not a premium or higher plan: Zone=%s ID=%s", req.Zone, req.ID)
+	if current.PlanID != types.VPCRouterPlans.Standard {
+		return nil, fmt.Errorf("target is not a standard plan: Zone=%s ID=%s", req.Zone, req.ID)
 	}
 	if current.Availability != types.Availabilities.Available {
 		return nil, fmt.Errorf("target has invalid Availability: Zone=%s ID=%s Availability=%v", req.Zone, req.ID.String(), current.Availability)
@@ -74,26 +73,16 @@ func (req *UpdateRequest) ApplyRequest(ctx context.Context, caller sacloud.APICa
 			continue
 		}
 
-		additionalNICs = append(additionalNICs, &AdditionalPremiumNICSetting{
-			SwitchID:         nic.SwitchID,
-			IPAddresses:      setting.IPAddress,
-			VirtualIPAddress: setting.VirtualIPAddress,
-			NetworkMaskLen:   setting.NetworkMaskLen,
-			Index:            setting.Index,
-		})
-	}
-
-	var nicSetting *PremiumNICSetting
-	for _, s := range current.Settings.Interfaces {
-		if s.Index == 0 {
-			nicSetting = &PremiumNICSetting{
-				SwitchID:         current.Interfaces[0].SwitchID,
-				IPAddresses:      s.IPAddress,
-				VirtualIPAddress: s.VirtualIPAddress,
-				IPAliases:        s.IPAliases,
-			}
-			break
+		ip := ""
+		if len(setting.IPAddress) > 0 {
+			ip = setting.IPAddress[0]
 		}
+		additionalNICs = append(additionalNICs, &AdditionalStandardNICSetting{
+			SwitchID:       nic.SwitchID,
+			IPAddress:      ip,
+			NetworkMaskLen: setting.NetworkMaskLen,
+			Index:          setting.Index,
+		})
 	}
 
 	applyRequest := &ApplyRequest{
@@ -104,7 +93,7 @@ func (req *UpdateRequest) ApplyRequest(ctx context.Context, caller sacloud.APICa
 		Tags:                  current.Tags,
 		IconID:                current.IconID,
 		PlanID:                current.PlanID,
-		NICSetting:            nicSetting,
+		NICSetting:            &StandardNICSetting{},
 		AdditionalNICSettings: additionalNICs,
 		RouterSetting: &RouterSetting{
 			VRID:                      current.Settings.VRID,

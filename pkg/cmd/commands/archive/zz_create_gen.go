@@ -39,6 +39,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.SourceFile, "source-file", "", p.SourceFile, "")
 	fs.VarP(core.NewIDFlag(&p.SourceDiskID, &p.SourceDiskID), "source-disk-id", "", "")
 	fs.VarP(core.NewIDFlag(&p.SourceArchiveID, &p.SourceArchiveID), "source-archive-id", "", "")
+	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -75,6 +76,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("source-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("source-disk-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("source-archive-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Archive options",
 			Flags: fs,

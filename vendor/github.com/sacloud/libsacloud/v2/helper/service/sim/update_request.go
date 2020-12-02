@@ -15,6 +15,9 @@
 package sim
 
 import (
+	"context"
+
+	"github.com/sacloud/libsacloud/v2/helper/query"
 	"github.com/sacloud/libsacloud/v2/helper/service"
 	"github.com/sacloud/libsacloud/v2/helper/validate"
 	"github.com/sacloud/libsacloud/v2/sacloud"
@@ -28,19 +31,42 @@ type UpdateRequest struct {
 	Description *string     `request:",omitempty" validate:"omitempty,min=1,max=512"`
 	Tags        *types.Tags `request:",omitempty"`
 	IconID      *types.ID   `request:",omitempty"`
+
+	Activate *bool                                `request:",omitempty"`
+	IMEI     *string                              `request:",omitempty"`
+	Carriers *[]*sacloud.SIMNetworkOperatorConfig `request:",omitempty"`
 }
 
 func (req *UpdateRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *UpdateRequest) ToRequestParameter(current *sacloud.SIM) (*sacloud.SIMUpdateRequest, error) {
-	r := &sacloud.SIMUpdateRequest{}
-	if err := service.RequestConvertTo(current, r); err != nil {
+func (req *UpdateRequest) ApplyRequest(ctx context.Context, caller sacloud.APICaller) (*ApplyRequest, error) {
+	simOp := sacloud.NewSIMOp(caller)
+	current, err := query.FindSIMByID(ctx, simOp, req.ID)
+	if err != nil {
 		return nil, err
 	}
-	if err := service.RequestConvertTo(req, r); err != nil {
+	carriers, err := simOp.GetNetworkOperator(ctx, req.ID)
+	if err != nil {
 		return nil, err
 	}
-	return r, nil
+
+	applyRequest := &ApplyRequest{
+		ID:          req.ID,
+		Name:        current.Name,
+		Description: current.Description,
+		Tags:        current.Tags,
+		IconID:      current.IconID,
+		ICCID:       current.ICCID,
+		PassCode:    "",
+		Activate:    current.Info.Activated,
+		IMEI:        current.Info.IMEI,
+		Carriers:    carriers,
+	}
+
+	if err := service.RequestConvertTo(req, applyRequest); err != nil {
+		return nil, err
+	}
+	return applyRequest, nil
 }

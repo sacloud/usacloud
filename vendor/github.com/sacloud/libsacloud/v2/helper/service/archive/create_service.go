@@ -57,6 +57,7 @@ func (s *Service) CreateWithContext(ctx context.Context, req *CreateRequest) (*s
 		SourceArchiveID:   req.SourceArchiveID,
 		SourceArchiveZone: req.SourceArchiveZone,
 		SourceSharedKey:   "",
+		NoWait:            req.NoWait,
 		Client:            archiveBuilder.NewAPIClient(s.caller),
 	}).Builder()
 	if err := builder.Validate(ctx, req.Zone); err != nil {

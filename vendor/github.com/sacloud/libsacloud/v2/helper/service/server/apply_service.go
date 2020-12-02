@@ -22,22 +22,18 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud"
 )
 
-func (s *Service) Apply(req *ApplyRequest) (*sacloud.Server, string, error) {
+func (s *Service) Apply(req *ApplyRequest) (*sacloud.Server, error) {
 	return s.ApplyWithContext(context.Background(), req)
 }
 
-func (s *Service) ApplyWithContext(ctx context.Context, req *ApplyRequest) (*sacloud.Server, string, error) {
+func (s *Service) ApplyWithContext(ctx context.Context, req *ApplyRequest) (*sacloud.Server, error) {
 	if err := req.Validate(); err != nil {
-		return nil, "", err
+		return nil, err
 	}
 
 	builder, err := req.Builder(s.caller)
 	if err != nil {
-		return nil, "", err
-	}
-
-	if err != nil {
-		return nil, "", err
+		return nil, err
 	}
 
 	var result *serverBuilder.BuildResult
@@ -45,13 +41,13 @@ func (s *Service) ApplyWithContext(ctx context.Context, req *ApplyRequest) (*sac
 	if req.ID.IsEmpty() {
 		created, err := builder.Build(ctx, req.Zone)
 		if err != nil {
-			return nil, "", err
+			return nil, err
 		}
 		result = created
 	} else {
 		updated, err := builder.Update(ctx, req.Zone)
 		if err != nil {
-			return nil, "", err
+			return nil, err
 		}
 		result = updated
 	}
@@ -59,7 +55,7 @@ func (s *Service) ApplyWithContext(ctx context.Context, req *ApplyRequest) (*sac
 	serverOp := sacloud.NewServerOp(s.caller)
 	server, err := serverOp.Read(ctx, req.Zone, result.ServerID)
 	if err != nil {
-		return nil, "", err
+		return nil, err
 	}
-	return server, result.GeneratedSSHPrivateKey, nil
+	return server, nil
 }

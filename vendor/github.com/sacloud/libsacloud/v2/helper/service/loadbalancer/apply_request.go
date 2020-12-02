@@ -22,8 +22,8 @@ import (
 )
 
 type ApplyRequest struct {
-	ID   types.ID `request:"-"` // for update
-	Zone string   `request:"-" validate:"required"`
+	ID   types.ID // for update
+	Zone string   `validate:"required"`
 
 	Name               string `validate:"required"`
 	Description        string `validate:"min=0,max=512"`
@@ -38,6 +38,7 @@ type ApplyRequest struct {
 	VirtualIPAddresses sacloud.LoadBalancerVirtualIPAddresses
 
 	SettingsHash string // for update
+	NoWait       bool
 }
 
 func (req *ApplyRequest) Validate() error {

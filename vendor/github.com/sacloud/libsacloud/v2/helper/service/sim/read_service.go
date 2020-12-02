@@ -17,6 +17,7 @@ package sim
 import (
 	"context"
 
+	"github.com/sacloud/libsacloud/v2/helper/query"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 )
 
@@ -29,5 +30,5 @@ func (s *Service) ReadWithContext(ctx context.Context, req *ReadRequest) (*saclo
 		return nil, err
 	}
 	client := sacloud.NewSIMOp(s.caller)
-	return client.Read(ctx, req.ID)
+	return query.FindSIMByID(ctx, client, req.ID)
 }

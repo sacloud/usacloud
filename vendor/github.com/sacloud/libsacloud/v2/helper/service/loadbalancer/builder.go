@@ -40,33 +40,9 @@ type Builder struct {
 	DefaultRoute       string
 	VirtualIPAddresses sacloud.LoadBalancerVirtualIPAddresses
 
+	NoWait       bool
 	SettingsHash string // for update
 	Client       sacloud.LoadBalancerAPI
-}
-
-func BuilderFromResource(ctx context.Context, caller sacloud.APICaller, zone string, id types.ID) (*Builder, error) {
-	client := sacloud.NewLoadBalancerOp(caller)
-	current, err := client.Read(ctx, zone, id)
-	if err != nil {
-		return nil, err
-	}
-
-	return &Builder{
-		ID:                 current.ID,
-		Zone:               zone,
-		Name:               current.Name,
-		Description:        current.Description,
-		Tags:               current.Tags,
-		IconID:             current.IconID,
-		SwitchID:           current.SwitchID,
-		PlanID:             current.PlanID,
-		VRID:               current.VRID,
-		IPAddresses:        current.IPAddresses,
-		NetworkMaskLen:     current.NetworkMaskLen,
-		DefaultRoute:       current.DefaultRoute,
-		VirtualIPAddresses: current.VirtualIPAddresses,
-		Client:             client,
-	}, nil
 }
 
 func (b *Builder) Build(ctx context.Context) (*sacloud.LoadBalancer, error) {
@@ -92,6 +68,9 @@ func (b *Builder) create(ctx context.Context) (*sacloud.LoadBalancer, error) {
 	})
 	if err != nil {
 		return nil, err
+	}
+	if b.NoWait {
+		return created, nil
 	}
 	return wait.UntilLoadBalancerIsUp(ctx, b.Client, b.Zone, created.ID)
 }

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package mobilegateway
+package vpcrouter
 
 import (
 	"context"
@@ -21,11 +21,11 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud"
 )
 
-func (s *Service) Update(req *UpdateRequest) (*sacloud.MobileGateway, error) {
-	return s.UpdateWithContext(context.Background(), req)
+func (s *Service) UpdateStandard(req *UpdateStandardRequest) (*sacloud.VPCRouter, error) {
+	return s.UpdateStandardWithContext(context.Background(), req)
 }
 
-func (s *Service) UpdateWithContext(ctx context.Context, req *UpdateRequest) (*sacloud.MobileGateway, error) {
+func (s *Service) UpdateStandardWithContext(ctx context.Context, req *UpdateStandardRequest) (*sacloud.VPCRouter, error) {
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
@@ -34,5 +34,6 @@ func (s *Service) UpdateWithContext(ctx context.Context, req *UpdateRequest) (*s
 	if err != nil {
 		return nil, fmt.Errorf("processing request parameter failed: %s", err)
 	}
+
 	return s.ApplyWithContext(ctx, applyRequest)
 }

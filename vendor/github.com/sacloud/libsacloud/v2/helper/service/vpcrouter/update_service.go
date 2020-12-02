@@ -30,16 +30,10 @@ func (s *Service) UpdateWithContext(ctx context.Context, req *UpdateRequest) (*s
 		return nil, err
 	}
 
-	client := sacloud.NewVPCRouterOp(s.caller)
-	current, err := client.Read(ctx, req.Zone, req.ID)
-	if err != nil {
-		return nil, fmt.Errorf("reading VPCRouter[%s] failed: %s", req.ID, err)
-	}
-
-	params, err := req.ToRequestParameter(current)
+	applyRequest, err := req.ApplyRequest(ctx, s.caller)
 	if err != nil {
 		return nil, fmt.Errorf("processing request parameter failed: %s", err)
 	}
 
-	return client.Update(ctx, req.Zone, req.ID, params)
+	return s.ApplyWithContext(ctx, applyRequest)
 }

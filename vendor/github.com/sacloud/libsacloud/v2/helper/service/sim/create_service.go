@@ -29,11 +29,5 @@ func (s *Service) CreateWithContext(ctx context.Context, req *CreateRequest) (*s
 		return nil, err
 	}
 
-	params, err := req.ToRequestParameter()
-	if err != nil {
-		return nil, err
-	}
-
-	client := sacloud.NewSIMOp(s.caller)
-	return client.Create(ctx, params)
+	return s.ApplyWithContext(ctx, req.ApplyRequest())
 }

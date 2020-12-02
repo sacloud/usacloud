@@ -16,7 +16,6 @@ package containerregistry
 
 import (
 	"github.com/sacloud/libsacloud/v2/helper/validate"
-	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
@@ -35,8 +34,8 @@ func (req *CreateRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *CreateRequest) Builder(caller sacloud.APICaller) (*Builder, error) {
-	return &Builder{
+func (req *CreateRequest) ApplyRequest() *ApplyRequest {
+	return &ApplyRequest{
 		Name:           req.Name,
 		Description:    req.Description,
 		Tags:           req.Tags,
@@ -46,6 +45,5 @@ func (req *CreateRequest) Builder(caller sacloud.APICaller) (*Builder, error) {
 		SubDomainLabel: req.SubDomainLabel,
 		Users:          req.Users,
 		SettingsHash:   "",
-		Client:         sacloud.NewContainerRegistryOp(caller),
-	}, nil
+	}
 }

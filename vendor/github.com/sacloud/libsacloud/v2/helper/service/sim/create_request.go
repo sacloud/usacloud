@@ -15,7 +15,6 @@
 package sim
 
 import (
-	"github.com/sacloud/libsacloud/v2/helper/service"
 	"github.com/sacloud/libsacloud/v2/helper/validate"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
@@ -28,16 +27,26 @@ type CreateRequest struct {
 	IconID      types.ID
 	ICCID       string `validate:"required"`
 	PassCode    string `validate:"required"`
+
+	Activate bool
+	IMEI     string
+	Carriers []*sacloud.SIMNetworkOperatorConfig
 }
 
 func (req *CreateRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *CreateRequest) ToRequestParameter() (*sacloud.SIMCreateRequest, error) {
-	params := &sacloud.SIMCreateRequest{}
-	if err := service.RequestConvertTo(req, params); err != nil {
-		return nil, err
+func (req *CreateRequest) ApplyRequest() *ApplyRequest {
+	return &ApplyRequest{
+		Name:        req.Name,
+		Description: req.Description,
+		Tags:        req.Tags,
+		IconID:      req.IconID,
+		ICCID:       req.ICCID,
+		PassCode:    req.PassCode,
+		Activate:    req.Activate,
+		IMEI:        req.IMEI,
+		Carriers:    req.Carriers,
 	}
-	return params, nil
 }
