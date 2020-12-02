@@ -20,6 +20,7 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -37,6 +38,30 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("icon-id") {
 		p.IconID = nil
 	}
+	if !fs.Changed("source-network") {
+		p.SourceNetwork = nil
+	}
+	if !fs.Changed("enable-replication") {
+		p.EnableReplication = nil
+	}
+	if !fs.Changed("replica-user-password") {
+		p.ReplicaUserPassword = nil
+	}
+	if !fs.Changed("enable-web-ui") {
+		p.EnableWebUI = nil
+	}
+	if !fs.Changed("enable-backup") {
+		p.EnableBackup = nil
+	}
+	if !fs.Changed("backup-weekdays") {
+		p.BackupWeekdays = nil
+	}
+	if !fs.Changed("backup-start-time-hour") {
+		p.BackupStartTimeHour = nil
+	}
+	if !fs.Changed("backup-start-time-minute") {
+		p.BackupStartTimeMinute = nil
+	}
 }
 
 func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
@@ -52,13 +77,33 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.IconID == nil {
 		p.IconID = pointer.NewID(types.ID(0))
 	}
+	if p.SourceNetwork == nil {
+		p.SourceNetwork = pointer.NewStringSlice([]string{})
+	}
+	if p.EnableReplication == nil {
+		p.EnableReplication = pointer.NewBool(false)
+	}
+	if p.ReplicaUserPassword == nil {
+		p.ReplicaUserPassword = pointer.NewString("")
+	}
+	if p.EnableWebUI == nil {
+		p.EnableWebUI = pointer.NewBool(false)
+	}
+	if p.EnableBackup == nil {
+		p.EnableBackup = pointer.NewBool(false)
+	}
+	if p.BackupWeekdays == nil {
+		p.BackupWeekdays = pointer.NewStringSlice([]string{})
+	}
+	if p.BackupStartTimeHour == nil {
+		p.BackupStartTimeHour = pointer.NewInt(0)
+	}
+	if p.BackupStartTimeMinute == nil {
+		p.BackupStartTimeMinute = pointer.NewInt(0)
+	}
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
-	fs.StringVarP(p.Name, "name", "", "", "")
-	fs.StringVarP(p.Description, "description", "", "", "")
-	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
-	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -66,6 +111,20 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.FormatFile, "format-file", "", p.FormatFile, "Output format in Go templates(from file)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
 	fs.StringVarP(&p.QueryFile, "query-file", "", p.QueryFile, "JMESPath query(from file)")
+	fs.StringVarP(p.Name, "name", "", "", "")
+	fs.StringVarP(p.Description, "description", "", "", "")
+	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
+	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
+	fs.StringSliceVarP(p.SourceNetwork, "source-network", "", nil, "")
+	fs.BoolVarP(p.EnableReplication, "enable-replication", "", false, "")
+	fs.StringVarP(p.ReplicaUserPassword, "replica-user-password", "", "", "")
+	fs.BoolVarP(p.EnableWebUI, "enable-web-ui", "", false, "")
+	fs.BoolVarP(p.EnableBackup, "enable-backup", "", false, "")
+	fs.StringSliceVarP(p.BackupWeekdays, "backup-weekdays", "", nil, "options: [all/sun/mon/tue/wed/thu/fri/sat]")
+	fs.IntVarP(p.BackupStartTimeHour, "backup-start-time-hour", "", 0, "")
+	fs.IntVarP(p.BackupStartTimeMinute, "backup-start-time-minute", "", 0, "")
+	fs.StringVarP(&p.SettingsHash, "settings-hash", "", p.SettingsHash, "")
+	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -91,6 +150,16 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("description"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("source-network"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("enable-replication"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("replica-user-password"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("enable-web-ui"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("enable-backup"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("backup-weekdays"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("backup-start-time-hour"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("backup-start-time-minute"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("settings-hash"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Database options",
 			Flags: fs,
@@ -126,6 +195,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *updateParameter) setCompletionFunc(cmd *cobra.Command) {
+	cmd.RegisterFlagCompletionFunc("backup-weekdays", util.FlagCompletionFunc("all", "sun", "mon", "tue", "wed", "thu", "fri", "sat"))
 
 }
 

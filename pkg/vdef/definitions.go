@@ -54,7 +54,8 @@ var definitions = map[string][]*definition{
 		{key: "1t", value: types.DatabasePlans.DB1TB},
 	},
 	"database_type": {
-		{key: "postgresql", value: "postgresql"},
+		{key: "postgresql", value: "postgres"},
+		{key: "postgres", value: "postgres"},
 		{key: "mariadb", value: "mariadb"},
 	},
 	"disk_plan": {

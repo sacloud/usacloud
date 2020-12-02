@@ -62,6 +62,8 @@ type createParameter struct {
 
 	BackupStartTimeHour   int `validate:"omitempty,min=0,max=23"`
 	BackupStartTimeMinute int `cli:",options=backup_start_minute" validate:"omitempty,backup_start_minute"`
+
+	NoWait bool
 }
 
 func newCreateParameter() *createParameter {

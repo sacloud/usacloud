@@ -34,28 +34,28 @@ var updateCommand = &core.Command{
 }
 
 type updateParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	Name        *string   `validate:"omitempty,min=1"`
 	Description *string   `validate:"omitempty,description"`
 	Tags        *[]string `validate:"omitempty,tags"`
 	IconID      *types.ID
 
-	/*
-		TODO これらはlibsacloud側で対応すべき
+	SourceNetwork         *[]string ` validate:"omitempty,dive,cidrv4"`
+	EnableReplication     *bool
+	ReplicaUserPassword   *string ` validate:"omitempty,required_with=EnableReplication"`
+	EnableWebUI           *bool
+	EnableBackup          *bool
+	BackupWeekdays        *[]string `cli:",options=weekdays" mapconv:",omitempty,filters=weekdays" validate:"omitempty,required_with=EnableBackup,max=7,weekdays"`
+	BackupStartTimeHour   *int      `request:",omitempty" validate:"omitempty,min=0,max=23"`
+	BackupStartTimeMinute *int      `request:",omitempty" validate:"omitempty,oneof=0 15 30 45"`
 
-		SourceNetwork         []string `validate:"omitempty,dive,cidrv4"`
-		EnableWebUI           bool
-		EnableBackup          bool
-		BackupWeekdays        []string `cli:",options=weekdays" mapconv:",omitempty,filters=weekdays" validate:"required_with=EnableBackup,max=7,weekdays"`
-		BackupStartTimeHour   int  `validate:"omitempty,min=0,max=23"`
-		BackupStartTimeMinute int  `cli:",options=backup_start_minute" validate:"omitempty,backup_start_minute"`
-	*/
-
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
+	SettingsHash string
+	NoWait       bool
 }
 
 func newUpdateParameter() *updateParameter {

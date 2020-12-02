@@ -38,10 +38,10 @@ type UpdateRequest struct {
 
 	SourceNetwork         *[]string                   `request:",omitempty" validate:"omitempty,dive,cidrv4"`
 	EnableReplication     *bool                       `request:",omitempty"`
-	ReplicaUserPassword   *string                     `request:",omitempty" validate:"required_with=EnableReplication"`
+	ReplicaUserPassword   *string                     `request:",omitempty" validate:"omitempty,required_with=EnableReplication"`
 	EnableWebUI           *bool                       `request:",omitempty"`
 	EnableBackup          *bool                       `request:",omitempty"`
-	BackupWeekdays        *[]types.EBackupSpanWeekday `request:",omitempty" validate:"required_with=EnableBackup,max=7"`
+	BackupWeekdays        *[]types.EBackupSpanWeekday `request:",omitempty" validate:"omitempty,required_with=EnableBackup,max=7"`
 	BackupStartTimeHour   *int                        `request:",omitempty" validate:"omitempty,min=0,max=23"`
 	BackupStartTimeMinute *int                        `request:",omitempty" validate:"omitempty,oneof=0 15 30 45"`
 
