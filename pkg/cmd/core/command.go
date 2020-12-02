@@ -368,7 +368,7 @@ func (c *Command) expandResourceContextsFromArgs(ctx cli.Context, args []string)
 	}
 
 	if c.SelectorType == SelectorTypeRequireSingle && len(results) > 1 {
-		return nil, fmt.Errorf("target resource not found: query=%q", args)
+		return nil, fmt.Errorf("in this operation, only a single target is allowed: query=%q", args)
 	}
 	if len(results) == 0 {
 		return nil, fmt.Errorf("target resource not found: query=%q", args)
