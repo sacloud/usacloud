@@ -33,7 +33,7 @@ type CreateRequest struct {
 	DefaultRoute          string   `validate:"omitempty,ipv4"`
 	Port                  int      `validate:"omitempty,min=1,max=65535"`
 	SourceNetwork         []string `validate:"omitempty,dive,cidrv4"`
-	DatabaseType          string   `validate:"required,oneof=mariadb postgresql"`
+	DatabaseType          string   `validate:"required,oneof=mariadb postgres"`
 	Username              string   `validate:"required"`
 	Password              string   `validate:"required"`
 	EnableReplication     bool

@@ -50,7 +50,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.DefaultRoute, "default-route", "", p.DefaultRoute, "")
 	fs.IntVarP(&p.Port, "port", "", p.Port, "")
 	fs.StringSliceVarP(&p.SourceNetwork, "source-network", "", p.SourceNetwork, "")
-	fs.StringVarP(&p.DatabaseType, "database-type", "", p.DatabaseType, "options: [postgresql/mariadb]")
+	fs.StringVarP(&p.DatabaseType, "database-type", "", p.DatabaseType, "options: [postgresql/postgres/mariadb]")
 	fs.StringVarP(&p.Username, "username", "", p.Username, "")
 	fs.StringVarP(&p.Password, "password", "", p.Password, "")
 	fs.BoolVarP(&p.EnableReplication, "enable-replication", "", p.EnableReplication, "")
@@ -60,6 +60,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.BackupWeekdays, "backup-weekdays", "", p.BackupWeekdays, "options: [all/sun/mon/tue/wed/thu/fri/sat]")
 	fs.IntVarP(&p.BackupStartTimeHour, "backup-start-time-hour", "", p.BackupStartTimeHour, "")
 	fs.IntVarP(&p.BackupStartTimeMinute, "backup-start-time-minute", "", p.BackupStartTimeMinute, "")
+	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -104,6 +105,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("backup-weekdays"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("backup-start-time-hour"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("backup-start-time-minute"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Database options",
 			Flags: fs,
@@ -140,7 +142,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("plan", util.FlagCompletionFunc("10g", "30g", "90g", "240g", "500g", "1t"))
-	cmd.RegisterFlagCompletionFunc("database-type", util.FlagCompletionFunc("postgresql", "mariadb"))
+	cmd.RegisterFlagCompletionFunc("database-type", util.FlagCompletionFunc("postgresql", "postgres", "mariadb"))
 	cmd.RegisterFlagCompletionFunc("backup-weekdays", util.FlagCompletionFunc("all", "sun", "mon", "tue", "wed", "thu", "fri", "sat"))
 
 }
