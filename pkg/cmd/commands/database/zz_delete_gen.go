@@ -32,6 +32,7 @@ func (p *deleteParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.FailIfNotFound, "fail-if-not-found", "", p.FailIfNotFound, "")
+	fs.BoolVarP(&p.Force, "force", "", p.Force, "")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -61,6 +62,7 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs = pflag.NewFlagSet("database", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("force"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Database options",
 			Flags: fs,
