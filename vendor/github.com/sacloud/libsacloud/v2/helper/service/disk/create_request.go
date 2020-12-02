@@ -15,13 +15,9 @@
 package disk
 
 import (
-	"context"
 	"fmt"
 
-	"github.com/sacloud/libsacloud/v2/helper/query"
-	"github.com/sacloud/libsacloud/v2/helper/service"
 	"github.com/sacloud/libsacloud/v2/helper/validate"
-	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
@@ -42,6 +38,9 @@ type CreateRequest struct {
 	SizeGB          int `request:"SizeMB,filters=gb_to_mb"`
 	DistantFrom     []types.ID
 	OSType          ostype.ArchiveOSType
+	EditParameter   *EditParameter
+
+	NoWait bool
 }
 
 func (req *CreateRequest) Validate() error {
@@ -53,18 +52,22 @@ func (req *CreateRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *CreateRequest) ToRequestParameter(ctx context.Context, caller sacloud.APICaller) (*sacloud.DiskCreateRequest, error) {
-	if req.OSType != ostype.Custom {
-		archive, err := query.FindArchiveByOSType(ctx, sacloud.NewArchiveOp(caller), req.Zone, req.OSType)
-		if err != nil {
-			return nil, err
-		}
-		req.SourceArchiveID = archive.ID
+func (req *CreateRequest) ApplyRequest() *ApplyRequest {
+	return &ApplyRequest{
+		Zone:            req.Zone,
+		Name:            req.Name,
+		Description:     req.Description,
+		Tags:            req.Tags,
+		IconID:          req.IconID,
+		DiskPlanID:      req.DiskPlanID,
+		Connection:      req.Connection,
+		SourceDiskID:    req.SourceArchiveID,
+		SourceArchiveID: req.SourceArchiveID,
+		ServerID:        req.ServerID,
+		SizeGB:          req.SizeGB,
+		DistantFrom:     req.DistantFrom,
+		OSType:          req.OSType,
+		EditParameter:   req.EditParameter,
+		NoWait:          req.NoWait,
 	}
-
-	params := &sacloud.DiskCreateRequest{}
-	if err := service.RequestConvertTo(req, params); err != nil {
-		return nil, err
-	}
-	return params, nil
 }

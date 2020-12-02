@@ -29,11 +29,5 @@ func (s *Service) CreateWithContext(ctx context.Context, req *CreateRequest) (*s
 		return nil, err
 	}
 
-	params, err := req.ToRequestParameter()
-	if err != nil {
-		return nil, err
-	}
-
-	client := sacloud.NewServerOp(s.caller)
-	return client.Create(ctx, req.Zone, params)
+	return s.ApplyWithContext(ctx, req.ApplyRequest())
 }

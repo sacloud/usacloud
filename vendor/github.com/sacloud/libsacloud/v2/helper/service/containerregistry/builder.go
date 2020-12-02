@@ -45,42 +45,6 @@ type User struct {
 	Permission types.EContainerRegistryPermission
 }
 
-// BuilderFromResource 既存のリソースからビルダーを作成
-func BuilderFromResource(ctx context.Context, caller sacloud.APICaller, id types.ID) (*Builder, error) {
-	client := sacloud.NewContainerRegistryOp(caller)
-	current, err := client.Read(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-	users, err := client.ListUsers(ctx, id) // NOTE: ユーザーが登録されていなくても200が返る
-	if err != nil {
-		return nil, err
-	}
-
-	builder := &Builder{
-		ID:             id,
-		Name:           current.Name,
-		Description:    current.Description,
-		Tags:           current.Tags,
-		IconID:         current.IconID,
-		AccessLevel:    current.AccessLevel,
-		VirtualDomain:  current.VirtualDomain,
-		SubDomainLabel: current.SubDomainLabel,
-		SettingsHash:   current.SettingsHash,
-		Client:         client,
-	}
-	if users != nil {
-		for _, user := range users.Users {
-			builder.Users = append(builder.Users, &User{
-				UserName:   user.UserName,
-				Password:   "", // パスワードは参照できないため常に空
-				Permission: user.Permission,
-			})
-		}
-	}
-	return builder, nil
-}
-
 func (b *Builder) Build(ctx context.Context) (*sacloud.ContainerRegistry, error) {
 	if b.ID.IsEmpty() {
 		return b.create(ctx)
@@ -137,6 +101,7 @@ func (b *Builder) reconcileUsers(ctx context.Context, id types.ID) error {
 	if err != nil {
 		return err
 	}
+
 	if currentUsers != nil {
 		// delete
 		for _, username := range b.deletedUsers(currentUsers.Users) {
@@ -147,21 +112,26 @@ func (b *Builder) reconcileUsers(ctx context.Context, id types.ID) error {
 		// update
 		for _, user := range b.updatedUsers(currentUsers.Users) {
 			if err := b.Client.UpdateUser(ctx, id, user.UserName, &sacloud.ContainerRegistryUserUpdateRequest{
-				Password:   user.Password,
+				Password:   user.Password, // Note: パスワードが空(Update時など)もあるが、nakedでomitemptyがついてるため問題なし
 				Permission: user.Permission,
 			}); err != nil {
 				return err
 			}
 		}
-		// create
-		for _, user := range b.createdUsers(currentUsers.Users) {
-			if err := b.Client.AddUser(ctx, id, &sacloud.ContainerRegistryUserCreateRequest{
-				UserName:   user.UserName,
-				Password:   user.Password,
-				Permission: user.Permission,
-			}); err != nil {
-				return err
-			}
+	}
+
+	// create
+	var users []*sacloud.ContainerRegistryUser
+	if currentUsers != nil {
+		users = currentUsers.Users
+	}
+	for _, user := range b.createdUsers(users) {
+		if err := b.Client.AddUser(ctx, id, &sacloud.ContainerRegistryUserCreateRequest{
+			UserName:   user.UserName,
+			Password:   user.Password,
+			Permission: user.Permission,
+		}); err != nil {
+			return err
 		}
 	}
 	return nil

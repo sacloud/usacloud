@@ -41,6 +41,8 @@ type ApplyRequest struct {
 
 	OSType        ostype.ArchiveOSType
 	EditParameter *EditParameter
+
+	NoWait bool
 }
 
 // EditParameter ディスクの修正用パラメータ
@@ -61,10 +63,6 @@ type EditParameter struct {
 
 	// IsSSHKeysEphemeral trueの場合、SSHキーを生成する場合に生成したSSHキーリソースをサーバ作成後に削除する
 	IsSSHKeysEphemeral bool
-	// GenerateSSHKeyName 設定されていた場合、クラウドAPIを用いてキーペアを生成する。
-	GenerateSSHKeyName        string
-	GenerateSSHKeyPassPhrase  string
-	GenerateSSHKeyDescription string
 
 	IsNotesEphemeral bool
 	NoteContents     []string
@@ -77,7 +75,9 @@ func (req *ApplyRequest) Validate() error {
 
 func (req *ApplyRequest) Builder(caller sacloud.APICaller) (diskBuilder.Builder, error) {
 	var editParameter *diskBuilder.EditRequest
+
 	if req.EditParameter != nil {
+		editParameter = &diskBuilder.EditRequest{}
 		if err := service.RequestConvertTo(req.EditParameter, editParameter); err != nil {
 			return nil, err
 		}
@@ -97,6 +97,7 @@ func (req *ApplyRequest) Builder(caller sacloud.APICaller) (diskBuilder.Builder,
 		SourceDiskID:    req.SourceDiskID,
 		SourceArchiveID: req.SourceArchiveID,
 		EditParameter:   editParameter,
+		NoWait:          req.NoWait,
 		Client:          diskBuilder.NewBuildersAPIClient(caller),
 	}
 	return director.Builder(), nil

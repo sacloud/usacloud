@@ -20,38 +20,38 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud"
 )
 
-func (s *Service) Apply(req *ApplyRequest) (*sacloud.Disk, *sacloud.SSHKeyGenerated, error) {
+func (s *Service) Apply(req *ApplyRequest) (*sacloud.Disk, error) {
 	return s.ApplyWithContext(context.Background(), req)
 }
 
-func (s *Service) ApplyWithContext(ctx context.Context, req *ApplyRequest) (*sacloud.Disk, *sacloud.SSHKeyGenerated, error) {
+func (s *Service) ApplyWithContext(ctx context.Context, req *ApplyRequest) (*sacloud.Disk, error) {
 	if err := req.Validate(); err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
 	builder, err := req.Builder(s.caller)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
 	// create
 	if req.ID.IsEmpty() {
 		res, err := builder.Build(ctx, req.Zone, req.ServerID)
 		if err != nil {
-			return nil, nil, err
+			return nil, err
 		}
 		diskOp := sacloud.NewDiskOp(s.caller)
 		disk, err := diskOp.Read(ctx, req.Zone, res.DiskID)
 		if err != nil {
-			return nil, nil, err
+			return nil, err
 		}
-		return disk, res.GeneratedSSHKey, nil
+		return disk, nil
 	}
 
 	// update
 	res, err := builder.Update(ctx, req.Zone)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
-	return res.Disk, nil, nil
+	return res.Disk, nil
 }

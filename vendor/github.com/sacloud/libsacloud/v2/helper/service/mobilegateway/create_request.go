@@ -15,32 +15,51 @@
 package mobilegateway
 
 import (
-	"github.com/sacloud/libsacloud/v2/helper/service"
 	"github.com/sacloud/libsacloud/v2/helper/validate"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
 type CreateRequest struct {
-	Zone string `request:"-" validate:"required"`
+	Zone string `validate:"required"`
 
 	Name                            string `validate:"required"`
 	Description                     string `validate:"min=0,max=512"`
 	Tags                            types.Tags
 	IconID                          types.ID
+	PrivateInterface                *PrivateInterfaceSetting `validate:"omitempty"`
 	StaticRoutes                    []*sacloud.MobileGatewayStaticRoute
-	InternetConnectionEnabled       types.StringFlag
-	InterDeviceCommunicationEnabled types.StringFlag
+	SIMRoutes                       []*SIMRouteSetting
+	InternetConnectionEnabled       bool
+	InterDeviceCommunicationEnabled bool
+	DNS                             *sacloud.MobileGatewayDNSSetting
+	SIMs                            []*SIMSetting
+	TrafficConfig                   *sacloud.MobileGatewayTrafficControl
+
+	NoWait          bool
+	BootAfterCreate bool
 }
 
 func (req *CreateRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *CreateRequest) ToRequestParameter() (*sacloud.MobileGatewayCreateRequest, error) {
-	params := &sacloud.MobileGatewayCreateRequest{}
-	if err := service.RequestConvertTo(req, params); err != nil {
-		return nil, err
+func (req *CreateRequest) ApplyRequest() *ApplyRequest {
+	return &ApplyRequest{
+		Zone:                            req.Zone,
+		Name:                            req.Name,
+		Description:                     req.Description,
+		Tags:                            req.Tags,
+		IconID:                          req.IconID,
+		PrivateInterface:                req.PrivateInterface,
+		StaticRoutes:                    req.StaticRoutes,
+		SIMRoutes:                       req.SIMRoutes,
+		InternetConnectionEnabled:       req.InternetConnectionEnabled,
+		InterDeviceCommunicationEnabled: req.InterDeviceCommunicationEnabled,
+		DNS:                             req.DNS,
+		SIMs:                            req.SIMs,
+		TrafficConfig:                   req.TrafficConfig,
+		NoWait:                          req.NoWait,
+		BootAfterCreate:                 req.BootAfterCreate,
 	}
-	return params, nil
 }

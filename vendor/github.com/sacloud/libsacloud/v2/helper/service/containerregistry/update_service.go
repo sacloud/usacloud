@@ -30,10 +30,10 @@ func (s *Service) UpdateWithContext(ctx context.Context, req *UpdateRequest) (*s
 		return nil, err
 	}
 
-	builder, err := req.Builder(ctx, s.caller)
+	applyRequest, err := req.ApplyRequest(ctx, s.caller)
 	if err != nil {
 		return nil, fmt.Errorf("processing request parameter failed: %s", err)
 	}
 
-	return builder.Build(ctx)
+	return s.ApplyWithContext(ctx, applyRequest)
 }

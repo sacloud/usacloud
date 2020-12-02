@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"strings"
 	"text/template"
+	"time"
 
 	"github.com/sacloud/libsacloud/v2/sacloud"
 
@@ -109,6 +110,13 @@ var TemplateFuncMap = template.FuncMap{
 			}
 		}
 		return nil
+	},
+	"unix_time_to_date": func(value int64) *time.Time {
+		if value <= 0 {
+			return nil
+		}
+		v := time.Unix(value/1000, 0)
+		return &v
 	},
 }
 

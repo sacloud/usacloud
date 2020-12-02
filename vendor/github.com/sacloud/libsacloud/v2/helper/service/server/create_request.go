@@ -15,37 +15,54 @@
 package server
 
 import (
-	"github.com/sacloud/libsacloud/v2/helper/service"
+	diskService "github.com/sacloud/libsacloud/v2/helper/service/disk"
 	"github.com/sacloud/libsacloud/v2/helper/validate"
-	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
 type CreateRequest struct {
 	Zone string `request:"-" validate:"required"`
 
-	Name                 string `validate:"required"`
-	Description          string `validate:"min=0,max=512"`
-	Tags                 types.Tags
-	IconID               types.ID
-	CPU                  int
-	MemoryMB             int
-	ServerPlanCommitment types.ECommitment
-	ServerPlanGeneration types.EPlanGeneration
-	ConnectedSwitches    []*sacloud.ConnectedSwitch
-	InterfaceDriver      types.EInterfaceDriver
-	WaitDiskMigration    bool
-	PrivateHostID        types.ID
+	Name            string `validate:"required"`
+	Description     string `validate:"min=0,max=512"`
+	Tags            types.Tags
+	IconID          types.ID
+	CPU             int
+	MemoryGB        int
+	Commitment      types.ECommitment
+	Generation      types.EPlanGeneration
+	InterfaceDriver types.EInterfaceDriver
+
+	BootAfterCreate bool
+	CDROMID         types.ID
+	PrivateHostID   types.ID
+
+	NetworkInterfaces []*NetworkInterface
+	Disks             []*diskService.ApplyRequest
+	NoWait            bool
 }
 
 func (req *CreateRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *CreateRequest) ToRequestParameter() (*sacloud.ServerCreateRequest, error) {
-	params := &sacloud.ServerCreateRequest{}
-	if err := service.RequestConvertTo(req, params); err != nil {
-		return nil, err
+func (req *CreateRequest) ApplyRequest() *ApplyRequest {
+	return &ApplyRequest{
+		Zone:              req.Zone,
+		Name:              req.Name,
+		Description:       req.Description,
+		Tags:              req.Tags,
+		IconID:            req.IconID,
+		CPU:               req.CPU,
+		MemoryGB:          req.MemoryGB,
+		Commitment:        req.Commitment,
+		Generation:        req.Generation,
+		InterfaceDriver:   req.InterfaceDriver,
+		BootAfterCreate:   req.BootAfterCreate,
+		CDROMID:           req.CDROMID,
+		PrivateHostID:     req.PrivateHostID,
+		NetworkInterfaces: req.NetworkInterfaces,
+		Disks:             req.Disks,
+		NoWait:            req.NoWait,
 	}
-	return params, nil
 }

@@ -15,9 +15,7 @@
 package vpcrouter
 
 import (
-	"github.com/sacloud/libsacloud/v2/helper/service"
 	"github.com/sacloud/libsacloud/v2/helper/validate"
-	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
@@ -28,16 +26,35 @@ type CreateRequest struct {
 	Description string `validate:"min=0,max=512"`
 	Tags        types.Tags
 	IconID      types.ID
+
+	PlanID                types.ID `validate:"required"`
+	NICSetting            *PremiumNICSetting
+	AdditionalNICSettings []*AdditionalPremiumNICSetting
+	RouterSetting         *RouterSetting
+	NoWait                bool
+	BootAfterCreate       bool
 }
 
 func (req *CreateRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *CreateRequest) ToRequestParameter() (*sacloud.VPCRouterCreateRequest, error) {
-	params := &sacloud.VPCRouterCreateRequest{}
-	if err := service.RequestConvertTo(req, params); err != nil {
-		return nil, err
+func (req *CreateRequest) ApplyRequest() *ApplyRequest {
+	var additionalNICs []AdditionalNICSettingHolder
+	for _, nic := range req.AdditionalNICSettings {
+		additionalNICs = append(additionalNICs, nic)
 	}
-	return params, nil
+	return &ApplyRequest{
+		Zone:                  req.Zone,
+		Name:                  req.Name,
+		Description:           req.Description,
+		Tags:                  req.Tags,
+		IconID:                req.IconID,
+		PlanID:                req.PlanID,
+		NICSetting:            req.NICSetting,
+		AdditionalNICSettings: additionalNICs,
+		RouterSetting:         req.RouterSetting,
+		NoWait:                req.NoWait,
+		BootAfterCreate:       req.BootAfterCreate,
+	}
 }

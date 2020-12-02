@@ -44,8 +44,7 @@ func (s *StandardNICSetting) interfaceSetting() *sacloud.VPCRouterInterfaceSetti
 // PremiumNICSetting VPCルータのeth0をスイッチ+ルータに接続するためのSetting(プレミアム/ハイスペックプラン)
 type PremiumNICSetting struct {
 	SwitchID         types.ID
-	IPAddress1       string
-	IPAddress2       string
+	IPAddresses      []string
 	VirtualIPAddress string
 	IPAliases        []string
 }
@@ -55,12 +54,12 @@ func (s *PremiumNICSetting) connectedSwitch() *sacloud.ApplianceConnectedSwitch 
 }
 
 func (s *PremiumNICSetting) ipAddresses() []string {
-	return []string{s.IPAddress1, s.IPAddress2}
+	return s.IPAddresses
 }
 
 func (s *PremiumNICSetting) interfaceSetting() *sacloud.VPCRouterInterfaceSetting {
 	return &sacloud.VPCRouterInterfaceSetting{
-		IPAddress:        []string{s.IPAddress1, s.IPAddress2},
+		IPAddress:        s.IPAddresses,
 		VirtualIPAddress: s.VirtualIPAddress,
 		IPAliases:        s.IPAliases,
 		Index:            0,
@@ -96,8 +95,7 @@ func (s *AdditionalStandardNICSetting) interfaceSetting() *sacloud.VPCRouterInte
 // AdditionalPremiumNICSetting VPCルータのeth1-eth7の設定(プレミアム/ハイスペックプラン向け)
 type AdditionalPremiumNICSetting struct {
 	SwitchID         types.ID
-	IPAddress1       string
-	IPAddress2       string
+	IPAddresses      []string
 	VirtualIPAddress string
 	NetworkMaskLen   int
 	Index            int
@@ -109,7 +107,7 @@ func (s *AdditionalPremiumNICSetting) switchInfo() (switchID types.ID, index int
 
 func (s *AdditionalPremiumNICSetting) interfaceSetting() *sacloud.VPCRouterInterfaceSetting {
 	return &sacloud.VPCRouterInterfaceSetting{
-		IPAddress:        []string{s.IPAddress1, s.IPAddress2},
+		IPAddress:        s.IPAddresses,
 		VirtualIPAddress: s.VirtualIPAddress,
 		NetworkMaskLen:   s.NetworkMaskLen,
 		Index:            s.Index,

@@ -15,7 +15,9 @@
 package internet
 
 import (
-	"github.com/sacloud/libsacloud/v2/helper/service"
+	"errors"
+
+	internetBuilder "github.com/sacloud/libsacloud/v2/helper/builder/internet"
 	"github.com/sacloud/libsacloud/v2/helper/validate"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
@@ -30,16 +32,32 @@ type CreateRequest struct {
 	IconID         types.ID
 	NetworkMaskLen int
 	BandWidthMbps  int
+	EnableIPv6     bool
+	NoWait         bool
+	NotFoundRetry  int // スイッチ+ルータは作成直後だと404を返すことがあることへの対応でリトライする際のリトライ上限回数、省略時はDefaultNotFoundRetry
 }
 
 func (req *CreateRequest) Validate() error {
-	return validate.Struct(req)
+	if err := validate.Struct(req); err != nil {
+		return err
+	}
+	if req.EnableIPv6 && req.NoWait {
+		return errors.New("NoWait=true is not supported when EnableIPv6=true")
+	}
+	return nil
 }
 
-func (req *CreateRequest) ToRequestParameter() (*sacloud.InternetCreateRequest, error) {
-	params := &sacloud.InternetCreateRequest{}
-	if err := service.RequestConvertTo(req, params); err != nil {
-		return nil, err
+func (req *CreateRequest) Builder(caller sacloud.APICaller) *internetBuilder.Builder {
+	return &internetBuilder.Builder{
+		Name:           req.Name,
+		Description:    req.Description,
+		Tags:           req.Tags,
+		IconID:         req.IconID,
+		NetworkMaskLen: req.NetworkMaskLen,
+		BandWidthMbps:  req.BandWidthMbps,
+		EnableIPv6:     req.EnableIPv6,
+		NotFoundRetry:  req.NotFoundRetry,
+		NoWait:         req.NoWait,
+		Client:         internetBuilder.NewAPIClient(caller),
 	}
-	return params, nil
 }

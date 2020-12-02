@@ -37,7 +37,8 @@ func (req *FindRequest) Validate() error {
 
 func (req *FindRequest) ToRequestParameter() (*sacloud.FindCondition, error) {
 	condition := &sacloud.FindCondition{
-		Filter: map[search.FilterKey]interface{}{},
+		Include: []string{"*", "Status.sim"}, // デフォルトだと詳細情報は含まれないため追加
+		Filter:  map[search.FilterKey]interface{}{},
 	}
 	if err := service.RequestConvertTo(req, condition); err != nil {
 		return nil, err

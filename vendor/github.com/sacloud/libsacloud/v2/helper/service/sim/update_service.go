@@ -30,16 +30,9 @@ func (s *Service) UpdateWithContext(ctx context.Context, req *UpdateRequest) (*s
 		return nil, err
 	}
 
-	client := sacloud.NewSIMOp(s.caller)
-	current, err := client.Read(ctx, req.ID)
-	if err != nil {
-		return nil, fmt.Errorf("reading SIM[%s] failed: %s", req.ID, err)
-	}
-
-	params, err := req.ToRequestParameter(current)
+	applyRequest, err := req.ApplyRequest(ctx, s.caller)
 	if err != nil {
 		return nil, fmt.Errorf("processing request parameter failed: %s", err)
 	}
-
-	return client.Update(ctx, req.ID, params)
+	return s.ApplyWithContext(ctx, applyRequest)
 }

@@ -35,6 +35,8 @@ type CreateRequest struct {
 	SourceArchiveID   types.ID
 	SourceArchiveZone string
 	SourceSharedKey   types.ArchiveShareKey
+
+	NoWait bool
 }
 
 func (req *CreateRequest) Validate() error {

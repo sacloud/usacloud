@@ -59,6 +59,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/subnet"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/swytch"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/vpcrouter"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/webaccelerator"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/zone"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/cmd/root"
@@ -112,6 +113,7 @@ var Resources = core.Resources{
 	zone.Resource,
 	// libsacloud service以外のマニュアル実装分
 	config.Resource,
+	webaccelerator.Resource,
 }
 
 func initCommands() {

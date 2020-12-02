@@ -30,9 +30,6 @@ var ArchiveCriteria = map[ArchiveOSType]search.Filter{
 	CentOS7: {
 		search.Key(keys.Tags): search.TagsAndEqual("centos-7-latest"),
 	},
-	CentOS6: {
-		search.Key(keys.Tags): search.TagsAndEqual("centos-6-latest"),
-	},
 	Ubuntu: {
 		search.Key(keys.Tags): search.TagsAndEqual("current-stable", "distro-ubuntu"),
 	},
