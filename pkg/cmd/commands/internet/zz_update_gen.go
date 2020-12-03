@@ -40,6 +40,9 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("band-width") {
 		p.BandWidthMbps = nil
 	}
+	if !fs.Changed("enable-ipv6") {
+		p.EnableIPv6 = nil
+	}
 }
 
 func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
@@ -58,14 +61,12 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.BandWidthMbps == nil {
 		p.BandWidthMbps = pointer.NewInt(0)
 	}
+	if p.EnableIPv6 == nil {
+		p.EnableIPv6 = pointer.NewBool(false)
+	}
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
-	fs.StringVarP(p.Name, "name", "", "", "")
-	fs.StringVarP(p.Description, "description", "", "", "")
-	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
-	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
-	fs.IntVarP(p.BandWidthMbps, "band-width", "", 0, "(aliases: --band-width-mbps)")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -73,6 +74,12 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.FormatFile, "format-file", "", p.FormatFile, "Output format in Go templates(from file)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
 	fs.StringVarP(&p.QueryFile, "query-file", "", p.QueryFile, "JMESPath query(from file)")
+	fs.StringVarP(p.Name, "name", "", "", "")
+	fs.StringVarP(p.Description, "description", "", "", "")
+	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
+	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
+	fs.IntVarP(p.BandWidthMbps, "band-width", "", 0, "(aliases: --band-width-mbps)")
+	fs.BoolVarP(p.EnableIPv6, "enable-ipv6", "", false, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -80,12 +87,12 @@ func (p *updateParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 	switch name {
 	case "skeleton":
 		name = "generate-skeleton"
-	case "band-width-mbps":
-		name = "band-width"
 	case "out":
 		name = "output-type"
 	case "fmt":
 		name = "format"
+	case "band-width-mbps":
+		name = "band-width"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -101,6 +108,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("band-width"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("enable-ipv6"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Internet options",
 			Flags: fs,
