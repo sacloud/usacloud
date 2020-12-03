@@ -15,11 +15,9 @@
 package disk
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/pkg/util"
 )
 
 var editCommand = &core.Command{
@@ -34,32 +32,14 @@ var editCommand = &core.Command{
 }
 
 type editParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
-
-	NoWait bool `request:"-"` // trueの場合ディスクの修正完了まで待たずに即時復帰する
-
-	HostName string
-	Password string
-
-	DisablePWAuth       bool
-	EnableDHCP          bool
-	ChangePartitionUUID bool
-
-	IPAddress      string
-	NetworkMaskLen int
-	DefaultRoute   string
-
-	SSHKeys   []string   `cli:"ssh-keys"`
-	SSHKeyIDs []types.ID `cli:"ssh-key-ids"`
-
-	NoteIDs   []types.ID              `cli:"note-ids" mapconv:"-"`
-	NotesData string                  `cli:"notes" mapconv:"-"`
-	Notes     []*sacloud.DiskEditNote `cli:"-"` // --parametersでファイルからパラメータ指定する場合向け
-
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
+
+	EditDisk editRequest `cli:",squash" mapconv:",squash"`
+	NoWait   bool        `request:"-"` // trueの場合ディスクの修正完了まで待たずに即時復帰する
 }
 
 func newEditParameter() *editParameter {
@@ -73,18 +53,6 @@ func init() {
 }
 
 // Customize パラメータ変換処理
-func (p *editParameter) Customize() error {
-	var notes []*sacloud.DiskEditNote
-	if p.NotesData != "" {
-		if err := util.MarshalJSONFromPathOrContent(p.NotesData, &notes); err != nil {
-			return err
-		}
-	}
-
-	for _, id := range p.NoteIDs {
-		notes = append(notes, &sacloud.DiskEditNote{ID: id})
-	}
-
-	p.Notes = append(p.Notes, notes...)
-	return nil
+func (p *editParameter) Customize(ctx cli.Context) error {
+	return p.EditDisk.Customize(ctx)
 }

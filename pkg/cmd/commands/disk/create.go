@@ -36,8 +36,10 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	Name            string   `validate:"required"`
 	Description     string   `validate:"description"`
@@ -52,8 +54,8 @@ type createParameter struct {
 	DistantFrom     []types.ID
 	OSType          string `cli:",options=os_type" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
 
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
+	EditDisk editRequest `cli:",category=edit" mapconv:"EditParameter,omitempty"`
+	NoWait   bool
 }
 
 func validateCreateParameter(ctx cli.Context, parameter interface{}) error {
@@ -85,4 +87,9 @@ func newCreateParameter() *createParameter {
 
 func init() {
 	Resource.AddCommand(createCommand)
+}
+
+// Customize パラメータ変換処理
+func (p *createParameter) Customize(ctx cli.Context) error {
+	return p.EditDisk.Customize(ctx)
 }
