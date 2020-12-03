@@ -16,6 +16,7 @@ package disk
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
@@ -34,18 +35,19 @@ var updateCommand = &core.Command{
 }
 
 type updateParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	Name        *string   `validate:"omitempty,min=1"`
 	Description *string   `validate:"omitempty,description"`
 	Tags        *[]string `validate:"omitempty,tags"`
 	IconID      *types.ID
-	Connection  *string `cli:",options=disk_connection" validate:"omitempty,disk_connection"`
-
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
+	Connection  *string     `cli:",options=disk_connection" validate:"omitempty,disk_connection"`
+	EditDisk    editRequest `mapconv:"EditParameter,omitempty"`
+	NoWait      bool
 }
 
 func newUpdateParameter() *updateParameter {
@@ -56,4 +58,9 @@ func newUpdateParameter() *updateParameter {
 
 func init() {
 	Resource.AddCommand(updateCommand)
+}
+
+// Customize パラメータ変換処理
+func (p *updateParameter) Customize(ctx cli.Context) error {
+	return p.EditDisk.Customize(ctx)
 }
