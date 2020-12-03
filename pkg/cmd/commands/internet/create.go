@@ -33,8 +33,10 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	Name        string   `validate:"required"`
 	Description string   `validate:"description"`
@@ -44,8 +46,9 @@ type createParameter struct {
 	NetworkMaskLen int `cli:",options=internet_network_mask_len" validate:"required,internet_network_mask_len"`
 	BandWidthMbps  int `cli:"band-width,aliases=band-width-mbps,options=internet_bandwidth" validate:"required,internet_bandwidth"`
 
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
+	EnableIPv6    bool `cli:"enable-ipv6"`
+	NoWait        bool
+	NotFoundRetry int
 }
 
 func newCreateParameter() *createParameter {

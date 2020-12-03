@@ -31,12 +31,6 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
-	fs.StringVarP(&p.Name, "name", "", p.Name, "")
-	fs.StringVarP(&p.Description, "description", "", p.Description, "")
-	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
-	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.IntVarP(&p.NetworkMaskLen, "network-mask-len", "", p.NetworkMaskLen, "")
-	fs.IntVarP(&p.BandWidthMbps, "band-width", "", p.BandWidthMbps, "(aliases: --band-width-mbps)")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -44,6 +38,15 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.FormatFile, "format-file", "", p.FormatFile, "Output format in Go templates(from file)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
 	fs.StringVarP(&p.QueryFile, "query-file", "", p.QueryFile, "JMESPath query(from file)")
+	fs.StringVarP(&p.Name, "name", "", p.Name, "")
+	fs.StringVarP(&p.Description, "description", "", p.Description, "")
+	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
+	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
+	fs.IntVarP(&p.NetworkMaskLen, "network-mask-len", "", p.NetworkMaskLen, "")
+	fs.IntVarP(&p.BandWidthMbps, "band-width", "", p.BandWidthMbps, "(aliases: --band-width-mbps)")
+	fs.BoolVarP(&p.EnableIPv6, "enable-ipv6", "", p.EnableIPv6, "")
+	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
+	fs.IntVarP(&p.NotFoundRetry, "not-found-retry", "", p.NotFoundRetry, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -51,12 +54,12 @@ func (p *createParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 	switch name {
 	case "skeleton":
 		name = "generate-skeleton"
-	case "band-width-mbps":
-		name = "band-width"
 	case "out":
 		name = "output-type"
 	case "fmt":
 		name = "format"
+	case "band-width-mbps":
+		name = "band-width"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -73,6 +76,9 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("band-width"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("enable-ipv6"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("not-found-retry"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Internet options",
 			Flags: fs,

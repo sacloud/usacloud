@@ -26,7 +26,7 @@ var defaultColumnDefs = []output.ColumnDef{
 	ccol.Tags,
 	ccol.Description,
 	{Name: "BandWidthMbps"},
-	{Name: "IPAddresses", Template: "[{{ range .Switch.Subnets }}{{ .NetworkAddress }}/{{ .NetworkMaskLen }} {{ end }}]"},
+	{Name: "IPAddresses", Template: "{{ range $i, $v := .Switch.Subnets }}{{ if gt $i 0 }}\n{{ end }}{{ $v.NetworkAddress }}/{{ $v.NetworkMaskLen }}{{ end }}"},
 	{Name: "IPv6Net", Template: "{{ if .Switch.IPv6Nets }}{{ with index .Switch.IPv6Nets 0 }}{{ .IPv6Prefix }}/{{ .IPv6PrefixLen }} {{ end }}{{ end }}"},
 }
 

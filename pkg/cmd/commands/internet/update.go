@@ -34,19 +34,19 @@ var updateCommand = &core.Command{
 }
 
 type updateParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	Name        *string   `validate:"omitempty,min=1"`
 	Description *string   `validate:"omitempty,description"`
 	Tags        *[]string `validate:"omitempty,tags"`
 	IconID      *types.ID
 
-	BandWidthMbps *int `cli:"band-width,aliases=band-width-mbps,options=internet_bandwidth" validate:"omitempty,internet_bandwidth"`
-
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
+	BandWidthMbps *int  `cli:"band-width,aliases=band-width-mbps,options=internet_bandwidth" validate:"omitempty,internet_bandwidth"`
+	EnableIPv6    *bool `cli:"enable-ipv6"`
 }
 
 func newUpdateParameter() *updateParameter {
