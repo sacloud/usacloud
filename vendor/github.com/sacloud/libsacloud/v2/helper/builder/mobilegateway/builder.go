@@ -350,38 +350,42 @@ func (b *Builder) Update(ctx context.Context, zone string, id types.ID) (*saclou
 	// NICの切断/変更
 	if b.isPrivateInterfaceChanged(mgw) {
 		if len(mgw.Interfaces) > 1 && !mgw.Interfaces[1].SwitchID.IsEmpty() {
-			// 切断
-			if err := b.Client.MobileGateway.DisconnectFromSwitch(ctx, zone, id); err != nil {
-				return nil, err
-			}
-			// [HACK] スイッチ接続直後だとエラーになることがあるため数秒待つ
-			time.Sleep(b.SetupOptions.NICUpdateWaitDuration)
+			if b.PrivateInterface != nil && mgw.Interfaces[1].SwitchID != b.PrivateInterface.SwitchID {
+				// 切断
+				if err := b.Client.MobileGateway.DisconnectFromSwitch(ctx, zone, id); err != nil {
+					return nil, err
+				}
+				// [HACK] スイッチ接続直後だとエラーになることがあるため数秒待つ
+				time.Sleep(b.SetupOptions.NICUpdateWaitDuration)
 
-			updated, err := b.Client.MobileGateway.UpdateSettings(ctx, zone, id, &sacloud.MobileGatewayUpdateSettingsRequest{
-				InternetConnectionEnabled:       types.StringFlag(b.InternetConnectionEnabled),
-				InterDeviceCommunicationEnabled: types.StringFlag(b.InterDeviceCommunicationEnabled),
-				SettingsHash:                    mgw.SettingsHash,
-			})
-			if err != nil {
-				return nil, err
+				updated, err := b.Client.MobileGateway.UpdateSettings(ctx, zone, id, &sacloud.MobileGatewayUpdateSettingsRequest{
+					InternetConnectionEnabled:       types.StringFlag(b.InternetConnectionEnabled),
+					InterDeviceCommunicationEnabled: types.StringFlag(b.InterDeviceCommunicationEnabled),
+					SettingsHash:                    mgw.SettingsHash,
+				})
+				if err != nil {
+					return nil, err
+				}
+				// [HACK] インターフェースの設定をConfigで反映させておかないとエラーになることへの対応
+				// see: https://github.com/sacloud/libsacloud/issues/589
+				if err := b.Client.MobileGateway.Config(ctx, zone, id); err != nil {
+					return nil, err
+				}
+				mgw = updated
 			}
-			// [HACK] インターフェースの設定をConfigで反映させておかないとエラーになることへの対応
-			// see: https://github.com/sacloud/libsacloud/issues/589
-			if err := b.Client.MobileGateway.Config(ctx, zone, id); err != nil {
-				return nil, err
-			}
-			mgw = updated
 		}
 
 		// 接続
 		if b.PrivateInterface != nil {
-			// スイッチの接続
-			if err := b.Client.MobileGateway.ConnectToSwitch(ctx, zone, id, b.PrivateInterface.SwitchID); err != nil {
-				return nil, err
-			}
+			if len(mgw.Interfaces) == 1 {
+				// スイッチの接続
+				if err := b.Client.MobileGateway.ConnectToSwitch(ctx, zone, id, b.PrivateInterface.SwitchID); err != nil {
+					return nil, err
+				}
 
-			// [HACK] スイッチ接続直後だとエラーになることがあるため数秒待つ
-			time.Sleep(b.SetupOptions.NICUpdateWaitDuration)
+				// [HACK] スイッチ接続直後だとエラーになることがあるため数秒待つ
+				time.Sleep(b.SetupOptions.NICUpdateWaitDuration)
+			}
 
 			// Interface設定
 			updated, err := b.Client.MobileGateway.UpdateSettings(ctx, zone, id, &sacloud.MobileGatewayUpdateSettingsRequest{

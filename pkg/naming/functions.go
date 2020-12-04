@@ -51,9 +51,11 @@ var normalizationWords = map[string]string{
 	"Vpc": "VPC",
 	"Vpn": "VPN",
 
-	"L2tp":  "L2TP",
-	"l_2tp": "l2tp",
-	"l-2tp": "l2tp",
+	"L2tp":   "L2TP",
+	"l_2tp":  "l2tp",
+	"l-2tp":  "l2tp",
+	"dns-11": "dns1", //xstrings.ToKebabCase対応
+	"dns-22": "dns2",
 
 	"Ipsec": "IPsec",
 }

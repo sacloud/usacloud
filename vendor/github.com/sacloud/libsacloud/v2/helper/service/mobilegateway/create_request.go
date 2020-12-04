@@ -32,9 +32,9 @@ type CreateRequest struct {
 	SIMRoutes                       []*SIMRouteSetting
 	InternetConnectionEnabled       bool
 	InterDeviceCommunicationEnabled bool
-	DNS                             *sacloud.MobileGatewayDNSSetting
+	DNS                             *DNSSetting
 	SIMs                            []*SIMSetting
-	TrafficConfig                   *sacloud.MobileGatewayTrafficControl
+	TrafficConfig                   *TrafficConfig
 
 	NoWait          bool
 	BootAfterCreate bool

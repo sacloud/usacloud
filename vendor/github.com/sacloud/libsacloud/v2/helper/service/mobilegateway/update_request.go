@@ -28,20 +28,41 @@ type UpdateRequest struct {
 	ID   types.ID `validate:"required"`
 
 	Name                            *string                              `request:",omitempty"`
-	Description                     *string                              `request:",omitempty" validate:"min=0,max=512"`
+	Description                     *string                              `request:",omitempty" validate:"omitempty,min=0,max=512"`
 	Tags                            *types.Tags                          `request:",omitempty"`
 	IconID                          *types.ID                            `request:",omitempty"`
-	PrivateInterface                *PrivateInterfaceSetting             `request:",omitempty"`
+	PrivateInterface                *PrivateInterfaceSettingUpdate       `request:",omitempty,recursive"`
 	StaticRoutes                    *[]*sacloud.MobileGatewayStaticRoute `request:",omitempty"`
 	SIMRoutes                       *[]*SIMRouteSetting                  `request:",omitempty"`
 	InternetConnectionEnabled       *bool                                `request:",omitempty"`
 	InterDeviceCommunicationEnabled *bool                                `request:",omitempty"`
-	DNS                             *sacloud.MobileGatewayDNSSetting     `request:",omitempty"`
+	DNS                             *DNSSettingUpdate                    `request:",omitempty,recursive"`
 	SIMs                            *[]*SIMSetting                       `request:",omitempty"`
-	TrafficConfig                   *sacloud.MobileGatewayTrafficControl `request:",omitempty"`
+	TrafficConfig                   *TrafficConfigUpdate                 `request:",omitempty,recursive"`
 
 	SettingsHash string
 	NoWait       bool
+}
+
+// PrivateInterfaceSetting represents API parameter/response structure
+type PrivateInterfaceSettingUpdate struct {
+	SwitchID       *types.ID `request:",omitempty"`
+	IPAddress      *string   `request:",omitempty" validate:"omitempty,ipv4"`
+	NetworkMaskLen *int      `request:",omitempty"`
+}
+
+type DNSSettingUpdate struct {
+	DNS1 *string `request:",omitempty" validate:"required_with=DNS2,omitempty,ipv4"`
+	DNS2 *string `request:",omitempty" validate:"required_with=DNS1,omitempty,ipv4"`
+}
+
+type TrafficConfigUpdate struct {
+	TrafficQuotaInMB       *int    `request:",omitempty"`
+	BandWidthLimitInKbps   *int    `request:",omitempty"`
+	EmailNotifyEnabled     *bool   `request:",omitempty"`
+	SlackNotifyEnabled     *bool   `request:",omitempty"`
+	SlackNotifyWebhooksURL *string `request:",omitempty"`
+	AutoTrafficShaping     *bool   `request:",omitempty"`
 }
 
 func (req *UpdateRequest) Validate() error {
@@ -56,10 +77,10 @@ func (req *UpdateRequest) ApplyRequest(ctx context.Context, caller sacloud.APICa
 	}
 
 	var privateInterface *PrivateInterfaceSetting
-	for i, nic := range current.InterfaceSettings {
-		if nic.Index == 1 {
+	for _, nic := range current.InterfaceSettings {
+		if nic.Index == 1 && len(current.Interfaces) > 1 {
 			privateInterface = &PrivateInterfaceSetting{
-				SwitchID:       current.Interfaces[i].SwitchID,
+				SwitchID:       current.Interfaces[nic.Index].SwitchID,
 				IPAddress:      nic.IPAddress[0],
 				NetworkMaskLen: nic.NetworkMaskLen,
 			}
@@ -78,9 +99,16 @@ func (req *UpdateRequest) ApplyRequest(ctx context.Context, caller sacloud.APICa
 		})
 	}
 
-	dns, err := mgwOp.GetDNS(ctx, req.Zone, req.ID)
+	currentDNS, err := mgwOp.GetDNS(ctx, req.Zone, req.ID)
 	if err != nil {
 		return nil, err
+	}
+	var dns *DNSSetting
+	if currentDNS != nil {
+		dns = &DNSSetting{
+			DNS1: currentDNS.DNS1,
+			DNS2: currentDNS.DNS2,
+		}
 	}
 
 	sims, err := mgwOp.ListSIM(ctx, req.Zone, req.ID)
@@ -95,9 +123,16 @@ func (req *UpdateRequest) ApplyRequest(ctx context.Context, caller sacloud.APICa
 		})
 	}
 
-	trafficConfig, err := mgwOp.GetTrafficConfig(ctx, req.Zone, req.ID)
+	currentTrafficConfig, err := mgwOp.GetTrafficConfig(ctx, req.Zone, req.ID)
 	if err != nil {
 		return nil, err
+	}
+	var trafficConfig *TrafficConfig
+	if currentTrafficConfig != nil {
+		trafficConfig = &TrafficConfig{}
+		if err := service.RequestConvertTo(currentTrafficConfig, trafficConfig); err != nil {
+			return nil, err
+		}
 	}
 
 	applyRequest := &ApplyRequest{

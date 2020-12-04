@@ -37,14 +37,53 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("icon-id") {
 		p.IconID = nil
 	}
+	if !fs.Changed("private-interface-switch-id") {
+		p.PrivateInterface.SwitchID = nil
+	}
+	if !fs.Changed("private-interface-ip-address") {
+		p.PrivateInterface.IPAddress = nil
+	}
+	if !fs.Changed("private-interface-network-mask-len") {
+		p.PrivateInterface.NetworkMaskLen = nil
+	}
 	if !fs.Changed("internet-connection-enabled") {
 		p.InternetConnectionEnabled = nil
 	}
 	if !fs.Changed("inter-device-communication-enabled") {
 		p.InterDeviceCommunicationEnabled = nil
 	}
+	if !fs.Changed("sims") {
+		p.SIMsData = nil
+	}
+	if !fs.Changed("sim-routes") {
+		p.SIMRoutesData = nil
+	}
 	if !fs.Changed("static-routes") {
 		p.StaticRoutesData = nil
+	}
+	if !fs.Changed("dns1") {
+		p.DNS.DNS1 = nil
+	}
+	if !fs.Changed("dns2") {
+		p.DNS.DNS2 = nil
+	}
+	if !fs.Changed("traffic-config-traffic-quota-in-mb") {
+		p.TrafficConfig.TrafficQuotaInMB = nil
+	}
+	if !fs.Changed("traffic-config-band-width-limit-in-kbps") {
+		p.TrafficConfig.BandWidthLimitInKbps = nil
+	}
+	if !fs.Changed("traffic-config-email-notify-enabled") {
+		p.TrafficConfig.EmailNotifyEnabled = nil
+	}
+	if !fs.Changed("traffic-config-slack-notify-enabled") {
+		p.TrafficConfig.SlackNotifyEnabled = nil
+	}
+	if !fs.Changed("traffic-config-slack-notify-webhooks-url") {
+		p.TrafficConfig.SlackNotifyWebhooksURL = nil
+	}
+	if !fs.Changed("traffic-config-auto-traffic-shaping") {
+		p.TrafficConfig.AutoTrafficShaping = nil
 	}
 }
 
@@ -61,14 +100,53 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.IconID == nil {
 		p.IconID = pointer.NewID(types.ID(0))
 	}
+	if p.PrivateInterface.SwitchID == nil {
+		p.PrivateInterface.SwitchID = pointer.NewID(types.ID(0))
+	}
+	if p.PrivateInterface.IPAddress == nil {
+		p.PrivateInterface.IPAddress = pointer.NewString("")
+	}
+	if p.PrivateInterface.NetworkMaskLen == nil {
+		p.PrivateInterface.NetworkMaskLen = pointer.NewInt(0)
+	}
 	if p.InternetConnectionEnabled == nil {
 		p.InternetConnectionEnabled = pointer.NewBool(false)
 	}
 	if p.InterDeviceCommunicationEnabled == nil {
 		p.InterDeviceCommunicationEnabled = pointer.NewBool(false)
 	}
+	if p.SIMsData == nil {
+		p.SIMsData = pointer.NewString("")
+	}
+	if p.SIMRoutesData == nil {
+		p.SIMRoutesData = pointer.NewString("")
+	}
 	if p.StaticRoutesData == nil {
 		p.StaticRoutesData = pointer.NewString("")
+	}
+	if p.DNS.DNS1 == nil {
+		p.DNS.DNS1 = pointer.NewString("")
+	}
+	if p.DNS.DNS2 == nil {
+		p.DNS.DNS2 = pointer.NewString("")
+	}
+	if p.TrafficConfig.TrafficQuotaInMB == nil {
+		p.TrafficConfig.TrafficQuotaInMB = pointer.NewInt(0)
+	}
+	if p.TrafficConfig.BandWidthLimitInKbps == nil {
+		p.TrafficConfig.BandWidthLimitInKbps = pointer.NewInt(0)
+	}
+	if p.TrafficConfig.EmailNotifyEnabled == nil {
+		p.TrafficConfig.EmailNotifyEnabled = pointer.NewBool(false)
+	}
+	if p.TrafficConfig.SlackNotifyEnabled == nil {
+		p.TrafficConfig.SlackNotifyEnabled = pointer.NewBool(false)
+	}
+	if p.TrafficConfig.SlackNotifyWebhooksURL == nil {
+		p.TrafficConfig.SlackNotifyWebhooksURL = pointer.NewString("")
+	}
+	if p.TrafficConfig.AutoTrafficShaping == nil {
+		p.TrafficConfig.AutoTrafficShaping = pointer.NewBool(false)
 	}
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
@@ -84,10 +162,24 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.Description, "description", "", "", "")
 	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
+	fs.VarP(core.NewIDFlag(p.PrivateInterface.SwitchID, p.PrivateInterface.SwitchID), "private-interface-switch-id", "", "")
+	fs.StringVarP(p.PrivateInterface.IPAddress, "private-interface-ip-address", "", "", "")
+	fs.IntVarP(p.PrivateInterface.NetworkMaskLen, "private-interface-network-mask-len", "", 0, "")
 	fs.BoolVarP(p.InternetConnectionEnabled, "internet-connection-enabled", "", false, "")
 	fs.BoolVarP(p.InterDeviceCommunicationEnabled, "inter-device-communication-enabled", "", false, "")
+	fs.StringVarP(p.SIMsData, "sims", "", "", "")
+	fs.StringVarP(p.SIMRoutesData, "sim-routes", "", "", "")
 	fs.StringVarP(p.StaticRoutesData, "static-routes", "", "", "")
+	fs.StringVarP(p.DNS.DNS1, "dns1", "", "", "")
+	fs.StringVarP(p.DNS.DNS2, "dns2", "", "", "")
+	fs.IntVarP(p.TrafficConfig.TrafficQuotaInMB, "traffic-config-traffic-quota-in-mb", "", 0, "")
+	fs.IntVarP(p.TrafficConfig.BandWidthLimitInKbps, "traffic-config-band-width-limit-in-kbps", "", 0, "")
+	fs.BoolVarP(p.TrafficConfig.EmailNotifyEnabled, "traffic-config-email-notify-enabled", "", false, "")
+	fs.BoolVarP(p.TrafficConfig.SlackNotifyEnabled, "traffic-config-slack-notify-enabled", "", false, "")
+	fs.StringVarP(p.TrafficConfig.SlackNotifyWebhooksURL, "traffic-config-slack-notify-webhooks-url", "", "", "")
+	fs.BoolVarP(p.TrafficConfig.AutoTrafficShaping, "traffic-config-auto-traffic-shaping", "", false, "")
 	fs.StringVarP(&p.SettingsHash, "settings-hash", "", p.SettingsHash, "")
+	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -113,10 +205,24 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("description"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("private-interface-switch-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("private-interface-ip-address"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("private-interface-network-mask-len"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("internet-connection-enabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("inter-device-communication-enabled"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("sims"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("sim-routes"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("static-routes"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("dns1"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("dns2"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("traffic-config-traffic-quota-in-mb"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("traffic-config-band-width-limit-in-kbps"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("traffic-config-email-notify-enabled"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("traffic-config-slack-notify-enabled"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("traffic-config-slack-notify-webhooks-url"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("traffic-config-auto-traffic-shaping"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("settings-hash"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Mobile-Gateway options",
 			Flags: fs,
