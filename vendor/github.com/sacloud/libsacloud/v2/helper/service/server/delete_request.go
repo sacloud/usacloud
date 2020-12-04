@@ -23,6 +23,7 @@ type DeleteRequest struct {
 	Zone string   `request:"-" validate:"required"`
 	ID   types.ID `request:"-" validate:"required"`
 
+	WithDisks      bool `request:"-"` // ディスクを一緒に削除するか
 	FailIfNotFound bool `request:"-"`
 	Force          bool `request:"-"` // trueの場合は電源OFF(強制終了)してから削除
 }
