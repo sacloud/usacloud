@@ -57,8 +57,19 @@ func (s *Service) DeleteWithContext(ctx context.Context, req *DeleteRequest) err
 		}
 	}
 
-	if err := client.Delete(ctx, req.Zone, req.ID); err != nil {
-		return service.HandleNotFoundError(err, !req.FailIfNotFound)
+	if req.WithDisks {
+		var diskIDs []types.ID
+		for _, disk := range target.Disks {
+			diskIDs = append(diskIDs, disk.ID)
+		}
+		if err := client.DeleteWithDisks(ctx, req.Zone, req.ID, &sacloud.ServerDeleteWithDisksRequest{IDs: diskIDs}); err != nil {
+			return service.HandleNotFoundError(err, !req.FailIfNotFound)
+		}
+	} else {
+		if err := client.Delete(ctx, req.Zone, req.ID); err != nil {
+			return service.HandleNotFoundError(err, !req.FailIfNotFound)
+		}
 	}
+
 	return nil
 }

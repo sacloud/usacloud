@@ -18,6 +18,7 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/common"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/validate"
 )
@@ -54,7 +55,7 @@ type createParameter struct {
 	DistantFrom     []types.ID
 	OSType          string `cli:",options=os_type" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
 
-	EditDisk editRequest `cli:",category=edit" mapconv:"EditParameter,omitempty"`
+	EditDisk common.EditRequest `cli:",category=edit" mapconv:"EditParameter,omitempty"`
 	NoWait   bool
 }
 

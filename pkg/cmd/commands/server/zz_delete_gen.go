@@ -33,6 +33,8 @@ func (p *deleteParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.BoolVarP(&p.FailIfNotFound, "fail-if-not-found", "", p.FailIfNotFound, "")
+	fs.BoolVarP(&p.Force, "force", "f", p.Force, "")
+	fs.BoolVarP(&p.WithDisks, "with-disks", "", p.WithDisks, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -51,6 +53,8 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs = pflag.NewFlagSet("server", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("force"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("with-disks"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Server options",
 			Flags: fs,

@@ -34,7 +34,7 @@ var defaultColumnDefs = []output.ColumnDef{
 
 	{
 		Name:     "IPAddress",
-		Template: "{{ if gt (len .Interfaces) 0 }}{{ with index .Interfaces 0 }}{{ if .IPAddress }}{{ .IPAddress }}{{ .SubnetNetworkMaskLen }}{{ else }}{{ .UserIPAddress }}{{ end }}/{{ .UserSubnetNetworkMaskLen }}{{ end }}{{ end }}",
+		Template: "{{ if gt (len .Interfaces) 0 }}{{ with index .Interfaces 0 }}{{ if .IPAddress }}{{ .IPAddress }}/{{ .SubnetNetworkMaskLen }}{{ else }}{{ .UserIPAddress }}/{{ .UserSubnetNetworkMaskLen }}{{ end }}{{ end }}{{ end }}",
 	},
 	{
 		Name:     "Upstream(Mbps)",

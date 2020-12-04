@@ -17,6 +17,7 @@ package disk
 import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/common"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
@@ -38,8 +39,8 @@ type editParameter struct {
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	EditDisk editRequest `cli:",squash" mapconv:",squash"`
-	NoWait   bool        `request:"-"` // trueの場合ディスクの修正完了まで待たずに即時復帰する
+	EditDisk common.EditRequest `cli:",squash" mapconv:",squash"`
+	NoWait   bool               `request:"-"` // trueの場合ディスクの修正完了まで待たずに即時復帰する
 }
 
 func newEditParameter() *editParameter {

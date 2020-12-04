@@ -72,6 +72,10 @@ var definitions = map[string][]*definition{
 		{key: types.GSLBHealthCheckProtocols.Ping.String(), value: types.GSLBHealthCheckProtocols.Ping},
 		{key: types.GSLBHealthCheckProtocols.TCP.String(), value: types.GSLBHealthCheckProtocols.TCP},
 	},
+	"interface_driver": {
+		{key: "virtio", value: types.InterfaceDrivers.VirtIO},
+		{key: "e1000", value: types.InterfaceDrivers.E1000},
+	},
 	"internet_network_mask_len": {
 		{key: 28, value: 28},
 		{key: 27, value: 27},

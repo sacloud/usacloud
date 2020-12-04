@@ -18,6 +18,7 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/common"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
@@ -45,8 +46,8 @@ type updateParameter struct {
 	Description *string   `validate:"omitempty,description"`
 	Tags        *[]string `validate:"omitempty,tags"`
 	IconID      *types.ID
-	Connection  *string     `cli:",options=disk_connection" validate:"omitempty,disk_connection"`
-	EditDisk    editRequest `mapconv:"EditParameter,omitempty"`
+	Connection  *string            `cli:",options=disk_connection" validate:"omitempty,disk_connection"`
+	EditDisk    common.EditRequest `mapconv:"EditParameter,omitempty"`
 	NoWait      bool
 }
 

@@ -47,6 +47,45 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.IntVarP(&p.Memory, "memory", "", p.Memory, "")
 	fs.StringVarP(&p.Commitment, "commitment", "", p.Commitment, "options: [standard/dedicatedcpu]")
 	fs.StringVarP(&p.Generation, "generation", "", p.Generation, "options: [default/g100/g200]")
+	fs.StringVarP(&p.InterfaceDriver, "interface-driver", "", p.InterfaceDriver, "options: [interface_dirver]")
+	fs.BoolVarP(&p.BootAfterCreate, "boot-after-create", "", p.BootAfterCreate, "")
+	fs.VarP(core.NewIDFlag(&p.CDROMID, &p.CDROMID), "cdrom-id", "", "(aliases: --iso-image-id)")
+	fs.VarP(core.NewIDFlag(&p.PrivateHostID, &p.PrivateHostID), "private-host-id", "", "")
+	fs.StringVarP(&p.NetworkInterface.Upstream, "network-interface-upstream", "", p.NetworkInterface.Upstream, "")
+	fs.VarP(core.NewIDFlag(&p.NetworkInterface.PacketFilterID, &p.NetworkInterface.PacketFilterID), "network-interface-packet-filter-id", "", "")
+	fs.StringVarP(&p.NetworkInterface.UserIPAddress, "network-interface-user-ip-address", "", p.NetworkInterface.UserIPAddress, "")
+	fs.StringVarP(&p.NetworkInterfaceData, "network-interfaces", "", p.NetworkInterfaceData, "")
+	fs.VarP(core.NewIDFlag(&p.Disk.ID, &p.Disk.ID), "disk-id", "", "")
+	fs.StringVarP(&p.Disk.Name, "disk-name", "", p.Disk.Name, "")
+	fs.StringVarP(&p.Disk.Description, "disk-description", "", p.Disk.Description, "")
+	fs.StringSliceVarP(&p.Disk.Tags, "disk-tags", "", p.Disk.Tags, "")
+	fs.VarP(core.NewIDFlag(&p.Disk.IconID, &p.Disk.IconID), "disk-icon-id", "", "")
+	fs.StringVarP(&p.Disk.DiskPlan, "disk-disk-plan", "", p.Disk.DiskPlan, "options: [ssd/hdd]")
+	fs.StringVarP(&p.Disk.Connection, "disk-connection", "", p.Disk.Connection, "options: [virtio/ide]")
+	fs.VarP(core.NewIDFlag(&p.Disk.SourceDiskID, &p.Disk.SourceDiskID), "disk-source-disk-id", "", "")
+	fs.VarP(core.NewIDFlag(&p.Disk.SourceArchiveID, &p.Disk.SourceArchiveID), "disk-source-archive-id", "", "")
+	fs.VarP(core.NewIDFlag(&p.Disk.ServerID, &p.Disk.ServerID), "disk-server-id", "", "")
+	fs.IntVarP(&p.Disk.SizeGB, "disk-size", "", p.Disk.SizeGB, "(aliases: --size-gb)")
+	fs.VarP(core.NewIDSliceFlag(&p.Disk.DistantFrom, &p.Disk.DistantFrom), "disk-distant-from", "", "")
+	fs.StringVarP(&p.Disk.OSType, "disk-os-type", "", p.Disk.OSType, "options: [centos/centos8/centos7/ubuntu/ubuntu2004/ubuntu1804/ubuntu1604/debian/debian10/debian9/coreos/rancheros/k3os/kusanagi/freebsd/windows2016/windows2016-rds/windows2016-rds-office/windows2016-sql-web/windows2016-sql-standard/windows2016-sql-standard-all/windows2016-sql2017-standard/windows2016-sql2017-enterprise/windows2016-sql2017-standard-all/windows2019/windows2019-rds/windows2019-rds-office2019/windows2019-sql2017-web/windows2019-sql2019-web/windows2019-sql2017-standard/windows2019-sql2019-standard/windows2019-sql2017-enterprise/windows2019-sql2019-enterprise/windows2019-sql2017-standard-all/windows2019-sql2019-standard-all]")
+	fs.StringVarP(&p.Disk.EditDisk.HostName, "disk-edit-host-name", "", p.Disk.EditDisk.HostName, "")
+	fs.StringVarP(&p.Disk.EditDisk.Password, "disk-edit-password", "", p.Disk.EditDisk.Password, "")
+	fs.BoolVarP(&p.Disk.EditDisk.DisablePWAuth, "disk-edit-disable-pw-auth", "", p.Disk.EditDisk.DisablePWAuth, "")
+	fs.BoolVarP(&p.Disk.EditDisk.EnableDHCP, "disk-edit-enable-dhcp", "", p.Disk.EditDisk.EnableDHCP, "")
+	fs.BoolVarP(&p.Disk.EditDisk.ChangePartitionUUID, "disk-edit-change-partition-uuid", "", p.Disk.EditDisk.ChangePartitionUUID, "")
+	fs.StringVarP(&p.Disk.EditDisk.IPAddress, "disk-edit-ip-address", "", p.Disk.EditDisk.IPAddress, "")
+	fs.IntVarP(&p.Disk.EditDisk.NetworkMaskLen, "disk-edit-network-mask-len", "", p.Disk.EditDisk.NetworkMaskLen, "")
+	fs.StringVarP(&p.Disk.EditDisk.DefaultRoute, "disk-edit-default-route", "", p.Disk.EditDisk.DefaultRoute, "")
+	fs.StringSliceVarP(&p.Disk.EditDisk.SSHKeys, "disk-edit-ssh-keys", "", p.Disk.EditDisk.SSHKeys, "")
+	fs.VarP(core.NewIDSliceFlag(&p.Disk.EditDisk.SSHKeyIDs, &p.Disk.EditDisk.SSHKeyIDs), "disk-edit-ssh-key-ids", "", "")
+	fs.BoolVarP(&p.Disk.EditDisk.IsSSHKeysEphemeral, "disk-edit-make-ssh-keys-ephemeral", "", p.Disk.EditDisk.IsSSHKeysEphemeral, "")
+	fs.VarP(core.NewIDSliceFlag(&p.Disk.EditDisk.NoteIDs, &p.Disk.EditDisk.NoteIDs), "disk-edit-note-ids", "", "")
+	fs.StringVarP(&p.Disk.EditDisk.NotesData, "disk-edit-notes", "", p.Disk.EditDisk.NotesData, "")
+	fs.BoolVarP(&p.Disk.EditDisk.IsNotesEphemeral, "disk-edit-make-notes-ephemeral", "", p.Disk.EditDisk.IsNotesEphemeral, "")
+	fs.BoolVarP(&p.Disk.NoWait, "disk-no-wait", "", p.Disk.NoWait, "")
+	fs.StringVarP(&p.DisksData, "disks", "", p.DisksData, "")
+	fs.VarP(core.NewIDSliceFlag(&p.DiskIDs, &p.DiskIDs), "disk-ids", "", "")
+	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -60,6 +99,10 @@ func (p *createParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 		name = "format"
 	case "core":
 		name = "cpu"
+	case "iso-image-id":
+		name = "cdrom-id"
+	case "size-gb":
+		name = "disk-size"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -78,6 +121,45 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("memory"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("commitment"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generation"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("interface-driver"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("boot-after-create"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("cdrom-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("private-host-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("network-interface-upstream"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("network-interface-packet-filter-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("network-interface-user-ip-address"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("network-interfaces"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-name"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-description"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-tags"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-icon-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-disk-plan"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-connection"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-source-disk-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-source-archive-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-server-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-size"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-distant-from"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-os-type"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-host-name"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-password"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-disable-pw-auth"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-enable-dhcp"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-change-partition-uuid"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-ip-address"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-network-mask-len"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-default-route"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-ssh-keys"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-ssh-key-ids"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-make-ssh-keys-ephemeral"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-note-ids"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-notes"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-make-notes-ephemeral"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-no-wait"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disks"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-ids"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Server options",
 			Flags: fs,
@@ -115,6 +197,10 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("commitment", util.FlagCompletionFunc("standard", "dedicatedcpu"))
 	cmd.RegisterFlagCompletionFunc("generation", util.FlagCompletionFunc("default", "g100", "g200"))
+	cmd.RegisterFlagCompletionFunc("interface-driver", util.FlagCompletionFunc("interface_dirver"))
+	cmd.RegisterFlagCompletionFunc("disk-disk-plan", util.FlagCompletionFunc("ssd", "hdd"))
+	cmd.RegisterFlagCompletionFunc("disk-connection", util.FlagCompletionFunc("virtio", "ide"))
+	cmd.RegisterFlagCompletionFunc("disk-os-type", util.FlagCompletionFunc("centos", "centos8", "centos7", "ubuntu", "ubuntu2004", "ubuntu1804", "ubuntu1604", "debian", "debian10", "debian9", "coreos", "rancheros", "k3os", "kusanagi", "freebsd", "windows2016", "windows2016-rds", "windows2016-rds-office", "windows2016-sql-web", "windows2016-sql-standard", "windows2016-sql-standard-all", "windows2016-sql2017-standard", "windows2016-sql2017-enterprise", "windows2016-sql2017-standard-all", "windows2019", "windows2019-rds", "windows2019-rds-office2019", "windows2019-sql2017-web", "windows2019-sql2019-web", "windows2019-sql2017-standard", "windows2019-sql2019-standard", "windows2019-sql2017-enterprise", "windows2019-sql2019-enterprise", "windows2019-sql2017-standard-all", "windows2019-sql2019-standard-all"))
 
 }
 

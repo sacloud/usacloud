@@ -20,6 +20,7 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -37,6 +38,27 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("icon-id") {
 		p.IconID = nil
 	}
+	if !fs.Changed("cpu") {
+		p.CPU = nil
+	}
+	if !fs.Changed("memory") {
+		p.Memory = nil
+	}
+	if !fs.Changed("commitment") {
+		p.Commitment = nil
+	}
+	if !fs.Changed("generation") {
+		p.Generation = nil
+	}
+	if !fs.Changed("interface-driver") {
+		p.InterfaceDriver = nil
+	}
+	if !fs.Changed("cdrom-id") {
+		p.CDROMID = nil
+	}
+	if !fs.Changed("private-host-id") {
+		p.PrivateHostID = nil
+	}
 }
 
 func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
@@ -52,6 +74,27 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.IconID == nil {
 		p.IconID = pointer.NewID(types.ID(0))
 	}
+	if p.CPU == nil {
+		p.CPU = pointer.NewInt(0)
+	}
+	if p.Memory == nil {
+		p.Memory = pointer.NewInt(0)
+	}
+	if p.Commitment == nil {
+		p.Commitment = pointer.NewString("")
+	}
+	if p.Generation == nil {
+		p.Generation = pointer.NewString("")
+	}
+	if p.InterfaceDriver == nil {
+		p.InterfaceDriver = pointer.NewString("")
+	}
+	if p.CDROMID == nil {
+		p.CDROMID = pointer.NewID(types.ID(0))
+	}
+	if p.PrivateHostID == nil {
+		p.PrivateHostID = pointer.NewID(types.ID(0))
+	}
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
@@ -66,6 +109,17 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.Description, "description", "", "", "")
 	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
+	fs.IntVarP(p.CPU, "cpu", "", 0, "(aliases: --core)")
+	fs.IntVarP(p.Memory, "memory", "", 0, "")
+	fs.StringVarP(p.Commitment, "commitment", "", "", "options: [standard/dedicatedcpu]")
+	fs.StringVarP(p.Generation, "generation", "", "", "options: [default/g100/g200]")
+	fs.StringVarP(p.InterfaceDriver, "interface-driver", "", "", "options: [interface_dirver]")
+	fs.VarP(core.NewIDFlag(p.CDROMID, p.CDROMID), "cdrom-id", "", "(aliases: --iso-image-id)")
+	fs.VarP(core.NewIDFlag(p.PrivateHostID, p.PrivateHostID), "private-host-id", "", "")
+	fs.StringVarP(&p.NetworkInterfaceData, "network-interfaces", "", p.NetworkInterfaceData, "")
+	fs.StringVarP(&p.DisksData, "disks", "", p.DisksData, "")
+	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
+	fs.BoolVarP(&p.ForceShutdown, "force-shutdown", "", p.ForceShutdown, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -77,6 +131,10 @@ func (p *updateParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 		name = "output-type"
 	case "fmt":
 		name = "format"
+	case "core":
+		name = "cpu"
+	case "iso-image-id":
+		name = "cdrom-id"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -91,6 +149,17 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("description"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("cpu"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("memory"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("commitment"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generation"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("interface-driver"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("cdrom-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("private-host-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("network-interfaces"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disks"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("force-shutdown"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Server options",
 			Flags: fs,
@@ -126,6 +195,9 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *updateParameter) setCompletionFunc(cmd *cobra.Command) {
+	cmd.RegisterFlagCompletionFunc("commitment", util.FlagCompletionFunc("standard", "dedicatedcpu"))
+	cmd.RegisterFlagCompletionFunc("generation", util.FlagCompletionFunc("default", "g100", "g200"))
+	cmd.RegisterFlagCompletionFunc("interface-driver", util.FlagCompletionFunc("interface_dirver"))
 
 }
 

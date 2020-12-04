@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package disk
+package common
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud"
@@ -21,7 +21,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
-type editRequest struct {
+type EditRequest struct {
 	HostName string
 	Password string
 
@@ -44,7 +44,7 @@ type editRequest struct {
 }
 
 // Customize パラメータ変換処理
-func (p *editRequest) Customize(_ cli.Context) error {
+func (p *EditRequest) Customize(_ cli.Context) error {
 	var notes []*sacloud.DiskEditNote
 	if p.NotesData != "" {
 		if err := util.MarshalJSONFromPathOrContent(p.NotesData, &notes); err != nil {
