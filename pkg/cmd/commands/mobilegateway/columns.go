@@ -26,8 +26,10 @@ var defaultColumnDefs = []output.ColumnDef{
 	ccol.Tags,
 	ccol.Description,
 	{
-		Name:     "IPAddresses",
-		Template: `{{ range .Interfaces }}{{ .IPAddress }}/{{ .NetworkMaskLen }} {{ end }}`,
+		Name: "IPAddresses",
+		Template: `
+{{- if gt (len .Interfaces) 0 }}Global : {{ with index .Interfaces 0 }}{{ .IPAddress }}/{{ .SubnetNetworkMaskLen }}{{ end }}{{ end }}
+{{ if gt (len .Interfaces) 1 }}Private: {{ with index .InterfaceSettings 0 }}{{ index .IPAddress 0 }}/{{ .NetworkMaskLen }}{{ end }}{{ end }}`,
 	},
 	{Name: "Internet", Template: "{{.InternetConnectionEnabled}}"},
 	{Name: "InterDeviceCommunication", Template: "{{.InterDeviceCommunicationEnabled}}"},

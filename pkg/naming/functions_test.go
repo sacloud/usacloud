@@ -20,6 +20,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestHoge(t *testing.T) {
+	t.Log(ToKebabCase("DNS1"))
+}
+
 func TestNames(t *testing.T) {
 	cases := []struct {
 		f   func(string) string

@@ -29,7 +29,11 @@ func (s *Service) ApplyWithContext(ctx context.Context, req *ApplyRequest) (*sac
 		return nil, err
 	}
 
-	builder := req.Builder(s.caller)
+	builder, err := req.Builder(s.caller)
+	if err != nil {
+		return nil, err
+	}
+
 	if err := builder.Validate(ctx, req.Zone); err != nil {
 		return nil, err
 	}

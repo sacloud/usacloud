@@ -15,6 +15,7 @@
 package mobilegateway
 
 import (
+	"github.com/sacloud/libsacloud/v2/helper/service/mobilegateway"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
@@ -49,8 +50,21 @@ type createParameter struct {
 	InternetConnectionEnabled       bool
 	InterDeviceCommunicationEnabled bool
 
+	SIMsData string                      `cli:"sims" mapconv:"-"`
+	SIMs     []*mobilegateway.SIMSetting `cli:"-"`
+
+	SIMRoutesData string                           `cli:"sim-routes" mapconv:"-"`
+	SIMRoutes     []*mobilegateway.SIMRouteSetting `cli:"-"`
+
 	StaticRoutesData string                              `cli:"static-routes" mapconv:"-"`
 	StaticRoutes     []*sacloud.MobileGatewayStaticRoute `cli:"-"`
+
+	PrivateInterface mobilegateway.PrivateInterfaceSetting `mapconv:",omitempty" validate:"omitempty"`
+	DNS              sacloud.MobileGatewayDNSSetting       `cli:",squash" mapconv:",omitempty" validate:"omitempty"`
+	TrafficConfig    sacloud.MobileGatewayTrafficControl   `mapconv:",omitempty"`
+
+	NoWait          bool
+	BootAfterCreate bool
 }
 
 func newCreateParameter() *createParameter {
@@ -63,6 +77,22 @@ func init() {
 
 // Customize パラメータ変換処理
 func (p *createParameter) Customize(_ cli.Context) error {
+	if p.SIMsData != "" {
+		var sims []*mobilegateway.SIMSetting
+		if err := util.MarshalJSONFromPathOrContent(p.SIMsData, &sims); err != nil {
+			return err
+		}
+		p.SIMs = append(p.SIMs, sims...)
+	}
+
+	if p.SIMRoutesData != "" {
+		var simRoutes []*mobilegateway.SIMRouteSetting
+		if err := util.MarshalJSONFromPathOrContent(p.SIMRoutesData, &simRoutes); err != nil {
+			return err
+		}
+		p.SIMRoutes = append(p.SIMRoutes, simRoutes...)
+	}
+
 	if p.StaticRoutesData != "" {
 		var staticRoutes []*sacloud.MobileGatewayStaticRoute
 		if err := util.MarshalJSONFromPathOrContent(p.StaticRoutesData, &staticRoutes); err != nil {

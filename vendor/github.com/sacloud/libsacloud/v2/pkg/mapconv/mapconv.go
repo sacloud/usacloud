@@ -55,7 +55,13 @@ type Decoder struct {
 
 func (d *Decoder) ConvertTo(source interface{}, dest interface{}) error {
 	s := structs.New(source)
-	destMap := Map(make(map[string]interface{}))
+	mappedValues := Map(make(map[string]interface{}))
+
+	// recursiveの際に参照するためのdestのmap
+	destValues := Map(make(map[string]interface{}))
+	if structs.IsStruct(dest) {
+		destValues = Map(structs.Map(dest))
+	}
 
 	fields := s.Fields()
 	for _, f := range fields {
@@ -102,19 +108,39 @@ func (d *Decoder) ConvertTo(source interface{}, dest interface{}) error {
 					return err
 				}
 				for k, v := range dest {
-					destMap.Set(k, v)
+					mappedValues.Set(k, v)
 				}
 				continue
 			}
 
 			if tags.Recursive {
+				current, err := destValues.Get(destKey)
+				if err != nil {
+					return err
+				}
+
 				var dest []interface{}
 				values := valueToSlice(value)
-				for _, v := range values {
+				currentValues := valueToSlice(current)
+				for i, v := range values {
 					if structs.IsStruct(v) {
+						var currentDest interface{}
+						if len(currentValues) > i {
+							currentDest = currentValues[i]
+						}
 						destMap := Map(make(map[string]interface{}))
 						if err := d.ConvertTo(v, &destMap); err != nil {
 							return err
+						}
+						// 宛先が存在しstructであれば(map[string]interface{}になっているはずなので)マージする
+						if currentDest != nil {
+							mv, ok := currentDest.(map[string]interface{})
+							if ok {
+								for k, v := range destMap.Map() {
+									mv[k] = v
+								}
+								destMap = Map(mv)
+							}
 						}
 						dest = append(dest, destMap)
 					} else {
@@ -128,7 +154,7 @@ func (d *Decoder) ConvertTo(source interface{}, dest interface{}) error {
 				}
 			}
 
-			destMap.Set(destKey, value)
+			mappedValues.Set(destKey, value)
 		}
 	}
 
@@ -141,7 +167,7 @@ func (d *Decoder) ConvertTo(source interface{}, dest interface{}) error {
 	if err != nil {
 		return err
 	}
-	return decoder.Decode(destMap.Map())
+	return decoder.Decode(mappedValues.Map())
 }
 
 func (d *Decoder) ConvertFrom(source interface{}, dest interface{}) error {

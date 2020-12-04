@@ -17,6 +17,7 @@ package mobilegateway
 import (
 	"github.com/sacloud/libsacloud/v2/helper/builder"
 	mobileGatewayBuilder "github.com/sacloud/libsacloud/v2/helper/builder/mobilegateway"
+	"github.com/sacloud/libsacloud/v2/helper/service"
 	"github.com/sacloud/libsacloud/v2/helper/validate"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
@@ -35,9 +36,9 @@ type ApplyRequest struct {
 	SIMRoutes                       []*SIMRouteSetting
 	InternetConnectionEnabled       bool
 	InterDeviceCommunicationEnabled bool
-	DNS                             *sacloud.MobileGatewayDNSSetting
+	DNS                             *DNSSetting
 	SIMs                            []*SIMSetting
-	TrafficConfig                   *sacloud.MobileGatewayTrafficControl
+	TrafficConfig                   *TrafficConfig
 
 	SettingsHash    string
 	BootAfterCreate bool
@@ -46,28 +47,42 @@ type ApplyRequest struct {
 
 // PrivateInterfaceSetting represents API parameter/response structure
 type PrivateInterfaceSetting struct {
-	SwitchID       types.ID
-	IPAddress      string `validate:"ipv4"`
-	NetworkMaskLen int
+	SwitchID       types.ID `request:",omitempty"`
+	IPAddress      string   `request:",omitempty" validate:"required,ipv4"`
+	NetworkMaskLen int      `request:",omitempty"`
 }
 
 // SIMRouteSetting represents API parameter/response structure
 type SIMRouteSetting struct {
 	SIMID  types.ID
-	Prefix string
+	Prefix string `validate:"required"`
 }
 
 // SIMSetting represents API parameter/response structure
 type SIMSetting struct {
 	SIMID     types.ID
-	IPAddress string `validate:"ipv4"`
+	IPAddress string `validate:"required,ipv4"`
+}
+
+type DNSSetting struct {
+	DNS1 string `request:",omitempty" validate:"required_with=DNS2,omitempty,ipv4"`
+	DNS2 string `request:",omitempty" validate:"required_with=DNS1,omitempty,ipv4"`
+}
+
+type TrafficConfig struct {
+	TrafficQuotaInMB       int    `request:",omitempty"`
+	BandWidthLimitInKbps   int    `request:",omitempty"`
+	EmailNotifyEnabled     bool   `request:",omitempty"`
+	SlackNotifyEnabled     bool   `request:",omitempty"`
+	SlackNotifyWebhooksURL string `request:",omitempty"`
+	AutoTrafficShaping     bool   `request:",omitempty"`
 }
 
 func (req *ApplyRequest) Validate() error {
 	return validate.Struct(req)
 }
 
-func (req *ApplyRequest) Builder(caller sacloud.APICaller) *mobileGatewayBuilder.Builder {
+func (req *ApplyRequest) Builder(caller sacloud.APICaller) (*mobileGatewayBuilder.Builder, error) {
 	var privateInterface *mobileGatewayBuilder.PrivateInterfaceSetting
 	if req.PrivateInterface != nil {
 		privateInterface = &mobileGatewayBuilder.PrivateInterfaceSetting{
@@ -93,6 +108,22 @@ func (req *ApplyRequest) Builder(caller sacloud.APICaller) *mobileGatewayBuilder
 		})
 	}
 
+	var dns *sacloud.MobileGatewayDNSSetting
+	if req.DNS != nil {
+		dns = &sacloud.MobileGatewayDNSSetting{
+			DNS1: req.DNS.DNS1,
+			DNS2: req.DNS.DNS2,
+		}
+	}
+
+	var trafficConfig *sacloud.MobileGatewayTrafficControl
+	if req.TrafficConfig != nil {
+		trafficConfig = &sacloud.MobileGatewayTrafficControl{}
+		if err := service.RequestConvertTo(req.TrafficConfig, trafficConfig); err != nil {
+			return nil, err
+		}
+	}
+
 	return &mobileGatewayBuilder.Builder{
 		Name:                            req.Name,
 		Description:                     req.Description,
@@ -103,12 +134,12 @@ func (req *ApplyRequest) Builder(caller sacloud.APICaller) *mobileGatewayBuilder
 		SIMRoutes:                       simRoutes,
 		InternetConnectionEnabled:       req.InternetConnectionEnabled,
 		InterDeviceCommunicationEnabled: req.InterDeviceCommunicationEnabled,
-		DNS:                             req.DNS,
+		DNS:                             dns,
 		SIMs:                            sims,
-		TrafficConfig:                   req.TrafficConfig,
+		TrafficConfig:                   trafficConfig,
 		SettingsHash:                    req.SettingsHash,
 		NoWait:                          req.NoWait,
 		SetupOptions:                    &builder.RetryableSetupParameter{BootAfterBuild: req.BootAfterCreate},
 		Client:                          mobileGatewayBuilder.NewAPIClient(caller),
-	}
+	}, nil
 }
