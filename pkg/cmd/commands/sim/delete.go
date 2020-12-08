@@ -56,6 +56,12 @@ func init() {
 
 // Customize パラメータ変換処理
 func (p *deleteParameter) Customize(ctx cli.Context) error {
-	p.Zones = ctx.Option().Zones
+	var zones []string
+	for _, zone := range ctx.Option().Zones {
+		if zone != "all" {
+			zones = append(zones, zone)
+		}
+	}
+	p.Zones = zones
 	return nil
 }
