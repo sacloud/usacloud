@@ -15,7 +15,7 @@
 package cflag
 
 type OutputParameter struct {
-	OutputType string `cli:",short=o,aliases=out,category=output,desc=Output format: one of the following [table/json/yaml]"`
+	OutputType string `cli:",short=o,aliases=out,category=output,desc=Output format: one of the following [table/json/yaml]" validate:"omitempty,output_type"`
 	Quiet      bool   `cli:",short=q,category=output,desc=Output IDs only"`
 	Format     string `cli:",aliases=fmt,category=output,desc=Output format in Go templates"`
 	FormatFile string `cli:",category=output,desc=Output format in Go templates(from file)"`
