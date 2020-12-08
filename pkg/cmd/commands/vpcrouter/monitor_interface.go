@@ -17,35 +17,44 @@ package vpcrouter
 import (
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/output"
 )
 
-var deleteCommand = &core.Command{
-	Name:         "delete",
-	Aliases:      []string{"rm"},
-	Category:     "basic",
-	Order:        50,
+var monitorInterfaceCommand = &core.Command{
+	Name:       "monitor-interface",
+	Aliases:    []string{"monitor-nic"},
+	Category:   "monitor",
+	Order:      40,
+	NoProgress: true,
+
+	ColumnDefs: []output.ColumnDef{
+		{Name: "Time"},
+		{Name: "Send"},
+		{Name: "Receive"},
+	},
+
 	SelectorType: core.SelectorTypeRequireMulti,
 
 	ParameterInitializer: func() interface{} {
-		return newDeleteParameter()
+		return newMonitorInterfaceParameter()
 	},
 }
 
-type deleteParameter struct {
+type monitorInterfaceParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
 	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.MonitorParameter `cli:",squash" mapconv:",squash"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
-
-	FailIfNotFound bool
-	Force          bool `cli:",short=f"`
+	Index                  int
 }
 
-func newDeleteParameter() *deleteParameter {
-	return &deleteParameter{}
+func newMonitorInterfaceParameter() *monitorInterfaceParameter {
+	return &monitorInterfaceParameter{
+		// TODO デフォルト値はここで設定する
+	}
 }
 
 func init() {
-	Resource.AddCommand(deleteCommand)
+	Resource.AddCommand(monitorInterfaceCommand)
 }

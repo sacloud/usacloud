@@ -43,7 +43,7 @@ github.com/olekukonko/tablewriter
 github.com/pmezard/go-difflib/difflib
 # github.com/sacloud/ftps v1.1.0
 github.com/sacloud/ftps
-# github.com/sacloud/libsacloud/v2 v2.8.11-0.20201204095741-a902ffb85f95
+# github.com/sacloud/libsacloud/v2 v2.8.11-0.20201208075603-f95f6c224c29
 github.com/sacloud/libsacloud/v2
 github.com/sacloud/libsacloud/v2/helper/api
 github.com/sacloud/libsacloud/v2/helper/builder
@@ -57,6 +57,7 @@ github.com/sacloud/libsacloud/v2/helper/builder/server
 github.com/sacloud/libsacloud/v2/helper/builder/sim
 github.com/sacloud/libsacloud/v2/helper/builder/vpcrouter
 github.com/sacloud/libsacloud/v2/helper/cleanup
+github.com/sacloud/libsacloud/v2/helper/defaults
 github.com/sacloud/libsacloud/v2/helper/power
 github.com/sacloud/libsacloud/v2/helper/query
 github.com/sacloud/libsacloud/v2/helper/service

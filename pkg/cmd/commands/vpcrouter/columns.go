@@ -25,7 +25,8 @@ var defaultColumnDefs = []output.ColumnDef{
 	ccol.Name,
 	ccol.Tags,
 	ccol.Description,
-	{Name: "VRID", Template: `{{ if .Settings }}{{ .Settings.VRID }}{{ end }}`},
+	{Name: "Plan", Template: `{{ .PlanID | vpc_router_plan_to_key }}`},
+	{Name: "VRID", Template: `{{ if .Settings }}{{ if gt .Settings.VRID 0 }}{{ .Settings.VRID }}{{ end }}{{ end }}`},
 	{Name: "Upstream", Template: `{{ with index .OriginalValue.Interfaces 0 }}{{ .UpstreamType }}{{ end }}`},
 	{
 		Name: "IPAddress",

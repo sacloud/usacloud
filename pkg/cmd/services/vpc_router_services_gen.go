@@ -172,6 +172,78 @@ func init() {
 			return results, nil
 		},
 	)
+	setDefaultServiceFunc("vpc-router", "create",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+
+			req := &service.CreateRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			res, err := svc.CreateWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return []interface{}{res}, nil
+
+		},
+	)
+	setDefaultListAllFunc("vpc-router", "create",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	setDefaultServiceFunc("vpc-router", "create-standard",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+
+			req := &service.CreateStandardRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			res, err := svc.CreateStandardWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return []interface{}{res}, nil
+
+		},
+	)
+	setDefaultListAllFunc("vpc-router", "create-standard",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
 	setDefaultServiceFunc("vpc-router", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
@@ -208,6 +280,78 @@ func init() {
 			return results, nil
 		},
 	)
+	setDefaultServiceFunc("vpc-router", "update",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+
+			req := &service.UpdateRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			res, err := svc.UpdateWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return []interface{}{res}, nil
+
+		},
+	)
+	setDefaultListAllFunc("vpc-router", "update",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	setDefaultServiceFunc("vpc-router", "update-standard",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+
+			req := &service.UpdateStandardRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			res, err := svc.UpdateStandardWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return []interface{}{res}, nil
+
+		},
+	)
+	setDefaultListAllFunc("vpc-router", "update-standard",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
 	setDefaultServiceFunc("vpc-router", "delete",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
@@ -230,6 +374,46 @@ func init() {
 		},
 	)
 	setDefaultListAllFunc("vpc-router", "delete",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	setDefaultServiceFunc("vpc-router", "monitor-interface",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+
+			req := &service.MonitorInterfaceRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			res, err := svc.MonitorInterfaceWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+
+		},
+	)
+	setDefaultListAllFunc("vpc-router", "monitor-interface",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
