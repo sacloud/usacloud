@@ -59,7 +59,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.EnableBackup, "enable-backup", "", p.EnableBackup, "")
 	fs.StringSliceVarP(&p.BackupWeekdays, "backup-weekdays", "", p.BackupWeekdays, "options: [all/sun/mon/tue/wed/thu/fri/sat]")
 	fs.IntVarP(&p.BackupStartTimeHour, "backup-start-time-hour", "", p.BackupStartTimeHour, "")
-	fs.IntVarP(&p.BackupStartTimeMinute, "backup-start-time-minute", "", p.BackupStartTimeMinute, "")
+	fs.IntVarP(&p.BackupStartTimeMinute, "backup-start-time-minute", "", p.BackupStartTimeMinute, "options: [0/15/30/45]")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -144,6 +144,7 @@ func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("plan", util.FlagCompletionFunc("10g", "30g", "90g", "240g", "500g", "1t"))
 	cmd.RegisterFlagCompletionFunc("database-type", util.FlagCompletionFunc("postgresql", "postgres", "mariadb"))
 	cmd.RegisterFlagCompletionFunc("backup-weekdays", util.FlagCompletionFunc("all", "sun", "mon", "tue", "wed", "thu", "fri", "sat"))
+	cmd.RegisterFlagCompletionFunc("backup-start-time-minute", util.FlagCompletionFunc("0", "15", "30", "45"))
 
 }
 
