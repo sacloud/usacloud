@@ -31,7 +31,6 @@ func (p *deleteParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
-	fs.BoolVarP(&p.FailIfNotFound, "fail-if-not-found", "", p.FailIfNotFound, "")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -39,6 +38,10 @@ func (p *deleteParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.FormatFile, "format-file", "", p.FormatFile, "Output format in Go templates(from file)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
 	fs.StringVarP(&p.QueryFile, "query-file", "", p.QueryFile, "JMESPath query(from file)")
+	fs.BoolVarP(&p.FailIfNotFound, "fail-if-not-found", "", p.FailIfNotFound, "")
+	fs.BoolVarP(&p.WaitForRelease, "wait-for-release", "", p.WaitForRelease, "")
+	fs.IntVarP(&p.WaitForReleaseTimeout, "wait-for-release-timeout", "", p.WaitForReleaseTimeout, "")
+	fs.IntVarP(&p.WaitForReleaseTick, "wait-for-release-tick", "", p.WaitForReleaseTick, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -61,6 +64,9 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs = pflag.NewFlagSet("bridge", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release-timeout"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release-tick"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Bridge options",
 			Flags: fs,
