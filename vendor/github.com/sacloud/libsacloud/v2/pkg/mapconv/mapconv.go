@@ -20,6 +20,8 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/sacloud/libsacloud/v2/pkg/util"
+
 	"github.com/fatih/structs"
 	"github.com/mitchellh/mapstructure"
 )
@@ -135,6 +137,12 @@ func (d *Decoder) ConvertTo(source interface{}, dest interface{}) error {
 						// 宛先が存在しstructであれば(map[string]interface{}になっているはずなので)マージする
 						if currentDest != nil {
 							mv, ok := currentDest.(map[string]interface{})
+							// 元の値から空の値を除去する(structs:",omitempty"でも可)
+							for k, v := range mv {
+								if util.IsEmpty(v) {
+									delete(mv, k)
+								}
+							}
 							if ok {
 								for k, v := range destMap.Map() {
 									mv[k] = v

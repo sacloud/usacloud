@@ -21,9 +21,9 @@ import (
 	"sync"
 	"time"
 
+	"github.com/sacloud/libsacloud/v2/helper/defaults"
+
 	"github.com/sacloud/libsacloud/v2"
-	"github.com/sacloud/libsacloud/v2/helper/builder"
-	"github.com/sacloud/libsacloud/v2/helper/setup"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/fake"
 	"github.com/sacloud/libsacloud/v2/sacloud/trace"
@@ -137,11 +137,11 @@ func newCaller(opts *CallerOptions) sacloud.APICaller {
 		sacloud.DefaultStatePollingInterval = defaultInterval
 		sacloud.DefaultDBStatusPollingInterval = defaultInterval
 		// update default polling intervals: libsacloud/utils/setup
-		setup.DefaultDeleteWaitInterval = defaultInterval
-		setup.DefaultProvisioningWaitInterval = defaultInterval
-		setup.DefaultPollingInterval = defaultInterval
+		defaults.DefaultDeleteWaitInterval = defaultInterval
+		defaults.DefaultProvisioningWaitInterval = defaultInterval
+		defaults.DefaultPollingInterval = defaultInterval
 		// update default polling intervals: libsacloud/utils/builder
-		builder.DefaultNICUpdateWaitDuration = defaultInterval
+		defaults.DefaultNICUpdateWaitDuration = defaultInterval
 	}
 
 	if opts.DefaultZone != "" {

@@ -22,28 +22,28 @@ import (
 	"github.com/spf13/pflag"
 )
 
-func (p *deleteParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
+func (p *monitorInterfaceParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 
 }
 
-func (p *deleteParameter) buildFlags(fs *pflag.FlagSet) {
+func (p *monitorInterfaceParameter) buildFlags(fs *pflag.FlagSet) {
 
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
-	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
+	fs.StringVarP(&p.Start, "start", "", p.Start, "")
+	fs.StringVarP(&p.End, "end", "", p.End, "")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
 	fs.StringVarP(&p.FormatFile, "format-file", "", p.FormatFile, "Output format in Go templates(from file)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
 	fs.StringVarP(&p.QueryFile, "query-file", "", p.QueryFile, "JMESPath query(from file)")
-	fs.BoolVarP(&p.FailIfNotFound, "fail-if-not-found", "", p.FailIfNotFound, "")
-	fs.BoolVarP(&p.Force, "force", "f", p.Force, "")
+	fs.IntVarP(&p.Index, "index", "", p.Index, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
-func (p *deleteParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.NormalizedName {
+func (p *monitorInterfaceParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.NormalizedName {
 	switch name {
 	case "skeleton":
 		name = "generate-skeleton"
@@ -55,16 +55,25 @@ func (p *deleteParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 	return pflag.NormalizedName(name)
 }
 
-func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
+func (p *monitorInterfaceParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("vpc-router", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("force"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("index"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Vpc-Router options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("monitor", pflag.ContinueOnError)
+		fs.AddFlag(cmd.LocalFlags().Lookup("start"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("end"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Monitor options",
 			Flags: fs,
 		})
 	}
@@ -73,7 +82,6 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,
@@ -97,11 +105,11 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 	core.BuildFlagsUsage(cmd, sets)
 }
 
-func (p *deleteParameter) setCompletionFunc(cmd *cobra.Command) {
+func (p *monitorInterfaceParameter) setCompletionFunc(cmd *cobra.Command) {
 
 }
 
-func (p *deleteParameter) SetupCobraCommandFlags(cmd *cobra.Command) {
+func (p *monitorInterfaceParameter) SetupCobraCommandFlags(cmd *cobra.Command) {
 	p.buildFlags(cmd.Flags())
 	p.buildFlagsUsage(cmd)
 	p.setCompletionFunc(cmd)

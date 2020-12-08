@@ -33,12 +33,41 @@ type UpdateRequest struct {
 	Tags        *types.Tags `request:",omitempty"`
 	IconID      *types.ID   `request:",omitempty"`
 
-	NICSetting            *PremiumNICSetting             `request:",omitempty"`
-	AdditionalNICSettings *[]AdditionalPremiumNICSetting `request:",omitempty"`
-	RouterSetting         *RouterSetting                 `request:",omitempty"`
+	NICSetting            *PremiumNICSettingUpdate              `request:",omitempty,recursive"`
+	AdditionalNICSettings *[]*AdditionalPremiumNICSettingUpdate `request:"-"` // Indexが同じものを手動でマージする
+	RouterSetting         *RouterSettingUpdate                  `request:",omitempty,recursive"`
 	NoWait                bool
 
 	SettingsHash string
+}
+
+type PremiumNICSettingUpdate struct {
+	IPAddresses      *[]string `request:",omitempty"`
+	VirtualIPAddress *string   `request:",omitempty"`
+	IPAliases        *[]string `request:",omitempty"`
+}
+
+type AdditionalPremiumNICSettingUpdate struct {
+	SwitchID         *types.ID `request:",omitempty"`
+	IPAddresses      *[]string `request:",omitempty"`
+	VirtualIPAddress *string   `request:",omitempty"`
+	NetworkMaskLen   *int      `request:",omitempty"`
+	Index            int
+}
+
+type RouterSettingUpdate struct {
+	InternetConnectionEnabled *bool                                   `request:",omitempty"`
+	StaticNAT                 *[]*sacloud.VPCRouterStaticNAT          `request:",omitempty,recursive"`
+	PortForwarding            *[]*sacloud.VPCRouterPortForwarding     `request:",omitempty,recursive"`
+	Firewall                  *[]*sacloud.VPCRouterFirewall           `request:",omitempty,recursive"`
+	DHCPServer                *[]*sacloud.VPCRouterDHCPServer         `request:",omitempty,recursive"`
+	DHCPStaticMapping         *[]*sacloud.VPCRouterDHCPStaticMapping  `request:",omitempty,recursive"`
+	PPTPServer                *sacloud.VPCRouterPPTPServer            `request:",omitempty,recursive"`
+	L2TPIPsecServer           *sacloud.VPCRouterL2TPIPsecServer       `request:",omitempty,recursive"`
+	RemoteAccessUsers         *[]*sacloud.VPCRouterRemoteAccessUser   `request:",omitempty,recursive"`
+	SiteToSiteIPsecVPN        *[]*sacloud.VPCRouterSiteToSiteIPsecVPN `request:",omitempty,recursive"`
+	StaticRoute               *[]*sacloud.VPCRouterStaticRoute        `request:",omitempty,recursive"`
+	SyslogHost                *string                                 `request:",omitempty"`
 }
 
 func (req *UpdateRequest) Validate() error {
@@ -127,5 +156,36 @@ func (req *UpdateRequest) ApplyRequest(ctx context.Context, caller sacloud.APICa
 	if err := service.RequestConvertTo(req, applyRequest); err != nil {
 		return nil, err
 	}
+
+	// NOTE: AdditionalNICSettingsは配列のインデックスではなく
+	//       要素中のIndexフィールドを元にマージする必要があるためここで個別実装する
+	if err := req.mergeAdditionalNICSettings(applyRequest); err != nil {
+		return nil, err
+	}
+
 	return applyRequest, nil
+}
+
+func (req *UpdateRequest) mergeAdditionalNICSettings(applyRequest *ApplyRequest) error {
+	if req.AdditionalNICSettings != nil {
+		var newAdditionalNICs []AdditionalNICSettingHolder
+		for _, reqNIC := range *req.AdditionalNICSettings {
+			var nic AdditionalNICSettingHolder
+			for _, n := range applyRequest.AdditionalNICSettings {
+				if reqNIC.Index == n.interfaceSetting().Index {
+					nic = n
+					break
+				}
+			}
+			if nic == nil {
+				nic = &AdditionalPremiumNICSetting{}
+			}
+			if err := service.RequestConvertTo(reqNIC, nic); err != nil {
+				return err
+			}
+			newAdditionalNICs = append(newAdditionalNICs, nic)
+		}
+		applyRequest.AdditionalNICSettings = newAdditionalNICs
+	}
+	return nil
 }

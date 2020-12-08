@@ -33,11 +33,18 @@ type UpdateStandardRequest struct {
 	Tags        *types.Tags `request:",omitempty"`
 	IconID      *types.ID   `request:",omitempty"`
 
-	AdditionalNICSettings *[]AdditionalStandardNICSetting `request:",omitempty"`
-	RouterSetting         *RouterSetting                  `request:",omitempty"`
+	AdditionalNICSettings *[]*AdditionalStandardNICSettingUpdate `request:"-"` // Indexが同じものを手動でマージする
+	RouterSetting         *RouterSettingUpdate                   `request:",omitempty,recursive"`
 	NoWait                bool
 
 	SettingsHash string
+}
+
+type AdditionalStandardNICSettingUpdate struct {
+	SwitchID       *types.ID `request:",omitempty"`
+	IPAddress      *string   `request:",omitempty"`
+	NetworkMaskLen *int      `request:",omitempty"`
+	Index          int       `request:",omitempty"`
 }
 
 func (req *UpdateStandardRequest) Validate() error {
@@ -116,5 +123,36 @@ func (req *UpdateStandardRequest) ApplyRequest(ctx context.Context, caller saclo
 	if err := service.RequestConvertTo(req, applyRequest); err != nil {
 		return nil, err
 	}
+
+	// NOTE: AdditionalNICSettingsは配列のインデックスではなく
+	//       要素中のIndexフィールドを元にマージする必要があるためここで個別実装する
+	if err := req.mergeAdditionalNICSettings(applyRequest); err != nil {
+		return nil, err
+	}
+
 	return applyRequest, nil
+}
+
+func (req *UpdateStandardRequest) mergeAdditionalNICSettings(applyRequest *ApplyRequest) error {
+	if req.AdditionalNICSettings != nil {
+		var newAdditionalNICs []AdditionalNICSettingHolder
+		for _, reqNIC := range *req.AdditionalNICSettings {
+			var nic AdditionalNICSettingHolder
+			for _, n := range applyRequest.AdditionalNICSettings {
+				if reqNIC.Index == n.interfaceSetting().Index {
+					nic = n
+					break
+				}
+			}
+			if nic == nil {
+				nic = &AdditionalStandardNICSetting{}
+			}
+			if err := service.RequestConvertTo(reqNIC, nic); err != nil {
+				return err
+			}
+			newAdditionalNICs = append(newAdditionalNICs, nic)
+		}
+		applyRequest.AdditionalNICSettings = newAdditionalNICs
+	}
+	return nil
 }
