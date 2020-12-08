@@ -37,6 +37,7 @@ type deleteParameter struct {
 	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 
 	FailIfNotFound bool
+	Force          bool `cli:",short=f"`
 
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`

@@ -39,7 +39,7 @@ type deleteParameter struct {
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	FailIfNotFound bool
-	Force          bool
+	Force          bool `cli:",short=f"`
 }
 
 func newDeleteParameter() *deleteParameter {
