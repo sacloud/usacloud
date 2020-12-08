@@ -49,6 +49,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.IPAddresses, "ip-address", "", p.IPAddresses, "(aliases: --ipaddress)")
 	fs.IntVarP(&p.NetworkMaskLen, "network-mask-len", "", p.NetworkMaskLen, "")
 	fs.StringVarP(&p.DefaultRoute, "default-route", "", p.DefaultRoute, "")
+	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -82,6 +83,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("ip-address"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Nfs options",
 			Flags: fs,

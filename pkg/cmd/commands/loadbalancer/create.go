@@ -56,6 +56,8 @@ type createParameter struct {
 
 	VirtualIPAddressesData string                                 `cli:"virtual-ip-addresses" mapconv:"-"`
 	VirtualIPAddresses     sacloud.LoadBalancerVirtualIPAddresses `cli:"-"`
+
+	NoWait bool
 }
 
 func newCreateParameter() *createParameter {

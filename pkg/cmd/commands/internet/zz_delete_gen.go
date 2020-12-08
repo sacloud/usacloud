@@ -39,7 +39,7 @@ func (p *deleteParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
 	fs.StringVarP(&p.QueryFile, "query-file", "", p.QueryFile, "JMESPath query(from file)")
 	fs.BoolVarP(&p.FailIfNotFound, "fail-if-not-found", "", p.FailIfNotFound, "")
-	fs.BoolVarP(&p.Force, "force", "", p.Force, "")
+	fs.BoolVarP(&p.Force, "force", "f", p.Force, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 

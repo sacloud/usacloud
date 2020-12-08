@@ -74,6 +74,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
 	fs.StringVarP(p.VirtualIPAddressesData, "virtual-ip-addresses", "", "", "")
 	fs.StringVarP(&p.SettingsHash, "settings-hash", "", p.SettingsHash, "")
+	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -101,6 +102,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("virtual-ip-addresses"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("settings-hash"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Load-Balancer options",
 			Flags: fs,

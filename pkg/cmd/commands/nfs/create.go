@@ -49,6 +49,8 @@ type createParameter struct {
 	IPAddresses    []string `cli:"ip-address,aliases=ipaddress" validate:"required,min=1,max=2,dive,ipv4"`
 	NetworkMaskLen int      `validate:"required,min=1,max=32"`
 	DefaultRoute   string   `validate:"omitempty,ipv4"`
+
+	NoWait bool
 }
 
 func newCreateParameter() *createParameter {

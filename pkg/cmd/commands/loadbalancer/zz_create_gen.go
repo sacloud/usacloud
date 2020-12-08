@@ -51,6 +51,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.DefaultRoute, "default-route", "", p.DefaultRoute, "")
 	fs.IntVarP(&p.Port, "port", "", p.Port, "")
 	fs.StringVarP(&p.VirtualIPAddressesData, "virtual-ip-addresses", "", p.VirtualIPAddressesData, "")
+	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -86,6 +87,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("port"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("virtual-ip-addresses"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Load-Balancer options",
 			Flags: fs,
