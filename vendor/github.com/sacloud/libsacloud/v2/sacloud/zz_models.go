@@ -14645,6 +14645,7 @@ type MobileGateway struct {
 	InstanceStatusChangedAt         time.Time                        `mapconv:"Instance.StatusChangedAt"`
 	Interfaces                      []*MobileGatewayInterface        `json:",omitempty" mapconv:"[]Interfaces,recursive,omitempty"`
 	ZoneID                          types.ID                         `mapconv:"Remark.Zone.ID"`
+	GlobalAddress                   string                           `mapconv:"Remark.MobileGateway.GlobalAddress"`
 	InterfaceSettings               []*MobileGatewayInterfaceSetting `mapconv:"Settings.MobileGateway.[]Interfaces,recursive"`
 	StaticRoutes                    []*MobileGatewayStaticRoute      `mapconv:"Settings.MobileGateway.[]StaticRoutes,recursive"`
 	InternetConnectionEnabled       types.StringFlag                 `mapconv:"Settings.MobileGateway.InternetConnection.Enabled"`
@@ -14674,6 +14675,7 @@ func (o *MobileGateway) setDefaults() interface{} {
 		InstanceStatusChangedAt         time.Time                        `mapconv:"Instance.StatusChangedAt"`
 		Interfaces                      []*MobileGatewayInterface        `json:",omitempty" mapconv:"[]Interfaces,recursive,omitempty"`
 		ZoneID                          types.ID                         `mapconv:"Remark.Zone.ID"`
+		GlobalAddress                   string                           `mapconv:"Remark.MobileGateway.GlobalAddress"`
 		InterfaceSettings               []*MobileGatewayInterfaceSetting `mapconv:"Settings.MobileGateway.[]Interfaces,recursive"`
 		StaticRoutes                    []*MobileGatewayStaticRoute      `mapconv:"Settings.MobileGateway.[]StaticRoutes,recursive"`
 		InternetConnectionEnabled       types.StringFlag                 `mapconv:"Settings.MobileGateway.InternetConnection.Enabled"`
@@ -14694,6 +14696,7 @@ func (o *MobileGateway) setDefaults() interface{} {
 		InstanceStatusChangedAt:         o.GetInstanceStatusChangedAt(),
 		Interfaces:                      o.GetInterfaces(),
 		ZoneID:                          o.GetZoneID(),
+		GlobalAddress:                   o.GetGlobalAddress(),
 		InterfaceSettings:               o.GetInterfaceSettings(),
 		StaticRoutes:                    o.GetStaticRoutes(),
 		InternetConnectionEnabled:       o.GetInternetConnectionEnabled(),
@@ -14880,6 +14883,16 @@ func (o *MobileGateway) GetZoneID() types.ID {
 // SetZoneID sets value to ZoneID
 func (o *MobileGateway) SetZoneID(v types.ID) {
 	o.ZoneID = v
+}
+
+// GetGlobalAddress returns value of GlobalAddress
+func (o *MobileGateway) GetGlobalAddress() string {
+	return o.GlobalAddress
+}
+
+// SetGlobalAddress sets value to GlobalAddress
+func (o *MobileGateway) SetGlobalAddress(v string) {
+	o.GlobalAddress = v
 }
 
 // GetInterfaceSettings returns value of InterfaceSettings
