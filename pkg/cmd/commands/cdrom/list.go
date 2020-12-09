@@ -37,20 +37,17 @@ var listCommand = &core.Command{
 type listParameter struct {
 	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
 	cflag.CommonParameter `cli:",squash" mapconv:"-"`
-
-	Names               []string `cli:",category=filter" validate:"omitempty"`
-	Tags                []string `cli:",category=filter" validate:"omitempty"`
-	OSType              string   `cli:",category=filter,options=os_type" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
-	Scope               string   `cli:",category=filter,options=scope" mapconv:",omitempty,filters=scope_to_value" validate:"omitempty,scope"`
-	cflag.FindParameter `cli:",squash" mapconv:",squash"`
-
+	cflag.FindParameter   `cli:",squash" mapconv:",squash"`
 	cflag.OutputParameter `cli:",squash" mapconv:"-"`
+
+	Names  []string `cli:",category=filter" validate:"omitempty"`
+	Tags   []string `cli:",category=filter" validate:"omitempty"`
+	OSType string   `cli:",category=filter,options=os_type" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
+	Scope  string   `cli:",category=filter,options=scope" mapconv:",omitempty,filters=scope_to_value" validate:"omitempty,scope"`
 }
 
 func newListParameter() *listParameter {
-	return &listParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &listParameter{}
 }
 
 func init() {

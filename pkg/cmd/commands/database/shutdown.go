@@ -35,18 +35,17 @@ var shutdownCommand = &core.Command{
 }
 
 type shutdownParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 
 	NoWait        bool
 	ForceShutdown bool `cli:",short=f,aliases=force"`
 }
 
 func newShutdownParameter() *shutdownParameter {
-	return &shutdownParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &shutdownParameter{}
 }
 
 func init() {

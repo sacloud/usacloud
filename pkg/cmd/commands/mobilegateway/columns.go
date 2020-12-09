@@ -35,25 +35,3 @@ Private: {{ with index .InterfaceSettings 0 }}{{ index .IPAddress 0 }}/{{ .Netwo
 	{Name: "InterDeviceCommunication", Template: "{{.InterDeviceCommunicationEnabled}}"},
 	ccol.InstanceStatus,
 }
-
-/*
-	ID                              types.ID
-	Name                            string `validate:"required"`
-	Description                     string `validate:"min=0,max=512"`
-	Tags                            types.Tags
-	Availability                    types.EAvailability
-	Class                           string
-	IconID                          types.ID `mapconv:"Icon.ID"`
-	CreatedAt                       time.Time
-	InstanceHostName                string                           `mapconv:"Instance.Host.Name"`
-	InstanceHostInfoURL             string                           `mapconv:"Instance.Host.InfoURL"`
-	InstanceStatus                  types.EServerInstanceStatus      `mapconv:"Instance.Status"`
-	InstanceStatusChangedAt         time.Time                        `mapconv:"Instance.StatusChangedAt"`
-	Interfaces                      []*MobileGatewayInterface        `json:",omitempty" mapconv:"[]Interfaces,recursive,omitempty"`
-	ZoneID                          types.ID                         `mapconv:"Remark.Zone.ID"`
-	InterfaceSettings               []*MobileGatewayInterfaceSetting `mapconv:"Settings.MobileGateway.[]Interfaces,recursive"`
-	StaticRoutes                    []*MobileGatewayStaticRoute      `mapconv:"Settings.MobileGateway.[]StaticRoutes,recursive"`
-	InternetConnectionEnabled       types.StringFlag                 `mapconv:"Settings.MobileGateway.InternetConnection.Enabled"`
-	InterDeviceCommunicationEnabled types.StringFlag                 `mapconv:"Settings.MobileGateway.InterDeviceCommunication.Enabled"`
-	SettingsHash                    string                           `json:",omitempty" mapconv:",omitempty"`
-*/

@@ -29,7 +29,8 @@ var healthCommand = &core.Command{
 
 	ColumnDefs: []output.ColumnDef{
 		ccol.ID,
-		{Name: "Peers", Template: `[{{ range .Peers }}{{ .ID }}:{{ .Status }} {{ end }}]`},
+		{Name: "Peers", Template: `{{ range .Peers }}{{ .ID }}:{{ .Status }}
+{{ end }}`},
 	},
 
 	SelectorType: core.SelectorTypeRequireMulti,
@@ -46,9 +47,7 @@ type healthParameter struct {
 }
 
 func newHealthParameter() *healthParameter {
-	return &healthParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &healthParameter{}
 }
 
 func init() {

@@ -15,6 +15,7 @@
 package database
 
 import (
+	"github.com/sacloud/usacloud/pkg/cmd/ccol"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -27,6 +28,8 @@ var monitorDatabaseCommand = &core.Command{
 	NoProgress: true,
 
 	ColumnDefs: []output.ColumnDef{
+		ccol.Zone,
+		ccol.ID,
 		{Name: "Time"},
 		{Name: "DatabaseTime"},
 		{
@@ -71,9 +74,7 @@ type monitorDatabaseParameter struct {
 }
 
 func newMonitorDatabaseParameter() *monitorDatabaseParameter {
-	return &monitorDatabaseParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &monitorDatabaseParameter{}
 }
 
 func init() {

@@ -15,6 +15,7 @@
 package mobilegateway
 
 import (
+	"github.com/sacloud/usacloud/pkg/cmd/ccol"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -27,6 +28,8 @@ var logsCommand = &core.Command{
 	NoProgress: true,
 
 	ColumnDefs: []output.ColumnDef{
+		ccol.Zone,
+		ccol.ID,
 		{Name: "Date"},
 		{Name: "SessionStatus"},
 		{Name: "ResourceID"},
@@ -50,9 +53,7 @@ type logsParameter struct {
 }
 
 func newLogsParameter() *logsParameter {
-	return &logsParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &logsParameter{}
 }
 
 func init() {

@@ -49,9 +49,7 @@ type monitorResponseTimeParameter struct {
 }
 
 func newMonitorResponseTimeParameter() *monitorResponseTimeParameter {
-	return &monitorResponseTimeParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &monitorResponseTimeParameter{}
 }
 
 func init() {

@@ -44,9 +44,7 @@ type connectSwitchParameter struct {
 }
 
 func newConnectSwitchParameter() *connectSwitchParameter {
-	return &connectSwitchParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &connectSwitchParameter{}
 }
 
 func init() {

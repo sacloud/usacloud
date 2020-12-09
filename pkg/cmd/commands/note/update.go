@@ -34,22 +34,19 @@ var updateCommand = &core.Command{
 }
 
 type updateParameter struct {
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	Name    *string   `validate:"omitempty,min=1"`
 	Tags    *[]string `validate:"omitempty,tags"`
 	IconID  *types.ID `validate:"omitempty"`
 	Content *string   `cli:",aliases=contents" validate:"omitempty"`
-
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 func newUpdateParameter() *updateParameter {
-	return &updateParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &updateParameter{}
 }
 
 func init() {

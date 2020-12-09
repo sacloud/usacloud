@@ -44,9 +44,7 @@ type bootParameter struct {
 }
 
 func newBootParameter() *bootParameter {
-	return &bootParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &bootParameter{}
 }
 
 func init() {

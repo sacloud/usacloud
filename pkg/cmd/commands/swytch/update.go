@@ -34,9 +34,11 @@ var updateCommand = &core.Command{
 }
 
 type updateParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	Name        *string   `validate:"omitempty,min=1"`
 	Description *string   `validate:"omitempty,description"`
@@ -45,15 +47,10 @@ type updateParameter struct {
 
 	NetworkMaskLen *int    `cli:"display-network-mask-len"`
 	DefaultRoute   *string `cli:"display-default-route"`
-
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 func newUpdateParameter() *updateParameter {
-	return &updateParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &updateParameter{}
 }
 
 func init() {

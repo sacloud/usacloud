@@ -15,6 +15,7 @@
 package database
 
 import (
+	"github.com/sacloud/usacloud/pkg/cmd/ccol"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -27,6 +28,8 @@ var monitorCPUCommand = &core.Command{
 	NoProgress: true,
 
 	ColumnDefs: []output.ColumnDef{
+		ccol.Zone,
+		ccol.ID,
 		{Name: "Time"},
 		{Name: "CPUTime"},
 	},
@@ -47,9 +50,7 @@ type monitorCPUParameter struct {
 }
 
 func newMonitorCPUParameter() *monitorCPUParameter {
-	return &monitorCPUParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &monitorCPUParameter{}
 }
 
 func init() {

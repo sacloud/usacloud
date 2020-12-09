@@ -41,9 +41,7 @@ type resetParameter struct {
 }
 
 func newResetParameter() *resetParameter {
-	return &resetParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &resetParameter{}
 }
 
 func init() {

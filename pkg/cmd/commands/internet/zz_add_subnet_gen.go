@@ -32,8 +32,6 @@ func (p *addSubnetParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
-	fs.IntVarP(&p.NetworkMaskLen, "network-mask-len", "", p.NetworkMaskLen, "options: [28/27/26/25/24]")
-	fs.StringVarP(&p.NextHop, "next-hop", "", p.NextHop, "")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -41,6 +39,8 @@ func (p *addSubnetParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.FormatFile, "format-file", "", p.FormatFile, "Output format in Go templates(from file)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
 	fs.StringVarP(&p.QueryFile, "query-file", "", p.QueryFile, "JMESPath query(from file)")
+	fs.IntVarP(&p.NetworkMaskLen, "network-mask-len", "", p.NetworkMaskLen, "options: [28/27/26/25/24]")
+	fs.StringVarP(&p.NextHop, "next-hop", "", p.NextHop, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 

@@ -31,8 +31,6 @@ func (p *listParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
-	fs.StringSliceVarP(&p.Names, "names", "", p.Names, "")
-	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.IntVarP(&p.Count, "count", "", p.Count, "(aliases: --max, --limit)")
 	fs.IntVarP(&p.From, "from", "", p.From, "(aliases: --offset)")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
@@ -41,6 +39,8 @@ func (p *listParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.FormatFile, "format-file", "", p.FormatFile, "Output format in Go templates(from file)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
 	fs.StringVarP(&p.QueryFile, "query-file", "", p.QueryFile, "JMESPath query(from file)")
+	fs.StringSliceVarP(&p.Names, "names", "", p.Names, "")
+	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -76,10 +76,10 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("filter", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("names"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("count"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("from"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("names"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Filter options",
 			Flags: fs,

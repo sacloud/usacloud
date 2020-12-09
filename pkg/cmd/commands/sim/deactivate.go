@@ -39,9 +39,7 @@ type deactivateParameter struct {
 }
 
 func newDeactivateParameter() *deactivateParameter {
-	return &deactivateParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &deactivateParameter{}
 }
 
 func init() {

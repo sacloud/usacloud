@@ -31,6 +31,7 @@ import (
 
 var createCommand = &core.Command{
 	Name:     "create",
+	Aliases:  []string{"build"}, // v0との互換用
 	Category: "basic",
 	Order:    20,
 

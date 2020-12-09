@@ -15,6 +15,7 @@
 package proxylb
 
 import (
+	"github.com/sacloud/usacloud/pkg/cmd/ccol"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -28,6 +29,7 @@ var monitorConnectionCommand = &core.Command{
 	NoProgress: true,
 
 	ColumnDefs: []output.ColumnDef{
+		ccol.ID,
 		{Name: "Time"},
 		{Name: "ActiveConnections"},
 		{Name: "ConnectionsPerSec"},
@@ -48,9 +50,7 @@ type monitorConnectionParameter struct {
 }
 
 func newMonitorConnectionParameter() *monitorConnectionParameter {
-	return &monitorConnectionParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &monitorConnectionParameter{}
 }
 
 func init() {

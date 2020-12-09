@@ -33,14 +33,13 @@ var deleteSubnetCommand = &core.Command{
 }
 
 type deleteSubnetParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 
 	FailIfNotFound bool
 	SubnetID       types.ID `validate:"required"`
-
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 }
 
 func newDeleteSubnetParameter() *deleteSubnetParameter {

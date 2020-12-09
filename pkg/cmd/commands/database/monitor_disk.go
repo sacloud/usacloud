@@ -15,6 +15,7 @@
 package database
 
 import (
+	"github.com/sacloud/usacloud/pkg/cmd/ccol"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -27,6 +28,8 @@ var monitorDiskCommand = &core.Command{
 	NoProgress: true,
 
 	ColumnDefs: []output.ColumnDef{
+		ccol.Zone,
+		ccol.ID,
 		{Name: "Time"},
 		{Name: "Read"},
 		{Name: "Write"},
@@ -48,9 +51,7 @@ type monitorDiskParameter struct {
 }
 
 func newMonitorDiskParameter() *monitorDiskParameter {
-	return &monitorDiskParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &monitorDiskParameter{}
 }
 
 func init() {

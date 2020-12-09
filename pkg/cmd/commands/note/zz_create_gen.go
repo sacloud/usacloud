@@ -31,11 +31,6 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
-	fs.StringVarP(&p.Name, "name", "", p.Name, "")
-	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
-	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.StringVarP(&p.Class, "class", "", p.Class, "options: [shell/yaml_cloud_config]")
-	fs.StringVarP(&p.Content, "content", "", p.Content, "(aliases: --contents, --script, --scripts)")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -43,6 +38,11 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.FormatFile, "format-file", "", p.FormatFile, "Output format in Go templates(from file)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
 	fs.StringVarP(&p.QueryFile, "query-file", "", p.QueryFile, "JMESPath query(from file)")
+	fs.StringVarP(&p.Name, "name", "", p.Name, "")
+	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
+	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
+	fs.StringVarP(&p.Class, "class", "", p.Class, "options: [shell/yaml_cloud_config]")
+	fs.StringVarP(&p.Content, "content", "", p.Content, "(aliases: --contents, --script, --scripts)")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -50,16 +50,16 @@ func (p *createParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 	switch name {
 	case "skeleton":
 		name = "generate-skeleton"
+	case "out":
+		name = "output-type"
+	case "fmt":
+		name = "format"
 	case "contents":
 		name = "content"
 	case "script":
 		name = "content"
 	case "scripts":
 		name = "content"
-	case "out":
-		name = "output-type"
-	case "fmt":
-		name = "format"
 	}
 	return pflag.NormalizedName(name)
 }

@@ -39,14 +39,11 @@ type readParameter struct {
 	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
 	cflag.CommonParameter `cli:",squash" mapconv:"-"`
-
 	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 
 func newReadParameter() *readParameter {
-	return &readParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &readParameter{}
 }
 
 func init() {

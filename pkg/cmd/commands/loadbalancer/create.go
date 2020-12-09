@@ -33,6 +33,8 @@ var createCommand = &core.Command{
 	ParameterInitializer: func() interface{} {
 		return newCreateParameter()
 	},
+
+	// TODO プランごとにIPアドレス数のバリデーションが必要
 }
 
 type createParameter struct {

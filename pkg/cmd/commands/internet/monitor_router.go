@@ -15,6 +15,7 @@
 package internet
 
 import (
+	"github.com/sacloud/usacloud/pkg/cmd/ccol"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -28,6 +29,8 @@ var monitorInterfaceCommand = &core.Command{
 	NoProgress: true,
 
 	ColumnDefs: []output.ColumnDef{
+		ccol.Zone,
+		ccol.ID,
 		{Name: "Time"},
 		{Name: "In"},
 		{Name: "Out"},
@@ -49,9 +52,7 @@ type monitorInterfaceParameter struct {
 }
 
 func newMonitorInterfaceParameter() *monitorInterfaceParameter {
-	return &monitorInterfaceParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &monitorInterfaceParameter{}
 }
 
 func init() {

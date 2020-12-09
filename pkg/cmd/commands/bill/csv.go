@@ -57,9 +57,7 @@ type csvParameter struct {
 }
 
 func newCSVParameter() *csvParameter {
-	return &csvParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &csvParameter{}
 }
 
 func init() {

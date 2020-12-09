@@ -33,13 +33,12 @@ var connectToServerCommand = &core.Command{
 }
 
 type connectToServerParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 
 	ServerID types.ID `validate:"required"`
-
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 }
 
 func newConnectToServerParameter() *connectToServerParameter {

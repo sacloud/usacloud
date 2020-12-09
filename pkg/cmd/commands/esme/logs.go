@@ -15,6 +15,7 @@
 package esme
 
 import (
+	"github.com/sacloud/usacloud/pkg/cmd/ccol"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -27,6 +28,7 @@ var logsCommand = &core.Command{
 	NoProgress: true,
 
 	ColumnDefs: []output.ColumnDef{
+		ccol.ID,
 		{Name: "MessageID"},
 		{Name: "Status"},
 		{Name: "OTP"},

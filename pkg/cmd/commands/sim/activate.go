@@ -39,9 +39,7 @@ type activateParameter struct {
 }
 
 func newActivateParameter() *activateParameter {
-	return &activateParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &activateParameter{}
 }
 
 func init() {
