@@ -26,31 +26,4 @@ var Resource = &core.Resource{
 	Name:        "server",
 	ServiceType: reflect.TypeOf(&server.Service{}),
 	Category:    core.ResourceCategoryComputing,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "power",
-			DisplayName: "Power Management Commands",
-			Order:       20,
-		},
-		{
-			Key:         "operation",
-			DisplayName: "Operation Commands",
-			Order:       30,
-		},
-		{
-			Key:         "monitor",
-			DisplayName: "Monitoring Commands",
-			Order:       50,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

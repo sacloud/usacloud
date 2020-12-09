@@ -25,21 +25,4 @@ var Resource = &core.Resource{
 	Name:        "archive",
 	ServiceType: reflect.TypeOf(&archive.Service{}),
 	Category:    core.ResourceCategoryStorage,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "operation",
-			DisplayName: "Archive Operation Commands",
-			Order:       20,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

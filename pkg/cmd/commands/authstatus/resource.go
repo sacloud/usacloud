@@ -26,11 +26,4 @@ var Resource = &core.Resource{
 	ServiceType:        reflect.TypeOf(&authstatus.Service{}),
 	DefaultCommandName: "read",
 	Category:           core.ResourceCategoryAuth,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basics",
-			DisplayName: "Basics",
-			Order:       10,
-		},
-	},
 }

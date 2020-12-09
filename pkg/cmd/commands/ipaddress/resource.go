@@ -26,16 +26,4 @@ var Resource = &core.Resource{
 	Aliases:     []string{"ip-address"},
 	ServiceType: reflect.TypeOf(&ipaddress.Service{}),
 	Category:    core.ResourceCategoryNetworking,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

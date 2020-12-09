@@ -25,26 +25,4 @@ var Resource = &core.Resource{
 	Name:        "disk",
 	ServiceType: reflect.TypeOf(&disk.Service{}),
 	Category:    core.ResourceCategoryStorage,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "operation",
-			DisplayName: "Disk Operation Commands",
-			Order:       20,
-		},
-		{
-			Key:         "monitor",
-			DisplayName: "Monitoring Commands",
-			Order:       30,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

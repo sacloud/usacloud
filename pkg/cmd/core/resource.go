@@ -28,7 +28,6 @@ type Resource struct {
 	Name               string
 	Aliases            []string
 	Usage              string
-	CommandCategories  []Category
 	DefaultCommandName string
 	Category           Category
 	Warning            string
@@ -132,7 +131,7 @@ func (r *Resource) AddCommand(command *Command) {
 }
 
 func (r *Resource) commandCategory(key string) *Category {
-	for _, c := range r.CommandCategories {
+	for _, c := range CommandCategories {
 		if c.Key == key {
 			return &c
 		}

@@ -26,31 +26,4 @@ var Resource = &core.Resource{
 	Aliases:     []string{"router"},
 	ServiceType: reflect.TypeOf(&internet.Service{}),
 	Category:    core.ResourceCategoryNetworking,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "subnet",
-			DisplayName: "Subnet Operation Commands",
-			Order:       20,
-		},
-		{
-			Key:         "ipv6",
-			DisplayName: "IPv6 Operation Commands",
-			Order:       30,
-		},
-		{
-			Key:         "monitor",
-			DisplayName: "Monitoring Commands",
-			Order:       50,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

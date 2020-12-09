@@ -26,21 +26,4 @@ var Resource = &core.Resource{
 	ServiceType:      reflect.TypeOf(&localrouter.Service{}),
 	Category:         core.ResourceCategoryNetworking,
 	IsGlobalResource: true,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "monitor",
-			DisplayName: "Monitoring Commands",
-			Order:       50,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

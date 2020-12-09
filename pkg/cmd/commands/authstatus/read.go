@@ -22,7 +22,7 @@ import (
 var readCommand = &core.Command{
 	Name:       "read",
 	Aliases:    []string{"show"},
-	Category:   "basics",
+	Category:   "basic",
 	Order:      10,
 	NoProgress: true,
 

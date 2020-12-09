@@ -25,11 +25,4 @@ var Resource = &core.Resource{
 	Category:           core.ResourceCategoryConfig,
 	IsGlobalResource:   true,
 	SkipLoadingProfile: true,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-	},
 }
