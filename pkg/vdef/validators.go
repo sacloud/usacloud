@@ -33,7 +33,7 @@ var validatorAliases = map[string]string{
 
 func ValidatorAliases(zones []string) map[string]string {
 	aliases := validatorAliases
-	aliases["zone"] = fmt.Sprintf("required,oneof=all %s", joinWithSpace(zones))
+	aliases["zone"] = fmt.Sprintf("oneof=all %s", joinWithSpace(zones))
 	return aliases
 }
 

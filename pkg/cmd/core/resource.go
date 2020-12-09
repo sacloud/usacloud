@@ -72,7 +72,7 @@ func (r *Resource) runDefaultCmd(cmd *cobra.Command, currentArgs []string) error
 	args := append([]string{r.Name, r.DefaultCommandName}, currentArgs...)
 	cmd.Flags().VisitAll(func(f *pflag.Flag) {
 		if f.Changed {
-			args = append(args, fmt.Sprintf("--%s", f.Name), f.Value.String())
+			args = append(args, fmt.Sprintf("--%s=%s", f.Name, f.Value.String()))
 		}
 	})
 
