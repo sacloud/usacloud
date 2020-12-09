@@ -178,7 +178,6 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(p.TrafficConfig.SlackNotifyEnabled, "traffic-config-slack-notify-enabled", "", false, "")
 	fs.StringVarP(p.TrafficConfig.SlackNotifyWebhooksURL, "traffic-config-slack-notify-webhooks-url", "", "", "")
 	fs.BoolVarP(p.TrafficConfig.AutoTrafficShaping, "traffic-config-auto-traffic-shaping", "", false, "")
-	fs.StringVarP(&p.SettingsHash, "settings-hash", "", p.SettingsHash, "")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -221,7 +220,6 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("traffic-config-slack-notify-enabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("traffic-config-slack-notify-webhooks-url"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("traffic-config-auto-traffic-shaping"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("settings-hash"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Mobile-Gateway options",

@@ -123,7 +123,6 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(p.BackupWeekdays, "backup-weekdays", "", nil, "options: [all/sun/mon/tue/wed/thu/fri/sat]")
 	fs.IntVarP(p.BackupStartTimeHour, "backup-start-time-hour", "", 0, "")
 	fs.IntVarP(p.BackupStartTimeMinute, "backup-start-time-minute", "", 0, "")
-	fs.StringVarP(&p.SettingsHash, "settings-hash", "", p.SettingsHash, "")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -158,7 +157,6 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("backup-weekdays"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("backup-start-time-hour"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("backup-start-time-minute"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("settings-hash"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Database options",

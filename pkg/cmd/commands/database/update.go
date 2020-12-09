@@ -54,8 +54,7 @@ type updateParameter struct {
 	BackupStartTimeHour   *int      `request:",omitempty" validate:"omitempty,min=0,max=23"`
 	BackupStartTimeMinute *int      `request:",omitempty" validate:"omitempty,oneof=0 15 30 45"`
 
-	SettingsHash string
-	NoWait       bool
+	NoWait bool
 }
 
 func newUpdateParameter() *updateParameter {

@@ -128,7 +128,6 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(p.Weighted, "weighted", "", false, "")
 	fs.StringVarP(p.SorryServer, "sorry-server", "", "", "")
 	fs.StringVarP(p.ServersData, "servers", "", "", "")
-	fs.StringVarP(&p.SettingsHash, "settings-hash", "", p.SettingsHash, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -162,7 +161,6 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("weighted"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("sorry-server"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("servers"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("settings-hash"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Gslb options",
 			Flags: fs,

@@ -52,8 +52,6 @@ type updateParameter struct {
 	NotifySlackEnabled *string
 	SlackWebhooksURL   *string
 	NotifyInterval     *int `validate:"omitempty,min=3600,max=259200"`
-
-	SettingsHash string
 }
 
 type updateParameterHealthCheck struct {

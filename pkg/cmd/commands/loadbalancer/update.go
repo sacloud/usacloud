@@ -50,7 +50,6 @@ type updateParameter struct {
 
 	VirtualIPAddressesData *string                                 `cli:"virtual-ip-addresses" mapconv:"-"`
 	VirtualIPAddresses     *sacloud.LoadBalancerVirtualIPAddresses `cli:"-"`
-	SettingsHash           string
 	NoWait                 bool
 }
 

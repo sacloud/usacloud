@@ -61,8 +61,6 @@ type updateParameter struct {
 
 	ServersData        *string              `cli:"servers" mapconv:"-"`
 	DestinationServers *sacloud.GSLBServers `cli:"-"`
-
-	SettingsHash string
 }
 
 func newUpdateParameter() *updateParameter {

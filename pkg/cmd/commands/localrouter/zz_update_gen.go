@@ -128,7 +128,6 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.IntVarP(p.Interface.VRID, "vrid", "", 0, "")
 	fs.StringVarP(p.PeersData, "peers", "", "", "")
 	fs.StringVarP(p.StaticRoutesData, "static-routes", "", "", "")
-	fs.StringVarP(&p.SettingsHash, "settings-hash", "", p.SettingsHash, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -162,7 +161,6 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("vrid"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("peers"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("static-routes"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("settings-hash"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Local-Router options",
 			Flags: fs,

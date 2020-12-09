@@ -206,7 +206,6 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.NotifySlackEnabled, "notify-slack-enabled", "", "", "")
 	fs.StringVarP(p.SlackWebhooksURL, "slack-webhooks-url", "", "", "")
 	fs.IntVarP(p.NotifyInterval, "notify-interval", "", 0, "")
-	fs.StringVarP(&p.SettingsHash, "settings-hash", "", p.SettingsHash, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -251,7 +250,6 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("notify-slack-enabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("slack-webhooks-url"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("notify-interval"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("settings-hash"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Simple-Monitor options",
 			Flags: fs,
