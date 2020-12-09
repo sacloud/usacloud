@@ -18,6 +18,7 @@ package internet
 
 import (
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -42,8 +43,8 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.IntVarP(&p.NetworkMaskLen, "network-mask-len", "", p.NetworkMaskLen, "")
-	fs.IntVarP(&p.BandWidthMbps, "band-width", "", p.BandWidthMbps, "(aliases: --band-width-mbps)")
+	fs.IntVarP(&p.NetworkMaskLen, "network-mask-len", "", p.NetworkMaskLen, "options: [28/27/26/25/24]")
+	fs.IntVarP(&p.BandWidthMbps, "band-width", "", p.BandWidthMbps, "options: [100/250/500/1000/1500/2000/2500/3000/5000] (aliases: --band-width-mbps)")
 	fs.BoolVarP(&p.EnableIPv6, "enable-ipv6", "", p.EnableIPv6, "")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.IntVarP(&p.NotFoundRetry, "not-found-retry", "", p.NotFoundRetry, "")
@@ -114,6 +115,8 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
+	cmd.RegisterFlagCompletionFunc("network-mask-len", util.FlagCompletionFunc("28", "27", "26", "25", "24"))
+	cmd.RegisterFlagCompletionFunc("band-width", util.FlagCompletionFunc("100", "250", "500", "1000", "1500", "2000", "2500", "3000", "5000"))
 
 }
 

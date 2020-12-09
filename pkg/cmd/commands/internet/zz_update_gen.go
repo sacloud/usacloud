@@ -20,6 +20,7 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -78,7 +79,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.Description, "description", "", "", "")
 	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
-	fs.IntVarP(p.BandWidthMbps, "band-width", "", 0, "(aliases: --band-width-mbps)")
+	fs.IntVarP(p.BandWidthMbps, "band-width", "", 0, "options: [100/250/500/1000/1500/2000/2500/3000/5000] (aliases: --band-width-mbps)")
 	fs.BoolVarP(p.EnableIPv6, "enable-ipv6", "", false, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -144,6 +145,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *updateParameter) setCompletionFunc(cmd *cobra.Command) {
+	cmd.RegisterFlagCompletionFunc("band-width", util.FlagCompletionFunc("100", "250", "500", "1000", "1500", "2000", "2500", "3000", "5000"))
 
 }
 

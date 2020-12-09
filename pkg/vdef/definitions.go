@@ -253,6 +253,8 @@ func registerCLITagOptions() {
 				allows = append(allows, s)
 			case fmt.Stringer:
 				allows = append(allows, s.String())
+			default:
+				allows = append(allows, fmt.Sprintf("%v", s))
 			}
 		}
 		FlagOptionsMap[name] = allows
