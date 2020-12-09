@@ -42,9 +42,7 @@ type listSubnetParameter struct {
 }
 
 func newListSubnetParameter() *listSubnetParameter {
-	return &listSubnetParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &listSubnetParameter{}
 }
 
 func init() {

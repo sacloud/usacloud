@@ -33,7 +33,9 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	Name string `validate:"required"`
 
@@ -41,9 +43,6 @@ type createParameter struct {
 	IconID  types.ID
 	Class   string `cli:",options=note_class" validate:"required,note_class"`
 	Content string `cli:",aliases=contents script scripts" validate:"required" mapconv:",filters=path_or_content"`
-
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 func newCreateParameter() *createParameter {

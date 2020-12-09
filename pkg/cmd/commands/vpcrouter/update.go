@@ -60,9 +60,7 @@ type updateParameter struct {
 }
 
 func newUpdateParameter() *updateParameter {
-	return &updateParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &updateParameter{}
 }
 
 func init() {

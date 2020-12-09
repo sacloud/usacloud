@@ -38,9 +38,7 @@ type renewLetsEncryptCertParameter struct {
 }
 
 func newRenewLetsEncryptCertParameter() *renewLetsEncryptCertParameter {
-	return &renewLetsEncryptCertParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &renewLetsEncryptCertParameter{}
 }
 
 func init() {

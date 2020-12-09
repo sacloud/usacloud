@@ -47,9 +47,7 @@ type listParameter struct {
 }
 
 func newListParameter() *listParameter {
-	return &listParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &listParameter{}
 }
 
 func init() {

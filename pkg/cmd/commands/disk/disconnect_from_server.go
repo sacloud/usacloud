@@ -32,10 +32,9 @@ var disconnectFromServerCommand = &core.Command{
 }
 
 type disconnectFromServerParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
-
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 }
 

@@ -29,6 +29,7 @@ var enableIPv6Command = &core.Command{
 	SelectorType: core.SelectorTypeRequireMulti,
 
 	ColumnDefs: []output.ColumnDef{
+		ccol.Zone,
 		ccol.ID,
 		{Name: "IPAddresses", Template: "{{.IPv6Prefix}}/{{.IPv6PrefixLen}}"},
 	},
@@ -39,10 +40,9 @@ var enableIPv6Command = &core.Command{
 }
 
 type enableIPv6Parameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
-
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }

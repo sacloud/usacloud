@@ -44,9 +44,7 @@ type editParameter struct {
 }
 
 func newEditParameter() *editParameter {
-	return &editParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &editParameter{}
 }
 
 func init() {

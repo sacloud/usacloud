@@ -41,9 +41,7 @@ type disconnectSwitchParameter struct {
 }
 
 func newDisconnectSwitchParameter() *disconnectSwitchParameter {
-	return &disconnectSwitchParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &disconnectSwitchParameter{}
 }
 
 func init() {

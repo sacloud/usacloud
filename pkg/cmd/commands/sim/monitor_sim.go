@@ -15,6 +15,7 @@
 package sim
 
 import (
+	"github.com/sacloud/usacloud/pkg/cmd/ccol"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -28,6 +29,7 @@ var monitorSIMCommand = &core.Command{
 	NoProgress: true,
 
 	ColumnDefs: []output.ColumnDef{
+		ccol.ID,
 		{Name: "Time"},
 		{Name: "UplinkBPS"},
 		{Name: "DownlinkBPS"},
@@ -48,9 +50,7 @@ type monitorSIMParameter struct {
 }
 
 func newMonitorSIMParameter() *monitorSIMParameter {
-	return &monitorSIMParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &monitorSIMParameter{}
 }
 
 func init() {

@@ -33,8 +33,10 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	Name        string   `validate:"required"`
 	Description string   `validate:"description"`
@@ -44,9 +46,6 @@ type createParameter struct {
 	DiskID           types.ID `validate:"required"`
 	Weekdays         []string `cli:",options=weekdays" mapconv:"BackupSpanWeekdays,omitempty,filters=weekdays" validate:"required,weekdays"`
 	MaxNumOfArchives int      `mapconv:"MaximumNumberOfArchives" validate:"required,min=1,max=10"`
-
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 func newCreateParameter() *createParameter {

@@ -15,6 +15,7 @@
 package loadbalancer
 
 import (
+	"github.com/sacloud/usacloud/pkg/cmd/ccol"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -28,6 +29,8 @@ var monitorInterfaceCommand = &core.Command{
 	NoProgress: true,
 
 	ColumnDefs: []output.ColumnDef{
+		ccol.Zone,
+		ccol.ID,
 		{Name: "Time"},
 		{Name: "Send"},
 		{Name: "Receive"},

@@ -39,9 +39,7 @@ type readParameter struct {
 }
 
 func newReadParameter() *readParameter {
-	return &readParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &readParameter{}
 }
 
 func init() {

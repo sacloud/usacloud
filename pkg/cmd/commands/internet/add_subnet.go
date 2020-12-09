@@ -34,15 +34,14 @@ var addSubnetCommand = &core.Command{
 }
 
 type addSubnetParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	NetworkMaskLen int    `cli:",options=internet_network_mask_len" validate:"required,internet_network_mask_len"`
 	NextHop        string `validate:"required,ipv4"`
-
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 func newAddSubnetParameter() *addSubnetParameter {

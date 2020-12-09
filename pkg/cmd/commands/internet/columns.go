@@ -31,6 +31,7 @@ var defaultColumnDefs = []output.ColumnDef{
 }
 
 var subnetColumnDefs = []output.ColumnDef{
+	ccol.Zone,
 	ccol.ID,
 	{Name: "SwitchID"},
 	{Name: "InternetID"},

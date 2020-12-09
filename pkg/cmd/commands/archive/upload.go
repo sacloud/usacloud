@@ -31,13 +31,12 @@ var uploadCommand = &core.Command{
 }
 
 type uploadParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 
 	SourceFile string `mapconv:"Reader,filters=path_to_reader" validate:"omitempty,file"`
-
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 }
 
 func newUploadParameter() *uploadParameter {

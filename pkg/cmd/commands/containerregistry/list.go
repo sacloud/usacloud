@@ -36,18 +36,15 @@ var listCommand = &core.Command{
 
 type listParameter struct {
 	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.FindParameter   `cli:",squash" mapconv:",squash"`
+	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 
 	Names []string `cli:",category=filter" validate:"omitempty"`
 	Tags  []string `cli:",category=filter" validate:"omitempty"`
-
-	cflag.FindParameter   `cli:",squash" mapconv:",squash"`
-	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 
 func newListParameter() *listParameter {
-	return &listParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &listParameter{}
 }
 
 func init() {

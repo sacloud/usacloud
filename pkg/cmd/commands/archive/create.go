@@ -36,8 +36,10 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	Name        string   `validate:"required"`
 	Description string   `validate:"description"`
@@ -50,9 +52,6 @@ type createParameter struct {
 	SourceArchiveID types.ID
 
 	NoWait bool
-
-	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }
 
 func validateCreateParameter(ctx cli.Context, parameter interface{}) error {

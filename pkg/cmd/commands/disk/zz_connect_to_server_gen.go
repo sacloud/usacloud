@@ -31,8 +31,8 @@ func (p *connectToServerParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
-	fs.VarP(core.NewIDFlag(&p.ServerID, &p.ServerID), "server-id", "", "")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
+	fs.VarP(core.NewIDFlag(&p.ServerID, &p.ServerID), "server-id", "", "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
