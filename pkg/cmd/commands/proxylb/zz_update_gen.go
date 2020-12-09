@@ -82,9 +82,6 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("rules") {
 		p.RulesData = nil
 	}
-	if !fs.Changed("settings-hash") {
-		p.SettingsHash = nil
-	}
 }
 
 func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
@@ -145,9 +142,6 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.RulesData == nil {
 		p.RulesData = pointer.NewString("")
 	}
-	if p.SettingsHash == nil {
-		p.SettingsHash = pointer.NewString("")
-	}
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
@@ -176,7 +170,6 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.BindPortsData, "bind-ports", "", "", "")
 	fs.StringVarP(p.ServersData, "servers", "", "", "")
 	fs.StringVarP(p.RulesData, "rules", "", "", "")
-	fs.StringVarP(p.SettingsHash, "settings-hash", "", "", "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -218,7 +211,6 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("bind-ports"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("servers"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("rules"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("settings-hash"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Proxy-Lb options",
 			Flags: fs,

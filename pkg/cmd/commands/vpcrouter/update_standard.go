@@ -53,8 +53,7 @@ type updateStandardParameter struct {
 
 	RouterSetting routerSettingUpdate `cli:",squash" mapconv:",omitempty,recursive"`
 
-	SettingsHash string
-	NoWait       bool
+	NoWait bool
 }
 
 func newUpdateStandardParameter() *updateStandardParameter {

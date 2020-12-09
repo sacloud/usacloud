@@ -61,9 +61,8 @@ type updateParameter struct {
 	ServersData *string                   `cli:"servers" mapconv:"-"`
 	Servers     *[]*sacloud.ProxyLBServer `cli:"-"`
 
-	RulesData    *string                 `cli:"rules" mapconv:"-"`
-	Rules        *[]*sacloud.ProxyLBRule `cli:"-"`
-	SettingsHash *string
+	RulesData *string                 `cli:"rules" mapconv:"-"`
+	Rules     *[]*sacloud.ProxyLBRule `cli:"-"`
 }
 
 func newUpdateParameter() *updateParameter {

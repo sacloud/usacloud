@@ -66,8 +66,7 @@ type updateParameter struct {
 	DNS           mobilegateway.DNSSettingUpdate    `cli:",squash" mapconv:",omitempty"`
 	TrafficConfig mobilegateway.TrafficConfigUpdate `mapconv:",omitempty"`
 
-	SettingsHash string
-	NoWait       bool
+	NoWait bool
 }
 
 func newUpdateParameter() *updateParameter {

@@ -124,7 +124,6 @@ func (p *updateStandardParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.RouterSetting.SiteToSiteIPsecVPNData, "site-to-site-vpn", "", p.RouterSetting.SiteToSiteIPsecVPNData, "")
 	fs.StringVarP(&p.RouterSetting.StaticRouteData, "static-route", "", p.RouterSetting.StaticRouteData, "")
 	fs.StringVarP(p.RouterSetting.SyslogHost, "syslog-host", "", "", "")
-	fs.StringVarP(&p.SettingsHash, "settings-hash", "", p.SettingsHash, "")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -167,7 +166,6 @@ func (p *updateStandardParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("site-to-site-vpn"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("static-route"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("syslog-host"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("settings-hash"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Vpc-Router options",

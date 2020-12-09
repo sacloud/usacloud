@@ -65,8 +65,6 @@ type updateParameter struct {
 
 	StaticRoutesData *string                            `cli:"static-routes" mapconv:"-"`
 	StaticRoutes     *[]*sacloud.LocalRouterStaticRoute `cli:"-"`
-
-	SettingsHash string
 }
 
 func newUpdateParameter() *updateParameter {
