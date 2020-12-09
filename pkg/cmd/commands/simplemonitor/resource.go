@@ -27,21 +27,4 @@ var Resource = &core.Resource{
 	ServiceType:      reflect.TypeOf(&simplemonitor.Service{}),
 	Category:         core.ResourceCategoryCommonServiceItem,
 	IsGlobalResource: true,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "monitor",
-			DisplayName: "Monitoring Commands",
-			Order:       50,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

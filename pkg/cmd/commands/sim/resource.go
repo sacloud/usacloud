@@ -26,26 +26,4 @@ var Resource = &core.Resource{
 	ServiceType:      reflect.TypeOf(&sim.Service{}),
 	Category:         core.ResourceCategorySecureMobile,
 	IsGlobalResource: true,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "operation",
-			DisplayName: "Operation Commands",
-			Order:       20,
-		},
-		{
-			Key:         "monitor",
-			DisplayName: "Monitoring Commands",
-			Order:       50,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

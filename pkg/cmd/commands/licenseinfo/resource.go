@@ -27,16 +27,4 @@ var Resource = &core.Resource{
 	ServiceType:      reflect.TypeOf(&licenseinfo.Service{}),
 	IsGlobalResource: true,
 	Category:         core.ResourceCategoryInformation,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

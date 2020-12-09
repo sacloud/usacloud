@@ -25,16 +25,4 @@ var Resource = &core.Resource{
 	Name:        "ipv6addr",
 	ServiceType: reflect.TypeOf(&ipv6addr.Service{}),
 	Category:    core.ResourceCategoryNetworking,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

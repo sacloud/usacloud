@@ -25,31 +25,4 @@ var Resource = &core.Resource{
 	Name:        "database",
 	ServiceType: reflect.TypeOf(&database.Service{}),
 	Category:    core.ResourceCategoryAppliance,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "power",
-			DisplayName: "Power Management Commands",
-			Order:       20,
-		},
-		{
-			Key:         "backup",
-			DisplayName: "Backup Operation Commands",
-			Order:       30,
-		},
-		{
-			Key:         "monitor",
-			DisplayName: "Monitoring Commands",
-			Order:       50,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

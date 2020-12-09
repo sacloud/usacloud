@@ -26,21 +26,4 @@ var Resource = &core.Resource{
 	Aliases:     []string{"privatehost"},
 	ServiceType: reflect.TypeOf(&privatehost.Service{}),
 	Category:    core.ResourceCategoryComputing,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "operation",
-			DisplayName: "Operation Commands",
-			Order:       20,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

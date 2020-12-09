@@ -25,16 +25,4 @@ var Resource = &core.Resource{
 	Name:        "subnet",
 	ServiceType: reflect.TypeOf(&subnet.Service{}),
 	Category:    core.ResourceCategoryNetworking,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

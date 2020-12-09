@@ -26,21 +26,4 @@ var Resource = &core.Resource{
 	ServiceType:      reflect.TypeOf(&esme.Service{}),
 	Category:         core.ResourceCategoryLab,
 	IsGlobalResource: true,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "operation",
-			DisplayName: "Operation Commands",
-			Order:       20,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

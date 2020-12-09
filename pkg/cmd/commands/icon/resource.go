@@ -26,16 +26,4 @@ var Resource = &core.Resource{
 	ServiceType:      reflect.TypeOf(&icon.Service{}),
 	Category:         core.ResourceCategoryOther,
 	IsGlobalResource: true,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }

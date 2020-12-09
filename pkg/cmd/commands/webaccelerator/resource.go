@@ -25,28 +25,6 @@ var Resource = &core.Resource{
 	Aliases:          []string{"web-accel", "webaccel"},
 	IsGlobalResource: true,
 	Category:         core.ResourceCategoryOther,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "certificate",
-			DisplayName: "Certificate Management Commands",
-			Order:       20,
-		},
-		{
-			Key:         "cache",
-			DisplayName: "Cache Management Commands",
-			Order:       30,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
 }
 
 func listAllFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
