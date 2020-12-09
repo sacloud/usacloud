@@ -149,6 +149,7 @@ func (c *Command) CLICommand() *cobra.Command {
 	if c, ok := c.currentParameter.(FlagInitializer); ok {
 		c.SetupCobraCommandFlags(cmd)
 	}
+
 	return cmd
 }
 

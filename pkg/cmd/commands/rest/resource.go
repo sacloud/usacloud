@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cflag
+package rest
 
-type ZoneParameter struct {
-	Zone string `validate:"required,zone"`
-}
+import (
+	"github.com/sacloud/usacloud/pkg/cmd/core"
+)
 
-func (p *ZoneParameter) ZoneFlagValue() string {
-	return p.Zone
-}
-
-func (p *ZoneParameter) SetZoneFlagValue(zone string) {
-	p.Zone = zone
+var Resource = &core.Resource{
+	Name:               "rest",
+	Category:           core.ResourceCategoryOther,
+	IsGlobalResource:   true,
+	DefaultCommandName: "request",
 }

@@ -129,6 +129,16 @@ var definitions = map[string][]*definition{
 		{key: types.ProxyLBRegions.IS1.String(), value: types.ProxyLBRegions.IS1},
 		{key: types.ProxyLBRegions.Anycast.String(), value: types.ProxyLBRegions.Anycast},
 	},
+	"rest_method": {
+		{key: "get", value: "get"},
+		{key: "post", value: "post"},
+		{key: "put", value: "put"},
+		{key: "delete", value: "delete"},
+		{key: "GET", value: "get"},
+		{key: "POST", value: "post"},
+		{key: "PUT", value: "put"},
+		{key: "DELETE", value: "delete"},
+	},
 	"scope": {
 		{key: types.Scopes.User.String(), value: types.Scopes.User},
 		{key: types.Scopes.Shared.String(), value: types.Scopes.Shared},
