@@ -20,6 +20,7 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/sacloud/usacloud/pkg/naming"
+	"github.com/sacloud/usacloud/tools/clitag"
 )
 
 var validate = validator.New()
@@ -34,7 +35,7 @@ func Exec(parameter interface{}) error {
 
 		var errs []error
 		for _, err := range err.(validator.ValidationErrors) {
-			errs = append(errs, errorFromValidationErr(err))
+			errs = append(errs, errorFromValidationErr(parameter, err))
 		}
 		return NewValidationError(errs...)
 	}
@@ -57,8 +58,8 @@ func NewFlagError(flagName, message string) error {
 	return fmt.Errorf("%s: %s", flagName, message)
 }
 
-func errorFromValidationErr(err validator.FieldError) error {
-	flagName := naming.ToCLIFlag(err.StructField())
+func errorFromValidationErr(parameter interface{}, err validator.FieldError) error {
+	flagName := flagName(parameter, err)
 	param := err.Param()
 	detail := err.ActualTag()
 	if param != "" {
@@ -72,4 +73,20 @@ func errorFromValidationErr(err validator.FieldError) error {
 	}
 
 	return NewFlagError(flagName, detail)
+}
+
+func flagName(parameter interface{}, fieldErr validator.FieldError) string {
+	fields, err := clitag.Parse(parameter)
+	if err != nil {
+		panic(err) // 基本的にコード生成時にclitag.Parseを呼び出し済みなため発生し得ない
+	}
+	namespaces := strings.Split(fieldErr.StructNamespace(), ".")
+	errFieldName := strings.Join(namespaces[1:], ".") // .で区切った先頭を除いたもの
+
+	for _, f := range fields {
+		if f.FieldName == errFieldName {
+			return naming.ToCLIFlag(f.FlagName)
+		}
+	}
+	return naming.ToCLIFlag(fieldErr.StructField())
 }
