@@ -14,16 +14,7 @@
 
 package cflag
 
-// CommonParameter 全コマンド共通フィールド
-type CommonParameter struct {
-	Parameters       string `cli:",category=input,desc=Input parameters in JSON format" json:"-"`
-	GenerateSkeleton bool   `cli:",category=input,aliases=skeleton,desc=Output skeleton of parameters with JSON format" json:"-"`
-}
-
-func (p *CommonParameter) ParametersFlagValue() string {
-	return p.Parameters
-}
-
-func (p *CommonParameter) GenerateSkeletonFlagValue() bool {
-	return p.GenerateSkeleton
+type LimitOffsetParameter struct {
+	Count int `cli:",aliases=max limit,category=limit-offset"`
+	From  int `cli:",aliases=offset,category=limit-offset"`
 }

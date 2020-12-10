@@ -46,7 +46,7 @@ var deleteCacheCommand = &core.Command{
 type deleteCacheParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	URLs []string `cli:"url" validate:"required"`

@@ -22,24 +22,24 @@ import (
 )
 
 type EditRequest struct {
-	HostName string
-	Password string
+	HostName string `cli:",category=diskedit,order=10"`
+	Password string `cli:",category=diskedit,order=20"`
 
-	DisablePWAuth       bool
-	EnableDHCP          bool
-	ChangePartitionUUID bool
+	IPAddress      string `cli:",category=diskedit,order=30"`
+	NetworkMaskLen int    `cli:",category=diskedit,order=31"`
+	DefaultRoute   string `cli:",category=diskedit,order=32"`
 
-	IPAddress      string
-	NetworkMaskLen int
-	DefaultRoute   string
+	DisablePWAuth       bool `cli:",category=diskedit,order=40"`
+	EnableDHCP          bool `cli:",category=diskedit,order=50"`
+	ChangePartitionUUID bool `cli:",category=diskedit,order=60"`
 
-	SSHKeys            []string   `cli:"ssh-keys"`
-	SSHKeyIDs          []types.ID `cli:"ssh-key-ids"`
-	IsSSHKeysEphemeral bool       `cli:"make-ssh-keys-ephemeral"`
+	SSHKeys            []string   `cli:"ssh-keys,category=diskedit,order=70"`
+	SSHKeyIDs          []types.ID `cli:"ssh-key-ids,category=diskedit,order=71"`
+	IsSSHKeysEphemeral bool       `cli:"make-ssh-keys-ephemeral,category=diskedit,order=72"`
 
-	NoteIDs          []types.ID              `cli:"note-ids" mapconv:"-"`
-	NotesData        string                  `cli:"notes" mapconv:"-"`
-	IsNotesEphemeral bool                    `cli:"make-notes-ephemeral"`
+	NoteIDs          []types.ID              `cli:"note-ids,category=diskedit,order=80" mapconv:"-"`
+	NotesData        string                  `cli:"notes,category=diskedit,order=81" mapconv:"-"`
+	IsNotesEphemeral bool                    `cli:"make-notes-ephemeral,category=diskedit,order=82"`
 	Notes            []*sacloud.DiskEditNote `cli:"-"` // --parametersでファイルからパラメータ指定する場合向け
 }
 

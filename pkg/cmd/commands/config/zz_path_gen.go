@@ -41,9 +41,10 @@ func (p *pathParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("config", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("name"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Config options",
+			Title: "Config-specific options",
 			Flags: fs,
 		})
 	}

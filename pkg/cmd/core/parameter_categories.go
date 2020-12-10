@@ -16,60 +16,70 @@ package core
 
 import "math"
 
-var DefaultResourceCategory = &Category{
-	Key:         "default",
-	DisplayName: "",
-	Order:       math.MaxInt32,
-}
-
-var DefaultCommandCategory = &Category{
-	Key:         "default",
-	DisplayName: "",
-	Order:       math.MaxInt32,
-}
-
-var ParameterCategoryFilter = &Category{
-	Key:         "filter",
-	DisplayName: "Filter options",
-	Order:       math.MaxInt32 - 70,
-}
-var ParameterCategoryLimitOffset = &Category{
-	Key:         "limit-offset",
-	DisplayName: "Limit/Offset options",
-	Order:       math.MaxInt32 - 60,
-}
-var ParameterCategorySort = &Category{
-	Key:         "sort",
-	DisplayName: "Sort options",
-	Order:       math.MaxInt32 - 50,
-}
-
-var ParameterCategoryMonitor = &Category{
-	Key:         "monitor",
-	DisplayName: "Monitor options",
-	Order:       math.MaxInt32 - 40,
-}
-
-var ParameterCategoryCommon = &Category{
-	Key:         "common",
-	DisplayName: "Common options",
-	Order:       math.MaxInt32 - 30,
-}
-
-var ParameterCategoryInput = &Category{
-	Key:         "Input",
-	DisplayName: "Input options",
-	Order:       math.MaxInt32 - 20,
-}
-
-var ParameterCategoryOutput = &Category{
-	Key:         "output",
-	DisplayName: "Output options",
-	Order:       math.MaxInt32 - 10,
-}
-
-var ParameterCategoryDefault = &Category{
-	Key:         "default",
-	DisplayName: "Other options",
-	Order:       math.MaxInt32,
+var ParameterCategories = []*Category{
+	{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       50,
+	},
+	{
+		Key:         "plan",
+		DisplayName: "Plan options",
+		Order:       60,
+	},
+	{
+		Key:         "diskedit",
+		DisplayName: "Edit disk options",
+		Order:       200,
+	},
+	{
+		Key:         "network",
+		DisplayName: "Network options",
+		Order:       200,
+	},
+	{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       math.MaxInt32 - 60,
+	},
+	{
+		Key:         "limit-offset",
+		DisplayName: "Limit/Offset options",
+		Order:       math.MaxInt32 - 50,
+	},
+	{
+		Key:         "sort",
+		DisplayName: "Sort options",
+		Order:       math.MaxInt32 - 40,
+	},
+	{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       math.MaxInt32 - 30,
+	},
+	{
+		Key:         "zone",
+		DisplayName: "Zone options",
+		Order:       math.MaxInt32 - 20,
+	},
+	{
+		Key:         "wait",
+		DisplayName: "Wait options",
+		Order:       math.MaxInt32 - 15,
+	},
+	{
+		Key:         "input",
+		DisplayName: "Input options",
+		Order:       math.MaxInt32 - 10,
+	},
+	{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       math.MaxInt32 - 5,
+	},
+	{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       math.MaxInt32,
+	},
 }

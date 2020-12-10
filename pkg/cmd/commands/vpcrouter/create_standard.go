@@ -16,7 +16,6 @@ package vpcrouter
 
 import (
 	"github.com/sacloud/libsacloud/v2/helper/service/vpcrouter"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -37,14 +36,14 @@ var createStandardCommand = &core.Command{
 
 type createStandardParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name        string   `validate:"required"`
-	Description string   `validate:"description"`
-	Tags        []string `validate:"tags"`
-	IconID      types.ID
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
 	PrivateNetworkInterfacesData string                                    `cli:"private-network-interfaces" mapconv:"-"`
 	PrivateNetworkInterfaces     []*vpcrouter.AdditionalStandardNICSetting `cli:"-" mapconv:"AdditionalNICSettings"`
@@ -52,7 +51,7 @@ type createStandardParameter struct {
 	RouterSetting routerSetting `cli:",squash" mapconv:",omitempty"`
 
 	BootAfterCreateStandard bool
-	NoWait                  bool
+	cflag.NoWaitParameter   `cli:",squash" mapconv:",squash"`
 }
 
 func newCreateStandardParameter() *createStandardParameter {

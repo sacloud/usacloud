@@ -46,7 +46,7 @@ var monitorInterfaceCommand = &core.Command{
 type monitorInterfaceParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.MonitorParameter `cli:",squash" mapconv:",squash"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 	Index                  int

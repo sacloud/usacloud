@@ -150,6 +150,8 @@ func (c *Command) CLICommand() *cobra.Command {
 		c.SetupCobraCommandFlags(cmd)
 	}
 
+	cmd.InheritedFlags().SortFlags = false
+
 	return cmd
 }
 
@@ -295,7 +297,7 @@ func (c *Command) printCommandWarning(ctx cli.Context) {
 }
 
 func (c *Command) handleCommonParameters(ctx cli.Context) (bool, error) {
-	if cp, ok := c.currentParameter.(cflag.CommonParameterValueHolder); ok {
+	if cp, ok := c.currentParameter.(cflag.InputParameterValueHolder); ok {
 		// パラメータスケルトンの生成
 		if cp.GenerateSkeletonFlagValue() {
 			return false, generateSkeleton(ctx, c.currentParameter)
@@ -525,37 +527,30 @@ func (c *Command) parameterWithZone(zone string) (interface{}, error) {
 }
 
 func (c *Command) ParameterCategoryBy(key string) *Category {
-	switch key {
-	case "output":
-		return ParameterCategoryOutput
-	case "input":
-		return ParameterCategoryInput
-	case "common":
-		return ParameterCategoryCommon
-	case "sort":
-		return ParameterCategorySort
-	case "limit-offset":
-		return ParameterCategoryLimitOffset
-	case "filter":
-		return ParameterCategoryFilter
-	case "monitor":
-		return ParameterCategoryMonitor
-	default:
-		if key == "" || len(c.ParameterCategories) == 0 {
-			key = c.resource.Name
-			return &Category{
-				Key:         key,
-				DisplayName: fmt.Sprintf("%s options", strings.Title(key)),
-				Order:       1,
-			}
+	for _, cat := range ParameterCategories {
+		if cat.Key == key {
+			return cat
 		}
+	}
 
-		for _, cat := range c.ParameterCategories {
-			if cat.Key == key {
-				return &cat
-			}
+	if key == "" || len(c.ParameterCategories) == 0 {
+		key = c.resource.Name
+		return &Category{
+			Key:         key,
+			DisplayName: fmt.Sprintf("%s-specific options", strings.Title(key)),
+			Order:       100,
 		}
-		return nil
+	}
+
+	for _, cat := range c.ParameterCategories {
+		if cat.Key == key {
+			return &cat
+		}
+	}
+	return &Category{
+		Key:         key,
+		DisplayName: fmt.Sprintf("%s options", strings.Title(key)),
+		Order:       200,
 	}
 }
 

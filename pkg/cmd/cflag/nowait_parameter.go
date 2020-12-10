@@ -14,7 +14,6 @@
 
 package cflag
 
-type CommonParameterValueHolder interface {
-	ParametersFlagValue() string
-	GenerateSkeletonFlagValue() bool
+type NoWaitParameter struct {
+	NoWait bool `cli:",category=wait"`
 }

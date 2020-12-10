@@ -191,37 +191,48 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("proxy-lb", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("common", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("description"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-protocol"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-path"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-host"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-delay-loop"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("sorry-server-ip-address"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("sorry-server-port"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("lets-encrypt-common-name"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("lets-encrypt-enabled"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("sticky-session-method"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("sticky-session-enabled"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("inactive-sec"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("bind-ports"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("servers"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("rules"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Proxy-Lb options",
+			Title: "Common options",
 			Flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs = pflag.NewFlagSet("proxy-lb", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("bind-ports"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-delay-loop"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-host"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-path"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-protocol"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("inactive-sec"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("lets-encrypt-common-name"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("lets-encrypt-enabled"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("rules"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("servers"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("sorry-server-ip-address"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("sorry-server-port"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("sticky-session-enabled"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("sticky-session-method"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Proxy-Lb-specific options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("input", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,
@@ -230,12 +241,13 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("format"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("format-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
 			Flags: fs,

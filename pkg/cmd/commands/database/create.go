@@ -34,22 +34,22 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name           string   `validate:"required"`
-	Description    string   `validate:"description"`
-	Tags           []string `validate:"tags"`
-	IconID         types.ID
-	PlanID         string   `cli:"plan,options=database_plan" mapconv:",filters=database_plan_to_value" validate:"required,database_plan"`
-	SwitchID       types.ID `validate:"required"`
-	IPAddresses    []string `cli:"ip-address,aliases=ipaddress" validate:"required,min=1,max=2,dive,ipv4"`
-	NetworkMaskLen int      `validate:"required,min=1,max=32"`
-	DefaultRoute   string   `validate:"omitempty,ipv4"`
-	Port           int      `validate:"omitempty,min=1,max=65535"`
-	SourceNetwork  []string `validate:"omitempty,dive,cidrv4"`
-	DatabaseType   string   `cli:",options=database_type" mapconv:",filters=database_type_to_value" validate:"required,database_type"`
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
+	PlanID                string   `cli:"plan,options=database_plan" mapconv:",filters=database_plan_to_value" validate:"required,database_plan"`
+	SwitchID              types.ID `validate:"required"`
+	IPAddresses           []string `cli:"ip-address,aliases=ipaddress" validate:"required,min=1,max=2,dive,ipv4"`
+	NetworkMaskLen        int      `validate:"required,min=1,max=32"`
+	DefaultRoute          string   `validate:"omitempty,ipv4"`
+	Port                  int      `validate:"omitempty,min=1,max=65535"`
+	SourceNetwork         []string `validate:"omitempty,dive,cidrv4"`
+	DatabaseType          string   `cli:",options=database_type" mapconv:",filters=database_type_to_value" validate:"required,database_type"`
 
 	Username string `validate:"required"`
 	Password string `validate:"required"`
@@ -63,7 +63,7 @@ type createParameter struct {
 	BackupStartTimeHour   int `validate:"omitempty,min=0,max=23"`
 	BackupStartTimeMinute int `cli:",options=backup_start_minute" validate:"omitempty,backup_start_minute"`
 
-	NoWait bool
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 func newCreateParameter() *createParameter {

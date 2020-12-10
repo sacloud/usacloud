@@ -35,11 +35,11 @@ var listCommand = &core.Command{
 }
 
 type listParameter struct {
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
-	cflag.FindParameter   `cli:",squash" mapconv:",squash"`
-	cflag.OutputParameter `cli:",squash" mapconv:"-"`
+	cflag.InputParameter       `cli:",squash" mapconv:"-"`
+	cflag.LimitOffsetParameter `cli:",squash" mapconv:",squash"`
+	cflag.OutputParameter      `cli:",squash" mapconv:"-"`
 
-	Names []string `cli:",category=filter" validate:"omitempty"`
+	cflag.FilterByNamesParameter `cli:",squash" mapconv:",omitempty,squash"`
 }
 
 func newListParameter() *listParameter {

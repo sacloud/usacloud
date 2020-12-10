@@ -34,14 +34,14 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name        string   `validate:"required"`
-	Description string   `validate:"description"`
-	Tags        []string `validate:"tags"`
-	IconID      types.ID
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
 	SwitchID       types.ID `validate:"required"`
 	Plan           string   `cli:"plan,options=nfs_plan" mapconv:",filters=nfs_plan_to_value" validate:"required,nfs_plan"`
@@ -50,7 +50,7 @@ type createParameter struct {
 	NetworkMaskLen int      `validate:"required,min=1,max=32"`
 	DefaultRoute   string   `validate:"omitempty,ipv4"`
 
-	NoWait bool
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 func newCreateParameter() *createParameter {

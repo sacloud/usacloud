@@ -34,13 +34,13 @@ import (
 func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 	t.Run("full", func(t *testing.T) {
 		in := &updateParameter{
-			ZoneParameter: cflag.ZoneParameter{Zone: "is1a"},
-			IDParameter:   cflag.IDParameter{ID: types.ID(1)},
-			Name:          pointer.NewString("name"),
-			Description:   pointer.NewString("desc"),
-			Tags:          pointer.NewStringSlice([]string{"tag1", "tag2"}),
-			IconID:        pointer.NewID(types.ID(2)),
-			Connection:    pointer.NewString(types.DiskConnections.VirtIO.String()),
+			ZoneParameter:         cflag.ZoneParameter{Zone: "is1a"},
+			IDParameter:           cflag.IDParameter{ID: types.ID(1)},
+			NameUpdateParameter:   cflag.NameUpdateParameter{Name: pointer.NewString("name")},
+			DescUpdateParameter:   cflag.DescUpdateParameter{Description: pointer.NewString("desc")},
+			TagsUpdateParameter:   cflag.TagsUpdateParameter{Tags: pointer.NewStringSlice([]string{"tag1", "tag2"})},
+			IconIDUpdateParameter: cflag.IconIDUpdateParameter{IconID: pointer.NewID(types.ID(2))},
+			Connection:            pointer.NewString(types.DiskConnections.VirtIO.String()),
 		}
 
 		out := &disk.UpdateRequest{}
@@ -61,9 +61,9 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 
 	t.Run("nil", func(t *testing.T) {
 		in := &updateParameter{
-			ZoneParameter: cflag.ZoneParameter{Zone: "is1a"},
-			IDParameter:   cflag.IDParameter{ID: types.ID(1)},
-			Name:          pointer.NewString("name"),
+			ZoneParameter:       cflag.ZoneParameter{Zone: "is1a"},
+			IDParameter:         cflag.IDParameter{ID: types.ID(1)},
+			NameUpdateParameter: cflag.NameUpdateParameter{Name: pointer.NewString("name")},
 		}
 
 		out := &disk.UpdateRequest{}
@@ -83,12 +83,12 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 	})
 	t.Run("empty", func(t *testing.T) {
 		in := &updateParameter{
-			ZoneParameter: cflag.ZoneParameter{Zone: "is1a"},
-			IDParameter:   cflag.IDParameter{ID: types.ID(1)},
-			Name:          pointer.NewString("name"),
-			Description:   pointer.NewString(""),
-			Tags:          pointer.NewStringSlice([]string{}),
-			IconID:        pointer.NewID(types.ID(0)),
+			ZoneParameter:         cflag.ZoneParameter{Zone: "is1a"},
+			IDParameter:           cflag.IDParameter{ID: types.ID(1)},
+			NameUpdateParameter:   cflag.NameUpdateParameter{Name: pointer.NewString("name")},
+			DescUpdateParameter:   cflag.DescUpdateParameter{Description: pointer.NewString("")},
+			TagsUpdateParameter:   cflag.TagsUpdateParameter{Tags: pointer.NewStringSlice([]string{})},
+			IconIDUpdateParameter: cflag.IconIDUpdateParameter{IconID: pointer.NewID(types.ID(0))},
 		}
 
 		out := &disk.UpdateRequest{}
@@ -124,21 +124,21 @@ func TestUpdateParameter_Validate(t *testing.T) {
 		// valid
 		{
 			in: &updateParameter{
-				ZoneParameter: cflag.ZoneParameter{Zone: "is1a"},
-				IDParameter:   cflag.IDParameter{ID: 1},
-				Name:          pointer.NewString("1"),
-				Description:   pointer.NewString(""),
-				Tags:          pointer.NewStringSlice([]string{}),
-				Connection:    pointer.NewString("ide"),
+				ZoneParameter:       cflag.ZoneParameter{Zone: "is1a"},
+				IDParameter:         cflag.IDParameter{ID: 1},
+				NameUpdateParameter: cflag.NameUpdateParameter{Name: pointer.NewString("1")},
+				DescUpdateParameter: cflag.DescUpdateParameter{Description: pointer.NewString("")},
+				TagsUpdateParameter: cflag.TagsUpdateParameter{Tags: pointer.NewStringSlice([]string{})},
+				Connection:          pointer.NewString("ide"),
 			},
 			err: nil,
 		},
 		// name
 		{
 			in: &updateParameter{
-				ZoneParameter: cflag.ZoneParameter{Zone: "is1a"},
-				IDParameter:   cflag.IDParameter{ID: 1},
-				Name:          pointer.NewString(""),
+				ZoneParameter:       cflag.ZoneParameter{Zone: "is1a"},
+				IDParameter:         cflag.IDParameter{ID: 1},
+				NameUpdateParameter: cflag.NameUpdateParameter{Name: pointer.NewString("")},
 			},
 			err: errors.New(strings.Join([]string{
 				"validation error:",

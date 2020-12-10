@@ -33,13 +33,13 @@ var generateCommand = &core.Command{
 }
 
 type generateParameter struct {
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name        string `validate:"required"`
-	Description string `validate:"omitempty,description"`
-	PassPhrase  string
+	cflag.NameParameter `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter `cli:",squash" mapconv:",squash"`
+	PassPhrase          string
 }
 
 func newGenerateParameter() *generateParameter {

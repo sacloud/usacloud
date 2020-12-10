@@ -16,7 +16,6 @@ package vpcrouter
 
 import (
 	"github.com/sacloud/libsacloud/v2/helper/service/vpcrouter"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -37,14 +36,14 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name        string   `validate:"required"`
-	Description string   `validate:"description"`
-	Tags        []string `validate:"tags"`
-	IconID      types.ID
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
 	Plan string `cli:"plan,options=vpc_router_plan_premium" mapconv:"PlanID,filters=vpc_router_plan_premium_to_value" validate:"required,vpc_router_plan_premium"`
 
@@ -55,8 +54,8 @@ type createParameter struct {
 
 	RouterSetting routerSetting `cli:",squash" mapconv:",recursive"`
 
-	BootAfterCreate bool
-	NoWait          bool
+	BootAfterCreate       bool
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 func newCreateParameter() *createParameter {

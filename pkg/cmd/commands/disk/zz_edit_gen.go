@@ -40,12 +40,12 @@ func (p *editParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.QueryFile, "query-file", "", p.QueryFile, "JMESPath query(from file)")
 	fs.StringVarP(&p.EditDisk.HostName, "host-name", "", p.EditDisk.HostName, "")
 	fs.StringVarP(&p.EditDisk.Password, "password", "", p.EditDisk.Password, "")
-	fs.BoolVarP(&p.EditDisk.DisablePWAuth, "disable-pw-auth", "", p.EditDisk.DisablePWAuth, "")
-	fs.BoolVarP(&p.EditDisk.EnableDHCP, "enable-dhcp", "", p.EditDisk.EnableDHCP, "")
-	fs.BoolVarP(&p.EditDisk.ChangePartitionUUID, "change-partition-uuid", "", p.EditDisk.ChangePartitionUUID, "")
 	fs.StringVarP(&p.EditDisk.IPAddress, "ip-address", "", p.EditDisk.IPAddress, "")
 	fs.IntVarP(&p.EditDisk.NetworkMaskLen, "network-mask-len", "", p.EditDisk.NetworkMaskLen, "")
 	fs.StringVarP(&p.EditDisk.DefaultRoute, "default-route", "", p.EditDisk.DefaultRoute, "")
+	fs.BoolVarP(&p.EditDisk.DisablePWAuth, "disable-pw-auth", "", p.EditDisk.DisablePWAuth, "")
+	fs.BoolVarP(&p.EditDisk.EnableDHCP, "enable-dhcp", "", p.EditDisk.EnableDHCP, "")
+	fs.BoolVarP(&p.EditDisk.ChangePartitionUUID, "change-partition-uuid", "", p.EditDisk.ChangePartitionUUID, "")
 	fs.StringSliceVarP(&p.EditDisk.SSHKeys, "ssh-keys", "", p.EditDisk.SSHKeys, "")
 	fs.VarP(core.NewIDSliceFlag(&p.EditDisk.SSHKeyIDs, &p.EditDisk.SSHKeyIDs), "ssh-key-ids", "", "")
 	fs.BoolVarP(&p.EditDisk.IsSSHKeysEphemeral, "make-ssh-keys-ephemeral", "", p.EditDisk.IsSSHKeysEphemeral, "")
@@ -72,34 +72,54 @@ func (p *editParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("disk", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		fs = pflag.NewFlagSet("diskedit", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("host-name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("password"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("disable-pw-auth"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("enable-dhcp"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("change-partition-uuid"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("ip-address"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disable-pw-auth"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("enable-dhcp"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("change-partition-uuid"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("ssh-keys"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("ssh-key-ids"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("make-ssh-keys-ephemeral"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("note-ids"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("notes"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("make-notes-ephemeral"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Disk options",
+			Title: "Edit disk options",
 			Flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs = pflag.NewFlagSet("zone", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Zone options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("wait", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Wait options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("input", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,
@@ -108,12 +128,13 @@ func (p *editParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("format"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("format-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
 			Flags: fs,

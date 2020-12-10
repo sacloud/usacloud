@@ -14,7 +14,16 @@
 
 package cflag
 
-type FindParameter struct {
-	Count int `cli:",aliases=max limit,category=filter"`
-	From  int `cli:",aliases=offset,category=filter"`
+// InputParameter 全コマンド共通フィールド
+type InputParameter struct {
+	Parameters       string `cli:",category=input,desc=Input parameters in JSON format" json:"-"`
+	GenerateSkeleton bool   `cli:",category=input,aliases=skeleton,desc=Output skeleton of parameters with JSON format" json:"-"`
+}
+
+func (p *InputParameter) ParametersFlagValue() string {
+	return p.Parameters
+}
+
+func (p *InputParameter) GenerateSkeletonFlagValue() bool {
+	return p.GenerateSkeleton
 }

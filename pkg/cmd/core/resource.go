@@ -64,6 +64,7 @@ func (r *Resource) CLICommand() *cobra.Command {
 	}
 
 	buildCommandsUsage(cmd, r.CategorizedCommands())
+	cmd.InheritedFlags().SortFlags = false
 	return cmd
 }
 

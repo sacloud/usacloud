@@ -34,9 +34,9 @@ var waitUntilShutdownCommand = &core.Command{
 }
 
 type waitUntilShutdownParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter  `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter    `cli:",squash" mapconv:",squash"`
+	cflag.InputParameter `cli:",squash" mapconv:"-"`
 }
 
 func newWaitUntilShutdownParameter() *waitUntilShutdownParameter {

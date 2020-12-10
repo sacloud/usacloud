@@ -38,25 +38,25 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name            string   `validate:"required"`
-	Description     string   `validate:"description"`
-	Tags            []string `validate:"tags"`
-	IconID          types.ID
-	DiskPlan        string `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"required,disk_plan"`
-	Connection      string `cli:",options=disk_connection" validate:"required,disk_connection"`
-	SourceDiskID    types.ID
-	SourceArchiveID types.ID
-	ServerID        types.ID
-	SizeGB          int `cli:"size"`
-	DistantFrom     []types.ID
-	OSType          string `cli:",options=os_type" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
+	DiskPlan              string `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"required,disk_plan"`
+	Connection            string `cli:",options=disk_connection" validate:"required,disk_connection"`
+	SourceDiskID          types.ID
+	SourceArchiveID       types.ID
+	ServerID              types.ID
+	SizeGB                int `cli:"size"`
+	DistantFrom           []types.ID
+	OSType                string `cli:",options=os_type_simple" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
 
-	EditDisk common.EditRequest `cli:",category=edit" mapconv:"EditParameter,omitempty"`
-	NoWait   bool
+	EditDisk              common.EditRequest `cli:",category=edit" mapconv:"EditParameter,omitempty"`
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 func validateCreateParameter(ctx cli.Context, parameter interface{}) error {

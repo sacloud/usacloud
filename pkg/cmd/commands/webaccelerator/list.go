@@ -38,9 +38,9 @@ var listCommand = &core.Command{
 }
 
 type listParameter struct {
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
-	cflag.FindParameter   `cli:",squash" mapconv:",squash"`
-	cflag.OutputParameter `cli:",squash" mapconv:"-"`
+	cflag.InputParameter       `cli:",squash" mapconv:"-"`
+	cflag.LimitOffsetParameter `cli:",squash" mapconv:",squash"`
+	cflag.OutputParameter      `cli:",squash" mapconv:"-"`
 }
 
 func listFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {

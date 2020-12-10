@@ -46,27 +46,28 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name        string   `validate:"required"`
-	Description string   `validate:"description"`
-	Tags        []string `validate:"tags"`
-	IconID      types.ID
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	CPU             int    `cli:"cpu,aliases=core" validate:"required"`
-	Memory          int    `cli:"memory" mapconv:"MemoryGB" validate:"required"`
-	Commitment      string `cli:",options=server_plan_commitment" mapconv:",filters=server_plan_commitment_to_value" validate:"required,server_plan_commitment"`
-	Generation      string `cli:",options=server_plan_generation" mapconv:",filters=server_plan_generation_to_value" validate:"required,server_plan_generation"`
+	CPU        int    `cli:"cpu,aliases=core,category=plan,order=10" validate:"required"`
+	Memory     int    `cli:"memory,category=plan,order=20" mapconv:"MemoryGB" validate:"required"`
+	Commitment string `cli:",options=server_plan_commitment,category=plan,order=30" mapconv:",filters=server_plan_commitment_to_value" validate:"required,server_plan_commitment"`
+	Generation string `cli:",options=server_plan_generation,category=plan,order=40" mapconv:",filters=server_plan_generation_to_value" validate:"required,server_plan_generation"`
+
 	InterfaceDriver string `cli:",options=interface_dirver" mapconv:",filters=interface_driver_to_value" validate:"required,interface_driver"`
 
 	BootAfterCreate bool
 	CDROMID         types.ID `cli:"cdrom-id,aliases=iso-image-id"`
 	PrivateHostID   types.ID
 
-	NetworkInterface     server.NetworkInterface    `mapconv:"-" validate:"omitempty"`
-	NetworkInterfaceData string                     `cli:"network-interfaces" mapconv:"-"`
+	NetworkInterface     server.NetworkInterface    `cli:",category=network,order=10" mapconv:"-" validate:"omitempty"`
+	NetworkInterfaceData string                     `cli:"network-interfaces,category=network,order=20" mapconv:"-"`
 	NetworkInterfaces    []*server.NetworkInterface `cli:"-" mapconv:",omitempty,recursive"`
 
 	Disk      diskApplyParameter    `mapconv:"-" validate:"omitempty"`
@@ -74,24 +75,24 @@ type createParameter struct {
 	Disks     []*diskApplyParameter `cli:"-" mapconv:",omitempty,recursive"`
 	DiskIDs   []types.ID            `cli:"disk-ids" mapconv:"-"`
 
-	NoWait bool
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 type diskApplyParameter struct {
 	ID types.ID
 
-	Name            string   // 省略時はサーバ名が利用される
-	Description     string   `validate:"description"`
-	Tags            []string `validate:"tags"`
-	IconID          types.ID
-	DiskPlan        string `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"omitempty,disk_plan"`
-	Connection      string `cli:",options=disk_connection" validate:"omitempty,disk_connection"`
-	SourceDiskID    types.ID
-	SourceArchiveID types.ID
-	ServerID        types.ID
-	SizeGB          int `cli:"size,aliases=size-gb"`
-	DistantFrom     []types.ID
-	OSType          string `cli:",options=os_type" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
+	Name                  string `cli:",category=common"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
+	DiskPlan              string `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"omitempty,disk_plan"`
+	Connection            string `cli:",options=disk_connection" validate:"omitempty,disk_connection"`
+	SourceDiskID          types.ID
+	SourceArchiveID       types.ID
+	ServerID              types.ID
+	SizeGB                int `cli:"size,aliases=size-gb"`
+	DistantFrom           []types.ID
+	OSType                string `cli:",options=os_type_simple" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
 
 	EditDisk common.EditRequest `cli:"edit,category=edit" mapconv:"EditParameter,omitempty"`
 	NoWait   bool
@@ -189,13 +190,13 @@ func (p *createParameter) Customize(ctx cli.Context) error {
 				return err
 			}
 			p.Disks = append(p.Disks, &diskApplyParameter{
-				ID:          diskID,
-				Name:        disk.Name,
-				Description: disk.Description,
-				Tags:        disk.Tags,
-				IconID:      disk.IconID,
-				Connection:  disk.Connection.String(),
-				NoWait:      p.NoWait,
+				ID:              diskID,
+				Name:            disk.Name,
+				DescParameter:   cflag.DescParameter{Description: disk.Description},
+				TagsParameter:   cflag.TagsParameter{Tags: disk.Tags},
+				IconIDParameter: cflag.IconIDParameter{IconID: disk.IconID},
+				Connection:      disk.Connection.String(),
+				NoWait:          p.NoWait,
 			})
 		}
 	}

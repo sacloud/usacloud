@@ -35,12 +35,12 @@ var editCommand = &core.Command{
 type editParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	EditDisk common.EditRequest `cli:",squash" mapconv:",squash"`
-	NoWait   bool               `request:"-"` // trueの場合ディスクの修正完了まで待たずに即時復帰する
+	EditDisk              common.EditRequest                `cli:",squash" mapconv:",squash"`
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"` // trueの場合ディスクの修正完了まで待たずに即時復帰する
 }
 
 func newEditParameter() *editParameter {

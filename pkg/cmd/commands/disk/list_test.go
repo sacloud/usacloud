@@ -28,9 +28,9 @@ func TestList_ConvertToServiceRequest(t *testing.T) {
 		ZoneParameter: cflag.ZoneParameter{
 			Zone: "is1b",
 		},
-		Names: []string{"name1", "name2"},
-		Tags:  []string{"tag1", "tag2"},
-		FindParameter: cflag.FindParameter{
+		FilterByNamesParameter: cflag.FilterByNamesParameter{Names: []string{"name1", "name2"}},
+		FilterByTagsParameter:  cflag.FilterByTagsParameter{Tags: []string{"tag1", "tag2"}},
+		LimitOffsetParameter: cflag.LimitOffsetParameter{
 			Count: 1,
 			From:  2,
 		},

@@ -44,6 +44,12 @@ func (c *Command) CategorizedParameterFields() []*CategorizedParameterFields {
 	}
 	var categorizedFields []*CategorizedParameterFields
 	for _, cat := range m {
+		sort.Slice(cat.Fields, func(i, j int) bool {
+			if cat.Fields[i].Order == cat.Fields[j].Order {
+				return cat.Fields[i].FlagName < cat.Fields[j].FlagName
+			}
+			return cat.Fields[i].Order < cat.Fields[j].Order
+		})
 		categorizedFields = append(categorizedFields, cat)
 	}
 	sort.Slice(categorizedFields, func(i, j int) bool {

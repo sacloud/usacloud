@@ -34,11 +34,11 @@ var updateCommand = &core.Command{
 
 type updateParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name *string `validate:"omitempty,min=1"`
+	cflag.NameUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 }
 
 func newUpdateParameter() *updateParameter {

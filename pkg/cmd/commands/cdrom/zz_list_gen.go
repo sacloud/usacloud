@@ -42,7 +42,7 @@ func (p *listParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.QueryFile, "query-file", "", p.QueryFile, "JMESPath query(from file)")
 	fs.StringSliceVarP(&p.Names, "names", "", p.Names, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
-	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [centos/centos8/centos7/ubuntu/ubuntu2004/ubuntu1804/ubuntu1604/debian/debian10/debian9/coreos/rancheros/k3os/kusanagi/freebsd/windows2016/windows2016-rds/windows2016-rds-office/windows2016-sql-web/windows2016-sql-standard/windows2016-sql-standard-all/windows2016-sql2017-standard/windows2016-sql2017-enterprise/windows2016-sql2017-standard-all/windows2019/windows2019-rds/windows2019-rds-office2019/windows2019-sql2017-web/windows2019-sql2019-web/windows2019-sql2017-standard/windows2019-sql2019-standard/windows2019-sql2017-enterprise/windows2019-sql2019-enterprise/windows2019-sql2017-standard-all/windows2019-sql2019-standard-all]")
+	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [centos/centos8/ubuntu/ubuntu2004/debian/debian10/coreos/rancheros/k3os/freebsd/...]")
 	fs.StringVarP(&p.Scope, "scope", "", p.Scope, "options: [user/shared]")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -69,21 +69,11 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("cdrom", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
-		sets = append(sets, &core.FlagSet{
-			Title: "Cdrom options",
-			Flags: fs,
-		})
-	}
-	{
-		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("filter", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("count"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("from"))
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("os-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("names"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("os-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("scope"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Filter options",
@@ -92,9 +82,31 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
+		fs = pflag.NewFlagSet("limit-offset", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("count"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("from"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Limit/Offset options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("zone", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Zone options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("input", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,
@@ -103,12 +115,13 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("format"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("format-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
 			Flags: fs,
@@ -119,7 +132,7 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *listParameter) setCompletionFunc(cmd *cobra.Command) {
-	cmd.RegisterFlagCompletionFunc("os-type", util.FlagCompletionFunc("centos", "centos8", "centos7", "ubuntu", "ubuntu2004", "ubuntu1804", "ubuntu1604", "debian", "debian10", "debian9", "coreos", "rancheros", "k3os", "kusanagi", "freebsd", "windows2016", "windows2016-rds", "windows2016-rds-office", "windows2016-sql-web", "windows2016-sql-standard", "windows2016-sql-standard-all", "windows2016-sql2017-standard", "windows2016-sql2017-enterprise", "windows2016-sql2017-standard-all", "windows2019", "windows2019-rds", "windows2019-rds-office2019", "windows2019-sql2017-web", "windows2019-sql2019-web", "windows2019-sql2017-standard", "windows2019-sql2019-standard", "windows2019-sql2017-enterprise", "windows2019-sql2019-enterprise", "windows2019-sql2017-standard-all", "windows2019-sql2019-standard-all"))
+	cmd.RegisterFlagCompletionFunc("os-type", util.FlagCompletionFunc("centos", "centos8", "ubuntu", "ubuntu2004", "debian", "debian10", "coreos", "rancheros", "k3os", "freebsd", "..."))
 	cmd.RegisterFlagCompletionFunc("scope", util.FlagCompletionFunc("user", "shared"))
 
 }

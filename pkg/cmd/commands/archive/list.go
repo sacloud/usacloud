@@ -35,15 +35,15 @@ var listCommand = &core.Command{
 }
 
 type listParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
-	cflag.FindParameter   `cli:",squash" mapconv:",squash"`
-	cflag.OutputParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter        `cli:",squash" mapconv:",squash"`
+	cflag.InputParameter       `cli:",squash" mapconv:"-"`
+	cflag.LimitOffsetParameter `cli:",squash" mapconv:",squash"`
+	cflag.OutputParameter      `cli:",squash" mapconv:"-"`
 
-	Names  []string `cli:",category=filter" validate:"omitempty"`
-	Tags   []string `cli:",category=filter" validate:"omitempty"`
-	OSType string   `cli:",category=filter,options=os_type" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
-	Scope  string   `cli:",category=filter,options=scope" mapconv:",omitempty,filters=scope_to_value" validate:"omitempty,scope"`
+	cflag.FilterByNamesParameter `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.FilterByTagsParameter  `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.FilterByScopeParameter `cli:",squash" mapconv:",omitempty,squash"`
+	OSType                       string `cli:",category=filter,options=os_type_simple,order=100" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
 }
 
 func newListParameter() *listParameter {

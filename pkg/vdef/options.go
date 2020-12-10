@@ -17,4 +17,18 @@ package vdef
 // FlagOptionsMap CLIで指定するフラグでの静的な候補値一覧(cliタグで指定する)
 //
 // Note: コード生成で利用されるため実行時に動的に変化する項目には利用できない
-var FlagOptionsMap = map[string][]string{}
+var FlagOptionsMap = map[string][]string{
+	"os_type_simple": {
+		"centos",
+		"centos8",
+		"ubuntu",
+		"ubuntu2004",
+		"debian",
+		"debian10",
+		"coreos",
+		"rancheros",
+		"k3os",
+		"freebsd",
+		"...",
+	},
+}

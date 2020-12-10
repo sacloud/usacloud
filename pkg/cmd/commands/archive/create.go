@@ -37,21 +37,21 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name        string   `validate:"required"`
-	Description string   `validate:"description"`
-	Tags        []string `validate:"tags"`
-	IconID      types.ID
-	SizeGB      int `cli:"size" validate:"required_with=SourceFile"`
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
+	SizeGB          int    `cli:"size" validate:"required_with=SourceFile"`
 	SourceFile      string `mapconv:"SourceReader,omitempty,filters=path_to_reader" validate:"omitempty,file"` // TODO 標準入力(パイプも)への対応
 	SourceDiskID    types.ID
 	SourceArchiveID types.ID
 
-	NoWait bool
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 func validateCreateParameter(ctx cli.Context, parameter interface{}) error {

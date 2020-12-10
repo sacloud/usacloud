@@ -3,6 +3,7 @@ module github.com/sacloud/usacloud
 go 1.13
 
 require (
+	github.com/coreos/etcd v3.3.13+incompatible
 	github.com/fatih/color v1.7.0
 	github.com/fatih/structs v1.1.0
 	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32
