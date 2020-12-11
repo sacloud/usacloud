@@ -21,6 +21,11 @@ var CommandCategories = []Category{
 		Order:       100,
 	},
 	{
+		Key:         "connect",
+		DisplayName: "Connect Commands",
+		Order:       150,
+	},
+	{
 		Key:         "operation",
 		DisplayName: "Operation Commands",
 		Order:       200,
