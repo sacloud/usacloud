@@ -47,7 +47,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.IntVarP(&p.Memory, "memory", "", p.Memory, "")
 	fs.StringVarP(&p.Commitment, "commitment", "", p.Commitment, "options: [standard/dedicatedcpu]")
 	fs.StringVarP(&p.Generation, "generation", "", p.Generation, "options: [default/g100/g200]")
-	fs.StringVarP(&p.InterfaceDriver, "interface-driver", "", p.InterfaceDriver, "options: [interface_dirver]")
+	fs.StringVarP(&p.InterfaceDriver, "interface-driver", "", p.InterfaceDriver, "options: [virtio/e1000]")
 	fs.BoolVarP(&p.BootAfterCreate, "boot-after-create", "", p.BootAfterCreate, "")
 	fs.VarP(core.NewIDFlag(&p.CDROMID, &p.CDROMID), "cdrom-id", "", "(aliases: --iso-image-id)")
 	fs.VarP(core.NewIDFlag(&p.PrivateHostID, &p.PrivateHostID), "private-host-id", "", "")
@@ -263,7 +263,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("commitment", util.FlagCompletionFunc("standard", "dedicatedcpu"))
 	cmd.RegisterFlagCompletionFunc("generation", util.FlagCompletionFunc("default", "g100", "g200"))
-	cmd.RegisterFlagCompletionFunc("interface-driver", util.FlagCompletionFunc("interface_dirver"))
+	cmd.RegisterFlagCompletionFunc("interface-driver", util.FlagCompletionFunc("virtio", "e1000"))
 	cmd.RegisterFlagCompletionFunc("disk-disk-plan", util.FlagCompletionFunc("ssd", "hdd"))
 	cmd.RegisterFlagCompletionFunc("disk-connection", util.FlagCompletionFunc("virtio", "ide"))
 	cmd.RegisterFlagCompletionFunc("disk-os-type", util.FlagCompletionFunc("centos", "centos8", "ubuntu", "ubuntu2004", "debian", "debian10", "coreos", "rancheros", "k3os", "freebsd", "..."))

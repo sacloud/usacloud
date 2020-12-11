@@ -43,9 +43,9 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.VarP(core.NewIDFlag(&p.SwitchID, &p.SwitchID), "switch-id", "", "")
 	fs.StringVarP(&p.Plan, "plan", "", p.Plan, "options: [ssd/hdd]")
 	fs.IntVarP(&p.Size, "size", "", p.Size, "")
+	fs.VarP(core.NewIDFlag(&p.SwitchID, &p.SwitchID), "switch-id", "", "")
 	fs.StringSliceVarP(&p.IPAddresses, "ip-address", "", p.IPAddresses, "(aliases: --ipaddress)")
 	fs.IntVarP(&p.NetworkMaskLen, "network-mask-len", "", p.NetworkMaskLen, "")
 	fs.StringVarP(&p.DefaultRoute, "default-route", "", p.DefaultRoute, "")
@@ -84,16 +84,25 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("nfs", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("plan", pflag.ContinueOnError)
 		fs.SortFlags = false
-		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("ip-address"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("size"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("switch-id"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Nfs-specific options",
+			Title: "Plan options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("switch-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("ip-address"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Network options",
 			Flags: fs,
 		})
 	}

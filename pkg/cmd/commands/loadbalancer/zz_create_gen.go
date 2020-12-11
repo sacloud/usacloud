@@ -43,9 +43,9 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.VarP(core.NewIDFlag(&p.SwitchID, &p.SwitchID), "switch-id", "", "")
 	fs.StringVarP(&p.PlanID, "plan", "", p.PlanID, "options: [standard/highspec]")
 	fs.IntVarP(&p.VRID, "vrid", "", p.VRID, "")
+	fs.VarP(core.NewIDFlag(&p.SwitchID, &p.SwitchID), "switch-id", "", "")
 	fs.StringSliceVarP(&p.IPAddresses, "ip-address", "", p.IPAddresses, "(aliases: --ipaddress)")
 	fs.IntVarP(&p.NetworkMaskLen, "network-mask-len", "", p.NetworkMaskLen, "")
 	fs.StringVarP(&p.DefaultRoute, "default-route", "", p.DefaultRoute, "")
@@ -86,18 +86,27 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("load-balancer", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("plan", pflag.ContinueOnError)
 		fs.SortFlags = false
-		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Plan options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("vrid"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("switch-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("ip-address"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("port"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("switch-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("virtual-ip-addresses"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("vrid"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Load-Balancer-specific options",
+			Title: "Network options",
 			Flags: fs,
 		})
 	}

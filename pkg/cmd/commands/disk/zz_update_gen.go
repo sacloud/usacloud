@@ -121,11 +121,11 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("disk", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("plan", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("connection"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Disk-specific options",
+			Title: "Plan options",
 			Flags: fs,
 		})
 	}

@@ -47,7 +47,7 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	VirtualIPAddressesData *string                                 `cli:"virtual-ip-addresses" mapconv:"-"`
+	VirtualIPAddressesData *string                                 `cli:"virtual-ip-addresses,category=network" mapconv:"-"`
 	VirtualIPAddresses     *sacloud.LoadBalancerVirtualIPAddresses `cli:"-"`
 	cflag.NoWaitParameter  `cli:",squash" mapconv:",squash"`
 }

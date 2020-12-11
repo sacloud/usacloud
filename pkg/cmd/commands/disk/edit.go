@@ -39,7 +39,7 @@ type editParameter struct {
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	EditDisk              common.EditRequest                `cli:",squash" mapconv:",squash"`
+	EditDisk              common.EditRequest                `cli:",squash,category=edit" mapconv:",squash"`
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"` // trueの場合ディスクの修正完了まで待たずに即時復帰する
 }
 

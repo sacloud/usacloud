@@ -52,10 +52,10 @@ type updateParameter struct {
 		Path         *string
 		ResponseCode *int
 		Port         *int `validate:"omitempty,min=1,max=65535"`
-	} `mapconv:",omitempty"`
+	} `cli:",category=health" mapconv:",omitempty"`
 
-	DelayLoop   *int `validate:"omitempty,min=10,max=60"`
-	Weighted    *bool
+	DelayLoop   *int    `cli:",category=health,order=10" validate:"omitempty,min=10,max=60"`
+	Weighted    *bool   `cli:",category=health,order=20"`
 	SorryServer *string `validate:"omitempty,ipv4"`
 
 	ServersData        *string              `cli:"servers" mapconv:"-"`

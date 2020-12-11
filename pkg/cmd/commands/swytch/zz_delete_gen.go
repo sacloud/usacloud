@@ -61,24 +61,33 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("switch", pflag.ContinueOnError)
-		fs.SortFlags = false
-		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release-tick"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release-timeout"))
-		sets = append(sets, &core.FlagSet{
-			Title: "Switch-specific options",
-			Flags: fs,
-		})
-	}
-	{
-		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("zone", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Zone options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("error", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Error handling options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("wait", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release-timeout"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release-tick"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Wait options",
 			Flags: fs,
 		})
 	}

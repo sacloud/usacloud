@@ -44,13 +44,13 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
 	fs.StringVarP(&p.DiskPlan, "disk-plan", "", p.DiskPlan, "options: [ssd/hdd]")
+	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "")
 	fs.StringVarP(&p.Connection, "connection", "", p.Connection, "options: [virtio/ide]")
+	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [centos/centos8/ubuntu/ubuntu2004/debian/debian10/coreos/rancheros/k3os/freebsd/...]")
 	fs.VarP(core.NewIDFlag(&p.SourceDiskID, &p.SourceDiskID), "source-disk-id", "", "")
 	fs.VarP(core.NewIDFlag(&p.SourceArchiveID, &p.SourceArchiveID), "source-archive-id", "", "")
 	fs.VarP(core.NewIDFlag(&p.ServerID, &p.ServerID), "server-id", "", "")
-	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "")
 	fs.VarP(core.NewIDSliceFlag(&p.DistantFrom, &p.DistantFrom), "distant-from", "", "")
-	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [centos/centos8/ubuntu/ubuntu2004/debian/debian10/coreos/rancheros/k3os/freebsd/...]")
 	fs.StringVarP(&p.EditDisk.HostName, "edit-disk-host-name", "", p.EditDisk.HostName, "")
 	fs.StringVarP(&p.EditDisk.Password, "edit-disk-password", "", p.EditDisk.Password, "")
 	fs.StringVarP(&p.EditDisk.IPAddress, "edit-disk-ip-address", "", p.EditDisk.IPAddress, "")
@@ -98,16 +98,22 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 	}
 	{
 		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("plan", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-plan"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("size"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("connection"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Plan options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("disk", pflag.ContinueOnError)
 		fs.SortFlags = false
-		fs.AddFlag(cmd.LocalFlags().Lookup("connection"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("disk-plan"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("distant-from"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("os-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("server-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("size"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("source-archive-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("source-disk-id"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Disk-specific options",
 			Flags: fs,
@@ -133,6 +139,18 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-make-notes-ephemeral"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Edit disk options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("source", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("os-type"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("source-disk-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("source-archive-id"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Source options",
 			Flags: fs,
 		})
 	}

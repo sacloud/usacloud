@@ -49,7 +49,7 @@ type ftpOpenParameter struct {
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	ChangePassword bool
+	ChangePassword bool `cli:",category=FTP"`
 }
 
 func newFTPOpenParameter() *ftpOpenParameter {

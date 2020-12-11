@@ -162,17 +162,26 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("gslb", pflag.ContinueOnError)
 		fs.SortFlags = false
-		fs.AddFlag(cmd.LocalFlags().Lookup("delay-loop"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("servers"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("sorry-server"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Gslb-specific options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("health", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-host-header"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-path"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-port"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-protocol"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-response-code"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("servers"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("sorry-server"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("delay-loop"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("weighted"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Gslb-specific options",
+			Title: "Health check options",
 			Flags: fs,
 		})
 	}

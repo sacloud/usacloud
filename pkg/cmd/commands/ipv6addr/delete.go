@@ -37,8 +37,8 @@ type deleteParameter struct {
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	IPv6Addr       string `validate:"required,ipv6"`
-	FailIfNotFound bool
+	IPv6Addr                      string `validate:"required,ipv6"`
+	cflag.FailIfNotFoundParameter `cli:",squash" mapconv:",squash"`
 }
 
 func newDeleteParameter() *deleteParameter {

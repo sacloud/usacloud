@@ -106,11 +106,11 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("load-balancer", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("virtual-ip-addresses"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Load-Balancer-specific options",
+			Title: "Network options",
 			Flags: fs,
 		})
 	}

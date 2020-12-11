@@ -36,7 +36,7 @@ type uploadParameter struct {
 	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 
-	SourceFile string `mapconv:"Reader,filters=path_to_reader" validate:"omitempty,file"`
+	SourceFile string `cli:",category=upload" mapconv:"Reader,filters=path_to_reader" validate:"omitempty,file"`
 }
 
 func newUploadParameter() *uploadParameter {

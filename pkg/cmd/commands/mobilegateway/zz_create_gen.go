@@ -99,9 +99,6 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("dns2"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("inter-device-communication-enabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("internet-connection-enabled"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("private-interface-ip-address"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("private-interface-network-mask-len"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("private-interface-switch-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("sim-routes"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("sims"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("static-routes"))
@@ -113,6 +110,18 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("traffic-config-traffic-quota-in-mb"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Mobile-Gateway-specific options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("private-interface-ip-address"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("private-interface-network-mask-len"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("private-interface-switch-id"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Network options",
 			Flags: fs,
 		})
 	}

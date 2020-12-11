@@ -37,9 +37,9 @@ type deleteParameter struct {
 	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 
-	FailIfNotFound bool
-	Force          bool `cli:",short=f"`
-	WithDisks      bool
+	cflag.FailIfNotFoundParameter `cli:",squash" mapconv:",squash"`
+	cflag.ForceDeleteParameter    `cli:",squash" mapconv:",squash"`
+	WithDisks                     bool `cli:",category=delete,order=20"`
 }
 
 func newDeleteParameter() *deleteParameter {

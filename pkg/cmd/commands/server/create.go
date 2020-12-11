@@ -60,7 +60,7 @@ type createParameter struct {
 	Commitment string `cli:",options=server_plan_commitment,category=plan,order=30" mapconv:",filters=server_plan_commitment_to_value" validate:"required,server_plan_commitment"`
 	Generation string `cli:",options=server_plan_generation,category=plan,order=40" mapconv:",filters=server_plan_generation_to_value" validate:"required,server_plan_generation"`
 
-	InterfaceDriver string `cli:",options=interface_dirver" mapconv:",filters=interface_driver_to_value" validate:"required,interface_driver"`
+	InterfaceDriver string `cli:",options=interface_driver" mapconv:",filters=interface_driver_to_value" validate:"required,interface_driver"`
 
 	BootAfterCreate bool
 	CDROMID         types.ID `cli:"cdrom-id,aliases=iso-image-id"`

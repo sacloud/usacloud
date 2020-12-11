@@ -47,9 +47,9 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	PublicNetworkInterface vpcrouter.PremiumNICSettingUpdate `request:",omitempty" mapconv:",omitempty"`
+	PublicNetworkInterface vpcrouter.PremiumNICSettingUpdate `cli:",category=network,order=10" mapconv:",omitempty"`
 
-	PrivateNetworkInterfacesData string                                          `cli:"private-network-interfaces" mapconv:"-"`
+	PrivateNetworkInterfacesData string                                          `cli:"private-network-interfaces,category=network,order=20" mapconv:"-"`
 	PrivateNetworkInterfaces     *[]*vpcrouter.AdditionalPremiumNICSettingUpdate `cli:"-" mapconv:"AdditionalNICSettings"`
 
 	RouterSetting routerSettingUpdate `cli:",squash" mapconv:",omitempty,recursive"`

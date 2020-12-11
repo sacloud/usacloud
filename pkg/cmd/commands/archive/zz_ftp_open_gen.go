@@ -58,11 +58,11 @@ func (p *ftpOpenParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("archive", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("FTP", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("change-password"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Archive-specific options",
+			Title: "FTP options",
 			Flags: fs,
 		})
 	}

@@ -99,6 +99,16 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 	}
 	{
 		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("plan", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Plan options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("vpc-router", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("boot-after-create"))
@@ -109,15 +119,9 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("l2tp-pre-shared-secret"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("l2tp-range-start"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("l2tp-range-stop"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("port-forwarding"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("pptp-range-start"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("pptp-range-stop"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("private-network-interfaces"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("public-network-interface-ip-addresses"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("public-network-interface-ip-aliases"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("public-network-interface-switch-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("public-network-interface-virtual-ip-address"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("site-to-site-vpn"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("static-nat"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("static-route"))
@@ -126,6 +130,20 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("vrid"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Vpc-Router-specific options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("public-network-interface-ip-addresses"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("public-network-interface-ip-aliases"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("public-network-interface-switch-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("public-network-interface-virtual-ip-address"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("private-network-interfaces"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Network options",
 			Flags: fs,
 		})
 	}

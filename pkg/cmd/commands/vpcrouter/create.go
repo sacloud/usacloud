@@ -45,11 +45,11 @@ type createParameter struct {
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	Plan string `cli:"plan,options=vpc_router_plan_premium" mapconv:"PlanID,filters=vpc_router_plan_premium_to_value" validate:"required,vpc_router_plan_premium"`
+	Plan string `cli:"plan,options=vpc_router_plan_premium,category=plan" mapconv:"PlanID,filters=vpc_router_plan_premium_to_value" validate:"required,vpc_router_plan_premium"`
 
-	PublicNetworkInterface vpcrouter.PremiumNICSetting `mapconv:"NICSetting,omitempty"`
+	PublicNetworkInterface vpcrouter.PremiumNICSetting `cli:",category=network,order=10" mapconv:"NICSetting,omitempty"`
 
-	PrivateNetworkInterfacesData string                                   `cli:"private-network-interfaces" mapconv:"-"`
+	PrivateNetworkInterfacesData string                                   `cli:"private-network-interfaces,category=network,order=20" mapconv:"-"`
 	PrivateNetworkInterfaces     []*vpcrouter.AdditionalPremiumNICSetting `cli:"-" mapconv:"AdditionalNICSettings"`
 
 	RouterSetting routerSetting `cli:",squash" mapconv:",recursive"`

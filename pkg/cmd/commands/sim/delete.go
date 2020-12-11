@@ -38,12 +38,9 @@ type deleteParameter struct {
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	FailIfNotFound bool
-
-	WaitForRelease        bool
-	WaitForReleaseTimeout int
-	WaitForReleaseTick    int
-	Zones                 []string `cli:"-"` // Note: Customizeの中でctxから受け取る
+	cflag.FailIfNotFoundParameter `cli:",squash" mapconv:",squash"`
+	cflag.WaitForReleaseParameter `cli:",squash" mapconv:",squash"`
+	Zones                         []string `cli:"-"` // Note: Customizeの中でctxから受け取る
 }
 
 func newDeleteParameter() *deleteParameter {

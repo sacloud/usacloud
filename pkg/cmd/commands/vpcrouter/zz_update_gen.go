@@ -190,10 +190,6 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("port-forwarding"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("pptp-range-start"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("pptp-range-stop"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("private-network-interfaces"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("public-network-interface-ip-addresses"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("public-network-interface-ip-aliases"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("public-network-interface-virtual-ip-address"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("site-to-site-vpn"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("static-nat"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("static-route"))
@@ -201,6 +197,19 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("users"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Vpc-Router-specific options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("public-network-interface-ip-addresses"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("public-network-interface-ip-aliases"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("public-network-interface-virtual-ip-address"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("private-network-interfaces"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Network options",
 			Flags: fs,
 		})
 	}

@@ -50,13 +50,12 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("server", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("delete", pflag.ContinueOnError)
 		fs.SortFlags = false
-		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("force"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("with-disks"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Server-specific options",
+			Title: "Delete options",
 			Flags: fs,
 		})
 	}
@@ -67,6 +66,16 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Zone options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("error", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Error handling options",
 			Flags: fs,
 		})
 	}

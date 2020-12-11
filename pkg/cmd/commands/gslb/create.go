@@ -50,10 +50,11 @@ type createParameter struct {
 		Path         string
 		ResponseCode int
 		Port         int `validate:"omitempty,min=1,max=65535"`
-	}
+	} `cli:",category=health"`
 
-	DelayLoop   int `validate:"required,min=10,max=60"`
-	Weighted    bool
+	DelayLoop int  `cli:",category=health,order=10" validate:"required,min=10,max=60"`
+	Weighted  bool `cli:",category=health,order=20"`
+
 	SorryServer string `validate:"omitempty,ipv4"`
 
 	ServersData        string              `cli:"servers" mapconv:"-"`

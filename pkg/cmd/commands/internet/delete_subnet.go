@@ -38,8 +38,8 @@ type deleteSubnetParameter struct {
 	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 
-	FailIfNotFound bool
-	SubnetID       types.ID `validate:"required"`
+	cflag.FailIfNotFoundParameter `cli:",squash" mapconv:",squash"`
+	SubnetID                      types.ID `validate:"required"`
 }
 
 func newDeleteSubnetParameter() *deleteSubnetParameter {

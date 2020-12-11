@@ -57,11 +57,11 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("icon", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("error", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Icon-specific options",
+			Title: "Error handling options",
 			Flags: fs,
 		})
 	}

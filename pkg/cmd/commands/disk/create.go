@@ -46,14 +46,16 @@ type createParameter struct {
 	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
-	DiskPlan              string `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"required,disk_plan"`
-	Connection            string `cli:",options=disk_connection" validate:"required,disk_connection"`
-	SourceDiskID          types.ID
-	SourceArchiveID       types.ID
-	ServerID              types.ID
-	SizeGB                int `cli:"size"`
-	DistantFrom           []types.ID
-	OSType                string `cli:",options=os_type_simple" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
+	DiskPlan              string `cli:",options=disk_plan,category=plan,order=10" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"required,disk_plan"`
+	SizeGB                int    `cli:"size,category=plan,order=20"`
+	Connection            string `cli:",options=disk_connection,category=plan,order=30" validate:"required,disk_connection"`
+
+	OSType          string   `cli:",options=os_type_simple,category=source,order=10" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
+	SourceDiskID    types.ID `cli:",category=source,order=20"`
+	SourceArchiveID types.ID `cli:",category=source,order=30"`
+
+	ServerID    types.ID
+	DistantFrom []types.ID
 
 	EditDisk              common.EditRequest `cli:",category=edit" mapconv:"EditParameter,omitempty"`
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`

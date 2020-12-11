@@ -38,8 +38,8 @@ type deleteParameter struct {
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	FailIfNotFound bool
-	Force          bool `cli:",short=f"` // trueの場合は電源OFF(強制終了)してから削除
+	cflag.FailIfNotFoundParameter `cli:",squash" mapconv:",squash"`
+	cflag.ForceDeleteParameter    `cli:",squash" mapconv:",squash"`
 }
 
 func newDeleteParameter() *deleteParameter {

@@ -48,7 +48,7 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	PrivateInterface mobilegateway.PrivateInterfaceSettingUpdate `mapconv:",omitempty" validate:"omitempty"`
+	PrivateInterface mobilegateway.PrivateInterfaceSettingUpdate `cli:",category=network" mapconv:",omitempty" validate:"omitempty"`
 
 	InternetConnectionEnabled       *bool
 	InterDeviceCommunicationEnabled *bool

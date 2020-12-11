@@ -48,11 +48,11 @@ func (p *uploadParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("archive", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("upload", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("source-file"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Archive-specific options",
+			Title: "Upload options",
 			Flags: fs,
 		})
 	}

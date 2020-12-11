@@ -156,18 +156,45 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("database", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("WebUI", pflag.ContinueOnError)
 		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("enable-web-ui"))
+		sets = append(sets, &core.FlagSet{
+			Title: "WebUI options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("backup", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("enable-backup"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("backup-weekdays"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("backup-start-time-hour"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("backup-start-time-minute"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("backup-weekdays"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("enable-backup"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("enable-replication"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("enable-web-ui"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("replica-user-password"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Backup options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("source-network"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Database-specific options",
+			Title: "Network options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("replication", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("enable-replication"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("replica-user-password"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Replication options",
 			Flags: fs,
 		})
 	}

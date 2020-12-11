@@ -58,7 +58,7 @@ type createParameter struct {
 	StaticRoutesData string                              `cli:"static-routes" mapconv:"-"`
 	StaticRoutes     []*sacloud.MobileGatewayStaticRoute `cli:"-"`
 
-	PrivateInterface mobilegateway.PrivateInterfaceSetting `mapconv:",omitempty" validate:"omitempty"`
+	PrivateInterface mobilegateway.PrivateInterfaceSetting `cli:",category=network" mapconv:",omitempty" validate:"omitempty"`
 	DNS              sacloud.MobileGatewayDNSSetting       `cli:",squash" mapconv:",omitempty" validate:"omitempty"`
 	TrafficConfig    sacloud.MobileGatewayTrafficControl   `mapconv:",omitempty"`
 

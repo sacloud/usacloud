@@ -61,7 +61,6 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("ipv6addr", pflag.ContinueOnError)
 		fs.SortFlags = false
-		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("ipv6addr"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Ipv6addr-specific options",
@@ -75,6 +74,16 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Zone options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("error", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Error handling options",
 			Flags: fs,
 		})
 	}

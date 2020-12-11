@@ -51,12 +51,12 @@ func (p *downloadParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("archive", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("download", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("destination"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("force"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Archive-specific options",
+			Title: "Download options",
 			Flags: fs,
 		})
 	}

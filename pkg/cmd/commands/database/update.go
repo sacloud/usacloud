@@ -44,14 +44,15 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	SourceNetwork         *[]string ` validate:"omitempty,dive,cidrv4"`
-	EnableReplication     *bool
-	ReplicaUserPassword   *string ` validate:"omitempty,required_with=EnableReplication"`
-	EnableWebUI           *bool
-	EnableBackup          *bool
-	BackupWeekdays        *[]string `cli:",options=weekdays" mapconv:",omitempty,filters=weekdays" validate:"omitempty,required_with=EnableBackup,max=7,weekdays"`
-	BackupStartTimeHour   *int      `request:",omitempty" validate:"omitempty,min=0,max=23"`
-	BackupStartTimeMinute *int      `request:",omitempty" validate:"omitempty,oneof=0 15 30 45"`
+	SourceNetwork *[]string `cli:",category=network" validate:"omitempty,dive,cidrv4"`
+
+	EnableReplication     *bool     `cli:",category=replication,order=10"`
+	ReplicaUserPassword   *string   `cli:",category=replication,order=20" validate:"omitempty,required_with=EnableReplication"`
+	EnableWebUI           *bool     `cli:",category=WebUI"`
+	EnableBackup          *bool     `cli:",category=backup,order=10"`
+	BackupWeekdays        *[]string `cli:",options=weekdays,category=backup,order=20" mapconv:",omitempty,filters=weekdays" validate:"omitempty,required_with=EnableBackup,max=7,weekdays"`
+	BackupStartTimeHour   *int      `cli:",category=backup,order=30" mapconv:",omitempty" validate:"omitempty,min=0,max=23"`
+	BackupStartTimeMinute *int      `cli:",category=backup,order=40" mapconv:",omitempty" validate:"omitempty,oneof=0 15 30 45"`
 
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
