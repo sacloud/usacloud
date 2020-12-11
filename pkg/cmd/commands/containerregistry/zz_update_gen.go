@@ -83,9 +83,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
-	fs.StringVarP(&p.FormatFile, "format-file", "", p.FormatFile, "Output format in Go templates(from file)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
-	fs.StringVarP(&p.QueryFile, "query-file", "", p.QueryFile, "JMESPath query(from file)")
 	fs.StringVarP(p.Name, "name", "", "", "")
 	fs.StringVarP(p.Description, "description", "", "", "")
 	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
@@ -154,10 +152,8 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("format"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("format-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
