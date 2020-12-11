@@ -19,6 +19,9 @@ import (
 	"os/exec"
 	"strings"
 
+	"github.com/sacloud/libsacloud/v2/helper/wait"
+	"github.com/sacloud/libsacloud/v2/sacloud"
+
 	"github.com/sacloud/libsacloud/v2/helper/query"
 	"github.com/sacloud/libsacloud/v2/helper/service/server"
 	"github.com/sacloud/usacloud/pkg/cli"
@@ -45,10 +48,11 @@ type sshParameter struct {
 	cflag.IDParameter    `cli:",squash" mapconv:",squash"`
 	cflag.InputParameter `cli:",squash" mapconv:"-"`
 
-	Key      string `cli:",short=i" validate:"omitempty,file"`
-	User     string `cli:",short=l"`
-	Port     int    `cli:",short=p" validate:"required"`
-	Password string `cli:",aliases=pass-phrase"`
+	Key            string `cli:",short=i" validate:"omitempty,file"`
+	User           string `cli:",short=l"`
+	Port           int    `cli:",short=p" validate:"required"`
+	Password       string `cli:",aliases=pass-phrase"`
+	WaitUntilReady bool   `cli:",aliases=wait"`
 }
 
 func newSSHParameter() *sshParameter {
@@ -78,6 +82,14 @@ func sshFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 
 	if len(instance.Interfaces) == 0 {
 		return nil, fmt.Errorf("server[%q] has no network interfaces", p.ID)
+	}
+
+	if !instance.InstanceStatus.IsUp() && p.WaitUntilReady {
+		lastState, err := wait.UntilServerIsUp(ctx, sacloud.NewServerOp(ctx.Client()), p.Zone, p.ID)
+		if err != nil {
+			return nil, err
+		}
+		instance = lastState
 	}
 
 	ip := instance.Interfaces[0].IPAddress

@@ -35,6 +35,7 @@ func (p *sshParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.User, "user", "l", p.User, "")
 	fs.IntVarP(&p.Port, "port", "p", p.Port, "")
 	fs.StringVarP(&p.Password, "password", "", p.Password, "(aliases: --pass-phrase)")
+	fs.BoolVarP(&p.WaitUntilReady, "wait-until-ready", "", p.WaitUntilReady, "(aliases: --wait)")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -44,6 +45,8 @@ func (p *sshParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.No
 		name = "generate-skeleton"
 	case "pass-phrase":
 		name = "password"
+	case "wait":
+		name = "wait-until-ready"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -58,6 +61,7 @@ func (p *sshParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("password"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("port"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("user"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("wait-until-ready"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Server-specific options",
 			Flags: fs,
