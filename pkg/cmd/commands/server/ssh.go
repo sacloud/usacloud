@@ -23,7 +23,6 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud"
 
 	"github.com/sacloud/libsacloud/v2/helper/query"
-	"github.com/sacloud/libsacloud/v2/helper/service/server"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -71,15 +70,7 @@ func sshFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		return nil, fmt.Errorf("invalid parameter: %v", parameter)
 	}
 
-	svc := server.New(ctx.Client())
-	instance, err := svc.ReadWithContext(ctx, &server.ReadRequest{
-		Zone: p.Zone,
-		ID:   p.ID,
-	})
-	if err != nil {
-		return nil, err
-	}
-
+	instance := ctx.Resource().(*sacloud.Server)
 	if len(instance.Interfaces) == 0 {
 		return nil, fmt.Errorf("server[%q] has no network interfaces", p.ID)
 	}

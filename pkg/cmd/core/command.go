@@ -365,7 +365,7 @@ func (c *Command) expandResourceContextsFromArgs(ctx cli.Context, args []string)
 
 		for _, r := range resources {
 			if id, ok := c.extractMatchedResourceID(r, args); ok {
-				results.Append(cli.ResourceContext{ID: id, Zone: zone})
+				results.Append(cli.ResourceContext{ID: id, Zone: zone, Resource: r})
 			}
 		}
 	}
@@ -488,7 +488,7 @@ func (c *Command) execParallel(ctx cli.Context, ids cli.ResourceContexts) (outpu
 			}
 
 			resultCh <- &funcResult{results: contents}
-		}(ctx.WithResource(rc.ID, rc.Zone))
+		}(ctx.WithResource(rc.ID, rc.Zone, rc.Resource))
 	}
 	wg.Wait()
 

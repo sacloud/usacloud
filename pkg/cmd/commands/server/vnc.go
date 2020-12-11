@@ -61,19 +61,14 @@ func vncFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		return nil, fmt.Errorf("invalid parameter: %v", parameter)
 	}
 
-	serverOp := sacloud.NewServerOp(ctx.Client())
-	instance, err := serverOp.Read(ctx, p.Zone, p.ID)
-	if err != nil {
-		return nil, err
-	}
-
+	instance := ctx.Resource().(*sacloud.Server)
 	if !instance.InstanceStatus.IsUp() && p.WaitUntilReady {
 		if _, err := wait.UntilServerIsUp(ctx, sacloud.NewServerOp(ctx.Client()), p.Zone, p.ID); err != nil {
 			return nil, err
 		}
 	}
 
-	vncInfo, err := serverOp.GetVNCProxy(ctx, p.Zone, p.ID)
+	vncInfo, err := sacloud.NewServerOp(ctx.Client()).GetVNCProxy(ctx, p.Zone, p.ID)
 	if err != nil {
 		return nil, err
 	}
