@@ -18,7 +18,7 @@ import "github.com/sacloud/libsacloud/v2/sacloud/types"
 
 // IDParameter IDを指定して操作する必要があるリソースが実装すべきIDパラメータの定義
 type IDParameter struct {
-	ID types.ID `cli:"-"` // IDは実行時にName or Tagsから検索〜設定されるケースがあるためvalidate:"required"にしない
+	ID types.ID `cli:"-" json:"-"` // IDは実行時にName or Tagsから検索〜設定されるケースがあるためvalidate:"required"にしない
 }
 
 func (p *IDParameter) IDFlagValue() types.ID {
