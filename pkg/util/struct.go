@@ -18,6 +18,8 @@ import (
 	"encoding/json"
 	"errors"
 	"io/ioutil"
+
+	"github.com/mitchellh/go-homedir"
 )
 
 func MarshalJSONFromPathOrContent(pathOrContent string, destination interface{}) error {
@@ -42,9 +44,14 @@ func BytesFromPathOrContent(pathOrContent string) ([]byte, error) {
 		return nil, errors.New("pathOrContent required")
 	}
 
-	data, err := ioutil.ReadFile(pathOrContent)
+	poc, err := homedir.Expand(pathOrContent)
 	if err != nil {
-		return []byte(pathOrContent), nil // ファイルを読んでみてエラーだった場合はJSONなどのコンテンツと判定する
+		return nil, errors.New("got invalid pathOrContent")
+	}
+
+	data, err := ioutil.ReadFile(poc)
+	if err != nil {
+		return []byte(poc), nil // ファイルを読んでみてエラーだった場合はJSONなどのコンテンツと判定する
 	}
 	return data, nil
 }

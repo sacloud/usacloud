@@ -12,6 +12,7 @@ require (
 	github.com/mattn/go-colorable v0.1.4
 	github.com/mattn/go-isatty v0.0.10
 	github.com/mattn/go-runewidth v0.0.6 // indirect
+	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.0-20180506121414-d4647c9c7a84
 	github.com/sacloud/libsacloud/v2 v2.8.11-0.20201208151412-9cd2ecdc7826
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
