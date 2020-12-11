@@ -26,7 +26,7 @@ import (
 )
 
 {{ if .ServiceType }}
-func init() { {{ range .Commands }}{{ if .ParameterInitializer }}
+func init() { {{ range .Commands }}{{ if .ParameterInitializer }}{{ if not .Func }}
 	setDefaultServiceFunc("{{ .Resource.Name }}", "{{.Name}}", 
 		func (ctx cli.Context, parameter interface{}) ([]interface{}, error) { 
 			svc := service.New(ctx.Client())
@@ -59,7 +59,7 @@ func init() { {{ range .Commands }}{{ if .ParameterInitializer }}
 			return nil, nil
 			{{ end }}
 		},
-	)
+	){{ end }}
 	{{ if .Resource.ServiceMeta.HasFindMethod }}setDefaultListAllFunc("{{ .Resource.Name }}", "{{.Name}}", 
 		func (ctx cli.Context, parameter interface{}) ([]interface{}, error) { 
 			svc := service.New(ctx.Client())

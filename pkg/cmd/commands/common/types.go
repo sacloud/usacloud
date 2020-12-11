@@ -57,5 +57,13 @@ func (p *EditRequest) Customize(_ cli.Context) error {
 	}
 
 	p.Notes = append(p.Notes, notes...)
+
+	for i := range p.SSHKeys {
+		key, err := util.StringFromPathOrContent(p.SSHKeys[i])
+		if err != nil {
+			return err
+		}
+		p.SSHKeys[i] = key
+	}
 	return nil
 }
