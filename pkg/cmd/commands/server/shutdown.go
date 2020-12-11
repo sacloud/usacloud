@@ -38,10 +38,10 @@ type shutdownParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 
-	NoWait        bool
-	ForceShutdown bool `cli:",short=f,aliases=force"`
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
+	ForceShutdown         bool `cli:",short=f,aliases=force"`
 }
 
 func newShutdownParameter() *shutdownParameter {

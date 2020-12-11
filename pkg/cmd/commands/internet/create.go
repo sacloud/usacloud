@@ -15,7 +15,6 @@
 package internet
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
@@ -34,21 +33,21 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name        string   `validate:"required"`
-	Description string   `validate:"description"`
-	Tags        []string `validate:"tags"`
-	IconID      types.ID
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
 	NetworkMaskLen int `cli:",options=internet_network_mask_len" validate:"required,internet_network_mask_len"`
 	BandWidthMbps  int `cli:"band-width,aliases=band-width-mbps,options=internet_bandwidth" validate:"required,internet_bandwidth"`
 
-	EnableIPv6    bool `cli:"enable-ipv6"`
-	NoWait        bool
-	NotFoundRetry int
+	EnableIPv6            bool `cli:"enable-ipv6"`
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
+	NotFoundRetry         int
 }
 
 func newCreateParameter() *createParameter {

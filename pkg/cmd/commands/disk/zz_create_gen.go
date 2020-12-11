@@ -44,21 +44,21 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
 	fs.StringVarP(&p.DiskPlan, "disk-plan", "", p.DiskPlan, "options: [ssd/hdd]")
+	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "")
 	fs.StringVarP(&p.Connection, "connection", "", p.Connection, "options: [virtio/ide]")
+	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [centos/centos8/ubuntu/ubuntu2004/debian/debian10/coreos/rancheros/k3os/freebsd/...]")
 	fs.VarP(core.NewIDFlag(&p.SourceDiskID, &p.SourceDiskID), "source-disk-id", "", "")
 	fs.VarP(core.NewIDFlag(&p.SourceArchiveID, &p.SourceArchiveID), "source-archive-id", "", "")
 	fs.VarP(core.NewIDFlag(&p.ServerID, &p.ServerID), "server-id", "", "")
-	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "")
 	fs.VarP(core.NewIDSliceFlag(&p.DistantFrom, &p.DistantFrom), "distant-from", "", "")
-	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [centos/centos8/centos7/ubuntu/ubuntu2004/ubuntu1804/ubuntu1604/debian/debian10/debian9/coreos/rancheros/k3os/kusanagi/freebsd/windows2016/windows2016-rds/windows2016-rds-office/windows2016-sql-web/windows2016-sql-standard/windows2016-sql-standard-all/windows2016-sql2017-standard/windows2016-sql2017-enterprise/windows2016-sql2017-standard-all/windows2019/windows2019-rds/windows2019-rds-office2019/windows2019-sql2017-web/windows2019-sql2019-web/windows2019-sql2017-standard/windows2019-sql2019-standard/windows2019-sql2017-enterprise/windows2019-sql2019-enterprise/windows2019-sql2017-standard-all/windows2019-sql2019-standard-all]")
 	fs.StringVarP(&p.EditDisk.HostName, "edit-disk-host-name", "", p.EditDisk.HostName, "")
 	fs.StringVarP(&p.EditDisk.Password, "edit-disk-password", "", p.EditDisk.Password, "")
-	fs.BoolVarP(&p.EditDisk.DisablePWAuth, "edit-disk-disable-pw-auth", "", p.EditDisk.DisablePWAuth, "")
-	fs.BoolVarP(&p.EditDisk.EnableDHCP, "edit-disk-enable-dhcp", "", p.EditDisk.EnableDHCP, "")
-	fs.BoolVarP(&p.EditDisk.ChangePartitionUUID, "edit-disk-change-partition-uuid", "", p.EditDisk.ChangePartitionUUID, "")
 	fs.StringVarP(&p.EditDisk.IPAddress, "edit-disk-ip-address", "", p.EditDisk.IPAddress, "")
 	fs.IntVarP(&p.EditDisk.NetworkMaskLen, "edit-disk-network-mask-len", "", p.EditDisk.NetworkMaskLen, "")
 	fs.StringVarP(&p.EditDisk.DefaultRoute, "edit-disk-default-route", "", p.EditDisk.DefaultRoute, "")
+	fs.BoolVarP(&p.EditDisk.DisablePWAuth, "edit-disk-disable-pw-auth", "", p.EditDisk.DisablePWAuth, "")
+	fs.BoolVarP(&p.EditDisk.EnableDHCP, "edit-disk-enable-dhcp", "", p.EditDisk.EnableDHCP, "")
+	fs.BoolVarP(&p.EditDisk.ChangePartitionUUID, "edit-disk-change-partition-uuid", "", p.EditDisk.ChangePartitionUUID, "")
 	fs.StringSliceVarP(&p.EditDisk.SSHKeys, "edit-disk-ssh-keys", "", p.EditDisk.SSHKeys, "")
 	fs.VarP(core.NewIDSliceFlag(&p.EditDisk.SSHKeyIDs, &p.EditDisk.SSHKeyIDs), "edit-disk-ssh-key-ids", "", "")
 	fs.BoolVarP(&p.EditDisk.IsSSHKeysEphemeral, "edit-disk-make-ssh-keys-ephemeral", "", p.EditDisk.IsSSHKeysEphemeral, "")
@@ -85,46 +85,102 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("disk", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		fs = pflag.NewFlagSet("common", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("description"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Common options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("plan", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-plan"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("connection"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("source-disk-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("source-archive-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("server-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("size"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("connection"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Plan options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("disk", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("distant-from"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("os-type"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("server-id"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Disk-specific options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("diskedit", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-host-name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-password"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-disable-pw-auth"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-enable-dhcp"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-change-partition-uuid"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-ip-address"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-network-mask-len"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-default-route"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-disable-pw-auth"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-enable-dhcp"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-change-partition-uuid"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-ssh-keys"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-ssh-key-ids"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-make-ssh-keys-ephemeral"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-note-ids"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-notes"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-make-notes-ephemeral"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Disk options",
+			Title: "Edit disk options",
 			Flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs = pflag.NewFlagSet("source", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("os-type"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("source-disk-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("source-archive-id"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Source options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("zone", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Zone options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("wait", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Wait options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("input", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,
@@ -133,12 +189,13 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("format"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("format-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
 			Flags: fs,
@@ -151,7 +208,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("disk-plan", util.FlagCompletionFunc("ssd", "hdd"))
 	cmd.RegisterFlagCompletionFunc("connection", util.FlagCompletionFunc("virtio", "ide"))
-	cmd.RegisterFlagCompletionFunc("os-type", util.FlagCompletionFunc("centos", "centos8", "centos7", "ubuntu", "ubuntu2004", "ubuntu1804", "ubuntu1604", "debian", "debian10", "debian9", "coreos", "rancheros", "k3os", "kusanagi", "freebsd", "windows2016", "windows2016-rds", "windows2016-rds-office", "windows2016-sql-web", "windows2016-sql-standard", "windows2016-sql-standard-all", "windows2016-sql2017-standard", "windows2016-sql2017-enterprise", "windows2016-sql2017-standard-all", "windows2019", "windows2019-rds", "windows2019-rds-office2019", "windows2019-sql2017-web", "windows2019-sql2019-web", "windows2019-sql2017-standard", "windows2019-sql2019-standard", "windows2019-sql2017-enterprise", "windows2019-sql2019-enterprise", "windows2019-sql2017-standard-all", "windows2019-sql2019-standard-all"))
+	cmd.RegisterFlagCompletionFunc("os-type", util.FlagCompletionFunc("centos", "centos8", "ubuntu", "ubuntu2004", "debian", "debian10", "coreos", "rancheros", "k3os", "freebsd", "..."))
 
 }
 

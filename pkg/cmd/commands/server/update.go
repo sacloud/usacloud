@@ -39,19 +39,20 @@ var updateCommand = &core.Command{
 type updateParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name        *string   `validate:"omitempty,min=1"`
-	Description *string   `validate:"omitempty,description"`
-	Tags        *[]string `validate:"omitempty,tags"`
-	IconID      *types.ID
+	cflag.NameUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.DescUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	CPU             *int    `cli:"cpu,aliases=core"`
-	Memory          *int    `cli:"memory" mapconv:"MemoryGB"`
-	Commitment      *string `cli:",options=server_plan_commitment" mapconv:",omitempty,filters=server_plan_commitment_to_value" validate:"omitempty,server_plan_commitment"`
-	Generation      *string `cli:",options=server_plan_generation" mapconv:",omitempty,filters=server_plan_generation_to_value" validate:"omitempty,server_plan_generation"`
+	CPU        *int    `cli:"cpu,aliases=core,category=plan,order=10"`
+	Memory     *int    `cli:"memory,category=plan,order=20" mapconv:"MemoryGB"`
+	Commitment *string `cli:",options=server_plan_commitment,category=plan,order=30" mapconv:",omitempty,filters=server_plan_commitment_to_value" validate:"omitempty,server_plan_commitment"`
+	Generation *string `cli:",options=server_plan_generation,category=plan,order=40" mapconv:",omitempty,filters=server_plan_generation_to_value" validate:"omitempty,server_plan_generation"`
+
 	InterfaceDriver *string `cli:",options=interface_dirver" mapconv:",omitempty,filters=interface_driver_to_value" validate:"omitempty,interface_driver"`
 
 	CDROMID       *types.ID `cli:"cdrom-id,aliases=iso-image-id"`
@@ -63,8 +64,8 @@ type updateParameter struct {
 	DisksData string                 `cli:"disks" mapconv:"-"`
 	Disks     *[]*diskApplyParameter `cli:"-" mapconv:",omitempty,recursive"`
 
-	NoWait        bool
-	ForceShutdown bool // DeleteのForceと区別するために-fは定義しない
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
+	ForceShutdown         bool // DeleteのForceと区別するために-fは定義しない
 }
 
 func newUpdateParameter() *updateParameter {

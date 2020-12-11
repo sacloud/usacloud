@@ -51,23 +51,43 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("private-host", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("zone", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release-timeout"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release-tick"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Private-Host options",
+			Title: "Zone options",
 			Flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs = pflag.NewFlagSet("error", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Error handling options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("wait", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release-timeout"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("wait-for-release-tick"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Wait options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("input", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,

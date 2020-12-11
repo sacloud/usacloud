@@ -32,13 +32,13 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name  string   `validate:"required"`
-	Tags  []string `validate:"tags"`
-	Image string   `mapconv:",filters=path_or_content base64encode" validate:"required"`
+	cflag.NameParameter `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter `cli:",squash" mapconv:",squash"`
+	Image               string `mapconv:",filters=path_or_content base64encode" validate:"required"`
 }
 
 func newCreateParameter() *createParameter {

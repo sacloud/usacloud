@@ -225,42 +225,53 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("simple-monitor", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("common", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("description"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("delay-loop"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("enabled"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-protocol"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-port"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-path"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-status"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-sni"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-host"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-basic-auth-username"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-basic-auth-password"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-q-name"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-expected-data"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-community"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-snmp-version"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-oid"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-remaining-days"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("notify-email-enabled"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("notify-email-html"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("notify-slack-enabled"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("slack-webhooks-url"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("notify-interval"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Simple-Monitor options",
+			Title: "Common options",
 			Flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs = pflag.NewFlagSet("simple-monitor", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("delay-loop"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("enabled"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-basic-auth-password"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-basic-auth-username"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-community"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-expected-data"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-host"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-oid"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-path"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-port"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-protocol"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-q-name"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-remaining-days"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-sni"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-snmp-version"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-status"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("notify-email-enabled"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("notify-email-html"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("notify-interval"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("notify-slack-enabled"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("slack-webhooks-url"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Simple-Monitor-specific options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("input", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,
@@ -269,12 +280,13 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("format"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("format-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
 			Flags: fs,

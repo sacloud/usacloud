@@ -44,11 +44,12 @@ func (p *requestParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("rest", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("method"))
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("data"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("method"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Rest options",
+			Title: "Rest-specific options",
 			Flags: fs,
 		})
 	}

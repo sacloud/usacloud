@@ -34,36 +34,38 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name           string   `validate:"required"`
-	Description    string   `validate:"description"`
-	Tags           []string `validate:"tags"`
-	IconID         types.ID
-	PlanID         string   `cli:"plan,options=database_plan" mapconv:",filters=database_plan_to_value" validate:"required,database_plan"`
-	SwitchID       types.ID `validate:"required"`
-	IPAddresses    []string `cli:"ip-address,aliases=ipaddress" validate:"required,min=1,max=2,dive,ipv4"`
-	NetworkMaskLen int      `validate:"required,min=1,max=32"`
-	DefaultRoute   string   `validate:"omitempty,ipv4"`
-	Port           int      `validate:"omitempty,min=1,max=65535"`
-	SourceNetwork  []string `validate:"omitempty,dive,cidrv4"`
-	DatabaseType   string   `cli:",options=database_type" mapconv:",filters=database_type_to_value" validate:"required,database_type"`
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	Username string `validate:"required"`
-	Password string `validate:"required"`
+	DatabaseType string `cli:",options=database_type,category=plan,order=10" mapconv:",filters=database_type_to_value" validate:"required,database_type"`
+	PlanID       string `cli:"plan,options=database_plan,category=plan,order=20" mapconv:",filters=database_plan_to_value" validate:"required,database_plan"`
 
-	EnableReplication   bool
-	ReplicaUserPassword string `validate:"required_with=EnableReplication"`
-	EnableWebUI         bool
-	EnableBackup        bool
-	BackupWeekdays      []string `cli:",options=weekdays" mapconv:",omitempty,filters=weekdays" validate:"required_with=EnableBackup,max=7,weekdays"`
+	SwitchID       types.ID `cli:",category=network,order=10" validate:"required"`
+	IPAddresses    []string `cli:"ip-address,aliases=ipaddress,category=network,order=20" validate:"required,min=1,max=2,dive,ipv4"`
+	NetworkMaskLen int      `cli:",category=network,order=30" validate:"required,min=1,max=32"`
+	DefaultRoute   string   `cli:",category=network,order=40" validate:"omitempty,ipv4"`
+	Port           int      `cli:",category=network,order=50" validate:"omitempty,min=1,max=65535"`
+	SourceNetwork  []string `cli:",category=network,order=60" validate:"omitempty,dive,cidrv4"`
 
-	BackupStartTimeHour   int `validate:"omitempty,min=0,max=23"`
-	BackupStartTimeMinute int `cli:",options=backup_start_minute" validate:"omitempty,backup_start_minute"`
+	Username string `cli:",category=user,order=10" validate:"required"`
+	Password string `cli:",category=user,order=20" validate:"required"`
 
-	NoWait bool
+	EnableReplication   bool     `cli:",category=replication,order=10"`
+	ReplicaUserPassword string   `cli:",category=replication,order=20" validate:"required_with=EnableReplication"`
+	EnableWebUI         bool     `cli:",category=WebUI"`
+	EnableBackup        bool     `cli:",category=backup,order=10"`
+	BackupWeekdays      []string `cli:",options=weekdays,category=backup,order=20" mapconv:",omitempty,filters=weekdays" validate:"required_with=EnableBackup,max=7,weekdays"`
+
+	BackupStartTimeHour   int `cli:",category=backup,order=30" validate:"omitempty,min=0,max=23"`
+	BackupStartTimeMinute int `cli:",options=backup_start_minute,category=backup,order=40" validate:"omitempty,backup_start_minute"`
+
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 func newCreateParameter() *createParameter {

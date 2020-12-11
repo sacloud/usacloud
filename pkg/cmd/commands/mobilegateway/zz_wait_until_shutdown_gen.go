@@ -46,18 +46,20 @@ func (p *waitUntilShutdownParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("mobile-gateway", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("zone", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Mobile-Gateway options",
+			Title: "Zone options",
 			Flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
+		fs = pflag.NewFlagSet("input", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,

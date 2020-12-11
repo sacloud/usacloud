@@ -47,19 +47,21 @@ func (p *disableIPv6Parameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("internet", pflag.ContinueOnError)
+		fs = pflag.NewFlagSet("zone", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Internet options",
+			Title: "Zone options",
 			Flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs = pflag.NewFlagSet("input", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,

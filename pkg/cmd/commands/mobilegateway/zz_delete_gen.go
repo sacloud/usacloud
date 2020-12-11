@@ -59,21 +59,41 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("mobile-gateway", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
+		fs = pflag.NewFlagSet("delete", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("force"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Mobile-Gateway options",
+			Title: "Delete options",
 			Flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs = pflag.NewFlagSet("zone", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Zone options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("error", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("fail-if-not-found"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Error handling options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("input", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,
@@ -82,12 +102,13 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("format"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("format-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
 			Flags: fs,

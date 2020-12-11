@@ -39,7 +39,7 @@ var deleteCacheAllCommand = &core.Command{
 type deleteCacheAllParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 
 	Domain string `validate:"required"`
 }

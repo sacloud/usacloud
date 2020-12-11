@@ -14,7 +14,6 @@
 
 package cflag
 
-type CommonParameterValueHolder interface {
-	ParametersFlagValue() string
-	GenerateSkeletonFlagValue() bool
+type ForceDeleteParameter struct {
+	Force bool `cli:",short=f,category=delete,order=10"`
 }

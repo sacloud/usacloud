@@ -33,12 +33,12 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name        string `validate:"required"`
-	Description string `validate:"description"`
+	cflag.NameParameter `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter `cli:",squash" mapconv:",squash"`
 }
 
 func newCreateParameter() *createParameter {

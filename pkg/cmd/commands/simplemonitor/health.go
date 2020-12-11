@@ -43,7 +43,7 @@ var healthCommand = &core.Command{
 
 type healthParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.MonitorParameter `cli:",squash" mapconv:",squash"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }

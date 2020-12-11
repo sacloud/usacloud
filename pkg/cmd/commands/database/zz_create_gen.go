@@ -43,6 +43,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
+	fs.StringVarP(&p.DatabaseType, "database-type", "", p.DatabaseType, "options: [postgresql/postgres/mariadb]")
 	fs.StringVarP(&p.PlanID, "plan", "", p.PlanID, "options: [10g/30g/90g/240g/500g/1t]")
 	fs.VarP(core.NewIDFlag(&p.SwitchID, &p.SwitchID), "switch-id", "", "")
 	fs.StringSliceVarP(&p.IPAddresses, "ip-address", "", p.IPAddresses, "(aliases: --ipaddress)")
@@ -50,7 +51,6 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.DefaultRoute, "default-route", "", p.DefaultRoute, "")
 	fs.IntVarP(&p.Port, "port", "", p.Port, "")
 	fs.StringSliceVarP(&p.SourceNetwork, "source-network", "", p.SourceNetwork, "")
-	fs.StringVarP(&p.DatabaseType, "database-type", "", p.DatabaseType, "options: [postgresql/postgres/mariadb]")
 	fs.StringVarP(&p.Username, "username", "", p.Username, "")
 	fs.StringVarP(&p.Password, "password", "", p.Password, "")
 	fs.BoolVarP(&p.EnableReplication, "enable-replication", "", p.EnableReplication, "")
@@ -82,41 +82,115 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("database", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		fs = pflag.NewFlagSet("common", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("description"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Common options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("plan", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("database-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Plan options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("WebUI", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("enable-web-ui"))
+		sets = append(sets, &core.FlagSet{
+			Title: "WebUI options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("backup", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("enable-backup"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("backup-weekdays"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("backup-start-time-hour"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("backup-start-time-minute"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Backup options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("switch-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("ip-address"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("port"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("source-network"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("database-type"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("username"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("password"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("enable-replication"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("replica-user-password"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("enable-web-ui"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("enable-backup"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("backup-weekdays"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("backup-start-time-hour"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("backup-start-time-minute"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Database options",
+			Title: "Network options",
 			Flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs = pflag.NewFlagSet("replication", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("enable-replication"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("replica-user-password"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Replication options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("user", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("username"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("password"))
+		sets = append(sets, &core.FlagSet{
+			Title: "User options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("zone", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Zone options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("wait", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Wait options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("input", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,
@@ -125,12 +199,13 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("format"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("format-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
 			Flags: fs,
@@ -141,8 +216,8 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
-	cmd.RegisterFlagCompletionFunc("plan", util.FlagCompletionFunc("10g", "30g", "90g", "240g", "500g", "1t"))
 	cmd.RegisterFlagCompletionFunc("database-type", util.FlagCompletionFunc("postgresql", "postgres", "mariadb"))
+	cmd.RegisterFlagCompletionFunc("plan", util.FlagCompletionFunc("10g", "30g", "90g", "240g", "500g", "1t"))
 	cmd.RegisterFlagCompletionFunc("backup-weekdays", util.FlagCompletionFunc("all", "sun", "mon", "tue", "wed", "thu", "fri", "sat"))
 	cmd.RegisterFlagCompletionFunc("backup-start-time-minute", util.FlagCompletionFunc("0", "15", "30", "45"))
 

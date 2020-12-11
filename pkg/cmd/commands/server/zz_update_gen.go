@@ -143,34 +143,72 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("server", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		fs = pflag.NewFlagSet("common", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("description"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("cpu"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("memory"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("commitment"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("generation"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("interface-driver"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("cdrom-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("private-host-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("network-interfaces"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("disks"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("force-shutdown"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Server options",
+			Title: "Common options",
 			Flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs = pflag.NewFlagSet("plan", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("cpu"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("memory"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("commitment"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generation"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Plan options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("server", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("cdrom-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disks"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("force-shutdown"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("interface-driver"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("network-interfaces"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("private-host-id"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Server-specific options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("zone", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Zone options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("wait", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Wait options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("input", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,
@@ -179,12 +217,13 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("format"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("format-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
 			Flags: fs,

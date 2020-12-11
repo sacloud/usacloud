@@ -15,7 +15,6 @@
 package disk
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/common"
@@ -38,17 +37,18 @@ var updateCommand = &core.Command{
 type updateParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name        *string   `validate:"omitempty,min=1"`
-	Description *string   `validate:"omitempty,description"`
-	Tags        *[]string `validate:"omitempty,tags"`
-	IconID      *types.ID
-	Connection  *string            `cli:",options=disk_connection" validate:"omitempty,disk_connection"`
-	EditDisk    common.EditRequest `mapconv:"EditParameter,omitempty"`
-	NoWait      bool
+	cflag.NameUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.DescUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
+
+	Connection            *string            `cli:",options=disk_connection,category=plan" validate:"omitempty,disk_connection"`
+	EditDisk              common.EditRequest `cli:",category=edit" mapconv:"EditParameter,omitempty"`
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 func newUpdateParameter() *updateParameter {

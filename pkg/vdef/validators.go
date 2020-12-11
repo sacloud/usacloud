@@ -24,7 +24,7 @@ import (
 
 var validatorAliases = map[string]string{
 	"description":  "max=512",
-	"tags":         "max=10,dive,max=32",
+	"tags":         "unique,max=10,dive,max=32",
 	"profile_name": fmt.Sprintf("excludesrune=%s", string(os.PathListSeparator)),
 	"output_type":  "oneof=table json yaml",
 	"weekdays":     fmt.Sprintf("unique,dive,oneof=%s", joinWithSpace(append([]string{"all"}, types.BackupWeekdayStrings...))),

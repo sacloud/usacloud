@@ -43,9 +43,9 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.VarP(core.NewIDFlag(&p.SwitchID, &p.SwitchID), "switch-id", "", "")
 	fs.StringVarP(&p.Plan, "plan", "", p.Plan, "options: [ssd/hdd]")
 	fs.IntVarP(&p.Size, "size", "", p.Size, "")
+	fs.VarP(core.NewIDFlag(&p.SwitchID, &p.SwitchID), "switch-id", "", "")
 	fs.StringSliceVarP(&p.IPAddresses, "ip-address", "", p.IPAddresses, "(aliases: --ipaddress)")
 	fs.IntVarP(&p.NetworkMaskLen, "network-mask-len", "", p.NetworkMaskLen, "")
 	fs.StringVarP(&p.DefaultRoute, "default-route", "", p.DefaultRoute, "")
@@ -71,30 +71,68 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("nfs", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		fs = pflag.NewFlagSet("common", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("description"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("switch-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("size"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("ip-address"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Nfs options",
+			Title: "Common options",
 			Flags: fs,
 		})
 	}
 	{
 		var fs *pflag.FlagSet
-		fs = pflag.NewFlagSet("Input", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs = pflag.NewFlagSet("plan", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("size"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Plan options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("switch-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("ip-address"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Network options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("zone", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Zone options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("wait", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("no-wait"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Wait options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("input", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("generate-skeleton"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
 			Flags: fs,
@@ -103,12 +141,13 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("format"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("format-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query-file"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
 			Flags: fs,

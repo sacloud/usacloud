@@ -39,27 +39,28 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name        string   `validate:"required"`
-	Description string   `validate:"description"`
-	Tags        []string `validate:"tags"`
-	IconID      types.ID
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	SwitchID       types.ID `validate:"required"`
-	PlanID         string   `cli:"plan,options=loadbalancer_plan" mapconv:",filters=loadbalancer_plan_to_value" validate:"required,loadbalancer_plan"`
-	VRID           int      `cli:"vrid"`
-	IPAddresses    []string `cli:"ip-address,aliases=ipaddress" validate:"required,min=1,max=2,dive,ipv4"`
-	NetworkMaskLen int      `validate:"required,min=1,max=32"`
-	DefaultRoute   string   `validate:"omitempty,ipv4"`
-	Port           int      `validate:"omitempty,min=1,max=65535"`
+	PlanID string `cli:"plan,options=loadbalancer_plan,category=plan,order=10" mapconv:",filters=loadbalancer_plan_to_value" validate:"required,loadbalancer_plan"`
 
-	VirtualIPAddressesData string                                 `cli:"virtual-ip-addresses" mapconv:"-"`
+	VRID           int      `cli:"vrid,category=network,order=10"`
+	SwitchID       types.ID `cli:",category=network,order=20" validate:"required"`
+	IPAddresses    []string `cli:"ip-address,aliases=ipaddress,category=network,order=30" validate:"required,min=1,max=2,dive,ipv4"`
+	NetworkMaskLen int      `cli:",category=network,order=40" validate:"required,min=1,max=32"`
+	DefaultRoute   string   `cli:",category=network,order=50" validate:"omitempty,ipv4"`
+	Port           int      `cli:",category=network,order=60" validate:"omitempty,min=1,max=65535"`
+
+	VirtualIPAddressesData string                                 `cli:"virtual-ip-addresses,category=network,order=70" mapconv:"-"`
 	VirtualIPAddresses     sacloud.LoadBalancerVirtualIPAddresses `cli:"-"`
 
-	NoWait bool
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 func newCreateParameter() *createParameter {

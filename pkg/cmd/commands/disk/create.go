@@ -38,25 +38,27 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name            string   `validate:"required"`
-	Description     string   `validate:"description"`
-	Tags            []string `validate:"tags"`
-	IconID          types.ID
-	DiskPlan        string `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"required,disk_plan"`
-	Connection      string `cli:",options=disk_connection" validate:"required,disk_connection"`
-	SourceDiskID    types.ID
-	SourceArchiveID types.ID
-	ServerID        types.ID
-	SizeGB          int `cli:"size"`
-	DistantFrom     []types.ID
-	OSType          string `cli:",options=os_type" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
+	DiskPlan              string `cli:",options=disk_plan,category=plan,order=10" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"required,disk_plan"`
+	SizeGB                int    `cli:"size,category=plan,order=20"`
+	Connection            string `cli:",options=disk_connection,category=plan,order=30" validate:"required,disk_connection"`
 
-	EditDisk common.EditRequest `cli:",category=edit" mapconv:"EditParameter,omitempty"`
-	NoWait   bool
+	OSType          string   `cli:",options=os_type_simple,category=source,order=10" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
+	SourceDiskID    types.ID `cli:",category=source,order=20"`
+	SourceArchiveID types.ID `cli:",category=source,order=30"`
+
+	ServerID    types.ID
+	DistantFrom []types.ID
+
+	EditDisk              common.EditRequest `cli:",category=edit" mapconv:"EditParameter,omitempty"`
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 func validateCreateParameter(ctx cli.Context, parameter interface{}) error {

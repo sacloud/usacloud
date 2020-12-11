@@ -43,7 +43,7 @@ var readCertificateCommand = &core.Command{
 
 type readCertificateParameter struct {
 	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.InputParameter  `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 

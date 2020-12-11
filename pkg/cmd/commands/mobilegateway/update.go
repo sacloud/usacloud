@@ -17,7 +17,6 @@ package mobilegateway
 import (
 	"github.com/sacloud/libsacloud/v2/helper/service/mobilegateway"
 	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -40,16 +39,16 @@ var updateCommand = &core.Command{
 type updateParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name        *string   `validate:"omitempty,min=1"`
-	Description *string   `validate:"omitempty,description"`
-	Tags        *[]string `validate:"omitempty,tags"`
-	IconID      *types.ID
+	cflag.NameUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.DescUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	PrivateInterface mobilegateway.PrivateInterfaceSettingUpdate `mapconv:",omitempty" validate:"omitempty"`
+	PrivateInterface mobilegateway.PrivateInterfaceSettingUpdate `cli:",category=network" mapconv:",omitempty" validate:"omitempty"`
 
 	InternetConnectionEnabled       *bool
 	InterDeviceCommunicationEnabled *bool
@@ -66,7 +65,7 @@ type updateParameter struct {
 	DNS           mobilegateway.DNSSettingUpdate    `cli:",squash" mapconv:",omitempty"`
 	TrafficConfig mobilegateway.TrafficConfigUpdate `mapconv:",omitempty"`
 
-	NoWait bool
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 func newUpdateParameter() *updateParameter {

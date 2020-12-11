@@ -43,7 +43,7 @@ var monitorResponseTimeCommand = &core.Command{
 
 type monitorResponseTimeParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.MonitorParameter `cli:",squash" mapconv:",squash"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 }

@@ -15,7 +15,7 @@
 package cflag
 
 type ZoneParameter struct {
-	Zone string `validate:"required,zone"`
+	Zone string `cli:",category=zone" validate:"required,zone"`
 }
 
 func (p *ZoneParameter) ZoneFlagValue() string {

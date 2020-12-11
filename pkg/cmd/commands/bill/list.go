@@ -34,7 +34,7 @@ var listCommand = &core.Command{
 }
 
 type listParameter struct {
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.InputParameter  `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 
 	Year  int `validate:"required_with=Month"`

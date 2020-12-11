@@ -38,14 +38,14 @@ var updateCommand = &core.Command{
 type updateParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name            *string                            `validate:"omitempty,min=1"`
-	Description     *string                            `validate:"omitempty,description"`
-	ExpressionsData *string                            `cli:"expressions,aliases=rules" mapconv:"-"`
-	Expressions     *[]*sacloud.PacketFilterExpression `cli:"-" mapconv:"Expression"`
+	cflag.NameUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.DescUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
+	ExpressionsData           *string                            `cli:"expressions,aliases=rules" mapconv:"-"`
+	Expressions               *[]*sacloud.PacketFilterExpression `cli:"-" mapconv:"Expression"`
 }
 
 func newUpdateParameter() *updateParameter {

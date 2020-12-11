@@ -14,7 +14,8 @@
 
 package cflag
 
-type FindParameter struct {
-	Count int `cli:",aliases=max limit,category=filter"`
-	From  int `cli:",aliases=offset,category=filter"`
+type WaitForReleaseParameter struct {
+	WaitForRelease        bool `cli:",category=wait,order=10"` // trueの場合、他リソースから参照されている間は削除を待ち合わせし続ける
+	WaitForReleaseTimeout int  `cli:",category=wait,order=20"` // WaitForReleaseがtrueの場合の待ち時間タイムアウト(デフォルト:1時間)
+	WaitForReleaseTick    int  `cli:",category=wait,order=30"` // WaitForReleaseがtrueの場合の待ち処理のポーリング間隔(デフォルト:5秒)
 }

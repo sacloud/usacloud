@@ -34,14 +34,12 @@ var deleteCommand = &core.Command{
 type deleteParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	FailIfNotFound        bool
-	WaitForRelease        bool // trueの場合、他リソースから参照されている間は削除を待ち合わせし続ける
-	WaitForReleaseTimeout int  // WaitForReleaseがtrueの場合の待ち時間タイムアウト(デフォルト:1時間)
-	WaitForReleaseTick    int  // WaitForReleaseがtrueの場合の待ち処理のポーリング間隔(デフォルト:5秒)
+	cflag.FailIfNotFoundParameter `cli:",squash" mapconv:",squash"`
+	cflag.WaitForReleaseParameter `cli:",squash" mapconv:",squash"`
 }
 
 func newDeleteParameter() *deleteParameter {

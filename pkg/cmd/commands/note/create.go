@@ -15,7 +15,6 @@
 package note
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
@@ -33,16 +32,15 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name string `validate:"required"`
-
-	Tags    []string `validate:"tags"`
-	IconID  types.ID
-	Class   string `cli:",options=note_class" validate:"required,note_class"`
-	Content string `cli:",aliases=contents script scripts" validate:"required" mapconv:",filters=path_or_content"`
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
+	Class                 string `cli:",options=note_class" validate:"required,note_class"`
+	Content               string `cli:",aliases=contents script scripts" validate:"required" mapconv:",filters=path_or_content"`
 }
 
 func newCreateParameter() *createParameter {

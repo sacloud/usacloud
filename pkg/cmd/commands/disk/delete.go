@@ -34,14 +34,12 @@ var deleteCommand = &core.Command{
 type deleteParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	FailIfNotFound        bool
-	WaitForRelease        bool
-	WaitForReleaseTimeout int
-	WaitForReleaseTick    int
+	cflag.FailIfNotFoundParameter `cli:",squash" mapconv:",squash"`
+	cflag.WaitForReleaseParameter `cli:",squash" mapconv:",squash"`
 }
 
 func newDeleteParameter() *deleteParameter {

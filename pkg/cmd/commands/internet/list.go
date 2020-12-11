@@ -35,15 +35,15 @@ var listCommand = &core.Command{
 }
 
 type listParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
-	cflag.FindParameter   `cli:",squash" mapconv:",squash"`
-	cflag.OutputParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter        `cli:",squash" mapconv:",squash"`
+	cflag.InputParameter       `cli:",squash" mapconv:"-"`
+	cflag.LimitOffsetParameter `cli:",squash" mapconv:",squash"`
+	cflag.OutputParameter      `cli:",squash" mapconv:"-"`
 
-	Names       []string `cli:",category=filter" validate:"omitempty"`
-	Tags        []string `cli:",category=filter" validate:"omitempty"`
-	SwitchIDs   []string `cli:"switch-ids,category=filter" validate:"omitempty"`
-	SwitchNames []string `cli:"switch-names,category=filter" validate:"omitempty"`
+	cflag.FilterByNamesParameter `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.FilterByTagsParameter  `cli:",squash" mapconv:",omitempty,squash"`
+	SwitchIDs                    []string `cli:"switch-ids,category=filter" validate:"omitempty"`
+	SwitchNames                  []string `cli:"switch-names,category=filter" validate:"omitempty"`
 }
 
 func newListParameter() *listParameter {

@@ -53,15 +53,16 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("config", pflag.ContinueOnError)
-		fs.AddFlag(cmd.LocalFlags().Lookup("name"))
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("access-token"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("access-token-secret"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("default-output-type"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("no-color"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("use"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Config options",
+			Title: "Config-specific options",
 			Flags: fs,
 		})
 	}

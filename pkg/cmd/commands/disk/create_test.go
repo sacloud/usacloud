@@ -36,15 +36,15 @@ import (
 func TestCreate_ConvertToServiceRequest(t *testing.T) {
 	t.Run("full", func(t *testing.T) {
 		in := &createParameter{
-			ZoneParameter: cflag.ZoneParameter{Zone: "is1a"},
-			Name:          "name",
-			Description:   "desc",
-			Tags:          []string{"tag1", "tag2"},
-			IconID:        types.ID(1),
-			DiskPlan:      "ssd",
-			Connection:    types.DiskConnections.VirtIO.String(),
-			SizeGB:        20,
-			OSType:        "ubuntu",
+			ZoneParameter:   cflag.ZoneParameter{Zone: "is1a"},
+			NameParameter:   cflag.NameParameter{Name: "name"},
+			DescParameter:   cflag.DescParameter{Description: "desc"},
+			TagsParameter:   cflag.TagsParameter{Tags: []string{"tag1", "tag2"}},
+			IconIDParameter: cflag.IconIDParameter{IconID: types.ID(1)},
+			DiskPlan:        "ssd",
+			Connection:      types.DiskConnections.VirtIO.String(),
+			SizeGB:          20,
+			OSType:          "ubuntu",
 		}
 
 		out := &disk.CreateRequest{}
@@ -86,9 +86,9 @@ func TestCreateParameter_Validate(t *testing.T) {
 				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
-				Name:       "foobar",
-				DiskPlan:   "ssd",
-				Connection: "virtio",
+				NameParameter: cflag.NameParameter{Name: "foobar"},
+				DiskPlan:      "ssd",
+				Connection:    "virtio",
 			},
 			err: nil,
 		},
@@ -98,10 +98,10 @@ func TestCreateParameter_Validate(t *testing.T) {
 				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
-				Name:       "foobar",
-				DiskPlan:   "ssd",
-				Connection: "virtio",
-				Tags:       []string{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "invalid"},
+				NameParameter: cflag.NameParameter{Name: "foobar"},
+				DiskPlan:      "ssd",
+				Connection:    "virtio",
+				TagsParameter: cflag.TagsParameter{Tags: []string{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "invalid"}},
 			},
 			err: errors.New(strings.Join([]string{
 				"validation error:",
@@ -114,10 +114,10 @@ func TestCreateParameter_Validate(t *testing.T) {
 				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
-				Name:       "foobar",
-				DiskPlan:   "ssd",
-				Connection: "virtio",
-				Tags:       []string{"********10********20********30++x"},
+				NameParameter: cflag.NameParameter{Name: "foobar"},
+				DiskPlan:      "ssd",
+				Connection:    "virtio",
+				TagsParameter: cflag.TagsParameter{Tags: []string{"********10********20********30++x"}},
 			},
 			err: errors.New(strings.Join([]string{
 				"validation error:",
@@ -130,7 +130,7 @@ func TestCreateParameter_Validate(t *testing.T) {
 				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
-				Name:            "foobar",
+				NameParameter:   cflag.NameParameter{Name: "foobar"},
 				DiskPlan:        "ssd",
 				Connection:      "virtio",
 				SourceArchiveID: types.ID(1),
@@ -147,7 +147,7 @@ func TestCreateParameter_Validate(t *testing.T) {
 				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
-				Name:            "foobar",
+				NameParameter:   cflag.NameParameter{Name: "foobar"},
 				DiskPlan:        "ssd",
 				Connection:      "virtio",
 				OSType:          "ubuntu",

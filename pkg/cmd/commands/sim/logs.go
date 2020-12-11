@@ -45,7 +45,7 @@ var logsCommand = &core.Command{
 
 type logsParameter struct {
 	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.InputParameter  `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 

@@ -15,7 +15,6 @@
 package note
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
@@ -35,14 +34,14 @@ var updateCommand = &core.Command{
 
 type updateParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	Name    *string   `validate:"omitempty,min=1"`
-	Tags    *[]string `validate:"omitempty,tags"`
-	IconID  *types.ID `validate:"omitempty"`
-	Content *string   `cli:",aliases=contents" validate:"omitempty"`
+	cflag.NameUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
+	Content                     *string `cli:",aliases=contents" validate:"omitempty"`
 }
 
 func newUpdateParameter() *updateParameter {

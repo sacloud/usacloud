@@ -38,9 +38,9 @@ type bootParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.InputParameter   `cli:",squash" mapconv:"-"`
 
-	NoWait bool
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 func newBootParameter() *bootParameter {
