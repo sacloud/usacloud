@@ -54,18 +54,18 @@ func (p *Parser) Parse(v interface{}) ([]StructField, error) {
 	case reflect.Ptr:
 		return p.Parse(rv.Elem().Interface()) // dereference pointer
 	case reflect.Struct:
-		return p.ParseFields("", "", reflect.TypeOf(v))
+		return p.ParseFields(StructField{}, reflect.TypeOf(v))
 	default:
 		return nil, fmt.Errorf("unsupported value: %#v", v)
 	}
 }
 
-func (p *Parser) ParseFields(flagPrefix, fieldPrefix string, tp reflect.Type) ([]StructField, error) {
+func (p *Parser) ParseFields(parent StructField, tp reflect.Type) ([]StructField, error) {
 	var fields []StructField
 	for i := 0; i < tp.NumField(); i++ {
 		f := tp.Field(i)
 		if f.PkgPath == "" { // exported?
-			parsed, err := p.ParseField(flagPrefix, fieldPrefix, f)
+			parsed, err := p.ParseField(parent, f)
 			if err != nil {
 				return nil, err
 			}
@@ -75,7 +75,7 @@ func (p *Parser) ParseFields(flagPrefix, fieldPrefix string, tp reflect.Type) ([
 	return fields, nil
 }
 
-func (p *Parser) ParseField(flagPrefix, fieldPrefix string, f reflect.StructField) ([]StructField, error) {
+func (p *Parser) ParseField(parent StructField, f reflect.StructField) ([]StructField, error) {
 	tag, err := p.parseTag(f.Tag.Get(p.Config.TagName))
 	if err != nil {
 		return nil, err
@@ -93,27 +93,34 @@ func (p *Parser) ParseField(flagPrefix, fieldPrefix string, f reflect.StructFiel
 	}
 
 	if !tag.Squash {
-		if flagPrefix != "" && tag.FlagName != "" {
-			tag.FlagName = fmt.Sprintf("%s-%s", flagPrefix, tag.FlagName)
+		if parent.FlagName != "" && tag.FlagName != "" {
+			tag.FlagName = fmt.Sprintf("%s-%s", parent.FlagName, tag.FlagName)
 		}
-		flagPrefix = tag.FlagName
+		parent.FlagName = tag.FlagName
 	}
 
 	if !f.Anonymous {
-		if fieldPrefix != "" && tag.FieldName != "" {
-			tag.FieldName = fmt.Sprintf("%s.%s", fieldPrefix, tag.FieldName)
+		if parent.FieldName != "" && tag.FieldName != "" {
+			tag.FieldName = fmt.Sprintf("%s.%s", parent.FieldName, tag.FieldName)
 		}
-		fieldPrefix = tag.FieldName
+		parent.FieldName = tag.FieldName
 	}
+
+	// inherits parent category if empty
+	if tag.Category == "" {
+		tag.Category = parent.Category
+	}
+
+	parent.Category = tag.Category
 
 	kind := f.Type.Kind()
 	switch kind {
 	case reflect.Ptr:
 		if f.Type.Elem().Kind() == reflect.Struct {
-			return p.ParseFields(flagPrefix, fieldPrefix, f.Type.Elem())
+			return p.ParseFields(parent, f.Type.Elem())
 		}
 	case reflect.Struct:
-		return p.ParseFields(flagPrefix, fieldPrefix, f.Type)
+		return p.ParseFields(parent, f.Type)
 	}
 
 	return []StructField{{StructField: f, Tag: tag}}, nil

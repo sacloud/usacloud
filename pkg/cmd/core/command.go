@@ -533,7 +533,7 @@ func (c *Command) ParameterCategoryBy(key string) *Category {
 		}
 	}
 
-	if key == "" || len(c.ParameterCategories) == 0 {
+	if key == "" {
 		key = c.resource.Name
 		return &Category{
 			Key:         key,

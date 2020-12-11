@@ -38,7 +38,7 @@ type ignore struct {
 }
 
 type recursive struct {
-	Nested1 *nested1
+	Nested1 *nested1 `cli:",category=parent"`
 }
 
 type nested1 struct {
@@ -51,7 +51,7 @@ type nested2 struct {
 }
 
 type squash struct {
-	Nested1 *nested1 `cli:",squash"`
+	Nested1 *nested1 `cli:",squash,category=parent"`
 	Nested2 *nestedSquash
 }
 
@@ -133,6 +133,7 @@ func TestParser_Parse(t *testing.T) {
 					Tag: Tag{
 						FieldName: "Nested1.Field1",
 						FlagName:  "nested-1-field-1",
+						Category:  "parent",
 					},
 				},
 				{
@@ -140,6 +141,7 @@ func TestParser_Parse(t *testing.T) {
 					Tag: Tag{
 						FieldName: "Nested1.Field2.Field1",
 						FlagName:  "nested-1-field-2-field-1",
+						Category:  "parent",
 					},
 				},
 			},
@@ -152,6 +154,7 @@ func TestParser_Parse(t *testing.T) {
 					Tag: Tag{
 						FieldName: "Nested1.Field1",
 						FlagName:  "field-1",
+						Category:  "parent",
 					},
 				},
 				{
@@ -159,6 +162,7 @@ func TestParser_Parse(t *testing.T) {
 					Tag: Tag{
 						FieldName: "Nested1.Field2.Field1",
 						FlagName:  "field-2-field-1",
+						Category:  "parent",
 					},
 				},
 				{

@@ -83,8 +83,8 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Disk.EditDisk.NotesData, "disk-edit-notes", "", p.Disk.EditDisk.NotesData, "")
 	fs.BoolVarP(&p.Disk.EditDisk.IsNotesEphemeral, "disk-edit-make-notes-ephemeral", "", p.Disk.EditDisk.IsNotesEphemeral, "")
 	fs.BoolVarP(&p.Disk.NoWait, "disk-no-wait", "", p.Disk.NoWait, "")
-	fs.StringVarP(&p.DisksData, "disks", "", p.DisksData, "")
 	fs.VarP(core.NewIDSliceFlag(&p.DiskIDs, &p.DiskIDs), "disk-ids", "", "")
+	fs.StringVarP(&p.DisksData, "disks", "", p.DisksData, "")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -145,25 +145,31 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("boot-after-create"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("cdrom-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("interface-driver"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("private-host-id"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Server-specific options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("disk", pflag.ContinueOnError)
+		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-connection"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-disk-plan"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-distant-from"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("disk-ids"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-no-wait"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-os-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-server-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-size"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-source-archive-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-source-disk-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-ids"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disks"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("interface-driver"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("network-interface-packet-filter-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("network-interface-upstream"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("network-interface-user-ip-address"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("private-host-id"))
 		sets = append(sets, &core.FlagSet{
-			Title: "Server-specific options",
+			Title: "Disk options",
 			Flags: fs,
 		})
 	}
@@ -194,6 +200,9 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
 		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("network-interface-packet-filter-id"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("network-interface-upstream"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("network-interface-user-ip-address"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("network-interfaces"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Network options",

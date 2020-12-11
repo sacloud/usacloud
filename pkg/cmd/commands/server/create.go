@@ -70,10 +70,10 @@ type createParameter struct {
 	NetworkInterfaceData string                     `cli:"network-interfaces,category=network,order=20" mapconv:"-"`
 	NetworkInterfaces    []*server.NetworkInterface `cli:"-" mapconv:",omitempty,recursive"`
 
-	Disk      diskApplyParameter    `mapconv:"-" validate:"omitempty"`
-	DisksData string                `cli:"disks" mapconv:"-"`
+	Disk      diskApplyParameter    `cli:",category=disk,order=10" mapconv:"-" validate:"omitempty"`
+	DiskIDs   []types.ID            `cli:"disk-ids,category=disk,order=20" mapconv:"-"`
+	DisksData string                `cli:"disks,category=disk,order=30" mapconv:"-"`
 	Disks     []*diskApplyParameter `cli:"-" mapconv:",omitempty,recursive"`
-	DiskIDs   []types.ID            `cli:"disk-ids" mapconv:"-"`
 
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
@@ -81,7 +81,7 @@ type createParameter struct {
 type diskApplyParameter struct {
 	ID types.ID
 
-	Name                  string `cli:",category=common"`
+	Name                  string `cli:",category=common"` // NOTE: requiredではないためcflag.NameParameterを利用していない
 	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
