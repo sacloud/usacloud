@@ -45,7 +45,7 @@ type createParameter struct {
 
 	DiskID           types.ID `validate:"required"`
 	Weekdays         []string `cli:",options=weekdays" mapconv:"BackupSpanWeekdays,omitempty,filters=weekdays" validate:"required,weekdays"`
-	MaxNumOfArchives int      `mapconv:"MaximumNumberOfArchives" validate:"required,min=1,max=10"`
+	MaxNumOfArchives int      `cli:"max-backup-num" mapconv:"MaximumNumberOfArchives" validate:"required,min=1,max=10"`
 }
 
 func newCreateParameter() *createParameter {

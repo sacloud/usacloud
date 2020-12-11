@@ -45,7 +45,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
 	fs.VarP(core.NewIDFlag(&p.DiskID, &p.DiskID), "disk-id", "", "")
 	fs.StringSliceVarP(&p.Weekdays, "weekdays", "", p.Weekdays, "options: [all/sun/mon/tue/wed/thu/fri/sat]")
-	fs.IntVarP(&p.MaxNumOfArchives, "max-num-of-archives", "", p.MaxNumOfArchives, "")
+	fs.IntVarP(&p.MaxNumOfArchives, "max-backup-num", "", p.MaxNumOfArchives, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -81,7 +81,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs = pflag.NewFlagSet("auto-backup", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-id"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("max-num-of-archives"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("max-backup-num"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("weekdays"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Auto-Backup-specific options",

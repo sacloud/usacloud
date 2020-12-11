@@ -45,7 +45,7 @@ type createParameter struct {
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
 	AccessLevel    string `cli:",options=container_registry_access_levels" mapconv:",filters=container_registry_access_levels_to_value" validate:"required,container_registry_access_levels"`
-	SubDomainLabel string `validate:"required"`
+	SubDomainLabel string `cli:"subdomain-label" validate:"required"`
 	VirtualDomain  string `validate:"omitempty,fqdn"`
 
 	UsersData string                    `cli:"users" mapconv:"-"`

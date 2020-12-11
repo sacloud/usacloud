@@ -43,7 +43,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
 	fs.StringVarP(&p.AccessLevel, "access-level", "", p.AccessLevel, "options: [readwrite/readonly/none]")
-	fs.StringVarP(&p.SubDomainLabel, "sub-domain-label", "", p.SubDomainLabel, "")
+	fs.StringVarP(&p.SubDomainLabel, "subdomain-label", "", p.SubDomainLabel, "")
 	fs.StringVarP(&p.VirtualDomain, "virtual-domain", "", p.VirtualDomain, "")
 	fs.StringVarP(&p.UsersData, "users", "", p.UsersData, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
@@ -81,7 +81,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs = pflag.NewFlagSet("container-registry", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("access-level"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("sub-domain-label"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("subdomain-label"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("users"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("virtual-domain"))
 		sets = append(sets, &core.FlagSet{

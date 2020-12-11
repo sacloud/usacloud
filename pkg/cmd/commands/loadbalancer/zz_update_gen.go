@@ -72,7 +72,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.Description, "description", "", "", "")
 	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
-	fs.StringVarP(p.VirtualIPAddressesData, "virtual-ip-addresses", "", "", "")
+	fs.StringVarP(p.VirtualIPAddressesData, "virtual-ip-addresses", "", "", "(aliases: --vips)")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -85,6 +85,8 @@ func (p *updateParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 		name = "output-type"
 	case "fmt":
 		name = "format"
+	case "vips":
+		name = "virtual-ip-addresses"
 	}
 	return pflag.NormalizedName(name)
 }

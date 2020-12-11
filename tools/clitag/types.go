@@ -38,16 +38,17 @@ type StructField struct {
 // - Category: (empty)
 // - Order: 0
 type Tag struct {
-	FlagName    string
-	FieldName   string
-	Aliases     []string
-	Shorthand   string
-	Description string
-	Squash      bool
-	Ignore      bool
-	Category    string
-	Order       int
-	Options     []string // 設定可能な値のリスト
+	FlagName       string
+	FieldName      string
+	Aliases        []string
+	Shorthand      string
+	Description    string
+	Squash         bool
+	Ignore         bool
+	Category       string
+	Order          int
+	Options        []string // 設定可能な値のリスト
+	DisplayOptions []string // 表示用
 }
 
 // LongDescription DescriptionにAliasesとOptionsを連結して返す
@@ -89,5 +90,9 @@ func (t Tag) OptionsString() string {
 		return ""
 	}
 
-	return fmt.Sprintf("options: [%s]", strings.Join(t.Options, "/"))
+	options := t.Options
+	if len(t.DisplayOptions) > 0 {
+		options = t.DisplayOptions
+	}
+	return fmt.Sprintf("options: [%s]", strings.Join(options, "/"))
 }

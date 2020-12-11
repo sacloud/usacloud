@@ -54,9 +54,9 @@ type updateParameter struct {
 
 	Interface struct {
 		VirtualIPAddress *string   `validate:"omitempty,ipv4"`
-		IPAddress        *[]string `validate:"omitempty,min=2,max=2,dive,ipv4"`
-		NetworkMaskLen   *int      `validate:"omitempty,min=8,max=28"`
-		VRID             *int      `validate:"omitempty"`
+		IPAddress        *[]string `cli:"ip-addresses" validate:"omitempty,min=2,max=2,dive,ipv4"`
+		NetworkMaskLen   *int      `cli:"netmask,aliases=network-mask-len" validate:"omitempty,min=8,max=28"`
+		VRID             *int      `cli:"vrid" validate:"omitempty"`
 	} `cli:",squash"`
 
 	PeersData *string                     `cli:"peers" mapconv:"-"`

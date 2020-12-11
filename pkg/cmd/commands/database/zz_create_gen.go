@@ -47,10 +47,10 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.PlanID, "plan", "", p.PlanID, "options: [10g/30g/90g/240g/500g/1t]")
 	fs.VarP(core.NewIDFlag(&p.SwitchID, &p.SwitchID), "switch-id", "", "")
 	fs.StringSliceVarP(&p.IPAddresses, "ip-address", "", p.IPAddresses, "(aliases: --ipaddress)")
-	fs.IntVarP(&p.NetworkMaskLen, "network-mask-len", "", p.NetworkMaskLen, "")
-	fs.StringVarP(&p.DefaultRoute, "default-route", "", p.DefaultRoute, "")
+	fs.IntVarP(&p.NetworkMaskLen, "netmask", "", p.NetworkMaskLen, "(aliases: --network-mask-len)")
+	fs.StringVarP(&p.DefaultRoute, "gateway", "", p.DefaultRoute, "(aliases: --default-route)")
 	fs.IntVarP(&p.Port, "port", "", p.Port, "")
-	fs.StringSliceVarP(&p.SourceNetwork, "source-network", "", p.SourceNetwork, "")
+	fs.StringSliceVarP(&p.SourceNetwork, "source-range", "", p.SourceNetwork, "(aliases: --source-network)")
 	fs.StringVarP(&p.Username, "username", "", p.Username, "")
 	fs.StringVarP(&p.Password, "password", "", p.Password, "")
 	fs.BoolVarP(&p.EnableReplication, "enable-replication", "", p.EnableReplication, "")
@@ -74,6 +74,12 @@ func (p *createParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 		name = "format"
 	case "ipaddress":
 		name = "ip-address"
+	case "network-mask-len":
+		name = "netmask"
+	case "default-route":
+		name = "gateway"
+	case "source-network":
+		name = "source-range"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -133,10 +139,10 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("switch-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("ip-address"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("netmask"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("gateway"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("port"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("source-network"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("source-range"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Network options",
 			Flags: fs,

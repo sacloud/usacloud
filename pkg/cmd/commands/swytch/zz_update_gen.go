@@ -40,7 +40,7 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("display-network-mask-len") {
 		p.NetworkMaskLen = nil
 	}
-	if !fs.Changed("display-default-route") {
+	if !fs.Changed("display-gateway") {
 		p.DefaultRoute = nil
 	}
 }
@@ -79,7 +79,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
 	fs.IntVarP(p.NetworkMaskLen, "display-network-mask-len", "", 0, "")
-	fs.StringVarP(p.DefaultRoute, "display-default-route", "", "", "")
+	fs.StringVarP(p.DefaultRoute, "display-gateway", "", "", "(aliases: --display-default-route)")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -91,6 +91,8 @@ func (p *updateParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 		name = "output-type"
 	case "fmt":
 		name = "format"
+	case "display-default-route":
+		name = "display-gateway"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -114,7 +116,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("switch", pflag.ContinueOnError)
 		fs.SortFlags = false
-		fs.AddFlag(cmd.LocalFlags().Lookup("display-default-route"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("display-gateway"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("display-network-mask-len"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Switch-specific options",

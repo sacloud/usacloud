@@ -53,11 +53,11 @@ type createParameter struct {
 	VRID           int      `cli:"vrid,category=network,order=10"`
 	SwitchID       types.ID `cli:",category=network,order=20" validate:"required"`
 	IPAddresses    []string `cli:"ip-address,aliases=ipaddress,category=network,order=30" validate:"required,min=1,max=2,dive,ipv4"`
-	NetworkMaskLen int      `cli:",category=network,order=40" validate:"required,min=1,max=32"`
-	DefaultRoute   string   `cli:",category=network,order=50" validate:"omitempty,ipv4"`
+	NetworkMaskLen int      `cli:"netmask,aliases=network-mask-len,category=network,order=40" validate:"required,min=1,max=32"`
+	DefaultRoute   string   `cli:"gateway,aliases=default-route,category=network,order=50" validate:"omitempty,ipv4"`
 	Port           int      `cli:",category=network,order=60" validate:"omitempty,min=1,max=65535"`
 
-	VirtualIPAddressesData string                                 `cli:"virtual-ip-addresses,category=network,order=70" mapconv:"-"`
+	VirtualIPAddressesData string                                 `cli:"virtual-ip-addresses,aliases=vips,category=network,order=70" mapconv:"-"`
 	VirtualIPAddresses     sacloud.LoadBalancerVirtualIPAddresses `cli:"-"`
 
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`

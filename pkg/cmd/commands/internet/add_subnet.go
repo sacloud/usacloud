@@ -40,7 +40,7 @@ type addSubnetParameter struct {
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	NetworkMaskLen int    `cli:",options=internet_network_mask_len" validate:"required,internet_network_mask_len"`
+	NetworkMaskLen int    `cli:"netmask,aliases=network-mask-len,options=internet_network_mask_len" validate:"required,internet_network_mask_len"`
 	NextHop        string `validate:"required,ipv4"`
 }
 

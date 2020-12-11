@@ -45,7 +45,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
 	fs.StringVarP(&p.DiskPlan, "disk-plan", "", p.DiskPlan, "options: [ssd/hdd]")
 	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "")
-	fs.StringVarP(&p.Connection, "connection", "", p.Connection, "options: [virtio/ide]")
+	fs.StringVarP(&p.Connection, "connector", "", p.Connection, "options: [virtio/ide] (aliases: --connection)")
 	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [centos/centos8/ubuntu/ubuntu2004/debian/debian10/coreos/rancheros/k3os/freebsd/...]")
 	fs.VarP(core.NewIDFlag(&p.SourceDiskID, &p.SourceDiskID), "source-disk-id", "", "")
 	fs.VarP(core.NewIDFlag(&p.SourceArchiveID, &p.SourceArchiveID), "source-archive-id", "", "")
@@ -54,8 +54,8 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.EditDisk.HostName, "edit-disk-host-name", "", p.EditDisk.HostName, "")
 	fs.StringVarP(&p.EditDisk.Password, "edit-disk-password", "", p.EditDisk.Password, "")
 	fs.StringVarP(&p.EditDisk.IPAddress, "edit-disk-ip-address", "", p.EditDisk.IPAddress, "")
-	fs.IntVarP(&p.EditDisk.NetworkMaskLen, "edit-disk-network-mask-len", "", p.EditDisk.NetworkMaskLen, "")
-	fs.StringVarP(&p.EditDisk.DefaultRoute, "edit-disk-default-route", "", p.EditDisk.DefaultRoute, "")
+	fs.IntVarP(&p.EditDisk.NetworkMaskLen, "edit-disk-netmask", "", p.EditDisk.NetworkMaskLen, "(aliases: --network-mask-len)")
+	fs.StringVarP(&p.EditDisk.DefaultRoute, "edit-disk-gateway", "", p.EditDisk.DefaultRoute, "(aliases: --default-route)")
 	fs.BoolVarP(&p.EditDisk.DisablePWAuth, "edit-disk-disable-pw-auth", "", p.EditDisk.DisablePWAuth, "")
 	fs.BoolVarP(&p.EditDisk.EnableDHCP, "edit-disk-enable-dhcp", "", p.EditDisk.EnableDHCP, "")
 	fs.BoolVarP(&p.EditDisk.ChangePartitionUUID, "edit-disk-change-partition-uuid", "", p.EditDisk.ChangePartitionUUID, "")
@@ -77,6 +77,12 @@ func (p *createParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 		name = "output-type"
 	case "fmt":
 		name = "format"
+	case "connection":
+		name = "connector"
+	case "network-mask-len":
+		name = "edit-disk-netmask"
+	case "default-route":
+		name = "edit-disk-gateway"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -102,7 +108,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-plan"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("size"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("connection"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("connector"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Plan options",
 			Flags: fs,
@@ -126,8 +132,8 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-host-name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-password"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-ip-address"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-network-mask-len"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-default-route"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-netmask"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-gateway"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-disable-pw-auth"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-enable-dhcp"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-change-partition-uuid"))
@@ -207,8 +213,8 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("disk-plan", util.FlagCompletionFunc("ssd", "hdd"))
-	cmd.RegisterFlagCompletionFunc("connection", util.FlagCompletionFunc("virtio", "ide"))
-	cmd.RegisterFlagCompletionFunc("os-type", util.FlagCompletionFunc("centos", "centos8", "ubuntu", "ubuntu2004", "debian", "debian10", "coreos", "rancheros", "k3os", "freebsd", "..."))
+	cmd.RegisterFlagCompletionFunc("connector", util.FlagCompletionFunc("virtio", "ide"))
+	cmd.RegisterFlagCompletionFunc("os-type", util.FlagCompletionFunc("centos", "centos8", "centos7", "ubuntu", "ubuntu2004", "ubuntu1804", "ubuntu1604", "debian", "debian10", "debian9", "coreos", "rancheros", "k3os", "kusanagi", "freebsd", "windows2016", "windows2016-rds", "windows2016-rds-office", "windows2016-sql-web", "windows2016-sql-standard", "windows2016-sql-standard-all", "windows2016-sql2017-standard", "windows2016-sql2017-enterprise", "windows2016-sql2017-standard-all", "windows2019", "windows2019-rds", "windows2019-rds-office2019", "windows2019-sql2017-web", "windows2019-sql2019-web", "windows2019-sql2017-standard", "windows2019-sql2019-standard", "windows2019-sql2017-enterprise", "windows2019-sql2019-enterprise", "windows2019-sql2017-standard-all", "windows2019-sql2019-standard-all"))
 
 }
 

@@ -50,7 +50,7 @@ type updateParameter struct {
 		Protocol     *string `validate:"omitempty,gslb_protocol"`
 		HostHeader   *string
 		Path         *string
-		ResponseCode *int
+		ResponseCode *int `cli:"status,aliases=response-code"`
 		Port         *int `validate:"omitempty,min=1,max=65535"`
 	} `cli:",category=health" mapconv:",omitempty"`
 

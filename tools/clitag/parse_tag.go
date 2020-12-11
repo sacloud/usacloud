@@ -21,13 +21,14 @@ import (
 )
 
 const (
-	aliasesKey   = "aliases"
-	shortHandKey = "short"
-	descKey      = "desc"
-	squashKey    = "squash"
-	categoryKey  = "category"
-	orderKey     = "order"
-	optionsKey   = "options"
+	aliasesKey        = "aliases"
+	shortHandKey      = "short"
+	descKey           = "desc"
+	squashKey         = "squash"
+	categoryKey       = "category"
+	orderKey          = "order"
+	optionsKey        = "options"
+	displayOptionsKey = "display_options"
 )
 
 func (p *Parser) parseTag(t string) (Tag, error) {
@@ -96,6 +97,16 @@ func (p *Parser) parseTag(t string) (Tag, error) {
 					}
 					// 登録済みでなければキーをそのまま登録
 					tag.Options = append(tag.Options, o)
+				}
+			case displayOptionsKey:
+				options := strings.Split(val, " ")
+				for _, o := range options {
+					if registered, ok := p.Config.OptionsMap[o]; ok {
+						tag.DisplayOptions = append(tag.DisplayOptions, registered...)
+						continue
+					}
+					// 登録済みでなければキーをそのまま登録
+					tag.DisplayOptions = append(tag.DisplayOptions, o)
 				}
 			default:
 				return tag, fmt.Errorf("got invalid tag key: %q", token)

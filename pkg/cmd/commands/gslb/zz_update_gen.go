@@ -46,7 +46,7 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("health-check-path") {
 		p.HealthCheck.Path = nil
 	}
-	if !fs.Changed("health-check-response-code") {
+	if !fs.Changed("health-check-status") {
 		p.HealthCheck.ResponseCode = nil
 	}
 	if !fs.Changed("health-check-port") {
@@ -122,7 +122,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.HealthCheck.Protocol, "health-check-protocol", "", "", "")
 	fs.StringVarP(p.HealthCheck.HostHeader, "health-check-host-header", "", "", "")
 	fs.StringVarP(p.HealthCheck.Path, "health-check-path", "", "", "")
-	fs.IntVarP(p.HealthCheck.ResponseCode, "health-check-response-code", "", 0, "")
+	fs.IntVarP(p.HealthCheck.ResponseCode, "health-check-status", "", 0, "(aliases: --response-code)")
 	fs.IntVarP(p.HealthCheck.Port, "health-check-port", "", 0, "")
 	fs.IntVarP(p.DelayLoop, "delay-loop", "", 0, "")
 	fs.BoolVarP(p.Weighted, "weighted", "", false, "")
@@ -139,6 +139,8 @@ func (p *updateParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 		name = "output-type"
 	case "fmt":
 		name = "format"
+	case "response-code":
+		name = "health-check-status"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -177,7 +179,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-path"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-port"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-protocol"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-response-code"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-status"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("delay-loop"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("weighted"))
 		sets = append(sets, &core.FlagSet{

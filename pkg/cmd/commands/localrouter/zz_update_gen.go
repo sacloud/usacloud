@@ -49,10 +49,10 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("virtual-ip-address") {
 		p.Interface.VirtualIPAddress = nil
 	}
-	if !fs.Changed("ip-address") {
+	if !fs.Changed("ip-addresses") {
 		p.Interface.IPAddress = nil
 	}
-	if !fs.Changed("network-mask-len") {
+	if !fs.Changed("netmask") {
 		p.Interface.NetworkMaskLen = nil
 	}
 	if !fs.Changed("vrid") {
@@ -123,8 +123,8 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.Switch.Category, "switch-category", "", "", "")
 	fs.StringVarP(p.Switch.ZoneID, "switch-zone-id", "", "", "")
 	fs.StringVarP(p.Interface.VirtualIPAddress, "virtual-ip-address", "", "", "")
-	fs.StringSliceVarP(p.Interface.IPAddress, "ip-address", "", nil, "")
-	fs.IntVarP(p.Interface.NetworkMaskLen, "network-mask-len", "", 0, "")
+	fs.StringSliceVarP(p.Interface.IPAddress, "ip-addresses", "", nil, "")
+	fs.IntVarP(p.Interface.NetworkMaskLen, "netmask", "", 0, "(aliases: --network-mask-len)")
 	fs.IntVarP(p.Interface.VRID, "vrid", "", 0, "")
 	fs.StringVarP(p.PeersData, "peers", "", "", "")
 	fs.StringVarP(p.StaticRoutesData, "static-routes", "", "", "")
@@ -139,6 +139,8 @@ func (p *updateParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 		name = "output-type"
 	case "fmt":
 		name = "format"
+	case "network-mask-len":
+		name = "netmask"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -162,8 +164,8 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("local-router", pflag.ContinueOnError)
 		fs.SortFlags = false
-		fs.AddFlag(cmd.LocalFlags().Lookup("ip-address"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("ip-addresses"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("netmask"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("peers"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("static-routes"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("switch-category"))

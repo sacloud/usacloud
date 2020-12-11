@@ -38,7 +38,7 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("icon-id") {
 		p.IconID = nil
 	}
-	if !fs.Changed("source-network") {
+	if !fs.Changed("source-range") {
 		p.SourceNetwork = nil
 	}
 	if !fs.Changed("enable-replication") {
@@ -115,7 +115,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.Description, "description", "", "", "")
 	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
-	fs.StringSliceVarP(p.SourceNetwork, "source-network", "", nil, "")
+	fs.StringSliceVarP(p.SourceNetwork, "source-range", "", nil, "(aliases: --source-network)")
 	fs.BoolVarP(p.EnableReplication, "enable-replication", "", false, "")
 	fs.StringVarP(p.ReplicaUserPassword, "replica-user-password", "", "", "")
 	fs.BoolVarP(p.EnableWebUI, "enable-web-ui", "", false, "")
@@ -135,6 +135,8 @@ func (p *updateParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 		name = "output-type"
 	case "fmt":
 		name = "format"
+	case "source-network":
+		name = "source-range"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -181,7 +183,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("network", pflag.ContinueOnError)
 		fs.SortFlags = false
-		fs.AddFlag(cmd.LocalFlags().Lookup("source-network"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("source-range"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Network options",
 			Flags: fs,

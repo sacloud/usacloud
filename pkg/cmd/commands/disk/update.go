@@ -46,7 +46,7 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	Connection            *string            `cli:",options=disk_connection,category=plan" validate:"omitempty,disk_connection"`
+	Connection            *string            `cli:"connector,aliases=connection,options=disk_connection,category=plan" validate:"omitempty,disk_connection"`
 	EditDisk              common.EditRequest `cli:",category=edit" mapconv:"EditParameter,omitempty"`
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }

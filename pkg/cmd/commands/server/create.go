@@ -66,7 +66,7 @@ type createParameter struct {
 	CDROMID         types.ID `cli:"cdrom-id,aliases=iso-image-id"`
 	PrivateHostID   types.ID
 
-	NetworkInterface     server.NetworkInterface    `cli:",category=network,order=10" mapconv:"-" validate:"omitempty"`
+	NetworkInterface     serverNetworkInterface     `cli:",category=network,order=10" mapconv:"-" validate:"omitempty"`
 	NetworkInterfaceData string                     `cli:"network-interfaces,category=network,order=20" mapconv:"-"`
 	NetworkInterfaces    []*server.NetworkInterface `cli:"-" mapconv:",omitempty,recursive"`
 
@@ -76,6 +76,12 @@ type createParameter struct {
 	Disks     []*diskApplyParameter `cli:"-" mapconv:",omitempty,recursive"`
 
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
+}
+
+type serverNetworkInterface struct {
+	Upstream       string `cli:",display_options=shared/disconnected/(switch-id),options=shared disconnected"`
+	PacketFilterID types.ID
+	UserIPAddress  string `validate:"omitempty,ipv4"`
 }
 
 type diskApplyParameter struct {
@@ -92,7 +98,7 @@ type diskApplyParameter struct {
 	ServerID              types.ID
 	SizeGB                int `cli:"size,aliases=size-gb"`
 	DistantFrom           []types.ID
-	OSType                string `cli:",options=os_type_simple" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
+	OSType                string `cli:",options=os_type,display_options=os_type_simple" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
 
 	EditDisk common.EditRequest `cli:"edit,category=edit" mapconv:"EditParameter,omitempty"`
 	NoWait   bool
@@ -142,7 +148,12 @@ func validateCreateParameter(_ cli.Context, parameter interface{}) error {
 	}
 
 	if !util.IsEmpty(p.NetworkInterface) {
-		if err := p.NetworkInterface.Validate(); err != nil {
+		nic := &server.NetworkInterface{
+			Upstream:       p.NetworkInterface.Upstream,
+			PacketFilterID: p.NetworkInterface.PacketFilterID,
+			UserIPAddress:  p.NetworkInterface.UserIPAddress,
+		}
+		if err := nic.Validate(); err != nil {
 			errs = append(errs, err)
 		}
 	}
@@ -158,7 +169,12 @@ func validateCreateParameter(_ cli.Context, parameter interface{}) error {
 func (p *createParameter) Customize(ctx cli.Context) error {
 	// network interfaces
 	if !util.IsEmpty(p.NetworkInterface) {
-		p.NetworkInterfaces = append(p.NetworkInterfaces, &p.NetworkInterface)
+		nic := &server.NetworkInterface{
+			Upstream:       p.NetworkInterface.Upstream,
+			PacketFilterID: p.NetworkInterface.PacketFilterID,
+			UserIPAddress:  p.NetworkInterface.UserIPAddress,
+		}
+		p.NetworkInterfaces = append(p.NetworkInterfaces, nic)
 	}
 	if p.NetworkInterfaceData != "" {
 		var nics []*server.NetworkInterface

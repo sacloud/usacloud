@@ -45,7 +45,7 @@ type updateParameter struct {
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
 	NetworkMaskLen *int    `cli:"display-network-mask-len"`
-	DefaultRoute   *string `cli:"display-default-route"`
+	DefaultRoute   *string `cli:"display-gateway,aliases=display-default-route"`
 }
 
 func newUpdateParameter() *updateParameter {

@@ -25,13 +25,13 @@ type EditRequest struct {
 	HostName string `cli:",category=diskedit,order=10"`
 	Password string `cli:",category=diskedit,order=20"`
 
-	IPAddress      string `cli:",category=diskedit,order=30"`
-	NetworkMaskLen int    `cli:",category=diskedit,order=31"`
-	DefaultRoute   string `cli:",category=diskedit,order=32"`
+	IPAddress      string `cli:"ip-address,category=diskedit,order=30"`
+	NetworkMaskLen int    `cli:"netmask,aliases=network-mask-len,category=diskedit,order=31"`
+	DefaultRoute   string `cli:"gateway,aliases=default-route,category=diskedit,order=32"`
 
-	DisablePWAuth       bool `cli:",category=diskedit,order=40"`
-	EnableDHCP          bool `cli:",category=diskedit,order=50"`
-	ChangePartitionUUID bool `cli:",category=diskedit,order=60"`
+	DisablePWAuth       bool `cli:"disable-pw-auth,category=diskedit,order=40"`
+	EnableDHCP          bool `cli:"enable-dhcp,category=diskedit,order=50"`
+	ChangePartitionUUID bool `cli:"change-partition-uuid,category=diskedit,order=60"`
 
 	SSHKeys            []string   `cli:"ssh-keys,category=diskedit,order=70"`
 	SSHKeyIDs          []types.ID `cli:"ssh-key-ids,category=diskedit,order=71"`

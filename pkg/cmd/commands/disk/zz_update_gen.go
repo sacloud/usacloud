@@ -38,7 +38,7 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("icon-id") {
 		p.IconID = nil
 	}
-	if !fs.Changed("connection") {
+	if !fs.Changed("connector") {
 		p.Connection = nil
 	}
 }
@@ -73,12 +73,12 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.Description, "description", "", "", "")
 	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
-	fs.StringVarP(p.Connection, "connection", "", "", "options: [virtio/ide]")
+	fs.StringVarP(p.Connection, "connector", "", "", "options: [virtio/ide] (aliases: --connection)")
 	fs.StringVarP(&p.EditDisk.HostName, "edit-disk-host-name", "", p.EditDisk.HostName, "")
 	fs.StringVarP(&p.EditDisk.Password, "edit-disk-password", "", p.EditDisk.Password, "")
 	fs.StringVarP(&p.EditDisk.IPAddress, "edit-disk-ip-address", "", p.EditDisk.IPAddress, "")
-	fs.IntVarP(&p.EditDisk.NetworkMaskLen, "edit-disk-network-mask-len", "", p.EditDisk.NetworkMaskLen, "")
-	fs.StringVarP(&p.EditDisk.DefaultRoute, "edit-disk-default-route", "", p.EditDisk.DefaultRoute, "")
+	fs.IntVarP(&p.EditDisk.NetworkMaskLen, "edit-disk-netmask", "", p.EditDisk.NetworkMaskLen, "(aliases: --network-mask-len)")
+	fs.StringVarP(&p.EditDisk.DefaultRoute, "edit-disk-gateway", "", p.EditDisk.DefaultRoute, "(aliases: --default-route)")
 	fs.BoolVarP(&p.EditDisk.DisablePWAuth, "edit-disk-disable-pw-auth", "", p.EditDisk.DisablePWAuth, "")
 	fs.BoolVarP(&p.EditDisk.EnableDHCP, "edit-disk-enable-dhcp", "", p.EditDisk.EnableDHCP, "")
 	fs.BoolVarP(&p.EditDisk.ChangePartitionUUID, "edit-disk-change-partition-uuid", "", p.EditDisk.ChangePartitionUUID, "")
@@ -100,6 +100,12 @@ func (p *updateParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 		name = "output-type"
 	case "fmt":
 		name = "format"
+	case "connection":
+		name = "connector"
+	case "network-mask-len":
+		name = "edit-disk-netmask"
+	case "default-route":
+		name = "edit-disk-gateway"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -123,7 +129,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("plan", pflag.ContinueOnError)
 		fs.SortFlags = false
-		fs.AddFlag(cmd.LocalFlags().Lookup("connection"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("connector"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Plan options",
 			Flags: fs,
@@ -136,8 +142,8 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-host-name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-password"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-ip-address"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-network-mask-len"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-default-route"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-netmask"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-gateway"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-disable-pw-auth"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-enable-dhcp"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("edit-disk-change-partition-uuid"))
@@ -204,7 +210,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *updateParameter) setCompletionFunc(cmd *cobra.Command) {
-	cmd.RegisterFlagCompletionFunc("connection", util.FlagCompletionFunc("virtio", "ide"))
+	cmd.RegisterFlagCompletionFunc("connector", util.FlagCompletionFunc("virtio", "ide"))
 
 }
 

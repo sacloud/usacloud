@@ -48,8 +48,8 @@ type createParameter struct {
 
 	SwitchID       types.ID `cli:",category=network,order=10" validate:"required"`
 	IPAddresses    []string `cli:"ip-address,aliases=ipaddress,category=network,order=20" validate:"required,min=1,max=2,dive,ipv4"`
-	NetworkMaskLen int      `cli:",category=network,order=30" validate:"required,min=1,max=32"`
-	DefaultRoute   string   `cli:",category=network,order=40" validate:"omitempty,ipv4"`
+	NetworkMaskLen int      `cli:"netmask,aliases=network-mask-len,category=network,order=30" validate:"required,min=1,max=32"`
+	DefaultRoute   string   `cli:"gateway,aliases=default-route,category=network,order=40" validate:"omitempty,ipv4"`
 
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
