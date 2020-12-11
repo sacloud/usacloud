@@ -51,7 +51,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.BootAfterCreate, "boot-after-create", "", p.BootAfterCreate, "")
 	fs.VarP(core.NewIDFlag(&p.CDROMID, &p.CDROMID), "cdrom-id", "", "(aliases: --iso-image-id)")
 	fs.VarP(core.NewIDFlag(&p.PrivateHostID, &p.PrivateHostID), "private-host-id", "", "")
-	fs.StringVarP(&p.NetworkInterface.Upstream, "network-interface-upstream", "", p.NetworkInterface.Upstream, "")
+	fs.StringVarP(&p.NetworkInterface.Upstream, "network-interface-upstream", "", p.NetworkInterface.Upstream, "options: [shared/disconnected/(switch-id)]")
 	fs.VarP(core.NewIDFlag(&p.NetworkInterface.PacketFilterID, &p.NetworkInterface.PacketFilterID), "network-interface-packet-filter-id", "", "")
 	fs.StringVarP(&p.NetworkInterface.UserIPAddress, "network-interface-user-ip-address", "", p.NetworkInterface.UserIPAddress, "")
 	fs.StringVarP(&p.NetworkInterfaceData, "network-interfaces", "", p.NetworkInterfaceData, "")
@@ -71,8 +71,8 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Disk.EditDisk.HostName, "disk-edit-host-name", "", p.Disk.EditDisk.HostName, "")
 	fs.StringVarP(&p.Disk.EditDisk.Password, "disk-edit-password", "", p.Disk.EditDisk.Password, "")
 	fs.StringVarP(&p.Disk.EditDisk.IPAddress, "disk-edit-ip-address", "", p.Disk.EditDisk.IPAddress, "")
-	fs.IntVarP(&p.Disk.EditDisk.NetworkMaskLen, "disk-edit-network-mask-len", "", p.Disk.EditDisk.NetworkMaskLen, "")
-	fs.StringVarP(&p.Disk.EditDisk.DefaultRoute, "disk-edit-default-route", "", p.Disk.EditDisk.DefaultRoute, "")
+	fs.IntVarP(&p.Disk.EditDisk.NetworkMaskLen, "disk-edit-netmask", "", p.Disk.EditDisk.NetworkMaskLen, "(aliases: --network-mask-len)")
+	fs.StringVarP(&p.Disk.EditDisk.DefaultRoute, "disk-edit-gateway", "", p.Disk.EditDisk.DefaultRoute, "(aliases: --default-route)")
 	fs.BoolVarP(&p.Disk.EditDisk.DisablePWAuth, "disk-edit-disable-pw-auth", "", p.Disk.EditDisk.DisablePWAuth, "")
 	fs.BoolVarP(&p.Disk.EditDisk.EnableDHCP, "disk-edit-enable-dhcp", "", p.Disk.EditDisk.EnableDHCP, "")
 	fs.BoolVarP(&p.Disk.EditDisk.ChangePartitionUUID, "disk-edit-change-partition-uuid", "", p.Disk.EditDisk.ChangePartitionUUID, "")
@@ -103,6 +103,10 @@ func (p *createParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 		name = "cdrom-id"
 	case "size-gb":
 		name = "disk-size"
+	case "network-mask-len":
+		name = "disk-edit-netmask"
+	case "default-route":
+		name = "disk-edit-gateway"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -180,8 +184,8 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-host-name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-password"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-ip-address"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-network-mask-len"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-default-route"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-netmask"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-gateway"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-disable-pw-auth"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-enable-dhcp"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-edit-change-partition-uuid"))
@@ -264,9 +268,10 @@ func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("commitment", util.FlagCompletionFunc("standard", "dedicatedcpu"))
 	cmd.RegisterFlagCompletionFunc("generation", util.FlagCompletionFunc("default", "g100", "g200"))
 	cmd.RegisterFlagCompletionFunc("interface-driver", util.FlagCompletionFunc("virtio", "e1000"))
+	cmd.RegisterFlagCompletionFunc("network-interface-upstream", util.FlagCompletionFunc("shared", "disconnected"))
 	cmd.RegisterFlagCompletionFunc("disk-disk-plan", util.FlagCompletionFunc("ssd", "hdd"))
 	cmd.RegisterFlagCompletionFunc("disk-connection", util.FlagCompletionFunc("virtio", "ide"))
-	cmd.RegisterFlagCompletionFunc("disk-os-type", util.FlagCompletionFunc("centos", "centos8", "ubuntu", "ubuntu2004", "debian", "debian10", "coreos", "rancheros", "k3os", "freebsd", "..."))
+	cmd.RegisterFlagCompletionFunc("disk-os-type", util.FlagCompletionFunc("centos", "centos8", "centos7", "ubuntu", "ubuntu2004", "ubuntu1804", "ubuntu1604", "debian", "debian10", "debian9", "coreos", "rancheros", "k3os", "kusanagi", "freebsd", "windows2016", "windows2016-rds", "windows2016-rds-office", "windows2016-sql-web", "windows2016-sql-standard", "windows2016-sql-standard-all", "windows2016-sql2017-standard", "windows2016-sql2017-enterprise", "windows2016-sql2017-standard-all", "windows2019", "windows2019-rds", "windows2019-rds-office2019", "windows2019-sql2017-web", "windows2019-sql2019-web", "windows2019-sql2017-standard", "windows2019-sql2019-standard", "windows2019-sql2017-enterprise", "windows2019-sql2019-enterprise", "windows2019-sql2017-standard-all", "windows2019-sql2019-standard-all"))
 
 }
 

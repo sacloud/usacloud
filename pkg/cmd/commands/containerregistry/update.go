@@ -47,7 +47,7 @@ type updateParameter struct {
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
 	AccessLevel    *string `cli:",options=container_registry_access_levels" mapconv:",omitempty,filters=dereference,container_registry_access_levels_to_value" validate:"omitempty,container_registry_access_levels"`
-	SubDomainLabel *string `validate:"omitempty"`
+	SubDomainLabel *string `cli:"subdomain-label" validate:"omitempty"`
 	VirtualDomain  *string `validate:"omitempty,fqdn"`
 
 	UsersData *string                    `cli:"users" mapconv:"-"`

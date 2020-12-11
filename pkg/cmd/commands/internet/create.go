@@ -42,7 +42,7 @@ type createParameter struct {
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	NetworkMaskLen int `cli:",options=internet_network_mask_len" validate:"required,internet_network_mask_len"`
+	NetworkMaskLen int `cli:"netmask,aliases=network-mask-len,options=internet_network_mask_len" validate:"required,internet_network_mask_len"`
 	BandWidthMbps  int `cli:"band-width,aliases=band-width-mbps,options=internet_bandwidth" validate:"required,internet_bandwidth"`
 
 	EnableIPv6            bool `cli:"enable-ipv6"`

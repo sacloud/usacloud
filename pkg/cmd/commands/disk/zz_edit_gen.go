@@ -41,8 +41,8 @@ func (p *editParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.EditDisk.HostName, "host-name", "", p.EditDisk.HostName, "")
 	fs.StringVarP(&p.EditDisk.Password, "password", "", p.EditDisk.Password, "")
 	fs.StringVarP(&p.EditDisk.IPAddress, "ip-address", "", p.EditDisk.IPAddress, "")
-	fs.IntVarP(&p.EditDisk.NetworkMaskLen, "network-mask-len", "", p.EditDisk.NetworkMaskLen, "")
-	fs.StringVarP(&p.EditDisk.DefaultRoute, "default-route", "", p.EditDisk.DefaultRoute, "")
+	fs.IntVarP(&p.EditDisk.NetworkMaskLen, "netmask", "", p.EditDisk.NetworkMaskLen, "(aliases: --network-mask-len)")
+	fs.StringVarP(&p.EditDisk.DefaultRoute, "gateway", "", p.EditDisk.DefaultRoute, "(aliases: --default-route)")
 	fs.BoolVarP(&p.EditDisk.DisablePWAuth, "disable-pw-auth", "", p.EditDisk.DisablePWAuth, "")
 	fs.BoolVarP(&p.EditDisk.EnableDHCP, "enable-dhcp", "", p.EditDisk.EnableDHCP, "")
 	fs.BoolVarP(&p.EditDisk.ChangePartitionUUID, "change-partition-uuid", "", p.EditDisk.ChangePartitionUUID, "")
@@ -64,6 +64,10 @@ func (p *editParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.N
 		name = "output-type"
 	case "fmt":
 		name = "format"
+	case "network-mask-len":
+		name = "netmask"
+	case "default-route":
+		name = "gateway"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -77,8 +81,8 @@ func (p *editParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("host-name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("password"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("ip-address"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("netmask"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("gateway"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disable-pw-auth"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("enable-dhcp"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("change-partition-uuid"))

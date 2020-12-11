@@ -39,7 +39,7 @@ func (p *addSubnetParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.FormatFile, "format-file", "", p.FormatFile, "Output format in Go templates(from file)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
 	fs.StringVarP(&p.QueryFile, "query-file", "", p.QueryFile, "JMESPath query(from file)")
-	fs.IntVarP(&p.NetworkMaskLen, "network-mask-len", "", p.NetworkMaskLen, "options: [28/27/26/25/24]")
+	fs.IntVarP(&p.NetworkMaskLen, "netmask", "", p.NetworkMaskLen, "options: [28/27/26/25/24] (aliases: --network-mask-len)")
 	fs.StringVarP(&p.NextHop, "next-hop", "", p.NextHop, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -52,6 +52,8 @@ func (p *addSubnetParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pf
 		name = "output-type"
 	case "fmt":
 		name = "format"
+	case "network-mask-len":
+		name = "netmask"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -62,7 +64,7 @@ func (p *addSubnetParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("internet", pflag.ContinueOnError)
 		fs.SortFlags = false
-		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("netmask"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("next-hop"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Internet-specific options",
@@ -111,7 +113,7 @@ func (p *addSubnetParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *addSubnetParameter) setCompletionFunc(cmd *cobra.Command) {
-	cmd.RegisterFlagCompletionFunc("network-mask-len", util.FlagCompletionFunc("28", "27", "26", "25", "24"))
+	cmd.RegisterFlagCompletionFunc("netmask", util.FlagCompletionFunc("28", "27", "26", "25", "24"))
 
 }
 

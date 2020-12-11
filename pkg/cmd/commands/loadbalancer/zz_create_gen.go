@@ -47,10 +47,10 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.IntVarP(&p.VRID, "vrid", "", p.VRID, "")
 	fs.VarP(core.NewIDFlag(&p.SwitchID, &p.SwitchID), "switch-id", "", "")
 	fs.StringSliceVarP(&p.IPAddresses, "ip-address", "", p.IPAddresses, "(aliases: --ipaddress)")
-	fs.IntVarP(&p.NetworkMaskLen, "network-mask-len", "", p.NetworkMaskLen, "")
-	fs.StringVarP(&p.DefaultRoute, "default-route", "", p.DefaultRoute, "")
+	fs.IntVarP(&p.NetworkMaskLen, "netmask", "", p.NetworkMaskLen, "(aliases: --network-mask-len)")
+	fs.StringVarP(&p.DefaultRoute, "gateway", "", p.DefaultRoute, "(aliases: --default-route)")
 	fs.IntVarP(&p.Port, "port", "", p.Port, "")
-	fs.StringVarP(&p.VirtualIPAddressesData, "virtual-ip-addresses", "", p.VirtualIPAddressesData, "")
+	fs.StringVarP(&p.VirtualIPAddressesData, "virtual-ip-addresses", "", p.VirtualIPAddressesData, "(aliases: --vips)")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -65,6 +65,12 @@ func (p *createParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 		name = "format"
 	case "ipaddress":
 		name = "ip-address"
+	case "network-mask-len":
+		name = "netmask"
+	case "default-route":
+		name = "gateway"
+	case "vips":
+		name = "virtual-ip-addresses"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -101,8 +107,8 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("vrid"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("switch-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("ip-address"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("network-mask-len"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("default-route"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("netmask"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("gateway"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("port"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("virtual-ip-addresses"))
 		sets = append(sets, &core.FlagSet{

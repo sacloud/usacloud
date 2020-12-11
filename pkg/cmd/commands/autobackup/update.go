@@ -45,7 +45,7 @@ type updateParameter struct {
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
 	Weekdays         *[]string `cli:",options=weekdays" mapconv:"BackupSpanWeekdays,omitempty,filters=weekdays" validate:"omitempty,weekdays"`
-	MaxNumOfArchives *int      `mapconv:"MaximumNumberOfArchives" validate:"omitempty,min=1,max=10"`
+	MaxNumOfArchives *int      `cli:"max-backup-num" mapconv:"MaximumNumberOfArchives" validate:"omitempty,min=1,max=10"`
 }
 
 func newUpdateParameter() *updateParameter {

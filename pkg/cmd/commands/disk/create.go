@@ -48,9 +48,9 @@ type createParameter struct {
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 	DiskPlan              string `cli:",options=disk_plan,category=plan,order=10" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"required,disk_plan"`
 	SizeGB                int    `cli:"size,category=plan,order=20"`
-	Connection            string `cli:",options=disk_connection,category=plan,order=30" validate:"required,disk_connection"`
+	Connection            string `cli:"connector,aliases=connection,options=disk_connection,category=plan,order=30" validate:"required,disk_connection"`
 
-	OSType          string   `cli:",options=os_type_simple,category=source,order=10" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
+	OSType          string   `cli:",options=os_type,display_options=os_type_simple,category=source,order=10" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
 	SourceDiskID    types.ID `cli:",category=source,order=20"`
 	SourceArchiveID types.ID `cli:",category=source,order=30"`
 

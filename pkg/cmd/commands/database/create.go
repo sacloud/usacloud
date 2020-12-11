@@ -48,10 +48,10 @@ type createParameter struct {
 
 	SwitchID       types.ID `cli:",category=network,order=10" validate:"required"`
 	IPAddresses    []string `cli:"ip-address,aliases=ipaddress,category=network,order=20" validate:"required,min=1,max=2,dive,ipv4"`
-	NetworkMaskLen int      `cli:",category=network,order=30" validate:"required,min=1,max=32"`
-	DefaultRoute   string   `cli:",category=network,order=40" validate:"omitempty,ipv4"`
+	NetworkMaskLen int      `cli:"netmask,aliases=network-mask-len,category=network,order=30" validate:"required,min=1,max=32"`
+	DefaultRoute   string   `cli:"gateway,aliases=default-route,category=network,order=40" validate:"omitempty,ipv4"`
 	Port           int      `cli:",category=network,order=50" validate:"omitempty,min=1,max=65535"`
-	SourceNetwork  []string `cli:",category=network,order=60" validate:"omitempty,dive,cidrv4"`
+	SourceNetwork  []string `cli:"source-range,aliases=source-network,category=network,order=60" validate:"omitempty,dive,cidrv4"`
 
 	Username string `cli:",category=user,order=10" validate:"required"`
 	Password string `cli:",category=user,order=20" validate:"required"`

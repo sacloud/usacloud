@@ -42,7 +42,7 @@ type listParameter struct {
 
 	cflag.FilterByNamesParameter `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.FilterByTagsParameter  `cli:",squash" mapconv:",omitempty,squash"`
-	OSType                       string `cli:",category=filter,options=os_type_simple" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
+	OSType                       string `cli:",category=filter,options=os_type,display_options=os_type_simple" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
 	cflag.FilterByScopeParameter `cli:",squash" mapconv:",omitempty,squash"`
 }
 

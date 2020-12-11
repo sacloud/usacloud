@@ -44,7 +44,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.HealthCheck.Protocol, "health-check-protocol", "", p.HealthCheck.Protocol, "")
 	fs.StringVarP(&p.HealthCheck.HostHeader, "health-check-host-header", "", p.HealthCheck.HostHeader, "")
 	fs.StringVarP(&p.HealthCheck.Path, "health-check-path", "", p.HealthCheck.Path, "")
-	fs.IntVarP(&p.HealthCheck.ResponseCode, "health-check-response-code", "", p.HealthCheck.ResponseCode, "")
+	fs.IntVarP(&p.HealthCheck.ResponseCode, "health-check-status", "", p.HealthCheck.ResponseCode, "(aliases: --response-code)")
 	fs.IntVarP(&p.HealthCheck.Port, "health-check-port", "", p.HealthCheck.Port, "")
 	fs.IntVarP(&p.DelayLoop, "delay-loop", "", p.DelayLoop, "")
 	fs.BoolVarP(&p.Weighted, "weighted", "", p.Weighted, "")
@@ -61,6 +61,8 @@ func (p *createParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag
 		name = "output-type"
 	case "fmt":
 		name = "format"
+	case "response-code":
+		name = "health-check-status"
 	}
 	return pflag.NormalizedName(name)
 }
@@ -99,7 +101,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-path"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-port"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-protocol"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-response-code"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-status"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("delay-loop"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("weighted"))
 		sets = append(sets, &core.FlagSet{

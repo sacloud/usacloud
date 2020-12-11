@@ -44,7 +44,7 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	SourceNetwork *[]string `cli:",category=network" validate:"omitempty,dive,cidrv4"`
+	SourceNetwork *[]string `cli:"source-range,aliases=source-network,category=network" validate:"omitempty,dive,cidrv4"`
 
 	EnableReplication     *bool     `cli:",category=replication,order=10"`
 	ReplicaUserPassword   *string   `cli:",category=replication,order=20" validate:"omitempty,required_with=EnableReplication"`
