@@ -77,5 +77,19 @@ func ValidateOutputOption(o output.Option, defaultOutputType string) []error {
 		}
 	}
 
+	if format != "" {
+		_, err := util.StringFromPathOrContent(format)
+		if err != nil {
+			return []error{fmt.Errorf("%q: invalid format: %s", "--format", err)}
+		}
+	}
+
+	if query != "" {
+		_, err := util.StringFromPathOrContent(query)
+		if err != nil {
+			return []error{fmt.Errorf("%q: invalid JMESPath: %s", "--query", err)}
+		}
+	}
+
 	return []error{}
 }
