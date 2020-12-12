@@ -1,3 +1,5 @@
+// +build !wasm
+
 // Copyright 2017-2020 The Usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +26,6 @@ import (
 
 	"github.com/sacloud/libsacloud/v2/helper/query"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
@@ -40,24 +41,6 @@ var sshCommand = &core.Command{
 	},
 
 	Func: sshFunc,
-}
-
-type sshParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
-
-	Key            string `cli:",short=i" validate:"omitempty,file"`
-	User           string `cli:",short=l"`
-	Port           int    `cli:",short=p" validate:"required"`
-	Password       string `cli:",aliases=pass-phrase"`
-	WaitUntilReady bool   `cli:",aliases=wait"`
-}
-
-func newSSHParameter() *sshParameter {
-	return &sshParameter{
-		Port: 22,
-	}
 }
 
 func init() {

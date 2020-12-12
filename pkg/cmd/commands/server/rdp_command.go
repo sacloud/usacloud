@@ -1,3 +1,5 @@
+// +build !wasm
+
 // Copyright 2017-2020 The Usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,57 +22,61 @@ import (
 	"github.com/sacloud/libsacloud/v2/helper/wait"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/connect"
 )
 
-var vncCommand = &core.Command{
-	Name:         "vnc",
+var rdpCommand = &core.Command{
+	Name:         "rdp",
+	Aliases:      []string{"remote-desktop"},
 	Category:     "connect",
-	Order:        20,
+	Order:        30,
 	SelectorType: core.SelectorTypeRequireSingle,
 	NoProgress:   true,
 
 	ParameterInitializer: func() interface{} {
-		return newVNCParameter()
+		return newRDPParameter()
 	},
 
-	Func: vncFunc,
-}
-
-type vncParameter struct {
-	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
-
-	WaitUntilReady bool `cli:",aliases=wait"`
-}
-
-func newVNCParameter() *vncParameter {
-	return &vncParameter{}
+	Func: rdpFunc,
 }
 
 func init() {
-	Resource.AddCommand(vncCommand)
+	Resource.AddCommand(rdpCommand)
 }
 
-func vncFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-	p, ok := parameter.(*vncParameter)
+func rdpFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+	p, ok := parameter.(*rdpParameter)
 	if !ok {
 		return nil, fmt.Errorf("invalid parameter: %v", parameter)
 	}
 
 	instance := ctx.Resource().(*sacloud.Server)
-	if !instance.InstanceStatus.IsUp() && p.WaitUntilReady {
-		if _, err := wait.UntilServerIsUp(ctx, sacloud.NewServerOp(ctx.Client()), p.Zone, p.ID); err != nil {
-			return nil, err
-		}
+	if len(instance.Interfaces) == 0 {
+		return nil, fmt.Errorf("server[%q] has no network interfaces", p.ID)
 	}
 
-	vncInfo, err := sacloud.NewServerOp(ctx.Client()).GetVNCProxy(ctx, p.Zone, p.ID)
-	if err != nil {
-		return nil, err
+	if !instance.InstanceStatus.IsUp() && p.WaitUntilReady {
+		lastState, err := wait.UntilServerIsUp(ctx, sacloud.NewServerOp(ctx.Client()), p.Zone, p.ID)
+		if err != nil {
+			return nil, err
+		}
+		instance = lastState
 	}
-	return nil, connect.StartDefaultVNCClient(vncInfo)
+
+	ip := instance.Interfaces[0].IPAddress
+	if ip == "" {
+		ip = instance.Interfaces[0].UserIPAddress
+	}
+	if ip == "" {
+		return nil, fmt.Errorf("server[%q] has no valid ip addresses", p.ID)
+	}
+
+	opener := connect.RDPOpener{
+		IPAddress: ip,
+		User:      p.User,
+		Port:      p.Port,
+	}
+
+	return nil, opener.StartDefaultClient()
 }
