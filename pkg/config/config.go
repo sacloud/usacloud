@@ -151,31 +151,6 @@ func (o *Config) loadFromEnv() {
 	}
 }
 
-func (o *Config) loadFromProfile(flags *pflag.FlagSet, errW io.Writer) {
-	if flags.Changed("profile") {
-		v, err := flags.GetString("profile")
-		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err) // nolint
-			return
-		}
-		o.Profile = v
-	}
-
-	profileName := o.Profile
-	if profileName == "" {
-		current, err := profile.CurrentName()
-		if err != nil {
-			fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err) // nolint
-			return
-		}
-		profileName = current
-	}
-	if err := profile.Load(profileName, o); err != nil {
-		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err) // nolint
-		return
-	}
-}
-
 func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("token") {
 		v, err := flags.GetString("token")
