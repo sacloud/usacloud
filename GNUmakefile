@@ -65,6 +65,10 @@ build: bin/usacloud
 bin/usacloud: $(GO_FILES)
 	OS="`go env GOOS`" ARCH="`go env GOARCH`" ARCHIVE= BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
+build-wasm: bin/usacloud.wasm
+bin/usacloud.wasm: $(GO_FILES)
+	OS="js" ARCH="wasm" ARCHIVE= BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
+
 build-x: build-darwin build-windows build-linux build-bsd
 
 build-darwin: bin/usacloud_darwin-amd64.zip
