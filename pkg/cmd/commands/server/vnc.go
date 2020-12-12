@@ -40,9 +40,9 @@ var vncCommand = &core.Command{
 }
 
 type vncParameter struct {
-	cflag.ZoneParameter  `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter    `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 
 	WaitUntilReady bool `cli:",aliases=wait"`
 }

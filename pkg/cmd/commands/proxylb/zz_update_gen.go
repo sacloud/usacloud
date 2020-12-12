@@ -20,6 +20,7 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -98,7 +99,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 		p.IconID = pointer.NewID(types.ID(0))
 	}
 	if p.Plan == nil {
-		p.Plan = pointer.NewInt(0)
+		p.Plan = pointer.NewString("")
 	}
 	if p.HealthCheck.Protocol == nil {
 		p.HealthCheck.Protocol = pointer.NewString("")
@@ -144,6 +145,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	}
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
+	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -153,7 +155,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.Description, "description", "", "", "")
 	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
-	fs.IntVarP(p.Plan, "plan", "", 0, "")
+	fs.StringVarP(p.Plan, "plan", "", "", "options: [100/500/1000/5000/10000/50000/100000]")
 	fs.StringVarP(p.HealthCheck.Protocol, "health-check-protocol", "", "", "")
 	fs.StringVarP(p.HealthCheck.Path, "health-check-path", "", "", "")
 	fs.StringVarP(p.HealthCheck.Host, "health-check-host", "", "", "")
@@ -249,11 +251,22 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 			Flags: fs,
 		})
 	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("example", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("example"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Parameter example",
+			Flags: fs,
+		})
+	}
 
 	core.BuildFlagsUsage(cmd, sets)
 }
 
 func (p *updateParameter) setCompletionFunc(cmd *cobra.Command) {
+	cmd.RegisterFlagCompletionFunc("plan", util.FlagCompletionFunc("100", "500", "1000", "5000", "10000", "50000", "100000"))
 
 }
 

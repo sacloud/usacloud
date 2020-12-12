@@ -15,11 +15,14 @@
 package loadbalancer
 
 import (
+	"net/http"
+
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -39,7 +42,7 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -57,7 +60,7 @@ type createParameter struct {
 	DefaultRoute   string   `cli:"gateway,aliases=default-route,category=network,order=50" validate:"omitempty,ipv4"`
 	Port           int      `cli:",category=network,order=60" validate:"omitempty,min=1,max=65535"`
 
-	VirtualIPAddressesData string                                 `cli:"virtual-ip-addresses,aliases=vips,category=network,order=70" mapconv:"-"`
+	VirtualIPAddressesData string                                 `cli:"virtual-ip-addresses,aliases=vips,category=network,order=70" mapconv:"-" json:"-"`
 	VirtualIPAddresses     sacloud.LoadBalancerVirtualIPAddresses `cli:"-"`
 
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
@@ -84,4 +87,45 @@ func (p *createParameter) Customize(_ cli.Context) error {
 	}
 
 	return nil
+}
+
+func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &createParameter{
+		ZoneParameter:   examples.Zones(ctx.Option().Zones),
+		NameParameter:   examples.Name,
+		DescParameter:   examples.Description,
+		TagsParameter:   examples.Tags,
+		IconIDParameter: examples.IconID,
+		PlanID:          examples.OptionsString("loadbalancer_plan"),
+		VRID:            1,
+		SwitchID:        examples.ID,
+		IPAddresses:     examples.IPAddresses,
+		NetworkMaskLen:  examples.NetworkMaskLen,
+		DefaultRoute:    examples.DefaultRoute,
+		Port:            80,
+		VirtualIPAddresses: sacloud.LoadBalancerVirtualIPAddresses{
+			{
+				VirtualIPAddress: examples.VirtualIPAddress,
+				Port:             80,
+				DelayLoop:        10,
+				SorryServer:      "192.0.2.1",
+				Description:      "example",
+				Servers: sacloud.LoadBalancerServers{
+					{
+						IPAddress: "192.0.2.101",
+						Port:      80,
+						Enabled:   true,
+						HealthCheck: &sacloud.LoadBalancerServerHealthCheck{
+							Protocol:     types.ELoadBalancerHealthCheckProtocol(examples.OptionsString("loadbalancer_server_protocol")),
+							Path:         "/",
+							ResponseCode: http.StatusOK,
+						},
+					},
+				},
+			},
+		},
+		NoWaitParameter: cflag.NoWaitParameter{
+			NoWait: false,
+		},
+	}
 }

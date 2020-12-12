@@ -43,9 +43,9 @@ var sshCommand = &core.Command{
 }
 
 type sshParameter struct {
-	cflag.ZoneParameter  `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter    `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 
 	Key            string `cli:",short=i" validate:"omitempty,file"`
 	User           string `cli:",short=l"`

@@ -34,7 +34,7 @@ var renewLetsEncryptCertCommand = &core.Command{
 type renewLetsEncryptCertParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 }
 
 func newRenewLetsEncryptCertParameter() *renewLetsEncryptCertParameter {

@@ -20,6 +20,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -36,7 +37,7 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -45,7 +46,7 @@ type createParameter struct {
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	Plan           int `validate:"required,proxylb_plan"`
+	Plan           string `cli:",options=proxylb_plan" mapconv:",filters=proxylb_plan_to_value" validate:"required,proxylb_plan"`
 	HealthCheck    createParameterHealthCheck
 	SorryServer    createParameterSorryServer `mapconv:",omitempty"`
 	LetsEncrypt    createParameterLetsEncrypt
@@ -54,13 +55,13 @@ type createParameter struct {
 	UseVIPFailover bool                         `cli:"vip-fail-over"`
 	Region         string                       `cli:",options=proxylb_region" validate:"required,proxylb_region"`
 
-	BindPortsData string                     `cli:"bind-ports" mapconv:"-"`
+	BindPortsData string                     `cli:"bind-ports" mapconv:"-" json:"-"`
 	BindPorts     []*sacloud.ProxyLBBindPort `cli:"-"`
 
-	ServersData string                   `cli:"servers" mapconv:"-"`
+	ServersData string                   `cli:"servers" mapconv:"-" json:"-"`
 	Servers     []*sacloud.ProxyLBServer `cli:"-"`
 
-	RulesData string                 `cli:"rules" mapconv:"-"`
+	RulesData string                 `cli:"rules" mapconv:"-" json:"-"`
 	Rules     []*sacloud.ProxyLBRule `cli:"-"`
 }
 
@@ -92,7 +93,7 @@ type createParameterTimeout struct {
 
 func newCreateParameter() *createParameter {
 	return &createParameter{
-		Plan:   types.ProxyLBPlans.CPS100.Int(),
+		Plan:   types.ProxyLBPlans.CPS100.String(),
 		Region: types.ProxyLBRegions.IS1.String(),
 		HealthCheck: createParameterHealthCheck{
 			Protocol:  types.ProxyLBProtocols.HTTP.String(),
@@ -134,4 +135,66 @@ func (p *createParameter) Customize(_ cli.Context) error {
 		p.Rules = append(p.Rules, rules...)
 	}
 	return nil
+}
+
+func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &createParameter{
+		NameParameter:   examples.Name,
+		DescParameter:   examples.Description,
+		TagsParameter:   examples.Tags,
+		IconIDParameter: examples.IconID,
+		Plan:            examples.OptionsString("proxylb_plan"),
+		HealthCheck: createParameterHealthCheck{
+			Protocol:  examples.OptionsString("proxylb_protocol"),
+			Path:      "/healthz",
+			Host:      "www.example.com",
+			DelayLoop: 10,
+		},
+		SorryServer: createParameterSorryServer{
+			IPAddress: examples.IPAddress,
+			Port:      80,
+		},
+		LetsEncrypt: createParameterLetsEncrypt{
+			CommonName: "www.example.com",
+			Enabled:    true,
+		},
+		StickySession: createParameterStickySession{
+			Method:  "cookie",
+			Enabled: true,
+		},
+		Timeout: createParameterTimeout{
+			InactiveSec: 10,
+		},
+		UseVIPFailover: true,
+		Region:         examples.OptionsString("proxylb_region"),
+		BindPorts: []*sacloud.ProxyLBBindPort{
+			{
+				ProxyMode:       types.EProxyLBProxyMode(examples.OptionsString("proxylb_proxy_mode")),
+				Port:            80,
+				RedirectToHTTPS: true,
+				SupportHTTP2:    true,
+				AddResponseHeader: []*sacloud.ProxyLBResponseHeader{
+					{
+						Header: "Cache-Control",
+						Value:  "public, max-age=900",
+					},
+				},
+			},
+		},
+		Servers: []*sacloud.ProxyLBServer{
+			{
+				IPAddress:   examples.IPAddress,
+				Port:        80,
+				ServerGroup: "group1",
+				Enabled:     true,
+			},
+		},
+		Rules: []*sacloud.ProxyLBRule{
+			{
+				Host:        "www2.example.com",
+				Path:        "/foo",
+				ServerGroup: "group1",
+			},
+		},
+	}
 }

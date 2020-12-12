@@ -18,7 +18,6 @@ package bridge
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
@@ -31,12 +30,6 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("description") {
 		p.Description = nil
 	}
-	if !fs.Changed("tags") {
-		p.Tags = nil
-	}
-	if !fs.Changed("icon-id") {
-		p.IconID = nil
-	}
 }
 
 func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
@@ -46,15 +39,10 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.Description == nil {
 		p.Description = pointer.NewString("")
 	}
-	if p.Tags == nil {
-		p.Tags = pointer.NewStringSlice([]string{})
-	}
-	if p.IconID == nil {
-		p.IconID = pointer.NewID(types.ID(0))
-	}
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
+	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -62,8 +50,6 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
 	fs.StringVarP(p.Name, "name", "", "", "")
 	fs.StringVarP(p.Description, "description", "", "", "")
-	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
-	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -87,8 +73,6 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("description"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("tags"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Common options",
 			Flags: fs,
@@ -126,6 +110,16 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("example", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("example"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Parameter example",
 			Flags: fs,
 		})
 	}

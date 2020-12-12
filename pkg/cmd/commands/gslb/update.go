@@ -15,10 +15,14 @@
 package gslb
 
 import (
+	"net/http"
+
 	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -37,7 +41,7 @@ var updateCommand = &core.Command{
 
 type updateParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -46,20 +50,22 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	HealthCheck struct {
-		Protocol     *string `validate:"omitempty,gslb_protocol"`
-		HostHeader   *string
-		Path         *string
-		ResponseCode *int `cli:"status,aliases=response-code"`
-		Port         *int `validate:"omitempty,min=1,max=65535"`
-	} `cli:",category=health" mapconv:",omitempty"`
+	HealthCheck gslbHealthCheckUpdate `cli:",category=health" mapconv:",omitempty"`
 
 	DelayLoop   *int    `cli:",category=health,order=10" validate:"omitempty,min=10,max=60"`
 	Weighted    *bool   `cli:",category=health,order=20"`
 	SorryServer *string `validate:"omitempty,ipv4"`
 
-	ServersData        *string              `cli:"servers" mapconv:"-"`
+	ServersData        *string              `cli:"servers" mapconv:"-" json:"-"`
 	DestinationServers *sacloud.GSLBServers `cli:"-"`
+}
+
+type gslbHealthCheckUpdate struct {
+	Protocol     *string `validate:"omitempty,gslb_protocol"`
+	HostHeader   *string
+	Path         *string
+	ResponseCode *int `cli:"status,aliases=response-code"`
+	Port         *int `validate:"omitempty,min=1,max=65535"`
 }
 
 func newUpdateParameter() *updateParameter {
@@ -84,4 +90,30 @@ func (p *updateParameter) Customize(_ cli.Context) error {
 	}
 
 	return nil
+}
+
+func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &updateParameter{
+		NameUpdateParameter:   examples.NameUpdate,
+		DescUpdateParameter:   examples.DescriptionUpdate,
+		TagsUpdateParameter:   examples.TagsUpdate,
+		IconIDUpdateParameter: examples.IconIDUpdate,
+		HealthCheck: gslbHealthCheckUpdate{
+			Protocol:     pointer.NewString(examples.OptionsString("gslb_protocol")),
+			HostHeader:   pointer.NewString("www.example.com"),
+			Path:         pointer.NewString("/"),
+			ResponseCode: pointer.NewInt(http.StatusOK),
+			Port:         pointer.NewInt(80),
+		},
+		DelayLoop:   pointer.NewInt(10),
+		Weighted:    pointer.NewBool(true),
+		SorryServer: pointer.NewString("192.0.2.1"),
+		DestinationServers: &sacloud.GSLBServers{
+			{
+				IPAddress: examples.IPAddress,
+				Enabled:   true,
+				Weight:    1,
+			},
+		},
+	}
 }

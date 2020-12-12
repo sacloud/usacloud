@@ -21,7 +21,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
-func loadParameters(parameters cflag.InputParameterValueHolder) error {
+func loadParameters(parameters cflag.CommonParameterValueHolder) error {
 	p := parameters.ParametersFlagValue()
 
 	if p == "" {

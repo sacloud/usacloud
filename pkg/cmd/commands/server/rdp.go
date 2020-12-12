@@ -41,9 +41,9 @@ var rdpCommand = &core.Command{
 }
 
 type rdpParameter struct {
-	cflag.ZoneParameter  `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter    `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 
 	User           string
 	Port           int

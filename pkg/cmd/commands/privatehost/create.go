@@ -16,8 +16,10 @@ package privatehost
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 )
 
 var createCommand = &core.Command{
@@ -34,7 +36,7 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -42,8 +44,8 @@ type createParameter struct {
 	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
-	PlanID                types.ID `validate:"required_without=Class"`
-	Class                 string   `cli:",options=private_host_class" validate:"required_without=PlanID,private_host_class"`
+	PlanID                types.ID `validate:"required_without=Class" json:",omitempty"`
+	Class                 string   `cli:",options=private_host_class" validate:"required_without=PlanID,private_host_class" json:",omitempty"`
 }
 
 func newCreateParameter() *createParameter {
@@ -52,4 +54,15 @@ func newCreateParameter() *createParameter {
 
 func init() {
 	Resource.AddCommand(createCommand)
+}
+
+func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &createParameter{
+		ZoneParameter:   examples.Zones(ctx.Option().Zones),
+		NameParameter:   examples.Name,
+		DescParameter:   examples.Description,
+		TagsParameter:   examples.Tags,
+		IconIDParameter: examples.IconID,
+		Class:           examples.OptionsString("private_host_class"),
+	}
 }

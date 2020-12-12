@@ -38,7 +38,7 @@ type shutdownParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 	ForceShutdown         bool `cli:",short=f,aliases=force"`

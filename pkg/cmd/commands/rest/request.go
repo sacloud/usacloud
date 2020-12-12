@@ -133,7 +133,7 @@ func requestFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 		if err := json.Unmarshal(results, &temp); err != nil {
 			return nil, err
 		}
-		formattedJSON, err := json.MarshalIndent(temp, "", "  ")
+		formattedJSON, err := json.MarshalIndent(temp, "", "    ")
 		if err != nil {
 			return nil, err
 		}

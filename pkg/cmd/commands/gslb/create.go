@@ -15,10 +15,13 @@
 package gslb
 
 import (
+	"net/http"
+
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -35,7 +38,7 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -44,21 +47,23 @@ type createParameter struct {
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	HealthCheck struct {
-		Protocol     string `validate:"required,gslb_protocol"`
-		HostHeader   string
-		Path         string
-		ResponseCode int `cli:"status,aliases=response-code"`
-		Port         int `validate:"omitempty,min=1,max=65535"`
-	} `cli:",category=health"`
+	HealthCheck gslbHealthCheck `cli:",category=health"`
 
 	DelayLoop int  `cli:",category=health,order=10" validate:"required,min=10,max=60"`
 	Weighted  bool `cli:",category=health,order=20"`
 
 	SorryServer string `validate:"omitempty,ipv4"`
 
-	ServersData        string              `cli:"servers" mapconv:"-"`
+	ServersData        string              `cli:"servers" mapconv:"-" json:"-"`
 	DestinationServers sacloud.GSLBServers `cli:"-"`
+}
+
+type gslbHealthCheck struct {
+	Protocol     string `validate:"required,gslb_protocol"`
+	HostHeader   string
+	Path         string
+	ResponseCode int `cli:"status,aliases=response-code"`
+	Port         int `validate:"omitempty,min=1,max=65535"`
 }
 
 func newCreateParameter() *createParameter {
@@ -82,4 +87,30 @@ func (p *createParameter) Customize(_ cli.Context) error {
 	}
 
 	return nil
+}
+
+func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &createParameter{
+		NameParameter:   examples.Name,
+		DescParameter:   examples.Description,
+		TagsParameter:   examples.Tags,
+		IconIDParameter: examples.IconID,
+		HealthCheck: gslbHealthCheck{
+			Protocol:     examples.OptionsString("gslb_protocol"),
+			HostHeader:   "www.example.com",
+			Path:         "/",
+			ResponseCode: http.StatusOK,
+			Port:         80,
+		},
+		DelayLoop:   10,
+		Weighted:    true,
+		SorryServer: "192.0.2.1",
+		DestinationServers: sacloud.GSLBServers{
+			{
+				IPAddress: examples.IPAddress,
+				Enabled:   true,
+				Weight:    1,
+			},
+		},
+	}
 }

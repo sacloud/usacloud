@@ -37,7 +37,7 @@ var readCommand = &core.Command{
 
 type readParameter struct {
 	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter  `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 
 	IPv6Addr string `validate:"required,ipv6"`

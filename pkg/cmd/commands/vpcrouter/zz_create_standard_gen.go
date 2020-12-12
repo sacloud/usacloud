@@ -31,6 +31,7 @@ func (p *createStandardParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
+	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -57,7 +58,7 @@ func (p *createStandardParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.RouterSetting.SiteToSiteIPsecVPNData, "site-to-site-vpn", "", p.RouterSetting.SiteToSiteIPsecVPNData, "")
 	fs.StringVarP(&p.RouterSetting.StaticRouteData, "static-route", "", p.RouterSetting.StaticRouteData, "")
 	fs.StringVarP(&p.RouterSetting.SyslogHost, "syslog-host", "", p.RouterSetting.SyslogHost, "")
-	fs.BoolVarP(&p.BootAfterCreateStandard, "boot-after-create-standard", "", p.BootAfterCreateStandard, "")
+	fs.BoolVarP(&p.BootAfterCreate, "boot-after-create", "", p.BootAfterCreate, "")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -93,7 +94,7 @@ func (p *createStandardParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("vpc-router", pflag.ContinueOnError)
 		fs.SortFlags = false
-		fs.AddFlag(cmd.LocalFlags().Lookup("boot-after-create-standard"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("boot-after-create"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("dhcp-server"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("dhcp-static-mapping"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("firewall"))
@@ -158,6 +159,16 @@ func (p *createStandardParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("example", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("example"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Parameter example",
 			Flags: fs,
 		})
 	}

@@ -12,19 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cflag
+package core
 
-import "github.com/sacloud/libsacloud/v2/sacloud/types"
+import (
+	"encoding/json"
+	"fmt"
 
-// IDParameter IDを指定して操作する必要があるリソースが実装すべきIDパラメータの定義
-type IDParameter struct {
-	ID types.ID `cli:"-" json:"-"` // IDは実行時にName or Tagsから検索〜設定されるケースがあるためvalidate:"required"にしない
+	"github.com/sacloud/usacloud/pkg/cli"
+)
+
+type ExampleHolder interface {
+	ExampleParameters(ctx cli.Context) interface{}
 }
 
-func (p *IDParameter) IDFlagValue() types.ID {
-	return p.ID
-}
-
-func (p *IDParameter) SetIDFlagValue(id types.ID) {
-	p.ID = id
+func generateExampleParameters(ctx cli.Context, exampleHolder ExampleHolder) error {
+	examples := exampleHolder.ExampleParameters(ctx)
+	data, err := json.MarshalIndent(examples, "", "    ")
+	if err != nil {
+		return fmt.Errorf("marshaling to JSON is failed: %s", err)
+	}
+	_, err = fmt.Fprintln(ctx.IO().Out(), string(data))
+	return err
 }

@@ -21,38 +21,38 @@ import (
 )
 
 type routerSetting struct {
-	VRID                      int
+	VRID                      int `json:",omitempty"`
 	InternetConnectionEnabled bool
 
-	StaticNATData string                        `cli:"static-nat" mapconv:"-"`
-	StaticNAT     []*sacloud.VPCRouterStaticNAT `cli:"-"`
+	StaticNATData string                        `cli:"static-nat" mapconv:"-" json:"-"`
+	StaticNAT     []*sacloud.VPCRouterStaticNAT `cli:"-" json:",omitempty"`
 
-	PortForwardingData string                             `cli:"port-forwarding" mapconv:"-"`
-	PortForwarding     []*sacloud.VPCRouterPortForwarding `cli:"-"`
+	PortForwardingData string                             `cli:"port-forwarding" mapconv:"-" json:"-"`
+	PortForwarding     []*sacloud.VPCRouterPortForwarding `cli:"-" json:",omitempty"`
 
-	FirewallData string                       `cli:"firewall" mapconv:"-"`
-	Firewall     []*sacloud.VPCRouterFirewall `cli:"-"`
+	FirewallData string                       `cli:"firewall" mapconv:"-" json:"-"`
+	Firewall     []*sacloud.VPCRouterFirewall `cli:"-" json:",omitempty"`
 
-	DHCPServerData string                         `cli:"dhcp-server" mapconv:"-"`
-	DHCPServer     []*sacloud.VPCRouterDHCPServer `cli:"-"`
+	DHCPServerData string                         `cli:"dhcp-server" mapconv:"-" json:"-"`
+	DHCPServer     []*sacloud.VPCRouterDHCPServer `cli:"-" json:",omitempty"`
 
-	DHCPStaticMappingData string                                `cli:"dhcp-static-mapping" mapconv:"-"`
-	DHCPStaticMapping     []*sacloud.VPCRouterDHCPStaticMapping `cli:"-"`
+	DHCPStaticMappingData string                                `cli:"dhcp-static-mapping" mapconv:"-" json:"-"`
+	DHCPStaticMapping     []*sacloud.VPCRouterDHCPStaticMapping `cli:"-" json:",omitempty"`
 
-	PPTPServer sacloud.VPCRouterPPTPServer `cli:"pptp" mapconv:",omitempty"`
+	PPTPServer sacloud.VPCRouterPPTPServer `cli:"pptp" mapconv:",omitempty" json:",omitempty"`
 
-	L2TPIPsecServer sacloud.VPCRouterL2TPIPsecServer `cli:"l2tp" mapconv:",omitempty"`
+	L2TPIPsecServer sacloud.VPCRouterL2TPIPsecServer `cli:"l2tp" mapconv:",omitempty" json:",omitempty"`
 
-	RemoteAccessUsersData string                               `cli:"users" mapconv:"-"`
-	RemoteAccessUsers     []*sacloud.VPCRouterRemoteAccessUser `cli:"-"`
+	RemoteAccessUsersData string                               `cli:"users" mapconv:"-" json:"-"`
+	RemoteAccessUsers     []*sacloud.VPCRouterRemoteAccessUser `cli:"-" json:",omitempty"`
 
-	SiteToSiteIPsecVPNData string                                 `cli:"site-to-site-vpn" mapconv:"-"`
-	SiteToSiteIPsecVPN     []*sacloud.VPCRouterSiteToSiteIPsecVPN `cli:"-"`
+	SiteToSiteIPsecVPNData string                                 `cli:"site-to-site-vpn" mapconv:"-" json:"-"`
+	SiteToSiteIPsecVPN     []*sacloud.VPCRouterSiteToSiteIPsecVPN `cli:"-" json:",omitempty"`
 
-	StaticRouteData string                          `cli:"static-route" mapconv:"-"`
-	StaticRoute     []*sacloud.VPCRouterStaticRoute `cli:"-"`
+	StaticRouteData string                          `cli:"static-route" mapconv:"-" json:"-"`
+	StaticRoute     []*sacloud.VPCRouterStaticRoute `cli:"-" json:",omitempty"`
 
-	SyslogHost string
+	SyslogHost string `json:",omitempty"`
 }
 
 func (r *routerSetting) Customize(_ cli.Context) error {

@@ -15,6 +15,7 @@
 package esme
 
 import (
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -42,7 +43,7 @@ var sendMessageCommand = &core.Command{
 type sendMessageParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	Destination string `cli:",aliases=dest" validate:"required"`
@@ -58,4 +59,12 @@ func newSendMessageParameter() *sendMessageParameter {
 
 func init() {
 	Resource.AddCommand(sendMessageCommand)
+}
+
+func (p *sendMessageParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &sendMessageParameter{
+		Destination: "81zzzzzzzzzz",
+		Sender:      "example-sender",
+		OTP:         "your-otp",
+	}
 }

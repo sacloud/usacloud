@@ -15,8 +15,12 @@
 package simplemonitor
 
 import (
+	"net/http"
+
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 )
 
 var createCommand = &core.Command{
@@ -32,7 +36,7 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -47,26 +51,26 @@ type createParameter struct {
 
 	NotifyEmailEnabled bool
 	NotifyEmailHTML    bool
-	NotifySlackEnabled string
+	NotifySlackEnabled bool
 	SlackWebhooksURL   string
 	NotifyInterval     int `validate:"min=3600,max=259200"`
 }
 
 type createParameterHealthCheck struct {
-	Protocol          string `cli:",options=simple_monitor_protocol" mapconv:",filters=simple_monitor_protocol_to_value" validate:"required,simple_monitor_protocol"`
-	Port              int
-	Path              string
-	Status            int
-	SNI               bool
-	Host              string
-	BasicAuthUsername string
-	BasicAuthPassword string
-	QName             string
-	ExpectedData      string
-	Community         string
-	SNMPVersion       string
-	OID               string
-	RemainingDays     int
+	Protocol          string `cli:",options=simple_monitor_protocol" mapconv:",filters=simple_monitor_protocol_to_value" validate:"required,simple_monitor_protocol" json:",omitempty"`
+	Port              int    `json:",omitempty"`
+	Path              string `json:",omitempty"`
+	Status            int    `json:",omitempty"`
+	SNI               bool   `json:",omitempty"`
+	Host              string `json:",omitempty"`
+	BasicAuthUsername string `json:",omitempty"`
+	BasicAuthPassword string `json:",omitempty"`
+	QName             string `json:",omitempty"`
+	ExpectedData      string `json:",omitempty"`
+	Community         string `json:",omitempty"`
+	SNMPVersion       string `json:",omitempty"`
+	OID               string `json:",omitempty"`
+	RemainingDays     int    `json:",omitempty"`
 }
 
 func newCreateParameter() *createParameter {
@@ -79,4 +83,30 @@ func newCreateParameter() *createParameter {
 
 func init() {
 	Resource.AddCommand(createCommand)
+}
+
+func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &createParameter{
+		Target:          "www.example.com",
+		DescParameter:   examples.Description,
+		TagsParameter:   examples.Tags,
+		IconIDParameter: examples.IconID,
+		DelayLoop:       60,
+		Enabled:         true,
+		HealthCheck: createParameterHealthCheck{
+			Protocol:          examples.OptionsString("simple_monitor_protocol"),
+			Port:              80,
+			Path:              "/healthz",
+			Status:            http.StatusOK,
+			SNI:               true,
+			Host:              "www2.example.com",
+			BasicAuthUsername: "username",
+			BasicAuthPassword: "password",
+		},
+		NotifyEmailEnabled: true,
+		NotifyEmailHTML:    true,
+		NotifySlackEnabled: true,
+		SlackWebhooksURL:   examples.SlackNotifyWebhooksURL,
+		NotifyInterval:     60 * 60 * 2,
+	}
 }

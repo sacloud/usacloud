@@ -59,7 +59,7 @@ func showFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		return nil, err
 	}
 
-	data, err := json.MarshalIndent(profileValue, "", "  ")
+	data, err := json.MarshalIndent(profileValue, "", "    ")
 	if err != nil {
 		return nil, err
 	}

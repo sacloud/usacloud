@@ -39,7 +39,7 @@ var downloadCommand = &core.Command{
 type downloadParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 
 	Destination string `cli:",aliases=dest,category=download,order=10" mapconv:"Writer,omitempty,filters=path_to_writer"` // 省略時は標準出力

@@ -16,8 +16,10 @@ package database
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 )
 
 var createCommand = &core.Command{
@@ -34,7 +36,7 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -47,7 +49,7 @@ type createParameter struct {
 	PlanID       string `cli:"plan,options=database_plan,category=plan,order=20" mapconv:",filters=database_plan_to_value" validate:"required,database_plan"`
 
 	SwitchID       types.ID `cli:",category=network,order=10" validate:"required"`
-	IPAddresses    []string `cli:"ip-address,aliases=ipaddress,category=network,order=20" validate:"required,min=1,max=2,dive,ipv4"`
+	IPAddresses    []string `cli:"ip-address,aliases=ipaddress,category=network,order=20" validate:"required,min=1,max=1,dive,ipv4"`
 	NetworkMaskLen int      `cli:"netmask,aliases=network-mask-len,category=network,order=30" validate:"required,min=1,max=32"`
 	DefaultRoute   string   `cli:"gateway,aliases=default-route,category=network,order=40" validate:"omitempty,ipv4"`
 	Port           int      `cli:",category=network,order=50" validate:"omitempty,min=1,max=65535"`
@@ -74,4 +76,34 @@ func newCreateParameter() *createParameter {
 
 func init() {
 	Resource.AddCommand(createCommand)
+}
+
+func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &createParameter{
+		ZoneParameter:         examples.Zones(ctx.Option().Zones),
+		NameParameter:         examples.Name,
+		DescParameter:         examples.Description,
+		TagsParameter:         examples.Tags,
+		IconIDParameter:       examples.IconID,
+		DatabaseType:          examples.OptionsString("database_type"),
+		PlanID:                examples.OptionsString("database_plan"),
+		SwitchID:              examples.ID,
+		IPAddresses:           []string{examples.IPAddress},
+		NetworkMaskLen:        examples.NetworkMaskLen,
+		DefaultRoute:          examples.DefaultRoute,
+		Port:                  5432,
+		SourceNetwork:         []string{"192.0.2.0/24"},
+		Username:              "username",
+		Password:              "password",
+		EnableReplication:     true,
+		ReplicaUserPassword:   "password",
+		EnableWebUI:           true,
+		EnableBackup:          true,
+		BackupWeekdays:        []string{examples.OptionsString("weekdays")},
+		BackupStartTimeHour:   1,
+		BackupStartTimeMinute: 30,
+		NoWaitParameter: cflag.NoWaitParameter{
+			NoWait: false,
+		},
+	}
 }

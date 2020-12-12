@@ -272,6 +272,9 @@ func (c *Command) initCommandContext(cmd *cobra.Command, args []string) (cli.Con
 
 	// パラメータファイルの処理やスケルトン出力など
 	needContinue, err := c.handleCommonParameters(ctx)
+	if needContinue {
+		needContinue, err = c.handleExampleParameters(ctx)
+	}
 	return ctx, needContinue, err
 }
 
@@ -297,7 +300,7 @@ func (c *Command) printCommandWarning(ctx cli.Context) {
 }
 
 func (c *Command) handleCommonParameters(ctx cli.Context) (bool, error) {
-	if cp, ok := c.currentParameter.(cflag.InputParameterValueHolder); ok {
+	if cp, ok := c.currentParameter.(cflag.CommonParameterValueHolder); ok {
 		// パラメータスケルトンの生成
 		if cp.GenerateSkeletonFlagValue() {
 			return false, generateSkeleton(ctx, c.currentParameter)
@@ -305,6 +308,19 @@ func (c *Command) handleCommonParameters(ctx cli.Context) (bool, error) {
 		// --parameters/--parameter-fileフラグの処理
 		if err := loadParameters(cp); err != nil {
 			return false, err
+		}
+	}
+	return true, nil
+}
+
+func (c *Command) handleExampleParameters(ctx cli.Context) (bool, error) {
+	if cp, ok := c.currentParameter.(cflag.ExampleParameterValueHolder); ok {
+		if cp.ExampleFlagValue() {
+			if eh, ok := c.currentParameter.(ExampleHolder); ok {
+				return false, generateExampleParameters(ctx, eh)
+			}
+			// パラメータがExampleHolder未実装の場合はスケルトン出力
+			return false, generateSkeleton(ctx, c.currentParameter)
 		}
 	}
 	return true, nil

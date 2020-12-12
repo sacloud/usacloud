@@ -42,3 +42,16 @@ func SetIDFlagValue(p interface{}, id types.ID) {
 	}
 	v.SetIDFlagValue(id)
 }
+
+// IDParameter IDを指定して操作する必要があるリソースが実装すべきIDパラメータの定義
+type IDParameter struct {
+	ID types.ID `cli:"-" json:"-"` // IDは実行時にName or Tagsから検索〜設定されるケースがあるためvalidate:"required"にしない
+}
+
+func (p *IDParameter) IDFlagValue() types.ID {
+	return p.ID
+}
+
+func (p *IDParameter) SetIDFlagValue(id types.ID) {
+	p.ID = id
+}

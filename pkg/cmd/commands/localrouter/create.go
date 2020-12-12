@@ -19,6 +19,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -35,7 +36,7 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -44,24 +45,28 @@ type createParameter struct {
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	Switch struct {
-		Code     string
-		Category string
-		ZoneID   string
-	}
+	Switch switchParameter
 
-	Interface struct {
-		VirtualIPAddress string   `validate:"omitempty,ipv4"`
-		IPAddress        []string `cli:"ip-addresses" validate:"omitempty,min=2,max=2,dive,ipv4"`
-		NetworkMaskLen   int      `cli:"netmask,aliases=network-mask-len" validate:"omitempty,min=8,max=28"`
-		VRID             int      `validate:"omitempty"`
-	} `cli:",squash"`
+	Interface interfaceParameter `cli:",squash"`
 
-	PeersData string                     `cli:"peers" mapconv:"-"`
+	PeersData string                     `cli:"peers" mapconv:"-" json:"-"`
 	Peers     []*sacloud.LocalRouterPeer `cli:"-"`
 
-	StaticRoutesData string                            `cli:"static-routes" mapconv:"-"`
+	StaticRoutesData string                            `cli:"static-routes" mapconv:"-" json:"-"`
 	StaticRoutes     []*sacloud.LocalRouterStaticRoute `cli:"-"`
+}
+
+type switchParameter struct {
+	Code     string
+	Category string
+	ZoneID   string
+}
+
+type interfaceParameter struct {
+	VirtualIPAddress string   `validate:"omitempty,ipv4"`
+	IPAddress        []string `cli:"ip-addresses" validate:"omitempty,min=2,max=2,dive,ipv4"`
+	NetworkMaskLen   int      `cli:"netmask,aliases=network-mask-len" validate:"omitempty,min=8,max=28"`
+	VRID             int      `validate:"omitempty"`
 }
 
 func newCreateParameter() *createParameter {
@@ -90,4 +95,38 @@ func (p *createParameter) Customize(_ cli.Context) error {
 	}
 
 	return nil
+}
+
+func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &createParameter{
+		NameParameter:   examples.Name,
+		DescParameter:   examples.Description,
+		TagsParameter:   examples.Tags,
+		IconIDParameter: examples.IconID,
+		Switch: switchParameter{
+			Category: "cloud",
+			Code:     examples.ID.String(),
+			ZoneID:   examples.ZonesString(ctx.Option().Zones),
+		},
+		Interface: interfaceParameter{
+			VirtualIPAddress: examples.VirtualIPAddress,
+			IPAddress:        examples.IPAddresses,
+			NetworkMaskLen:   examples.NetworkMaskLen,
+			VRID:             1,
+		},
+		Peers: []*sacloud.LocalRouterPeer{
+			{
+				ID:          examples.ID,
+				SecretKey:   "*****",
+				Enabled:     true,
+				Description: "example-peer",
+			},
+		},
+		StaticRoutes: []*sacloud.LocalRouterStaticRoute{
+			{
+				Prefix:  "192.0.2.0/24",
+				NextHop: "192.0.2.1",
+			},
+		},
+	}
 }

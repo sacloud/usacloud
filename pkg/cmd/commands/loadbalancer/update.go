@@ -15,10 +15,14 @@
 package loadbalancer
 
 import (
+	"net/http"
+
 	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -38,7 +42,7 @@ var updateCommand = &core.Command{
 type updateParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -47,7 +51,7 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	VirtualIPAddressesData *string                                 `cli:"virtual-ip-addresses,aliases=vips,category=network" mapconv:"-"`
+	VirtualIPAddressesData *string                                 `cli:"virtual-ip-addresses,aliases=vips,category=network" mapconv:"-" json:"-"`
 	VirtualIPAddresses     *sacloud.LoadBalancerVirtualIPAddresses `cli:"-"`
 	cflag.NoWaitParameter  `cli:",squash" mapconv:",squash"`
 }
@@ -74,4 +78,35 @@ func (p *updateParameter) Customize(_ cli.Context) error {
 	}
 
 	return nil
+}
+
+func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &updateParameter{
+		ZoneParameter:         examples.Zones(ctx.Option().Zones),
+		NameUpdateParameter:   examples.NameUpdate,
+		DescUpdateParameter:   examples.DescriptionUpdate,
+		TagsUpdateParameter:   examples.TagsUpdate,
+		IconIDUpdateParameter: examples.IconIDUpdate,
+		VirtualIPAddresses: &sacloud.LoadBalancerVirtualIPAddresses{
+			{
+				VirtualIPAddress: examples.VirtualIPAddress,
+				Port:             80,
+				DelayLoop:        10,
+				SorryServer:      "192.0.2.1",
+				Description:      "example",
+				Servers: sacloud.LoadBalancerServers{
+					{
+						IPAddress: "192.0.2.101",
+						Port:      80,
+						Enabled:   true,
+						HealthCheck: &sacloud.LoadBalancerServerHealthCheck{
+							Protocol:     types.ELoadBalancerHealthCheckProtocol(examples.OptionsString("loadbalancer_server_protocol")),
+							Path:         "/",
+							ResponseCode: http.StatusOK,
+						},
+					},
+				},
+			},
+		},
+	}
 }

@@ -17,9 +17,11 @@ package mobilegateway
 import (
 	"github.com/sacloud/libsacloud/v2/helper/service/mobilegateway"
 	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -39,7 +41,7 @@ var updateCommand = &core.Command{
 type updateParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -53,13 +55,13 @@ type updateParameter struct {
 	InternetConnectionEnabled       *bool
 	InterDeviceCommunicationEnabled *bool
 
-	SIMsData *string                      `cli:"sims" mapconv:"-"`
+	SIMsData *string                      `cli:"sims" mapconv:"-" json:"-"`
 	SIMs     *[]*mobilegateway.SIMSetting `cli:"-"`
 
-	SIMRoutesData *string                           `cli:"sim-routes" mapconv:"-"`
+	SIMRoutesData *string                           `cli:"sim-routes" mapconv:"-" json:"-"`
 	SIMRoutes     *[]*mobilegateway.SIMRouteSetting `cli:"-"`
 
-	StaticRoutesData *string                              `cli:"static-routes" mapconv:"-"`
+	StaticRoutesData *string                              `cli:"static-routes" mapconv:"-" json:"-"`
 	StaticRoutes     *[]*sacloud.MobileGatewayStaticRoute `cli:"-"`
 
 	DNS           mobilegateway.DNSSettingUpdate    `cli:",squash" mapconv:",omitempty"`
@@ -112,4 +114,54 @@ func (p *updateParameter) Customize(_ cli.Context) error {
 	}
 
 	return nil
+}
+
+func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &updateParameter{
+		ZoneParameter:                   examples.Zones(ctx.Option().Zones),
+		NameUpdateParameter:             examples.NameUpdate,
+		DescUpdateParameter:             examples.DescriptionUpdate,
+		TagsUpdateParameter:             examples.TagsUpdate,
+		IconIDUpdateParameter:           examples.IconIDUpdate,
+		InternetConnectionEnabled:       pointer.NewBool(true),
+		InterDeviceCommunicationEnabled: pointer.NewBool(true),
+		SIMs: &[]*mobilegateway.SIMSetting{
+			{
+				SIMID:     examples.ID,
+				IPAddress: examples.IPAddress,
+			},
+		},
+		SIMRoutes: &[]*mobilegateway.SIMRouteSetting{
+			{
+				SIMID:  examples.ID,
+				Prefix: "192.0.2.0/24",
+			},
+		},
+		StaticRoutes: &[]*sacloud.MobileGatewayStaticRoute{
+			{
+				NextHop: "192.0.2.2",
+				Prefix:  "192.0.2.0/24",
+			},
+		},
+		PrivateInterface: mobilegateway.PrivateInterfaceSettingUpdate{
+			SwitchID:       &examples.ID,
+			IPAddress:      &examples.IPAddress,
+			NetworkMaskLen: &examples.NetworkMaskLen,
+		},
+		DNS: mobilegateway.DNSSettingUpdate{
+			DNS1: pointer.NewString("133.242.0.3 | 210.188.224.10 | n.n.n.n"),
+			DNS2: pointer.NewString("133.242.0.4 | 210.188.224.11 | n.n.n.n"),
+		},
+		TrafficConfig: mobilegateway.TrafficConfigUpdate{
+			TrafficQuotaInMB:       pointer.NewInt(10),
+			BandWidthLimitInKbps:   pointer.NewInt(128),
+			EmailNotifyEnabled:     pointer.NewBool(true),
+			SlackNotifyEnabled:     pointer.NewBool(true),
+			SlackNotifyWebhooksURL: &examples.SlackNotifyWebhooksURL,
+			AutoTrafficShaping:     pointer.NewBool(true),
+		},
+		NoWaitParameter: cflag.NoWaitParameter{
+			NoWait: false,
+		},
+	}
 }

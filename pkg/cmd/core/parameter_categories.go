@@ -93,6 +93,11 @@ var ParameterCategories = []*Category{
 		Order:       math.MaxInt32 - 10,
 	},
 	{
+		Key:         "example",
+		DisplayName: "Parameter example",
+		Order:       math.MaxInt32 - 5,
+	},
+	{
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       math.MaxInt32,
