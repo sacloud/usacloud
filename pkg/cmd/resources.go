@@ -122,7 +122,10 @@ var Resources = core.Resources{
 
 func initCommands() {
 	for _, r := range Resources {
-		root.Command.AddCommand(r.CLICommand())
+		cmd := r.CLICommand()
+		if len(cmd.Commands()) > 0 {
+			root.Command.AddCommand(cmd)
+		}
 	}
 	core.BuildRootCommandsUsage(root.Command, Resources.CategorizedResources())
 }
