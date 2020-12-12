@@ -41,9 +41,9 @@ var rdpCommand = &core.Command{
 }
 
 type rdpParameter struct {
-	cflag.ZoneParameter  `cli:",squash" mapconv:",squash"`
-	cflag.IDParameter    `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 
 	User           string
 	Port           int
@@ -67,12 +67,7 @@ func rdpFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		return nil, fmt.Errorf("invalid parameter: %v", parameter)
 	}
 
-	serverOp := sacloud.NewServerOp(ctx.Client())
-	instance, err := serverOp.Read(ctx, p.Zone, p.ID)
-	if err != nil {
-		return nil, err
-	}
-
+	instance := ctx.Resource().(*sacloud.Server)
 	if len(instance.Interfaces) == 0 {
 		return nil, fmt.Errorf("server[%q] has no network interfaces", p.ID)
 	}

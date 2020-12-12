@@ -31,6 +31,7 @@ func (p *waitUntilShutdownParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
+	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -62,6 +63,16 @@ func (p *waitUntilShutdownParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("example", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("example"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Parameter example",
 			Flags: fs,
 		})
 	}

@@ -16,9 +16,11 @@ package dns
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -37,7 +39,7 @@ var updateCommand = &core.Command{
 
 type updateParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -46,7 +48,7 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	RecordsData *string             `cli:"records" mapconv:"-"`
+	RecordsData *string             `cli:"records" mapconv:"-" json:"-"`
 	Records     *sacloud.DNSRecords `cli:"-"`
 }
 
@@ -72,4 +74,27 @@ func (p *updateParameter) Customize(_ cli.Context) error {
 	}
 
 	return nil
+}
+
+func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &updateParameter{
+		NameUpdateParameter:   examples.NameUpdate,
+		DescUpdateParameter:   examples.DescriptionUpdate,
+		TagsUpdateParameter:   examples.TagsUpdate,
+		IconIDUpdateParameter: examples.IconIDUpdate,
+		Records: &sacloud.DNSRecords{
+			{
+				Name:  "www",
+				Type:  types.EDNSRecordType(examples.OptionsString("dns_record_type")),
+				RData: examples.IPAddress,
+				TTL:   300,
+			},
+			{
+				Name:  "@",
+				Type:  types.EDNSRecordType(examples.OptionsString("dns_record_type")),
+				RData: examples.IPAddress,
+				TTL:   300,
+			},
+		},
+	}
 }

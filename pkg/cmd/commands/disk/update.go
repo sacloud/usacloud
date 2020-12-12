@@ -15,10 +15,14 @@
 package disk
 
 import (
+	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/common"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 )
 
 var updateCommand = &core.Command{
@@ -37,7 +41,7 @@ var updateCommand = &core.Command{
 type updateParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -62,4 +66,42 @@ func init() {
 // Customize パラメータ変換処理
 func (p *updateParameter) Customize(ctx cli.Context) error {
 	return p.EditDisk.Customize(ctx)
+}
+
+func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &updateParameter{
+		ZoneParameter:         examples.Zones(ctx.Option().Zones),
+		NameUpdateParameter:   examples.NameUpdate,
+		DescUpdateParameter:   examples.DescriptionUpdate,
+		TagsUpdateParameter:   examples.TagsUpdate,
+		IconIDUpdateParameter: examples.IconIDUpdate,
+		Connection:            pointer.NewString(examples.OptionsString("disk_connection")),
+		EditDisk: common.EditRequest{
+			HostName:            "hostname",
+			Password:            "password",
+			IPAddress:           examples.IPAddress,
+			NetworkMaskLen:      examples.NetworkMaskLen,
+			DefaultRoute:        examples.DefaultRoute,
+			DisablePWAuth:       true,
+			EnableDHCP:          true,
+			ChangePartitionUUID: true,
+			SSHKeys:             []string{"/path/to/your/public/key", "ssh-rsa ..."},
+			SSHKeyIDs:           []types.ID{examples.ID},
+			IsSSHKeysEphemeral:  true,
+			NoteIDs:             []types.ID{examples.ID},
+			IsNotesEphemeral:    true,
+			Notes: []*sacloud.DiskEditNote{
+				{
+					ID: examples.ID,
+					Variables: map[string]interface{}{
+						"variable1": "foo",
+						"variable2": "bar",
+					},
+				},
+			},
+		},
+		NoWaitParameter: cflag.NoWaitParameter{
+			NoWait: false,
+		},
+	}
 }

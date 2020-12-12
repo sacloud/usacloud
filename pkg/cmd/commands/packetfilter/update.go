@@ -16,9 +16,11 @@ package packetfilter
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -38,13 +40,13 @@ var updateCommand = &core.Command{
 type updateParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	cflag.NameUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.DescUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
-	ExpressionsData           *string                            `cli:"expressions,aliases=rules" mapconv:"-"`
+	ExpressionsData           *string                            `cli:"expressions,aliases=rules" mapconv:"-" json:"-"`
 	Expressions               *[]*sacloud.PacketFilterExpression `cli:"-" mapconv:"Expression"`
 }
 
@@ -70,4 +72,50 @@ func (p *updateParameter) Customize(_ cli.Context) error {
 	}
 
 	return nil
+}
+
+func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &updateParameter{
+		ZoneParameter:       examples.Zones(ctx.Option().Zones),
+		NameUpdateParameter: examples.NameUpdate,
+		DescUpdateParameter: examples.DescriptionUpdate,
+		Expressions: &[]*sacloud.PacketFilterExpression{
+			{
+				Protocol:        types.Protocol(examples.OptionsString("packetfilter_protocol")),
+				SourceNetwork:   "192.0.2.1 | 192.0.2.0/24",
+				SourcePort:      "1024 | 1024-2048",
+				DestinationPort: "1024 | 1024-2048",
+				Action:          types.Action(examples.OptionsString("packetfilter_action")),
+				Description:     "description",
+			},
+			{
+				Protocol:        types.Protocols.TCP,
+				DestinationPort: "22",
+				Action:          types.Actions.Allow,
+				Description:     "allow ssh",
+			},
+			{
+				Protocol: types.Protocols.ICMP,
+				Action:   types.Actions.Allow,
+			},
+			{
+				Protocol:        types.Protocols.TCP,
+				DestinationPort: "32768-61000",
+				Action:          types.Actions.Allow,
+			},
+			{
+				Protocol:        types.Protocols.UDP,
+				DestinationPort: "32768-61000",
+				Action:          types.Actions.Allow,
+			},
+			{
+				Protocol: types.Protocols.Fragment,
+				Action:   types.Actions.Allow,
+			},
+			{
+				Protocol: types.Protocols.IP,
+				Action:   types.Actions.Deny,
+			},
+		},
+	}
 }

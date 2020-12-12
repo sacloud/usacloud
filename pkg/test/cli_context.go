@@ -34,6 +34,7 @@ type DummyCLIContextValue struct {
 	CommandName  string
 	ID           types.ID
 	Zone         string
+	Resource     interface{}
 	Args         []string
 }
 
@@ -69,7 +70,11 @@ func (c *DummyCLIContext) Zone() string {
 	return c.DummyValue.Zone
 }
 
-func (c *DummyCLIContext) WithResource(id types.ID, zone string) cli.Context {
+func (c *DummyCLIContext) Resource() interface{} {
+	return c.DummyValue.Resource
+}
+
+func (c *DummyCLIContext) WithResource(id types.ID, zone string, resource interface{}) cli.Context {
 	return &DummyCLIContext{
 		DummyValue: &DummyCLIContextValue{
 			Context:      c.DummyValue.Context,
@@ -81,6 +86,7 @@ func (c *DummyCLIContext) WithResource(id types.ID, zone string) cli.Context {
 			Args:         c.DummyValue.Args,
 			ID:           id,
 			Zone:         zone,
+			Resource:     resource,
 		},
 	}
 }

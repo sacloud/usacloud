@@ -32,6 +32,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
+	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -62,7 +63,6 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Disk.Connection, "disk-connection", "", p.Disk.Connection, "options: [virtio/ide]")
 	fs.VarP(core.NewIDFlag(&p.Disk.SourceDiskID, &p.Disk.SourceDiskID), "disk-source-disk-id", "", "")
 	fs.VarP(core.NewIDFlag(&p.Disk.SourceArchiveID, &p.Disk.SourceArchiveID), "disk-source-archive-id", "", "")
-	fs.VarP(core.NewIDFlag(&p.Disk.ServerID, &p.Disk.ServerID), "disk-server-id", "", "")
 	fs.IntVarP(&p.Disk.SizeGB, "disk-size", "", p.Disk.SizeGB, "(aliases: --size-gb)")
 	fs.VarP(core.NewIDSliceFlag(&p.Disk.DistantFrom, &p.Disk.DistantFrom), "disk-distant-from", "", "")
 	fs.StringVarP(&p.Disk.OSType, "disk-os-type", "", p.Disk.OSType, "options: [centos/centos8/ubuntu/ubuntu2004/debian/debian10/coreos/rancheros/k3os/freebsd/...]")
@@ -164,7 +164,6 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-no-wait"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-os-type"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("disk-server-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-size"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-source-archive-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-source-disk-id"))
@@ -253,6 +252,16 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("example", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("example"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Parameter example",
 			Flags: fs,
 		})
 	}

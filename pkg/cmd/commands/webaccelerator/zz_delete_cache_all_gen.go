@@ -31,6 +31,7 @@ func (p *deleteCacheAllParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
+	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
 	fs.StringVarP(&p.Domain, "domain", "", p.Domain, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -64,6 +65,16 @@ func (p *deleteCacheAllParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("parameters"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Input options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("example", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("example"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Parameter example",
 			Flags: fs,
 		})
 	}

@@ -28,6 +28,17 @@ type definition struct {
 	value interface{}
 }
 
+func (d *definition) stringKey() string {
+	switch s := d.key.(type) {
+	case string:
+		return s
+	case fmt.Stringer:
+		return s.String()
+	default:
+		return fmt.Sprintf("%v", s)
+	}
+}
+
 // definitions usacloudで使う名称(key)/値(value)のペア
 var definitions = map[string][]*definition{
 	"backup_start_minute": {
@@ -40,10 +51,15 @@ var definitions = map[string][]*definition{
 		{key: 5, value: 5},
 		{key: 10, value: 10},
 	},
-	"container_registry_access_levels": {
+	"container_registry_access_level": {
 		{key: types.ContainerRegistryAccessLevels.ReadWrite.String(), value: types.ContainerRegistryAccessLevels.ReadWrite},
 		{key: types.ContainerRegistryAccessLevels.ReadOnly.String(), value: types.ContainerRegistryAccessLevels.ReadOnly},
 		{key: types.ContainerRegistryAccessLevels.None.String(), value: types.ContainerRegistryAccessLevels.None},
+	},
+	"container_registry_permission": {
+		{key: types.ContainerRegistryPermissions.All.String(), value: types.ContainerRegistryPermissions.All},
+		{key: types.ContainerRegistryPermissions.ReadWrite.String(), value: types.ContainerRegistryPermissions.ReadWrite},
+		{key: types.ContainerRegistryPermissions.ReadOnly.String(), value: types.ContainerRegistryPermissions.ReadOnly},
 	},
 	"database_plan": {
 		{key: "10g", value: types.DatabasePlans.DB10GB},
@@ -66,6 +82,18 @@ var definitions = map[string][]*definition{
 		{key: types.DiskConnections.VirtIO.String(), value: types.DiskConnections.VirtIO.String()},
 		{key: types.DiskConnections.IDE.String(), value: types.DiskConnections.IDE.String()},
 	},
+	"dns_record_type": {
+		{key: types.DNSRecordTypes.A.String(), value: types.DNSRecordTypes.A},
+		{key: types.DNSRecordTypes.AAAA.String(), value: types.DNSRecordTypes.AAAA},
+		{key: types.DNSRecordTypes.ALIAS.String(), value: types.DNSRecordTypes.ALIAS},
+		{key: types.DNSRecordTypes.CNAME.String(), value: types.DNSRecordTypes.CNAME},
+		{key: types.DNSRecordTypes.NS.String(), value: types.DNSRecordTypes.NS},
+		{key: types.DNSRecordTypes.MX.String(), value: types.DNSRecordTypes.MX},
+		{key: types.DNSRecordTypes.TXT.String(), value: types.DNSRecordTypes.TXT},
+		{key: types.DNSRecordTypes.SRV.String(), value: types.DNSRecordTypes.SRV},
+		{key: types.DNSRecordTypes.CAA.String(), value: types.DNSRecordTypes.CAA},
+		{key: types.DNSRecordTypes.PTR.String(), value: types.DNSRecordTypes.PTR},
+	},
 	"gslb_protocol": {
 		{key: types.GSLBHealthCheckProtocols.HTTP.String(), value: types.GSLBHealthCheckProtocols.HTTP},
 		{key: types.GSLBHealthCheckProtocols.HTTPS.String(), value: types.GSLBHealthCheckProtocols.HTTPS},
@@ -80,8 +108,6 @@ var definitions = map[string][]*definition{
 		{key: 28, value: 28},
 		{key: 27, value: 27},
 		{key: 26, value: 26},
-		{key: 25, value: 25},
-		{key: 24, value: 24},
 	},
 	"internet_bandwidth": {
 		{key: 100, value: 100},
@@ -98,6 +124,12 @@ var definitions = map[string][]*definition{
 		{key: "standard", value: types.LoadBalancerPlans.Standard},
 		{key: "highspec", value: types.LoadBalancerPlans.HighSpec},
 	},
+	"loadbalancer_server_protocol": {
+		{key: types.LoadBalancerHealthCheckProtocols.HTTP.String(), value: types.LoadBalancerHealthCheckProtocols.HTTP},
+		{key: types.LoadBalancerHealthCheckProtocols.HTTPS.String(), value: types.LoadBalancerHealthCheckProtocols.HTTPS},
+		{key: types.LoadBalancerHealthCheckProtocols.TCP.String(), value: types.LoadBalancerHealthCheckProtocols.TCP},
+		{key: types.LoadBalancerHealthCheckProtocols.Ping.String(), value: types.LoadBalancerHealthCheckProtocols.Ping},
+	},
 	"nfs_plan": {
 		{key: "ssd", value: types.NFSPlans.SSD},
 		{key: "hdd", value: types.NFSPlans.HDD},
@@ -107,9 +139,27 @@ var definitions = map[string][]*definition{
 		{key: "yaml_cloud_config", value: "sheyaml_cloud_configll"},
 	},
 	"os_type": ostypeDefinition(),
+	"packetfilter_protocol": {
+		{key: types.Protocols.HTTP.String(), value: types.Protocols.HTTP},
+		{key: types.Protocols.HTTPS.String(), value: types.Protocols.HTTPS},
+		{key: types.Protocols.TCP.String(), value: types.Protocols.TCP},
+		{key: types.Protocols.UDP.String(), value: types.Protocols.UDP},
+		{key: types.Protocols.ICMP.String(), value: types.Protocols.ICMP},
+		{key: types.Protocols.Fragment.String(), value: types.Protocols.Fragment},
+		{key: types.Protocols.IP.String(), value: types.Protocols.IP},
+	},
+	"packetfilter_action": {
+		{key: types.Actions.Allow.String(), value: types.Actions.Allow},
+		{key: types.Actions.Deny.String(), value: types.Actions.Deny},
+	},
 	"private_host_class": {
 		{key: "dynamic", value: "dynamic"},
 		{key: "ms_windows", value: "ms_windows"},
+	},
+	"proxylb_proxy_mode": {
+		{key: types.ProxyLBProxyModes.HTTP.String(), value: types.ProxyLBProxyModes.HTTP},
+		{key: types.ProxyLBProxyModes.HTTPS.String(), value: types.ProxyLBProxyModes.HTTPS},
+		{key: types.ProxyLBProxyModes.TCP.String(), value: types.ProxyLBProxyModes.TCP},
 	},
 	"proxylb_plan": {
 		{key: types.ProxyLBPlans.CPS100.String(), value: types.ProxyLBPlans.CPS100},
@@ -175,6 +225,16 @@ var definitions = map[string][]*definition{
 		{key: "highspec", value: types.VPCRouterPlans.HighSpec},
 		{key: "highspec4000", value: types.VPCRouterPlans.HighSpec4000},
 	},
+	"vpc_router_port_forwarding_protocol": {
+		{key: string(types.VPCRouterPortForwardingProtocols.TCP), value: types.VPCRouterPortForwardingProtocols.TCP},
+		{key: string(types.VPCRouterPortForwardingProtocols.UDP), value: types.VPCRouterPortForwardingProtocols.UDP},
+	},
+	"vpc_router_firewall_protocol": {
+		{key: string(types.VPCRouterFirewallProtocols.TCP), value: types.VPCRouterFirewallProtocols.TCP},
+		{key: string(types.VPCRouterFirewallProtocols.UDP), value: types.VPCRouterFirewallProtocols.UDP},
+		{key: string(types.VPCRouterFirewallProtocols.ICMP), value: types.VPCRouterFirewallProtocols.ICMP},
+		{key: string(types.VPCRouterFirewallProtocols.IP), value: types.VPCRouterFirewallProtocols.IP},
+	},
 	"weekdays": {
 		{key: "all", value: "all"},
 		{key: types.BackupSpanWeekdays.Sunday.String(), value: types.BackupSpanWeekdays.Sunday},
@@ -185,6 +245,18 @@ var definitions = map[string][]*definition{
 		{key: types.BackupSpanWeekdays.Friday.String(), value: types.BackupSpanWeekdays.Friday},
 		{key: types.BackupSpanWeekdays.Saturday.String(), value: types.BackupSpanWeekdays.Saturday},
 	},
+}
+
+func Keys(key string) ([]string, bool) {
+	values, ok := definitions[key]
+	if !ok {
+		return nil, false
+	}
+	var results []string
+	for _, v := range values {
+		results = append(results, v.stringKey())
+	}
+	return results, true
 }
 
 func ostypeDefinition() []*definition {
@@ -237,14 +309,7 @@ func registerValidators() {
 		}
 		var allows []string
 		for _, def := range defs {
-			switch s := def.key.(type) {
-			case string:
-				allows = append(allows, s)
-			case fmt.Stringer:
-				allows = append(allows, s.String())
-			default:
-				allows = append(allows, fmt.Sprintf("%v", s))
-			}
+			allows = append(allows, def.stringKey())
 		}
 		validatorAliases[name] = fmt.Sprintf("oneof=%s", joinWithSpace(allows))
 	}
@@ -258,14 +323,7 @@ func registerCLITagOptions() {
 		}
 		var allows []string
 		for _, def := range defs {
-			switch s := def.key.(type) {
-			case string:
-				allows = append(allows, s)
-			case fmt.Stringer:
-				allows = append(allows, s.String())
-			default:
-				allows = append(allows, fmt.Sprintf("%v", s))
-			}
+			allows = append(allows, def.stringKey())
 		}
 		FlagOptionsMap[name] = allows
 	}

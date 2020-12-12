@@ -95,7 +95,7 @@ func (o *jsonOutput) Print(contents Contents) error {
 		results = append(results, mapValue)
 	}
 
-	b, err := json.MarshalIndent(results, "", "  ")
+	b, err := json.MarshalIndent(results, "", "    ")
 	if err != nil {
 		return fmt.Errorf("JSONOutput:Print: MarshalIndent failed: %s", err)
 	}

@@ -16,9 +16,12 @@ package proxylb
 
 import (
 	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -37,7 +40,7 @@ var updateCommand = &core.Command{
 
 type updateParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -46,7 +49,7 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	Plan *int `validate:"omitempty,proxylb_plan"`
+	Plan *string `cli:",options=proxylb_plan" mapconv:",omitempty,filters=proxylb_plan_to_value" validate:"omitempty,proxylb_plan"`
 
 	HealthCheck   updateParameterHealthCheck   `mapconv:",omitempty"`
 	SorryServer   updateParameterSorryServer   `mapconv:",omitempty"`
@@ -131,4 +134,64 @@ func (p *updateParameter) Customize(_ cli.Context) error {
 		*p.Rules = append(*p.Rules, rules...)
 	}
 	return nil
+}
+
+func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &updateParameter{
+		NameUpdateParameter:   examples.NameUpdate,
+		DescUpdateParameter:   examples.DescriptionUpdate,
+		TagsUpdateParameter:   examples.TagsUpdate,
+		IconIDUpdateParameter: examples.IconIDUpdate,
+		Plan:                  pointer.NewString(examples.OptionsString("proxylb_plan")),
+		HealthCheck: updateParameterHealthCheck{
+			Protocol:  pointer.NewString(examples.OptionsString("proxylb_protocol")),
+			Path:      pointer.NewString("/healthz"),
+			Host:      pointer.NewString("www.example.com"),
+			DelayLoop: pointer.NewInt(10),
+		},
+		SorryServer: updateParameterSorryServer{
+			IPAddress: &examples.IPAddress,
+			Port:      pointer.NewInt(80),
+		},
+		LetsEncrypt: updateParameterLetsEncrypt{
+			CommonName: pointer.NewString("www.example.com"),
+			Enabled:    pointer.NewBool(true),
+		},
+		StickySession: updateParameterStickySession{
+			Method:  pointer.NewString("cookie"),
+			Enabled: pointer.NewBool(true),
+		},
+		Timeout: updateParameterTimeout{
+			InactiveSec: pointer.NewInt(10),
+		},
+		BindPorts: &[]*sacloud.ProxyLBBindPort{
+			{
+				ProxyMode:       types.EProxyLBProxyMode(examples.OptionsString("proxylb_proxy_mode")),
+				Port:            80,
+				RedirectToHTTPS: true,
+				SupportHTTP2:    true,
+				AddResponseHeader: []*sacloud.ProxyLBResponseHeader{
+					{
+						Header: "Cache-Control",
+						Value:  "public, max-age=900",
+					},
+				},
+			},
+		},
+		Servers: &[]*sacloud.ProxyLBServer{
+			{
+				IPAddress:   examples.IPAddress,
+				Port:        80,
+				ServerGroup: "group1",
+				Enabled:     true,
+			},
+		},
+		Rules: &[]*sacloud.ProxyLBRule{
+			{
+				Host:        "www2.example.com",
+				Path:        "/foo",
+				ServerGroup: "group1",
+			},
+		},
+	}
 }

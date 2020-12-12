@@ -15,8 +15,10 @@
 package ipaddress
 
 import (
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 )
 
 var updateHostNameCommand = &core.Command{
@@ -34,7 +36,7 @@ var updateHostNameCommand = &core.Command{
 
 type updateHostNameParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -53,4 +55,14 @@ func newUpdateHostNameParameter() *updateHostNameParameter {
 
 func init() {
 	Resource.AddCommand(updateHostNameCommand)
+}
+
+func (p *updateHostNameParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &updateHostNameParameter{
+		ZoneParameter: examples.Zones(ctx.Option().Zones),
+		IPAddress:     examples.IPAddress,
+		HostName:      "www.example.com",
+		RetryMax:      30,
+		RetryInterval: 10,
+	}
 }

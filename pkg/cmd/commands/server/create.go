@@ -17,6 +17,9 @@ package server
 import (
 	"fmt"
 
+	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
+
 	"github.com/sacloud/libsacloud/v2/helper/service/disk"
 
 	"github.com/sacloud/libsacloud/v2/helper/service/server"
@@ -46,7 +49,7 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -66,13 +69,13 @@ type createParameter struct {
 	CDROMID         types.ID `cli:"cdrom-id,aliases=iso-image-id"`
 	PrivateHostID   types.ID
 
-	NetworkInterface     serverNetworkInterface     `cli:",category=network,order=10" mapconv:"-" validate:"omitempty"`
-	NetworkInterfaceData string                     `cli:"network-interfaces,category=network,order=20" mapconv:"-"`
+	NetworkInterface     serverNetworkInterface     `cli:",category=network,order=10" mapconv:"-" validate:"omitempty" json:"-"`
+	NetworkInterfaceData string                     `cli:"network-interfaces,category=network,order=20" mapconv:"-" json:"-"`
 	NetworkInterfaces    []*server.NetworkInterface `cli:"-" mapconv:",omitempty,recursive"`
 
-	Disk      diskApplyParameter    `cli:",category=disk,order=10" mapconv:"-" validate:"omitempty"`
-	DiskIDs   []types.ID            `cli:"disk-ids,category=disk,order=20" mapconv:"-"`
-	DisksData string                `cli:"disks,category=disk,order=30" mapconv:"-"`
+	Disk      diskApplyParameter    `cli:",category=disk,order=10" mapconv:"-" validate:"omitempty" json:"-"`
+	DiskIDs   []types.ID            `cli:"disk-ids,category=disk,order=20" mapconv:"-" json:"-"`
+	DisksData string                `cli:"disks,category=disk,order=30" mapconv:"-" json:"-"`
 	Disks     []*diskApplyParameter `cli:"-" mapconv:",omitempty,recursive"`
 
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
@@ -85,22 +88,21 @@ type serverNetworkInterface struct {
 }
 
 type diskApplyParameter struct {
-	ID types.ID
+	ID types.ID `json:",omitempty"`
 
-	Name                  string `cli:",category=common"` // NOTE: requiredではないためcflag.NameParameterを利用していない
-	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
-	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
-	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
-	DiskPlan              string `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"omitempty,disk_plan"`
-	Connection            string `cli:",options=disk_connection" validate:"omitempty,disk_connection"`
-	SourceDiskID          types.ID
-	SourceArchiveID       types.ID
-	ServerID              types.ID
-	SizeGB                int `cli:"size,aliases=size-gb"`
-	DistantFrom           []types.ID
-	OSType                string `cli:",options=os_type,display_options=os_type_simple" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
+	Name                  string `cli:",category=common" json:",omitempty"` // NOTE: requiredではないためcflag.NameParameterを利用していない
+	cflag.DescParameter   `cli:",squash" mapconv:",squash" json:",omitempty"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash" json:",omitempty"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash" json:",omitempty"`
+	DiskPlan              string     `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"omitempty,disk_plan" json:",omitempty"`
+	Connection            string     `cli:",options=disk_connection" validate:"omitempty,disk_connection" json:",omitempty"`
+	SourceDiskID          types.ID   `json:",omitempty"`
+	SourceArchiveID       types.ID   `json:",omitempty"`
+	SizeGB                int        `cli:"size,aliases=size-gb" json:",omitempty"`
+	DistantFrom           []types.ID `json:",omitempty"`
+	OSType                string     `cli:",options=os_type,display_options=os_type_simple" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type" json:",omitempty"`
 
-	EditDisk common.EditRequest `cli:"edit,category=edit" mapconv:"EditParameter,omitempty"`
+	EditDisk common.EditRequest `cli:"edit,category=edit" mapconv:"EditParameter,omitempty" json:",omitempty"`
 	NoWait   bool
 }
 
@@ -235,4 +237,79 @@ func (p *createParameter) Customize(ctx cli.Context) error {
 	}
 
 	return nil
+}
+
+func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &createParameter{
+		ZoneParameter:   examples.Zones(ctx.Option().Zones),
+		NameParameter:   examples.Name,
+		DescParameter:   examples.Description,
+		TagsParameter:   examples.Tags,
+		IconIDParameter: examples.IconID,
+		CPU:             1,
+		Memory:          2,
+		Commitment:      examples.OptionsString("server_plan_commitment"),
+		Generation:      examples.OptionsString("server_plan_generation"),
+		InterfaceDriver: examples.OptionsString("interface_driver"),
+		BootAfterCreate: true,
+		CDROMID:         examples.ID,
+		PrivateHostID:   examples.ID,
+		NetworkInterfaces: []*server.NetworkInterface{
+			{
+				Upstream:       "shared | disconnected | (switch-id)",
+				PacketFilterID: examples.ID,
+				UserIPAddress:  examples.IPAddress,
+			},
+		},
+		Disks: []*diskApplyParameter{
+			{
+				DescParameter: cflag.DescParameter{
+					Description: "新規ディスクを作成する例",
+				},
+				TagsParameter:   examples.Tags,
+				IconIDParameter: examples.IconID,
+				DiskPlan:        examples.OptionsString("disk_plan"),
+				Connection:      examples.OptionsString("disk_connection"),
+				SourceDiskID:    examples.ID,
+				SourceArchiveID: examples.ID,
+				SizeGB:          20,
+				DistantFrom:     []types.ID{examples.ID},
+				OSType:          examples.OptionsString("os_type"),
+				EditDisk: common.EditRequest{
+					HostName:            "hostname",
+					Password:            "password",
+					IPAddress:           examples.IPAddress,
+					NetworkMaskLen:      examples.NetworkMaskLen,
+					DefaultRoute:        examples.DefaultRoute,
+					DisablePWAuth:       true,
+					EnableDHCP:          true,
+					ChangePartitionUUID: true,
+					SSHKeys:             []string{"/path/to/your/public/key", "ssh-rsa ..."},
+					SSHKeyIDs:           []types.ID{examples.ID},
+					IsSSHKeysEphemeral:  true,
+					NoteIDs:             []types.ID{examples.ID},
+					IsNotesEphemeral:    true,
+					Notes: []*sacloud.DiskEditNote{
+						{
+							ID: examples.ID,
+							Variables: map[string]interface{}{
+								"variable1": "foo",
+								"variable2": "bar",
+							},
+						},
+					},
+				},
+				NoWait: true,
+			},
+			{
+				ID: examples.ID,
+				DescParameter: cflag.DescParameter{
+					Description: "既存のディスクを接続する例",
+				},
+			},
+		},
+		NoWaitParameter: cflag.NoWaitParameter{
+			NoWait: false,
+		},
+	}
 }

@@ -31,6 +31,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
+	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -58,7 +59,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.IntVarP(&p.HealthCheck.RemainingDays, "health-check-remaining-days", "", p.HealthCheck.RemainingDays, "")
 	fs.BoolVarP(&p.NotifyEmailEnabled, "notify-email-enabled", "", p.NotifyEmailEnabled, "")
 	fs.BoolVarP(&p.NotifyEmailHTML, "notify-email-html", "", p.NotifyEmailHTML, "")
-	fs.StringVarP(&p.NotifySlackEnabled, "notify-slack-enabled", "", p.NotifySlackEnabled, "")
+	fs.BoolVarP(&p.NotifySlackEnabled, "notify-slack-enabled", "", p.NotifySlackEnabled, "")
 	fs.StringVarP(&p.SlackWebhooksURL, "slack-webhooks-url", "", p.SlackWebhooksURL, "")
 	fs.IntVarP(&p.NotifyInterval, "notify-interval", "", p.NotifyInterval, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
@@ -143,6 +144,16 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("example", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("example"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Parameter example",
 			Flags: fs,
 		})
 	}

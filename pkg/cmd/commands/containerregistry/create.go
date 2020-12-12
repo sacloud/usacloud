@@ -16,9 +16,11 @@ package containerregistry
 
 import (
 	"github.com/sacloud/libsacloud/v2/helper/service/containerregistry"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -35,7 +37,7 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -44,11 +46,11 @@ type createParameter struct {
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	AccessLevel    string `cli:",options=container_registry_access_levels" mapconv:",filters=container_registry_access_levels_to_value" validate:"required,container_registry_access_levels"`
+	AccessLevel    string `cli:",options=container_registry_access_level" mapconv:",filters=container_registry_access_level_to_value" validate:"required,container_registry_access_level"`
 	SubDomainLabel string `cli:"subdomain-label" validate:"required"`
 	VirtualDomain  string `validate:"omitempty,fqdn"`
 
-	UsersData string                    `cli:"users" mapconv:"-"`
+	UsersData string                    `cli:"users" mapconv:"-" json:"-"`
 	Users     []*containerregistry.User `cli:"-"` // --parametersでファイルからパラメータ指定する場合向け
 }
 
@@ -71,4 +73,23 @@ func (p *createParameter) Customize(_ cli.Context) error {
 
 	p.Users = append(p.Users, users...)
 	return nil
+}
+
+func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &createParameter{
+		NameParameter:   examples.Name,
+		DescParameter:   examples.Description,
+		TagsParameter:   examples.Tags,
+		IconIDParameter: examples.IconID,
+		AccessLevel:     examples.OptionsString("container_registry_access_level"),
+		SubDomainLabel:  "your-sub-domain",
+		VirtualDomain:   "your-domain.example.com",
+		Users: []*containerregistry.User{
+			{
+				UserName:   "example-user-name",
+				Password:   "example-password",
+				Permission: types.EContainerRegistryPermission(examples.OptionsString("container_registry_permission")),
+			},
+		},
+	}
 }

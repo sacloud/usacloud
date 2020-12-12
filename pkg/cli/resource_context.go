@@ -22,8 +22,9 @@ import (
 
 // ResourceContext 現在処理中のリソースの情報
 type ResourceContext struct {
-	ID   types.ID
-	Zone string
+	ID       types.ID
+	Zone     string
+	Resource interface{} // 対象のリソースそのもの
 }
 
 func (r *ResourceContext) String() string {

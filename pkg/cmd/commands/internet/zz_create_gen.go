@@ -32,6 +32,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
+	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
@@ -41,7 +42,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.IntVarP(&p.NetworkMaskLen, "netmask", "", p.NetworkMaskLen, "options: [28/27/26/25/24] (aliases: --network-mask-len)")
+	fs.IntVarP(&p.NetworkMaskLen, "netmask", "", p.NetworkMaskLen, "options: [28/27/26] (aliases: --network-mask-len)")
 	fs.IntVarP(&p.BandWidthMbps, "band-width", "", p.BandWidthMbps, "options: [100/250/500/1000/1500/2000/2500/3000/5000] (aliases: --band-width-mbps)")
 	fs.BoolVarP(&p.EnableIPv6, "enable-ipv6", "", p.EnableIPv6, "")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
@@ -138,12 +139,22 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 			Flags: fs,
 		})
 	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("example", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("example"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Parameter example",
+			Flags: fs,
+		})
+	}
 
 	core.BuildFlagsUsage(cmd, sets)
 }
 
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
-	cmd.RegisterFlagCompletionFunc("netmask", util.FlagCompletionFunc("28", "27", "26", "25", "24"))
+	cmd.RegisterFlagCompletionFunc("netmask", util.FlagCompletionFunc("28", "27", "26"))
 	cmd.RegisterFlagCompletionFunc("band-width", util.FlagCompletionFunc("100", "250", "500", "1000", "1500", "2000", "2500", "3000", "5000"))
 
 }

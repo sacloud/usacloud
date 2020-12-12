@@ -35,7 +35,7 @@ var listCommand = &core.Command{
 }
 
 type listParameter struct {
-	cflag.InputParameter `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 
 	cflag.FilterByNamesParameter `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.FilterByTagsParameter  `cli:",squash" mapconv:",omitempty,squash"`

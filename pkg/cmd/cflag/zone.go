@@ -40,3 +40,15 @@ func SetZoneFlagValue(p interface{}, zone string) {
 	}
 	v.SetZoneFlagValue(zone)
 }
+
+type ZoneParameter struct {
+	Zone string `cli:",category=zone" validate:"required,zone"`
+}
+
+func (p *ZoneParameter) ZoneFlagValue() string {
+	return p.Zone
+}
+
+func (p *ZoneParameter) SetZoneFlagValue(zone string) {
+	p.Zone = zone
+}

@@ -22,7 +22,7 @@ import (
 )
 
 func generateSkeleton(ctx cli.Context, params interface{}) error {
-	data, err := json.MarshalIndent(params, "", "\t")
+	data, err := json.MarshalIndent(params, "", "    ")
 	if err != nil {
 		return fmt.Errorf("marshaling to JSON is failed: %s", err)
 	}

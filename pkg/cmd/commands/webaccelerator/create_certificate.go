@@ -17,6 +17,8 @@ package webaccelerator
 import (
 	"fmt"
 
+	"github.com/sacloud/usacloud/pkg/util"
+
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
@@ -42,7 +44,7 @@ var createCertificateCommand = &core.Command{
 
 type createCertificateParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 
@@ -64,10 +66,19 @@ func createCertificateFunc(ctx cli.Context, parameter interface{}) ([]interface{
 		return nil, fmt.Errorf("got invalid parameter type: %#v", parameter)
 	}
 
+	certs, err := util.StringFromPathOrContent(p.CertificateChain)
+	if err != nil {
+		return nil, err
+	}
+	key, err := util.StringFromPathOrContent(p.Key)
+	if err != nil {
+		return nil, err
+	}
+
 	webAccelOp := sacloud.NewWebAccelOp(ctx.Client())
 	result, err := webAccelOp.CreateCertificate(ctx, p.ID, &sacloud.WebAccelCertRequest{
-		CertificateChain: p.CertificateChain,
-		Key:              p.Key,
+		CertificateChain: certs,
+		Key:              key,
 	})
 	if err != nil {
 		return nil, err
@@ -76,4 +87,11 @@ func createCertificateFunc(ctx cli.Context, parameter interface{}) ([]interface{
 		return nil, nil
 	}
 	return []interface{}{result}, nil
+}
+
+func (p *createCertificateParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &createCertificateParameter{
+		CertificateChain: "/path/to/your/certificate/chain | -----BEGIN CERTIFICATE-----\n...",
+		Key:              "/path/to/your/private-key | -----BEGIN RSA PRIVATE KEY-----\n...",
+	}
 }

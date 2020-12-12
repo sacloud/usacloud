@@ -20,6 +20,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -37,7 +38,7 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -49,18 +50,18 @@ type createParameter struct {
 	InternetConnectionEnabled       bool
 	InterDeviceCommunicationEnabled bool
 
-	SIMsData string                      `cli:"sims" mapconv:"-"`
+	SIMsData string                      `cli:"sims" mapconv:"-" json:"-"`
 	SIMs     []*mobilegateway.SIMSetting `cli:"-"`
 
-	SIMRoutesData string                           `cli:"sim-routes" mapconv:"-"`
+	SIMRoutesData string                           `cli:"sim-routes" mapconv:"-" json:"-"`
 	SIMRoutes     []*mobilegateway.SIMRouteSetting `cli:"-"`
 
-	StaticRoutesData string                              `cli:"static-routes" mapconv:"-"`
+	StaticRoutesData string                              `cli:"static-routes" mapconv:"-" json:"-"`
 	StaticRoutes     []*sacloud.MobileGatewayStaticRoute `cli:"-"`
 
 	PrivateInterface mobilegateway.PrivateInterfaceSetting `cli:",category=network" mapconv:",omitempty" validate:"omitempty"`
-	DNS              sacloud.MobileGatewayDNSSetting       `cli:",squash" mapconv:",omitempty" validate:"omitempty"`
-	TrafficConfig    sacloud.MobileGatewayTrafficControl   `mapconv:",omitempty"`
+	DNS              mobilegateway.DNSSetting              `cli:",squash" mapconv:",omitempty" validate:"omitempty"`
+	TrafficConfig    mobilegateway.TrafficConfig           `mapconv:",omitempty"`
 
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 	BootAfterCreate       bool
@@ -101,4 +102,55 @@ func (p *createParameter) Customize(_ cli.Context) error {
 	}
 
 	return nil
+}
+
+func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &createParameter{
+		ZoneParameter:                   examples.Zones(ctx.Option().Zones),
+		NameParameter:                   examples.Name,
+		DescParameter:                   examples.Description,
+		TagsParameter:                   examples.Tags,
+		IconIDParameter:                 examples.IconID,
+		InternetConnectionEnabled:       true,
+		InterDeviceCommunicationEnabled: true,
+		SIMs: []*mobilegateway.SIMSetting{
+			{
+				SIMID:     examples.ID,
+				IPAddress: examples.IPAddress,
+			},
+		},
+		SIMRoutes: []*mobilegateway.SIMRouteSetting{
+			{
+				SIMID:  examples.ID,
+				Prefix: "192.0.2.0/24",
+			},
+		},
+		StaticRoutes: []*sacloud.MobileGatewayStaticRoute{
+			{
+				NextHop: "192.0.2.2",
+				Prefix:  "192.0.2.0/24",
+			},
+		},
+		PrivateInterface: mobilegateway.PrivateInterfaceSetting{
+			SwitchID:       examples.ID,
+			IPAddress:      examples.IPAddress,
+			NetworkMaskLen: examples.NetworkMaskLen,
+		},
+		DNS: mobilegateway.DNSSetting{
+			DNS1: "133.242.0.3 | 210.188.224.10 | n.n.n.n",
+			DNS2: "133.242.0.4 | 210.188.224.11 | n.n.n.n",
+		},
+		TrafficConfig: mobilegateway.TrafficConfig{
+			TrafficQuotaInMB:       10,
+			BandWidthLimitInKbps:   128,
+			EmailNotifyEnabled:     true,
+			SlackNotifyEnabled:     true,
+			SlackNotifyWebhooksURL: examples.SlackNotifyWebhooksURL,
+			AutoTrafficShaping:     true,
+		},
+		NoWaitParameter: cflag.NoWaitParameter{
+			NoWait: false,
+		},
+		BootAfterCreate: true,
+	}
 }

@@ -36,7 +36,7 @@ var listCommand = &core.Command{
 
 type listParameter struct {
 	cflag.ZoneParameter        `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter       `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter      `cli:",squash" mapconv:"-"`
 	cflag.LimitOffsetParameter `cli:",squash" mapconv:",squash"`
 	cflag.OutputParameter      `cli:",squash" mapconv:"-"`
 

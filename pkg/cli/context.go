@@ -48,9 +48,10 @@ type Context interface {
 	// WithResource 特定のリソース向け作業をする際に呼ばれる。
 	// リソースのIDとゾーンを保持した新しいコンテキストを返す
 	// 新しいコンテキストの親コンテキストには現在のコンテキストが設定される
-	WithResource(id types.ID, zone string) Context
+	WithResource(id types.ID, zone string, resource interface{}) Context
 	ID() types.ID
 	Zone() string
+	Resource() interface{}
 }
 
 type cliContext struct {
@@ -118,7 +119,11 @@ func (c *cliContext) Zone() string {
 	return c.resource.Zone
 }
 
-func (c *cliContext) WithResource(id types.ID, zone string) Context {
+func (c *cliContext) Resource() interface{} {
+	return c.resource.Resource
+}
+
+func (c *cliContext) WithResource(id types.ID, zone string, resource interface{}) Context {
 	return &cliContext{
 		parentCtx:    c,
 		option:       c.option,
@@ -127,7 +132,7 @@ func (c *cliContext) WithResource(id types.ID, zone string) Context {
 		args:         c.args,
 		resourceName: c.resourceName,
 		commandName:  c.commandName,
-		resource:     ResourceContext{ID: id, Zone: zone},
+		resource:     ResourceContext{ID: id, Zone: zone, Resource: resource},
 	}
 }
 

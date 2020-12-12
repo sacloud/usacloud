@@ -35,7 +35,7 @@ var deleteSubnetCommand = &core.Command{
 type deleteSubnetParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 
 	cflag.FailIfNotFoundParameter `cli:",squash" mapconv:",squash"`

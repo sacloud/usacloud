@@ -16,10 +16,14 @@ package server
 
 import (
 	"github.com/sacloud/libsacloud/v2/helper/service/server"
+	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/common"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -39,7 +43,7 @@ var updateCommand = &core.Command{
 type updateParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -58,10 +62,10 @@ type updateParameter struct {
 	CDROMID       *types.ID `cli:"cdrom-id,aliases=iso-image-id"`
 	PrivateHostID *types.ID
 
-	NetworkInterfaceData string                      `cli:"network-interfaces" mapconv:"-"`
+	NetworkInterfaceData string                      `cli:"network-interfaces" mapconv:"-" json:"-"`
 	NetworkInterfaces    *[]*server.NetworkInterface `cli:"-" mapconv:",omitempty,recursive"`
 
-	DisksData string                 `cli:"disks" mapconv:"-"`
+	DisksData string                 `cli:"disks" mapconv:"-" json:"-"`
 	Disks     *[]*diskApplyParameter `cli:"-" mapconv:",omitempty,recursive"`
 
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
@@ -100,4 +104,79 @@ func (p *updateParameter) Customize(_ cli.Context) error {
 		*p.Disks = append(*p.Disks, disks...)
 	}
 	return nil
+}
+
+func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &updateParameter{
+		ZoneParameter:         examples.Zones(ctx.Option().Zones),
+		NameUpdateParameter:   examples.NameUpdate,
+		DescUpdateParameter:   examples.DescriptionUpdate,
+		TagsUpdateParameter:   examples.TagsUpdate,
+		IconIDUpdateParameter: examples.IconIDUpdate,
+		CPU:                   pointer.NewInt(1),
+		Memory:                pointer.NewInt(2),
+		Commitment:            pointer.NewString(examples.OptionsString("server_plan_commitment")),
+		Generation:            pointer.NewString(examples.OptionsString("server_plan_generation")),
+		InterfaceDriver:       pointer.NewString(examples.OptionsString("interface_driver")),
+		CDROMID:               &examples.ID,
+		PrivateHostID:         &examples.ID,
+		NetworkInterfaces: &[]*server.NetworkInterface{
+			{
+				Upstream:       "shared | disconnected | (switch-id)",
+				PacketFilterID: examples.ID,
+				UserIPAddress:  examples.IPAddress,
+			},
+		},
+		Disks: &[]*diskApplyParameter{
+			{
+				DescParameter: cflag.DescParameter{
+					Description: "新規ディスクを作成する例",
+				},
+				TagsParameter:   examples.Tags,
+				IconIDParameter: examples.IconID,
+				DiskPlan:        examples.OptionsString("disk_plan"),
+				Connection:      examples.OptionsString("disk_connection"),
+				SourceDiskID:    examples.ID,
+				SourceArchiveID: examples.ID,
+				SizeGB:          20,
+				DistantFrom:     []types.ID{examples.ID},
+				OSType:          examples.OptionsString("os_type"),
+				EditDisk: common.EditRequest{
+					HostName:            "hostname",
+					Password:            "password",
+					IPAddress:           examples.IPAddress,
+					NetworkMaskLen:      examples.NetworkMaskLen,
+					DefaultRoute:        examples.DefaultRoute,
+					DisablePWAuth:       true,
+					EnableDHCP:          true,
+					ChangePartitionUUID: true,
+					SSHKeys:             []string{"/path/to/your/public/key", "ssh-rsa ..."},
+					SSHKeyIDs:           []types.ID{examples.ID},
+					IsSSHKeysEphemeral:  true,
+					NoteIDs:             []types.ID{examples.ID},
+					IsNotesEphemeral:    true,
+					Notes: []*sacloud.DiskEditNote{
+						{
+							ID: examples.ID,
+							Variables: map[string]interface{}{
+								"variable1": "foo",
+								"variable2": "bar",
+							},
+						},
+					},
+				},
+				NoWait: true,
+			},
+			{
+				ID: examples.ID,
+				DescParameter: cflag.DescParameter{
+					Description: "既存のディスクを接続する例",
+				},
+			},
+		},
+		NoWaitParameter: cflag.NoWaitParameter{
+			NoWait: false,
+		},
+		ForceShutdown: false,
+	}
 }

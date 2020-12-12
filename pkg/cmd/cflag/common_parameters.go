@@ -14,36 +14,30 @@
 
 package cflag
 
-import "github.com/sacloud/libsacloud/v2/sacloud/types"
-
-type NameParameter struct {
-	Name string `cli:",category=common,order=10" validate:"required"`
+type CommonParameterValueHolder interface {
+	ParametersFlagValue() string
+	GenerateSkeletonFlagValue() bool
 }
 
-type NameUpdateParameter struct {
-	Name *string `cli:",category=common,order=10" validate:"omitempty,min=1"`
+type ExampleParameterValueHolder interface {
+	ExampleFlagValue() bool
 }
 
-type DescParameter struct {
-	Description string `cli:",category=common,order=20" validate:"omitempty,description"`
+// CommonParameter 全コマンド共通フィールド
+type CommonParameter struct {
+	Parameters       string `cli:",category=input,desc=Input parameters in JSON format" json:"-"`
+	GenerateSkeleton bool   `cli:",category=input,aliases=skeleton,desc=Output skeleton of parameters with JSON format" json:"-"`
+	Example          bool   `cli:",category=example,desc=Output example parameters with JSON format" json:"-"`
 }
 
-type DescUpdateParameter struct {
-	Description *string `cli:",category=common,order=20" validate:"omitempty,description"`
+func (p *CommonParameter) ParametersFlagValue() string {
+	return p.Parameters
 }
 
-type TagsParameter struct {
-	Tags []string `cli:",category=common,order=30" validate:"omitempty,tags"`
+func (p *CommonParameter) GenerateSkeletonFlagValue() bool {
+	return p.GenerateSkeleton
 }
 
-type TagsUpdateParameter struct {
-	Tags *[]string `cli:",category=common,order=30" validate:"omitempty,tags"`
-}
-
-type IconIDParameter struct {
-	IconID types.ID `cli:",category=common,order=40"`
-}
-
-type IconIDUpdateParameter struct {
-	IconID *types.ID `cli:",category=common,order=40"`
+func (p *CommonParameter) ExampleFlagValue() bool {
+	return p.Example
 }

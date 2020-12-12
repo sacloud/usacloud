@@ -34,7 +34,7 @@ var readCommand = &core.Command{
 }
 
 type readParameter struct {
-	cflag.InputParameter  `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 

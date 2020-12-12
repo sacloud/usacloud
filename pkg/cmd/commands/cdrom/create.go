@@ -15,8 +15,10 @@
 package cdrom
 
 import (
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 )
 
 var createCommand = &core.Command{
@@ -33,7 +35,7 @@ var createCommand = &core.Command{
 
 type createParameter struct {
 	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag.InputParameter   `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
@@ -54,4 +56,16 @@ func newCreateParameter() *createParameter {
 
 func init() {
 	Resource.AddCommand(createCommand)
+}
+
+func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &createParameter{
+		ZoneParameter:   examples.Zones(ctx.Option().Zones),
+		NameParameter:   examples.Name,
+		DescParameter:   examples.Description,
+		TagsParameter:   examples.Tags,
+		IconIDParameter: examples.IconID,
+		SizeGB:          5,
+		SourceFile:      "/path/to/iso/file",
+	}
 }
