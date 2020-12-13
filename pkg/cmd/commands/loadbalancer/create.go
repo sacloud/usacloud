@@ -15,7 +15,10 @@
 package loadbalancer
 
 import (
+	"fmt"
 	"net/http"
+
+	"github.com/sacloud/usacloud/pkg/validate"
 
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
@@ -37,7 +40,7 @@ var createCommand = &core.Command{
 		return newCreateParameter()
 	},
 
-	// TODO プランごとにIPアドレス数のバリデーションが必要
+	ValidateFunc: validateCreateParameter,
 }
 
 type createParameter struct {
@@ -64,6 +67,29 @@ type createParameter struct {
 	VirtualIPAddresses     sacloud.LoadBalancerVirtualIPAddresses `cli:"-"`
 
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
+}
+
+func validateCreateParameter(ctx cli.Context, parameter interface{}) error {
+	if err := validate.Exec(parameter); err != nil {
+		return err
+	}
+
+	p, ok := parameter.(*createParameter)
+	if !ok {
+		return fmt.Errorf("invalid parameter: %v", parameter)
+	}
+
+	switch p.PlanID {
+	case "standard":
+		if len(p.IPAddresses) != 1 {
+			return validate.NewValidationError(validate.NewFlagError("--ip-addresses", "for the standard plan, specify only one IP address"))
+		}
+	default:
+		if len(p.IPAddresses) != 2 {
+			return validate.NewValidationError(validate.NewFlagError("--ip-addresses", "for the highspec plan, specify two IP addresses"))
+		}
+	}
+	return nil
 }
 
 func newCreateParameter() *createParameter {
