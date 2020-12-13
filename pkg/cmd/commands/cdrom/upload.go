@@ -36,7 +36,7 @@ type uploadParameter struct {
 	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 
-	SourceFile string `mapconv:"Reader,filters=path_to_reader" validate:"required,file"` // TODO 標準入力への対応
+	SourceFile string `mapconv:"Reader,filters=path_to_reader" validate:"required,file"`
 }
 
 func newUploadParameter() *uploadParameter {

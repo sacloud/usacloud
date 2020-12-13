@@ -45,7 +45,7 @@ type createParameter struct {
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 	SizeGB                int `cli:"size" validate:"required_with=SourceFile,cdrom_sizes"`
 
-	SourceFile string `mapconv:"SourceReader,filters=path_to_reader" validate:"required,file"` // TODO 標準入力(パイプも)への対応
+	SourceFile string `mapconv:"SourceReader,filters=path_to_reader" validate:"required,file"`
 }
 
 func newCreateParameter() *createParameter {

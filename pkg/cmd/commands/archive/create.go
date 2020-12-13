@@ -48,7 +48,7 @@ type createParameter struct {
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
 	SizeGB          int    `cli:"size" validate:"required_with=SourceFile"`
-	SourceFile      string `mapconv:"SourceReader,omitempty,filters=path_to_reader" validate:"omitempty,file"` // TODO 標準入力(パイプも)への対応
+	SourceFile      string `mapconv:"SourceReader,omitempty,filters=path_to_reader" validate:"omitempty,file"`
 	SourceDiskID    types.ID
 	SourceArchiveID types.ID
 
