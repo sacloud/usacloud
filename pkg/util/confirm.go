@@ -15,6 +15,7 @@
 package util
 
 import (
+	"bufio"
 	"fmt"
 	"io"
 	"os"
@@ -39,11 +40,10 @@ func Confirm(msg string, in In, out io.Writer) (bool, error) {
 		return false, err
 	}
 
-	var input string
-	_, err = fmt.Fscanln(in, &input)
-	if err != nil {
-		return false, err
-	}
+	scanner := bufio.NewScanner(in)
+	scanner.Scan()
+	input := scanner.Text()
+
 	return input == "y" || input == "yes", nil
 }
 
