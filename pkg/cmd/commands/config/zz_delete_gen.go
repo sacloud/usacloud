@@ -29,6 +29,7 @@ func (p *deleteParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 func (p *deleteParameter) buildFlags(fs *pflag.FlagSet) {
 
 	fs.StringVarP(&p.Name, "name", "", p.Name, "")
+	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -45,6 +46,16 @@ func (p *deleteParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("name"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Config-specific options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("input", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("assumeyes"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Input options",
 			Flags: fs,
 		})
 	}

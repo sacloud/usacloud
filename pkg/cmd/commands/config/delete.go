@@ -19,6 +19,7 @@ import (
 
 	"github.com/sacloud/libsacloud/v2/sacloud/profile"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
@@ -42,7 +43,8 @@ func init() {
 }
 
 type deleteParameter struct {
-	ProfileParameter `cli:",squash"`
+	ProfileParameter       `cli:",squash"`
+	cflag.ConfirmParameter `cli:",squash"`
 }
 
 func deleteFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
@@ -50,8 +52,6 @@ func deleteFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	if !ok {
 		return nil, fmt.Errorf("invalid parameter: %v", parameter)
 	}
-
-	// TODO confirm
 
 	return nil, profile.Remove(p.Name)
 }
