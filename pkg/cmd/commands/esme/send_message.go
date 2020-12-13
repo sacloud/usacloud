@@ -52,9 +52,7 @@ type sendMessageParameter struct {
 }
 
 func newSendMessageParameter() *sendMessageParameter {
-	return &sendMessageParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &sendMessageParameter{}
 }
 
 func init() {

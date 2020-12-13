@@ -52,9 +52,7 @@ type logsParameter struct {
 }
 
 func newLogsParameter() *logsParameter {
-	return &logsParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &logsParameter{}
 }
 
 func init() {

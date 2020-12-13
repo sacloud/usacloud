@@ -18,7 +18,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/vdef"
 )
 
-func InitializeValidator(zones []string) { // TODO 実行時に動的に変えたいバリデーションが他に出てきた場合は引数をstructにして対応する
+func InitializeValidator(zones []string) { // Note: 実行時に動的に変えたいバリデーションが他に出てきた場合は引数をstructにして対応する
 	aliases := vdef.ValidatorAliases(zones)
 	for name, tags := range aliases {
 		validate.RegisterAlias(name, tags)

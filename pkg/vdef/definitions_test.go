@@ -68,7 +68,6 @@ func TestConverterFuncGenerator(t *testing.T) {
 				expect: "intValue",
 			},
 			{
-				// TODO int/int64は区別されるがこのままで良いか？要検討
 				in:  int64(1),
 				err: "key 1 not found in test",
 			},
@@ -114,7 +113,6 @@ func TestConverterFuncGenerator(t *testing.T) {
 				expect: "intKey",
 			},
 			{
-				// TODO int/int64は区別されるがこのままで良いか？要検討
 				in:     int64(1),
 				expect: "intKey",
 				err:    `value 1 not found in test`,

@@ -52,9 +52,7 @@ type healthStatusParameter struct {
 }
 
 func newHealthStatusParameter() *healthStatusParameter {
-	return &healthStatusParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &healthStatusParameter{}
 }
 
 func init() {

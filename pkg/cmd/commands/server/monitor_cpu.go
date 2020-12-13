@@ -50,9 +50,7 @@ type monitorCPUParameter struct {
 }
 
 func newMonitorCPUParameter() *monitorCPUParameter {
-	return &monitorCPUParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &monitorCPUParameter{}
 }
 
 func init() {

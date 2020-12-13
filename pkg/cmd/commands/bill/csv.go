@@ -29,7 +29,7 @@ var csvCommand = &core.Command{
 
 	ColumnDefs: csvColumnDefs,
 
-	SelectorType: core.SelectorTypeRequireSingle, // TODO libsacloud service側はbill csvでID省略可能(最新の請求情報が対象となる)がusacloudは現状非対応
+	SelectorType: core.SelectorTypeRequireSingle, // Note: libsacloud service側はbill csvでID省略可能(最新の請求情報が対象となる)がusacloudは現状非対応
 
 	ParameterInitializer: func() interface{} {
 		return newCSVParameter()
