@@ -1,4 +1,4 @@
-// +build !wasm
+// +build wasm
 
 // Copyright 2017-2020 The Usacloud Authors
 //
@@ -16,16 +16,8 @@
 
 package term
 
-import (
-	"os"
-
-	"github.com/mattn/go-isatty"
-)
-
 // IsTerminal 標準入力/出力が端末か判定する
 func IsTerminal() bool {
-	is := func(fd uintptr) bool {
-		return isatty.IsTerminal(fd) || isatty.IsCygwinTerminal(fd)
-	}
-	return is(os.Stdin.Fd()) && is(os.Stdout.Fd())
+	// Note: usacon(github.com/sacloud/usacon)向けにtrueを返しておく
+	return true
 }
