@@ -20,6 +20,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/sacloud/usacloud/pkg/util"
 
@@ -38,7 +39,11 @@ type Config struct {
 	DefaultOutputType string
 	// NoColor ANSIエスケープシーケンスによる色つけを無効化
 	NoColor bool
+	// ProcessTimeoutSec コマンド全体の実行タイムアウトまでの秒数
+	ProcessTimeoutSec int
 }
+
+var DefaultProcessTimeoutSec = 60 * 60 * 2 // 2時間
 
 // InitConfig 指定のFlagSetにConfigへ値を設定するためのフラグを登録する
 func InitConfig(flags *pflag.FlagSet) {
@@ -46,6 +51,7 @@ func InitConfig(flags *pflag.FlagSet) {
 	initOutputConfig(flags)
 	initDebugConfig(flags)
 	// misc flags
+	flags.IntP("process-timeout-sec", "", 0, "number of seconds before the command execution is timed out")
 	flags.BoolP("version", "v", false, "show version info")
 }
 
@@ -149,6 +155,9 @@ func (o *Config) loadFromEnv() {
 	if o.FakeStorePath == "" {
 		o.FakeStorePath = stringFromEnv("SAKURACLOUD_FAKE_STORE_PATH", "")
 	}
+	if o.ProcessTimeoutSec <= 0 {
+		o.ProcessTimeoutSec = intFromEnv("SAKURACLOUD_PROCESS_TIMEOUT_SEC", DefaultProcessTimeoutSec)
+	}
 }
 
 func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
@@ -210,6 +219,14 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 		}
 		o.FakeStorePath = v
 	}
+	if flags.Changed("process-timeout-sec") {
+		v, err := flags.GetInt("process-timeout-sec")
+		if err != nil {
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "process-timeout-sec", err) // nolint
+			return
+		}
+		o.ProcessTimeoutSec = v
+	}
 }
 
 func stringFromEnv(key, defaultValue string) string {
@@ -254,4 +271,12 @@ func (o *Config) Validate(skipCred bool) []error {
 	errs = append(errs, validation.StringInSlice("default-output-type", o.DefaultOutputType, []string{"table", "json", "yaml"})...)
 
 	return errs
+}
+
+func (o *Config) ProcessTimeout() time.Duration {
+	sec := o.ProcessTimeoutSec
+	if sec <= 0 {
+		sec = DefaultProcessTimeoutSec
+	}
+	return time.Duration(sec) * time.Second
 }

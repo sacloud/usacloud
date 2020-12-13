@@ -66,16 +66,13 @@ type cliContext struct {
 	resource     ResourceContext
 }
 
-func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet, args []string, columnDefs []output.ColumnDef, parameter interface{}, skipLoadingProfile bool) (Context, error) {
-	// TODO あとでグローバルなタイムアウトなどを実装する
-	ctx := context.TODO()
-
+func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet, args []string, columnDefs []output.ColumnDef, parameter interface{}, skipLoadingProfile bool) (Context, func(), error) {
 	io := newIO()
-
 	option, err := config.LoadConfigValue(globalFlags, io.Err(), skipLoadingProfile)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
+	ctx, cancel := context.WithTimeout(context.Background(), option.ProcessTimeout())
 
 	// initialize validator with contextual values
 	validate.InitializeValidator(option.Zones)
@@ -88,7 +85,7 @@ func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet,
 		commandName:  commandName,
 		cliIO:        io,
 		args:         args,
-	}, nil
+	}, cancel, nil
 }
 
 func (c *cliContext) IO() IO {
