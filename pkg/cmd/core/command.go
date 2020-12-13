@@ -108,22 +108,40 @@ func (c *Command) CLICommand() *cobra.Command {
 		SilenceUsage: true,
 		Run: func(cmd *cobra.Command, args []string) {
 			// コンテキスト構築
-			ctx, needContinue, err := c.initCommandContext(cmd, args)
+			var err error
+			ctx, cancel, needContinue, err := c.initCommandContext(cmd, args)
 			if err != nil {
 				// この段階ではctx.IO()が参照できないため標準エラーに出力する
 				fmt.Fprintln(os.Stderr, err) // nolint
 				return
 			}
+			defer cancel()
+
 			if !needContinue {
 				return
 			}
 
-			// エラー出力(可能ならカラーで出力)
-			if err := c.Run(ctx, cmd, args); err != nil {
+			doneCh := make(chan error)
+			defer close(doneCh)
+
+			go func() {
+				doneCh <- c.Run(ctx, cmd, args)
+			}()
+
+			select {
+			case <-ctx.Done():
+				err = fmt.Errorf("command[%s/%s] timed out: %s", c.resource.Name, c.Name, ctx.Err())
+				break
+			case e := <-doneCh:
+				err = e
+				break
+			}
+			if err != nil {
 				out := ctx.IO().Err()
+				fmt.Fprintln(out, "") // nolint // エラーの前後は常に改行させる
 				(&printer.Printer{NoColor: ctx.Option().NoColor}).Fprint(out, color.New(color.FgHiRed), err)
-				fmt.Fprintln(out, "") // nolint // エラーのあとは常に改行させる
-				return
+				fmt.Fprintln(out, "") // nolint // エラーの前後は常に改行させる
+				os.Exit(1)
 			}
 		},
 		ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
@@ -137,10 +155,11 @@ func (c *Command) CLICommand() *cobra.Command {
 			}
 
 			// コンテキスト構築
-			ctx, needContinue, err := c.initCommandContext(cmd, args)
+			ctx, cancel, needContinue, err := c.initCommandContext(cmd, args)
 			if !needContinue || err != nil {
 				return nil, cobra.ShellCompDirectiveError
 			}
+			defer cancel()
 
 			return c.CompleteArgs(ctx, cmd, args, toComplete)
 		},
@@ -259,10 +278,10 @@ func (c *Command) collectCompletionValuesFromResource(resource interface{}, pref
 	return results
 }
 
-func (c *Command) initCommandContext(cmd *cobra.Command, args []string) (cli.Context, bool, error) {
-	ctx, err := cli.NewCLIContext(c.resource.Name, c.Name, root.Command.PersistentFlags(), args, c.ColumnDefs, c.currentParameter, c.resource.SkipLoadingProfile)
+func (c *Command) initCommandContext(cmd *cobra.Command, args []string) (cli.Context, func(), bool, error) {
+	ctx, cancel, err := cli.NewCLIContext(c.resource.Name, c.Name, root.Command.PersistentFlags(), args, c.ColumnDefs, c.currentParameter, c.resource.SkipLoadingProfile)
 	if err != nil {
-		return nil, false, err
+		return nil, nil, false, err
 	}
 
 	c.printCommandWarning(ctx)
@@ -275,7 +294,7 @@ func (c *Command) initCommandContext(cmd *cobra.Command, args []string) (cli.Con
 	if needContinue {
 		needContinue, err = c.handleExampleParameters(ctx)
 	}
-	return ctx, needContinue, err
+	return ctx, cancel, needContinue, err
 }
 
 func (c *Command) validateParameter(ctx cli.Context, parameter interface{}) error {
