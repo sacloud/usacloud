@@ -52,9 +52,7 @@ type monitorParameter struct {
 }
 
 func newMonitorParameter() *monitorParameter {
-	return &monitorParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &monitorParameter{}
 }
 
 func init() {

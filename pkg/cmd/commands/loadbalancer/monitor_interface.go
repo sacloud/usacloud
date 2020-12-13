@@ -52,9 +52,7 @@ type monitorInterfaceParameter struct {
 }
 
 func newMonitorInterfaceParameter() *monitorInterfaceParameter {
-	return &monitorInterfaceParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &monitorInterfaceParameter{}
 }
 
 func init() {

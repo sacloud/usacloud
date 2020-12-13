@@ -28,7 +28,7 @@ var downloadCommand = &core.Command{
 	Name:         "download",
 	Category:     "operation",
 	Order:        20,
-	SelectorType: core.SelectorTypeRequireSingle, // TODO 現状はダウンロード先を指定してもらう形のため、複数だとファイルを上書きしてしまう
+	SelectorType: core.SelectorTypeRequireSingle, // Note: 現状はダウンロード先を指定してもらう形のため、複数だとファイルを上書きしてしまう
 
 	ValidateFunc: validateDownloadParameter,
 	ParameterInitializer: func() interface{} {

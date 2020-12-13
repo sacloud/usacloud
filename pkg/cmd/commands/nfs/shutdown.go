@@ -45,9 +45,7 @@ type shutdownParameter struct {
 }
 
 func newShutdownParameter() *shutdownParameter {
-	return &shutdownParameter{
-		// TODO デフォルト値はここで設定する
-	}
+	return &shutdownParameter{}
 }
 
 func init() {
