@@ -1,0 +1,22 @@
+# from https://docs.github.com/en/free-pro-team@latest/actions/guides/publishing-docker-images#publishing-images-to-github-packages
+name: Publish Docker image
+on:
+  push:
+    tags: 'v[0-9]+.[0-9]+.[0-9]+'
+jobs:
+  push_to_registry:
+    name: Push Docker image to GitHub Container Registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Push to GitHub Container Registry
+        uses: docker/build-push-action@v1
+        env:
+          DOCKER_BUILDKIT: 1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.CR_PAT }}
+          registry: ghcr.io
+          repository: ${{ github.repository }}
+          tag_with_ref: true
