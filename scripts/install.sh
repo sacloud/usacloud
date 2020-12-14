@@ -26,20 +26,11 @@ install_by_yum() {
   sudo sh <<'SCRIPT'
     set -x
 
-    #import GPG key
-    gpgkey_path=`mktemp`
-    curl -fsSL -o $gpgkey_path https://releases.usacloud.jp/usacloud/repos/GPG-KEY-usacloud
-    rpm --import $gpgkey_path
-    rm $gpgkey_path
-
-    cat >/etc/yum.repos.d/usacloud.repo <<'EOF';
-[usacloud]
-name=usacloud
-baseurl=https://releases.usacloud.jp/usacloud/repos/centos/$basearch
-gpgcheck=1
-EOF
-
-    yum install -y usacloud
+    yum install -y curl zip
+    curl -LO https://github.com/sacloud/usacloud/releases/latest/download/usacloud_linux-amd64.zip
+    unzip usacloud_linux-amd64.zip && rm usacloud_linux-amd64.zip
+    chmod +x usacloud
+    mv usacloud /usr/local/bin/
 
 SCRIPT
 }
@@ -49,11 +40,11 @@ install_by_apt() {
   sudo sh <<'SCRIPT'
     set -x
     apt-get update -qq
-    apt-get install -y curl apt-transport-https gnupg2
-    echo "deb https://releases.usacloud.jp/usacloud/repos/debian /" > /etc/apt/sources.list.d/usacloud.list
-    curl -fsS https://releases.usacloud.jp/usacloud/repos/GPG-KEY-usacloud | apt-key add -
-    apt-get update -qq
-    apt-get install -y usacloud
+    apt-get install -y curl apt-transport-https zip
+    curl -LO https://github.com/sacloud/usacloud/releases/latest/download/usacloud_linux-amd64.zip
+    unzip usacloud_linux-amd64.zip && rm usacloud_linux-amd64.zip
+    chmod +x usacloud
+    mv usacloud /usr/local/bin/
 SCRIPT
 }
 
