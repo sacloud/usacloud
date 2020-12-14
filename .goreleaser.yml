@@ -1,0 +1,100 @@
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -s -w
+      - -X github.com/sacloud/usacloud/pkg/version.Revision={{.ShortCommit}}
+    goos:
+      - freebsd
+      - openbsd
+#      - solaris
+      - windows
+      - linux
+      - darwin
+      - js
+    goarch:
+      - amd64
+      - '386'
+      - arm
+      - arm64
+      - wasm
+    ignore:
+      - goos: darwin
+        goarch: '386'
+      - goos: darwin
+        goarch: arm
+      - goos: darwin
+        goarch: arm64
+      - goos: openbsd
+        goarch: arm
+      - goos: openbsd
+        goarch: arm64
+#      - goos: solaris
+#        goarch: arm
+#      - goos: solaris
+#        goarch: arm64
+#      - goos: solaris
+#        goarch: '386'
+      - goos: freebsd
+        goarch: wasm
+      - goos: openbsd
+        goarch: wasm
+      - goos: solaris
+        goarch: wasm
+      - goos: windows
+        goarch: wasm
+      - goos: linux
+        goarch: wasm
+      - goos: darwin
+        goarch: wasm
+    binary: '{{ .ProjectName }}'
+archives:
+  - format: zip
+    name_template: '{{ .ProjectName }}_{{ .Os }}-{{ .Arch }}'
+checksum:
+  name_template: '{{ .ProjectName }}_SHA256SUMS'
+  algorithm: sha256
+signs:
+  - artifacts: checksum
+    args:
+      - "--local-user"
+      - "E37EC0B895A9AC27DC4919AB96CEB4B93D86849D"
+      - "--output"
+      - "${signature}"
+      - "--detach-sign"
+      - "${artifact}"
+nfpms:
+  - homepage: https://docs.usacloud.jp/usacloud
+    file_name_template: "{{ .ProjectName }}_{{ .Os }}-{{ .Arch }}"
+    maintainer: Usacloud <sacloud.users@gmail.com>
+    description: CLI to manage to resources on the SAKURA Cloud
+    license: Apache 2.0
+    formats:
+      - deb
+      - rpm
+brews:
+  - tap:
+      owner: sacloud
+      name: homebrew-usacloud
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    url_template: "https://github.com/sacloud/usacloud/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    commit_author:
+      name: Usacloud
+      email: sacloud.users@gmail.com
+    homepage: "https://github.com/sacloud/usacloud"
+    license: "Apache 2.0"
+    # for debug
+    # skip_upload: true
+    test: |
+      system "#{bin}/usacloud --version"
+release:
+  # for debug
+  draft: true
+
+  extra_files:
+    - glob: ./scripts/install.sh
+changelog:
+  skip: true

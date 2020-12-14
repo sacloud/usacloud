@@ -1,5 +1,2 @@
-tools/bin
+.env
 bin
-rpmbuild
-package/deb-build
-package/rpm-build

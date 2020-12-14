@@ -18,5 +18,7 @@ bats.log
 
 usacloud-docker
 releases-usacloud
+key.gpg
+dist/
 
 fake.json
