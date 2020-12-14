@@ -22,7 +22,6 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/bill"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/bridge"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/cdrom"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/config"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/containerregistry"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/coupon"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/database"
@@ -51,7 +50,6 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/proxylb"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/region"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/rest"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/self"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/server"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/serverplan"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/serviceclass"
@@ -114,9 +112,7 @@ var Resources = core.Resources{
 	vpcrouter.Resource,
 	zone.Resource,
 	// libsacloud service以外のマニュアル実装分
-	config.Resource,
 	rest.Resource,
-	self.Resource,
 	webaccelerator.Resource,
 }
 
