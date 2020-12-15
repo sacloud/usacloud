@@ -15,7 +15,14 @@
 package root
 
 import (
+	"fmt"
+	"os"
+	"sync"
+
+	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/pkg/config"
+	"github.com/sacloud/usacloud/pkg/printer"
+	"github.com/sacloud/usacloud/pkg/version"
 	"github.com/spf13/cobra"
 )
 
@@ -24,6 +31,13 @@ var Command = &cobra.Command{
 	Use:   "usacloud [global options] <command> <sub-command> [options] [arguments]",
 	Short: "Usacloud is CLI for manage to resources on the SAKURA Cloud",
 	Long:  `CLI to manage to resources on the SAKURA Cloud`,
+
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		once.Do(func() {
+			noColor, _ := cmd.PersistentFlags().GetBool("no-color") // nolint - ignore error
+			alertNewVersionReleased(noColor)
+		})
+	},
 
 	RunE: func(cmd *cobra.Command, args []string) error {
 		v, err := cmd.Flags().GetBool("version")
@@ -43,4 +57,43 @@ func init() {
 	Command.PersistentFlags().SortFlags = false
 
 	config.InitConfig(Command.PersistentFlags())
+}
+
+const newVersionAlertTemplate = `
+[NOTICE]
+  Current version of Usacloud is out of date.
+
+    - Current version: v%s
+    - Latest version:  %s
+
+  You can update by downloading from %s
+
+`
+
+var once sync.Once
+
+func alertNewVersionReleased(noColor bool) {
+	releaseInfo, err := version.NewVersionReleased()
+	if err != nil {
+		handleGatheringReleaseInfoError(err)
+	}
+	if releaseInfo != nil {
+		newVersionReleased, err := releaseInfo.Release.GreaterThanCurrent()
+		if err != nil {
+			handleGatheringReleaseInfoError(err)
+		}
+		if newVersionReleased {
+			p := &printer.Printer{NoColor: noColor}
+			p.Fprintf(os.Stderr, color.New(color.FgYellow), newVersionAlertTemplate, version.Version, releaseInfo.Release.TagName, releaseInfo.Release.URL) // nolint
+		}
+	}
+}
+
+func handleGatheringReleaseInfoError(err error) {
+	if err == nil {
+		return
+	}
+	if os.Getenv("USACLOUD_TRACE") != "" {
+		fmt.Fprintln(os.Stderr, err) // nolint
+	}
 }
