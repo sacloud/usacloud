@@ -30,7 +30,7 @@ func (p *requestParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 func (p *requestParameter) buildFlags(fs *pflag.FlagSet) {
 
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
-	fs.StringVarP(&p.Method, "method", "X", p.Method, "options: [get/post/put/delete/GET/POST/PUT/DELETE]")
+	fs.StringVarP(&p.Method, "method", "X", p.Method, "(*required) options: [get/post/put/delete/GET/POST/PUT/DELETE]")
 	fs.StringVarP(&p.Data, "data", "d", p.Data, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }

@@ -21,7 +21,6 @@ import (
 
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/tools/clitag"
 )
 
 type Command struct {
@@ -49,13 +48,21 @@ func (c *Command) HasAliases() bool {
 	return false
 }
 
-func (c *Command) Fields() []clitag.StructField {
+func (c *Command) Fields() []Field {
 	if c.Command.ParameterInitializer == nil {
 		return nil
 	}
-	fields, err := clitagParser.Parse(c.Command.ParameterInitializer())
+	clitagFields, err := clitagParser.Parse(c.Command.ParameterInitializer())
 	if err != nil {
 		panic(err)
+	}
+	var fields []Field
+	for _, f := range clitagFields {
+		validateTag := f.StructField.Tag.Get("validate")
+		fields = append(fields, Field{
+			StructField: f,
+			Required:    strings.Contains(validateTag, "required"),
+		})
 	}
 	return fields
 }
@@ -75,7 +82,7 @@ func (c *Command) CLIFlagDefinitionStatements(parameterVariableName, flagSetVari
 	return strings.Join(statements, "\n")
 }
 
-func (c *Command) cliFlagDefinitionStatement(parameterVariableName string, field clitag.StructField) string {
+func (c *Command) cliFlagDefinitionStatement(parameterVariableName string, field Field) string {
 	fieldVar := fmt.Sprintf("%s.%s", parameterVariableName, field.FieldName)
 	fieldPointerVar := fieldVar
 	fieldType := dereferencePtrType(field.Type)
@@ -154,7 +161,7 @@ func (c *Command) CLIFlagInitializePointerStatement(parameterVariableName, flagS
 	return strings.Join(statements, "\n")
 }
 
-func (c *Command) cliFlagInitializePointerStatement(parameterVariableName string, field clitag.StructField) string {
+func (c *Command) cliFlagInitializePointerStatement(parameterVariableName string, field Field) string {
 	fieldVar := fmt.Sprintf("%s.%s", parameterVariableName, field.FieldName)
 	fieldType := dereferencePtrType(field.Type)
 	if field.Type.Kind() != reflect.Ptr {
@@ -215,7 +222,7 @@ func (c *Command) CLIFlagCleanupEmptyStatement(parameterVariableName, flagSetVar
 	return strings.Join(statements, "\n")
 }
 
-func (c *Command) cliFlagCleanupEmptyStatement(parameterVariableName, flagSetVariableName string, field clitag.StructField) string {
+func (c *Command) cliFlagCleanupEmptyStatement(parameterVariableName, flagSetVariableName string, field Field) string {
 	fieldVar := fmt.Sprintf("%s.%s", parameterVariableName, field.FieldName)
 	if field.Type.Kind() != reflect.Ptr {
 		return ""

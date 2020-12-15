@@ -37,11 +37,11 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
-	fs.StringVarP(&p.Name, "name", "", p.Name, "")
+	fs.StringVarP(&p.Name, "name", "", p.Name, "(*required) ")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.StringVarP(&p.Class, "class", "", p.Class, "options: [shell/yaml_cloud_config]")
-	fs.StringVarP(&p.Content, "content", "", p.Content, "(aliases: --contents, --script, --scripts)")
+	fs.StringVarP(&p.Class, "class", "", p.Class, "(*required) options: [shell/yaml_cloud_config]")
+	fs.StringVarP(&p.Content, "content", "", p.Content, "(*required) (aliases: --contents, --script, --scripts)")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 

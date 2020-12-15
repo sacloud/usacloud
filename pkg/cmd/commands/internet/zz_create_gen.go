@@ -29,7 +29,7 @@ func (p *createParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 
 func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 
-	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
+	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "(*required) ")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
@@ -38,12 +38,12 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
-	fs.StringVarP(&p.Name, "name", "", p.Name, "")
+	fs.StringVarP(&p.Name, "name", "", p.Name, "(*required) ")
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.IntVarP(&p.NetworkMaskLen, "netmask", "", p.NetworkMaskLen, "options: [28/27/26] (aliases: --network-mask-len)")
-	fs.IntVarP(&p.BandWidthMbps, "band-width", "", p.BandWidthMbps, "options: [100/250/500/1000/1500/2000/2500/3000/5000] (aliases: --band-width-mbps)")
+	fs.IntVarP(&p.NetworkMaskLen, "netmask", "", p.NetworkMaskLen, "(*required) options: [28/27/26] (aliases: --network-mask-len)")
+	fs.IntVarP(&p.BandWidthMbps, "band-width", "", p.BandWidthMbps, "(*required) options: [100/250/500/1000/1500/2000/2500/3000/5000] (aliases: --band-width-mbps)")
 	fs.BoolVarP(&p.EnableIPv6, "enable-ipv6", "", p.EnableIPv6, "")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.IntVarP(&p.NotFoundRetry, "not-found-retry", "", p.NotFoundRetry, "")

@@ -37,7 +37,7 @@ func (v *IDFlag) Set(id string) error {
 }
 
 func (v *IDFlag) Type() string {
-	return "types.ID"
+	return "int"
 }
 
 type IDSliceFlag []types.ID
@@ -65,5 +65,5 @@ func (v *IDSliceFlag) Set(ids string) error {
 }
 
 func (v *IDSliceFlag) Type() string {
-	return "types.IDSlice"
+	return "int"
 }

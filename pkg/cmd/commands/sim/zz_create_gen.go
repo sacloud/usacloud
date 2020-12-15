@@ -36,12 +36,12 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
-	fs.StringVarP(&p.Name, "name", "", p.Name, "")
+	fs.StringVarP(&p.Name, "name", "", p.Name, "(*required) ")
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.StringVarP(&p.ICCID, "iccid", "", p.ICCID, "")
-	fs.StringVarP(&p.PassCode, "passcode", "", p.PassCode, "(aliases: --pass-code)")
+	fs.StringVarP(&p.ICCID, "iccid", "", p.ICCID, "(*required) ")
+	fs.StringVarP(&p.PassCode, "passcode", "", p.PassCode, "(*required) (aliases: --pass-code)")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 

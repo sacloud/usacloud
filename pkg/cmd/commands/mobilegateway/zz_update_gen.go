@@ -148,7 +148,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.TrafficConfig.AutoTrafficShaping == nil {
 		p.TrafficConfig.AutoTrafficShaping = pointer.NewBool(false)
 	}
-	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
+	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "(*required) ")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
@@ -169,8 +169,8 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.SIMsData, "sims", "", "", "")
 	fs.StringVarP(p.SIMRoutesData, "sim-routes", "", "", "")
 	fs.StringVarP(p.StaticRoutesData, "static-routes", "", "", "")
-	fs.StringVarP(p.DNS.DNS1, "dns1", "", "", "")
-	fs.StringVarP(p.DNS.DNS2, "dns2", "", "", "")
+	fs.StringVarP(p.DNS.DNS1, "dns1", "", "", "(*required) ")
+	fs.StringVarP(p.DNS.DNS2, "dns2", "", "", "(*required) ")
 	fs.IntVarP(p.TrafficConfig.TrafficQuotaInMB, "traffic-config-traffic-quota-in-mb", "", 0, "")
 	fs.IntVarP(p.TrafficConfig.BandWidthLimitInKbps, "traffic-config-band-width-limit-in-kbps", "", 0, "")
 	fs.BoolVarP(p.TrafficConfig.EmailNotifyEnabled, "traffic-config-email-notify-enabled", "", false, "")

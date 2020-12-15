@@ -18,12 +18,11 @@ import (
 	"sort"
 
 	"github.com/sacloud/usacloud/pkg/cmd/core"
-	"github.com/sacloud/usacloud/tools/clitag"
 )
 
 type CategorizedParameterFields struct {
 	*core.Category
-	Fields []clitag.StructField
+	Fields []Field
 }
 
 func (c *Command) CategorizedParameterFields() []*CategorizedParameterFields {

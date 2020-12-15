@@ -36,7 +36,7 @@ func (p *deleteCacheParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
-	fs.StringSliceVarP(&p.URLs, "url", "", p.URLs, "")
+	fs.StringSliceVarP(&p.URLs, "url", "", p.URLs, "(*required) ")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 

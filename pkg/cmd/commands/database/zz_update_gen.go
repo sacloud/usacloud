@@ -101,7 +101,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.BackupStartTimeMinute == nil {
 		p.BackupStartTimeMinute = pointer.NewInt(0)
 	}
-	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
+	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "(*required) ")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
@@ -116,10 +116,10 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
 	fs.StringSliceVarP(p.SourceNetwork, "source-range", "", nil, "(aliases: --source-network)")
 	fs.BoolVarP(p.EnableReplication, "enable-replication", "", false, "")
-	fs.StringVarP(p.ReplicaUserPassword, "replica-user-password", "", "", "")
+	fs.StringVarP(p.ReplicaUserPassword, "replica-user-password", "", "", "(*required) ")
 	fs.BoolVarP(p.EnableWebUI, "enable-web-ui", "", false, "")
 	fs.BoolVarP(p.EnableBackup, "enable-backup", "", false, "")
-	fs.StringSliceVarP(p.BackupWeekdays, "backup-weekdays", "", nil, "options: [all/sun/mon/tue/wed/thu/fri/sat]")
+	fs.StringSliceVarP(p.BackupWeekdays, "backup-weekdays", "", nil, "(*required) options: [all/sun/mon/tue/wed/thu/fri/sat]")
 	fs.IntVarP(p.BackupStartTimeHour, "backup-start-time-hour", "", 0, "")
 	fs.IntVarP(p.BackupStartTimeMinute, "backup-start-time-minute", "", 0, "")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")

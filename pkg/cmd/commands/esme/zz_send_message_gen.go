@@ -36,8 +36,8 @@ func (p *sendMessageParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
-	fs.StringVarP(&p.Destination, "destination", "", p.Destination, "(aliases: --dest)")
-	fs.StringVarP(&p.Sender, "sender", "", p.Sender, "")
+	fs.StringVarP(&p.Destination, "destination", "", p.Destination, "(*required) (aliases: --dest)")
+	fs.StringVarP(&p.Sender, "sender", "", p.Sender, "(*required) ")
 	fs.StringVarP(&p.OTP, "otp", "", p.OTP, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }

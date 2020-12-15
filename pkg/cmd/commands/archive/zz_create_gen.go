@@ -28,7 +28,7 @@ func (p *createParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 
 func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 
-	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
+	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "(*required) ")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
@@ -37,11 +37,11 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
-	fs.StringVarP(&p.Name, "name", "", p.Name, "")
+	fs.StringVarP(&p.Name, "name", "", p.Name, "(*required) ")
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "")
+	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "(*required) ")
 	fs.StringVarP(&p.SourceFile, "source-file", "", p.SourceFile, "")
 	fs.VarP(core.NewIDFlag(&p.SourceDiskID, &p.SourceDiskID), "source-disk-id", "", "")
 	fs.VarP(core.NewIDFlag(&p.SourceArchiveID, &p.SourceArchiveID), "source-archive-id", "", "")

@@ -32,7 +32,7 @@ func (p *deleteCacheAllParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
-	fs.StringVarP(&p.Domain, "domain", "", p.Domain, "")
+	fs.StringVarP(&p.Domain, "domain", "", p.Domain, "(*required) ")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 

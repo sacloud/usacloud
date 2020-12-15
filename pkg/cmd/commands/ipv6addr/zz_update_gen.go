@@ -28,7 +28,7 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 
 func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 
-	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
+	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "(*required) ")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
@@ -37,8 +37,8 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
-	fs.StringVarP(&p.IPv6Addr, "ipv6addr", "", p.IPv6Addr, "")
-	fs.StringVarP(&p.HostName, "host-name", "", p.HostName, "")
+	fs.StringVarP(&p.IPv6Addr, "ipv6addr", "", p.IPv6Addr, "(*required) ")
+	fs.StringVarP(&p.HostName, "host-name", "", p.HostName, "(*required) ")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
