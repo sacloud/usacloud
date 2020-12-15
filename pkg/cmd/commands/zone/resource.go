@@ -26,5 +26,5 @@ var Resource = &core.Resource{
 	Aliases:          []string{"zones"},
 	ServiceType:      reflect.TypeOf(&zone.Service{}),
 	IsGlobalResource: true,
-	Category:         core.ResourceCategoryOther,
+	Category:         core.ResourceCategoryZone,
 }

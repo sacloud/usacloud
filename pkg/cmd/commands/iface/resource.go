@@ -25,5 +25,5 @@ var Resource = &core.Resource{
 	Name:        "interface",
 	Aliases:     []string{"iface"},
 	ServiceType: reflect.TypeOf(&iface.Service{}),
-	Category:    core.ResourceCategoryNetworking,
+	Category:    core.ResourceCategoryNetworkingSub,
 }

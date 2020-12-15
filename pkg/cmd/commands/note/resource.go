@@ -25,6 +25,6 @@ var Resource = &core.Resource{
 	Name:             "note",
 	Aliases:          []string{"startup-script"},
 	ServiceType:      reflect.TypeOf(&note.Service{}),
-	Category:         core.ResourceCategoryOther,
+	Category:         core.ResourceCategoryMisc,
 	IsGlobalResource: true,
 }

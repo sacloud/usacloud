@@ -24,7 +24,7 @@ import (
 var Resource = &core.Resource{
 	Name:               "coupon",
 	ServiceType:        reflect.TypeOf(&coupon.Service{}),
-	Category:           core.ResourceCategoryOther,
+	Category:           core.ResourceCategoryBilling,
 	IsGlobalResource:   true,
 	DefaultCommandName: "list",
 }

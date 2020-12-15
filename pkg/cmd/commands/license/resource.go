@@ -24,6 +24,6 @@ import (
 var Resource = &core.Resource{
 	Name:             "license",
 	ServiceType:      reflect.TypeOf(&license.Service{}),
-	Category:         core.ResourceCategoryOther,
+	Category:         core.ResourceCategoryMisc,
 	IsGlobalResource: true,
 }

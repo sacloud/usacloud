@@ -24,5 +24,5 @@ import (
 var Resource = &core.Resource{
 	Name:        "ipv6addr",
 	ServiceType: reflect.TypeOf(&ipv6addr.Service{}),
-	Category:    core.ResourceCategoryNetworking,
+	Category:    core.ResourceCategoryNetworkingSub,
 }

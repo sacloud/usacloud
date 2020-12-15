@@ -18,88 +18,102 @@ var (
 	ResourceCategoryConfig = Category{
 		Key:         "config",
 		DisplayName: "Configuration",
-		Order:       3,
+		Order:       10,
 	}
+
 	ResourceCategoryAuth = Category{
 		Key:         "auth",
 		DisplayName: "Authentication",
-		Order:       5,
+		Order:       20,
 	}
+
 	ResourceCategoryComputing = Category{
 		Key:         "computing",
 		DisplayName: "Computing",
-		Order:       10,
+		Order:       30,
 	}
 
 	ResourceCategoryStorage = Category{
 		Key:         "storage",
 		DisplayName: "Storage",
-		Order:       20,
+		Order:       40,
 	}
 
 	ResourceCategoryNetworking = Category{
 		Key:         "networking",
 		DisplayName: "Networking",
-		Order:       30,
+		Order:       50,
+	}
+
+	ResourceCategoryNetworkingSub = Category{
+		Key:         "networking-sub",
+		DisplayName: "Networking(SubResources)",
+		Order:       55,
 	}
 
 	ResourceCategoryAppliance = Category{
 		Key:         "appliance",
 		DisplayName: "Appliance",
-		Order:       40,
+		Order:       60,
 	}
 
 	ResourceCategorySecureMobile = Category{
 		Key:         "securemobile",
 		DisplayName: "SecureMobile",
-		Order:       45,
+		Order:       70,
 	}
 	ResourceCategoryCommonServiceItem = Category{
 		Key:         "commonserviceitem",
 		DisplayName: "Common service items",
-		Order:       50,
+		Order:       80,
 	}
 
 	ResourceCategoryCommonItem = Category{
 		Key:         "commonitem",
 		DisplayName: "Common items",
-		Order:       60,
+		Order:       90,
 	}
 
 	ResourceCategoryBilling = Category{
 		Key:         "billing",
 		DisplayName: "Billing",
-		Order:       70,
-	}
-
-	ResourceCategoryCoupon = Category{
-		Key:         "coupon",
-		DisplayName: "Coupon",
-		Order:       75,
+		Order:       100,
 	}
 
 	ResourceCategoryLab = Category{
 		Key:         "lab",
 		DisplayName: "Lab",
-		Order:       78,
+		Order:       110,
 	}
 
-	ResourceCategoryOther = Category{
+	ResourceCategoryWebAccel = Category{
+		Key:         "webaccel",
+		DisplayName: "WebAccelerator",
+		Order:       120,
+	}
+
+	ResourceCategoryMisc = Category{
 		Key:         "misc",
 		DisplayName: "Other services",
-		Order:       80,
+		Order:       130,
+	}
+
+	ResourceCategoryZone = Category{
+		Key:         "zone",
+		DisplayName: "Region/Zone information",
+		Order:       140,
 	}
 
 	ResourceCategoryInformation = Category{
 		Key:         "information",
-		DisplayName: "Service/Product informations",
-		Order:       90,
+		DisplayName: "Service/Product information",
+		Order:       150,
 	}
 
-	ResourceCategorySummary = Category{
-		Key:         "summary",
-		DisplayName: "Summary",
-		Order:       100,
+	ResourceCategoryOther = Category{
+		Key:         "other",
+		DisplayName: "Other commands",
+		Order:       160,
 	}
 
 	ResourceCategories = []Category{
@@ -108,13 +122,14 @@ var (
 		ResourceCategoryComputing,
 		ResourceCategoryStorage,
 		ResourceCategoryNetworking,
+		ResourceCategoryNetworkingSub,
 		ResourceCategoryAppliance,
 		ResourceCategoryCommonServiceItem,
 		ResourceCategoryCommonItem,
 		ResourceCategoryBilling,
-		ResourceCategoryCoupon,
-		ResourceCategoryOther,
+		ResourceCategoryMisc,
+		ResourceCategoryZone,
 		ResourceCategoryInformation,
-		ResourceCategorySummary,
+		ResourceCategoryOther,
 	}
 )
