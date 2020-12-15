@@ -22,11 +22,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sacloud/usacloud/pkg/util"
+	"github.com/sacloud/usacloud/pkg/validate"
 
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/profile"
-	"github.com/sacloud/usacloud/pkg/validation"
 	"github.com/spf13/pflag"
 )
 
@@ -67,7 +66,7 @@ func LoadConfigValue(flags *pflag.FlagSet, errW io.Writer, skipLoadingProfile bo
 	}
 
 	o.loadConfig(flags, errW)
-	return o, util.FlattenErrors(o.Validate(true))
+	return o, o.Validate(false)
 }
 
 func initCredentialConfig(fs *pflag.FlagSet) {
@@ -261,16 +260,25 @@ func intFromEnv(key string, defaultValue int) int {
 	return int(i)
 }
 
-func (o *Config) Validate(skipCred bool) []error {
+func (o *Config) Validate(skipCred bool) error {
 	var errs []error
 
 	if !skipCred {
-		errs = append(errs, validation.Required("token", o.AccessToken)...)
-		errs = append(errs, validation.Required("secret", o.AccessTokenSecret)...)
+		if o.AccessToken == "" {
+			errs = append(errs, validate.NewFlagError("--token", "required"))
+		}
+		if o.AccessTokenSecret == "" {
+			errs = append(errs, validate.NewFlagError("--secret", "required"))
+		}
 	}
-	errs = append(errs, validation.StringInSlice("default-output-type", o.DefaultOutputType, []string{"table", "json", "yaml"})...)
+	switch o.DefaultOutputType {
+	case "", "table", "json", "yaml":
+		// noop
+	default:
+		errs = append(errs, validate.NewFlagError("profile.DefaultOutputType", "DefaultOutputType must be one of [table/json/yaml]"))
+	}
 
-	return errs
+	return validate.NewValidationError(errs...)
 }
 
 func (o *Config) ProcessTimeout() time.Duration {

@@ -69,10 +69,6 @@ shasum:
 test: 
 	go test $(TESTARGS) -v ./...
 
-.PHONY: integration-test
-integration-test: bin/usacloud
-	test/integration/run-bats.sh test/integration/bats ;
-
 .PHONY: lint
 lint:
 	golangci-lint run ./...
