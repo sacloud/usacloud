@@ -25,5 +25,5 @@ var Resource = &core.Resource{
 	Name:        "ipaddress",
 	Aliases:     []string{"ip-address"},
 	ServiceType: reflect.TypeOf(&ipaddress.Service{}),
-	Category:    core.ResourceCategoryNetworking,
+	Category:    core.ResourceCategoryNetworkingSub,
 }

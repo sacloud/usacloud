@@ -25,6 +25,6 @@ var Resource = &core.Resource{
 	Name:             "ssh-key",
 	Aliases:          []string{"sshkey"},
 	ServiceType:      reflect.TypeOf(&sshkey.Service{}),
-	Category:         core.ResourceCategoryOther,
+	Category:         core.ResourceCategoryMisc,
 	IsGlobalResource: true,
 }

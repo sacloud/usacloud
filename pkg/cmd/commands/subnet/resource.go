@@ -24,5 +24,5 @@ import (
 var Resource = &core.Resource{
 	Name:        "subnet",
 	ServiceType: reflect.TypeOf(&subnet.Service{}),
-	Category:    core.ResourceCategoryNetworking,
+	Category:    core.ResourceCategoryNetworkingSub,
 }

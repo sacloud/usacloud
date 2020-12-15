@@ -24,7 +24,7 @@ var Resource = &core.Resource{
 	Name:             "web-accelerator",
 	Aliases:          []string{"web-accel", "webaccel"},
 	IsGlobalResource: true,
-	Category:         core.ResourceCategoryOther,
+	Category:         core.ResourceCategoryWebAccel,
 }
 
 func listAllFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {

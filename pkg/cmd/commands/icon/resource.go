@@ -24,6 +24,6 @@ import (
 var Resource = &core.Resource{
 	Name:             "icon",
 	ServiceType:      reflect.TypeOf(&icon.Service{}),
-	Category:         core.ResourceCategoryOther,
+	Category:         core.ResourceCategoryMisc,
 	IsGlobalResource: true,
 }
