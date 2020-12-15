@@ -102,6 +102,15 @@ func baseDir() (string, error) {
 	return homeDir, nil
 }
 
+// ConfigDir プロファイルを格納するディレクトリのフルパス
+func ConfigDir() (string, error) {
+	baseDir, err := baseDir()
+	if err != nil {
+		return "", fmt.Errorf("getting profile base dir is failed: %s", err)
+	}
+	return filepath.Clean(filepath.Join(baseDir, configDirName)), nil
+}
+
 // ConfigFilePath 指定のプロファイル名のコンフィグファイルパスを取得
 func ConfigFilePath(profileName string) (string, error) {
 	if err := ValidateName(profileName); err != nil {

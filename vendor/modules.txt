@@ -19,6 +19,8 @@ github.com/go-playground/validator/v10
 github.com/hashicorp/go-cleanhttp
 # github.com/hashicorp/go-retryablehttp v0.6.4
 github.com/hashicorp/go-retryablehttp
+# github.com/hashicorp/go-version v1.2.1
+github.com/hashicorp/go-version
 # github.com/huandu/xstrings v1.3.0
 github.com/huandu/xstrings
 # github.com/inconshreveable/mousetrap v1.0.0
@@ -43,7 +45,7 @@ github.com/olekukonko/tablewriter
 github.com/pmezard/go-difflib/difflib
 # github.com/sacloud/ftps v1.1.0
 github.com/sacloud/ftps
-# github.com/sacloud/libsacloud/v2 v2.8.11-0.20201214064716-c995ba0fb010
+# github.com/sacloud/libsacloud/v2 v2.8.11-0.20201215043141-215ba08138a4
 github.com/sacloud/libsacloud/v2
 github.com/sacloud/libsacloud/v2/helper/api
 github.com/sacloud/libsacloud/v2/helper/builder
