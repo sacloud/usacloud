@@ -20,6 +20,7 @@ package vdef
 var FlagOptionsMap = map[string][]string{
 	"os_type_simple": {
 		"centos",
+		"centos8stream",
 		"centos8",
 		"ubuntu",
 		"ubuntu2004",

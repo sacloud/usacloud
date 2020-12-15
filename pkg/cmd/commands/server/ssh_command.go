@@ -80,6 +80,9 @@ func sshFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		if err != nil {
 			return nil, err
 		}
+		if u == "" {
+			u = "root"
+		}
 		user = u
 	}
 
