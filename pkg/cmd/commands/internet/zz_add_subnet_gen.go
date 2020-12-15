@@ -29,7 +29,7 @@ func (p *addSubnetParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 
 func (p *addSubnetParameter) buildFlags(fs *pflag.FlagSet) {
 
-	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
+	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "(*required) ")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
@@ -38,8 +38,8 @@ func (p *addSubnetParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
-	fs.IntVarP(&p.NetworkMaskLen, "netmask", "", p.NetworkMaskLen, "options: [28/27/26] (aliases: --network-mask-len)")
-	fs.StringVarP(&p.NextHop, "next-hop", "", p.NextHop, "")
+	fs.IntVarP(&p.NetworkMaskLen, "netmask", "", p.NetworkMaskLen, "(*required) options: [28/27/26] (aliases: --network-mask-len)")
+	fs.StringVarP(&p.NextHop, "next-hop", "", p.NextHop, "(*required) ")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 

@@ -36,7 +36,7 @@ func (p *updateCertificateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
 	fs.BoolVarP(&p.AssumeYes, "assumeyes", "y", p.AssumeYes, "Assume that the answer to any question which would be asked is yes")
-	fs.StringVarP(&p.CertificateChain, "certificate-chain", "", p.CertificateChain, "")
+	fs.StringVarP(&p.CertificateChain, "certificate-chain", "", p.CertificateChain, "(*required) ")
 	fs.StringVarP(&p.Key, "key", "", p.Key, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
