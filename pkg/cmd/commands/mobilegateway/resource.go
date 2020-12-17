@@ -25,5 +25,5 @@ var Resource = &core.Resource{
 	Name:        "mobile-gateway",
 	Aliases:     []string{"mobilegateway", "mgw"},
 	ServiceType: reflect.TypeOf(&mobilegateway.Service{}),
-	Category:    core.ResourceCategoryAppliance,
+	Category:    core.ResourceCategorySecureMobile,
 }
