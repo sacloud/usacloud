@@ -21,7 +21,7 @@ import (
 var Resource = &core.Resource{
 	Name:               "config",
 	Aliases:            []string{"profile"},
-	DefaultCommandName: "show",
+	DefaultCommandName: "edit",
 	Category:           core.ResourceCategoryConfig,
 	IsGlobalResource:   true,
 	SkipLoadingProfile: true,
