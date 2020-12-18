@@ -22,6 +22,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
+	"github.com/sacloud/usacloud/pkg/validate"
 )
 
 var createCommand = &core.Command{
@@ -34,6 +35,7 @@ var createCommand = &core.Command{
 	ParameterInitializer: func() interface{} {
 		return newCreateParameter()
 	},
+	ValidateFunc: validateCreateParameter,
 }
 
 type createParameter struct {
@@ -80,6 +82,7 @@ type createParameterSorryServer struct {
 type createParameterLetsEncrypt struct {
 	CommonName string `validate:"omitempty,fqdn"`
 	Enabled    bool
+	AcceptTOS  bool `cli:"accept-tos,desc=The flag to accept the current Let's Encrypt terms of service(see: https://letsencrypt.org/repository/)" mapconv:"-"`
 }
 
 type createParameterStickySession struct {
@@ -197,4 +200,17 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 			},
 		},
 	}
+}
+
+func validateCreateParameter(_ cli.Context, parameter interface{}) error {
+	if err := validate.Exec(parameter); err != nil {
+		return err
+	}
+	p := parameter.(*createParameter)
+	if p.LetsEncrypt.Enabled && !p.LetsEncrypt.AcceptTOS {
+		return validate.NewValidationError(
+			validate.NewFlagError("--lets-encrypt-accept-tos", "required when --lets-encrypt-enabled=true"),
+		)
+	}
+	return nil
 }
