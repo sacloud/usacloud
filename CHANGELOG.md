@@ -4,6 +4,10 @@
 
 * 
 
+## 0.33.0 (2020-08-20)
+
+- tk1b zone #528 (@yamamoto-febc)
+
 ## 0.32.2 (2020-03-05)
 
 * Fix validator - use sacloud.ID#IsEmpty for validate the conflistWith rule #495 (yamamoto-febc)
