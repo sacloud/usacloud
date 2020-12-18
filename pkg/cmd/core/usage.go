@@ -33,7 +33,7 @@ const commandUsageTemplate = ` === %s ===
 const commandUsageWrapperTemplate = `Available Commands:
 %s`
 
-func buildRootCommandUsages(rootCmd *cobra.Command, resources []*Resource) string {
+func buildRootCommandUsages(rootCmd *cobra.Command, resources []*Resource, appendCompletion bool) string {
 	line := "    %s %s"
 	var usages []string
 	for _, r := range resources {
@@ -46,10 +46,12 @@ func buildRootCommandUsages(rootCmd *cobra.Command, resources []*Resource) strin
 		}
 	}
 	// completionを追加
-	if cmd := lookupCmd(rootCmd, "completion"); cmd != nil {
-		t := fmt.Sprintf("%%-%ds", cmd.NamePadding())
-		name := fmt.Sprintf(t, cmd.Name())
-		usages = append(usages, fmt.Sprintf(line, name, cmd.Short))
+	if appendCompletion {
+		if cmd := lookupCmd(rootCmd, "completion"); cmd != nil {
+			t := fmt.Sprintf("%%-%ds", cmd.NamePadding())
+			name := fmt.Sprintf(t, cmd.Name())
+			usages = append(usages, fmt.Sprintf(line, name, cmd.Short))
+		}
 	}
 	return strings.TrimRight(strings.Join(usages, "\n"), "\n")
 }
@@ -58,7 +60,7 @@ func BuildRootCommandsUsage(cmd *cobra.Command, commands []*CategorizedResources
 	cmd.SetUsageTemplate("")
 	var usages []string
 	for _, c := range commands {
-		usages = append(usages, fmt.Sprintf(commandUsageTemplate, c.Category.DisplayName, buildRootCommandUsages(cmd, c.Resources)))
+		usages = append(usages, fmt.Sprintf(commandUsageTemplate, c.Category.DisplayName, buildRootCommandUsages(cmd, c.Resources, c.Category == ResourceCategoryOther)))
 	}
 	usage := fmt.Sprintf(commandUsageWrapperTemplate, strings.TrimRight(strings.Join(usages, "\n"), "\n"))
 	cmd.SetUsageTemplate(strings.Replace(cmd.UsageTemplate(), originalCommandsUsage, usage, 1))
