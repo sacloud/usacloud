@@ -45,6 +45,12 @@ func buildRootCommandUsages(rootCmd *cobra.Command, resources []*Resource) strin
 			usages = append(usages, fmt.Sprintf(line, name, cmd.Short))
 		}
 	}
+	// completionを追加
+	if cmd := lookupCmd(rootCmd, "completion"); cmd != nil {
+		t := fmt.Sprintf("%%-%ds", cmd.NamePadding())
+		name := fmt.Sprintf(t, cmd.Name())
+		usages = append(usages, fmt.Sprintf(line, name, cmd.Short))
+	}
 	return strings.TrimRight(strings.Join(usages, "\n"), "\n")
 }
 
