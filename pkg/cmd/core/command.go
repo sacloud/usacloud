@@ -290,7 +290,7 @@ func (c *Command) initCommandContext(cmd *cobra.Command, args []string) (cli.Con
 	c.completeParameterValue(cmd, ctx, c.currentParameter)
 
 	// パラメータファイルの処理やスケルトン出力など
-	needContinue, err := c.handleCommonParameters(ctx)
+	needContinue, err := c.handleCommonParameters(ctx, cmd)
 	if needContinue {
 		needContinue, err = c.handleExampleParameters(ctx)
 	}
@@ -318,14 +318,14 @@ func (c *Command) printCommandWarning(ctx cli.Context) {
 	}
 }
 
-func (c *Command) handleCommonParameters(ctx cli.Context) (bool, error) {
+func (c *Command) handleCommonParameters(ctx cli.Context, cmd *cobra.Command) (bool, error) {
 	if cp, ok := c.currentParameter.(cflag.CommonParameterValueHolder); ok {
 		// パラメータスケルトンの生成
 		if cp.GenerateSkeletonFlagValue() {
 			return false, generateSkeleton(ctx, c.currentParameter)
 		}
 		// --parameters/--parameter-fileフラグの処理
-		if err := loadParameters(cp); err != nil {
+		if err := loadParameters(ctx, cmd, cp); err != nil {
 			return false, err
 		}
 	}
