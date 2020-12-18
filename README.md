@@ -44,6 +44,94 @@ $ usacloud server shutdown "example-" --zone=is1a
 Usacloud ドキュメントを参照してください。
 > [Usacloud ドキュメント](https://docs.usacloud.jp/usacloud)
 
+### コマンド一覧
+
+```shell
+usacloud -h
+CLI to manage to resources on the SAKURA Cloud
+
+Available Commands:
+ === Configuration ===
+    config             
+
+ === Authentication ===
+    auth-status        
+
+ === Computing ===
+    private-host       
+    server             
+
+ === Storage ===
+    archive            
+    auto-backup        
+    cdrom              
+    disk               
+
+ === Networking ===
+    bridge             
+    internet           
+    local-router       
+    packet-filter      
+    switch             
+
+ === Networking(SubResources) ===
+    interface          
+    ipaddress          
+    ipv6addr           
+    ipv6net            
+    subnet             
+
+ === Appliance ===
+    database           
+    load-balancer      
+    nfs                
+    vpc-router         
+
+ === SecureMobile ===
+    mobile-gateway     
+    sim                
+
+ === Common service items ===
+    dns                
+    gslb               
+    proxy-lb           
+    simple-monitor     
+
+ === Billing ===
+    bill               
+    coupon             
+
+ === Lab ===
+    container-registry 
+    esme               
+
+ === WebAccelerator ===
+    web-accelerator    
+
+ === Other services ===
+    icon               
+    license            
+    note               
+    ssh-key            
+
+ === Region/Zone information ===
+    region             
+    zone               
+
+ === Service/Product information ===
+    disk-plan          
+    internet-plan      
+    license-info       
+    private-host-plan  
+    server-plan        
+    service-class      
+
+ === Other commands ===
+    rest               
+    self               
+    completion         Generate completion script
+```
+
 ## License
 
  `usacloud` Copyright (C) 2017-2020 The Usacloud Authors.
