@@ -16,20 +16,17 @@ package cli
 
 import (
 	"context"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"time"
 
-	"github.com/sacloud/libsacloud/v2"
 	"github.com/sacloud/libsacloud/v2/helper/api"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/validate"
-	"github.com/sacloud/usacloud/pkg/version"
 	"github.com/spf13/pflag"
 )
 
@@ -152,7 +149,7 @@ func (c *cliContext) Client() sacloud.APICaller {
 		RetryMax:             o.RetryMax,
 		RetryWaitMax:         o.RetryWaitMax,
 		RetryWaitMin:         o.RetryWaitMin,
-		UserAgent:            fmt.Sprintf("Usacloud/v%s (+https://github.com/sacloud/usacloud) libsacloud/%s", version.Version, libsacloud.Version),
+		UserAgent:            UserAgent,
 		TraceAPI:             o.EnableAPITrace(),
 		TraceHTTP:            o.EnableHTTPTrace(),
 		FakeMode:             o.FakeMode,
