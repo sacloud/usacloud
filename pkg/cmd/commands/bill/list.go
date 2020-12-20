@@ -37,8 +37,8 @@ type listParameter struct {
 	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 
-	Year  int `validate:"required_with=Month"`
-	Month int `validate:"min=0,max=12"`
+	Year  int `cli:",desc=(*required when --month is specified)" validate:"required_with=Month"`
+	Month int `cli:",desc=(*required when --year is specified)" validate:"required_with=Year,min=0,max=12"`
 }
 
 func newListParameter() *listParameter {

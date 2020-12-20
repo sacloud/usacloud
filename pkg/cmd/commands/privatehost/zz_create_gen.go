@@ -42,8 +42,8 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.VarP(core.NewIDFlag(&p.PlanID, &p.PlanID), "plan-id", "", "(*required) ")
-	fs.StringVarP(&p.Class, "class", "", p.Class, "(*required) options: [dynamic/ms_windows]")
+	fs.VarP(core.NewIDFlag(&p.PlanID, &p.PlanID), "plan-id", "", "")
+	fs.StringVarP(&p.Class, "class", "", p.Class, "options: [dynamic/ms_windows]")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 

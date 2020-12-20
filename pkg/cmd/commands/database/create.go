@@ -59,10 +59,10 @@ type createParameter struct {
 	Password string `cli:",category=user,order=20" validate:"required"`
 
 	EnableReplication   bool     `cli:",category=replication,order=10"`
-	ReplicaUserPassword string   `cli:",category=replication,order=20" validate:"required_with=EnableReplication"`
+	ReplicaUserPassword string   `cli:",category=replication,order=20,desc=(*required when --enable-replication is specified)" validate:"required_with=EnableReplication"`
 	EnableWebUI         bool     `cli:",category=WebUI"`
 	EnableBackup        bool     `cli:",category=backup,order=10"`
-	BackupWeekdays      []string `cli:",options=weekdays,category=backup,order=20" mapconv:",omitempty,filters=weekdays" validate:"required_with=EnableBackup,max=7,weekdays"`
+	BackupWeekdays      []string `cli:",options=weekdays,category=backup,order=20,desc=(*required when --enable-backup is specified)" mapconv:",omitempty,filters=weekdays" validate:"required_with=EnableBackup,max=7,weekdays"`
 
 	BackupStartTimeHour   int `cli:",category=backup,order=30" validate:"omitempty,min=0,max=23"`
 	BackupStartTimeMinute int `cli:",options=backup_start_minute,category=backup,order=40" validate:"omitempty,backup_start_minute"`

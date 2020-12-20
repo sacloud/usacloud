@@ -35,8 +35,8 @@ func (p *listParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
-	fs.IntVarP(&p.Year, "year", "", p.Year, "(*required) ")
-	fs.IntVarP(&p.Month, "month", "", p.Month, "")
+	fs.IntVarP(&p.Year, "year", "", p.Year, "(*required when --month is specified)")
+	fs.IntVarP(&p.Month, "month", "", p.Month, "(*required when --year is specified)")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
