@@ -28,7 +28,7 @@ var readCommand = &core.Command{
 
 	ColumnDefs: defaultColumnDefs,
 
-	SelectorType: core.SelectorTypeRequireMulti,
+	SelectorType: core.SelectorTypeRequireSingle,
 
 	ParameterInitializer: func() interface{} {
 		return newReadParameter()
