@@ -51,7 +51,7 @@ type Command struct {
 	Name      string   // コマンド名、ケバブケース(ハイフン区切り)で指定すること
 	Aliases   []string // エイリアス
 	Usage     string
-	ArgsUsage string // Argumentsの説明、省略した場合はSelectorTypeの値に応じた内容が設定される // TODO 未実装
+	ArgsUsage string // Argumentsの説明、省略した場合はSelectorTypeの値に応じた内容が設定される
 
 	Category string // カテゴリーのキー
 	Order    int    // コマンドが属するリソース内での並び順
@@ -98,10 +98,33 @@ func (c *Command) ValidateSchema() error {
 	return nil
 }
 
+func (c *Command) argsUsage() string {
+	// NOTE: cobra.Command#Useには"コマンド名 usage"のように最初のスペース以前がコマンド名となる値を設定しないと
+	//       cobra.Command#Name()が正しい値を返さない仕様となっている。
+	//       ref: https://github.com/spf13/cobra/blob/86f8bfd7fef868a174e1b606783bd7f5c82ddf8f/command.go#L1286-L1294
+	if c.ArgsUsage != "" {
+		usage := c.ArgsUsage
+		if !strings.HasPrefix(usage, " ") {
+			usage = " " + usage
+		}
+		return usage
+	}
+
+	if c.SelectorType == SelectorTypeNone {
+		return ""
+	}
+
+	suffix := ""
+	if c.SelectorType == SelectorTypeRequireMulti {
+		suffix = "..."
+	}
+	return " { ID | NAME | TAG }" + suffix
+}
+
 func (c *Command) CLICommand() *cobra.Command {
 	c.currentParameter = c.ParameterInitializer()
 	cmd := &cobra.Command{
-		Use:          c.Name,
+		Use:          c.Name + c.argsUsage(),
 		Aliases:      c.Aliases,
 		Short:        c.Usage,
 		Long:         c.Usage,
@@ -170,7 +193,6 @@ func (c *Command) CLICommand() *cobra.Command {
 	}
 
 	cmd.InheritedFlags().SortFlags = false
-
 	return cmd
 }
 
