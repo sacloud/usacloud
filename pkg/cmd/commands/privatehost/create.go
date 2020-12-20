@@ -44,8 +44,8 @@ type createParameter struct {
 	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
-	PlanID                types.ID `validate:"required_without=Class" json:",omitempty"`
-	Class                 string   `cli:",options=private_host_class" validate:"required_without=PlanID,private_host_class" json:",omitempty"`
+	PlanID                types.ID `cli:",desc=(*required: --class or --plan-id)" validate:"required_without=Class" json:",omitempty"`
+	Class                 string   `cli:",options=private_host_class,desc=(*required: --class or --plan-id)" validate:"required_without=PlanID,private_host_class" json:",omitempty"`
 }
 
 func newCreateParameter() *createParameter {
