@@ -28,6 +28,7 @@ var readCommand = &core.Command{
 
 	ColumnDefs: defaultColumnDefs,
 
+	ArgsUsage:    "ipv4_address",
 	SelectorType: core.SelectorTypeNone, // NOTE: キーがIPアドレスなため通常の引数処理を行わないように
 
 	ParameterInitializer: func() interface{} {

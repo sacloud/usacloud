@@ -32,7 +32,7 @@ var readCertificateCommand = &core.Command{
 
 	ColumnDefs: certificateColumnDefs,
 
-	SelectorType: core.SelectorTypeRequireMulti,
+	SelectorType: core.SelectorTypeRequireSingle,
 
 	ParameterInitializer: func() interface{} {
 		return newReadCertificateParameter()
