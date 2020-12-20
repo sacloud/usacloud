@@ -61,7 +61,7 @@ func (c *Command) Fields() []Field {
 		validateTag := f.StructField.Tag.Get("validate")
 		fields = append(fields, Field{
 			StructField: f,
-			Required:    strings.Contains(validateTag, "required"),
+			Required:    strings.Contains(validateTag, "required") && !strings.Contains(validateTag, "required_with"), // require_with/withoutは無視
 		})
 	}
 	return fields

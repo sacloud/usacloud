@@ -41,7 +41,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "(*required) ")
+	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "(*required when --source-file is specified)")
 	fs.StringVarP(&p.SourceFile, "source-file", "", p.SourceFile, "(*required) ")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }

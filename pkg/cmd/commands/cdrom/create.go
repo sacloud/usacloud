@@ -43,7 +43,7 @@ type createParameter struct {
 	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
-	SizeGB                int `cli:"size" validate:"required_with=SourceFile,cdrom_sizes"`
+	SizeGB                int `cli:"size,desc=(*required when --source-file is specified)" validate:"required_with=SourceFile,cdrom_sizes"`
 
 	SourceFile string `mapconv:"SourceReader,filters=path_to_reader" validate:"required,file"`
 }
