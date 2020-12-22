@@ -1,8 +1,8 @@
 # Changelog
 
-# 1.0.0 (Unreleased)
+# 1.0.0 (2020-12-22)
 
-* 
+* Usacloud v1.0 (@yamamoto-febc)
 
 ## 0.33.0 (2020-08-20)
 
