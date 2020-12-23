@@ -125,6 +125,9 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 	in := ctx.IO().In()
 	msgWriter := &printer.Printer{NoColor: p.NoColor}
 
+	// Note: currentConfigには未知のキーが入る可能性がある&それを保持しておく必要があるため、
+	//       ここではnewConfigValueまたは入力値からcurrentConfigへ上書きする形で実装する
+
 	// access token
 	if newConfigValue.AccessToken == "" {
 		msg := "\nSetting SakuraCloud API Token => "
@@ -147,6 +150,8 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 			fmt.Fscanln(in, &input)
 			currentConfig.AccessToken = input
 		}
+	} else {
+		currentConfig.AccessToken = newConfigValue.AccessToken
 	}
 
 	if newConfigValue.AccessTokenSecret == "" {
@@ -170,6 +175,8 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 			fmt.Fscanln(in, &input)
 			currentConfig.AccessTokenSecret = input
 		}
+	} else {
+		currentConfig.AccessTokenSecret = newConfigValue.AccessTokenSecret
 	}
 
 	if newConfigValue.Zone == "" {
@@ -203,6 +210,8 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 			}
 			currentConfig.Zone = input
 		}
+	} else {
+		currentConfig.Zone = newConfigValue.Zone
 	}
 
 	if newConfigValue.DefaultOutputType == "" {
@@ -233,6 +242,8 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 			}
 			currentConfig.DefaultOutputType = input
 		}
+	} else {
+		currentConfig.DefaultOutputType = newConfigValue.DefaultOutputType
 	}
 
 	if err := profile.Save(p.Name, currentConfig); err != nil {
