@@ -92,7 +92,7 @@ brews:
       system "#{bin}/usacloud --version"
 release:
   # for debug
-  draft: true
+  # draft: true
 
   extra_files:
     - glob: ./scripts/install.sh
