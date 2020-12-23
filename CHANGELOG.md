@@ -1,6 +1,10 @@
 # Changelog
 
-# 1.0.0 (2020-12-22)
+## 1.0.1 (2020-12-23)
+
+* Fix: Save the value specified by command line option #775 (@yamamoto-febc)
+
+## 1.0.0 (2020-12-22)
 
 * Usacloud v1.0 (@yamamoto-febc)
 
