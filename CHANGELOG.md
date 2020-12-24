@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 (Unreleased)
+
+* Added internet-plans - 3500/4000/4500 Mbps #777 (@yamamoto-febc)
+
 ## 1.0.1 (2020-12-23)
 
 * Fix: Save the value specified by command line option #775 (@yamamoto-febc)
