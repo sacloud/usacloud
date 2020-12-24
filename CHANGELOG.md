@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.1 (Unreleased)
+## 1.0.2 (2020-12-24)
 
 * Added internet-plans - 3500/4000/4500 Mbps #777 (@yamamoto-febc)
 
