@@ -118,6 +118,9 @@ var definitions = map[string][]*definition{
 		{key: 2000, value: 2000},
 		{key: 2500, value: 2500},
 		{key: 3000, value: 3000},
+		{key: 3500, value: 3500},
+		{key: 4000, value: 4000},
+		{key: 4500, value: 4500},
 		{key: 5000, value: 5000},
 	},
 	"loadbalancer_plan": {
