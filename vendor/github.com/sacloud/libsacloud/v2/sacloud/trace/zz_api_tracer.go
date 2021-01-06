@@ -1,4 +1,4 @@
-// Copyright 2016-2020 The Libsacloud Authors
+// Copyright 2016-2021 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,13 +20,22 @@ import (
 	"context"
 	"encoding/json"
 	"log"
+	"sync"
 
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 )
 
+var initOnce sync.Once
+
 // AddClientFactoryHooks add client factory hooks
 func AddClientFactoryHooks() {
+	initOnce.Do(func() {
+		addClientFactoryHooks()
+	})
+}
+
+func addClientFactoryHooks() {
 	sacloud.AddClientFacotyHookFunc("Archive", func(in interface{}) interface{} {
 		return NewArchiveTracer(in.(sacloud.ArchiveAPI))
 	})
