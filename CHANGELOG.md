@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.3 (Unreleased)
+## 1.0.3 (2021-01-06)
 
 * Update Copyright #782 (@yamamoto-febc)
 * Fix: loading profile settings from environment variables #781 (@yamamoto-febc)
