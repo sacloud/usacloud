@@ -66,6 +66,11 @@ func (o *Config) IsEmpty() bool {
 }
 
 func (o *Config) loadConfig(flags *pflag.FlagSet, errW io.Writer) {
+	// プロファイルだけ先に環境変数を読んでおく
+	if o.Profile == "" {
+		o.Profile = stringFromEnvMulti([]string{"SAKURACLOUD_PROFILE", "USACLOUD_PROFILE"}, "default")
+	}
+
 	o.loadFromProfile(flags, errW)
 	o.loadFromEnv()
 	o.loadFromFlags(flags, errW)
@@ -79,9 +84,6 @@ func (o *Config) fillDefaults() {
 }
 
 func (o *Config) loadFromEnv() {
-	if o.Profile == "" {
-		o.Profile = stringFromEnv("SAKURACLOUD_PROFILE", "default")
-	}
 	if o.AccessToken == "" {
 		o.AccessToken = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN", "")
 	}
@@ -207,6 +209,16 @@ func stringFromEnv(key, defaultValue string) string {
 		return defaultValue
 	}
 	return v
+}
+
+func stringFromEnvMulti(keys []string, defaultValue string) string {
+	for _, key := range keys {
+		v := os.Getenv(key)
+		if v != "" {
+			return v
+		}
+	}
+	return defaultValue
 }
 
 func stringSliceFromEnv(key string, defaultValue []string) []string {
