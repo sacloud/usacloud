@@ -1,4 +1,4 @@
-// Copyright 2017-2020 The Usacloud Authors
+// Copyright 2017-2021 The Usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ var (
 	Revision = "xxxxxx" // set on build time
 
 	// CopyrightYear .
-	CopyrightYear = "2017-2020"
+	CopyrightYear = "2017-2021"
 )
 
 // FullVersion return sackerel full version text
