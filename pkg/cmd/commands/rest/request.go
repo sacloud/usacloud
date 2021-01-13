@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/jmespath/go-jmespath"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -45,6 +46,7 @@ type requestParameter struct {
 	Zone   string `validate:"omitempty,zone"` // 通常のzoneと扱いが異なるためcflag.ZoneParameterを利用しない
 	Method string `cli:",short=X,options=rest_method" validate:"required,rest_method"`
 	Data   string `cli:",short=d" validate:"omitempty,file|json"`
+	Query  string `cli:",category=output,desc=JMESPath query" validate:"omitempty"`
 }
 
 func newRequestParameter() *requestParameter {
@@ -129,9 +131,15 @@ func requestFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 	}
 
 	if len(results) > 0 {
-		temp := make(map[string]interface{})
+		var temp interface{}
 		if err := json.Unmarshal(results, &temp); err != nil {
 			return nil, err
+		}
+		if p.Query != "" {
+			temp, err = searchByJMESPath(ctx, temp, p.Query)
+			if err != nil {
+				return nil, err
+			}
 		}
 		formattedJSON, err := json.MarshalIndent(temp, "", "    ")
 		if err != nil {
@@ -142,4 +150,16 @@ func requestFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 		return nil, err
 	}
 	return nil, nil
+}
+
+func searchByJMESPath(ctx cli.Context, v interface{}, query string) (result interface{}, err error) {
+	defer func() {
+		ret := recover()
+		if ret != nil {
+			fmt.Fprintf(ctx.IO().Err(), "jmespath.Search failed: parse error\n")
+			err = fmt.Errorf("jmespath.Search failed: %s", ret)
+		}
+	}()
+	result, err = jmespath.Search(query, v)
+	return
 }
