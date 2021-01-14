@@ -17,6 +17,7 @@ package core
 import (
 	"encoding/json"
 	"os"
+	"reflect"
 
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/spf13/cobra"
@@ -25,18 +26,21 @@ import (
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
-func loadParameters(ctx cli.Context, cmd *cobra.Command, parameters cflag.CommonParameterValueHolder) error {
+func (c *Command) loadParameters(ctx cli.Context, cmd *cobra.Command, parameters cflag.CommonParameterValueHolder) error {
 	p := parameters.ParametersFlagValue()
-
 	if p == "" {
 		return nil
 	}
+
+	// c.currentParameterの実体をParameterInitializerで再度初期化
+	// Note: ポインタごと置き換えるとコマンドラインフラグのパースがうまく動かないため実体を差し替える
+	reflect.ValueOf(c.currentParameter).Elem().Set(reflect.ValueOf(c.ParameterInitializer()).Elem())
 
 	data, err := util.BytesFromPathOrContent(p)
 	if err != nil {
 		return err
 	}
-	if err := json.Unmarshal(data, parameters); err != nil {
+	if err := json.Unmarshal(data, c.currentParameter); err != nil {
 		return nil
 	}
 

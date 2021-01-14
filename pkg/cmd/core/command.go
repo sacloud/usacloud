@@ -347,7 +347,7 @@ func (c *Command) handleCommonParameters(ctx cli.Context, cmd *cobra.Command) (b
 			return false, generateSkeleton(ctx, c.currentParameter)
 		}
 		// --parameters/--parameter-fileフラグの処理
-		if err := loadParameters(ctx, cmd, cp); err != nil {
+		if err := c.loadParameters(ctx, cmd, cp); err != nil {
 			return false, err
 		}
 	}
