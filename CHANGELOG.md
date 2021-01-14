@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.4 (Unreleased)
+
+* Add JMESPath support with --query option to rest subcommand #786 (@hnakamur)
+
 ## 1.0.3 (2021-01-06)
 
 * Update Copyright #782 (@yamamoto-febc)
