@@ -2,7 +2,13 @@
 
 ## 1.0.4 (Unreleased)
 
-* Add JMESPath support with --query option to rest subcommand #786 (@hnakamur)
+FEATURES
+
+  * Add JMESPath support with --query option to rest subcommand #786 (@hnakamur)
+  
+FIXES
+
+  * Fix parameter loader #788 (@yamamoto-febc)
 
 ## 1.0.3 (2021-01-06)
 
