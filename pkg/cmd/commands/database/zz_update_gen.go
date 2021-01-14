@@ -62,6 +62,9 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("backup-start-time-minute") {
 		p.BackupStartTimeMinute = nil
 	}
+	if !fs.Changed("database-parameters") {
+		p.DatabaseParametersData = nil
+	}
 }
 
 func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
@@ -101,6 +104,9 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.BackupStartTimeMinute == nil {
 		p.BackupStartTimeMinute = pointer.NewInt(0)
 	}
+	if p.DatabaseParametersData == nil {
+		p.DatabaseParametersData = pointer.NewStringSlice([]string{})
+	}
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "(*required) ")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
@@ -122,6 +128,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(p.BackupWeekdays, "backup-weekdays", "", nil, "options: [all/sun/mon/tue/wed/thu/fri/sat]")
 	fs.IntVarP(p.BackupStartTimeHour, "backup-start-time-hour", "", 0, "")
 	fs.IntVarP(p.BackupStartTimeMinute, "backup-start-time-minute", "", 0, "")
+	fs.StringSliceVarP(p.DatabaseParametersData, "database-parameters", "", nil, "")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -152,6 +159,16 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("icon-id"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Common options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("database", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("database-parameters"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Database-specific options",
 			Flags: fs,
 		})
 	}

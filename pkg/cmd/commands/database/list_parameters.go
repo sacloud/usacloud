@@ -37,7 +37,7 @@ var listParametersCommand = &core.Command{
 			Name: "Key",
 		},
 		{
-			Name: "CurrentValue",
+			Name:     "CurrentValue",
 			Template: "{{ .Value }}",
 		},
 		{

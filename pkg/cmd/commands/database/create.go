@@ -15,11 +15,16 @@
 package database
 
 import (
+	"fmt"
+	"regexp"
+	"strings"
+
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/cmd/examples"
+	"github.com/sacloud/usacloud/pkg/validate"
 )
 
 var createCommand = &core.Command{
@@ -32,6 +37,7 @@ var createCommand = &core.Command{
 	ParameterInitializer: func() interface{} {
 		return newCreateParameter()
 	},
+	ValidateFunc: validateCreateParameter,
 }
 
 type createParameter struct {
@@ -67,7 +73,8 @@ type createParameter struct {
 	BackupStartTimeHour   int `cli:",category=backup,order=30" validate:"omitempty,min=0,max=23"`
 	BackupStartTimeMinute int `cli:",options=backup_start_minute,category=backup,order=40" validate:"omitempty,backup_start_minute"`
 
-	DatabaseParameters []string `mapconv:"-"`
+	DatabaseParametersData []string               `cli:"database-parameters" json:"-" mapconv:"-"`
+	DatabaseParameters     map[string]interface{} `cli:"-" mapconv:"Parameters"`
 
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
@@ -78,6 +85,24 @@ func newCreateParameter() *createParameter {
 
 func init() {
 	Resource.AddCommand(createCommand)
+}
+
+func validateCreateParameter(ctx cli.Context, parameter interface{}) error {
+	if err := validate.Exec(parameter); err != nil {
+		return err
+	}
+	p := parameter.(*createParameter)
+
+	var errs []error
+	pattern := regexp.MustCompile(`^\w+=\w*$`)
+	for _, param := range p.DatabaseParametersData {
+		if !pattern.MatchString(param) {
+			errs = append(errs, validate.NewFlagError("--database-parameters",
+				fmt.Sprintf("must be in a format like 'key=value': %s", param),
+			))
+		}
+	}
+	return validate.NewValidationError(errs...)
 }
 
 func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
@@ -104,8 +129,30 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		BackupWeekdays:        []string{examples.OptionsString("weekdays")},
 		BackupStartTimeHour:   1,
 		BackupStartTimeMinute: 30,
+		DatabaseParameters: map[string]interface{}{
+			"max_connections": "150",
+		},
 		NoWaitParameter: cflag.NoWaitParameter{
 			NoWait: false,
 		},
 	}
+}
+
+// Customize パラメータ変換処理
+func (p *createParameter) Customize(_ cli.Context) error {
+	parameters := make(map[string]interface{})
+	for _, p := range p.DatabaseParametersData {
+		keyValues := strings.Split(p, "=")
+		if len(keyValues) == 0 {
+			continue // バリデーションで弾いているため到達しないはず
+		}
+		key := keyValues[0]
+		var value interface{}
+		if len(keyValues) > 1 {
+			value = keyValues[1]
+		}
+		parameters[key] = value
+	}
+	p.DatabaseParameters = parameters
+	return nil
 }

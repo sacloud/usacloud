@@ -53,6 +53,7 @@ type Builder struct {
 	BackupWeekdays        []types.EBackupSpanWeekday `validate:"required_with=EnableBackup,max=7"`
 	BackupStartTimeHour   int                        `validate:"omitempty,min=0,max=23"`
 	BackupStartTimeMinute int                        `validate:"omitempty,oneof=0 15 30 45"`
+	Parameters            map[string]interface{}
 
 	NoWait bool
 
@@ -86,6 +87,10 @@ func BuilderFromResource(ctx context.Context, caller sacloud.APICaller, zone str
 			}
 		}
 	}
+	parameters, err := client.GetParameter(ctx, zone, id)
+	if err != nil {
+		return nil, err
+	}
 
 	return &Builder{
 		ID:                    current.ID,
@@ -111,6 +116,7 @@ func BuilderFromResource(ctx context.Context, caller sacloud.APICaller, zone str
 		BackupWeekdays:        bkWeekdays,
 		BackupStartTimeHour:   bkHour,
 		BackupStartTimeMinute: bkMinute,
+		Parameters:            parameters.Settings,
 		Caller:                caller,
 	}, nil
 }
@@ -146,6 +152,7 @@ func (b *Builder) actualBuilder() *databaseBuilder.Builder {
 		Description: b.Description,
 		Tags:        b.Tags,
 		IconID:      b.IconID,
+		Parameters:  b.Parameters,
 		NoWait:      b.NoWait,
 		Client:      databaseBuilder.NewAPIClient(b.Caller),
 	}

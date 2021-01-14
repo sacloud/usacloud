@@ -43,7 +43,7 @@ type CreateRequest struct {
 	BackupWeekdays        []types.EBackupSpanWeekday `validate:"required_with=EnableBackup,max=7"`
 	BackupStartTimeHour   int                        `validate:"omitempty,min=0,max=23"`
 	BackupStartTimeMinute int                        `validate:"omitempty,oneof=0 15 30 45"`
-	Parameter             map[string]interface{}
+	Parameters            map[string]interface{}
 
 	NoWait bool
 }
@@ -76,7 +76,7 @@ func (req *CreateRequest) ApplyRequest() *ApplyRequest {
 		BackupWeekdays:        req.BackupWeekdays,
 		BackupStartTimeHour:   req.BackupStartTimeHour,
 		BackupStartTimeMinute: req.BackupStartTimeMinute,
-		Parameter:             req.Parameter,
+		Parameters:            req.Parameters,
 		NoWait:                req.NoWait,
 	}
 }

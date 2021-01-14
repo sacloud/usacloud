@@ -59,7 +59,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.BackupWeekdays, "backup-weekdays", "", p.BackupWeekdays, "(*required when --enable-backup is specified) options: [all/sun/mon/tue/wed/thu/fri/sat]")
 	fs.IntVarP(&p.BackupStartTimeHour, "backup-start-time-hour", "", p.BackupStartTimeHour, "")
 	fs.IntVarP(&p.BackupStartTimeMinute, "backup-start-time-minute", "", p.BackupStartTimeMinute, "options: [0/15/30/45]")
-	fs.StringSliceVarP(&p.DatabaseParameters, "database-parameters", "", p.DatabaseParameters, "")
+	fs.StringSliceVarP(&p.DatabaseParametersData, "database-parameters", "", p.DatabaseParametersData, "")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
