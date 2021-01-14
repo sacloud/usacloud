@@ -2353,6 +2353,72 @@ func (t *DatabaseTracer) Status(ctx context.Context, zone string, id types.ID) (
 	return resultDatabaseStatus, err
 }
 
+// GetParameter is API call with trace log
+func (t *DatabaseTracer) GetParameter(ctx context.Context, zone string, id types.ID) (*sacloud.DatabaseParameter, error) {
+	log.Println("[TRACE] DatabaseAPI.GetParameter start")
+	targetArguments := struct {
+		Argzone string
+		Argid   types.ID `json:"id"`
+	}{
+		Argzone: zone,
+		Argid:   id,
+	}
+	if d, err := json.Marshal(targetArguments); err == nil {
+		log.Printf("[TRACE] \targs: %s\n", string(d))
+	}
+
+	defer func() {
+		log.Println("[TRACE] DatabaseAPI.GetParameter end")
+	}()
+
+	resultDatabaseParameter, err := t.Internal.GetParameter(ctx, zone, id)
+	targetResults := struct {
+		DatabaseParameter *sacloud.DatabaseParameter
+		Error             error
+	}{
+		DatabaseParameter: resultDatabaseParameter,
+		Error:             err,
+	}
+	if d, err := json.Marshal(targetResults); err == nil {
+		log.Printf("[TRACE] \tresults: %s\n", string(d))
+	}
+
+	return resultDatabaseParameter, err
+}
+
+// SetParameter is API call with trace log
+func (t *DatabaseTracer) SetParameter(ctx context.Context, zone string, id types.ID, param map[string]interface{}) error {
+	log.Println("[TRACE] DatabaseAPI.SetParameter start")
+	targetArguments := struct {
+		Argzone  string
+		Argid    types.ID               `json:"id"`
+		Argparam map[string]interface{} `json:"param"`
+	}{
+		Argzone:  zone,
+		Argid:    id,
+		Argparam: param,
+	}
+	if d, err := json.Marshal(targetArguments); err == nil {
+		log.Printf("[TRACE] \targs: %s\n", string(d))
+	}
+
+	defer func() {
+		log.Println("[TRACE] DatabaseAPI.SetParameter end")
+	}()
+
+	err := t.Internal.SetParameter(ctx, zone, id, param)
+	targetResults := struct {
+		Error error
+	}{
+		Error: err,
+	}
+	if d, err := json.Marshal(targetResults); err == nil {
+		log.Printf("[TRACE] \tresults: %s\n", string(d))
+	}
+
+	return err
+}
+
 /*************************************************
 * DiskTracer
 *************************************************/
@@ -2509,37 +2575,6 @@ func (t *DiskTracer) CreateWithConfig(ctx context.Context, zone string, createPa
 	return resultDisk, err
 }
 
-// ToBlank is API call with trace log
-func (t *DiskTracer) ToBlank(ctx context.Context, zone string, id types.ID) error {
-	log.Println("[TRACE] DiskAPI.ToBlank start")
-	targetArguments := struct {
-		Argzone string
-		Argid   types.ID `json:"id"`
-	}{
-		Argzone: zone,
-		Argid:   id,
-	}
-	if d, err := json.Marshal(targetArguments); err == nil {
-		log.Printf("[TRACE] \targs: %s\n", string(d))
-	}
-
-	defer func() {
-		log.Println("[TRACE] DiskAPI.ToBlank end")
-	}()
-
-	err := t.Internal.ToBlank(ctx, zone, id)
-	targetResults := struct {
-		Error error
-	}{
-		Error: err,
-	}
-	if d, err := json.Marshal(targetResults); err == nil {
-		log.Printf("[TRACE] \tresults: %s\n", string(d))
-	}
-
-	return err
-}
-
 // ResizePartition is API call with trace log
 func (t *DiskTracer) ResizePartition(ctx context.Context, zone string, id types.ID, param *sacloud.DiskResizePartitionRequest) error {
 	log.Println("[TRACE] DiskAPI.ResizePartition start")
@@ -2635,43 +2670,6 @@ func (t *DiskTracer) DisconnectFromServer(ctx context.Context, zone string, id t
 	}
 
 	return err
-}
-
-// Install is API call with trace log
-func (t *DiskTracer) Install(ctx context.Context, zone string, id types.ID, installParam *sacloud.DiskInstallRequest, distantFrom []types.ID) (*sacloud.Disk, error) {
-	log.Println("[TRACE] DiskAPI.Install start")
-	targetArguments := struct {
-		Argzone         string
-		Argid           types.ID                    `json:"id"`
-		ArginstallParam *sacloud.DiskInstallRequest `json:"installParam"`
-		ArgdistantFrom  []types.ID                  `json:"distantFrom"`
-	}{
-		Argzone:         zone,
-		Argid:           id,
-		ArginstallParam: installParam,
-		ArgdistantFrom:  distantFrom,
-	}
-	if d, err := json.Marshal(targetArguments); err == nil {
-		log.Printf("[TRACE] \targs: %s\n", string(d))
-	}
-
-	defer func() {
-		log.Println("[TRACE] DiskAPI.Install end")
-	}()
-
-	resultDisk, err := t.Internal.Install(ctx, zone, id, installParam, distantFrom)
-	targetResults := struct {
-		Disk  *sacloud.Disk
-		Error error
-	}{
-		Disk:  resultDisk,
-		Error: err,
-	}
-	if d, err := json.Marshal(targetResults); err == nil {
-		log.Printf("[TRACE] \tresults: %s\n", string(d))
-	}
-
-	return resultDisk, err
 }
 
 // Read is API call with trace log

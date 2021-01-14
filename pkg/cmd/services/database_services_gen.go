@@ -316,6 +316,46 @@ func init() {
 			return results, nil
 		},
 	)
+	setDefaultServiceFunc("database", "list-parameters",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+
+			req := &service.ListParameterRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			res, err := svc.ListParameterWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+
+		},
+	)
+	setDefaultListAllFunc("database", "list-parameters",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
 	setDefaultServiceFunc("database", "monitor-cpu",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())

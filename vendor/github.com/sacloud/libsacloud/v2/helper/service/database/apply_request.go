@@ -47,6 +47,7 @@ type ApplyRequest struct {
 	BackupWeekdays        []types.EBackupSpanWeekday `validate:"required_with=EnableBackup,max=7"`
 	BackupStartTimeHour   int                        `validate:"omitempty,min=0,max=23"`
 	BackupStartTimeMinute int                        `validate:"omitempty,oneof=0 15 30 45"`
+	Parameter             map[string]interface{}
 
 	NoWait bool
 }

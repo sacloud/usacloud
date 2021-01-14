@@ -25,6 +25,8 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/fake"
 	"github.com/sacloud/libsacloud/v2/sacloud/trace"
+	"github.com/sacloud/libsacloud/v2/sacloud/trace/otel"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )
 
 // CallerOptions sacloud.APICallerを作成する際のオプション
@@ -47,8 +49,10 @@ type CallerOptions struct {
 
 	UserAgent string
 
-	TraceAPI  bool
-	TraceHTTP bool
+	TraceAPI             bool
+	TraceHTTP            bool
+	OpenTelemetry        bool
+	OpenTelemetryOptions []otel.Option
 
 	FakeMode      bool
 	FakeStorePath string
@@ -112,6 +116,14 @@ func newCaller(opts *CallerOptions) sacloud.APICaller {
 		caller.HTTPClient.Transport = &sacloud.TracingRoundTripper{
 			Transport: caller.HTTPClient.Transport,
 		}
+	}
+	if opts.OpenTelemetry {
+		otel.Initialize(opts.OpenTelemetryOptions...)
+		transport := caller.HTTPClient.Transport
+		if transport == nil {
+			transport = http.DefaultTransport
+		}
+		caller.HTTPClient.Transport = otelhttp.NewTransport(transport)
 	}
 
 	if opts.FakeMode {

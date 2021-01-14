@@ -67,6 +67,8 @@ type createParameter struct {
 	BackupStartTimeHour   int `cli:",category=backup,order=30" validate:"omitempty,min=0,max=23"`
 	BackupStartTimeMinute int `cli:",options=backup_start_minute,category=backup,order=40" validate:"omitempty,backup_start_minute"`
 
+	DatabaseParameters []string `mapconv:"-"`
+
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
