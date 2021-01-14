@@ -32,6 +32,7 @@ func (p *requestParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Method, "method", "X", p.Method, "(*required) options: [get/post/put/delete/GET/POST/PUT/DELETE]")
 	fs.StringVarP(&p.Data, "data", "d", p.Data, "")
+	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -50,6 +51,16 @@ func (p *requestParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Rest-specific options",
+			Flags: fs,
+		})
+	}
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("output", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Output options",
 			Flags: fs,
 		})
 	}
