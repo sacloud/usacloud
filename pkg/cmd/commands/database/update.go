@@ -15,11 +15,16 @@
 package database
 
 import (
+	"fmt"
+	"regexp"
+	"strings"
+
 	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/cmd/examples"
+	"github.com/sacloud/usacloud/pkg/validate"
 )
 
 var updateCommand = &core.Command{
@@ -30,6 +35,7 @@ var updateCommand = &core.Command{
 
 	ColumnDefs: defaultColumnDefs,
 
+	ValidateFunc: validateUpdateParameter,
 	ParameterInitializer: func() interface{} {
 		return newUpdateParameter()
 	},
@@ -57,6 +63,9 @@ type updateParameter struct {
 	BackupStartTimeHour   *int      `cli:",category=backup,order=30" mapconv:",omitempty" validate:"omitempty,min=0,max=23"`
 	BackupStartTimeMinute *int      `cli:",category=backup,order=40" mapconv:",omitempty" validate:"omitempty,oneof=0 15 30 45"`
 
+	DatabaseParametersData *[]string               `cli:"database-parameters" json:"-" mapconv:"-"`
+	DatabaseParameters     *map[string]interface{} `cli:"-" mapconv:"Parameters"`
+
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
@@ -66,6 +75,26 @@ func newUpdateParameter() *updateParameter {
 
 func init() {
 	Resource.AddCommand(updateCommand)
+}
+
+func validateUpdateParameter(ctx cli.Context, parameter interface{}) error {
+	if err := validate.Exec(parameter); err != nil {
+		return err
+	}
+	p := parameter.(*updateParameter)
+
+	var errs []error
+	pattern := regexp.MustCompile(`^\w+=\w*$`)
+	if p.DatabaseParametersData != nil {
+		for _, param := range *p.DatabaseParametersData {
+			if !pattern.MatchString(param) {
+				errs = append(errs, validate.NewFlagError("--database-parameters",
+					fmt.Sprintf("must be in a format like 'key=value': %s", param),
+				))
+			}
+		}
+	}
+	return validate.NewValidationError(errs...)
 }
 
 func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
@@ -87,4 +116,25 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 			NoWait: false,
 		},
 	}
+}
+
+// Customize パラメータ変換処理
+func (p *updateParameter) Customize(_ cli.Context) error {
+	if p.DatabaseParametersData != nil {
+		parameters := make(map[string]interface{})
+		for _, p := range *p.DatabaseParametersData {
+			keyValues := strings.Split(p, "=")
+			if len(keyValues) == 0 {
+				continue // バリデーションで弾いているため到達しないはず
+			}
+			key := keyValues[0]
+			var value interface{}
+			if len(keyValues) > 1 {
+				value = keyValues[1]
+			}
+			parameters[key] = value
+		}
+		p.DatabaseParameters = &parameters
+	}
+	return nil
 }

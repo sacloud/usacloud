@@ -289,3 +289,84 @@ func (o *DatabaseOp) Status(ctx context.Context, zone string, id types.ID) (*sac
 		},
 	}, nil
 }
+
+func (o *DatabaseOp) GetParameter(ctx context.Context, zone string, id types.ID) (*sacloud.DatabaseParameter, error) {
+	v, err := o.Read(ctx, zone, id)
+	if err != nil {
+		return nil, err
+	}
+
+	var settings map[string]interface{}
+	raw := ds().Get(ResourceDatabase+"Parameter", zone, id)
+	if raw != nil {
+		settings = raw.(map[string]interface{})
+	}
+
+	meta := fakeDatabaseParameterMetaForMariaDB
+	if v.Conf.DatabaseName == "postgres" {
+		meta = fakeDatabaseParameterMetaForPostgreSQL
+	}
+	return &sacloud.DatabaseParameter{
+		Settings: settings,
+		MetaInfo: meta,
+	}, nil
+}
+
+var (
+	fakeDatabaseParameterMetaForMariaDB = []*sacloud.DatabaseParameterMeta{
+		{
+			Type:    "number",
+			Name:    "MariaDB/server.cnf/mysqld/max_connections",
+			Label:   "max_connections",
+			Text:    "同時クライアント接続の最大数を設定します。",
+			Example: "100",
+			Min:     10,
+			Max:     1000,
+			MaxLen:  0,
+			Reboot:  "static",
+		},
+	}
+	fakeDatabaseParameterMetaForPostgreSQL = []*sacloud.DatabaseParameterMeta{
+		{
+			Type:    "number",
+			Name:    "postgres/postgresql.conf/max_connections",
+			Label:   "max_connections",
+			Text:    "同時クライアント接続の最大数を設定します。",
+			Example: "100",
+			Min:     10,
+			Max:     1000,
+			MaxLen:  0,
+			Reboot:  "static",
+		},
+	}
+)
+
+func (o *DatabaseOp) SetParameter(ctx context.Context, zone string, id types.ID, param map[string]interface{}) error {
+	_, err := o.Read(ctx, zone, id)
+	if err != nil {
+		return err
+	}
+
+	var settings map[string]interface{}
+	raw := ds().Get(ResourceDatabase+"Parameter", zone, id)
+	if raw != nil {
+		settings = raw.(map[string]interface{})
+	} else {
+		settings = make(map[string]interface{})
+	}
+	for k, v := range param {
+		if v == nil {
+			delete(settings, k)
+		} else {
+			switch v := v.(type) {
+			case int:
+				settings[k] = float64(v)
+			default:
+				settings[k] = v
+			}
+		}
+	}
+
+	ds().Put(ResourceDatabase+"Parameter", zone, id, settings)
+	return nil
+}

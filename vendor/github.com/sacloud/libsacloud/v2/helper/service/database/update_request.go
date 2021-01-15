@@ -44,6 +44,7 @@ type UpdateRequest struct {
 	BackupWeekdays        *[]types.EBackupSpanWeekday `request:",omitempty" validate:"omitempty,required_with=EnableBackup,max=7"`
 	BackupStartTimeHour   *int                        `request:",omitempty" validate:"omitempty,min=0,max=23"`
 	BackupStartTimeMinute *int                        `request:",omitempty" validate:"omitempty,oneof=0 15 30 45"`
+	Parameters            *map[string]interface{}     `request:",omitempty"`
 
 	SettingsHash string
 	NoWait       bool
@@ -116,5 +117,34 @@ func (req *UpdateRequest) ApplyRequest(ctx context.Context, caller sacloud.APICa
 	if err := service.RequestConvertTo(req, applyRequest); err != nil {
 		return nil, err
 	}
+
+	// パラメータは手動マージ
+	parameter, err := dbOp.GetParameter(ctx, req.Zone, req.ID)
+	if err != nil {
+		return nil, err
+	}
+	// パラメータ設定をLabelをキーにするように正規化
+	ps := make(map[string]interface{})
+	for k, v := range parameter.Settings {
+		for _, meta := range parameter.MetaInfo {
+			if meta.Name == k {
+				ps[meta.Label] = v
+			}
+		}
+	}
+	if req.Parameters != nil {
+		for k, v := range *req.Parameters {
+			key := k
+			for _, meta := range parameter.MetaInfo {
+				if meta.Name == key {
+					key = meta.Label
+					break
+				}
+			}
+			ps[key] = v
+		}
+	}
+	applyRequest.Parameters = ps
+
 	return applyRequest, nil
 }

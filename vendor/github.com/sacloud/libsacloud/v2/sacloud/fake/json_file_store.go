@@ -303,6 +303,7 @@ var jsonResourceTypeMap = map[string]func() interface{}{
 	valuePoolResourceKey:         func() interface{} { return &valuePool{} },
 	"BillDetails":                func() interface{} { return &[]*sacloud.BillDetail{} },
 	"ContainerRegistryUsers":     func() interface{} { return &[]*sacloud.ContainerRegistryUser{} },
+	"DatabaseParameter":          func() interface{} { return map[string]interface{}{} },
 	"ESMELogs":                   func() interface{} { return &[]*sacloud.ESMELogs{} },
 	"LocalRouterStatus":          func() interface{} { return &sacloud.LocalRouterHealth{} },
 	"MobileGatewayDNS":           func() interface{} { return &sacloud.MobileGatewayDNSSetting{} },
