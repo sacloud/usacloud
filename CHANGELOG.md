@@ -1,9 +1,10 @@
 # Changelog
 
-## 1.0.4 (Unreleased)
+## 1.1.0 (Unreleased)
 
 FEATURES
 
+  * Support setting database parameters #789 (@yamamoto-febc)
   * Add JMESPath support with --query option to rest subcommand #786 (@hnakamur)
   
 FIXES
