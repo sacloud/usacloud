@@ -27,6 +27,8 @@ type CreateStandardRequest struct {
 	Tags        types.Tags
 	IconID      types.ID
 
+	Version int
+
 	AdditionalNICSettings []*AdditionalStandardNICSetting
 	RouterSetting         *RouterSetting
 	NoWait                bool
@@ -49,6 +51,7 @@ func (req *CreateStandardRequest) ApplyRequest() *ApplyRequest {
 		Tags:                  req.Tags,
 		IconID:                req.IconID,
 		PlanID:                types.VPCRouterPlans.Standard,
+		Version:               req.Version,
 		NICSetting:            &StandardNICSetting{},
 		AdditionalNICSettings: additionalNICs,
 		RouterSetting:         req.RouterSetting,

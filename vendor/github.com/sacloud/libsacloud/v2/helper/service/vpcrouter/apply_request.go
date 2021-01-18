@@ -35,7 +35,8 @@ type ApplyRequest struct {
 	Tags        types.Tags
 	IconID      types.ID
 
-	PlanID                types.ID                     `validate:"required"`
+	PlanID                types.ID `validate:"required"`
+	Version               int
 	NICSetting            NICSettingHolder             // StandardNICSetting または PremiumNICSetting を指定する
 	AdditionalNICSettings []AdditionalNICSettingHolder // AdditionalStandardNICSetting または AdditionalPremiumNICSetting を指定する
 	RouterSetting         *RouterSetting
@@ -71,6 +72,7 @@ func (req *ApplyRequest) Builder(caller sacloud.APICaller) *vpcRouterBuilder.Bui
 		Tags:                  req.Tags,
 		IconID:                req.IconID,
 		PlanID:                req.PlanID,
+		Version:               req.Version,
 		NICSetting:            req.nicSetting(),
 		AdditionalNICSettings: req.additionalNICSetting(),
 		RouterSetting:         req.routerSetting(),

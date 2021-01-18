@@ -48,7 +48,8 @@ type createParameter struct {
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	Plan string `cli:"plan,options=vpc_router_plan_premium,category=plan" mapconv:"PlanID,filters=vpc_router_plan_premium_to_value" validate:"required,vpc_router_plan_premium"`
+	Plan    string `cli:"plan,options=vpc_router_plan_premium,category=plan" mapconv:"PlanID,filters=vpc_router_plan_premium_to_value" validate:"required,vpc_router_plan_premium"`
+	Version int    `validate:"required,oneof=1 2"`
 
 	PublicNetworkInterface vpcrouter.PremiumNICSetting `cli:",category=network,order=10" mapconv:"NICSetting,omitempty"`
 
@@ -63,7 +64,8 @@ type createParameter struct {
 
 func newCreateParameter() *createParameter {
 	return &createParameter{
-		Plan: "premium",
+		Plan:    "premium",
+		Version: 2,
 	}
 }
 
@@ -91,6 +93,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		TagsParameter:   examples.Tags,
 		IconIDParameter: examples.IconID,
 		Plan:            examples.OptionsString("vpc_router_plan_premium"),
+		Version:         2,
 		PublicNetworkInterface: vpcrouter.PremiumNICSetting{
 			SwitchID:         examples.ID,
 			IPAddresses:      examples.IPAddresses,
