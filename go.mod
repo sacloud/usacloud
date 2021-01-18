@@ -10,10 +10,10 @@ require (
 	github.com/go-playground/validator/v10 v10.4.1
 	github.com/hashicorp/go-version v1.2.1
 	github.com/huandu/xstrings v1.3.0
+	github.com/itchyny/gojq v0.12.1
 	github.com/jmespath/go-jmespath v0.4.0
 	github.com/mattn/go-colorable v0.1.4
-	github.com/mattn/go-isatty v0.0.10
-	github.com/mattn/go-runewidth v0.0.6 // indirect
+	github.com/mattn/go-isatty v0.0.12
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.0-20180506121414-d4647c9c7a84
 	github.com/rhysd/go-github-selfupdate v1.2.3
