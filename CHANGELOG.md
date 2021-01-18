@@ -4,6 +4,7 @@
 
 FEATURES
 
+  * Added --version flag to vpc-router #792 (@yamamoto-febc)
   * Support setting database parameters #789 (@yamamoto-febc)
   * Add JMESPath support with --query option to rest subcommand #786 (@hnakamur)
   
