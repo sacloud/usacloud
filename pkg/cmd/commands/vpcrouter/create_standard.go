@@ -48,6 +48,8 @@ type createStandardParameter struct {
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
+	Version int `validate:"required,oneof=1 2"`
+
 	PrivateNetworkInterfacesData string                                    `cli:"private-network-interfaces" mapconv:"-"`
 	PrivateNetworkInterfaces     []*vpcrouter.AdditionalStandardNICSetting `cli:"-" mapconv:"AdditionalNICSettings"`
 
@@ -58,7 +60,9 @@ type createStandardParameter struct {
 }
 
 func newCreateStandardParameter() *createStandardParameter {
-	return &createStandardParameter{}
+	return &createStandardParameter{
+		Version: 2,
+	}
 }
 
 func init() {
@@ -84,6 +88,7 @@ func (p *createStandardParameter) ExampleParameters(ctx cli.Context) interface{}
 		DescParameter:   examples.Description,
 		TagsParameter:   examples.Tags,
 		IconIDParameter: examples.IconID,
+		Version:         2,
 		PrivateNetworkInterfaces: []*vpcrouter.AdditionalStandardNICSetting{
 			{
 				SwitchID:       examples.ID,

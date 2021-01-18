@@ -41,6 +41,7 @@ func (p *createStandardParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
+	fs.IntVarP(&p.Version, "version", "", p.Version, "(*required) ")
 	fs.StringVarP(&p.PrivateNetworkInterfacesData, "private-network-interfaces", "", p.PrivateNetworkInterfacesData, "")
 	fs.IntVarP(&p.RouterSetting.VRID, "vrid", "", p.RouterSetting.VRID, "")
 	fs.BoolVarP(&p.RouterSetting.InternetConnectionEnabled, "internet-connection-enabled", "", p.RouterSetting.InternetConnectionEnabled, "")
@@ -111,6 +112,7 @@ func (p *createStandardParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("static-route"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("syslog-host"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("users"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("version"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("vrid"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Vpc-Router-specific options",

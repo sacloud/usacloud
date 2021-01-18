@@ -26,6 +26,7 @@ var defaultColumnDefs = []output.ColumnDef{
 	ccol.Tags,
 	ccol.Description,
 	{Name: "Plan", Template: `{{ .PlanID | vpc_router_plan_to_key }}`},
+	{Name: "Version"},
 	{Name: "VRID", Template: `{{ if .Settings }}{{ if gt .Settings.VRID 0 }}{{ .Settings.VRID }}{{ end }}{{ end }}`},
 	{Name: "Upstream", Template: `{{ with index .OriginalValue.Interfaces 0 }}{{ .UpstreamType }}{{ end }}`},
 	{

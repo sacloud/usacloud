@@ -43,6 +43,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
 	fs.StringVarP(&p.Plan, "plan", "", p.Plan, "(*required) options: [premium/highspec/highspec4000]")
+	fs.IntVarP(&p.Version, "version", "", p.Version, "(*required) ")
 	fs.VarP(core.NewIDFlag(&p.PublicNetworkInterface.SwitchID, &p.PublicNetworkInterface.SwitchID), "public-network-interface-switch-id", "", "")
 	fs.StringSliceVarP(&p.PublicNetworkInterface.IPAddresses, "public-network-interface-ip-addresses", "", p.PublicNetworkInterface.IPAddresses, "")
 	fs.StringVarP(&p.PublicNetworkInterface.VirtualIPAddress, "public-network-interface-virtual-ip-address", "", p.PublicNetworkInterface.VirtualIPAddress, "")
@@ -126,6 +127,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("static-route"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("syslog-host"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("users"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("version"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("vrid"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Vpc-Router-specific options",
