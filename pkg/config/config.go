@@ -40,6 +40,12 @@ type Config struct {
 	NoColor bool
 	// ProcessTimeoutSec コマンド全体の実行タイムアウトまでの秒数
 	ProcessTimeoutSec int
+	// ArgumentMatchMode 引数でリソースを特定する際にリソース名と引数を比較する方法を指定
+	// 有効な値:
+	//   - `partial`(デフォルト): 部分一致
+	//   - `exact`: 完全一致
+	// Note: 引数はID or Name or Tagsと比較されるが、この項目はNameとの比較にのみ影響する。IDとTagsは常に完全一致となる。
+	ArgumentMatchMode string
 }
 
 var DefaultProcessTimeoutSec = 60 * 60 * 2 // 2時間
@@ -132,6 +138,9 @@ func (o *Config) loadFromEnv() {
 	if o.ProcessTimeoutSec <= 0 {
 		o.ProcessTimeoutSec = intFromEnv("SAKURACLOUD_PROCESS_TIMEOUT_SEC", DefaultProcessTimeoutSec)
 	}
+	if o.ArgumentMatchMode == "" {
+		o.ArgumentMatchMode = stringFromEnv("SAKURACLOUD_ARGUMENT_MATCH_MODE", "partial")
+	}
 }
 
 func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
@@ -201,6 +210,14 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 		}
 		o.ProcessTimeoutSec = v
 	}
+	if flags.Changed("argument-match-mode") {
+		v, err := flags.GetString("argument-match-mode")
+		if err != nil {
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "argument-match-mode", err) // nolint
+			return
+		}
+		o.ArgumentMatchMode = v
+	}
 }
 
 func stringFromEnv(key, defaultValue string) string {
@@ -263,6 +280,13 @@ func (o *Config) Validate(skipCred bool) error {
 		errs = append(errs, validate.NewFlagError("profile.DefaultOutputType", "DefaultOutputType must be one of [table/json/yaml]"))
 	}
 
+	switch o.ArgumentMatchMode {
+	case "", "partial", "exact":
+		// noop
+	default:
+		errs = append(errs, validate.NewFlagError("--argument-match-mode", "must be one of [partial/exact]"))
+	}
+
 	return validate.NewValidationError(errs...)
 }
 
@@ -272,4 +296,11 @@ func (o *Config) ProcessTimeout() time.Duration {
 		sec = DefaultProcessTimeoutSec
 	}
 	return time.Duration(sec) * time.Second
+}
+
+func (o *Config) ArgumentMatchModeValue() string {
+	if o.ArgumentMatchMode == "" {
+		return "partial"
+	}
+	return o.ArgumentMatchMode
 }

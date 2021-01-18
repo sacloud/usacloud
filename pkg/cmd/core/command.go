@@ -421,7 +421,7 @@ func (c *Command) expandResourceContextsFromArgs(ctx cli.Context, args []string)
 		resources := zonedResources.resources
 
 		for _, r := range resources {
-			if id, ok := c.extractMatchedResourceID(r, args); ok {
+			if id, ok := c.extractMatchedResourceID(ctx, r, args); ok {
 				results.Append(cli.ResourceContext{ID: id, Zone: zone, Resource: r})
 			}
 		}
@@ -436,7 +436,8 @@ func (c *Command) expandResourceContextsFromArgs(ctx cli.Context, args []string)
 	return results, nil
 }
 
-func (c *Command) extractMatchedResourceID(r interface{}, idOrNameOrTag []string) (types.ID, bool) {
+func (c *Command) extractMatchedResourceID(ctx cli.Context, r interface{}, idOrNameOrTag []string) (types.ID, bool) {
+	nameCompareFunc := c.selectNameComparingFuncByMode(ctx.Option().ArgumentMatchModeValue())
 	if v, ok := r.(accessor.ID); ok {
 		for _, cond := range idOrNameOrTag {
 			// ID
@@ -444,9 +445,9 @@ func (c *Command) extractMatchedResourceID(r interface{}, idOrNameOrTag []string
 				return v.GetID(), true
 			}
 
-			// Name(部分一致)
+			// Name(--argument-match-modeにしたがって比較)
 			if name, ok := r.(accessor.Name); ok {
-				if strings.Contains(name.GetName(), cond) {
+				if nameCompareFunc(name.GetName(), cond) {
 					return v.GetID(), true
 				}
 			}
@@ -462,6 +463,17 @@ func (c *Command) extractMatchedResourceID(r interface{}, idOrNameOrTag []string
 		}
 	}
 	return types.ID(0), false
+}
+
+func (c *Command) selectNameComparingFuncByMode(mode string) func(string, string) bool {
+	switch mode {
+	case "exact":
+		return func(source, pattern string) bool {
+			return source == pattern
+		}
+	default:
+		return strings.Contains
+	}
 }
 
 func (c *Command) exec(ctx cli.Context, ids cli.ResourceContexts) (output.Contents, error) {
