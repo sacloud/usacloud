@@ -22,6 +22,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/sacloud/usacloud/pkg/query"
+
 	"github.com/sacloud/usacloud/pkg/validate"
 
 	"github.com/sacloud/libsacloud/v2/sacloud"
@@ -32,23 +34,35 @@ import (
 // Config CLI全コマンドが利用するフラグ
 type Config struct {
 	profile.ConfigValue
+
 	// Profile プロファイル名
 	Profile string `json:"-"`
+
 	// DefaultOutputType デフォルトアウトプットタイプ
 	DefaultOutputType string
+
 	// NoColor ANSIエスケープシーケンスによる色つけを無効化
 	NoColor bool
+
 	// ProcessTimeoutSec コマンド全体の実行タイムアウトまでの秒数
 	ProcessTimeoutSec int
+
 	// ArgumentMatchMode 引数でリソースを特定する際にリソース名と引数を比較する方法を指定
 	// 有効な値:
 	//   - `partial`(デフォルト): 部分一致
 	//   - `exact`: 完全一致
 	// Note: 引数はID or Name or Tagsと比較されるが、この項目はNameとの比較にのみ影響する。IDとTagsは常に完全一致となる。
 	ArgumentMatchMode string
+
+	// DefaultQueryDriver 各コマンドで--query-driverが省略された場合のデフォルト値
+	// 有効な値:
+	//   - `jmespath`(デフォルト): JMESPath
+	//   - `jq` : gojq
+	DefaultQueryDriver string
 }
 
 var DefaultProcessTimeoutSec = 60 * 60 * 2 // 2時間
+var DefaultQueryDriver = query.DriverJMESPath
 
 // LoadConfigValue 指定のフラグセットからフラグを読み取り*Flagsを組み立てて返す
 func LoadConfigValue(flags *pflag.FlagSet, errW io.Writer, skipLoadingProfile bool) (*Config, error) {
@@ -277,7 +291,7 @@ func (o *Config) Validate(skipCred bool) error {
 	case "", "table", "json", "yaml":
 		// noop
 	default:
-		errs = append(errs, validate.NewFlagError("profile.DefaultOutputType", "DefaultOutputType must be one of [table/json/yaml]"))
+		errs = append(errs, validate.NewFlagError("profile.DefaultOutputType", "must be one of [table/json/yaml]"))
 	}
 
 	switch o.ArgumentMatchMode {
@@ -285,6 +299,13 @@ func (o *Config) Validate(skipCred bool) error {
 		// noop
 	default:
 		errs = append(errs, validate.NewFlagError("--argument-match-mode", "must be one of [partial/exact]"))
+	}
+
+	switch o.DefaultQueryDriver {
+	case "", query.DriverJMESPath, query.DriverGoJQ:
+		// noop
+	default:
+		errs = append(errs, validate.NewFlagError("profile.DefaultQueryDriver", "must be one of [jmespath/jq]"))
 	}
 
 	return validate.NewValidationError(errs...)
