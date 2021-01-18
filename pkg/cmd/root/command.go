@@ -33,6 +33,9 @@ var Command = &cobra.Command{
 	Long:  `CLI to manage to resources on the SAKURA Cloud`,
 
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		if cmd.Name() == "update-self" { // update-selfだけ例外扱い。Note: 例外扱いするコマンドが増えるようであれば実装を修正する
+			return
+		}
 		once.Do(func() {
 			noColor, _ := cmd.PersistentFlags().GetBool("no-color") // nolint - ignore error
 			alertNewVersionReleased(noColor)
@@ -66,7 +69,11 @@ const newVersionAlertTemplate = `
     - Current version: v%s
     - Latest version:  %s
 
-  You can update by downloading from %s
+  You can update Usacloud in the following ways.
+
+    - Use a package manager (e.g. ` + "`brew upgrade sacloud/usacloud/usacloud`" + `)
+    - Use ` + "`usacloud update-self`" + ` command
+    - Download directly from %s
 
 `
 
