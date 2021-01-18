@@ -3,6 +3,7 @@ module github.com/sacloud/usacloud
 go 1.15
 
 require (
+	github.com/blang/semver v3.5.1+incompatible
 	github.com/fatih/color v1.7.0
 	github.com/fatih/structs v1.1.0
 	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32
@@ -15,6 +16,7 @@ require (
 	github.com/mattn/go-runewidth v0.0.6 // indirect
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.0-20180506121414-d4647c9c7a84
+	github.com/rhysd/go-github-selfupdate v1.2.3
 	github.com/sacloud/libsacloud/v2 v2.12.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/cobra v1.1.1
