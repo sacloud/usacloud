@@ -325,6 +325,17 @@ var (
 			MaxLen:  0,
 			Reboot:  "static",
 		},
+		{
+			Type:    "string",
+			Name:    "MariaDB/server.cnf/mysqld/event_scheduler",
+			Label:   "event_scheduler",
+			Text:    "イベントスケジュールの有効無効を設定します。",
+			Example: "ON",
+			Min:     0,
+			Max:     0,
+			MaxLen:  0,
+			Reboot:  "dynamic",
+		},
 	}
 	fakeDatabaseParameterMetaForPostgreSQL = []*sacloud.DatabaseParameterMeta{
 		{
@@ -337,6 +348,17 @@ var (
 			Max:     1000,
 			MaxLen:  0,
 			Reboot:  "static",
+		},
+		{
+			Type:    "number",
+			Name:    "postgres/postgresql.conf/work_mem",
+			Label:   "work_mem",
+			Text:    "クエリワークスペースに使用するメモリの最大量を設定します。",
+			Example: "4096",
+			Min:     64,
+			Max:     2147483647,
+			MaxLen:  10,
+			Reboot:  "dynamic",
 		},
 	}
 )

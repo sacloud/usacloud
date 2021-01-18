@@ -28,6 +28,7 @@ type CreateRequest struct {
 	IconID      types.ID
 
 	PlanID                types.ID `validate:"required"`
+	Version               int
 	NICSetting            *PremiumNICSetting
 	AdditionalNICSettings []*AdditionalPremiumNICSetting
 	RouterSetting         *RouterSetting
@@ -51,6 +52,7 @@ func (req *CreateRequest) ApplyRequest() *ApplyRequest {
 		Tags:                  req.Tags,
 		IconID:                req.IconID,
 		PlanID:                req.PlanID,
+		Version:               req.Version,
 		NICSetting:            req.NICSetting,
 		AdditionalNICSettings: additionalNICs,
 		RouterSetting:         req.RouterSetting,
