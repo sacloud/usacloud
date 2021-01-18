@@ -23,8 +23,8 @@ func InitConfig(flags *pflag.FlagSet) {
 	initCredentialConfig(flags)
 	initOutputConfig(flags)
 	initDebugConfig(flags)
+	initBehaviorConfig(flags)
 	// misc flags
-	flags.IntP("process-timeout-sec", "", 0, "number of seconds before the command execution is timed out")
 	flags.BoolP("version", "v", false, "show version info")
 }
 
@@ -43,4 +43,9 @@ func initDebugConfig(fs *pflag.FlagSet) {
 	fs.BoolP("trace", "", false, "enable trace logs for API calling")
 	fs.BoolP("fake", "", false, "enable fake API driver")
 	fs.StringP("fake-store", "", "", "path to file store used by the fake API driver")
+}
+
+func initBehaviorConfig(fs *pflag.FlagSet) {
+	fs.IntP("process-timeout-sec", "", 0, "number of seconds before the command execution is timed out")
+	fs.StringP("argument-match-mode", "", "", "how to compare the argument and resource name when identifying the resource to be manipulated  options: [partial/exact]")
 }
