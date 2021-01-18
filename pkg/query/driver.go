@@ -12,34 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package output
+package query
 
-type Output interface {
-	Print(Contents) error
-}
+const (
+	DriverJMESPath = "jmespath"
+	DriverGoJQ     = "jq"
+)
 
-type Formatter interface {
-	ColumnDefs() []ColumnDef
-}
+type ExecFunc func(v interface{}, query string) (result interface{}, err error)
 
-type DefaultFormatter struct{}
-
-func (f *DefaultFormatter) IncludeFields() []string {
-	return []string{}
-}
-
-func (f *DefaultFormatter) ExcludeFields() []string {
-	return []string{}
-}
-
-func (f *DefaultFormatter) ColumnDefs() []ColumnDef {
-	return []ColumnDef{}
-}
-
-type Option interface {
-	OutputTypeFlagValue() string
-	FormatFlagValue() string
-	QuietFlagValue() bool
-	QueryFlagValue() string
-	QueryDriverFlagValue() string
+// Executor 指定のドライバーに対応したクエリ実行funcを返す
+func Executor(driver string) ExecFunc {
+	switch driver {
+	case DriverGoJQ:
+		return ByGoJQ
+	default:
+		return ByJMESPath
+	}
 }

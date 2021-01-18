@@ -28,6 +28,7 @@ type dummyOption struct {
 	format            string
 	quiet             bool
 	query             string
+	queryDriver       string
 	defaultOutputType string
 }
 
@@ -35,6 +36,7 @@ func (o *dummyOption) OutputTypeFlagValue() string { return o.outputType }
 func (o *dummyOption) FormatFlagValue() string     { return o.format }
 func (o *dummyOption) QuietFlagValue() bool        { return o.quiet }
 func (o dummyOption) QueryFlagValue() string       { return o.query }
+func (o dummyOption) QueryDriverFlagValue() string { return o.queryDriver }
 
 func TestValidateOutputOption(t *testing.T) {
 	expects := []struct {

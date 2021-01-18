@@ -20,22 +20,25 @@ import (
 	"io"
 	"os"
 
+	"github.com/sacloud/usacloud/pkg/query"
+
 	"github.com/fatih/structs"
-	"github.com/jmespath/go-jmespath"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
 type jsonOutput struct {
-	out   io.Writer
-	err   io.Writer
-	query string
+	out    io.Writer
+	err    io.Writer
+	query  string
+	driver string
 }
 
-func NewJSONOutput(out io.Writer, err io.Writer, query string) Output {
+func NewJSONOutput(out io.Writer, err io.Writer, query string, driver string) Output {
 	return &jsonOutput{
-		out:   out,
-		err:   err,
-		query: query,
+		out:    out,
+		err:    err,
+		query:  query,
+		driver: driver,
 	}
 }
 
@@ -52,27 +55,18 @@ func (o *jsonOutput) Print(contents Contents) error {
 		return nil
 	}
 
+	// queryが指定されている場合はメタデータなしでJSON出力処理を行う
 	if o.query != "" {
-		query, err := util.StringFromPathOrContent(o.query)
-		if err != nil {
-			return fmt.Errorf("JSONOutput:Query: loading query from %q Failed: %s", o.query, err)
-		}
-
-		v, err := o.searchByJMESPath(targets, query)
-		if err != nil {
-			return fmt.Errorf("JSONOutput:Query: jmespath.Search is Failed: %s", err)
-		}
-
-		switch v := v.(type) {
-		case []interface{}:
-			targets = v
-		default:
-			targets = []interface{}{v}
-		}
+		return o.printWithQuery(targets)
 	}
 
+	// queryが指定されていない場合はメタデータありのJSON出力処理を行う
+	return o.printWithMetaData(contents)
+}
+
+func (o *jsonOutput) printWithMetaData(contents Contents) error {
 	var results []interface{}
-	for i, v := range targets {
+	for i, v := range contents.Values() {
 		if !structs.IsStruct(v) {
 			results = append(results, v)
 			continue
@@ -85,7 +79,6 @@ func (o *jsonOutput) Print(contents Contents) error {
 				mapValue["Zone"] = contents[i].Zone
 			}
 		}
-
 		// ID
 		if !contents[i].ID.IsEmpty() {
 			if _, ok := mapValue["ID"]; !ok {
@@ -95,24 +88,33 @@ func (o *jsonOutput) Print(contents Contents) error {
 		results = append(results, mapValue)
 	}
 
-	b, err := json.MarshalIndent(results, "", "    ")
+	return o.printOutput(results)
+}
+
+func (o *jsonOutput) printWithQuery(values []interface{}) error {
+	q, err := util.StringFromPathOrContent(o.query)
+	if err != nil {
+		return fmt.Errorf("JSONOutput:Query: loading query from %q Failed: %s", o.query, err)
+	}
+
+	results, err := query.Executor(o.driver)(values, q)
+	if err != nil {
+		return err
+	}
+	return o.printOutput(results)
+}
+
+func (o *jsonOutput) printOutput(v interface{}) error {
+	data, err := json.MarshalIndent(v, "", "    ")
 	if err != nil {
 		return fmt.Errorf("JSONOutput:Print: MarshalIndent failed: %s", err)
 	}
 
-	o.out.Write(b) // nolint
-	fmt.Fprintln(o.out, "")
+	if _, err := o.out.Write(data); err != nil {
+		return err
+	}
+	if _, err := fmt.Fprintln(o.out, ""); err != nil {
+		return err
+	}
 	return nil
-}
-
-func (o *jsonOutput) searchByJMESPath(v interface{}, query string) (result interface{}, err error) {
-	defer func() {
-		ret := recover()
-		if ret != nil {
-			fmt.Fprintf(o.err, "jmespath.Search failed: parse error\n")
-			err = fmt.Errorf("jmespath.Search failed: %s", ret)
-		}
-	}()
-	result, err = jmespath.Search(query, v)
-	return
 }

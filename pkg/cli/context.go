@@ -197,7 +197,7 @@ func getOutputWriter(io IO, columnDefs []output.ColumnDef, rawOptions interface{
 	}
 	switch options.OutputTypeFlagValue() {
 	case "json":
-		return output.NewJSONOutput(out, err, options.QueryFlagValue())
+		return output.NewJSONOutput(out, err, options.QueryFlagValue(), options.QueryDriverFlagValue())
 	case "yaml":
 		return output.NewYAMLOutput(out, err)
 	default:
