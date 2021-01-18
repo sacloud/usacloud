@@ -33,7 +33,7 @@ const commandUsageTemplate = ` === %s ===
 const commandUsageWrapperTemplate = `Available Commands:
 %s`
 
-func buildRootCommandUsages(rootCmd *cobra.Command, resources []*Resource, appendCompletion bool) string {
+func buildRootCommandUsages(rootCmd *cobra.Command, resources []*Resource, appendManualImplCommands bool) string {
 	line := "    %s %s"
 	var usages []string
 	for _, r := range resources {
@@ -45,14 +45,21 @@ func buildRootCommandUsages(rootCmd *cobra.Command, resources []*Resource, appen
 			usages = append(usages, fmt.Sprintf(line, name, cmd.Short))
 		}
 	}
-	// completionを追加
-	if appendCompletion {
+	if appendManualImplCommands {
+		// completionを追加
 		if cmd := lookupCmd(rootCmd, "completion"); cmd != nil {
 			t := fmt.Sprintf("%%-%ds", cmd.NamePadding())
 			name := fmt.Sprintf(t, cmd.Name())
 			usages = append(usages, fmt.Sprintf(line, name, cmd.Short))
 		}
+		// update-selfを追加
+		if cmd := lookupCmd(rootCmd, "update-self"); cmd != nil {
+			t := fmt.Sprintf("%%-%ds", cmd.NamePadding())
+			name := fmt.Sprintf(t, cmd.Name())
+			usages = append(usages, fmt.Sprintf(line, name, cmd.Short))
+		}
 	}
+
 	return strings.TrimRight(strings.Join(usages, "\n"), "\n")
 }
 
