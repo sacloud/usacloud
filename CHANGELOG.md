@@ -13,6 +13,8 @@ FEATURES
   
 FIXES
 
+  * fixes field description - --query #805 (@yamamoto-febc)
+  * Added --query-driver to rest command #804 (@yamamoto-febc)
   * Pass output func to query package #802 (@yamamoto-febc)
   * Fix parameter loader #788 (@yamamoto-febc)
 
