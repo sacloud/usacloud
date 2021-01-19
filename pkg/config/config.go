@@ -155,6 +155,12 @@ func (o *Config) loadFromEnv() {
 	if o.ArgumentMatchMode == "" {
 		o.ArgumentMatchMode = stringFromEnv("SAKURACLOUD_ARGUMENT_MATCH_MODE", "partial")
 	}
+	if o.DefaultOutputType == "" {
+		o.DefaultOutputType = stringFromEnv("SAKURACLOUD_DEFAULT_OUTPUT_TYPE", "")
+	}
+	if o.DefaultQueryDriver == "" {
+		o.DefaultQueryDriver = stringFromEnv("SAKURACLOUD_DEFAULT_QUERY_DRIVER", "")
+	}
 }
 
 func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
