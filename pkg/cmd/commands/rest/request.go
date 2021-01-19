@@ -19,7 +19,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/jmespath/go-jmespath"
+	"github.com/sacloud/usacloud/pkg/query"
+
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -43,10 +44,11 @@ var requestCommand = &core.Command{
 }
 
 type requestParameter struct {
-	Zone   string `validate:"omitempty,zone"` // 通常のzoneと扱いが異なるためcflag.ZoneParameterを利用しない
-	Method string `cli:",short=X,options=rest_method" validate:"required,rest_method"`
-	Data   string `cli:",short=d" validate:"omitempty,file|json"`
-	Query  string `cli:",category=output,desc=JMESPath query" validate:"omitempty"`
+	Zone        string `validate:"omitempty,zone"` // 通常のzoneと扱いが異なるためcflag.ZoneParameterを利用しない
+	Method      string `cli:",short=X,options=rest_method" validate:"required,rest_method"`
+	Data        string `cli:",short=d" validate:"omitempty,file|json"`
+	Query       string `cli:",category=output,desc=JMESPath query" validate:"omitempty" json:"-"`
+	QueryDriver string `cli:",category=output,desc=Name of the driver that handles queries to JSON output options: [jmespath/jq]" json:"-" validate:"omitempty,oneof=jmespath jq"`
 }
 
 func newRequestParameter() *requestParameter {
@@ -57,6 +59,24 @@ func newRequestParameter() *requestParameter {
 
 func init() {
 	Resource.AddCommand(requestCommand)
+}
+
+func (p *requestParameter) queryValue() (string, error) {
+	if p.Query != "" {
+		return util.StringFromPathOrContent(p.Query)
+	}
+	return "", nil
+}
+
+func (p *requestParameter) queryDriverValue(ctx cli.Context) string {
+	driver := ctx.Option().DefaultQueryDriver
+	if p.QueryDriver != "" {
+		driver = p.QueryDriver
+	}
+	if driver == "" {
+		driver = query.DriverJMESPath
+	}
+	return driver
 }
 
 func validateRequest(ctx cli.Context, parameter interface{}) error {
@@ -131,35 +151,28 @@ func requestFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 	}
 
 	if len(results) > 0 {
+		printFn := func(v interface{}) error {
+			formattedJSON, err := json.MarshalIndent(v, "", "    ")
+			if err != nil {
+				return err
+			}
+			_, err = fmt.Fprintln(ctx.IO().Out(), string(formattedJSON))
+			return err
+		}
+
 		var temp interface{}
 		if err := json.Unmarshal(results, &temp); err != nil {
 			return nil, err
 		}
 		if p.Query != "" {
-			temp, err = searchByJMESPath(ctx, temp, p.Query)
+			driver := p.queryDriverValue(ctx)
+			q, err := p.queryValue()
 			if err != nil {
 				return nil, err
 			}
+			return nil, query.Executor(driver)(temp, q, printFn)
 		}
-		formattedJSON, err := json.MarshalIndent(temp, "", "    ")
-		if err != nil {
-			return nil, err
-		}
-
-		_, err = fmt.Fprintln(ctx.IO().Out(), string(formattedJSON))
-		return nil, err
+		return nil, printFn(temp)
 	}
 	return nil, nil
-}
-
-func searchByJMESPath(ctx cli.Context, v interface{}, query string) (result interface{}, err error) {
-	defer func() {
-		ret := recover()
-		if ret != nil {
-			fmt.Fprintf(ctx.IO().Err(), "jmespath.Search failed: parse error\n")
-			err = fmt.Errorf("jmespath.Search failed: %s", ret)
-		}
-	}()
-	result, err = jmespath.Search(query, v)
-	return
 }
