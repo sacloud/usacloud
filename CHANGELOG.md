@@ -6,6 +6,7 @@ FEATURES
 
   * Set Profile.Default* from env #801 (@yamamoto-febc)
   * gojq #797 (@yamamoto-febc)
+  * Added --argument-match-mode option #795 (@yamamoto-febc)
   * Added update-self sub-command #793 (@yamamoto-febc)
   * Added --version flag to vpc-router #792 (@yamamoto-febc)
   * Support setting database parameters #789 (@yamamoto-febc)
