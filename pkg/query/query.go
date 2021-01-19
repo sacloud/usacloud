@@ -72,12 +72,15 @@ func ByGoJQ(input interface{}, query string, printer func(interface{}) error) (e
 	return nil
 }
 
-func convertInputToMap(input interface{}) []interface{} {
+func convertInputToMap(input interface{}) interface{} {
 	var inputs []interface{}
-	ins, ok := input.([]interface{})
-	if ok {
-		inputs = ins
-	} else {
+
+	switch input := input.(type) {
+	case map[string]interface{}:
+		return input // 既にmap[string]interface{}の場合はそのまま返す
+	case []interface{}:
+		inputs = input
+	default:
 		inputs = []interface{}{input}
 	}
 
