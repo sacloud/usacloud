@@ -47,7 +47,7 @@ type requestParameter struct {
 	Zone        string `validate:"omitempty,zone"` // 通常のzoneと扱いが異なるためcflag.ZoneParameterを利用しない
 	Method      string `cli:",short=X,options=rest_method" validate:"required,rest_method"`
 	Data        string `cli:",short=d" validate:"omitempty,file|json"`
-	Query       string `cli:",category=output,desc=JMESPath query" validate:"omitempty" json:"-"`
+	Query       string `cli:",category=output,desc=Query for JSON output" validate:"omitempty" json:"-"`
 	QueryDriver string `cli:",category=output,desc=Name of the driver that handles queries to JSON output options: [jmespath/jq]" json:"-" validate:"omitempty,oneof=jmespath jq"`
 }
 
