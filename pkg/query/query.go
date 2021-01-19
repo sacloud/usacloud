@@ -22,18 +22,23 @@ import (
 	"github.com/jmespath/go-jmespath"
 )
 
-func ByJMESPath(v interface{}, query string) (result interface{}, err error) {
+func ByJMESPath(v interface{}, query string, printer func(interface{}) error) (err error) {
 	defer func() {
 		ret := recover()
 		if ret != nil {
 			err = fmt.Errorf("jmespath: failed to process query: %s", ret)
 		}
 	}()
+	var result interface{}
 	result, err = jmespath.Search(query, v)
-	return
+	if err != nil {
+		return err
+	}
+
+	return printer(result)
 }
 
-func ByGoJQ(input interface{}, query string) (result interface{}, err error) {
+func ByGoJQ(input interface{}, query string, printer func(interface{}) error) (err error) {
 	// Note: queryによってはpanicしてスタックトレースを吐くケースがあるためrecoverしておく
 	defer func() {
 		ret := recover()
@@ -44,7 +49,7 @@ func ByGoJQ(input interface{}, query string) (result interface{}, err error) {
 
 	q, err := gojq.Parse(query)
 	if err != nil {
-		return nil, fmt.Errorf("gojq parse failed: %v", err)
+		return fmt.Errorf("gojq parse failed: %v", err)
 	}
 
 	// gojqにinputを渡す前に[]map[string]interface{}へ変換しておく
@@ -52,18 +57,19 @@ func ByGoJQ(input interface{}, query string) (result interface{}, err error) {
 	// > the query input should have type []interface{} for an array and map[string]interface{} for a map
 	iter := q.Run(convertInputToMap(input))
 
-	var results []interface{}
 	for {
 		v, ok := iter.Next()
 		if !ok {
 			break
 		}
 		if err, ok := v.(error); ok {
-			return nil, fmt.Errorf("gojq: %s", err.Error())
+			return fmt.Errorf("gojq: %s", err.Error())
 		}
-		results = append(results, v)
+		if err := printer(v); err != nil {
+			return err
+		}
 	}
-	return results, err
+	return nil
 }
 
 func convertInputToMap(input interface{}) []interface{} {

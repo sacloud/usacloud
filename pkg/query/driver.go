@@ -19,7 +19,7 @@ const (
 	DriverGoJQ     = "jq"
 )
 
-type ExecFunc func(v interface{}, query string) (result interface{}, err error)
+type ExecFunc func(v interface{}, query string, printer func(interface{}) error) error
 
 // Executor 指定のドライバーに対応したクエリ実行funcを返す
 func Executor(driver string) ExecFunc {
