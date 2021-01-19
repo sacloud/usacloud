@@ -34,10 +34,11 @@ func (p *listParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
 	fs.IntVarP(&p.Count, "count", "", p.Count, "(aliases: --max, --limit)")
 	fs.IntVarP(&p.From, "from", "", p.From, "(aliases: --offset)")
-	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format: one of the following [table/json/yaml] (aliases: --out)")
+	fs.StringVarP(&p.OutputType, "output-type", "o", p.OutputType, "Output format options: [table/json/yaml] (aliases: --out)")
 	fs.BoolVarP(&p.Quiet, "quiet", "q", p.Quiet, "Output IDs only")
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
-	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
+	fs.StringVarP(&p.Query, "query", "", p.Query, "Query for JSON output")
+	fs.StringVarP(&p.QueryDriver, "query-driver", "", p.QueryDriver, "Name of the driver that handles queries to JSON output options: [jmespath/jq]")
 	fs.StringSliceVarP(&p.SwitchIDs, "switch-ids", "", p.SwitchIDs, "")
 	fs.StringSliceVarP(&p.SwitchNames, "switch-names", "", p.SwitchNames, "")
 	fs.StringSliceVarP(&p.InternetIDs, "internet-ids", "", p.InternetIDs, "")
@@ -117,6 +118,7 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("format"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("output-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("query"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("query-driver"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("quiet"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Output options",

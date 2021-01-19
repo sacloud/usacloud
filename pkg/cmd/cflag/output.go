@@ -15,10 +15,11 @@
 package cflag
 
 type OutputParameter struct {
-	OutputType string `cli:",short=o,aliases=out,category=output,desc=Output format: one of the following [table/json/yaml]" validate:"omitempty,output_type" json:"-"`
-	Quiet      bool   `cli:",short=q,category=output,desc=Output IDs only" json:"-"`
-	Format     string `cli:",aliases=fmt,category=output,desc=Output format in Go templates" json:"-"`
-	Query      string `cli:",category=output,desc=JMESPath query" json:"-"`
+	OutputType  string `cli:",short=o,aliases=out,category=output,desc=Output format options: [table/json/yaml]" validate:"omitempty,output_type" json:"-"`
+	Quiet       bool   `cli:",short=q,category=output,desc=Output IDs only" json:"-"`
+	Format      string `cli:",aliases=fmt,category=output,desc=Output format in Go templates" json:"-"`
+	Query       string `cli:",category=output,desc=Query for JSON output" json:"-"`
+	QueryDriver string `cli:",category=output,desc=Name of the driver that handles queries to JSON output options: [jmespath/jq]" json:"-" validate:"omitempty,oneof=jmespath jq"`
 }
 
 func (p *OutputParameter) OutputTypeFlagValue() string {
@@ -35,4 +36,8 @@ func (p *OutputParameter) FormatFlagValue() string {
 
 func (p *OutputParameter) QueryFlagValue() string {
 	return p.Query
+}
+
+func (p *OutputParameter) QueryDriverFlagValue() string {
+	return p.QueryDriver
 }

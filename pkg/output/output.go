@@ -41,4 +41,5 @@ type Option interface {
 	FormatFlagValue() string
 	QuietFlagValue() bool
 	QueryFlagValue() string
+	QueryDriverFlagValue() string
 }

@@ -24,13 +24,13 @@ import (
 
 type dummyOption struct{}
 
-func (o dummyOption) OutputTypeFlagValue() string { return "" }
-func (o dummyOption) GetColumn() []string         { return []string{} }
-func (o dummyOption) FormatFlagValue() string     { return "test ID:{{.ID}}" }
-func (o dummyOption) FormatFileFlagValue() string { return "" }
-func (o dummyOption) QuietFlagValue() bool        { return false }
-func (o dummyOption) QueryFlagValue() string      { return "" }
-func (o dummyOption) QueryFileFlagValue() string  { return "" }
+func (o dummyOption) OutputTypeFlagValue() string  { return "" }
+func (o dummyOption) GetColumn() []string          { return []string{} }
+func (o dummyOption) FormatFlagValue() string      { return "test ID:{{.ID}}" }
+func (o dummyOption) FormatFileFlagValue() string  { return "" }
+func (o dummyOption) QuietFlagValue() bool         { return false }
+func (o dummyOption) QueryFlagValue() string       { return "" }
+func (o dummyOption) QueryDriverFlagValue() string { return "" }
 
 func TestFreeOutput_Print(t *testing.T) {
 	buf := bytes.NewBufferString("")

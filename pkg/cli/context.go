@@ -77,7 +77,7 @@ func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet,
 	return &cliContext{
 		parentCtx:    ctx,
 		option:       option,
-		output:       getOutputWriter(io, columnDefs, parameter),
+		output:       getOutputWriter(io, option, columnDefs, parameter),
 		resourceName: resourceName,
 		commandName:  commandName,
 		cliIO:        io,
@@ -177,7 +177,7 @@ func (c *cliContext) Args() []string {
 	return c.args
 }
 
-func getOutputWriter(io IO, columnDefs []output.ColumnDef, rawOptions interface{}) output.Output {
+func getOutputWriter(io IO, globalOption *config.Config, columnDefs []output.ColumnDef, rawOptions interface{}) output.Output {
 	if rawOptions == nil {
 		return output.NewDiscardOutput()
 	}
@@ -189,15 +189,33 @@ func getOutputWriter(io IO, columnDefs []output.ColumnDef, rawOptions interface{
 	out := io.Out()
 	err := io.Err()
 
+	// グローバルオプションに持っているDefaultXXXをrawOptionsに反映
+	// Note: 本来はrawOptions側にグローバルオプションへの参照を保持させたいが、
+	//       その場合初期化タイミングの制御やコンテキストの引き回しが面倒。
+	//       (rawOptionsの実体となる各コマンドのパラメータstructは実行時に動的にnewされる、など)
+	//       このため、グローバルオプションを持ち、かつOutputを設定する前のこのタイミングで処理する。
+	outputType := options.OutputTypeFlagValue()
+	if outputType == "" {
+		outputType = globalOption.DefaultOutputType
+	}
+	queryDriver := options.QueryDriverFlagValue()
+	if queryDriver == "" {
+		queryDriver = globalOption.DefaultQueryDriver
+	}
+
 	if options.QuietFlagValue() {
 		return output.NewIDOutput(out, err)
 	}
 	if options.FormatFlagValue() != "" {
 		return output.NewFreeOutput(out, err, options)
 	}
-	switch options.OutputTypeFlagValue() {
+	if options.QueryFlagValue() != "" {
+		return output.NewJSONOutput(out, err, options.QueryFlagValue(), queryDriver)
+	}
+
+	switch outputType {
 	case "json":
-		return output.NewJSONOutput(out, err, options.QueryFlagValue())
+		return output.NewJSONOutput(out, err, options.QueryFlagValue(), queryDriver)
 	case "yaml":
 		return output.NewYAMLOutput(out, err)
 	default:
