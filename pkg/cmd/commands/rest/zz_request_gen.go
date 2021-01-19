@@ -32,7 +32,7 @@ func (p *requestParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
 	fs.StringVarP(&p.Method, "method", "X", p.Method, "(*required) options: [get/post/put/delete/GET/POST/PUT/DELETE]")
 	fs.StringVarP(&p.Data, "data", "d", p.Data, "")
-	fs.StringVarP(&p.Query, "query", "", p.Query, "JMESPath query")
+	fs.StringVarP(&p.Query, "query", "", p.Query, "Query for JSON output")
 	fs.StringVarP(&p.QueryDriver, "query-driver", "", p.QueryDriver, "Name of the driver that handles queries to JSON output options: [jmespath/jq]")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
