@@ -189,6 +189,11 @@ func getOutputWriter(io IO, globalOption *config.Config, columnDefs []output.Col
 	out := io.Out()
 	err := io.Err()
 
+	// グローバルオプションに持っているDefaultXXXをrawOptionsに反映
+	// Note: 本来はrawOptions側にグローバルオプションへの参照を保持させたいが、
+	//       その場合初期化タイミングの制御やコンテキストの引き回しが面倒。
+	//       (rawOptionsの実体となる各コマンドのパラメータstructは実行時に動的にnewされる、など)
+	//       このため、グローバルオプションを持ち、かつOutputを設定する前のこのタイミングで処理する。
 	outputType := options.OutputTypeFlagValue()
 	if outputType == "" {
 		outputType = globalOption.DefaultOutputType
@@ -204,6 +209,10 @@ func getOutputWriter(io IO, globalOption *config.Config, columnDefs []output.Col
 	if options.FormatFlagValue() != "" {
 		return output.NewFreeOutput(out, err, options)
 	}
+	if options.QueryFlagValue() != "" {
+		return output.NewJSONOutput(out, err, options.QueryFlagValue(), queryDriver)
+	}
+
 	switch outputType {
 	case "json":
 		return output.NewJSONOutput(out, err, options.QueryFlagValue(), queryDriver)
