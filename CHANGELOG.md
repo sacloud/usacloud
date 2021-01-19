@@ -4,6 +4,7 @@
 
 FEATURES
 
+  * Set Profile.Default* from env #801 (@yamamoto-febc)
   * gojq #797 (@yamamoto-febc)
   * Added update-self sub-command #793 (@yamamoto-febc)
   * Added --version flag to vpc-router #792 (@yamamoto-febc)
@@ -12,6 +13,7 @@ FEATURES
   
 FIXES
 
+  * Pass output func to query package #802 (@yamamoto-febc)
   * Fix parameter loader #788 (@yamamoto-febc)
 
 ## 1.0.3 (2021-01-06)
