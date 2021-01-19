@@ -97,11 +97,8 @@ func (o *jsonOutput) printWithQuery(values []interface{}) error {
 		return fmt.Errorf("JSONOutput:Query: loading query from %q Failed: %s", o.query, err)
 	}
 
-	results, err := query.Executor(o.driver)(values, q)
-	if err != nil {
-		return err
-	}
-	return o.printOutput(results)
+	// query.Executorに出力用のfuncを渡して出力までしてもらう
+	return query.Executor(o.driver)(values, q, o.printOutput)
 }
 
 func (o *jsonOutput) printOutput(v interface{}) error {
