@@ -4,6 +4,7 @@
 
 FEATURES
 
+  * Print JSON as pretty #806 (@yamamoto-febc)
   * Set Profile.Default* from env #801 (@yamamoto-febc)
   * gojq #797 (@yamamoto-febc)
   * Added --argument-match-mode option #795 (@yamamoto-febc)
