@@ -136,7 +136,7 @@ func Test_getOutputWriter(t *testing.T) {
 					defaultOutputType: "table",
 				},
 			},
-			want: output.NewJSONOutput(io.Out(), io.Err(), "dummy", "jmespath"),
+			want: output.NewJSONOutput(io.Out(), io.Err(), false, "dummy", "jmespath"),
 		},
 		{
 			name: "with json output-type",
@@ -146,7 +146,7 @@ func Test_getOutputWriter(t *testing.T) {
 				columnDefs:   nil,
 				rawOptions:   &dummyOption{outputType: "json"},
 			},
-			want: output.NewJSONOutput(io.Out(), io.Err(), "", ""),
+			want: output.NewJSONOutput(io.Out(), io.Err(), false, "", ""),
 		},
 		{
 			name: "with yaml output-type",
@@ -182,7 +182,7 @@ func Test_getOutputWriter(t *testing.T) {
 				columnDefs:   nil,
 				rawOptions:   &dummyOption{},
 			},
-			want: output.NewJSONOutput(io.Out(), io.Err(), "", ""),
+			want: output.NewJSONOutput(io.Out(), io.Err(), false, "", ""),
 		},
 		{
 			name: "with both of DefaultOutputType and output-type",
