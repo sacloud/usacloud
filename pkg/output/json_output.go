@@ -15,30 +15,31 @@
 package output
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"os"
 
-	"github.com/sacloud/usacloud/pkg/query"
-
 	"github.com/fatih/structs"
+	"github.com/hokaccha/go-prettyjson"
+	"github.com/sacloud/usacloud/pkg/query"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
 type jsonOutput struct {
-	out    io.Writer
-	err    io.Writer
-	query  string
-	driver string
+	out     io.Writer
+	err     io.Writer
+	noColor bool
+	query   string
+	driver  string
 }
 
-func NewJSONOutput(out io.Writer, err io.Writer, query string, driver string) Output {
+func NewJSONOutput(out io.Writer, err io.Writer, noColor bool, query string, driver string) Output {
 	return &jsonOutput{
-		out:    out,
-		err:    err,
-		query:  query,
-		driver: driver,
+		out:     out,
+		err:     err,
+		noColor: noColor,
+		query:   query,
+		driver:  driver,
 	}
 }
 
@@ -102,9 +103,13 @@ func (o *jsonOutput) printWithQuery(values []interface{}) error {
 }
 
 func (o *jsonOutput) printOutput(v interface{}) error {
-	data, err := json.MarshalIndent(v, "", "    ")
+	formatter := prettyjson.NewFormatter()
+	formatter.DisabledColor = o.noColor
+	formatter.Indent = 4
+
+	data, err := formatter.Marshal(v)
 	if err != nil {
-		return fmt.Errorf("JSONOutput:Print: MarshalIndent failed: %s", err)
+		return fmt.Errorf("JSONOutput:Print: prettyjson.Marshal failed: %s", err)
 	}
 
 	if _, err := o.out.Write(data); err != nil {

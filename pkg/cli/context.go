@@ -210,12 +210,12 @@ func getOutputWriter(io IO, globalOption *config.Config, columnDefs []output.Col
 		return output.NewFreeOutput(out, err, options)
 	}
 	if options.QueryFlagValue() != "" {
-		return output.NewJSONOutput(out, err, options.QueryFlagValue(), queryDriver)
+		return output.NewJSONOutput(out, err, globalOption.NoColor, options.QueryFlagValue(), queryDriver)
 	}
 
 	switch outputType {
 	case "json":
-		return output.NewJSONOutput(out, err, options.QueryFlagValue(), queryDriver)
+		return output.NewJSONOutput(out, err, globalOption.NoColor, options.QueryFlagValue(), queryDriver)
 	case "yaml":
 		return output.NewYAMLOutput(out, err)
 	default:

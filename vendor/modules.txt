@@ -37,6 +37,9 @@ github.com/hashicorp/go-retryablehttp
 # github.com/hashicorp/go-version v1.2.1
 ## explicit
 github.com/hashicorp/go-version
+# github.com/hokaccha/go-prettyjson v0.0.0-20210113012101-fb4e108d2519
+## explicit
+github.com/hokaccha/go-prettyjson
 # github.com/huandu/xstrings v1.3.0
 ## explicit
 github.com/huandu/xstrings
