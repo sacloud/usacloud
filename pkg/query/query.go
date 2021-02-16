@@ -15,6 +15,7 @@
 package query
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/fatih/structs"
@@ -39,14 +40,6 @@ func ByJMESPath(v interface{}, query string, printer func(interface{}) error) (e
 }
 
 func ByGoJQ(input interface{}, query string, printer func(interface{}) error) (err error) {
-	// Note: queryによってはpanicしてスタックトレースを吐くケースがあるためrecoverしておく
-	defer func() {
-		ret := recover()
-		if ret != nil {
-			err = fmt.Errorf("gojq: failed to process query: %s", ret)
-		}
-	}()
-
 	q, err := gojq.Parse(query)
 	if err != nil {
 		return fmt.Errorf("gojq parse failed: %v", err)
@@ -55,7 +48,11 @@ func ByGoJQ(input interface{}, query string, printer func(interface{}) error) (e
 	// gojqにinputを渡す前に[]map[string]interface{}へ変換しておく
 	// see: https://pkg.go.dev/github.com/itchyny/gojq#readme-usage-as-a-library
 	// > the query input should have type []interface{} for an array and map[string]interface{} for a map
-	iter := q.Run(convertInputToMap(input))
+	mv, err := convertInputToMap(input)
+	if err != nil {
+		return fmt.Errorf("failed to convert to map: %v", err)
+	}
+	iter := q.Run(mv)
 
 	for {
 		v, ok := iter.Next()
@@ -72,12 +69,12 @@ func ByGoJQ(input interface{}, query string, printer func(interface{}) error) (e
 	return nil
 }
 
-func convertInputToMap(input interface{}) interface{} {
+func convertInputToMap(input interface{}) (interface{}, error) {
 	var inputs []interface{}
 
 	switch input := input.(type) {
 	case map[string]interface{}:
-		return input // 既にmap[string]interface{}の場合はそのまま返す
+		return input, nil // 既にmap[string]interface{}の場合はそのまま返す
 	case []interface{}:
 		inputs = input
 	default:
@@ -88,7 +85,23 @@ func convertInputToMap(input interface{}) interface{} {
 		if !structs.IsStruct(v) {
 			continue
 		}
-		inputs[i] = structs.Map(v)
+		mv, err := struct2map(v)
+		if err != nil {
+			return nil, err
+		}
+		inputs[i] = mv
 	}
-	return inputs
+	return inputs, nil
+}
+
+func struct2map(v interface{}) (interface{}, error) {
+	out := make(map[string]interface{})
+	data, err := json.Marshal(v)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(data, &out); err != nil {
+		return nil, err
+	}
+	return out, nil
 }
