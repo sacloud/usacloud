@@ -41,7 +41,7 @@ func (c *Command) loadParameters(ctx cli.Context, cmd *cobra.Command, parameters
 		return err
 	}
 	if err := json.Unmarshal(data, c.currentParameter); err != nil {
-		return nil
+		return err
 	}
 
 	// os.Argsを元にもう一度フラグをパースする
