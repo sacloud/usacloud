@@ -18,6 +18,7 @@ import (
 	"strings"
 
 	"github.com/sacloud/usacloud/pkg/util"
+	"golang.org/x/crypto/ssh"
 )
 
 type Target struct {
@@ -49,4 +50,22 @@ func buildFlagName(targets ...*Target) string {
 		names = append(names, name)
 	}
 	return strings.Join(names, " & ")
+}
+
+func PublicKeyFormat(t *Target) error {
+	if t == nil || t.Value == nil || t.Value == "" {
+		return nil
+	}
+	pathOrContent := t.Value.(string)
+	content, err := util.BytesFromPathOrContent(pathOrContent)
+	if err != nil {
+		return NewFlagError(buildFlagName(t), err.Error())
+	}
+
+	_, _, _, _, err = ssh.ParseAuthorizedKey(content)
+	if err != nil {
+		return NewFlagError(buildFlagName(t), "must be in a valid format")
+	}
+
+	return nil
 }

@@ -19,6 +19,7 @@ import (
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/util"
+	"github.com/sacloud/usacloud/pkg/validate"
 )
 
 type EditRequest struct {
@@ -64,6 +65,15 @@ func (p *EditRequest) Customize(_ cli.Context) error {
 			return err
 		}
 		p.SSHKeys[i] = key
+	}
+	return nil
+}
+
+func (p *EditRequest) Validate() error {
+	for _, key := range p.SSHKeys {
+		if err := validate.PublicKeyFormat(&validate.Target{FlagName: "SSHKey", Value: key}); err != nil {
+			return err
+		}
 	}
 	return nil
 }

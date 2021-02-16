@@ -149,6 +149,17 @@ func validateCreateParameter(_ cli.Context, parameter interface{}) error {
 		errs = append(errs, err)
 	}
 
+	if !util.IsEmpty(p.Disk) {
+		if err := p.Disk.EditDisk.Validate(); err != nil {
+			errs = append(errs, err)
+		}
+	}
+	for _, d := range p.Disks {
+		if err := d.EditDisk.Validate(); err != nil {
+			errs = append(errs, err)
+		}
+	}
+
 	if !util.IsEmpty(p.NetworkInterface) {
 		nic := &server.NetworkInterface{
 			Upstream:       p.NetworkInterface.Upstream,
