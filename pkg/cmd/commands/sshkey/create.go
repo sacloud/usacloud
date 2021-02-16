@@ -19,6 +19,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/cmd/examples"
+	"github.com/sacloud/usacloud/pkg/validate"
 )
 
 var createCommand = &core.Command{
@@ -31,6 +32,8 @@ var createCommand = &core.Command{
 	ParameterInitializer: func() interface{} {
 		return newCreateParameter()
 	},
+
+	ValidateFunc: validateCreateParameter,
 }
 
 type createParameter struct {
@@ -49,6 +52,22 @@ func newCreateParameter() *createParameter {
 
 func init() {
 	Resource.AddCommand(createCommand)
+}
+
+func validateCreateParameter(ctx cli.Context, parameter interface{}) error {
+	if err := validate.Exec(parameter); err != nil {
+		return err
+	}
+	p := parameter.(*createParameter)
+
+	err := validate.PublicKeyFormat(&validate.Target{
+		FlagName: "--public-key",
+		Value:    p.PublicKey,
+	})
+	if err != nil {
+		return validate.NewValidationError(err)
+	}
+	return nil
 }
 
 func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
