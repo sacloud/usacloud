@@ -19,11 +19,11 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sacloud/usacloud/pkg/query"
-
+	"github.com/hokaccha/go-prettyjson"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/query"
 	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/sacloud/usacloud/pkg/validate"
 )
@@ -152,11 +152,15 @@ func requestFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 
 	if len(results) > 0 {
 		printFn := func(v interface{}) error {
-			formattedJSON, err := json.MarshalIndent(v, "", "    ")
+			formatter := prettyjson.NewFormatter()
+			formatter.DisabledColor = ctx.Option().NoColor
+			formatter.Indent = 4
+
+			data, err := formatter.Marshal(v)
 			if err != nil {
 				return err
 			}
-			_, err = fmt.Fprintln(ctx.IO().Out(), string(formattedJSON))
+			_, err = fmt.Fprintln(ctx.IO().Out(), string(data))
 			return err
 		}
 
