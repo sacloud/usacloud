@@ -40,7 +40,7 @@ type createParameter struct {
 
 	cflag.NameParameter `cli:",squash" mapconv:",squash"`
 	cflag.DescParameter `cli:",squash" mapconv:",squash"`
-	PublicKey           string `validate:"required"`
+	PublicKey           string `mapconv:",filters=path_or_content" validate:"required"`
 }
 
 func newCreateParameter() *createParameter {
