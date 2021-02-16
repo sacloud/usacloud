@@ -84,7 +84,7 @@ github.com/pmezard/go-difflib/difflib
 github.com/rhysd/go-github-selfupdate/selfupdate
 # github.com/sacloud/ftps v1.1.0
 github.com/sacloud/ftps
-# github.com/sacloud/libsacloud/v2 v2.12.0
+# github.com/sacloud/libsacloud/v2 v2.13.0
 ## explicit
 github.com/sacloud/libsacloud/v2
 github.com/sacloud/libsacloud/v2/helper/api
@@ -212,6 +212,7 @@ go.opentelemetry.io/otel/unit
 go.uber.org/ratelimit
 go.uber.org/ratelimit/internal/clock
 # golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad
+## explicit
 golang.org/x/crypto/blowfish
 golang.org/x/crypto/cast5
 golang.org/x/crypto/chacha20
