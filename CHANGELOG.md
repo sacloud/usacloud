@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.1 (2020-02-17)
+
+FIXES
+  * Convert target to map before calling gojq  #813 (@yamamoto-febc)
+  * fix public-key handling #812 (@yamamoto-febc)
+
+IMPROVEMENTS
+
+  * libsacloud v2.13  #815 (@yamamoto-febc)
+  * Colorize output of the rest command #814 (@yamamoto-febc)
+  * Use docker/build-push-action@v2 #810 (@yamamoto-febc)
+
 ## 1.1.0 (2020-01-20)
 
 FEATURES
