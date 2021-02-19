@@ -88,7 +88,7 @@ func (o *Config) IsEmpty() bool {
 func (o *Config) loadConfig(flags *pflag.FlagSet, errW io.Writer) {
 	// プロファイルだけ先に環境変数を読んでおく
 	if o.Profile == "" {
-		o.Profile = stringFromEnvMulti([]string{"SAKURACLOUD_PROFILE", "USACLOUD_PROFILE"}, "default")
+		o.Profile = stringFromEnvMulti([]string{"SAKURACLOUD_PROFILE", "USACLOUD_PROFILE"}, "")
 	}
 
 	o.loadFromProfile(flags, errW)
