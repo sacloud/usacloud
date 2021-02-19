@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.2 (Unreleased)
+## 1.1.2 (2020-02-19)
 
 FIXES
 
