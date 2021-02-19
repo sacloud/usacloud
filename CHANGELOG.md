@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.2 (Unreleased)
+
+FIXES
+
+  * Fix cannot load current config #817 (@higebu) 
+
 ## 1.1.1 (2020-02-17)
 
 FIXES
