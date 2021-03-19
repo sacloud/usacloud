@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM golang:1.15 AS builder
+FROM golang:1.16 AS builder
 MAINTAINER Usacloud Authors <sacloud.users@gmail.com>
 
 RUN  apt-get update && apt-get -y install \
@@ -26,8 +26,8 @@ RUN  apt-get update && apt-get -y install \
 
 ADD . /go/src/github.com/sacloud/usacloud
 WORKDIR /go/src/github.com/sacloud/usacloud
+ENV CGO_ENABLED 0
 RUN make tools build
-
 # ======
 
 FROM alpine:3.12

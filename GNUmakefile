@@ -39,11 +39,11 @@ clean-all:
 
 .PHONY: tools
 tools:
-	GO111MODULE=off go get golang.org/x/tools/cmd/goimports
-	GO111MODULE=off go get golang.org/x/tools/cmd/stringer
-	GO111MODULE=off go get github.com/sacloud/addlicense
-	GO111MODULE=off go get -u github.com/client9/misspell/cmd/misspell
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v1.23.8/install.sh | sh -s -- -b $$(go env GOPATH)/bin v1.23.8
+	go install golang.org/x/tools/cmd/goimports@latest
+	go install golang.org/x/tools/cmd/stringer@latest
+	go install github.com/sacloud/addlicense@latest
+	go install github.com/client9/misspell/cmd/misspell@latest
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v1.38.0/install.sh | sh -s -- -b $$(go env GOPATH)/bin v1.38.0
 
 .PHONY: gen _gen
 gen: _gen set-license fmt goimports
@@ -59,7 +59,7 @@ gen-force: clean-all gen
 build: bin/usacloud
 
 bin/usacloud: $(GO_FILES)
-	GOOS=$${OS:-"`go env GOOS`"} GOARCH=$${ARCH:-"`go env GOARCH`"} CGO_ENABLED=0 go build -ldflags=$(BUILD_LDFLAGS) -o bin/usacloud
+	GOOS=$${OS:-"`go env GOOS`"} GOARCH=$${ARCH:-"`go env GOARCH`"} CGO_ENABLED=0 go build -ldflags=$(BUILD_LDFLAGS) -o bin/usacloud main.go
 
 .PHONY: shasum
 shasum:
@@ -83,3 +83,6 @@ fmt:
 
 set-license:
 	@addlicense -c $(AUTHOR) -y $(COPYRIGHT_YEAR) $(COPYRIGHT_FILES)
+
+.SUFFIXES:
+.SUFFIXES: .go

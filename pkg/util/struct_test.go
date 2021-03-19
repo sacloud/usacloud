@@ -15,7 +15,6 @@
 package util
 
 import (
-	"io/ioutil"
 	"os"
 	"testing"
 
@@ -23,7 +22,7 @@ import (
 )
 
 func setup() (*os.File, func(), error) {
-	tempFile, err := ioutil.TempFile("", "*_test.json")
+	tempFile, err := os.CreateTemp("", "*_test.json")
 	if err != nil {
 		return nil, nil, err
 	}

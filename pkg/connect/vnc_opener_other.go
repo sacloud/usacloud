@@ -18,7 +18,6 @@ package connect
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"time"
 
@@ -32,7 +31,7 @@ func StartDefaultVNCClient(vncProxyInfo *sacloud.VNCProxyInfo) error {
 
 	for uri == "" {
 		// create .vnc tmp-file
-		f, err := ioutil.TempFile("", "libsacloud_open_vnc")
+		f, err := os.CreateTemp("", "libsacloud_open_vnc")
 		if err != nil {
 			return err
 		}
@@ -53,7 +52,7 @@ func StartDefaultVNCClient(vncProxyInfo *sacloud.VNCProxyInfo) error {
 		vncProxyInfo.Password,
 	)
 
-	if err := ioutil.WriteFile(uri, []byte(body), 0700); err != nil {
+	if err := os.WriteFile(uri, []byte(body), 0700); err != nil {
 		return err
 	}
 	defer os.Remove(uri)

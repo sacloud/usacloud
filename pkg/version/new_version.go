@@ -19,7 +19,6 @@ package version
 import (
 	"context"
 	"encoding/json"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
@@ -38,7 +37,7 @@ func NewVersionReleased() (*ReleaseInfo, error) {
 	var releaseInfo *ReleaseInfo
 	cachePath := filepath.Join(configDir, ".release_info_cache")
 	if _, err := os.Stat(cachePath); err == nil {
-		data, err := ioutil.ReadFile(cachePath)
+		data, err := os.ReadFile(cachePath)
 		if err != nil {
 			return nil, err
 		}
@@ -76,7 +75,7 @@ func NewVersionReleased() (*ReleaseInfo, error) {
 		if err != nil {
 			return nil, err
 		}
-		if err := ioutil.WriteFile(cachePath, data, 0700); err != nil {
+		if err := os.WriteFile(cachePath, data, 0700); err != nil {
 			return nil, err
 		}
 		releaseInfo = fetched

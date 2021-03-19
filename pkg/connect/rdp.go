@@ -16,7 +16,6 @@ package connect
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"time"
 
@@ -56,7 +55,7 @@ func (c *RDPOpener) StartDefaultClient() error {
 	uri := ""
 
 	// create .rdp tmp-file
-	f, err := ioutil.TempFile("", "usacloud_open_rdp")
+	f, err := os.CreateTemp("", "usacloud_open_rdp")
 	if err != nil {
 		return err
 	}
@@ -66,7 +65,7 @@ func (c *RDPOpener) StartDefaultClient() error {
 	uri = fmt.Sprintf("%s.rdp", f.Name())
 	rdpContent := c.RDPFileContent()
 
-	if err := ioutil.WriteFile(uri, []byte(rdpContent), 0700); err != nil {
+	if err := os.WriteFile(uri, []byte(rdpContent), 0700); err != nil {
 		return err
 	}
 	defer os.Remove(uri)
