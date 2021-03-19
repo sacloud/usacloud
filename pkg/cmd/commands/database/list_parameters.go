@@ -46,7 +46,7 @@ var listParametersCommand = &core.Command{
 		},
 		{
 			Name:     "About",
-			Template: "{{ .Meta.Text | ellipsis 30 }}",
+			Template: "{{ .Meta.Text | to_single_line | ellipsis 30 }}",
 		},
 		{
 			Name:     "Example",
