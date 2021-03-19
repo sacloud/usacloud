@@ -15,12 +15,12 @@
 package validate
 
 import (
-	"io/ioutil"
+	"os"
 	"testing"
 )
 
 func TestPublicKeyFormat(t *testing.T) {
-	dummyPubContent, err := ioutil.ReadFile("dummy.pub")
+	dummyPubContent, err := os.ReadFile("dummy.pub")
 	if err != nil {
 		t.Fatal(err)
 	}

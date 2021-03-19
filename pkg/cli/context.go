@@ -16,7 +16,7 @@ package cli
 
 import (
 	"context"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"time"
@@ -134,7 +134,7 @@ func (c *cliContext) Client() sacloud.APICaller {
 	o := c.Option()
 	if o.FakeMode {
 		// libsacloud fakeドライバはlogパッケージにシステムログを出すがusacloudからは利用しないため出力を抑制する
-		log.SetOutput(ioutil.Discard)
+		log.SetOutput(io.Discard)
 	}
 
 	return api.NewCaller(&api.CallerOptions{

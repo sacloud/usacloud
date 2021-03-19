@@ -17,7 +17,7 @@ package util
 import (
 	"encoding/json"
 	"errors"
-	"io/ioutil"
+	"os"
 
 	"github.com/mitchellh/go-homedir"
 )
@@ -49,7 +49,7 @@ func BytesFromPathOrContent(pathOrContent string) ([]byte, error) {
 		return nil, errors.New("got invalid pathOrContent")
 	}
 
-	data, err := ioutil.ReadFile(poc)
+	data, err := os.ReadFile(poc)
 	if err != nil {
 		return []byte(poc), nil // ファイルを読んでみてエラーだった場合はJSONなどのコンテンツと判定する
 	}

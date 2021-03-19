@@ -17,7 +17,7 @@
 package cli
 
 import (
-	"io/ioutil"
+	"io"
 	"os"
 
 	"github.com/mattn/go-colorable"
@@ -25,14 +25,14 @@ import (
 )
 
 func newIO() IO {
-	io := &cliIO{
+	cliIo := &cliIO{
 		in:       os.Stdin,
 		out:      colorable.NewColorableStdout(),
 		progress: colorable.NewColorableStderr(),
 		err:      colorable.NewColorableStderr(),
 	}
 	if !(isatty.IsTerminal(os.Stderr.Fd()) || isatty.IsCygwinTerminal(os.Stderr.Fd())) {
-		io.progress = ioutil.Discard
+		cliIo.progress = io.Discard
 	}
-	return io
+	return cliIo
 }

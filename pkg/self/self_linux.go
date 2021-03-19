@@ -17,13 +17,13 @@
 package self
 
 import (
-	"io/ioutil"
+	"os"
 )
 
 const serialFilePath = "/sys/devices/virtual/dmi/id/product_serial"
 
 func ID() (string, error) {
-	data, err := ioutil.ReadFile(serialFilePath)
+	data, err := os.ReadFile(serialFilePath)
 	if err != nil {
 		return "", err
 	}
