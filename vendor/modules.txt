@@ -84,7 +84,7 @@ github.com/pmezard/go-difflib/difflib
 github.com/rhysd/go-github-selfupdate/selfupdate
 # github.com/sacloud/ftps v1.1.0
 github.com/sacloud/ftps
-# github.com/sacloud/libsacloud/v2 v2.13.0
+# github.com/sacloud/libsacloud/v2 v2.14.1
 ## explicit
 github.com/sacloud/libsacloud/v2
 github.com/sacloud/libsacloud/v2/helper/api

@@ -1,6 +1,6 @@
 module github.com/sacloud/usacloud
 
-go 1.15
+go 1.16
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
@@ -18,7 +18,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.0-20180506121414-d4647c9c7a84
 	github.com/rhysd/go-github-selfupdate v1.2.3
-	github.com/sacloud/libsacloud/v2 v2.13.0
+	github.com/sacloud/libsacloud/v2 v2.14.1
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/pflag v1.0.5

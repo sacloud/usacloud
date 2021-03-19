@@ -44,7 +44,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
 	fs.IntVarP(&p.NetworkMaskLen, "netmask", "", p.NetworkMaskLen, "(*required) options: [28/27/26] (aliases: --network-mask-len)")
-	fs.IntVarP(&p.BandWidthMbps, "band-width", "", p.BandWidthMbps, "(*required) options: [100/250/500/1000/1500/2000/2500/3000/3500/4000/4500/5000] (aliases: --band-width-mbps)")
+	fs.IntVarP(&p.BandWidthMbps, "band-width", "", p.BandWidthMbps, "(*required) options: [100/250/500/1000/1500/2000/2500/3000/3500/4000/4500/5000/5500/6000/6500/7000/7500/8000/8500/9000/9500/10000] (aliases: --band-width-mbps)")
 	fs.BoolVarP(&p.EnableIPv6, "enable-ipv6", "", p.EnableIPv6, "")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.IntVarP(&p.NotFoundRetry, "not-found-retry", "", p.NotFoundRetry, "")
@@ -157,7 +157,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("netmask", util.FlagCompletionFunc("28", "27", "26"))
-	cmd.RegisterFlagCompletionFunc("band-width", util.FlagCompletionFunc("100", "250", "500", "1000", "1500", "2000", "2500", "3000", "3500", "4000", "4500", "5000"))
+	cmd.RegisterFlagCompletionFunc("band-width", util.FlagCompletionFunc("100", "250", "500", "1000", "1500", "2000", "2500", "3000", "3500", "4000", "4500", "5000", "5500", "6000", "6500", "7000", "7500", "8000", "8500", "9000", "9500", "10000"))
 
 }
 
