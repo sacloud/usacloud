@@ -1,12 +1,22 @@
 # Changelog
 
-## 1.1.2 (2020-02-19)
+## 1.1.3 (2021-03-22)
+
+FEATURES
+
+  * libsacloud v2.14.1 / Go 1.16 #821 (@yamamoto-febc)
+
+FIXES
+
+  * database: list-parameter: to_single_line #822 (@yamamoto-febc)
+
+## 1.1.2 (2021-02-19)
 
 FIXES
 
   * Fix cannot load current config #817 (@higebu) 
 
-## 1.1.1 (2020-02-17)
+## 1.1.1 (2021-02-17)
 
 FIXES
   * Convert target to map before calling gojq  #813 (@yamamoto-febc)
@@ -18,7 +28,7 @@ IMPROVEMENTS
   * Colorize output of the rest command #814 (@yamamoto-febc)
   * Use docker/build-push-action@v2 #810 (@yamamoto-febc)
 
-## 1.1.0 (2020-01-20)
+## 1.1.0 (2021-01-20)
 
 FEATURES
 
