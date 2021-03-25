@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.4 (2021-03-25)
+
+  * ESME: Web OTP #824 (@yamamoto-febc)
+
 ## 1.1.3 (2021-03-22)
 
 FEATURES
