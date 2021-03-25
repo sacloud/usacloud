@@ -26,6 +26,7 @@ type SendMessageRequest struct {
 	Destination string `validate:"required"`
 	Sender      string `validate:"required"`
 	OTP         string
+	DomainName  string
 }
 
 func (req *SendMessageRequest) Validate() error {
@@ -37,11 +38,13 @@ func (req *SendMessageRequest) ToRequestParameter() interface{} {
 		return &sacloud.ESMESendMessageWithGeneratedOTPRequest{
 			Destination: req.Destination,
 			Sender:      req.Sender,
+			DomainName:  req.DomainName,
 		}
 	}
 	return &sacloud.ESMESendMessageWithInputtedOTPRequest{
 		Destination: req.Destination,
 		Sender:      req.Sender,
+		DomainName:  req.DomainName,
 		OTP:         req.OTP,
 	}
 }

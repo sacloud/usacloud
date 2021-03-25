@@ -48,6 +48,7 @@ type sendMessageParameter struct {
 
 	Destination string `cli:",aliases=dest" validate:"required"`
 	Sender      string `validate:"required"`
+	DomainName  string `validate:"omitempty,fqdn"`
 	OTP         string
 }
 
@@ -63,6 +64,7 @@ func (p *sendMessageParameter) ExampleParameters(ctx cli.Context) interface{} {
 	return &sendMessageParameter{
 		Destination: "81zzzzzzzzzz",
 		Sender:      "example-sender",
+		DomainName:  "www.example.com",
 		OTP:         "your-otp",
 	}
 }

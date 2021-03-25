@@ -39,6 +39,7 @@ func (p *sendMessageParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.QueryDriver, "query-driver", "", p.QueryDriver, "Name of the driver that handles queries to JSON output options: [jmespath/jq]")
 	fs.StringVarP(&p.Destination, "destination", "", p.Destination, "(*required) (aliases: --dest)")
 	fs.StringVarP(&p.Sender, "sender", "", p.Sender, "(*required) ")
+	fs.StringVarP(&p.DomainName, "domain-name", "", p.DomainName, "")
 	fs.StringVarP(&p.OTP, "otp", "", p.OTP, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -64,6 +65,7 @@ func (p *sendMessageParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs = pflag.NewFlagSet("esme", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("destination"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("domain-name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("otp"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("sender"))
 		sets = append(sets, &core.FlagSet{
