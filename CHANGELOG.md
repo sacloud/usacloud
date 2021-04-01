@@ -4,6 +4,7 @@
 
 FEATURES
 
+  * darwin/arm64 #829 (@yamamoto-febc)
   * simple-monitor: --health-check-http2 #826 (@yamamoto-febc)
   * Server: send-nmi #825 (@yamamoto-febc)
 
