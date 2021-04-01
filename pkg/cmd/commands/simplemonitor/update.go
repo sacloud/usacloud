@@ -73,6 +73,7 @@ type updateParameterHealthCheck struct {
 	SNMPVersion       *string `json:",omitempty"`
 	OID               *string `json:",omitempty"`
 	RemainingDays     *int    `json:",omitempty"`
+	HTTP2             *bool   `cli:"http2" json:",omitempty"`
 }
 
 func newUpdateParameter() *updateParameter {
@@ -99,6 +100,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 			Host:              pointer.NewString("www2.example.com"),
 			BasicAuthUsername: pointer.NewString("username"),
 			BasicAuthPassword: pointer.NewString("password"),
+			HTTP2:             pointer.NewBool(true),
 		},
 		NotifyEmailEnabled: pointer.NewBool(true),
 		NotifyEmailHTML:    pointer.NewBool(true),

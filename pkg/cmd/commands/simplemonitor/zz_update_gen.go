@@ -83,6 +83,9 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("health-check-remaining-days") {
 		p.HealthCheck.RemainingDays = nil
 	}
+	if !fs.Changed("health-check-http2") {
+		p.HealthCheck.HTTP2 = nil
+	}
 	if !fs.Changed("notify-email-enabled") {
 		p.NotifyEmailEnabled = nil
 	}
@@ -158,6 +161,9 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.HealthCheck.RemainingDays == nil {
 		p.HealthCheck.RemainingDays = pointer.NewInt(0)
 	}
+	if p.HealthCheck.HTTP2 == nil {
+		p.HealthCheck.HTTP2 = pointer.NewBool(false)
+	}
 	if p.NotifyEmailEnabled == nil {
 		p.NotifyEmailEnabled = pointer.NewBool(false)
 	}
@@ -201,6 +207,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.HealthCheck.SNMPVersion, "health-check-snmp-version", "", "", "")
 	fs.StringVarP(p.HealthCheck.OID, "health-check-oid", "", "", "")
 	fs.IntVarP(p.HealthCheck.RemainingDays, "health-check-remaining-days", "", 0, "")
+	fs.BoolVarP(p.HealthCheck.HTTP2, "health-check-http2", "", false, "")
 	fs.BoolVarP(p.NotifyEmailEnabled, "notify-email-enabled", "", false, "")
 	fs.BoolVarP(p.NotifyEmailHTML, "notify-email-html", "", false, "")
 	fs.BoolVarP(p.NotifySlackEnabled, "notify-slack-enabled", "", false, "")
@@ -246,6 +253,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-community"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-expected-data"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-host"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-http2"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-oid"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-path"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-port"))
