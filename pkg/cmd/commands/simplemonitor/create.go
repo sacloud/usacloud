@@ -71,6 +71,7 @@ type createParameterHealthCheck struct {
 	SNMPVersion       string `json:",omitempty"`
 	OID               string `json:",omitempty"`
 	RemainingDays     int    `json:",omitempty"`
+	HTTP2             bool   `cli:"http2" json:",omitempty"`
 }
 
 func newCreateParameter() *createParameter {
@@ -102,6 +103,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 			Host:              "www2.example.com",
 			BasicAuthUsername: "username",
 			BasicAuthPassword: "password",
+			HTTP2:             true,
 		},
 		NotifyEmailEnabled: true,
 		NotifyEmailHTML:    true,
