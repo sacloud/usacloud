@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.5 (Unreleased)
+## 1.1.5 (2021-04-01)
 
 FEATURES
 
