@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.5 (Unreleased)
+
+FEATURES
+
+  * Server: send-nmi #825 (@yamamoto-febc)
+
 ## 1.1.4 (2021-03-25)
 
   * ESME: Web OTP #824 (@yamamoto-febc)
