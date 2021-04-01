@@ -43,6 +43,7 @@ var normalizationWords = map[string]string{
 	"Cpu": "CPU",
 	"Ftp": "FTP",
 	"Nfs": "NFS",
+	"Nmi": "NMI",
 
 	"Lb": "LB",
 
