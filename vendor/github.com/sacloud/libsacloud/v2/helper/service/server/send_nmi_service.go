@@ -12,7 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package libsacloud
+package server
 
-// Version バージョン
-const Version = "2.16.0"
+import (
+	"context"
+
+	"github.com/sacloud/libsacloud/v2/sacloud"
+)
+
+func (s *Service) SendNMI(req *SendNMIRequest) error {
+	return s.SendNMIWithContext(context.Background(), req)
+}
+
+func (s *Service) SendNMIWithContext(ctx context.Context, req *SendNMIRequest) error {
+	if err := req.Validate(); err != nil {
+		return err
+	}
+
+	client := sacloud.NewServerOp(s.caller)
+	return client.SendNMI(ctx, req.Zone, req.ID)
+}
