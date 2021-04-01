@@ -4,6 +4,7 @@
 
 FEATURES
 
+  * simple-monitor: --health-check-http2 #826 (@yamamoto-febc)
   * Server: send-nmi #825 (@yamamoto-febc)
 
 ## 1.1.4 (2021-03-25)
