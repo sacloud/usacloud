@@ -7,6 +7,10 @@ FEATURES
   * simple-monitor: --health-check-http2 #826 (@yamamoto-febc)
   * Server: send-nmi #825 (@yamamoto-febc)
 
+MISC
+
+  * Set 'dev' tag to docker image to be built for each commit #828 (@yamamoto-febc)
+
 ## 1.1.4 (2021-03-25)
 
   * ESME: Web OTP #824 (@yamamoto-febc)
