@@ -21748,8 +21748,8 @@ func (o *ServerDeleteWithDisksRequest) SetIDs(v []types.ID) {
 type ServerChangePlanRequest struct {
 	CPU                  int
 	MemoryMB             int
-	ServerPlanGeneration types.EPlanGeneration
-	ServerPlanCommitment types.ECommitment `json:",omitempty" mapconv:"ServerPlan.Commitment"`
+	ServerPlanGeneration types.EPlanGeneration `json:"Generation,omitempty"`
+	ServerPlanCommitment types.ECommitment     `json:"Commitment,omitempty"`
 }
 
 // Validate validates by field tags
@@ -21762,8 +21762,8 @@ func (o *ServerChangePlanRequest) setDefaults() interface{} {
 	return &struct {
 		CPU                  int
 		MemoryMB             int
-		ServerPlanGeneration types.EPlanGeneration
-		ServerPlanCommitment types.ECommitment `json:",omitempty" mapconv:"ServerPlan.Commitment"`
+		ServerPlanGeneration types.EPlanGeneration `json:"Generation,omitempty"`
+		ServerPlanCommitment types.ECommitment     `json:"Commitment,omitempty"`
 	}{
 		CPU:                  o.GetCPU(),
 		MemoryMB:             o.GetMemoryMB(),
@@ -23775,6 +23775,7 @@ type SimpleMonitorHealthCheck struct {
 	SNMPVersion       string
 	OID               string
 	RemainingDays     int
+	HTTP2             types.StringFlag
 }
 
 // Validate validates by field tags
@@ -23799,6 +23800,7 @@ func (o *SimpleMonitorHealthCheck) setDefaults() interface{} {
 		SNMPVersion       string
 		OID               string
 		RemainingDays     int
+		HTTP2             types.StringFlag
 	}{
 		Protocol:          o.GetProtocol(),
 		Port:              o.GetPort(),
@@ -23814,6 +23816,7 @@ func (o *SimpleMonitorHealthCheck) setDefaults() interface{} {
 		SNMPVersion:       o.GetSNMPVersion(),
 		OID:               o.GetOID(),
 		RemainingDays:     o.GetRemainingDays(),
+		HTTP2:             o.GetHTTP2(),
 	}
 }
 
@@ -23955,6 +23958,16 @@ func (o *SimpleMonitorHealthCheck) GetRemainingDays() int {
 // SetRemainingDays sets value to RemainingDays
 func (o *SimpleMonitorHealthCheck) SetRemainingDays(v int) {
 	o.RemainingDays = v
+}
+
+// GetHTTP2 returns value of HTTP2
+func (o *SimpleMonitorHealthCheck) GetHTTP2() types.StringFlag {
+	return o.HTTP2
+}
+
+// SetHTTP2 sets value to HTTP2
+func (o *SimpleMonitorHealthCheck) SetHTTP2(v types.StringFlag) {
+	o.HTTP2 = v
 }
 
 /*************************************************

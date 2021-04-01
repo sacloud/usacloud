@@ -132,6 +132,42 @@ func init() {
 			return results, nil
 		},
 	)
+	setDefaultServiceFunc("server", "send-nmi",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+
+			req := &service.SendNMIRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			err := svc.SendNMIWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return nil, nil
+
+		},
+	)
+	setDefaultListAllFunc("server", "send-nmi",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client())
+			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
 	setDefaultServiceFunc("server", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client())

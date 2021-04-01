@@ -12,7 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package libsacloud
+package server
 
-// Version バージョン
-const Version = "2.16.0"
+import (
+	"github.com/sacloud/libsacloud/v2/helper/validate"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
+)
+
+type SendNMIRequest struct {
+	Zone string   `request:"-" validate:"required"`
+	ID   types.ID `request:"-" validate:"required"`
+}
+
+func (req *SendNMIRequest) Validate() error {
+	return validate.Struct(req)
+}
