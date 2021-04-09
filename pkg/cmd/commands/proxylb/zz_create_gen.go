@@ -54,6 +54,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.LetsEncrypt.AcceptTOS, "lets-encrypt-accept-tos", "", p.LetsEncrypt.AcceptTOS, "The flag to accept the current Let's Encrypt terms of service(see: https://letsencrypt.org/repository/)")
 	fs.StringVarP(&p.StickySession.Method, "sticky-session-method", "", p.StickySession.Method, "")
 	fs.BoolVarP(&p.StickySession.Enabled, "sticky-session-enabled", "", p.StickySession.Enabled, "")
+	fs.BoolVarP(&p.Gzip.Enabled, "gzip-enabled", "", p.Gzip.Enabled, "")
 	fs.IntVarP(&p.Timeout.InactiveSec, "inactive-sec", "", p.Timeout.InactiveSec, "")
 	fs.BoolVarP(&p.UseVIPFailover, "vip-fail-over", "", p.UseVIPFailover, "")
 	fs.StringVarP(&p.Region, "region", "", p.Region, "(*required) options: [tk1/is1/anycast]")
@@ -97,6 +98,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs = pflag.NewFlagSet("proxy-lb", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("bind-ports"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("gzip-enabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-delay-loop"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-host"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-path"))

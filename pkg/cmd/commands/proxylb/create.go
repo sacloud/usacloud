@@ -53,6 +53,7 @@ type createParameter struct {
 	SorryServer    createParameterSorryServer `mapconv:",omitempty"`
 	LetsEncrypt    createParameterLetsEncrypt
 	StickySession  createParameterStickySession `mapconv:",omitempty"`
+	Gzip           createParameterGzip          `mapconv:",omitempty"`
 	Timeout        createParameterTimeout       `cli:",squash"`
 	UseVIPFailover bool                         `cli:"vip-fail-over"`
 	Region         string                       `cli:",options=proxylb_region" validate:"required,proxylb_region"`
@@ -87,6 +88,10 @@ type createParameterLetsEncrypt struct {
 
 type createParameterStickySession struct {
 	Method  string
+	Enabled bool
+}
+
+type createParameterGzip struct {
 	Enabled bool
 }
 
@@ -163,6 +168,9 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		},
 		StickySession: createParameterStickySession{
 			Method:  "cookie",
+			Enabled: true,
+		},
+		Gzip: createParameterGzip{
 			Enabled: true,
 		},
 		Timeout: createParameterTimeout{

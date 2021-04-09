@@ -71,6 +71,9 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("sticky-session-enabled") {
 		p.StickySession.Enabled = nil
 	}
+	if !fs.Changed("gzip-enabled") {
+		p.Gzip.Enabled = nil
+	}
 	if !fs.Changed("inactive-sec") {
 		p.Timeout.InactiveSec = nil
 	}
@@ -131,6 +134,9 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.StickySession.Enabled == nil {
 		p.StickySession.Enabled = pointer.NewBool(false)
 	}
+	if p.Gzip.Enabled == nil {
+		p.Gzip.Enabled = pointer.NewBool(false)
+	}
 	if p.Timeout.InactiveSec == nil {
 		p.Timeout.InactiveSec = pointer.NewInt(0)
 	}
@@ -168,6 +174,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.BoolVarP(&p.LetsEncrypt.AcceptTOS, "lets-encrypt-accept-tos", "", p.LetsEncrypt.AcceptTOS, "The flag to accept the current Let's Encrypt terms of service(see: https://letsencrypt.org/repository/)")
 	fs.StringVarP(p.StickySession.Method, "sticky-session-method", "", "", "")
 	fs.BoolVarP(p.StickySession.Enabled, "sticky-session-enabled", "", false, "")
+	fs.BoolVarP(p.Gzip.Enabled, "gzip-enabled", "", false, "")
 	fs.IntVarP(p.Timeout.InactiveSec, "inactive-sec", "", 0, "")
 	fs.StringVarP(p.BindPortsData, "bind-ports", "", "", "")
 	fs.StringVarP(p.ServersData, "servers", "", "", "")
@@ -209,6 +216,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs = pflag.NewFlagSet("proxy-lb", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("bind-ports"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("gzip-enabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-delay-loop"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-host"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-path"))
