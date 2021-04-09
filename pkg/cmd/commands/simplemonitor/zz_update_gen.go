@@ -53,6 +53,9 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("health-check-status") {
 		p.HealthCheck.Status = nil
 	}
+	if !fs.Changed("health-check-contains-string") {
+		p.HealthCheck.ContainsString = nil
+	}
 	if !fs.Changed("health-check-sni") {
 		p.HealthCheck.SNI = nil
 	}
@@ -131,6 +134,9 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.HealthCheck.Status == nil {
 		p.HealthCheck.Status = pointer.NewInt(0)
 	}
+	if p.HealthCheck.ContainsString == nil {
+		p.HealthCheck.ContainsString = pointer.NewString("")
+	}
 	if p.HealthCheck.SNI == nil {
 		p.HealthCheck.SNI = pointer.NewBool(false)
 	}
@@ -197,6 +203,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.IntVarP(p.HealthCheck.Port, "health-check-port", "", 0, "")
 	fs.StringVarP(p.HealthCheck.Path, "health-check-path", "", "", "")
 	fs.IntVarP(p.HealthCheck.Status, "health-check-status", "", 0, "")
+	fs.StringVarP(p.HealthCheck.ContainsString, "health-check-contains-string", "", "", "")
 	fs.BoolVarP(p.HealthCheck.SNI, "health-check-sni", "", false, "")
 	fs.StringVarP(p.HealthCheck.Host, "health-check-host", "", "", "")
 	fs.StringVarP(p.HealthCheck.BasicAuthUsername, "health-check-basic-auth-username", "", "", "")
@@ -251,6 +258,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-basic-auth-password"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-basic-auth-username"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-community"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-contains-string"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-expected-data"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-host"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-http2"))
