@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.6 (Unreleased)
+
+FEATURES
+
+  * simple-monitor: health-check-contains-string #831 (@yamamoto-febc)
+  * libsacloud v2.17 #831 (@yamamoto-febc)
+
 ## 1.1.5 (2021-04-01)
 
 FEATURES
