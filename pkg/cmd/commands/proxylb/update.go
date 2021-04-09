@@ -57,6 +57,7 @@ type updateParameter struct {
 	SorryServer   updateParameterSorryServer   `mapconv:",omitempty"`
 	LetsEncrypt   updateParameterLetsEncrypt   `mapconv:",omitempty"`
 	StickySession updateParameterStickySession `mapconv:",omitempty"`
+	Gzip          updateParameterGzip          `mapconv:",omitempty"`
 	Timeout       updateParameterTimeout       `cli:",squash"`
 
 	BindPortsData *string                     `cli:"bind-ports" mapconv:"-"`
@@ -93,6 +94,10 @@ type updateParameterLetsEncrypt struct {
 
 type updateParameterStickySession struct {
 	Method  *string
+	Enabled *bool
+}
+
+type updateParameterGzip struct {
 	Enabled *bool
 }
 
@@ -162,6 +167,9 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		},
 		StickySession: updateParameterStickySession{
 			Method:  pointer.NewString("cookie"),
+			Enabled: pointer.NewBool(true),
+		},
+		Gzip: updateParameterGzip{
 			Enabled: pointer.NewBool(true),
 		},
 		Timeout: updateParameterTimeout{
