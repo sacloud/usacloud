@@ -4,6 +4,7 @@
 
 FEATURES
 
+  * proxy-lb: gzip-enabled #832 (@yamamoto-febc)
   * simple-monitor: health-check-contains-string #831 (@yamamoto-febc)
   * libsacloud v2.17 #831 (@yamamoto-febc)
 
