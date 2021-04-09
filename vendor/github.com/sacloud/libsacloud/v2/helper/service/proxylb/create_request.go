@@ -34,6 +34,7 @@ type CreateRequest struct {
 	Rules          []*sacloud.ProxyLBRule
 	LetsEncrypt    *sacloud.ProxyLBACMESetting
 	StickySession  *sacloud.ProxyLBStickySession
+	Gzip           *sacloud.ProxyLBGzip
 	Timeout        *sacloud.ProxyLBTimeout
 	UseVIPFailover bool
 	Region         types.EProxyLBRegion
