@@ -63,6 +63,7 @@ type updateParameterHealthCheck struct {
 	Port              *int    `json:",omitempty"`
 	Path              *string `json:",omitempty"`
 	Status            *int    `json:",omitempty"`
+	ContainsString    *string `json:",omitempty"`
 	SNI               *bool   `json:",omitempty"`
 	Host              *string `json:",omitempty"`
 	BasicAuthUsername *string `json:",omitempty"`
@@ -96,6 +97,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 			Port:              pointer.NewInt(80),
 			Path:              pointer.NewString("/healthz"),
 			Status:            pointer.NewInt(http.StatusOK),
+			ContainsString:    pointer.NewString("ok"),
 			SNI:               pointer.NewBool(true),
 			Host:              pointer.NewString("www2.example.com"),
 			BasicAuthUsername: pointer.NewString("username"),

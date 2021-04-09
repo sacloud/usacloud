@@ -61,6 +61,7 @@ type createParameterHealthCheck struct {
 	Port              int    `json:",omitempty"`
 	Path              string `json:",omitempty"`
 	Status            int    `json:",omitempty"`
+	ContainsString    string `json:",omitempty"`
 	SNI               bool   `json:",omitempty"`
 	Host              string `json:",omitempty"`
 	BasicAuthUsername string `json:",omitempty"`
@@ -99,6 +100,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 			Port:              80,
 			Path:              "/healthz",
 			Status:            http.StatusOK,
+			ContainsString:    "ok",
 			SNI:               true,
 			Host:              "www2.example.com",
 			BasicAuthUsername: "username",
