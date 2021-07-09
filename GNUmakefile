@@ -16,7 +16,7 @@
 GO_FILES        ?=$(shell find . -name '*.go')
 AUTHOR          ?="The Usacloud Authors"
 COPYRIGHT_YEAR  ?="2017-2021"
-COPYRIGHT_FILES ?=$$(find . \( -name "*.dockerfile" -or -name "*.go" -or -name "*.sh" -or -name "*.pl" -or -name "*.bats" -or -name "*.bash" \) -print | grep -v "/vendor/")
+COPYRIGHT_FILES ?=$$(find . \( -name "*.dockerfile" -or -name "*.go" -or -name "*.sh" -or -name "*.pl" -or -name "*.bats" -or -name "*.bash" \) -print)
 BUILD_LDFLAGS   ?= "-s -w -X github.com/sacloud/usacloud/pkg/version.Revision=`git rev-parse --short HEAD`"
 
 export GO111MODULE=on
@@ -79,7 +79,7 @@ goimports:
 
 .PHONY: fmt
 fmt:
-	find . -name '*.go' | grep -v vendor | xargs gofmt -s -w
+	find . -name '*.go' | xargs gofmt -s -w
 
 set-license:
 	@addlicense -c $(AUTHOR) -y $(COPYRIGHT_YEAR) $(COPYRIGHT_FILES)
