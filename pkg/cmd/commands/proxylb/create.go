@@ -15,6 +15,8 @@
 package proxylb
 
 import (
+	"net/http"
+
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/cli"
@@ -204,9 +206,27 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		},
 		Rules: []*sacloud.ProxyLBRule{
 			{
+				Action:      types.ProxyLBRuleActions.Forward,
 				Host:        "www2.example.com",
-				Path:        "/foo",
+				Path:        "/foo1",
 				ServerGroup: "group1",
+			},
+			{
+				Action:             types.ProxyLBRuleActions.Redirect,
+				Host:               "www2.example.com",
+				Path:               "/foo2",
+				ServerGroup:        "group1",
+				RedirectLocation:   "/redirect",
+				RedirectStatusCode: http.StatusMovedPermanently,
+			},
+			{
+				Action:           types.ProxyLBRuleActions.Fixed,
+				Host:             "www2.example.com",
+				Path:             "/foo3",
+				ServerGroup:      "group1",
+				FixedStatusCode:  http.StatusOK,
+				FixedContentType: types.ProxyLBFixedContentTypes.Plain,
+				FixedMessageBody: "your-content",
 			},
 		},
 	}
