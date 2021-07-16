@@ -2,6 +2,12 @@
 
 ## 1.2.0 (Unreleased)
 
+FEATURES:
+
+  * SimpleMonitor: Timeout #839 (@yamamoto-febc)
+
+DEVELOPMENT:
+
   * Update dev env #836 (@yamamoto-febc)
 
 ## 1.1.6 (2021-04-09)
