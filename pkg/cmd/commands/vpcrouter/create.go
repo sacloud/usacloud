@@ -171,14 +171,24 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 					IPAddress:  "192.168.0.245",
 				},
 			},
-			PPTPServer: sacloud.VPCRouterPPTPServer{
+			PPTPServer: &sacloud.VPCRouterPPTPServer{
 				RangeStart: "192.168.0.246",
 				RangeStop:  "192.168.0.249",
 			},
-			L2TPIPsecServer: sacloud.VPCRouterL2TPIPsecServer{
+			L2TPIPsecServer: &sacloud.VPCRouterL2TPIPsecServer{
 				RangeStart:      "192.168.0.250",
 				RangeStop:       "192.168.0.254",
 				PreSharedSecret: "presharedsecret",
+			},
+			WireGuard: &sacloud.VPCRouterWireGuard{
+				IPAddress: "192.168.0.240/28",
+				Peers: []*sacloud.VPCRouterWireGuardPeer{
+					{
+						Name:      "client1",
+						IPAddress: "192.168.0.242",
+						PublicKey: "your-key",
+					},
+				},
 			},
 			RemoteAccessUsers: []*sacloud.VPCRouterRemoteAccessUser{
 				{
