@@ -81,9 +81,10 @@ type createParameterSorryServer struct {
 }
 
 type createParameterLetsEncrypt struct {
-	CommonName string `validate:"omitempty,fqdn"`
-	Enabled    bool
-	AcceptTOS  bool `cli:"accept-tos,desc=The flag to accept the current Let's Encrypt terms of service(see: https://letsencrypt.org/repository/)" mapconv:"-"`
+	CommonName      string `validate:"omitempty,fqdn"`
+	Enabled         bool
+	SubjectAltNames []string `validate:"omitempty,dive,fqdn"`
+	AcceptTOS       bool     `cli:"accept-tos,desc=The flag to accept the current Let's Encrypt terms of service(see: https://letsencrypt.org/repository/)" mapconv:"-"`
 }
 
 type createParameterStickySession struct {
@@ -163,8 +164,9 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 			Port:      80,
 		},
 		LetsEncrypt: createParameterLetsEncrypt{
-			CommonName: "www.example.com",
-			Enabled:    true,
+			CommonName:      "www.example.com",
+			SubjectAltNames: []string{"www1.example.com"},
+			Enabled:         true,
 		},
 		StickySession: createParameterStickySession{
 			Method:  "cookie",

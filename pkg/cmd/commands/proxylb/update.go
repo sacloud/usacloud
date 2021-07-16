@@ -87,9 +87,10 @@ type updateParameterSorryServer struct {
 }
 
 type updateParameterLetsEncrypt struct {
-	CommonName *string `validate:"omitempty,fqdn"`
-	Enabled    *bool
-	AcceptTOS  bool `cli:"accept-tos,desc=The flag to accept the current Let's Encrypt terms of service(see: https://letsencrypt.org/repository/)" mapconv:"-"`
+	CommonName      *string   `validate:"omitempty,fqdn"`
+	SubjectAltNames *[]string `validate:"omitempty,dive,fqdn"`
+	Enabled         *bool
+	AcceptTOS       bool `cli:"accept-tos,desc=The flag to accept the current Let's Encrypt terms of service(see: https://letsencrypt.org/repository/)" mapconv:"-"`
 }
 
 type updateParameterStickySession struct {
