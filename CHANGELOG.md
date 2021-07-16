@@ -4,6 +4,7 @@
 
 FEATURES:
 
+  * VPCRouter: WireGuard #846 (@yamamoto-febc) 
   * ELB: Syslog #844 (@yamamoto-febc)
   * ELB: SSLPolicy #843 (@yamamoto-febc)
   * ELB: rule-base-balancing #842 (@yamamoto-febc)
