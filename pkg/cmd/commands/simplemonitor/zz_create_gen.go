@@ -43,6 +43,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
 	fs.IntVarP(&p.DelayLoop, "delay-loop", "", p.DelayLoop, "")
+	fs.IntVarP(&p.Timeout, "timeout", "", p.Timeout, "")
 	fs.BoolVarP(&p.Enabled, "enabled", "", p.Enabled, "")
 	fs.StringVarP(&p.HealthCheck.Protocol, "health-check-protocol", "", p.HealthCheck.Protocol, "(*required) options: [http/https/ping/tcp/dns/ssh/smtp/pop3/snmp/sslcertificate]")
 	fs.IntVarP(&p.HealthCheck.Port, "health-check-port", "", p.HealthCheck.Port, "")
@@ -122,6 +123,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("notify-slack-enabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("slack-webhooks-url"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("target"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("timeout"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Simple-Monitor-specific options",
 			Flags: fs,
