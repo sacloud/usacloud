@@ -193,6 +193,11 @@ var definitions = map[string][]*definition{
 		{key: types.ProxyLBRegions.IS1.String(), value: types.ProxyLBRegions.IS1},
 		{key: types.ProxyLBRegions.Anycast.String(), value: types.ProxyLBRegions.Anycast},
 	},
+	"proxylb_ssl_policy": {
+		{key: "TLS-1-2-2019-04", value: "TLS-1-2-2019-04"},
+		{key: "TLS-1-2-2021-06", value: "TLS-1-2-2021-06"},
+		{key: "TLS-1-3-2021-06", value: "TLS-1-3-2021-06"},
+	},
 	"rest_method": {
 		{key: "get", value: "get"},
 		{key: "post", value: "post"},
