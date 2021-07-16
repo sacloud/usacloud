@@ -4,6 +4,7 @@
 
 FEATURES:
 
+  * ELB: 400,000CPS plan #841 (@yamamoto-febc)
   * ELB: SubjectAltNames #840 (@yamamoto-febc)
   * SimpleMonitor: Timeout #839 (@yamamoto-febc)
 
