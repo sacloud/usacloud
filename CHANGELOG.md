@@ -4,6 +4,7 @@
 
 FEATURES:
 
+  * ELB: Syslog #844 (@yamamoto-febc)
   * ELB: SSLPolicy #843 (@yamamoto-febc)
   * ELB: rule-base-balancing #842 (@yamamoto-febc)
   * ELB: 400,000CPS plan #841 (@yamamoto-febc)
