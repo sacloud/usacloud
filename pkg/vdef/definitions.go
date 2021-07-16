@@ -182,6 +182,7 @@ var definitions = map[string][]*definition{
 		{key: types.ProxyLBPlans.CPS10000.String(), value: types.ProxyLBPlans.CPS10000},
 		{key: types.ProxyLBPlans.CPS50000.String(), value: types.ProxyLBPlans.CPS50000},
 		{key: types.ProxyLBPlans.CPS100000.String(), value: types.ProxyLBPlans.CPS100000},
+		{key: types.ProxyLBPlans.CPS400000.String(), value: types.ProxyLBPlans.CPS400000},
 	},
 	"proxylb_protocol": {
 		{key: types.ProxyLBProtocols.HTTP.String(), value: types.ProxyLBProtocols.HTTP},

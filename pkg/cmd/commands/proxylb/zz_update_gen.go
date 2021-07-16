@@ -168,7 +168,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.Description, "description", "", "", "")
 	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
-	fs.StringVarP(p.Plan, "plan", "", "", "options: [100/500/1000/5000/10000/50000/100000]")
+	fs.StringVarP(p.Plan, "plan", "", "", "options: [100/500/1000/5000/10000/50000/100000/400000]")
 	fs.StringVarP(p.HealthCheck.Protocol, "health-check-protocol", "", "", "")
 	fs.StringVarP(p.HealthCheck.Path, "health-check-path", "", "", "")
 	fs.StringVarP(p.HealthCheck.Host, "health-check-host", "", "", "")
@@ -286,7 +286,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *updateParameter) setCompletionFunc(cmd *cobra.Command) {
-	cmd.RegisterFlagCompletionFunc("plan", util.FlagCompletionFunc("100", "500", "1000", "5000", "10000", "50000", "100000"))
+	cmd.RegisterFlagCompletionFunc("plan", util.FlagCompletionFunc("100", "500", "1000", "5000", "10000", "50000", "100000", "400000"))
 
 }
 
