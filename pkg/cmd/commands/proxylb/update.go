@@ -190,6 +190,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 						Value:  "public, max-age=900",
 					},
 				},
+				SSLPolicy: examples.OptionsString("proxylb_ssl_policy"),
 			},
 		},
 		Servers: &[]*sacloud.ProxyLBServer{
