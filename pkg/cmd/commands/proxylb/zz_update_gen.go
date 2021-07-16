@@ -62,6 +62,9 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("lets-encrypt-common-name") {
 		p.LetsEncrypt.CommonName = nil
 	}
+	if !fs.Changed("lets-encrypt-subject-alt-names") {
+		p.LetsEncrypt.SubjectAltNames = nil
+	}
 	if !fs.Changed("lets-encrypt-enabled") {
 		p.LetsEncrypt.Enabled = nil
 	}
@@ -125,6 +128,9 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.LetsEncrypt.CommonName == nil {
 		p.LetsEncrypt.CommonName = pointer.NewString("")
 	}
+	if p.LetsEncrypt.SubjectAltNames == nil {
+		p.LetsEncrypt.SubjectAltNames = pointer.NewStringSlice([]string{})
+	}
 	if p.LetsEncrypt.Enabled == nil {
 		p.LetsEncrypt.Enabled = pointer.NewBool(false)
 	}
@@ -170,6 +176,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.SorryServer.IPAddress, "sorry-server-ip-address", "", "", "(aliases: --ipaddress)")
 	fs.IntVarP(p.SorryServer.Port, "sorry-server-port", "", 0, "")
 	fs.StringVarP(p.LetsEncrypt.CommonName, "lets-encrypt-common-name", "", "", "")
+	fs.StringSliceVarP(p.LetsEncrypt.SubjectAltNames, "lets-encrypt-subject-alt-names", "", nil, "")
 	fs.BoolVarP(p.LetsEncrypt.Enabled, "lets-encrypt-enabled", "", false, "")
 	fs.BoolVarP(&p.LetsEncrypt.AcceptTOS, "lets-encrypt-accept-tos", "", p.LetsEncrypt.AcceptTOS, "The flag to accept the current Let's Encrypt terms of service(see: https://letsencrypt.org/repository/)")
 	fs.StringVarP(p.StickySession.Method, "sticky-session-method", "", "", "")
@@ -225,6 +232,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("lets-encrypt-accept-tos"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("lets-encrypt-common-name"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("lets-encrypt-enabled"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("lets-encrypt-subject-alt-names"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("rules"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("servers"))
