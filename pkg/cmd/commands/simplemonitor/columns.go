@@ -26,5 +26,6 @@ var defaultColumnDefs = []output.ColumnDef{
 	ccol.Description,
 	{Name: "HealthCheck", Template: `{{ .HealthCheck.Protocol }}`},
 	{Name: "DelayLoop"},
+	{Name: "Timeout"},
 	{Name: "Enabled"},
 }

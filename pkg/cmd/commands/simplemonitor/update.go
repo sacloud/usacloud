@@ -48,6 +48,7 @@ type updateParameter struct {
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
 	DelayLoop   *int `validate:"omitempty,min=60,max=3600"`
+	Timeout     *int `validate:"omitempty,min=1,max=30"`
 	Enabled     *bool
 	HealthCheck updateParameterHealthCheck `mapconv:",omitempty"`
 
@@ -91,6 +92,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		TagsUpdateParameter:   examples.TagsUpdate,
 		IconIDUpdateParameter: examples.IconIDUpdate,
 		DelayLoop:             pointer.NewInt(60),
+		Timeout:               pointer.NewInt(10),
 		Enabled:               pointer.NewBool(true),
 		HealthCheck: updateParameterHealthCheck{
 			Protocol:          pointer.NewString(examples.OptionsString("simple_monitor_protocol")),

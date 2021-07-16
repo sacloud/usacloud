@@ -46,6 +46,7 @@ type createParameter struct {
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
 	DelayLoop   int `validate:"min=60,max=3600"`
+	Timeout     int `validate:"omitempty,min=1,max=30"`
 	Enabled     bool
 	HealthCheck createParameterHealthCheck
 
@@ -94,6 +95,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		TagsParameter:   examples.Tags,
 		IconIDParameter: examples.IconID,
 		DelayLoop:       60,
+		Timeout:         10,
 		Enabled:         true,
 		HealthCheck: createParameterHealthCheck{
 			Protocol:          examples.OptionsString("simple_monitor_protocol"),
