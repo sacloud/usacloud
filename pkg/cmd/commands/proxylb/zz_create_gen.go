@@ -42,7 +42,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.StringVarP(&p.Plan, "plan", "", p.Plan, "(*required) options: [100/500/1000/5000/10000/50000/100000]")
+	fs.StringVarP(&p.Plan, "plan", "", p.Plan, "(*required) options: [100/500/1000/5000/10000/50000/100000/400000]")
 	fs.StringVarP(&p.HealthCheck.Protocol, "health-check-protocol", "", p.HealthCheck.Protocol, "(*required) ")
 	fs.StringVarP(&p.HealthCheck.Path, "health-check-path", "", p.HealthCheck.Path, "")
 	fs.StringVarP(&p.HealthCheck.Host, "health-check-host", "", p.HealthCheck.Host, "")
@@ -164,7 +164,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
-	cmd.RegisterFlagCompletionFunc("plan", util.FlagCompletionFunc("100", "500", "1000", "5000", "10000", "50000", "100000"))
+	cmd.RegisterFlagCompletionFunc("plan", util.FlagCompletionFunc("100", "500", "1000", "5000", "10000", "50000", "100000", "400000"))
 	cmd.RegisterFlagCompletionFunc("region", util.FlagCompletionFunc("tk1", "is1", "anycast"))
 
 }
