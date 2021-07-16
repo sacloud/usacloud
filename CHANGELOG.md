@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0 (Unreleased)
+
+  * Update dev env #836 (@yamamoto-febc)
+
 ## 1.1.6 (2021-04-09)
 
 FEATURES
