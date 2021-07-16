@@ -56,6 +56,7 @@ type createParameter struct {
 	LetsEncrypt    createParameterLetsEncrypt
 	StickySession  createParameterStickySession `mapconv:",omitempty"`
 	Gzip           createParameterGzip          `mapconv:",omitempty"`
+	Syslog         createParameterSyslog        `mapconv:",omitempty"`
 	Timeout        createParameterTimeout       `cli:",squash"`
 	UseVIPFailover bool                         `cli:"vip-fail-over"`
 	Region         string                       `cli:",options=proxylb_region" validate:"required,proxylb_region"`
@@ -80,6 +81,11 @@ type createParameterHealthCheck struct {
 type createParameterSorryServer struct {
 	IPAddress string `cli:",aliases=ipaddress" validate:"omitempty,ipv4"`
 	Port      int    `validate:"omitempty,min=0,max=65535"`
+}
+
+type createParameterSyslog struct {
+	Server string `validate:"omitempty,ipv4"`
+	Port   int    `validate:"omitempty,min=0,max=65535"`
 }
 
 type createParameterLetsEncrypt struct {
@@ -176,6 +182,10 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		},
 		Gzip: createParameterGzip{
 			Enabled: true,
+		},
+		Syslog: createParameterSyslog{
+			Server: examples.IPAddress,
+			Port:   514,
 		},
 		Timeout: createParameterTimeout{
 			InactiveSec: 10,

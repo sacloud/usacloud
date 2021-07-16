@@ -77,6 +77,12 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("gzip-enabled") {
 		p.Gzip.Enabled = nil
 	}
+	if !fs.Changed("syslog-server") {
+		p.Syslog.Server = nil
+	}
+	if !fs.Changed("syslog-port") {
+		p.Syslog.Port = nil
+	}
 	if !fs.Changed("inactive-sec") {
 		p.Timeout.InactiveSec = nil
 	}
@@ -143,6 +149,12 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.Gzip.Enabled == nil {
 		p.Gzip.Enabled = pointer.NewBool(false)
 	}
+	if p.Syslog.Server == nil {
+		p.Syslog.Server = pointer.NewString("")
+	}
+	if p.Syslog.Port == nil {
+		p.Syslog.Port = pointer.NewInt(0)
+	}
 	if p.Timeout.InactiveSec == nil {
 		p.Timeout.InactiveSec = pointer.NewInt(0)
 	}
@@ -182,6 +194,8 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.StickySession.Method, "sticky-session-method", "", "", "")
 	fs.BoolVarP(p.StickySession.Enabled, "sticky-session-enabled", "", false, "")
 	fs.BoolVarP(p.Gzip.Enabled, "gzip-enabled", "", false, "")
+	fs.StringVarP(p.Syslog.Server, "syslog-server", "", "", "")
+	fs.IntVarP(p.Syslog.Port, "syslog-port", "", 0, "")
 	fs.IntVarP(p.Timeout.InactiveSec, "inactive-sec", "", 0, "")
 	fs.StringVarP(p.BindPortsData, "bind-ports", "", "", "")
 	fs.StringVarP(p.ServersData, "servers", "", "", "")
@@ -240,6 +254,8 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("sorry-server-port"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("sticky-session-enabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("sticky-session-method"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("syslog-port"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("syslog-server"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Proxy-Lb-specific options",
 			Flags: fs,

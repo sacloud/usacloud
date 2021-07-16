@@ -56,6 +56,8 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.StickySession.Method, "sticky-session-method", "", p.StickySession.Method, "")
 	fs.BoolVarP(&p.StickySession.Enabled, "sticky-session-enabled", "", p.StickySession.Enabled, "")
 	fs.BoolVarP(&p.Gzip.Enabled, "gzip-enabled", "", p.Gzip.Enabled, "")
+	fs.StringVarP(&p.Syslog.Server, "syslog-server", "", p.Syslog.Server, "")
+	fs.IntVarP(&p.Syslog.Port, "syslog-port", "", p.Syslog.Port, "")
 	fs.IntVarP(&p.Timeout.InactiveSec, "inactive-sec", "", p.Timeout.InactiveSec, "")
 	fs.BoolVarP(&p.UseVIPFailover, "vip-fail-over", "", p.UseVIPFailover, "")
 	fs.StringVarP(&p.Region, "region", "", p.Region, "(*required) options: [tk1/is1/anycast]")
@@ -117,6 +119,8 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("sorry-server-port"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("sticky-session-enabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("sticky-session-method"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("syslog-port"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("syslog-server"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("vip-fail-over"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Proxy-Lb-specific options",
