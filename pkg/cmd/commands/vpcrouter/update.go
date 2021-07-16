@@ -166,14 +166,24 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 					IPAddress:  "192.168.0.245",
 				},
 			},
-			PPTPServer: PPTPServerUpdate{
-				RangeStart: pointer.NewString("192.168.0.246"),
-				RangeStop:  pointer.NewString("192.168.0.249"),
+			PPTPServer: &sacloud.VPCRouterPPTPServer{
+				RangeStart: "192.168.0.246",
+				RangeStop:  "192.168.0.249",
 			},
-			L2TPIPsecServer: L2TPIPsecServer{
-				RangeStart:      pointer.NewString("192.168.0.250"),
-				RangeStop:       pointer.NewString("192.168.0.254"),
-				PreSharedSecret: pointer.NewString("presharedsecret"),
+			L2TPIPsecServer: &sacloud.VPCRouterL2TPIPsecServer{
+				RangeStart:      "192.168.0.250",
+				RangeStop:       "192.168.0.254",
+				PreSharedSecret: "presharedsecret",
+			},
+			WireGuard: &sacloud.VPCRouterWireGuard{
+				IPAddress: "192.168.0.240/28",
+				Peers: []*sacloud.VPCRouterWireGuardPeer{
+					{
+						Name:      "client1",
+						IPAddress: "192.168.0.242",
+						PublicKey: "your-key",
+					},
+				},
 			},
 			RemoteAccessUsers: &[]*sacloud.VPCRouterRemoteAccessUser{
 				{

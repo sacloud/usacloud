@@ -38,9 +38,14 @@ type routerSettingUpdate struct {
 	DHCPStaticMappingData string                                 `cli:"dhcp-static-mapping" mapconv:"-"`
 	DHCPStaticMapping     *[]*sacloud.VPCRouterDHCPStaticMapping `cli:"-" mapconv:",omitempty"`
 
-	PPTPServer PPTPServerUpdate `cli:"pptp" mapconv:",omitempty"`
+	PPTPServerData string                       `cli:"pptp" mapconv:"-"`
+	PPTPServer     *sacloud.VPCRouterPPTPServer `cli:"-" mapconv:",omitempty"`
 
-	L2TPIPsecServer L2TPIPsecServer `cli:"l2tp" mapconv:",omitempty"`
+	L2TPIPsecServerData string                            `cli:"l2tp" mapconv:"-"`
+	L2TPIPsecServer     *sacloud.VPCRouterL2TPIPsecServer `cli:"-" mapconv:",omitempty"`
+
+	WireGuardData string                      `cli:"wireguard" mapconv:"-"`
+	WireGuard     *sacloud.VPCRouterWireGuard `cli:"-" mapconv:",omitempty"`
 
 	RemoteAccessUsersData string                                `cli:"users" mapconv:"-"`
 	RemoteAccessUsers     *[]*sacloud.VPCRouterRemoteAccessUser `cli:"-" mapconv:",omitempty"`
@@ -52,17 +57,6 @@ type routerSettingUpdate struct {
 	StaticRoute     *[]*sacloud.VPCRouterStaticRoute `cli:"-" mapconv:",omitempty"`
 
 	SyslogHost *string
-}
-
-type PPTPServerUpdate struct {
-	RangeStart *string
-	RangeStop  *string
-}
-
-type L2TPIPsecServer struct {
-	RangeStart      *string
-	RangeStop       *string
-	PreSharedSecret *string
 }
 
 func (r *routerSettingUpdate) Customize(_ cli.Context) error {
@@ -119,6 +113,29 @@ func (r *routerSettingUpdate) Customize(_ cli.Context) error {
 			r.DHCPStaticMapping = &[]*sacloud.VPCRouterDHCPStaticMapping{}
 		}
 		*r.DHCPStaticMapping = append(*r.DHCPStaticMapping, dhcpStaticMapping...)
+	}
+
+	if r.PPTPServerData != "" {
+		var pptp sacloud.VPCRouterPPTPServer
+		if err := util.MarshalJSONFromPathOrContent(r.PPTPServerData, &pptp); err != nil {
+			return err
+		}
+		*r.PPTPServer = pptp
+	}
+
+	if r.L2TPIPsecServerData != "" {
+		var l2tp sacloud.VPCRouterL2TPIPsecServer
+		if err := util.MarshalJSONFromPathOrContent(r.L2TPIPsecServerData, &l2tp); err != nil {
+			return err
+		}
+		*r.L2TPIPsecServer = l2tp
+	}
+	if r.WireGuardData != "" {
+		var wireGuard sacloud.VPCRouterWireGuard
+		if err := util.MarshalJSONFromPathOrContent(r.WireGuardData, &wireGuard); err != nil {
+			return err
+		}
+		*r.WireGuard = wireGuard
 	}
 
 	if r.RemoteAccessUsersData != "" {

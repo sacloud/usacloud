@@ -49,21 +49,6 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("internet-connection-enabled") {
 		p.RouterSetting.InternetConnectionEnabled = nil
 	}
-	if !fs.Changed("pptp-range-start") {
-		p.RouterSetting.PPTPServer.RangeStart = nil
-	}
-	if !fs.Changed("pptp-range-stop") {
-		p.RouterSetting.PPTPServer.RangeStop = nil
-	}
-	if !fs.Changed("l2tp-range-start") {
-		p.RouterSetting.L2TPIPsecServer.RangeStart = nil
-	}
-	if !fs.Changed("l2tp-range-stop") {
-		p.RouterSetting.L2TPIPsecServer.RangeStop = nil
-	}
-	if !fs.Changed("l2tp-pre-shared-secret") {
-		p.RouterSetting.L2TPIPsecServer.PreSharedSecret = nil
-	}
 	if !fs.Changed("syslog-host") {
 		p.RouterSetting.SyslogHost = nil
 	}
@@ -94,21 +79,6 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.RouterSetting.InternetConnectionEnabled == nil {
 		p.RouterSetting.InternetConnectionEnabled = pointer.NewBool(false)
 	}
-	if p.RouterSetting.PPTPServer.RangeStart == nil {
-		p.RouterSetting.PPTPServer.RangeStart = pointer.NewString("")
-	}
-	if p.RouterSetting.PPTPServer.RangeStop == nil {
-		p.RouterSetting.PPTPServer.RangeStop = pointer.NewString("")
-	}
-	if p.RouterSetting.L2TPIPsecServer.RangeStart == nil {
-		p.RouterSetting.L2TPIPsecServer.RangeStart = pointer.NewString("")
-	}
-	if p.RouterSetting.L2TPIPsecServer.RangeStop == nil {
-		p.RouterSetting.L2TPIPsecServer.RangeStop = pointer.NewString("")
-	}
-	if p.RouterSetting.L2TPIPsecServer.PreSharedSecret == nil {
-		p.RouterSetting.L2TPIPsecServer.PreSharedSecret = pointer.NewString("")
-	}
 	if p.RouterSetting.SyslogHost == nil {
 		p.RouterSetting.SyslogHost = pointer.NewString("")
 	}
@@ -136,11 +106,9 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.RouterSetting.FirewallData, "firewall", "", p.RouterSetting.FirewallData, "")
 	fs.StringVarP(&p.RouterSetting.DHCPServerData, "dhcp-server", "", p.RouterSetting.DHCPServerData, "")
 	fs.StringVarP(&p.RouterSetting.DHCPStaticMappingData, "dhcp-static-mapping", "", p.RouterSetting.DHCPStaticMappingData, "")
-	fs.StringVarP(p.RouterSetting.PPTPServer.RangeStart, "pptp-range-start", "", "", "")
-	fs.StringVarP(p.RouterSetting.PPTPServer.RangeStop, "pptp-range-stop", "", "", "")
-	fs.StringVarP(p.RouterSetting.L2TPIPsecServer.RangeStart, "l2tp-range-start", "", "", "")
-	fs.StringVarP(p.RouterSetting.L2TPIPsecServer.RangeStop, "l2tp-range-stop", "", "", "")
-	fs.StringVarP(p.RouterSetting.L2TPIPsecServer.PreSharedSecret, "l2tp-pre-shared-secret", "", "", "")
+	fs.StringVarP(&p.RouterSetting.PPTPServerData, "pptp", "", p.RouterSetting.PPTPServerData, "")
+	fs.StringVarP(&p.RouterSetting.L2TPIPsecServerData, "l2tp", "", p.RouterSetting.L2TPIPsecServerData, "")
+	fs.StringVarP(&p.RouterSetting.WireGuardData, "wireguard", "", p.RouterSetting.WireGuardData, "")
 	fs.StringVarP(&p.RouterSetting.RemoteAccessUsersData, "users", "", p.RouterSetting.RemoteAccessUsersData, "")
 	fs.StringVarP(&p.RouterSetting.SiteToSiteIPsecVPNData, "site-to-site-vpn", "", p.RouterSetting.SiteToSiteIPsecVPNData, "")
 	fs.StringVarP(&p.RouterSetting.StaticRouteData, "static-route", "", p.RouterSetting.StaticRouteData, "")
@@ -184,17 +152,15 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("dhcp-static-mapping"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("firewall"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("internet-connection-enabled"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("l2tp-pre-shared-secret"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("l2tp-range-start"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("l2tp-range-stop"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("l2tp"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("port-forwarding"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("pptp-range-start"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("pptp-range-stop"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("pptp"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("site-to-site-vpn"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("static-nat"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("static-route"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("syslog-host"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("users"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("wireguard"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Vpc-Router-specific options",
 			Flags: fs,

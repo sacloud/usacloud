@@ -39,12 +39,17 @@ type routerSetting struct {
 	DHCPStaticMappingData string                                `cli:"dhcp-static-mapping" mapconv:"-" json:"-"`
 	DHCPStaticMapping     []*sacloud.VPCRouterDHCPStaticMapping `cli:"-" json:",omitempty"`
 
-	PPTPServer sacloud.VPCRouterPPTPServer `cli:"pptp" mapconv:",omitempty" json:",omitempty"`
+	PPTPServerData string                       `cli:"pptp" mapconv:"-" json:"-"`
+	PPTPServer     *sacloud.VPCRouterPPTPServer `cli:"-" json:",omitempty"`
 
-	L2TPIPsecServer sacloud.VPCRouterL2TPIPsecServer `cli:"l2tp" mapconv:",omitempty" json:",omitempty"`
+	L2TPIPsecServerData string                            `cli:"l2tp" mapconv:"-" json:"-"`
+	L2TPIPsecServer     *sacloud.VPCRouterL2TPIPsecServer `cli:"-" json:",omitempty"`
 
 	RemoteAccessUsersData string                               `cli:"users" mapconv:"-" json:"-"`
 	RemoteAccessUsers     []*sacloud.VPCRouterRemoteAccessUser `cli:"-" json:",omitempty"`
+
+	WireGuardData string                      `cli:"wireguard" mapconv:"-" json:"-"`
+	WireGuard     *sacloud.VPCRouterWireGuard `cli:"-" json:",omitempty"`
 
 	SiteToSiteIPsecVPNData string                                 `cli:"site-to-site-vpn" mapconv:"-" json:"-"`
 	SiteToSiteIPsecVPN     []*sacloud.VPCRouterSiteToSiteIPsecVPN `cli:"-" json:",omitempty"`
@@ -94,6 +99,28 @@ func (r *routerSetting) Customize(_ cli.Context) error {
 			return err
 		}
 		r.DHCPStaticMapping = append(r.DHCPStaticMapping, dhcpStaticMapping...)
+	}
+
+	if r.PPTPServerData != "" {
+		var pptp sacloud.VPCRouterPPTPServer
+		if err := util.MarshalJSONFromPathOrContent(r.PPTPServerData, &pptp); err != nil {
+			return err
+		}
+		r.PPTPServer = &pptp
+	}
+	if r.L2TPIPsecServerData != "" {
+		var l2tp sacloud.VPCRouterL2TPIPsecServer
+		if err := util.MarshalJSONFromPathOrContent(r.L2TPIPsecServerData, &l2tp); err != nil {
+			return err
+		}
+		r.L2TPIPsecServer = &l2tp
+	}
+	if r.WireGuardData != "" {
+		var wireGuard sacloud.VPCRouterWireGuard
+		if err := util.MarshalJSONFromPathOrContent(r.WireGuardData, &wireGuard); err != nil {
+			return err
+		}
+		r.WireGuard = &wireGuard
 	}
 
 	if r.RemoteAccessUsersData != "" {
