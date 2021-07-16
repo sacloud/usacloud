@@ -4,6 +4,7 @@
 
 FEATURES:
 
+  * ELB: SSLPolicy #843 (@yamamoto-febc)
   * ELB: rule-base-balancing #842 (@yamamoto-febc)
   * ELB: 400,000CPS plan #841 (@yamamoto-febc)
   * ELB: SubjectAltNames #840 (@yamamoto-febc)
