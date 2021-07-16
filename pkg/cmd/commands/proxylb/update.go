@@ -60,6 +60,7 @@ type updateParameter struct {
 	LetsEncrypt   updateParameterLetsEncrypt   `mapconv:",omitempty"`
 	StickySession updateParameterStickySession `mapconv:",omitempty"`
 	Gzip          updateParameterGzip          `mapconv:",omitempty"`
+	Syslog        updateParameterSyslog        `mapconv:",omitempty"`
 	Timeout       updateParameterTimeout       `cli:",squash"`
 
 	BindPortsData *string                     `cli:"bind-ports" mapconv:"-"`
@@ -102,6 +103,11 @@ type updateParameterStickySession struct {
 
 type updateParameterGzip struct {
 	Enabled *bool
+}
+
+type updateParameterSyslog struct {
+	Server *string `validate:"omitempty,ipv4"`
+	Port   *int    `validate:"omitempty,min=0,max=65535"`
 }
 
 type updateParameterTimeout struct {
@@ -174,6 +180,10 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		},
 		Gzip: updateParameterGzip{
 			Enabled: pointer.NewBool(true),
+		},
+		Syslog: updateParameterSyslog{
+			Server: &examples.IPAddress,
+			Port:   pointer.NewInt(514),
 		},
 		Timeout: updateParameterTimeout{
 			InactiveSec: pointer.NewInt(10),
