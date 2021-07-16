@@ -4,6 +4,7 @@
 
 FEATURES:
 
+  * ELB: SubjectAltNames #840 (@yamamoto-febc)
   * SimpleMonitor: Timeout #839 (@yamamoto-febc)
 
 DEVELOPMENT:
