@@ -4,6 +4,7 @@
 
 FEATURES:
 
+  * SimpleMonitor: Added LatestLogs field #848 (@yamamoto-febc) 
   * EnhancedDB: added enhanced-db sub-commands #847 (@yamamoto-febc)
   * VPCRouter: WireGuard #846 (@yamamoto-febc) 
   * ELB: Syslog #844 (@yamamoto-febc)
@@ -16,6 +17,7 @@ FEATURES:
 DEVELOPMENT:
 
   * Update dev env #836 (@yamamoto-febc)
+  * libsacloud v2.21.0 #848 (@yamamoto-febc) 
 
 ## 1.1.6 (2021-04-09)
 
