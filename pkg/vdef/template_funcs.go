@@ -68,6 +68,17 @@ var TemplateFuncMap = template.FuncMap{
 		v := fmt.Sprintf("%v", value)
 		return strings.ReplaceAll(v, "\n", "\\n")
 	},
+	"first_line": func(value interface{}) interface{} {
+		if value == nil {
+			return nil
+		}
+		if v, ok := value.([]string); ok {
+			if len(v) > 0 {
+				return v[0]
+			}
+		}
+		return ""
+	},
 	"weekdays": func(value interface{}) interface{} {
 		if value == nil {
 			return nil
