@@ -4,6 +4,7 @@
 
 FEATURES:
 
+  * EnhancedDB: added enhanced-db sub-commands #847 (@yamamoto-febc)
   * VPCRouter: WireGuard #846 (@yamamoto-febc) 
   * ELB: Syslog #844 (@yamamoto-febc)
   * ELB: SSLPolicy #843 (@yamamoto-febc)
