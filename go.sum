@@ -286,8 +286,8 @@ github.com/russross/blackfriday/v2 v2.0.1/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQD
 github.com/ryanuber/columnize v0.0.0-20160712163229-9b3edd62028f/go.mod h1:sm1tb6uqfes/u+d4ooFouqFdy9/2g9QGwK3SQygK0Ts=
 github.com/sacloud/ftps v1.1.0 h1:cYv+b6qhrIT8msfx64XXRJzbv5S+Dqwb/rXa5Y641XA=
 github.com/sacloud/ftps v1.1.0/go.mod h1:h4awhOi3PEyhKLj1FpXjoVV5yVkmRUU+d5L95EwX2JU=
-github.com/sacloud/libsacloud/v2 v2.20.2 h1:sYnPSN64ZLSTOWswX+6SyQPIDoaO9Yzx4IHuDuetyQE=
-github.com/sacloud/libsacloud/v2 v2.20.2/go.mod h1:EPYsXh1SxP10pD6J7a0nK67gd03wAq413TSfCfl5sjc=
+github.com/sacloud/libsacloud/v2 v2.21.0 h1:558p5qLiAMF7La965aWmnb2RfXZR3lLE7YxB/21DjHY=
+github.com/sacloud/libsacloud/v2 v2.21.0/go.mod h1:EPYsXh1SxP10pD6J7a0nK67gd03wAq413TSfCfl5sjc=
 github.com/sean-/seed v0.0.0-20170313163322-e2103e2c3529/go.mod h1:DxrIzT+xaE7yg65j358z/aeFdxmN0P9QXhEzd20vsDc=
 github.com/shurcooL/sanitized_anchor_name v1.0.0/go.mod h1:1NzhyTcUVG4SuEtjjoZeVRXNmyL/1OwPU0+IJeTBvfc=
 github.com/sirupsen/logrus v1.2.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=

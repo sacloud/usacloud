@@ -32,6 +32,7 @@ var healthCommand = &core.Command{
 		{Name: "LastCheckedAt"},
 		{Name: "LastHealthChangedAt"},
 		{Name: "Health"},
+		{Name: "LatestLogs", Template: `{{ .LatestLogs | first_line | ellipsis 100 }}`},
 	},
 
 	SelectorType: core.SelectorTypeRequireMulti,
