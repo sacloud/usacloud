@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.1 (Unreleased)
+
+DEVELOPMENTS:
+  * libsacloud v2.21.1 #849 (@yamamoto-febc)
+
 ## 1.2.0 (2021-07-19)
 
 FEATURES:
