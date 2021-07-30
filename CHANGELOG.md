@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.0 (Unreleased)
+## 1.3.0 (2021-07-30)
 
 FEATURES:
 
