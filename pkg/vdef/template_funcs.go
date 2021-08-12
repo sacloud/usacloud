@@ -17,15 +17,15 @@ package vdef
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"strings"
 	"text/template"
 	"time"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
-
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
-
+	"github.com/mitchellh/go-homedir"
 	"github.com/sacloud/libsacloud/v2/pkg/size"
+	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/libsacloud/v2/sacloud/types"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -128,6 +128,25 @@ var TemplateFuncMap = template.FuncMap{
 		}
 		v := time.Unix(value/1000, 0)
 		return &v
+	},
+	"file": func(path string) string {
+		if path == "" {
+			return ""
+		}
+
+		poc, err := homedir.Expand(path)
+		if err != nil {
+			return ""
+		}
+
+		data, err := os.ReadFile(poc)
+		if err != nil {
+			return ""
+		}
+		return string(data)
+	},
+	"trim_space": func(s string) string {
+		return strings.TrimSpace(s)
 	},
 }
 

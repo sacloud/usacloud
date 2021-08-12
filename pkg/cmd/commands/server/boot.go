@@ -15,8 +15,14 @@
 package server
 
 import (
+	"fmt"
+
+	"github.com/ghodss/yaml"
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/util"
+	"github.com/sacloud/usacloud/pkg/validate"
 )
 
 var bootCommand = &core.Command{
@@ -32,6 +38,7 @@ var bootCommand = &core.Command{
 	ParameterInitializer: func() interface{} {
 		return newBootParameter()
 	},
+	ValidateFunc: validateBootParameter,
 }
 
 type bootParameter struct {
@@ -39,6 +46,8 @@ type bootParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+
+	UserData string `mapconv:",filters=path_or_content"`
 
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
@@ -49,4 +58,32 @@ func newBootParameter() *bootParameter {
 
 func init() {
 	Resource.AddCommand(bootCommand)
+}
+
+func validateBootParameter(_ cli.Context, parameter interface{}) error {
+	if err := validate.Exec(parameter); err != nil {
+		return err
+	}
+
+	p, ok := parameter.(*bootParameter)
+	if !ok {
+		return fmt.Errorf("invalid parameter: %v", parameter)
+	}
+
+	var errs []error
+	if p.UserData != "" {
+		userData, err := util.BytesFromPathOrContent(p.UserData)
+		if err != nil {
+			errs = append(errs, err)
+		}
+
+		if len(userData) > 0 {
+			v := make(map[string]interface{})
+			err := yaml.Unmarshal(userData, &v)
+			if err != nil {
+				errs = append(errs, err)
+			}
+		}
+	}
+	return validate.NewValidationError(errs...)
 }
