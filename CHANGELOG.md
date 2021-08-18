@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.4.0 (Unreleased)
+## 1.4.0 (2021-08-18)
 
 FEATURES:
 
