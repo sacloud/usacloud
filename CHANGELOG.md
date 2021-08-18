@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0 (Unreleased)
+
+FEATURES:
+
+* cloud-init #851 (@yamamoto-febc)
+
 ## 1.3.0 (2021-07-30)
 
 FEATURES:
