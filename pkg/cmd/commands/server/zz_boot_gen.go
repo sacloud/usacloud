@@ -33,6 +33,7 @@ func (p *bootParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
+	fs.StringVarP(&p.UserData, "user-data", "", p.UserData, "")
 	fs.BoolVarP(&p.NoWait, "no-wait", "", p.NoWait, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -47,6 +48,16 @@ func (p *bootParameter) normalizeFlagName(_ *pflag.FlagSet, name string) pflag.N
 
 func (p *bootParameter) buildFlagsUsage(cmd *cobra.Command) {
 	var sets []*core.FlagSet
+	{
+		var fs *pflag.FlagSet
+		fs = pflag.NewFlagSet("server", pflag.ContinueOnError)
+		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("user-data"))
+		sets = append(sets, &core.FlagSet{
+			Title: "Server-specific options",
+			Flags: fs,
+		})
+	}
 	{
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("zone", pflag.ContinueOnError)
