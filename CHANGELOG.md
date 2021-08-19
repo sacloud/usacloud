@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1 (Unreleased)
+
+FIXES:
+
+  * Fixed user-data handling #854 (@yamamoto-febc)
+
 ## 1.4.0 (2021-08-18)
 
 FEATURES:
