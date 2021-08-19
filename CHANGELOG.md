@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.4.1 (Unreleased)
+## 1.4.1 (2021-08-19)
 
 FIXES:
 
