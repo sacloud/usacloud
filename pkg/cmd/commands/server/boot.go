@@ -47,7 +47,7 @@ type bootParameter struct {
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 
-	UserData string `mapconv:",filters=path_or_content"`
+	UserData string `mapconv:",omitempty,filters=path_or_content"`
 
 	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
