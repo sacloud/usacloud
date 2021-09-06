@@ -56,6 +56,7 @@ type createParameter struct {
 	LetsEncrypt    createParameterLetsEncrypt
 	StickySession  createParameterStickySession `mapconv:",omitempty"`
 	Gzip           createParameterGzip          `mapconv:",omitempty"`
+	ProxyProtocol  createParameterProxyProtocol `mapconv:",omitempty"`
 	Syslog         createParameterSyslog        `mapconv:",omitempty"`
 	Timeout        createParameterTimeout       `cli:",squash"`
 	UseVIPFailover bool                         `cli:"vip-fail-over"`
@@ -101,6 +102,10 @@ type createParameterStickySession struct {
 }
 
 type createParameterGzip struct {
+	Enabled bool
+}
+
+type createParameterProxyProtocol struct {
 	Enabled bool
 }
 
@@ -181,6 +186,9 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 			Enabled: true,
 		},
 		Gzip: createParameterGzip{
+			Enabled: true,
+		},
+		ProxyProtocol: createParameterProxyProtocol{
 			Enabled: true,
 		},
 		Syslog: createParameterSyslog{
