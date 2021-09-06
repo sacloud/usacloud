@@ -77,6 +77,9 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("gzip-enabled") {
 		p.Gzip.Enabled = nil
 	}
+	if !fs.Changed("proxy-protocol-enabled") {
+		p.ProxyProtocol.Enabled = nil
+	}
 	if !fs.Changed("syslog-server") {
 		p.Syslog.Server = nil
 	}
@@ -149,6 +152,9 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.Gzip.Enabled == nil {
 		p.Gzip.Enabled = pointer.NewBool(false)
 	}
+	if p.ProxyProtocol.Enabled == nil {
+		p.ProxyProtocol.Enabled = pointer.NewBool(false)
+	}
 	if p.Syslog.Server == nil {
 		p.Syslog.Server = pointer.NewString("")
 	}
@@ -194,6 +200,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.StickySession.Method, "sticky-session-method", "", "", "")
 	fs.BoolVarP(p.StickySession.Enabled, "sticky-session-enabled", "", false, "")
 	fs.BoolVarP(p.Gzip.Enabled, "gzip-enabled", "", false, "")
+	fs.BoolVarP(p.ProxyProtocol.Enabled, "proxy-protocol-enabled", "", false, "")
 	fs.StringVarP(p.Syslog.Server, "syslog-server", "", "", "")
 	fs.IntVarP(p.Syslog.Port, "syslog-port", "", 0, "")
 	fs.IntVarP(p.Timeout.InactiveSec, "inactive-sec", "", 0, "")
@@ -248,6 +255,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("lets-encrypt-enabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("lets-encrypt-subject-alt-names"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("proxy-protocol-enabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("rules"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("servers"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("sorry-server-ip-address"))
