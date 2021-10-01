@@ -232,6 +232,11 @@ var definitions = map[string][]*definition{
 		{key: types.SimpleMonitorProtocols.POP3.String(), value: types.SimpleMonitorProtocols.POP3},
 		{key: types.SimpleMonitorProtocols.SNMP.String(), value: types.SimpleMonitorProtocols.SNMP},
 		{key: types.SimpleMonitorProtocols.SSLCertificate.String(), value: types.SimpleMonitorProtocols.SSLCertificate},
+		{key: types.SimpleMonitorProtocols.FTP.String(), value: types.SimpleMonitorProtocols.FTP},
+	},
+	"simple_monitor_ftps": {
+		{key: types.SimpleMonitorFTPSValues.Explicit.String(), value: types.SimpleMonitorFTPSValues.Explicit},
+		{key: types.SimpleMonitorFTPSValues.Implicit.String(), value: types.SimpleMonitorFTPSValues.Implicit},
 	},
 	"vpc_router_plan": {
 		{key: "standard", value: types.VPCRouterPlans.Standard},
