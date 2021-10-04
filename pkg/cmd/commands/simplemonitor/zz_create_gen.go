@@ -45,7 +45,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.IntVarP(&p.DelayLoop, "delay-loop", "", p.DelayLoop, "")
 	fs.IntVarP(&p.Timeout, "timeout", "", p.Timeout, "")
 	fs.BoolVarP(&p.Enabled, "enabled", "", p.Enabled, "")
-	fs.StringVarP(&p.HealthCheck.Protocol, "health-check-protocol", "", p.HealthCheck.Protocol, "(*required) options: [http/https/ping/tcp/dns/ssh/smtp/pop3/snmp/sslcertificate]")
+	fs.StringVarP(&p.HealthCheck.Protocol, "health-check-protocol", "", p.HealthCheck.Protocol, "(*required) options: [http/https/ping/tcp/dns/ssh/smtp/pop3/snmp/sslcertificate/ftp]")
 	fs.IntVarP(&p.HealthCheck.Port, "health-check-port", "", p.HealthCheck.Port, "")
 	fs.StringVarP(&p.HealthCheck.Path, "health-check-path", "", p.HealthCheck.Path, "")
 	fs.IntVarP(&p.HealthCheck.Status, "health-check-status", "", p.HealthCheck.Status, "")
@@ -61,6 +61,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.HealthCheck.OID, "health-check-oid", "", p.HealthCheck.OID, "")
 	fs.IntVarP(&p.HealthCheck.RemainingDays, "health-check-remaining-days", "", p.HealthCheck.RemainingDays, "")
 	fs.BoolVarP(&p.HealthCheck.HTTP2, "health-check-http2", "", p.HealthCheck.HTTP2, "")
+	fs.StringVarP(&p.HealthCheck.FTPS, "health-check-ftps", "", p.HealthCheck.FTPS, "options: [explicit/implicit]")
 	fs.BoolVarP(&p.NotifyEmailEnabled, "notify-email-enabled", "", p.NotifyEmailEnabled, "")
 	fs.BoolVarP(&p.NotifyEmailHTML, "notify-email-html", "", p.NotifyEmailHTML, "")
 	fs.BoolVarP(&p.NotifySlackEnabled, "notify-slack-enabled", "", p.NotifySlackEnabled, "")
@@ -106,6 +107,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-community"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-contains-string"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-expected-data"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-ftps"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-host"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-http2"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-oid"))
@@ -170,7 +172,8 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
-	cmd.RegisterFlagCompletionFunc("health-check-protocol", util.FlagCompletionFunc("http", "https", "ping", "tcp", "dns", "ssh", "smtp", "pop3", "snmp", "sslcertificate"))
+	cmd.RegisterFlagCompletionFunc("health-check-protocol", util.FlagCompletionFunc("http", "https", "ping", "tcp", "dns", "ssh", "smtp", "pop3", "snmp", "sslcertificate", "ftp"))
+	cmd.RegisterFlagCompletionFunc("health-check-ftps", util.FlagCompletionFunc("explicit", "implicit"))
 
 }
 
