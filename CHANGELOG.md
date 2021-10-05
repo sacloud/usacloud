@@ -1,9 +1,11 @@
 # Changelog
 
-# 1.4.2 (Unreleased)
+# 1.5.0 (Unreleased)
 
 FEATURES:
 
+  * Managed PKI #863 (@yamamoto-febc)
+  * SimpleMonitor: FTP/FTPS #862 (@yamamoto-febc)
   * libsacloud v2.25.1 - debian11 #859 (@yamamoto-febc)
   * libsacloud v2.24 - ELB.ProxyProtocol.Enabled #856 (@yamamoto-febc)
 
