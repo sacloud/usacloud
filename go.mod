@@ -18,7 +18,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.0-20180506121414-d4647c9c7a84
 	github.com/rhysd/go-github-selfupdate v1.2.3
-	github.com/sacloud/libsacloud/v2 v2.25.2-0.20210930043551-b491c1c2c6bd
+	github.com/sacloud/libsacloud/v2 v2.26.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/pflag v1.0.5
