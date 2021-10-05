@@ -6,6 +6,10 @@ FEATURES:
 
   * Managed PKI #863 (@yamamoto-febc)
   * SimpleMonitor: FTP/FTPS #862 (@yamamoto-febc)
+
+DEVELOPMENTS:
+
+  * libsacloud v2.26.0 #865 (@yamamoto-febc)
   * libsacloud v2.25.1 - debian11 #859 (@yamamoto-febc)
   * libsacloud v2.24 - ELB.ProxyProtocol.Enabled #856 (@yamamoto-febc)
 
