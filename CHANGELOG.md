@@ -1,6 +1,6 @@
 # Changelog
 
-# 1.5.0 (Unreleased)
+# 1.5.0 (2021-10-05)
 
 FEATURES:
 
