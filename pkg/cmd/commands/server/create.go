@@ -60,6 +60,7 @@ type createParameter struct {
 
 	CPU        int    `cli:"cpu,aliases=core,category=plan,order=10" validate:"required"`
 	Memory     int    `cli:"memory,category=plan,order=20" mapconv:"MemoryGB" validate:"required"`
+	GPU        int    `cli:"gpu,category=plan,order=30"`
 	Commitment string `cli:",options=server_plan_commitment,category=plan,order=30" mapconv:",filters=server_plan_commitment_to_value" validate:"required,server_plan_commitment"`
 	Generation string `cli:",options=server_plan_generation,category=plan,order=40" mapconv:",filters=server_plan_generation_to_value" validate:"required,server_plan_generation"`
 

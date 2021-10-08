@@ -31,6 +31,9 @@ var defaultColumnDefs = []output.ColumnDef{
 		Name:     "Memory",
 		Template: `{{ .MemoryMB | mib_to_gib }}`,
 	},
+	{
+		Name: "GPU",
+	},
 
 	{
 		Name:     "IPAddress",
