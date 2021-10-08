@@ -54,6 +54,7 @@ type updateParameter struct {
 
 	CPU        *int    `cli:"cpu,aliases=core,category=plan,order=10"`
 	Memory     *int    `cli:"memory,category=plan,order=20" mapconv:"MemoryGB"`
+	GPU        *int    `cli:"gpu,category=plan,order=30"`
 	Commitment *string `cli:",options=server_plan_commitment,category=plan,order=30" mapconv:",omitempty,filters=server_plan_commitment_to_value" validate:"omitempty,server_plan_commitment"`
 	Generation *string `cli:",options=server_plan_generation,category=plan,order=40" mapconv:",omitempty,filters=server_plan_generation_to_value" validate:"omitempty,server_plan_generation"`
 

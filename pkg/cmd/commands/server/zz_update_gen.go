@@ -44,6 +44,9 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("memory") {
 		p.Memory = nil
 	}
+	if !fs.Changed("gpu") {
+		p.GPU = nil
+	}
 	if !fs.Changed("commitment") {
 		p.Commitment = nil
 	}
@@ -80,6 +83,9 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.Memory == nil {
 		p.Memory = pointer.NewInt(0)
 	}
+	if p.GPU == nil {
+		p.GPU = pointer.NewInt(0)
+	}
 	if p.Commitment == nil {
 		p.Commitment = pointer.NewString("")
 	}
@@ -111,6 +117,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
 	fs.IntVarP(p.CPU, "cpu", "", 0, "(aliases: --core)")
 	fs.IntVarP(p.Memory, "memory", "", 0, "")
+	fs.IntVarP(p.GPU, "gpu", "", 0, "")
 	fs.StringVarP(p.Commitment, "commitment", "", "", "options: [standard/dedicatedcpu]")
 	fs.StringVarP(p.Generation, "generation", "", "", "options: [default/g100/g200]")
 	fs.StringVarP(p.InterfaceDriver, "interface-driver", "", "", "options: [interface_dirver]")
@@ -161,6 +168,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("cpu"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("memory"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("commitment"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("gpu"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generation"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Plan options",
