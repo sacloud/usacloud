@@ -1,5 +1,10 @@
 # Changelog
 
+# 1.6.0 (Unreleased)
+
+FEATURES:
+  * GPU plan #866 (@yamamoto-febc)
+
 # 1.5.0 (2021-10-05)
 
 FEATURES:
