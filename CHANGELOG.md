@@ -1,5 +1,10 @@
 # Changelog
 
+# 1.6.1 (Unreleased)
+
+FEATURES:
+  * libsacloud v2.27 - miracle linux #867 (@yamamoto-febc)
+
 # 1.6.0 (2021-10-08)
 
 FEATURES:
