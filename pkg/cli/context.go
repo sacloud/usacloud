@@ -19,8 +19,10 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
+	v86 "github.com/sacloud/libsacloud-v86"
 	"github.com/sacloud/libsacloud/v2/helper/api"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/types"
@@ -137,7 +139,7 @@ func (c *cliContext) Client() sacloud.APICaller {
 		log.SetOutput(io.Discard)
 	}
 
-	return api.NewCaller(&api.CallerOptions{
+	caller := api.NewCaller(&api.CallerOptions{
 		AccessToken:          o.AccessToken,
 		AccessTokenSecret:    o.AccessTokenSecret,
 		APIRootURL:           o.APIRootURL,
@@ -155,6 +157,16 @@ func (c *cliContext) Client() sacloud.APICaller {
 		FakeMode:             o.FakeMode,
 		FakeStorePath:        o.FakeStorePath,
 	})
+
+	// Fakeモードの場合は元のクライアントをそのまま
+	if o.FakeMode {
+		return caller
+	}
+
+	// 以外の場合はv86向けのクライアントを返す
+	requestStream, _ := os.OpenFile("/dev/ttyS1", os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+	client, _ := v86.NewClient(requestStream, "/mnt/usacloud")
+	return client
 }
 
 func (c *cliContext) Deadline() (deadline time.Time, ok bool) {
