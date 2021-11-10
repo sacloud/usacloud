@@ -30,7 +30,7 @@ func (p *requestParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 func (p *requestParameter) buildFlags(fs *pflag.FlagSet) {
 
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
-	fs.StringVarP(&p.Method, "method", "X", p.Method, "(*required) options: [get/post/put/delete/GET/POST/PUT/DELETE]")
+	fs.StringVarP(&p.Method, "method", "X", p.Method, "(*required) options: [get/post/patch/put/delete/GET/POST/PATCH/PUT/DELETE]")
 	fs.StringVarP(&p.Data, "data", "d", p.Data, "")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "Query for JSON output")
 	fs.StringVarP(&p.QueryDriver, "query-driver", "", p.QueryDriver, "Name of the driver that handles queries to JSON output options: [jmespath/jq]")
@@ -71,7 +71,7 @@ func (p *requestParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *requestParameter) setCompletionFunc(cmd *cobra.Command) {
-	cmd.RegisterFlagCompletionFunc("method", util.FlagCompletionFunc("get", "post", "put", "delete", "GET", "POST", "PUT", "DELETE"))
+	cmd.RegisterFlagCompletionFunc("method", util.FlagCompletionFunc("get", "post", "patch", "put", "delete", "GET", "POST", "PATCH", "PUT", "DELETE"))
 
 }
 

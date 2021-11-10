@@ -207,10 +207,12 @@ var definitions = map[string][]*definition{
 	"rest_method": {
 		{key: "get", value: "get"},
 		{key: "post", value: "post"},
+		{key: "patch", value: "patch"},
 		{key: "put", value: "put"},
 		{key: "delete", value: "delete"},
 		{key: "GET", value: "get"},
 		{key: "POST", value: "post"},
+		{key: "PATCH", value: "patch"},
 		{key: "PUT", value: "put"},
 		{key: "DELETE", value: "delete"},
 	},
