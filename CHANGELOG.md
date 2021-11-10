@@ -1,5 +1,11 @@
 # Changelog
 
+# 1.6.2 (Unreleased)
+
+FEATURES:
+  * rest: added PATCH method #871 (@yamamoto-febc)
+  * 
+
 # 1.6.1 (2021-10-14)
 
 FEATURES:
