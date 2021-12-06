@@ -1,3 +1,4 @@
+//go:build wasm
 // +build wasm
 
 // Copyright 2017-2021 The Usacloud Authors
