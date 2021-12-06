@@ -4,7 +4,7 @@
 
 FEATURES:
   * rest: added PATCH method #871 (@yamamoto-febc)
-  * 
+  * Go 1.17 #874 (@yamamoto-febc)
 
 # 1.6.1 (2021-10-14)
 
