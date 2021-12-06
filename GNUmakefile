@@ -43,7 +43,7 @@ tools:
 	go install golang.org/x/tools/cmd/stringer@latest
 	go install github.com/sacloud/addlicense@latest
 	go install github.com/client9/misspell/cmd/misspell@latest
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v1.38.0/install.sh | sh -s -- -b $$(go env GOPATH)/bin v1.38.0
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v1.43.0/install.sh | sh -s -- -b $$(go env GOPATH)/bin v1.43.0
 
 .PHONY: gen _gen
 gen: _gen set-license fmt goimports
