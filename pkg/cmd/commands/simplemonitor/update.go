@@ -77,6 +77,7 @@ type updateParameterHealthCheck struct {
 	RemainingDays     *int    `json:",omitempty"`
 	HTTP2             *bool   `cli:"http2" json:",omitempty"`
 	FTPS              *string `cli:",options=simple_monitor_ftps" mapconv:",omitempty,filters=simple_monitor_ftps_to_value" validate:"omitempty,simple_monitor_ftps" json:",omitempty"`
+	VerifySNI         *bool   `cli:"verify-sni" json:",omitempty"`
 }
 
 func newUpdateParameter() *updateParameter {
@@ -107,6 +108,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 			BasicAuthPassword: pointer.NewString("password"),
 			HTTP2:             pointer.NewBool(true),
 			FTPS:              pointer.NewString(examples.OptionsString("simple_monitor_ftps")),
+			VerifySNI:         pointer.NewBool(true),
 		},
 		NotifyEmailEnabled: pointer.NewBool(true),
 		NotifyEmailHTML:    pointer.NewBool(true),
