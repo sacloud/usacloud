@@ -3,7 +3,9 @@
 # 1.6.2 (Unreleased)
 
 FEATURES:
-  * SimpleMonitor: VerifySNI #875 (@yamamoto-febc)
+
+  * vpc-router: monitor-cpu #876 (@yamamoto-febc)
+  * simple-monitor: verify-sni parameter #875 (@yamamoto-febc)
   * rest: added PATCH method #871 (@yamamoto-febc)
   * Go 1.17 #874 (@yamamoto-febc)
 
