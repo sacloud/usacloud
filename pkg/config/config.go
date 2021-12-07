@@ -22,12 +22,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sacloud/usacloud/pkg/query"
-
-	"github.com/sacloud/usacloud/pkg/validate"
-
+	sacloudhttp "github.com/sacloud/go-http"
 	"github.com/sacloud/libsacloud/v2/sacloud"
 	"github.com/sacloud/libsacloud/v2/sacloud/profile"
+	"github.com/sacloud/usacloud/pkg/query"
+	"github.com/sacloud/usacloud/pkg/validate"
 	"github.com/spf13/pflag"
 )
 
@@ -120,13 +119,13 @@ func (o *Config) loadFromEnv() {
 		o.AcceptLanguage = stringFromEnv("SAKURACLOUD_ACCEPT_LANGUAGE", "")
 	}
 	if o.RetryMax <= 0 {
-		o.RetryMax = intFromEnv("SAKURACLOUD_RETRY_MAX", sacloud.APIDefaultRetryMax)
+		o.RetryMax = intFromEnv("SAKURACLOUD_RETRY_MAX", sacloudhttp.DefaultRetryMax)
 	}
 	if o.RetryWaitMax <= 0 {
-		o.RetryWaitMax = intFromEnv("SAKURACLOUD_RETRY_WAIT_MAX", 64)
+		o.RetryWaitMax = intFromEnv("SAKURACLOUD_RETRY_WAIT_MAX", int(sacloudhttp.DefaultRetryWaitMax.Seconds()))
 	}
 	if o.RetryWaitMin <= 0 {
-		o.RetryWaitMin = intFromEnv("SAKURACLOUD_RETRY_WAIT_MIN", 1)
+		o.RetryWaitMin = intFromEnv("SAKURACLOUD_RETRY_WAIT_MIN", int(sacloudhttp.DefaultRetryWaitMin.Seconds()))
 	}
 	if o.HTTPRequestTimeout <= 0 {
 		o.HTTPRequestTimeout = intFromEnv("SAKURACLOUD_API_REQUEST_TIMEOUT", 300)
