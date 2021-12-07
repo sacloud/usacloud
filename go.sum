@@ -294,6 +294,8 @@ github.com/sacloud/go-http v0.0.4 h1:+vgx/uCctcGiHMe8jE+qirMKd3+d73MNZXK7nrUo0po
 github.com/sacloud/go-http v0.0.4/go.mod h1:aYTXNuAnPmD6Ar3ktDaR1gPxJCPv2CqpppcYciy1hmo=
 github.com/sacloud/libsacloud/v2 v2.29.0 h1:/Bnz6dgwd4mefiHGc+cE6fQ6XTRsBrlov33Iyec5Mtc=
 github.com/sacloud/libsacloud/v2 v2.29.0/go.mod h1:QDsX+iHidP+o/AfOHvl44oeQew3cdfgoswqP2dQy2tk=
+github.com/sacloud/libsacloud/v2 v2.29.1-0.20211207014921-48ec6309065a h1:QVGVWXo31sb/IP/96w/FjX0WnnoMIRB438VnDJeL8h4=
+github.com/sacloud/libsacloud/v2 v2.29.1-0.20211207014921-48ec6309065a/go.mod h1:QDsX+iHidP+o/AfOHvl44oeQew3cdfgoswqP2dQy2tk=
 github.com/sean-/seed v0.0.0-20170313163322-e2103e2c3529/go.mod h1:DxrIzT+xaE7yg65j358z/aeFdxmN0P9QXhEzd20vsDc=
 github.com/shurcooL/sanitized_anchor_name v1.0.0/go.mod h1:1NzhyTcUVG4SuEtjjoZeVRXNmyL/1OwPU0+IJeTBvfc=
 github.com/sirupsen/logrus v1.2.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=
