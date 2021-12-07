@@ -1,6 +1,6 @@
 # Changelog
 
-# 1.6.2 (Unreleased)
+# 1.6.2 (2021-12-07)
 
 FEATURES:
 
