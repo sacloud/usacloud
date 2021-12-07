@@ -75,6 +75,7 @@ type createParameterHealthCheck struct {
 	RemainingDays     int    `json:",omitempty"`
 	HTTP2             bool   `cli:"http2" json:",omitempty"`
 	FTPS              string `cli:",options=simple_monitor_ftps" mapconv:",filters=simple_monitor_ftps_to_value" validate:"omitempty,simple_monitor_ftps" json:",omitempty"`
+	VerifySNI         bool   `cli:"verify-sni" json:",omitempty"`
 }
 
 func newCreateParameter() *createParameter {
@@ -110,6 +111,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 			BasicAuthPassword: "password",
 			HTTP2:             true,
 			FTPS:              examples.OptionsString("simple_monitor_ftps"),
+			VerifySNI:         true,
 		},
 		NotifyEmailEnabled: true,
 		NotifyEmailHTML:    true,
