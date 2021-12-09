@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.7.0 (Unreleased)
+
+  * libsacloud v2.30.0 - PostgreSQL 13 #877 (@yamamoto-febc)
+
 # 1.6.2 (2021-12-07)
 
 FEATURES:
