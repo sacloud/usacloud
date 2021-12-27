@@ -85,6 +85,7 @@ func (p *updateStandardParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.RouterSetting.FirewallData, "firewall", "", p.RouterSetting.FirewallData, "")
 	fs.StringVarP(&p.RouterSetting.DHCPServerData, "dhcp-server", "", p.RouterSetting.DHCPServerData, "")
 	fs.StringVarP(&p.RouterSetting.DHCPStaticMappingData, "dhcp-static-mapping", "", p.RouterSetting.DHCPStaticMappingData, "")
+	fs.StringVarP(&p.RouterSetting.DNSForwardingData, "dns-forwarding", "", p.RouterSetting.DNSForwardingData, "")
 	fs.StringVarP(&p.RouterSetting.PPTPServerData, "pptp", "", p.RouterSetting.PPTPServerData, "")
 	fs.StringVarP(&p.RouterSetting.L2TPIPsecServerData, "l2tp", "", p.RouterSetting.L2TPIPsecServerData, "")
 	fs.StringVarP(&p.RouterSetting.WireGuardData, "wireguard", "", p.RouterSetting.WireGuardData, "")
@@ -129,6 +130,7 @@ func (p *updateStandardParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("dhcp-server"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("dhcp-static-mapping"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("dns-forwarding"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("firewall"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("internet-connection-enabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("l2tp"))
