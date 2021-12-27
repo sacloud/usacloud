@@ -2,6 +2,10 @@
 
 # 1.7.0 (Unreleased)
 
+FEATURES:
+
+  * VPCRouter: DNS forwarding #879 (@yamamoto-febc)
+
 IMPROVEMENTS:
 
   * libsacloud v2.31.1 #878 (@yamamoto-febc)
