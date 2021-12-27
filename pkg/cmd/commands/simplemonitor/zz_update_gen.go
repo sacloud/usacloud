@@ -38,6 +38,12 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("delay-loop") {
 		p.DelayLoop = nil
 	}
+	if !fs.Changed("max-check-attempts") {
+		p.MaxCheckAttempts = nil
+	}
+	if !fs.Changed("retry-interval") {
+		p.RetryInterval = nil
+	}
 	if !fs.Changed("timeout") {
 		p.Timeout = nil
 	}
@@ -128,6 +134,12 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.DelayLoop == nil {
 		p.DelayLoop = pointer.NewInt(0)
 	}
+	if p.MaxCheckAttempts == nil {
+		p.MaxCheckAttempts = pointer.NewInt(0)
+	}
+	if p.RetryInterval == nil {
+		p.RetryInterval = pointer.NewInt(0)
+	}
 	if p.Timeout == nil {
 		p.Timeout = pointer.NewInt(0)
 	}
@@ -216,6 +228,8 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
 	fs.IntVarP(p.DelayLoop, "delay-loop", "", 0, "")
+	fs.IntVarP(p.MaxCheckAttempts, "max-check-attempts", "", 0, "")
+	fs.IntVarP(p.RetryInterval, "retry-interval", "", 0, "")
 	fs.IntVarP(p.Timeout, "timeout", "", 0, "")
 	fs.BoolVarP(p.Enabled, "enabled", "", false, "")
 	fs.StringVarP(p.HealthCheck.Protocol, "health-check-protocol", "", "", "options: [http/https/ping/tcp/dns/ssh/smtp/pop3/snmp/sslcertificate/ftp]")
@@ -294,10 +308,12 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-snmp-version"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-status"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-verify-sni"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("max-check-attempts"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("notify-email-enabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("notify-email-html"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("notify-interval"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("notify-slack-enabled"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("retry-interval"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("slack-webhooks-url"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("timeout"))
 		sets = append(sets, &core.FlagSet{

@@ -45,7 +45,10 @@ type createParameter struct {
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	DelayLoop   int `validate:"min=60,max=3600"`
+	DelayLoop        int `validate:"min=60,max=3600"`
+	MaxCheckAttempts int `validate:"min=1,max=10"`
+	RetryInterval    int `validate:"min=10,max=3600"`
+
 	Timeout     int `validate:"omitempty,min=1,max=30"`
 	Enabled     bool
 	HealthCheck createParameterHealthCheck
@@ -80,9 +83,11 @@ type createParameterHealthCheck struct {
 
 func newCreateParameter() *createParameter {
 	return &createParameter{
-		Enabled:        true,
-		DelayLoop:      60,
-		NotifyInterval: 60 * 60 * 2, // 2時間
+		Enabled:          true,
+		MaxCheckAttempts: 3,
+		RetryInterval:    10,
+		DelayLoop:        60,
+		NotifyInterval:   60 * 60 * 2, // 2時間
 	}
 }
 
@@ -92,13 +97,15 @@ func init() {
 
 func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 	return &createParameter{
-		Target:          "www.example.com",
-		DescParameter:   examples.Description,
-		TagsParameter:   examples.Tags,
-		IconIDParameter: examples.IconID,
-		DelayLoop:       60,
-		Timeout:         10,
-		Enabled:         true,
+		Target:           "www.example.com",
+		DescParameter:    examples.Description,
+		TagsParameter:    examples.Tags,
+		IconIDParameter:  examples.IconID,
+		DelayLoop:        60,
+		MaxCheckAttempts: 3,
+		RetryInterval:    10,
+		Timeout:          10,
+		Enabled:          true,
 		HealthCheck: createParameterHealthCheck{
 			Protocol:          examples.OptionsString("simple_monitor_protocol"),
 			Port:              80,
