@@ -47,10 +47,12 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	DelayLoop   *int `validate:"omitempty,min=60,max=3600"`
-	Timeout     *int `validate:"omitempty,min=1,max=30"`
-	Enabled     *bool
-	HealthCheck updateParameterHealthCheck `mapconv:",omitempty"`
+	DelayLoop        *int `validate:"omitempty,min=60,max=3600"`
+	MaxCheckAttempts *int `validate:"omitempty,min=1,max=10"`
+	RetryInterval    *int `validate:"omitempty,min=10,max=3600"`
+	Timeout          *int `validate:"omitempty,min=1,max=30"`
+	Enabled          *bool
+	HealthCheck      updateParameterHealthCheck `mapconv:",omitempty"`
 
 	NotifyEmailEnabled *bool
 	NotifyEmailHTML    *bool
@@ -94,6 +96,8 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		TagsUpdateParameter:   examples.TagsUpdate,
 		IconIDUpdateParameter: examples.IconIDUpdate,
 		DelayLoop:             pointer.NewInt(60),
+		MaxCheckAttempts:      pointer.NewInt(3),
+		RetryInterval:         pointer.NewInt(10),
 		Timeout:               pointer.NewInt(10),
 		Enabled:               pointer.NewBool(true),
 		HealthCheck: updateParameterHealthCheck{
