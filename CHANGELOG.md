@@ -2,7 +2,12 @@
 
 # 1.7.0 (Unreleased)
 
+IMPROVEMENTS:
+
+  * libsacloud v2.31.1 #878 (@yamamoto-febc)
   * libsacloud v2.30.0 - PostgreSQL 13 #877 (@yamamoto-febc)
+
+Note: `--os-type`: `centos8` has been removed.
 
 # 1.6.2 (2021-12-07)
 
