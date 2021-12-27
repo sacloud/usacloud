@@ -4,6 +4,7 @@
 
 FEATURES:
 
+  * SimpleMonitor: retry #880 (@yamamoto-febc)
   * VPCRouter: DNS forwarding #879 (@yamamoto-febc)
 
 IMPROVEMENTS:
