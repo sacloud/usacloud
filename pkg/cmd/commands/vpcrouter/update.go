@@ -166,6 +166,10 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 					IPAddress:  "192.168.0.245",
 				},
 			},
+			DNSForwarding: &sacloud.VPCRouterDNSForwarding{
+				Interface:  "eth1",
+				DNSServers: []string{"133.242.0.3", "133.242.0.4"},
+			},
 			PPTPServer: &sacloud.VPCRouterPPTPServer{
 				RangeStart: "192.168.0.246",
 				RangeStop:  "192.168.0.249",

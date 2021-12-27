@@ -39,6 +39,9 @@ type routerSetting struct {
 	DHCPStaticMappingData string                                `cli:"dhcp-static-mapping" mapconv:"-" json:"-"`
 	DHCPStaticMapping     []*sacloud.VPCRouterDHCPStaticMapping `cli:"-" json:",omitempty"`
 
+	DNSForwardingData string                          `cli:"dns-forwarding" mapconv:"-" json:"-"`
+	DNSForwarding     *sacloud.VPCRouterDNSForwarding `cli:"-" json:",omitempty"`
+
 	PPTPServerData string                       `cli:"pptp" mapconv:"-" json:"-"`
 	PPTPServer     *sacloud.VPCRouterPPTPServer `cli:"-" json:",omitempty"`
 
@@ -99,6 +102,13 @@ func (r *routerSetting) Customize(_ cli.Context) error {
 			return err
 		}
 		r.DHCPStaticMapping = append(r.DHCPStaticMapping, dhcpStaticMapping...)
+	}
+	if r.DNSForwardingData != "" {
+		var df sacloud.VPCRouterDNSForwarding
+		if err := util.MarshalJSONFromPathOrContent(r.DNSForwardingData, &df); err != nil {
+			return err
+		}
+		r.DNSForwarding = &df
 	}
 
 	if r.PPTPServerData != "" {
