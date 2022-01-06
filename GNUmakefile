@@ -1,5 +1,5 @@
 #
-# Copyright 2017-2021 The Usacloud Authors
+# Copyright 2017-2022 The Usacloud Authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 #
 GO_FILES        ?=$(shell find . -name '*.go')
 AUTHOR          ?="The Usacloud Authors"
-COPYRIGHT_YEAR  ?="2017-2021"
+COPYRIGHT_YEAR  ?="2017-2022"
 COPYRIGHT_FILES ?=$$(find . \( -name "*.dockerfile" -or -name "*.go" -or -name "*.sh" -or -name "*.pl" -or -name "*.bats" -or -name "*.bash" \) -print)
 BUILD_LDFLAGS   ?= "-s -w -X github.com/sacloud/usacloud/pkg/version.Revision=`git rev-parse --short HEAD`"
 

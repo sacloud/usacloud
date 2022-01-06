@@ -1,4 +1,4 @@
-// Copyright 2017-2021 The Usacloud Authors
+// Copyright 2017-2022 The Usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,10 +26,10 @@ var (
 	Revision = "xxxxxx" // set on build time
 
 	// CopyrightYear .
-	CopyrightYear = "2017-2021"
+	CopyrightYear = "2017-2022"
 )
 
-// FullVersion return sackerel full version text
+// FullVersion return usacloud full version text
 func FullVersion() string {
 	return fmt.Sprintf("%s %s/%s, build %s", Version, runtime.GOOS, runtime.GOARCH, Revision)
 }
