@@ -5,6 +5,7 @@
 MISC:
   * libsacloud v2.32.1 - Removed some os-types: freebsd and coreos #883 (@yamamoto-febc)
   * Upgrade dependenceis - misc #884 (@yamamoto-febc)
+  * Upgrade dependencies - github.com/spf13/cobra v1.3.0 #885 (@yamamoto-febc)
 
 # 1.7.0 (2021-12-27)
 
