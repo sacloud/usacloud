@@ -26,10 +26,8 @@ var FlagOptionsMap = map[string][]string{
 		"ubuntu2004",
 		"debian",
 		"debian11",
-		"coreos",
 		"rancheros",
 		"k3os",
-		"freebsd",
 		"...",
 	},
 }
