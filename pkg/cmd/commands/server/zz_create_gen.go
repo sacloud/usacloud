@@ -67,7 +67,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.VarP(core.NewIDFlag(&p.Disk.SourceArchiveID, &p.Disk.SourceArchiveID), "disk-source-archive-id", "", "")
 	fs.IntVarP(&p.Disk.SizeGB, "disk-size", "", p.Disk.SizeGB, "(aliases: --size-gb)")
 	fs.VarP(core.NewIDSliceFlag(&p.Disk.DistantFrom, &p.Disk.DistantFrom), "disk-distant-from", "", "")
-	fs.StringVarP(&p.Disk.OSType, "disk-os-type", "", p.Disk.OSType, "options: [centos/centos8stream/centos8/ubuntu/ubuntu2004/debian/debian11/coreos/rancheros/k3os/freebsd/...]")
+	fs.StringVarP(&p.Disk.OSType, "disk-os-type", "", p.Disk.OSType, "options: [centos/centos8stream/centos8/ubuntu/ubuntu2004/debian/debian11/rancheros/k3os/...]")
 	fs.StringVarP(&p.Disk.EditDisk.HostName, "disk-edit-host-name", "", p.Disk.EditDisk.HostName, "")
 	fs.StringVarP(&p.Disk.EditDisk.Password, "disk-edit-password", "", p.Disk.EditDisk.Password, "")
 	fs.StringVarP(&p.Disk.EditDisk.IPAddress, "disk-edit-ip-address", "", p.Disk.EditDisk.IPAddress, "")
@@ -280,7 +280,7 @@ func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("network-interface-upstream", util.FlagCompletionFunc("shared", "disconnected"))
 	cmd.RegisterFlagCompletionFunc("disk-disk-plan", util.FlagCompletionFunc("ssd", "hdd"))
 	cmd.RegisterFlagCompletionFunc("disk-connection", util.FlagCompletionFunc("virtio", "ide"))
-	cmd.RegisterFlagCompletionFunc("disk-os-type", util.FlagCompletionFunc("centos", "centos8stream", "centos7", "almalinux", "rockylinux", "miracle", "miraclelinux", "ubuntu", "ubuntu2004", "ubuntu1804", "debian", "debian10", "debian11", "coreos", "rancheros", "k3os", "kusanagi", "freebsd", "windows2016", "windows2016-rds", "windows2016-rds-office", "windows2016-sql-web", "windows2016-sql-standard", "windows2016-sql-standard-all", "windows2016-sql2017-standard", "windows2016-sql2017-enterprise", "windows2016-sql2017-standard-all", "windows2019", "windows2019-rds", "windows2019-rds-office2019", "windows2019-sql2017-web", "windows2019-sql2019-web", "windows2019-sql2017-standard", "windows2019-sql2019-standard", "windows2019-sql2017-enterprise", "windows2019-sql2019-enterprise", "windows2019-sql2017-standard-all", "windows2019-sql2019-standard-all"))
+	cmd.RegisterFlagCompletionFunc("disk-os-type", util.FlagCompletionFunc("centos", "centos8stream", "centos7", "almalinux", "rockylinux", "miracle", "miraclelinux", "ubuntu", "ubuntu2004", "ubuntu1804", "debian", "debian10", "debian11", "rancheros", "k3os", "kusanagi", "windows2016", "windows2016-rds", "windows2016-rds-office", "windows2016-sql-web", "windows2016-sql-standard", "windows2016-sql-standard-all", "windows2016-sql2017-standard", "windows2016-sql2017-enterprise", "windows2016-sql2017-standard-all", "windows2019", "windows2019-rds", "windows2019-rds-office2019", "windows2019-sql2017-web", "windows2019-sql2019-web", "windows2019-sql2017-standard", "windows2019-sql2019-standard", "windows2019-sql2017-enterprise", "windows2019-sql2019-enterprise", "windows2019-sql2017-standard-all", "windows2019-sql2019-standard-all"))
 
 }
 
