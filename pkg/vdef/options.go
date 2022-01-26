@@ -19,13 +19,12 @@ package vdef
 // Note: コード生成で利用されるため実行時に動的に変化する項目には利用できない
 var FlagOptionsMap = map[string][]string{
 	"os_type_simple": {
-		"centos",
+		"almalinux",
+		"rockylinux",
+		"miraclelinux",
 		"centos8stream",
-		"centos8",
 		"ubuntu",
-		"ubuntu2004",
 		"debian",
-		"debian11",
 		"rancheros",
 		"k3os",
 		"...",

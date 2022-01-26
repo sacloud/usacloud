@@ -42,7 +42,7 @@ func (p *listParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.QueryDriver, "query-driver", "", p.QueryDriver, "Name of the driver that handles queries to JSON output options: [jmespath/jq]")
 	fs.StringSliceVarP(&p.Names, "names", "", p.Names, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
-	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [centos/centos8stream/centos8/ubuntu/ubuntu2004/debian/debian11/rancheros/k3os/...]")
+	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [almalinux/rockylinux/miraclelinux/centos8stream/ubuntu/debian/rancheros/k3os/...]")
 	fs.StringVarP(&p.Scope, "scope", "", p.Scope, "options: [user/shared]")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
