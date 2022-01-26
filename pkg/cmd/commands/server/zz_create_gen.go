@@ -67,7 +67,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.VarP(core.NewIDFlag(&p.Disk.SourceArchiveID, &p.Disk.SourceArchiveID), "disk-source-archive-id", "", "")
 	fs.IntVarP(&p.Disk.SizeGB, "disk-size", "", p.Disk.SizeGB, "(aliases: --size-gb)")
 	fs.VarP(core.NewIDSliceFlag(&p.Disk.DistantFrom, &p.Disk.DistantFrom), "disk-distant-from", "", "")
-	fs.StringVarP(&p.Disk.OSType, "disk-os-type", "", p.Disk.OSType, "options: [centos/centos8stream/centos8/ubuntu/ubuntu2004/debian/debian11/rancheros/k3os/...]")
+	fs.StringVarP(&p.Disk.OSType, "disk-os-type", "", p.Disk.OSType, "options: [almalinux/rockylinux/miraclelinux/centos8stream/ubuntu/debian/rancheros/k3os/...]")
 	fs.StringVarP(&p.Disk.EditDisk.HostName, "disk-edit-host-name", "", p.Disk.EditDisk.HostName, "")
 	fs.StringVarP(&p.Disk.EditDisk.Password, "disk-edit-password", "", p.Disk.EditDisk.Password, "")
 	fs.StringVarP(&p.Disk.EditDisk.IPAddress, "disk-edit-ip-address", "", p.Disk.EditDisk.IPAddress, "")
