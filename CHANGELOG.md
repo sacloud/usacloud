@@ -1,5 +1,10 @@
 # Changelog
 
+# v1.7.1 (Unreleased)
+
+MISC:
+  * libsacloud v2.32.1 - Removed some os-types: freebsd and coreos #883 (@yamamoto-febc)
+
 # 1.7.0 (2021-12-27)
 
 FEATURES:
