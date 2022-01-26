@@ -13,7 +13,7 @@ require (
 	github.com/huandu/xstrings v1.3.0
 	github.com/itchyny/gojq v0.12.6
 	github.com/jmespath/go-jmespath v0.4.0
-	github.com/mattn/go-colorable v0.1.4
+	github.com/mattn/go-colorable v0.1.12
 	github.com/mattn/go-isatty v0.0.14
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.0-20180506121414-d4647c9c7a84
