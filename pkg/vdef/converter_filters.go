@@ -21,15 +21,11 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/sacloud/libsacloud/v2/pkg/size"
-
-	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
-
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
-
+	"github.com/sacloud/iaas-api-go/mapconv"
+	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/sacloud-go/pkg/pointer"
+	"github.com/sacloud/sacloud-go/pkg/size"
 	"github.com/sacloud/usacloud/pkg/util"
-
-	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
 )
 
 // ConverterFilters mapconvでの変換時に利用されるフィルターの定義、definitionsに登録したものは実行時に動的に追加される

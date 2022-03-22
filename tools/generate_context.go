@@ -21,7 +21,6 @@ import (
 	"path/filepath"
 
 	"github.com/sacloud/usacloud/pkg/cmd"
-
 	"github.com/sacloud/usacloud/pkg/version"
 )
 

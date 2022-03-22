@@ -18,8 +18,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -91,7 +91,7 @@ func (c *DummyCLIContext) WithResource(id types.ID, zone string, resource interf
 	}
 }
 
-func (c *DummyCLIContext) Client() sacloud.APICaller {
+func (c *DummyCLIContext) Client() iaas.APICaller {
 	return APICaller()
 }
 

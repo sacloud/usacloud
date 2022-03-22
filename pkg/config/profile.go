@@ -21,7 +21,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/sacloud/libsacloud/v2/sacloud/profile"
+	"github.com/sacloud/api-client-go/profile"
 	"github.com/spf13/pflag"
 )
 

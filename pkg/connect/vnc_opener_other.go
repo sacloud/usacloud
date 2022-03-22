@@ -22,12 +22,12 @@ import (
 	"os"
 	"time"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/iaas-api-go"
 	"github.com/skratchdot/open-golang/open"
 )
 
 // StartDefaultVNCClient starts OS's default VNC client
-func StartDefaultVNCClient(vncProxyInfo *sacloud.VNCProxyInfo) error {
+func StartDefaultVNCClient(vncProxyInfo *iaas.VNCProxyInfo) error {
 	uri := ""
 
 	for uri == "" {

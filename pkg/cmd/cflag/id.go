@@ -14,7 +14,7 @@
 
 package cflag
 
-import "github.com/sacloud/libsacloud/v2/sacloud/types"
+import "github.com/sacloud/iaas-api-go/types"
 
 type IDParameterValueHandler interface {
 	IDFlagValue() types.ID

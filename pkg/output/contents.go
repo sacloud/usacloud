@@ -17,8 +17,8 @@ package output
 import (
 	"sort"
 
-	"github.com/sacloud/libsacloud/v2/sacloud/accessor"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/accessor"
+	"github.com/sacloud/iaas-api-go/types"
 )
 
 type Content struct {

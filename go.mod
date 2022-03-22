@@ -2,12 +2,16 @@ module github.com/sacloud/usacloud
 
 go 1.17
 
+replace github.com/sacloud/sacloud-go => ../sacloud-go
+
+replace github.com/sacloud/sacloud-go/service/iaas => ../sacloud-go/service/iaas
+
 require (
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/fatih/color v1.13.0
 	github.com/fatih/structs v1.1.0
 	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32
-	github.com/go-playground/validator/v10 v10.9.0
+	github.com/go-playground/validator/v10 v10.10.1
 	github.com/hashicorp/go-version v1.2.1
 	github.com/hokaccha/go-prettyjson v0.0.0-20210113012101-fb4e108d2519
 	github.com/huandu/xstrings v1.3.0
@@ -18,19 +22,21 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/rhysd/go-github-selfupdate v1.2.3
+	github.com/sacloud/api-client-go v0.0.0-20220311054319-f37467272e84
 	github.com/sacloud/go-http v0.0.4
-	github.com/sacloud/libsacloud/v2 v2.32.1
+	github.com/sacloud/iaas-api-go v0.0.0-20220314063652-5eaa6e6cade6
+	github.com/sacloud/sacloud-go/pkg v0.0.0-20220314055142-1db1c3d10889
+	github.com/sacloud/sacloud-go/service/iaas v0.0.0-00010101000000-000000000000
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/cobra v1.3.0
 	github.com/spf13/pflag v1.0.5
-	github.com/stretchr/testify v1.7.0
-	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
+	github.com/stretchr/testify v1.7.1
+	golang.org/x/crypto v0.0.0-20220214200702-86341886e292
 )
 
 require (
 	github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/felixge/httpsnoop v1.0.2 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
@@ -47,16 +53,11 @@ require (
 	github.com/mitchellh/mapstructure v1.4.3 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/sacloud/ftps v1.1.0 // indirect
+	github.com/sacloud/sacloud-go v0.0.0-20220317060010-e514788840a8 // indirect
 	github.com/tcnksm/go-gitconfig v0.1.2 // indirect
 	github.com/ulikunitz/xz v0.5.9 // indirect
-	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.27.0 // indirect
-	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.27.0 // indirect
-	go.opentelemetry.io/otel v1.2.0 // indirect
-	go.opentelemetry.io/otel/internal/metric v0.25.0 // indirect
-	go.opentelemetry.io/otel/metric v0.25.0 // indirect
-	go.opentelemetry.io/otel/trace v1.2.0 // indirect
 	go.uber.org/ratelimit v0.2.0 // indirect
-	golang.org/x/net v0.0.0-20210813160813-60bc85c4be6d // indirect
+	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8 // indirect
 	golang.org/x/sys v0.0.0-20211205182925-97ca703d548d // indirect
 	golang.org/x/text v0.3.7 // indirect

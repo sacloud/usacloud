@@ -19,7 +19,6 @@ import (
 	"strings"
 
 	"github.com/sacloud/usacloud/pkg/version"
-
 	"github.com/spf13/cobra"
 )
 

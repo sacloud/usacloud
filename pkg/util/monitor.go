@@ -18,10 +18,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/iaas-api-go"
 )
 
-func MonitorCondition(start, end string) (*sacloud.MonitorCondition, error) {
+func MonitorCondition(start, end string) (*iaas.MonitorCondition, error) {
 	e := ParseDateTimeString(end)
 	s := e.Add(-1 * time.Hour)
 	if start != "" {
@@ -30,5 +30,5 @@ func MonitorCondition(start, end string) (*sacloud.MonitorCondition, error) {
 	if !(s.Unix() <= e.Unix()) {
 		return nil, fmt.Errorf("invalid parameter : start(%s) or end(%s) is invalid", start, end)
 	}
-	return &sacloud.MonitorCondition{Start: s, End: e}, nil
+	return &iaas.MonitorCondition{Start: s, End: e}, nil
 }
