@@ -25,7 +25,7 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/types"
-	"github.com/sacloud/sacloud-go/pkg/size"
+	"github.com/sacloud/packages-go/size"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 

@@ -18,7 +18,7 @@ import (
 	"strings"
 
 	"github.com/sacloud/iaas-api-go/types"
-	"github.com/sacloud/sacloud-go/pkg/pointer"
+	"github.com/sacloud/packages-go/pointer"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/vdef"
 )

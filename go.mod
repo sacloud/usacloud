@@ -2,10 +2,6 @@ module github.com/sacloud/usacloud
 
 go 1.17
 
-replace github.com/sacloud/sacloud-go => ../sacloud-go
-
-replace github.com/sacloud/sacloud-go/service/iaas => ../sacloud-go/service/iaas
-
 require (
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/fatih/color v1.13.0
@@ -22,11 +18,11 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/rhysd/go-github-selfupdate v1.2.3
-	github.com/sacloud/api-client-go v0.0.0-20220311054319-f37467272e84
+	github.com/sacloud/api-client-go v0.0.3
 	github.com/sacloud/go-http v0.0.4
-	github.com/sacloud/iaas-api-go v0.0.0-20220314063652-5eaa6e6cade6
-	github.com/sacloud/sacloud-go/pkg v0.0.0-20220314055142-1db1c3d10889
-	github.com/sacloud/sacloud-go/service/iaas v0.0.0-00010101000000-000000000000
+	github.com/sacloud/iaas-api-go v0.0.1
+	github.com/sacloud/iaas-service-go v0.0.2
+	github.com/sacloud/packages-go v0.0.2
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/cobra v1.3.0
 	github.com/spf13/pflag v1.0.5
@@ -43,7 +39,9 @@ require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-github/v30 v30.1.0 // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
+	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
+	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.0 // indirect
 	github.com/inconshreveable/go-update v0.0.0-20160112193335-8152e7eb6ccf // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
@@ -53,7 +51,6 @@ require (
 	github.com/mitchellh/mapstructure v1.4.3 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/sacloud/ftps v1.1.0 // indirect
-	github.com/sacloud/sacloud-go v0.0.0-20220317060010-e514788840a8 // indirect
 	github.com/tcnksm/go-gitconfig v0.1.2 // indirect
 	github.com/ulikunitz/xz v0.5.9 // indirect
 	go.uber.org/ratelimit v0.2.0 // indirect

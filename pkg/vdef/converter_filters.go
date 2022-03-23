@@ -23,8 +23,8 @@ import (
 
 	"github.com/sacloud/iaas-api-go/mapconv"
 	"github.com/sacloud/iaas-api-go/types"
-	"github.com/sacloud/sacloud-go/pkg/pointer"
-	"github.com/sacloud/sacloud-go/pkg/size"
+	"github.com/sacloud/packages-go/pointer"
+	"github.com/sacloud/packages-go/size"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
