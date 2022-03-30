@@ -18,16 +18,14 @@ import (
 	"fmt"
 
 	"github.com/sacloud/iaas-api-go"
-	"github.com/sacloud/usacloud/pkg/cmd/examples"
-
-	"github.com/sacloud/iaas-service-go/disk"
-
 	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/iaas-service-go/disk"
 	"github.com/sacloud/iaas-service-go/server"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/common"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/sacloud/usacloud/pkg/validate"
 )

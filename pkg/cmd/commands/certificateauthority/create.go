@@ -18,7 +18,6 @@ import (
 	"time"
 
 	"github.com/sacloud/iaas-api-go/types"
-
 	"github.com/sacloud/iaas-service-go/certificateauthority/builder"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"

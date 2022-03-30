@@ -20,16 +20,12 @@ import (
 	"testing"
 
 	"github.com/sacloud/iaas-api-go"
-	"github.com/sacloud/usacloud/pkg/validate"
-
 	"github.com/sacloud/iaas-api-go/ostype"
-
+	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/iaas-service-go/disk"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/conv"
-
-	"github.com/sacloud/iaas-api-go/types"
-
-	"github.com/sacloud/iaas-service-go/disk"
+	"github.com/sacloud/usacloud/pkg/validate"
 	"github.com/stretchr/testify/require"
 )
 

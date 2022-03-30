@@ -18,7 +18,6 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/server"
-
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

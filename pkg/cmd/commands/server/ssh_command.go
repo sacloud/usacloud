@@ -23,9 +23,8 @@ import (
 	"strings"
 
 	"github.com/sacloud/iaas-api-go"
-	"github.com/sacloud/iaas-api-go/helper/wait"
-
 	"github.com/sacloud/iaas-api-go/helper/query"
+	"github.com/sacloud/iaas-api-go/helper/wait"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )

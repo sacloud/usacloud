@@ -19,7 +19,6 @@ import (
 	"os"
 
 	"github.com/sacloud/usacloud/pkg/cmd/root"
-
 	"github.com/spf13/cobra"
 )
 

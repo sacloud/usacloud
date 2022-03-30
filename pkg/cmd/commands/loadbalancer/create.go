@@ -18,8 +18,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/sacloud/usacloud/pkg/validate"
-
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cli"
@@ -27,6 +25,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/cmd/examples"
 	"github.com/sacloud/usacloud/pkg/util"
+	"github.com/sacloud/usacloud/pkg/validate"
 )
 
 var createCommand = &core.Command{

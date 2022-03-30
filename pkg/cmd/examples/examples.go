@@ -17,12 +17,10 @@ package examples
 import (
 	"strings"
 
-	"github.com/sacloud/usacloud/pkg/vdef"
-
-	"github.com/sacloud/packages-go/pointer"
-
 	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/packages-go/pointer"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
+	"github.com/sacloud/usacloud/pkg/vdef"
 )
 
 var (
