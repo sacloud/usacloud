@@ -19,7 +19,7 @@ import (
 
 	"github.com/sacloud/usacloud/pkg/util"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -75,8 +75,8 @@ func createCertificateFunc(ctx cli.Context, parameter interface{}) ([]interface{
 		return nil, err
 	}
 
-	webAccelOp := sacloud.NewWebAccelOp(ctx.Client())
-	result, err := webAccelOp.CreateCertificate(ctx, p.ID, &sacloud.WebAccelCertRequest{
+	webAccelOp := iaas.NewWebAccelOp(ctx.Client())
+	result, err := webAccelOp.CreateCertificate(ctx, p.ID, &iaas.WebAccelCertRequest{
 		CertificateChain: certs,
 		Key:              key,
 	})

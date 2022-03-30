@@ -17,7 +17,7 @@ package coupon
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/coupon"
+	"github.com/sacloud/iaas-service-go/coupon"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

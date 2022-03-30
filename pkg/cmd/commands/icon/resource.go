@@ -17,7 +17,7 @@ package icon
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/icon"
+	"github.com/sacloud/iaas-service-go/icon"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

@@ -17,7 +17,7 @@ package vpcrouter
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/vpcrouter"
+	"github.com/sacloud/iaas-service-go/vpcrouter"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

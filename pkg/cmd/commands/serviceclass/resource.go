@@ -17,7 +17,7 @@ package serviceclass
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/serviceclass"
+	"github.com/sacloud/iaas-service-go/serviceclass"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

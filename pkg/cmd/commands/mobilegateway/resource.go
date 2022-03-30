@@ -17,7 +17,7 @@ package mobilegateway
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/mobilegateway"
+	"github.com/sacloud/iaas-service-go/mobilegateway"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

@@ -17,7 +17,7 @@ package license
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/license"
+	"github.com/sacloud/iaas-service-go/license"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

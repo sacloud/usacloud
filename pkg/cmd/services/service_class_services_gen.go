@@ -17,7 +17,7 @@
 package services
 
 import (
-	service "github.com/sacloud/libsacloud/v2/helper/service/serviceclass"
+	service "github.com/sacloud/iaas-service-go/serviceclass"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/conv"

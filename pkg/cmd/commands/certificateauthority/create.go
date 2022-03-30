@@ -17,9 +17,9 @@ package certificateauthority
 import (
 	"time"
 
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/types"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/certificateauthority"
+	"github.com/sacloud/iaas-service-go/certificateauthority/builder"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -57,11 +57,11 @@ type createParameter struct {
 	ValidityPeriodHours int       `mapconv:"-" validate:"required"` // Customize()で時間数->NotAfterへの変換が行われる
 	NotAfter            time.Time `cli:"-" json:"-"`                // Customize()の中で現在時刻+ValidityPeriodHoursが設定される
 
-	ClientsData string                             `cli:"clients" mapconv:"-" json:"-"`
-	Clients     []*certificateauthority.ClientCert `cli:"-"`
+	ClientsData string                `cli:"clients" mapconv:"-" json:"-"`
+	Clients     []*builder.ClientCert `cli:"-"`
 
-	ServersData string                             `cli:"servers" mapconv:"-" json:"-"`
-	Servers     []*certificateauthority.ServerCert `cli:"-"`
+	ServersData string                `cli:"servers" mapconv:"-" json:"-"`
+	Servers     []*builder.ServerCert `cli:"-"`
 }
 
 func newCreateParameter() *createParameter {
@@ -76,7 +76,7 @@ func init() {
 func (p *createParameter) Customize(_ cli.Context) error {
 	p.NotAfter = time.Now().Add(time.Duration(p.ValidityPeriodHours) * time.Hour)
 
-	var clients []*certificateauthority.ClientCert
+	var clients []*builder.ClientCert
 	if p.ClientsData != "" {
 		if err := util.MarshalJSONFromPathOrContent(p.ClientsData, &clients); err != nil {
 			return err
@@ -84,7 +84,7 @@ func (p *createParameter) Customize(_ cli.Context) error {
 	}
 	p.Clients = append(p.Clients, clients...)
 
-	var servers []*certificateauthority.ServerCert
+	var servers []*builder.ServerCert
 	if p.ServersData != "" {
 		if err := util.MarshalJSONFromPathOrContent(p.ServersData, &servers); err != nil {
 			return err
@@ -105,7 +105,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		OrganizationUnit:    []string{"ou1", "ou2"},
 		CommonName:          "example.usacloud.jp",
 		ValidityPeriodHours: 24 * 365,
-		Clients: []*certificateauthority.ClientCert{
+		Clients: []*builder.ClientCert{
 			{
 				Country:                   "JP",
 				Organization:              "usacloud",
@@ -119,7 +119,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 				Hold:                      true,
 			},
 		},
-		Servers: []*certificateauthority.ServerCert{
+		Servers: []*builder.ServerCert{
 			{
 				Country:                   "JP",
 				Organization:              "usacloud",

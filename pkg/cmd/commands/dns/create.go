@@ -15,8 +15,8 @@
 package dns
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -46,8 +46,8 @@ type createParameter struct {
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	RecordsData string             `cli:"records" mapconv:"-" json:"-"`
-	Records     sacloud.DNSRecords `cli:"-"`
+	RecordsData string          `cli:"records" mapconv:"-" json:"-"`
+	Records     iaas.DNSRecords `cli:"-"`
 }
 
 func newCreateParameter() *createParameter {
@@ -61,7 +61,7 @@ func init() {
 // Customize パラメータ変換処理
 func (p *createParameter) Customize(_ cli.Context) error {
 	if p.RecordsData != "" {
-		var records sacloud.DNSRecords
+		var records iaas.DNSRecords
 		if err := util.MarshalJSONFromPathOrContent(p.RecordsData, &records); err != nil {
 			return err
 		}
@@ -77,7 +77,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		DescParameter:   examples.Description,
 		TagsParameter:   examples.Tags,
 		IconIDParameter: examples.IconID,
-		Records: sacloud.DNSRecords{
+		Records: iaas.DNSRecords{
 			{
 				Name:  "www",
 				Type:  types.EDNSRecordType(examples.OptionsString("dns_record_type")),

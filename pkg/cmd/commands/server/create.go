@@ -17,13 +17,13 @@ package server
 import (
 	"fmt"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cmd/examples"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/disk"
+	"github.com/sacloud/iaas-service-go/disk"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/server"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/iaas-service-go/server"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/common"
@@ -301,7 +301,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 					IsSSHKeysEphemeral:  true,
 					NoteIDs:             []types.ID{examples.ID},
 					IsNotesEphemeral:    true,
-					Notes: []*sacloud.DiskEditNote{
+					Notes: []*iaas.DiskEditNote{
 						{
 							ID: examples.ID,
 							Variables: map[string]interface{}{

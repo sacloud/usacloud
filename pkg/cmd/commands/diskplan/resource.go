@@ -17,7 +17,7 @@ package diskplan
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/diskplan"
+	"github.com/sacloud/iaas-service-go/diskplan"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

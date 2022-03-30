@@ -15,9 +15,9 @@
 package vpcrouter
 
 import (
-	"github.com/sacloud/libsacloud/v2/helper/service/vpcrouter"
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/iaas-service-go/vpcrouter/builder"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -51,10 +51,10 @@ type createParameter struct {
 	Plan    string `cli:"plan,options=vpc_router_plan_premium,category=plan" mapconv:"PlanID,filters=vpc_router_plan_premium_to_value" validate:"required,vpc_router_plan_premium"`
 	Version int    `validate:"required,oneof=1 2"`
 
-	PublicNetworkInterface vpcrouter.PremiumNICSetting `cli:",category=network,order=10" mapconv:"NICSetting,omitempty"`
+	PublicNetworkInterface builder.PremiumNICSetting `cli:",category=network,order=10" mapconv:"NICSetting,omitempty"`
 
-	PrivateNetworkInterfacesData string                                   `cli:"private-network-interfaces,category=network,order=20" mapconv:"-" json:"-"`
-	PrivateNetworkInterfaces     []*vpcrouter.AdditionalPremiumNICSetting `cli:"-" mapconv:"AdditionalNICSettings"`
+	PrivateNetworkInterfacesData string                                 `cli:"private-network-interfaces,category=network,order=20" mapconv:"-" json:"-"`
+	PrivateNetworkInterfaces     []*builder.AdditionalPremiumNICSetting `cli:"-" mapconv:"AdditionalNICSettings"`
 
 	RouterSetting routerSetting `cli:",squash" mapconv:",recursive"`
 
@@ -76,7 +76,7 @@ func init() {
 // Customize パラメータ変換処理
 func (p *createParameter) Customize(ctx cli.Context) error {
 	if p.PrivateNetworkInterfacesData != "" {
-		var nics []*vpcrouter.AdditionalPremiumNICSetting
+		var nics []*builder.AdditionalPremiumNICSetting
 		if err := util.MarshalJSONFromPathOrContent(p.PrivateNetworkInterfacesData, &nics); err != nil {
 			return err
 		}
@@ -94,13 +94,13 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		IconIDParameter: examples.IconID,
 		Plan:            examples.OptionsString("vpc_router_plan_premium"),
 		Version:         2,
-		PublicNetworkInterface: vpcrouter.PremiumNICSetting{
+		PublicNetworkInterface: builder.PremiumNICSetting{
 			SwitchID:         examples.ID,
 			IPAddresses:      examples.IPAddresses,
 			VirtualIPAddress: examples.VirtualIPAddress,
 			IPAliases:        []string{"192.0.2.102"},
 		},
-		PrivateNetworkInterfaces: []*vpcrouter.AdditionalPremiumNICSetting{
+		PrivateNetworkInterfaces: []*builder.AdditionalPremiumNICSetting{
 			{
 				SwitchID:         examples.ID,
 				IPAddresses:      []string{"192.168.0.11", "192.168.0.12"},
@@ -112,14 +112,14 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		RouterSetting: routerSetting{
 			VRID:                      1,
 			InternetConnectionEnabled: true,
-			StaticNAT: []*sacloud.VPCRouterStaticNAT{
+			StaticNAT: []*iaas.VPCRouterStaticNAT{
 				{
 					GlobalAddress:  examples.VirtualIPAddress,
 					PrivateAddress: "192.168.0.1",
 					Description:    "example",
 				},
 			},
-			PortForwarding: []*sacloud.VPCRouterPortForwarding{
+			PortForwarding: []*iaas.VPCRouterPortForwarding{
 				{
 					Protocol:       types.EVPCRouterPortForwardingProtocol(examples.OptionsString("vpc_router_port_forwarding_protocol")),
 					GlobalPort:     22,
@@ -128,9 +128,9 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 					Description:    "example",
 				},
 			},
-			Firewall: []*sacloud.VPCRouterFirewall{
+			Firewall: []*iaas.VPCRouterFirewall{
 				{
-					Send: []*sacloud.VPCRouterFirewallRule{
+					Send: []*iaas.VPCRouterFirewallRule{
 						{
 							Protocol:           types.Protocol(examples.OptionsString("vpc_router_firewall_protocol")),
 							SourceNetwork:      "192.0.2.1 | 192.0.2.0/24",
@@ -142,7 +142,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 							Description:        "example",
 						},
 					},
-					Receive: []*sacloud.VPCRouterFirewallRule{
+					Receive: []*iaas.VPCRouterFirewallRule{
 						{
 							Protocol:           types.Protocol(examples.OptionsString("vpc_router_firewall_protocol")),
 							SourceNetwork:      "192.0.2.1 | 192.0.2.0/24",
@@ -157,7 +157,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 					Index: 0,
 				},
 			},
-			DHCPServer: []*sacloud.VPCRouterDHCPServer{
+			DHCPServer: []*iaas.VPCRouterDHCPServer{
 				{
 					Interface:  "eth1",
 					RangeStart: "192.168.0.240",
@@ -165,30 +165,30 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 					DNSServers: []string{"133.242.0.3", "133.242.0.4"},
 				},
 			},
-			DHCPStaticMapping: []*sacloud.VPCRouterDHCPStaticMapping{
+			DHCPStaticMapping: []*iaas.VPCRouterDHCPStaticMapping{
 				{
 					MACAddress: "9C:A3:BA:xx:xx:xx",
 					IPAddress:  "192.168.0.245",
 				},
 			},
 
-			DNSForwarding: &sacloud.VPCRouterDNSForwarding{
+			DNSForwarding: &iaas.VPCRouterDNSForwarding{
 				Interface:  "eth1",
 				DNSServers: []string{"133.242.0.3", "133.242.0.4"},
 			},
 
-			PPTPServer: &sacloud.VPCRouterPPTPServer{
+			PPTPServer: &iaas.VPCRouterPPTPServer{
 				RangeStart: "192.168.0.246",
 				RangeStop:  "192.168.0.249",
 			},
-			L2TPIPsecServer: &sacloud.VPCRouterL2TPIPsecServer{
+			L2TPIPsecServer: &iaas.VPCRouterL2TPIPsecServer{
 				RangeStart:      "192.168.0.250",
 				RangeStop:       "192.168.0.254",
 				PreSharedSecret: "presharedsecret",
 			},
-			WireGuard: &sacloud.VPCRouterWireGuard{
+			WireGuard: &iaas.VPCRouterWireGuard{
 				IPAddress: "192.168.0.240/28",
-				Peers: []*sacloud.VPCRouterWireGuardPeer{
+				Peers: []*iaas.VPCRouterWireGuardPeer{
 					{
 						Name:      "client1",
 						IPAddress: "192.168.0.242",
@@ -196,13 +196,13 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 					},
 				},
 			},
-			RemoteAccessUsers: []*sacloud.VPCRouterRemoteAccessUser{
+			RemoteAccessUsers: []*iaas.VPCRouterRemoteAccessUser{
 				{
 					UserName: "username",
 					Password: "password",
 				},
 			},
-			SiteToSiteIPsecVPN: []*sacloud.VPCRouterSiteToSiteIPsecVPN{
+			SiteToSiteIPsecVPN: []*iaas.VPCRouterSiteToSiteIPsecVPN{
 				{
 					Peer:            "192.0.2.1",
 					PreSharedSecret: "presharedsecret",
@@ -211,7 +211,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 					LocalPrefix:     []string{"192.168.0.0/24"},
 				},
 			},
-			StaticRoute: []*sacloud.VPCRouterStaticRoute{
+			StaticRoute: []*iaas.VPCRouterStaticRoute{
 				{
 					Prefix:  "172.16.0.0/16",
 					NextHop: "192.168.0.21",

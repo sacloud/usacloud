@@ -17,7 +17,7 @@ package authstatus
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/authstatus"
+	"github.com/sacloud/iaas-service-go/authstatus"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

@@ -17,8 +17,8 @@
 package autobackup
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/packages-go/pointer"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
@@ -57,7 +57,8 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 		p.Tags = pointer.NewStringSlice([]string{})
 	}
 	if p.IconID == nil {
-		p.IconID = pointer.NewID(types.ID(0))
+		v := types.ID(0)
+		p.IconID = &v
 	}
 	if p.Weekdays == nil {
 		p.Weekdays = pointer.NewStringSlice([]string{})

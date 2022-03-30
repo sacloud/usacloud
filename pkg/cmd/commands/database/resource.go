@@ -17,7 +17,7 @@ package database
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/database"
+	"github.com/sacloud/iaas-service-go/database"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

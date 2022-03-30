@@ -17,7 +17,7 @@ package sshkey
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/sshkey"
+	"github.com/sacloud/iaas-service-go/sshkey"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

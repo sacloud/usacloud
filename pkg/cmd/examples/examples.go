@@ -19,9 +19,9 @@ import (
 
 	"github.com/sacloud/usacloud/pkg/vdef"
 
-	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
+	"github.com/sacloud/packages-go/pointer"
 
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 )
 

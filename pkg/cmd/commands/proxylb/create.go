@@ -17,8 +17,8 @@ package proxylb
 import (
 	"net/http"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -62,14 +62,14 @@ type createParameter struct {
 	UseVIPFailover bool                         `cli:"vip-fail-over"`
 	Region         string                       `cli:",options=proxylb_region" validate:"required,proxylb_region"`
 
-	BindPortsData string                     `cli:"bind-ports" mapconv:"-" json:"-"`
-	BindPorts     []*sacloud.ProxyLBBindPort `cli:"-"`
+	BindPortsData string                  `cli:"bind-ports" mapconv:"-" json:"-"`
+	BindPorts     []*iaas.ProxyLBBindPort `cli:"-"`
 
-	ServersData string                   `cli:"servers" mapconv:"-" json:"-"`
-	Servers     []*sacloud.ProxyLBServer `cli:"-"`
+	ServersData string                `cli:"servers" mapconv:"-" json:"-"`
+	Servers     []*iaas.ProxyLBServer `cli:"-"`
 
-	RulesData string                 `cli:"rules" mapconv:"-" json:"-"`
-	Rules     []*sacloud.ProxyLBRule `cli:"-"`
+	RulesData string              `cli:"rules" mapconv:"-" json:"-"`
+	Rules     []*iaas.ProxyLBRule `cli:"-"`
 }
 
 type createParameterHealthCheck struct {
@@ -134,7 +134,7 @@ func init() {
 // Customize パラメータ変換処理
 func (p *createParameter) Customize(_ cli.Context) error {
 	if p.BindPortsData != "" {
-		var bindPorts []*sacloud.ProxyLBBindPort
+		var bindPorts []*iaas.ProxyLBBindPort
 		if err := util.MarshalJSONFromPathOrContent(p.BindPortsData, &bindPorts); err != nil {
 			return err
 		}
@@ -142,7 +142,7 @@ func (p *createParameter) Customize(_ cli.Context) error {
 	}
 
 	if p.ServersData != "" {
-		var servers []*sacloud.ProxyLBServer
+		var servers []*iaas.ProxyLBServer
 		if err := util.MarshalJSONFromPathOrContent(p.ServersData, &servers); err != nil {
 			return err
 		}
@@ -150,7 +150,7 @@ func (p *createParameter) Customize(_ cli.Context) error {
 	}
 
 	if p.RulesData != "" {
-		var rules []*sacloud.ProxyLBRule
+		var rules []*iaas.ProxyLBRule
 		if err := util.MarshalJSONFromPathOrContent(p.RulesData, &rules); err != nil {
 			return err
 		}
@@ -200,13 +200,13 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		},
 		UseVIPFailover: true,
 		Region:         examples.OptionsString("proxylb_region"),
-		BindPorts: []*sacloud.ProxyLBBindPort{
+		BindPorts: []*iaas.ProxyLBBindPort{
 			{
 				ProxyMode:       types.EProxyLBProxyMode(examples.OptionsString("proxylb_proxy_mode")),
 				Port:            80,
 				RedirectToHTTPS: true,
 				SupportHTTP2:    true,
-				AddResponseHeader: []*sacloud.ProxyLBResponseHeader{
+				AddResponseHeader: []*iaas.ProxyLBResponseHeader{
 					{
 						Header: "Cache-Control",
 						Value:  "public, max-age=900",
@@ -215,7 +215,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 				SSLPolicy: examples.OptionsString("proxylb_ssl_policy"),
 			},
 		},
-		Servers: []*sacloud.ProxyLBServer{
+		Servers: []*iaas.ProxyLBServer{
 			{
 				IPAddress:   examples.IPAddress,
 				Port:        80,
@@ -223,7 +223,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 				Enabled:     true,
 			},
 		},
-		Rules: []*sacloud.ProxyLBRule{
+		Rules: []*iaas.ProxyLBRule{
 			{
 				Action:      types.ProxyLBRuleActions.Forward,
 				Host:        "www2.example.com",

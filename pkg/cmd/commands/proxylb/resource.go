@@ -17,7 +17,7 @@ package proxylb
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/proxylb"
+	"github.com/sacloud/iaas-service-go/proxylb"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

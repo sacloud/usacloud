@@ -17,7 +17,7 @@ package internet
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/internet"
+	"github.com/sacloud/iaas-service-go/internet"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

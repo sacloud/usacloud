@@ -17,7 +17,7 @@ package gslb
 import (
 	"net/http"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -54,8 +54,8 @@ type createParameter struct {
 
 	SorryServer string `validate:"omitempty,ipv4"`
 
-	ServersData        string              `cli:"servers" mapconv:"-" json:"-"`
-	DestinationServers sacloud.GSLBServers `cli:"-"`
+	ServersData        string           `cli:"servers" mapconv:"-" json:"-"`
+	DestinationServers iaas.GSLBServers `cli:"-"`
 }
 
 type gslbHealthCheck struct {
@@ -79,7 +79,7 @@ func init() {
 // Customize パラメータ変換処理
 func (p *createParameter) Customize(_ cli.Context) error {
 	if p.ServersData != "" {
-		var servers sacloud.GSLBServers
+		var servers iaas.GSLBServers
 		if err := util.MarshalJSONFromPathOrContent(p.ServersData, &servers); err != nil {
 			return err
 		}
@@ -105,7 +105,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		DelayLoop:   10,
 		Weighted:    true,
 		SorryServer: "192.0.2.1",
-		DestinationServers: sacloud.GSLBServers{
+		DestinationServers: iaas.GSLBServers{
 			{
 				IPAddress: examples.IPAddress,
 				Enabled:   true,

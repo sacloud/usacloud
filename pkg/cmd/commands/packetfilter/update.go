@@ -15,8 +15,8 @@
 package packetfilter
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -46,8 +46,8 @@ type updateParameter struct {
 
 	cflag.NameUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.DescUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
-	ExpressionsData           *string                            `cli:"expressions,aliases=rules" mapconv:"-" json:"-"`
-	Expressions               *[]*sacloud.PacketFilterExpression `cli:"-" mapconv:"Expression"`
+	ExpressionsData           *string                         `cli:"expressions,aliases=rules" mapconv:"-" json:"-"`
+	Expressions               *[]*iaas.PacketFilterExpression `cli:"-" mapconv:"Expression"`
 }
 
 func newUpdateParameter() *updateParameter {
@@ -61,12 +61,12 @@ func init() {
 // Customize パラメータ変換処理
 func (p *updateParameter) Customize(_ cli.Context) error {
 	if p.ExpressionsData != nil && *p.ExpressionsData != "" {
-		var expressions []*sacloud.PacketFilterExpression
+		var expressions []*iaas.PacketFilterExpression
 		if err := util.MarshalJSONFromPathOrContent(*p.ExpressionsData, &expressions); err != nil {
 			return err
 		}
 		if p.Expressions == nil {
-			p.Expressions = &[]*sacloud.PacketFilterExpression{}
+			p.Expressions = &[]*iaas.PacketFilterExpression{}
 		}
 		*p.Expressions = append(*p.Expressions, expressions...)
 	}
@@ -79,7 +79,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		ZoneParameter:       examples.Zones(ctx.Option().Zones),
 		NameUpdateParameter: examples.NameUpdate,
 		DescUpdateParameter: examples.DescriptionUpdate,
-		Expressions: &[]*sacloud.PacketFilterExpression{
+		Expressions: &[]*iaas.PacketFilterExpression{
 			{
 				Protocol:        types.Protocol(examples.OptionsString("packetfilter_protocol")),
 				SourceNetwork:   "192.0.2.1 | 192.0.2.0/24",

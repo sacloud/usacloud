@@ -17,19 +17,19 @@ package disk
 import (
 	"testing"
 
-	"github.com/sacloud/libsacloud/v2/pkg/size"
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/packages-go/size"
 	"github.com/sacloud/usacloud/pkg/test"
 )
 
 func TestDiskDefaultColumnDefs(t *testing.T) {
 	cases := []struct {
-		in    *sacloud.Disk
+		in    *iaas.Disk
 		tests []*test.ColumnDefTestTarget
 	}{
 		{
-			in: &sacloud.Disk{
+			in: &iaas.Disk{
 				ID:           1,
 				Name:         "disk",
 				Description:  "desc",
@@ -39,7 +39,7 @@ func TestDiskDefaultColumnDefs(t *testing.T) {
 				SizeMB:       20 * size.GiB,
 				DiskPlanID:   types.DiskPlans.SSD,
 				DiskPlanName: "SSDプラン",
-				Storage:      &sacloud.Storage{Name: "dummy"},
+				Storage:      &iaas.Storage{Name: "dummy"},
 				ServerID:     2,
 				ServerName:   "server",
 			},

@@ -17,7 +17,7 @@ package ipaddress
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/ipaddress"
+	"github.com/sacloud/iaas-service-go/ipaddress"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

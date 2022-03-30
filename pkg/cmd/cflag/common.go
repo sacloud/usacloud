@@ -14,7 +14,7 @@
 
 package cflag
 
-import "github.com/sacloud/libsacloud/v2/sacloud/types"
+import "github.com/sacloud/iaas-api-go/types"
 
 type NameParameter struct {
 	Name string `cli:",category=common,order=10" validate:"required" json:",omitempty"`

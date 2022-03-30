@@ -15,10 +15,10 @@
 package vpcrouter
 
 import (
-	"github.com/sacloud/libsacloud/v2/helper/service/vpcrouter"
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/iaas-service-go/vpcrouter"
+	"github.com/sacloud/packages-go/pointer"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -107,14 +107,14 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		},
 		RouterSetting: routerSettingUpdate{
 			InternetConnectionEnabled: pointer.NewBool(true),
-			StaticNAT: &[]*sacloud.VPCRouterStaticNAT{
+			StaticNAT: &[]*iaas.VPCRouterStaticNAT{
 				{
 					GlobalAddress:  examples.VirtualIPAddress,
 					PrivateAddress: "192.168.0.1",
 					Description:    "example",
 				},
 			},
-			PortForwarding: &[]*sacloud.VPCRouterPortForwarding{
+			PortForwarding: &[]*iaas.VPCRouterPortForwarding{
 				{
 					Protocol:       types.EVPCRouterPortForwardingProtocol(examples.OptionsString("vpc_router_port_forwarding_protocol")),
 					GlobalPort:     22,
@@ -123,9 +123,9 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 					Description:    "example",
 				},
 			},
-			Firewall: &[]*sacloud.VPCRouterFirewall{
+			Firewall: &[]*iaas.VPCRouterFirewall{
 				{
-					Send: []*sacloud.VPCRouterFirewallRule{
+					Send: []*iaas.VPCRouterFirewallRule{
 						{
 							Protocol:           types.Protocol(examples.OptionsString("vpc_router_firewall_protocol")),
 							SourceNetwork:      "192.0.2.1 | 192.0.2.0/24",
@@ -137,7 +137,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 							Description:        "example",
 						},
 					},
-					Receive: []*sacloud.VPCRouterFirewallRule{
+					Receive: []*iaas.VPCRouterFirewallRule{
 						{
 							Protocol:           types.Protocol(examples.OptionsString("vpc_router_firewall_protocol")),
 							SourceNetwork:      "192.0.2.1 | 192.0.2.0/24",
@@ -152,7 +152,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 					Index: 0,
 				},
 			},
-			DHCPServer: &[]*sacloud.VPCRouterDHCPServer{
+			DHCPServer: &[]*iaas.VPCRouterDHCPServer{
 				{
 					Interface:  "eth1",
 					RangeStart: "192.168.0.240",
@@ -160,28 +160,28 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 					DNSServers: []string{"133.242.0.3", "133.242.0.4"},
 				},
 			},
-			DHCPStaticMapping: &[]*sacloud.VPCRouterDHCPStaticMapping{
+			DHCPStaticMapping: &[]*iaas.VPCRouterDHCPStaticMapping{
 				{
 					MACAddress: "9C:A3:BA:xx:xx:xx",
 					IPAddress:  "192.168.0.245",
 				},
 			},
-			DNSForwarding: &sacloud.VPCRouterDNSForwarding{
+			DNSForwarding: &iaas.VPCRouterDNSForwarding{
 				Interface:  "eth1",
 				DNSServers: []string{"133.242.0.3", "133.242.0.4"},
 			},
-			PPTPServer: &sacloud.VPCRouterPPTPServer{
+			PPTPServer: &iaas.VPCRouterPPTPServer{
 				RangeStart: "192.168.0.246",
 				RangeStop:  "192.168.0.249",
 			},
-			L2TPIPsecServer: &sacloud.VPCRouterL2TPIPsecServer{
+			L2TPIPsecServer: &iaas.VPCRouterL2TPIPsecServer{
 				RangeStart:      "192.168.0.250",
 				RangeStop:       "192.168.0.254",
 				PreSharedSecret: "presharedsecret",
 			},
-			WireGuard: &sacloud.VPCRouterWireGuard{
+			WireGuard: &iaas.VPCRouterWireGuard{
 				IPAddress: "192.168.0.240/28",
-				Peers: []*sacloud.VPCRouterWireGuardPeer{
+				Peers: []*iaas.VPCRouterWireGuardPeer{
 					{
 						Name:      "client1",
 						IPAddress: "192.168.0.242",
@@ -189,13 +189,13 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 					},
 				},
 			},
-			RemoteAccessUsers: &[]*sacloud.VPCRouterRemoteAccessUser{
+			RemoteAccessUsers: &[]*iaas.VPCRouterRemoteAccessUser{
 				{
 					UserName: "username",
 					Password: "password",
 				},
 			},
-			SiteToSiteIPsecVPN: &[]*sacloud.VPCRouterSiteToSiteIPsecVPN{
+			SiteToSiteIPsecVPN: &[]*iaas.VPCRouterSiteToSiteIPsecVPN{
 				{
 					Peer:            "192.0.2.1",
 					PreSharedSecret: "presharedsecret",
@@ -204,7 +204,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 					LocalPrefix:     []string{"192.168.0.0/24"},
 				},
 			},
-			StaticRoute: &[]*sacloud.VPCRouterStaticRoute{
+			StaticRoute: &[]*iaas.VPCRouterStaticRoute{
 				{
 					Prefix:  "172.16.0.0/16",
 					NextHop: "192.168.0.21",

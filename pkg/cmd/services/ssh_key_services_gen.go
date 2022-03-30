@@ -17,7 +17,7 @@
 package services
 
 import (
-	service "github.com/sacloud/libsacloud/v2/helper/service/sshkey"
+	service "github.com/sacloud/iaas-service-go/sshkey"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/conv"
 )

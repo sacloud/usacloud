@@ -21,9 +21,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/sacloud/libsacloud/v2/helper/api"
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	client "github.com/sacloud/api-client-go"
+
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/helper/api"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/validate"
@@ -33,7 +35,7 @@ import (
 type Context interface {
 	Option() *config.Config
 	Output() output.Output
-	Client() sacloud.APICaller
+	Client() iaas.APICaller
 	IO() IO
 	context.Context
 
@@ -130,30 +132,32 @@ func (c *cliContext) WithResource(id types.ID, zone string, resource interface{}
 	}
 }
 
-func (c *cliContext) Client() sacloud.APICaller {
+func (c *cliContext) Client() iaas.APICaller {
 	o := c.Option()
 	if o.FakeMode {
 		// libsacloud fakeドライバはlogパッケージにシステムログを出すがusacloudからは利用しないため出力を抑制する
 		log.SetOutput(io.Discard)
 	}
 
-	return api.NewCaller(&api.CallerOptions{
-		AccessToken:          o.AccessToken,
-		AccessTokenSecret:    o.AccessTokenSecret,
-		APIRootURL:           o.APIRootURL,
-		DefaultZone:          o.DefaultZone,
-		AcceptLanguage:       o.AcceptLanguage,
-		HTTPClient:           http.DefaultClient,
-		HTTPRequestTimeout:   o.HTTPRequestTimeout,
-		HTTPRequestRateLimit: o.HTTPRequestRateLimit,
-		RetryMax:             o.RetryMax,
-		RetryWaitMax:         o.RetryWaitMax,
-		RetryWaitMin:         o.RetryWaitMin,
-		UserAgent:            UserAgent,
-		TraceAPI:             o.EnableAPITrace(),
-		TraceHTTP:            o.EnableHTTPTrace(),
-		FakeMode:             o.FakeMode,
-		FakeStorePath:        o.FakeStorePath,
+	return api.NewCallerWithOptions(&api.CallerOptions{
+		Options: &client.Options{
+			AccessToken:          o.AccessToken,
+			AccessTokenSecret:    o.AccessTokenSecret,
+			AcceptLanguage:       o.AcceptLanguage,
+			HttpClient:           http.DefaultClient,
+			HttpRequestTimeout:   o.HTTPRequestTimeout,
+			HttpRequestRateLimit: o.HTTPRequestRateLimit,
+			RetryMax:             o.RetryMax,
+			RetryWaitMax:         o.RetryWaitMax,
+			RetryWaitMin:         o.RetryWaitMin,
+			UserAgent:            UserAgent,
+			Trace:                o.EnableHTTPTrace(),
+		},
+		APIRootURL:    o.APIRootURL,
+		DefaultZone:   o.DefaultZone,
+		TraceAPI:      o.EnableAPITrace(),
+		FakeMode:      o.FakeMode,
+		FakeStorePath: o.FakeStorePath,
 	})
 }
 

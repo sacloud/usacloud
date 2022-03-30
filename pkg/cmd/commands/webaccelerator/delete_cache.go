@@ -19,7 +19,7 @@ import (
 
 	"github.com/sacloud/usacloud/pkg/output"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -65,8 +65,8 @@ func deleteCacheFunc(ctx cli.Context, parameter interface{}) ([]interface{}, err
 	if !ok {
 		return nil, fmt.Errorf("got invalid parameter type: %#v", parameter)
 	}
-	webAccelOp := sacloud.NewWebAccelOp(ctx.Client())
-	deleteResults, err := webAccelOp.DeleteCache(ctx, &sacloud.WebAccelDeleteCacheRequest{URL: p.URLs})
+	webAccelOp := iaas.NewWebAccelOp(ctx.Client())
+	deleteResults, err := webAccelOp.DeleteCache(ctx, &iaas.WebAccelDeleteCacheRequest{URL: p.URLs})
 	if err != nil {
 		return nil, err
 	}

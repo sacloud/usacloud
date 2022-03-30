@@ -22,9 +22,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/sacloud/api-client-go/profile"
 	sacloudhttp "github.com/sacloud/go-http"
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/profile"
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/query"
 	"github.com/sacloud/usacloud/pkg/validate"
 	"github.com/spf13/pflag"
@@ -67,7 +67,7 @@ var DefaultQueryDriver = query.DriverJMESPath
 func LoadConfigValue(flags *pflag.FlagSet, errW io.Writer, skipLoadingProfile bool) (*Config, error) {
 	o := &Config{
 		ConfigValue: profile.ConfigValue{
-			Zones: append(sacloud.SakuraCloudZones, "all"),
+			Zones: append(iaas.SakuraCloudZones, "all"),
 		},
 	}
 	if skipLoadingProfile {
@@ -98,7 +98,7 @@ func (o *Config) loadConfig(flags *pflag.FlagSet, errW io.Writer) {
 
 func (o *Config) fillDefaults() {
 	if len(o.Zones) == 0 {
-		o.Zones = sacloud.SakuraCloudZones
+		o.Zones = iaas.SakuraCloudZones
 	}
 }
 
@@ -113,7 +113,7 @@ func (o *Config) loadFromEnv() {
 		o.Zone = stringFromEnv("SAKURACLOUD_ZONE", "")
 	}
 	if len(o.Zones) == 0 {
-		o.Zones = stringSliceFromEnv("SAKURACLOUD_ZONES", append(sacloud.SakuraCloudZones, "all"))
+		o.Zones = stringSliceFromEnv("SAKURACLOUD_ZONES", append(iaas.SakuraCloudZones, "all"))
 	}
 	if o.AcceptLanguage == "" {
 		o.AcceptLanguage = stringFromEnv("SAKURACLOUD_ACCEPT_LANGUAGE", "")
@@ -134,10 +134,10 @@ func (o *Config) loadFromEnv() {
 		o.HTTPRequestRateLimit = intFromEnv("SAKURACLOUD_API_REQUEST_RATE_LIMIT", 5) // デフォルト5ゾーン分(is1a/is1b/tk1a/tk1b/tk1v)
 	}
 	if o.APIRootURL == "" {
-		o.APIRootURL = stringFromEnv("SAKURACLOUD_API_ROOT_URL", sacloud.SakuraCloudAPIRoot)
+		o.APIRootURL = stringFromEnv("SAKURACLOUD_API_ROOT_URL", iaas.SakuraCloudAPIRoot)
 	}
 	if o.DefaultZone == "" {
-		o.DefaultZone = stringFromEnv("SAKURACLOUD_DEFAULT_ZONE", sacloud.APIDefaultZone)
+		o.DefaultZone = stringFromEnv("SAKURACLOUD_DEFAULT_ZONE", iaas.APIDefaultZone)
 	}
 	if o.TraceMode == "" {
 		o.TraceMode = stringFromEnv("SAKURACLOUD_TRACE", "")

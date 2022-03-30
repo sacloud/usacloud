@@ -17,7 +17,7 @@ package server
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/server"
+	"github.com/sacloud/iaas-service-go/server"
 
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )

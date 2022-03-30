@@ -19,17 +19,17 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/validate"
 
-	"github.com/sacloud/libsacloud/v2/sacloud/ostype"
+	"github.com/sacloud/iaas-api-go/ostype"
 
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/conv"
 
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/types"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/disk"
+	"github.com/sacloud/iaas-service-go/disk"
 	"github.com/stretchr/testify/require"
 )
 
@@ -160,7 +160,7 @@ func TestCreateParameter_Validate(t *testing.T) {
 		},
 	}
 
-	validate.InitializeValidator(sacloud.SakuraCloudZones)
+	validate.InitializeValidator(iaas.SakuraCloudZones)
 	for _, tc := range cases {
 		err := validateCreateParameter(nil, tc.in)
 		require.Equal(t, tc.err, err)

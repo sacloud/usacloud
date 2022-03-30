@@ -17,8 +17,8 @@ package loadbalancer
 import (
 	"net/http"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -51,8 +51,8 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	VirtualIPAddressesData *string                                 `cli:"virtual-ip-addresses,aliases=vips,category=network" mapconv:"-" json:"-"`
-	VirtualIPAddresses     *sacloud.LoadBalancerVirtualIPAddresses `cli:"-"`
+	VirtualIPAddressesData *string                              `cli:"virtual-ip-addresses,aliases=vips,category=network" mapconv:"-" json:"-"`
+	VirtualIPAddresses     *iaas.LoadBalancerVirtualIPAddresses `cli:"-"`
 	cflag.NoWaitParameter  `cli:",squash" mapconv:",squash"`
 }
 
@@ -67,12 +67,12 @@ func init() {
 // Customize パラメータ変換処理
 func (p *updateParameter) Customize(_ cli.Context) error {
 	if p.VirtualIPAddressesData != nil && *p.VirtualIPAddressesData != "" {
-		var vips sacloud.LoadBalancerVirtualIPAddresses
+		var vips iaas.LoadBalancerVirtualIPAddresses
 		if err := util.MarshalJSONFromPathOrContent(*p.VirtualIPAddressesData, &vips); err != nil {
 			return err
 		}
 		if p.VirtualIPAddresses == nil {
-			p.VirtualIPAddresses = &sacloud.LoadBalancerVirtualIPAddresses{}
+			p.VirtualIPAddresses = &iaas.LoadBalancerVirtualIPAddresses{}
 		}
 		*p.VirtualIPAddresses = append(*p.VirtualIPAddresses, vips...)
 	}
@@ -87,19 +87,19 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		DescUpdateParameter:   examples.DescriptionUpdate,
 		TagsUpdateParameter:   examples.TagsUpdate,
 		IconIDUpdateParameter: examples.IconIDUpdate,
-		VirtualIPAddresses: &sacloud.LoadBalancerVirtualIPAddresses{
+		VirtualIPAddresses: &iaas.LoadBalancerVirtualIPAddresses{
 			{
 				VirtualIPAddress: examples.VirtualIPAddress,
 				Port:             80,
 				DelayLoop:        10,
 				SorryServer:      "192.0.2.1",
 				Description:      "example",
-				Servers: sacloud.LoadBalancerServers{
+				Servers: iaas.LoadBalancerServers{
 					{
 						IPAddress: "192.0.2.101",
 						Port:      80,
 						Enabled:   true,
-						HealthCheck: &sacloud.LoadBalancerServerHealthCheck{
+						HealthCheck: &iaas.LoadBalancerServerHealthCheck{
 							Protocol:     types.ELoadBalancerHealthCheckProtocol(examples.OptionsString("loadbalancer_server_protocol")),
 							Path:         "/",
 							ResponseCode: http.StatusOK,

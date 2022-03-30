@@ -15,8 +15,8 @@
 package dns
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -48,8 +48,8 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	RecordsData *string             `cli:"records" mapconv:"-" json:"-"`
-	Records     *sacloud.DNSRecords `cli:"-"`
+	RecordsData *string          `cli:"records" mapconv:"-" json:"-"`
+	Records     *iaas.DNSRecords `cli:"-"`
 }
 
 func newUpdateParameter() *updateParameter {
@@ -63,12 +63,12 @@ func init() {
 // Customize パラメータ変換処理
 func (p *updateParameter) Customize(_ cli.Context) error {
 	if p.RecordsData != nil && *p.RecordsData != "" {
-		var records sacloud.DNSRecords
+		var records iaas.DNSRecords
 		if err := util.MarshalJSONFromPathOrContent(*p.RecordsData, &records); err != nil {
 			return err
 		}
 		if p.Records == nil {
-			p.Records = &sacloud.DNSRecords{}
+			p.Records = &iaas.DNSRecords{}
 		}
 		*p.Records = append(*p.Records, records...)
 	}
@@ -82,7 +82,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		DescUpdateParameter:   examples.DescriptionUpdate,
 		TagsUpdateParameter:   examples.TagsUpdate,
 		IconIDUpdateParameter: examples.IconIDUpdate,
-		Records: &sacloud.DNSRecords{
+		Records: &iaas.DNSRecords{
 			{
 				Name:  "www",
 				Type:  types.EDNSRecordType(examples.OptionsString("dns_record_type")),

@@ -15,7 +15,7 @@
 package localrouter
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -49,11 +49,11 @@ type createParameter struct {
 
 	Interface interfaceParameter `cli:",squash"`
 
-	PeersData string                     `cli:"peers" mapconv:"-" json:"-"`
-	Peers     []*sacloud.LocalRouterPeer `cli:"-"`
+	PeersData string                  `cli:"peers" mapconv:"-" json:"-"`
+	Peers     []*iaas.LocalRouterPeer `cli:"-"`
 
-	StaticRoutesData string                            `cli:"static-routes" mapconv:"-" json:"-"`
-	StaticRoutes     []*sacloud.LocalRouterStaticRoute `cli:"-"`
+	StaticRoutesData string                         `cli:"static-routes" mapconv:"-" json:"-"`
+	StaticRoutes     []*iaas.LocalRouterStaticRoute `cli:"-"`
 }
 
 type switchParameter struct {
@@ -80,14 +80,14 @@ func init() {
 // Customize パラメータ変換処理
 func (p *createParameter) Customize(_ cli.Context) error {
 	if p.PeersData != "" {
-		var peers []*sacloud.LocalRouterPeer
+		var peers []*iaas.LocalRouterPeer
 		if err := util.MarshalJSONFromPathOrContent(p.PeersData, &peers); err != nil {
 			return err
 		}
 		p.Peers = append(p.Peers, peers...)
 	}
 	if p.StaticRoutesData != "" {
-		var staticRoutes []*sacloud.LocalRouterStaticRoute
+		var staticRoutes []*iaas.LocalRouterStaticRoute
 		if err := util.MarshalJSONFromPathOrContent(p.StaticRoutesData, &staticRoutes); err != nil {
 			return err
 		}
@@ -114,7 +114,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 			NetworkMaskLen:   examples.NetworkMaskLen,
 			VRID:             1,
 		},
-		Peers: []*sacloud.LocalRouterPeer{
+		Peers: []*iaas.LocalRouterPeer{
 			{
 				ID:          examples.ID,
 				SecretKey:   "*****",
@@ -122,7 +122,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 				Description: "example-peer",
 			},
 		},
-		StaticRoutes: []*sacloud.LocalRouterStaticRoute{
+		StaticRoutes: []*iaas.LocalRouterStaticRoute{
 			{
 				Prefix:  "192.0.2.0/24",
 				NextHop: "192.0.2.1",

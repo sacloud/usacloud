@@ -15,8 +15,8 @@
 package containerregistry
 
 import (
-	"github.com/sacloud/libsacloud/v2/helper/service/containerregistry"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/iaas-service-go/containerregistry/builder"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -50,8 +50,8 @@ type createParameter struct {
 	SubDomainLabel string `cli:"subdomain-label" validate:"required"`
 	VirtualDomain  string `validate:"omitempty,fqdn"`
 
-	UsersData string                    `cli:"users" mapconv:"-" json:"-"`
-	Users     []*containerregistry.User `cli:"-"` // --parametersでファイルからパラメータ指定する場合向け
+	UsersData string          `cli:"users" mapconv:"-" json:"-"`
+	Users     []*builder.User `cli:"-"` // --parametersでファイルからパラメータ指定する場合向け
 }
 
 func newCreateParameter() *createParameter {
@@ -64,7 +64,7 @@ func init() {
 
 // Customize パラメータ変換処理
 func (p *createParameter) Customize(_ cli.Context) error {
-	var users []*containerregistry.User
+	var users []*builder.User
 	if p.UsersData != "" {
 		if err := util.MarshalJSONFromPathOrContent(p.UsersData, &users); err != nil {
 			return err
@@ -84,7 +84,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		AccessLevel:     examples.OptionsString("container_registry_access_level"),
 		SubDomainLabel:  "your-sub-domain",
 		VirtualDomain:   "your-domain.example.com",
-		Users: []*containerregistry.User{
+		Users: []*builder.User{
 			{
 				UserName:   "example-user-name",
 				Password:   "example-password",

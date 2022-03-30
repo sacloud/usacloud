@@ -17,7 +17,7 @@ package autobackup
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/autobackup"
+	"github.com/sacloud/iaas-service-go/autobackup"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

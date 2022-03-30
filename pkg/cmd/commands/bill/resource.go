@@ -17,7 +17,7 @@ package bill
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/bill"
+	"github.com/sacloud/iaas-service-go/bill"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

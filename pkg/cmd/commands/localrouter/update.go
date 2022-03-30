@@ -15,8 +15,8 @@
 package localrouter
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/packages-go/pointer"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -52,11 +52,11 @@ type updateParameter struct {
 
 	Interface interfaceParameterUpdate `cli:",squash"`
 
-	PeersData *string                     `cli:"peers" mapconv:"-" json:"-"`
-	Peers     *[]*sacloud.LocalRouterPeer `cli:"-"`
+	PeersData *string                  `cli:"peers" mapconv:"-" json:"-"`
+	Peers     *[]*iaas.LocalRouterPeer `cli:"-"`
 
-	StaticRoutesData *string                            `cli:"static-routes" mapconv:"-" json:"-"`
-	StaticRoutes     *[]*sacloud.LocalRouterStaticRoute `cli:"-"`
+	StaticRoutesData *string                         `cli:"static-routes" mapconv:"-" json:"-"`
+	StaticRoutes     *[]*iaas.LocalRouterStaticRoute `cli:"-"`
 }
 
 type switchParameterUpdate struct {
@@ -83,22 +83,22 @@ func init() {
 // Customize パラメータ変換処理
 func (p *updateParameter) Customize(_ cli.Context) error {
 	if p.PeersData != nil && *p.PeersData != "" {
-		var peers []*sacloud.LocalRouterPeer
+		var peers []*iaas.LocalRouterPeer
 		if err := util.MarshalJSONFromPathOrContent(*p.PeersData, &peers); err != nil {
 			return err
 		}
 		if p.Peers == nil {
-			p.Peers = &[]*sacloud.LocalRouterPeer{}
+			p.Peers = &[]*iaas.LocalRouterPeer{}
 		}
 		*p.Peers = append(*p.Peers, peers...)
 	}
 	if p.StaticRoutesData != nil && *p.StaticRoutesData != "" {
-		var staticRoutes []*sacloud.LocalRouterStaticRoute
+		var staticRoutes []*iaas.LocalRouterStaticRoute
 		if err := util.MarshalJSONFromPathOrContent(*p.StaticRoutesData, &staticRoutes); err != nil {
 			return err
 		}
 		if p.StaticRoutes == nil {
-			p.StaticRoutes = &[]*sacloud.LocalRouterStaticRoute{}
+			p.StaticRoutes = &[]*iaas.LocalRouterStaticRoute{}
 		}
 		*p.StaticRoutes = append(*p.StaticRoutes, staticRoutes...)
 	}
@@ -122,7 +122,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 			NetworkMaskLen:   pointer.NewInt(examples.NetworkMaskLen),
 			VRID:             pointer.NewInt(1),
 		},
-		Peers: &[]*sacloud.LocalRouterPeer{
+		Peers: &[]*iaas.LocalRouterPeer{
 			{
 				ID:          examples.ID,
 				SecretKey:   "*****",
@@ -130,7 +130,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 				Description: "example-peer",
 			},
 		},
-		StaticRoutes: &[]*sacloud.LocalRouterStaticRoute{
+		StaticRoutes: &[]*iaas.LocalRouterStaticRoute{
 			{
 				Prefix:  "192.0.2.0/24",
 				NextHop: "192.0.2.1",

@@ -17,7 +17,7 @@ package subnet
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/subnet"
+	"github.com/sacloud/iaas-service-go/subnet"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

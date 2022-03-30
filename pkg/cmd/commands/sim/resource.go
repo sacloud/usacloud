@@ -17,7 +17,7 @@ package sim
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/sim"
+	"github.com/sacloud/iaas-service-go/sim"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

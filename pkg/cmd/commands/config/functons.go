@@ -17,7 +17,7 @@ package config
 import (
 	"strings"
 
-	"github.com/sacloud/libsacloud/v2/sacloud/profile"
+	"github.com/sacloud/api-client-go/profile"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/spf13/cobra"
 )

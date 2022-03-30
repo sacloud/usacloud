@@ -17,7 +17,7 @@ package privatehostplan
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/privatehostplan"
+	"github.com/sacloud/iaas-service-go/privatehostplan"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

@@ -17,7 +17,7 @@ package dns
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/dns"
+	"github.com/sacloud/iaas-service-go/dns"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
