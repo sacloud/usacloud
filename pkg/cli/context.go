@@ -58,6 +58,7 @@ type cliContext struct {
 	output    output.Output
 	cliIO     IO
 	args      []string
+	client    iaas.APICaller
 
 	resourceName string
 	commandName  string
@@ -75,7 +76,7 @@ func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet,
 	// initialize validator with contextual values
 	validate.InitializeValidator(option.Zones)
 
-	return &cliContext{
+	cliCtx := &cliContext{
 		parentCtx:    ctx,
 		option:       option,
 		output:       getOutputWriter(io, option, columnDefs, parameter),
@@ -83,7 +84,10 @@ func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet,
 		commandName:  commandName,
 		cliIO:        io,
 		args:         args,
-	}, cancel, nil
+	}
+
+	cliCtx.initAPIClient()
+	return cliCtx, cancel, nil
 }
 
 func (c *cliContext) IO() IO {
@@ -127,18 +131,19 @@ func (c *cliContext) WithResource(id types.ID, zone string, resource interface{}
 		args:         c.args,
 		resourceName: c.resourceName,
 		commandName:  c.commandName,
+		client:       c.client,
 		resource:     ResourceContext{ID: id, Zone: zone, Resource: resource},
 	}
 }
 
-func (c *cliContext) Client() iaas.APICaller {
+func (c *cliContext) initAPIClient() {
 	o := c.Option()
 	if o.FakeMode {
 		// libsacloud fakeドライバはlogパッケージにシステムログを出すがusacloudからは利用しないため出力を抑制する
 		log.SetOutput(io.Discard)
 	}
 
-	return api.NewCallerWithOptions(&api.CallerOptions{
+	c.client = api.NewCallerWithOptions(&api.CallerOptions{
 		Options: &client.Options{
 			AccessToken:          o.AccessToken,
 			AccessTokenSecret:    o.AccessTokenSecret,
@@ -158,6 +163,10 @@ func (c *cliContext) Client() iaas.APICaller {
 		FakeMode:      o.FakeMode,
 		FakeStorePath: o.FakeStorePath,
 	})
+}
+
+func (c *cliContext) Client() iaas.APICaller {
+	return c.client
 }
 
 func (c *cliContext) Deadline() (deadline time.Time, ok bool) {
