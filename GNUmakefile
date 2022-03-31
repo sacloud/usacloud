@@ -19,11 +19,14 @@ COPYRIGHT_YEAR  ?="2017-2022"
 COPYRIGHT_FILES ?=$$(find . \( -name "*.dockerfile" -or -name "*.go" -or -name "*.sh" -or -name "*.pl" -or -name "*.bats" -or -name "*.bash" \) -print)
 BUILD_LDFLAGS   ?= "-s -w -X github.com/sacloud/usacloud/pkg/version.Revision=`git rev-parse --short HEAD`"
 
+.SUFFIXES:
+.SUFFIXES: .go
+
 export GO111MODULE=on
 export GOPROXY=https://proxy.golang.org
 
 .PHONY: default
-default: gen lint test build
+default: gen set-license go-licenses-check lint test build
 
 .PHONY: run
 run:
@@ -43,6 +46,7 @@ tools:
 	go install golang.org/x/tools/cmd/stringer@latest
 	go install github.com/sacloud/addlicense@latest
 	go install github.com/client9/misspell/cmd/misspell@latest
+	go install github.com/google/go-licenses@v1.0.0
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/v1.43.0/install.sh | sh -s -- -b $$(go env GOPATH)/bin v1.43.0
 
 .PHONY: gen _gen
@@ -82,7 +86,12 @@ fmt:
 	find . -name '*.go' | xargs gofmt -s -w
 
 set-license:
-	@addlicense -c $(AUTHOR) -y $(COPYRIGHT_YEAR) $(COPYRIGHT_FILES)
+	addlicense -c $(AUTHOR) -y $(COPYRIGHT_YEAR) $(COPYRIGHT_FILES)
 
-.SUFFIXES:
-.SUFFIXES: .go
+.PHONY: textlint
+textlint:
+	docker run -it --rm -v $$PWD:/work -w /work ghcr.io/sacloud/textlint-action:v0.0.1 .
+
+.PHONY: go-licenses-check
+go-licenses-check:
+	go-licenses check .

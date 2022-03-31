@@ -1,0 +1,21 @@
+name: Textlint
+on: [push, pull_request]
+jobs:
+  lint:
+    name: textlint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        working-directory:
+          - '.'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Unshallow
+        run: git fetch --prune --unshallow
+
+      - name: lint a document with textlint
+        uses: sacloud/textlint-action@v0.0.1
+        with:
+          working-directory: ${{ matrix.working-directory }}
