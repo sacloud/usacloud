@@ -18,10 +18,10 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/rhysd/go-github-selfupdate v1.2.3
-	github.com/sacloud/api-client-go v0.0.3
-	github.com/sacloud/go-http v0.0.4
-	github.com/sacloud/iaas-api-go v0.0.2
-	github.com/sacloud/iaas-service-go v0.0.3
+	github.com/sacloud/api-client-go v0.1.0
+	github.com/sacloud/go-http v0.1.0
+	github.com/sacloud/iaas-api-go v1.0.0
+	github.com/sacloud/iaas-service-go v1.0.0
 	github.com/sacloud/packages-go v0.0.2
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/cobra v1.3.0
