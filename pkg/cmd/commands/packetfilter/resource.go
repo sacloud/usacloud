@@ -17,7 +17,7 @@ package packetfilter
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/packetfilter"
+	"github.com/sacloud/iaas-service-go/packetfilter"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

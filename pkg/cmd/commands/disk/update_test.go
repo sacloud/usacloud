@@ -19,19 +19,18 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sacloud/usacloud/pkg/validate"
-
+	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/iaas-service-go/disk"
+	"github.com/sacloud/packages-go/pointer"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/conv"
-
-	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
-
-	"github.com/sacloud/libsacloud/v2/helper/service/disk"
+	"github.com/sacloud/usacloud/pkg/validate"
 	"github.com/stretchr/testify/require"
 )
 
 func TestUpdate_ConvertToServiceRequest(t *testing.T) {
+	id0 := types.ID(0)
+	id2 := types.ID(2)
 	t.Run("full", func(t *testing.T) {
 		in := &updateParameter{
 			ZoneParameter:         cflag.ZoneParameter{Zone: "is1a"},
@@ -39,7 +38,7 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 			NameUpdateParameter:   cflag.NameUpdateParameter{Name: pointer.NewString("name")},
 			DescUpdateParameter:   cflag.DescUpdateParameter{Description: pointer.NewString("desc")},
 			TagsUpdateParameter:   cflag.TagsUpdateParameter{Tags: pointer.NewStringSlice([]string{"tag1", "tag2"})},
-			IconIDUpdateParameter: cflag.IconIDUpdateParameter{IconID: pointer.NewID(types.ID(2))},
+			IconIDUpdateParameter: cflag.IconIDUpdateParameter{IconID: &id2},
 			Connection:            pointer.NewString(types.DiskConnections.VirtIO.String()),
 		}
 
@@ -53,8 +52,8 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 			ID:          types.ID(1),
 			Name:        pointer.NewString("name"),
 			Description: pointer.NewString("desc"),
-			Tags:        pointer.NewTags(types.Tags{"tag1", "tag2"}),
-			IconID:      pointer.NewID(types.ID(2)),
+			Tags:        &types.Tags{"tag1", "tag2"},
+			IconID:      &id2,
 			Connection:  &types.DiskConnections.VirtIO,
 		}, out)
 	})
@@ -88,7 +87,7 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 			NameUpdateParameter:   cflag.NameUpdateParameter{Name: pointer.NewString("name")},
 			DescUpdateParameter:   cflag.DescUpdateParameter{Description: pointer.NewString("")},
 			TagsUpdateParameter:   cflag.TagsUpdateParameter{Tags: pointer.NewStringSlice([]string{})},
-			IconIDUpdateParameter: cflag.IconIDUpdateParameter{IconID: pointer.NewID(types.ID(0))},
+			IconIDUpdateParameter: cflag.IconIDUpdateParameter{IconID: &id0},
 		}
 
 		out := &disk.UpdateRequest{}
@@ -101,8 +100,8 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 			ID:          types.ID(1),
 			Name:        pointer.NewString("name"),
 			Description: pointer.NewString(""),
-			Tags:        pointer.NewTags(types.Tags{}),
-			IconID:      pointer.NewID(0),
+			Tags:        &types.Tags{},
+			IconID:      &id0,
 			Connection:  nil,
 		}, out)
 	})

@@ -1,10 +1,14 @@
 # Changelog
 
+# v1.8.0 (Unreleased) 
+
+  * libsacloudからiaas-service-goへの切り替え #888 (@yamamoto-febc)
+
 # v1.7.1 (2022-01-27)
 
 MISC:
   * libsacloud v2.32.1 - Removed some os-types: freebsd and coreos #883 (@yamamoto-febc)
-  * Upgrade dependenceis - misc #884 (@yamamoto-febc)
+  * Upgrade dependencies - misc #884 (@yamamoto-febc)
   * Upgrade dependencies - github.com/spf13/cobra v1.3.0 #885 (@yamamoto-febc)
 
 # 1.7.0 (2021-12-27)

@@ -17,7 +17,7 @@ package region
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/region"
+	"github.com/sacloud/iaas-service-go/region"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

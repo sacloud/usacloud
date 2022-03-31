@@ -17,7 +17,7 @@ package enhanceddb
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/enhanceddb"
+	"github.com/sacloud/iaas-service-go/enhanceddb"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

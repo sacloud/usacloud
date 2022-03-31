@@ -20,10 +20,9 @@ import (
 	"reflect"
 
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/spf13/cobra"
-
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/util"
+	"github.com/spf13/cobra"
 )
 
 func (c *Command) loadParameters(ctx cli.Context, cmd *cobra.Command, parameters cflag.CommonParameterValueHolder) error {

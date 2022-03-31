@@ -17,8 +17,8 @@ package gslb
 import (
 	"net/http"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/packages-go/pointer"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -56,8 +56,8 @@ type updateParameter struct {
 	Weighted    *bool   `cli:",category=health,order=20"`
 	SorryServer *string `validate:"omitempty,ipv4"`
 
-	ServersData        *string              `cli:"servers" mapconv:"-" json:"-"`
-	DestinationServers *sacloud.GSLBServers `cli:"-"`
+	ServersData        *string           `cli:"servers" mapconv:"-" json:"-"`
+	DestinationServers *iaas.GSLBServers `cli:"-"`
 }
 
 type gslbHealthCheckUpdate struct {
@@ -79,12 +79,12 @@ func init() {
 // Customize パラメータ変換処理
 func (p *updateParameter) Customize(_ cli.Context) error {
 	if p.ServersData != nil && *p.ServersData != "" {
-		var servers sacloud.GSLBServers
+		var servers iaas.GSLBServers
 		if err := util.MarshalJSONFromPathOrContent(*p.ServersData, &servers); err != nil {
 			return err
 		}
 		if p.DestinationServers == nil {
-			p.DestinationServers = &sacloud.GSLBServers{}
+			p.DestinationServers = &iaas.GSLBServers{}
 		}
 		*p.DestinationServers = append(*p.DestinationServers, servers...)
 	}
@@ -108,7 +108,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		DelayLoop:   pointer.NewInt(10),
 		Weighted:    pointer.NewBool(true),
 		SorryServer: pointer.NewString("192.0.2.1"),
-		DestinationServers: &sacloud.GSLBServers{
+		DestinationServers: &iaas.GSLBServers{
 			{
 				IPAddress: examples.IPAddress,
 				Enabled:   true,

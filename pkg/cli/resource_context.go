@@ -17,7 +17,7 @@ package cli
 import (
 	"fmt"
 
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/types"
 )
 
 // ResourceContext 現在処理中のリソースの情報

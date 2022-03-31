@@ -17,7 +17,7 @@ package serverplan
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/serverplan"
+	"github.com/sacloud/iaas-service-go/serverplan"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

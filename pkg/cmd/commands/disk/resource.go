@@ -17,7 +17,7 @@ package disk
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/disk"
+	"github.com/sacloud/iaas-service-go/disk"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

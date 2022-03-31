@@ -17,7 +17,7 @@ package simplemonitor
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/simplemonitor"
+	"github.com/sacloud/iaas-service-go/simplemonitor"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

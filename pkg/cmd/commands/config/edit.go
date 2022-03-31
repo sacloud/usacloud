@@ -20,8 +20,8 @@ import (
 	"strings"
 
 	"github.com/fatih/color"
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/profile"
+	"github.com/sacloud/api-client-go/profile"
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/config"
@@ -196,7 +196,7 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 		if doChange {
 			zones := currentConfig.Zones
 			if len(zones) == 0 {
-				zones = sacloud.SakuraCloudZones
+				zones = iaas.SakuraCloudZones
 			}
 			// read input
 			var input string

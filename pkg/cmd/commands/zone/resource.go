@@ -17,7 +17,7 @@ package zone
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/zone"
+	"github.com/sacloud/iaas-service-go/zone"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

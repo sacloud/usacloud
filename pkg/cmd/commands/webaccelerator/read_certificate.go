@@ -17,7 +17,7 @@ package webaccelerator
 import (
 	"fmt"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -60,7 +60,7 @@ func readCertificateFunc(ctx cli.Context, parameter interface{}) ([]interface{},
 	if !ok {
 		return nil, fmt.Errorf("got invalid parameter type: %#v", parameter)
 	}
-	webAccelOp := sacloud.NewWebAccelOp(ctx.Client())
+	webAccelOp := iaas.NewWebAccelOp(ctx.Client())
 	result, err := webAccelOp.ReadCertificate(ctx, p.ID)
 	if err != nil {
 		return nil, err

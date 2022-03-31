@@ -17,8 +17,8 @@
 package esme
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/packages-go/pointer"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
@@ -50,7 +50,8 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 		p.Tags = pointer.NewStringSlice([]string{})
 	}
 	if p.IconID == nil {
-		p.IconID = pointer.NewID(types.ID(0))
+		v := types.ID(0)
+		p.IconID = &v
 	}
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")

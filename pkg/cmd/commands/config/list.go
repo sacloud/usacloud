@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/sacloud/libsacloud/v2/sacloud/profile"
+	"github.com/sacloud/api-client-go/profile"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/term"

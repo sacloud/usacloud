@@ -15,7 +15,7 @@
 package vpcrouter
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/util"
 )
@@ -24,48 +24,48 @@ type routerSetting struct {
 	VRID                      int `json:",omitempty"`
 	InternetConnectionEnabled bool
 
-	StaticNATData string                        `cli:"static-nat" mapconv:"-" json:"-"`
-	StaticNAT     []*sacloud.VPCRouterStaticNAT `cli:"-" json:",omitempty"`
+	StaticNATData string                     `cli:"static-nat" mapconv:"-" json:"-"`
+	StaticNAT     []*iaas.VPCRouterStaticNAT `cli:"-" json:",omitempty"`
 
-	PortForwardingData string                             `cli:"port-forwarding" mapconv:"-" json:"-"`
-	PortForwarding     []*sacloud.VPCRouterPortForwarding `cli:"-" json:",omitempty"`
+	PortForwardingData string                          `cli:"port-forwarding" mapconv:"-" json:"-"`
+	PortForwarding     []*iaas.VPCRouterPortForwarding `cli:"-" json:",omitempty"`
 
-	FirewallData string                       `cli:"firewall" mapconv:"-" json:"-"`
-	Firewall     []*sacloud.VPCRouterFirewall `cli:"-" json:",omitempty"`
+	FirewallData string                    `cli:"firewall" mapconv:"-" json:"-"`
+	Firewall     []*iaas.VPCRouterFirewall `cli:"-" json:",omitempty"`
 
-	DHCPServerData string                         `cli:"dhcp-server" mapconv:"-" json:"-"`
-	DHCPServer     []*sacloud.VPCRouterDHCPServer `cli:"-" json:",omitempty"`
+	DHCPServerData string                      `cli:"dhcp-server" mapconv:"-" json:"-"`
+	DHCPServer     []*iaas.VPCRouterDHCPServer `cli:"-" json:",omitempty"`
 
-	DHCPStaticMappingData string                                `cli:"dhcp-static-mapping" mapconv:"-" json:"-"`
-	DHCPStaticMapping     []*sacloud.VPCRouterDHCPStaticMapping `cli:"-" json:",omitempty"`
+	DHCPStaticMappingData string                             `cli:"dhcp-static-mapping" mapconv:"-" json:"-"`
+	DHCPStaticMapping     []*iaas.VPCRouterDHCPStaticMapping `cli:"-" json:",omitempty"`
 
-	DNSForwardingData string                          `cli:"dns-forwarding" mapconv:"-" json:"-"`
-	DNSForwarding     *sacloud.VPCRouterDNSForwarding `cli:"-" json:",omitempty"`
+	DNSForwardingData string                       `cli:"dns-forwarding" mapconv:"-" json:"-"`
+	DNSForwarding     *iaas.VPCRouterDNSForwarding `cli:"-" json:",omitempty"`
 
-	PPTPServerData string                       `cli:"pptp" mapconv:"-" json:"-"`
-	PPTPServer     *sacloud.VPCRouterPPTPServer `cli:"-" json:",omitempty"`
+	PPTPServerData string                    `cli:"pptp" mapconv:"-" json:"-"`
+	PPTPServer     *iaas.VPCRouterPPTPServer `cli:"-" json:",omitempty"`
 
-	L2TPIPsecServerData string                            `cli:"l2tp" mapconv:"-" json:"-"`
-	L2TPIPsecServer     *sacloud.VPCRouterL2TPIPsecServer `cli:"-" json:",omitempty"`
+	L2TPIPsecServerData string                         `cli:"l2tp" mapconv:"-" json:"-"`
+	L2TPIPsecServer     *iaas.VPCRouterL2TPIPsecServer `cli:"-" json:",omitempty"`
 
-	RemoteAccessUsersData string                               `cli:"users" mapconv:"-" json:"-"`
-	RemoteAccessUsers     []*sacloud.VPCRouterRemoteAccessUser `cli:"-" json:",omitempty"`
+	RemoteAccessUsersData string                            `cli:"users" mapconv:"-" json:"-"`
+	RemoteAccessUsers     []*iaas.VPCRouterRemoteAccessUser `cli:"-" json:",omitempty"`
 
-	WireGuardData string                      `cli:"wireguard" mapconv:"-" json:"-"`
-	WireGuard     *sacloud.VPCRouterWireGuard `cli:"-" json:",omitempty"`
+	WireGuardData string                   `cli:"wireguard" mapconv:"-" json:"-"`
+	WireGuard     *iaas.VPCRouterWireGuard `cli:"-" json:",omitempty"`
 
-	SiteToSiteIPsecVPNData string                                 `cli:"site-to-site-vpn" mapconv:"-" json:"-"`
-	SiteToSiteIPsecVPN     []*sacloud.VPCRouterSiteToSiteIPsecVPN `cli:"-" json:",omitempty"`
+	SiteToSiteIPsecVPNData string                              `cli:"site-to-site-vpn" mapconv:"-" json:"-"`
+	SiteToSiteIPsecVPN     []*iaas.VPCRouterSiteToSiteIPsecVPN `cli:"-" json:",omitempty"`
 
-	StaticRouteData string                          `cli:"static-route" mapconv:"-" json:"-"`
-	StaticRoute     []*sacloud.VPCRouterStaticRoute `cli:"-" json:",omitempty"`
+	StaticRouteData string                       `cli:"static-route" mapconv:"-" json:"-"`
+	StaticRoute     []*iaas.VPCRouterStaticRoute `cli:"-" json:",omitempty"`
 
 	SyslogHost string `json:",omitempty"`
 }
 
 func (r *routerSetting) Customize(_ cli.Context) error {
 	if r.StaticNATData != "" {
-		var staticNat []*sacloud.VPCRouterStaticNAT
+		var staticNat []*iaas.VPCRouterStaticNAT
 		if err := util.MarshalJSONFromPathOrContent(r.StaticNATData, &staticNat); err != nil {
 			return err
 		}
@@ -73,7 +73,7 @@ func (r *routerSetting) Customize(_ cli.Context) error {
 	}
 
 	if r.PortForwardingData != "" {
-		var portForwarding []*sacloud.VPCRouterPortForwarding
+		var portForwarding []*iaas.VPCRouterPortForwarding
 		if err := util.MarshalJSONFromPathOrContent(r.PortForwardingData, &portForwarding); err != nil {
 			return err
 		}
@@ -81,7 +81,7 @@ func (r *routerSetting) Customize(_ cli.Context) error {
 	}
 
 	if r.FirewallData != "" {
-		var firewall []*sacloud.VPCRouterFirewall
+		var firewall []*iaas.VPCRouterFirewall
 		if err := util.MarshalJSONFromPathOrContent(r.FirewallData, &firewall); err != nil {
 			return err
 		}
@@ -89,7 +89,7 @@ func (r *routerSetting) Customize(_ cli.Context) error {
 	}
 
 	if r.DHCPServerData != "" {
-		var dhcpServer []*sacloud.VPCRouterDHCPServer
+		var dhcpServer []*iaas.VPCRouterDHCPServer
 		if err := util.MarshalJSONFromPathOrContent(r.DHCPServerData, &dhcpServer); err != nil {
 			return err
 		}
@@ -97,14 +97,14 @@ func (r *routerSetting) Customize(_ cli.Context) error {
 	}
 
 	if r.DHCPStaticMappingData != "" {
-		var dhcpStaticMapping []*sacloud.VPCRouterDHCPStaticMapping
+		var dhcpStaticMapping []*iaas.VPCRouterDHCPStaticMapping
 		if err := util.MarshalJSONFromPathOrContent(r.DHCPStaticMappingData, &dhcpStaticMapping); err != nil {
 			return err
 		}
 		r.DHCPStaticMapping = append(r.DHCPStaticMapping, dhcpStaticMapping...)
 	}
 	if r.DNSForwardingData != "" {
-		var df sacloud.VPCRouterDNSForwarding
+		var df iaas.VPCRouterDNSForwarding
 		if err := util.MarshalJSONFromPathOrContent(r.DNSForwardingData, &df); err != nil {
 			return err
 		}
@@ -112,21 +112,21 @@ func (r *routerSetting) Customize(_ cli.Context) error {
 	}
 
 	if r.PPTPServerData != "" {
-		var pptp sacloud.VPCRouterPPTPServer
+		var pptp iaas.VPCRouterPPTPServer
 		if err := util.MarshalJSONFromPathOrContent(r.PPTPServerData, &pptp); err != nil {
 			return err
 		}
 		r.PPTPServer = &pptp
 	}
 	if r.L2TPIPsecServerData != "" {
-		var l2tp sacloud.VPCRouterL2TPIPsecServer
+		var l2tp iaas.VPCRouterL2TPIPsecServer
 		if err := util.MarshalJSONFromPathOrContent(r.L2TPIPsecServerData, &l2tp); err != nil {
 			return err
 		}
 		r.L2TPIPsecServer = &l2tp
 	}
 	if r.WireGuardData != "" {
-		var wireGuard sacloud.VPCRouterWireGuard
+		var wireGuard iaas.VPCRouterWireGuard
 		if err := util.MarshalJSONFromPathOrContent(r.WireGuardData, &wireGuard); err != nil {
 			return err
 		}
@@ -134,7 +134,7 @@ func (r *routerSetting) Customize(_ cli.Context) error {
 	}
 
 	if r.RemoteAccessUsersData != "" {
-		var users []*sacloud.VPCRouterRemoteAccessUser
+		var users []*iaas.VPCRouterRemoteAccessUser
 		if err := util.MarshalJSONFromPathOrContent(r.RemoteAccessUsersData, &users); err != nil {
 			return err
 		}
@@ -142,7 +142,7 @@ func (r *routerSetting) Customize(_ cli.Context) error {
 	}
 
 	if r.SiteToSiteIPsecVPNData != "" {
-		var s2s []*sacloud.VPCRouterSiteToSiteIPsecVPN
+		var s2s []*iaas.VPCRouterSiteToSiteIPsecVPN
 		if err := util.MarshalJSONFromPathOrContent(r.SiteToSiteIPsecVPNData, &s2s); err != nil {
 			return err
 		}
@@ -150,7 +150,7 @@ func (r *routerSetting) Customize(_ cli.Context) error {
 	}
 
 	if r.StaticRouteData != "" {
-		var staticRoutes []*sacloud.VPCRouterStaticRoute
+		var staticRoutes []*iaas.VPCRouterStaticRoute
 		if err := util.MarshalJSONFromPathOrContent(r.StaticRouteData, &staticRoutes); err != nil {
 			return err
 		}

@@ -15,8 +15,8 @@
 package common
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/sacloud/usacloud/pkg/validate"
@@ -38,15 +38,15 @@ type EditRequest struct {
 	SSHKeyIDs          []types.ID `cli:"ssh-key-ids,category=diskedit,order=71" json:",omitempty"`
 	IsSSHKeysEphemeral bool       `cli:"make-ssh-keys-ephemeral,category=diskedit,order=72" json:",omitempty"`
 
-	NoteIDs          []types.ID              `cli:"note-ids,category=diskedit,order=80" mapconv:"-" json:",omitempty"`
-	NotesData        string                  `cli:"notes,category=diskedit,order=81" mapconv:"-" json:"-"`
-	IsNotesEphemeral bool                    `cli:"make-notes-ephemeral,category=diskedit,order=82" json:",omitempty"`
-	Notes            []*sacloud.DiskEditNote `cli:"-" json:",omitempty"` // --parametersでファイルからパラメータ指定する場合向け
+	NoteIDs          []types.ID           `cli:"note-ids,category=diskedit,order=80" mapconv:"-" json:",omitempty"`
+	NotesData        string               `cli:"notes,category=diskedit,order=81" mapconv:"-" json:"-"`
+	IsNotesEphemeral bool                 `cli:"make-notes-ephemeral,category=diskedit,order=82" json:",omitempty"`
+	Notes            []*iaas.DiskEditNote `cli:"-" json:",omitempty"` // --parametersでファイルからパラメータ指定する場合向け
 }
 
 // Customize パラメータ変換処理
 func (p *EditRequest) Customize(_ cli.Context) error {
-	var notes []*sacloud.DiskEditNote
+	var notes []*iaas.DiskEditNote
 	if p.NotesData != "" {
 		if err := util.MarshalJSONFromPathOrContent(p.NotesData, &notes); err != nil {
 			return err
@@ -54,7 +54,7 @@ func (p *EditRequest) Customize(_ cli.Context) error {
 	}
 
 	for _, id := range p.NoteIDs {
-		notes = append(notes, &sacloud.DiskEditNote{ID: id})
+		notes = append(notes, &iaas.DiskEditNote{ID: id})
 	}
 
 	p.Notes = append(p.Notes, notes...)

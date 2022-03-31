@@ -15,8 +15,8 @@
 package disk
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/commands/common"
@@ -128,7 +128,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 			IsSSHKeysEphemeral:  true,
 			NoteIDs:             []types.ID{examples.ID},
 			IsNotesEphemeral:    true,
-			Notes: []*sacloud.DiskEditNote{
+			Notes: []*iaas.DiskEditNote{
 				{
 					ID: examples.ID,
 					Variables: map[string]interface{}{

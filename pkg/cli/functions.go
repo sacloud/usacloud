@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 

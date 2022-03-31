@@ -19,28 +19,30 @@ import (
 	"os"
 	"sync"
 
-	"github.com/sacloud/libsacloud/v2"
-	"github.com/sacloud/libsacloud/v2/helper/api"
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	client "github.com/sacloud/api-client-go"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/helper/api"
 	"github.com/sacloud/usacloud/pkg/version"
 )
 
-var apiCaller sacloud.APICaller
+var apiCaller iaas.APICaller
 var apiCallerInitOnce sync.Once
 
-func APICaller() sacloud.APICaller {
+func APICaller() iaas.APICaller {
 	apiCallerInitOnce.Do(func() {
-		apiCaller = api.NewCaller(&api.CallerOptions{
-			AccessToken:          os.Getenv("SAKURACLOUD_ACCESS_TOKEN"),
-			AccessTokenSecret:    os.Getenv("SAKURACLOUD_ACCESS_TOKEN_SECRET"),
-			HTTPRequestRateLimit: 5,
-			RetryMax:             10,
-			RetryWaitMax:         30,
-			RetryWaitMin:         1,
-			UserAgent:            fmt.Sprintf("Usacloud(Test)/v%s (+https://github.com/sacloud/usacloud) libsacloud/%s", version.Version, libsacloud.Version),
-			TraceAPI:             os.Getenv("SAKURACLOUD_TRACE") != "",
-			TraceHTTP:            os.Getenv("SAKURACLOUD_TRACE") != "",
-			FakeMode:             os.Getenv("FAKE_MODE") != "" || os.Getenv("TESTACC") != "",
+		apiCaller = api.NewCallerWithOptions(&api.CallerOptions{
+			Options: &client.Options{
+				AccessToken:          os.Getenv("SAKURACLOUD_ACCESS_TOKEN"),
+				AccessTokenSecret:    os.Getenv("SAKURACLOUD_ACCESS_TOKEN_SECRET"),
+				HttpRequestRateLimit: 5,
+				RetryMax:             10,
+				RetryWaitMax:         30,
+				RetryWaitMin:         1,
+				Trace:                os.Getenv("SAKURACLOUD_TRACE") != "",
+				UserAgent:            fmt.Sprintf("Usacloud(Test)/v%s (+https://github.com/sacloud/usacloud) %s", version.Version, iaas.DefaultUserAgent),
+			},
+			TraceAPI: os.Getenv("SAKURACLOUD_TRACE") != "",
+			FakeMode: os.Getenv("FAKE_MODE") != "" || os.Getenv("TESTACC") != "",
 		})
 	})
 	return apiCaller

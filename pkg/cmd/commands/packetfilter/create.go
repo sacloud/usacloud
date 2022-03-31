@@ -15,8 +15,8 @@
 package packetfilter
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -45,8 +45,8 @@ type createParameter struct {
 	cflag.NameParameter `cli:",squash" mapconv:",squash"`
 	cflag.DescParameter `cli:",squash" mapconv:",squash"`
 
-	ExpressionsData string                            `cli:"expressions,aliases=rules" mapconv:"-" json:"-"`
-	Expressions     []*sacloud.PacketFilterExpression `cli:"-" mapconv:"Expression"`
+	ExpressionsData string                         `cli:"expressions,aliases=rules" mapconv:"-" json:"-"`
+	Expressions     []*iaas.PacketFilterExpression `cli:"-" mapconv:"Expression"`
 }
 
 func newCreateParameter() *createParameter {
@@ -60,7 +60,7 @@ func init() {
 // Customize パラメータ変換処理
 func (p *createParameter) Customize(_ cli.Context) error {
 	if p.ExpressionsData != "" {
-		var expressions []*sacloud.PacketFilterExpression
+		var expressions []*iaas.PacketFilterExpression
 		if err := util.MarshalJSONFromPathOrContent(p.ExpressionsData, &expressions); err != nil {
 			return err
 		}
@@ -75,7 +75,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		ZoneParameter: examples.Zones(ctx.Option().Zones),
 		NameParameter: examples.Name,
 		DescParameter: examples.Description,
-		Expressions: []*sacloud.PacketFilterExpression{
+		Expressions: []*iaas.PacketFilterExpression{
 			{
 				Protocol:        types.Protocol(examples.OptionsString("packetfilter_protocol")),
 				SourceNetwork:   "192.0.2.1 | 192.0.2.0/24",

@@ -20,7 +20,7 @@ import (
 	"strings"
 
 	"github.com/hokaccha/go-prettyjson"
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/query"
@@ -129,7 +129,7 @@ func requestFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 		if !strings.HasPrefix(url, "/") {
 			url = "/" + url
 		}
-		url = fmt.Sprintf("%s/%s/api/cloud/1.1%s", sacloud.SakuraCloudAPIRoot, p.Zone, url)
+		url = fmt.Sprintf("%s/%s/api/cloud/1.1%s", iaas.SakuraCloudAPIRoot, p.Zone, url)
 	}
 
 	var body interface{}

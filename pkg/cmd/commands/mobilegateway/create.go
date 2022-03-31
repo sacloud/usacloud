@@ -15,8 +15,8 @@
 package mobilegateway
 
 import (
-	"github.com/sacloud/libsacloud/v2/helper/service/mobilegateway"
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-service-go/mobilegateway"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -56,8 +56,8 @@ type createParameter struct {
 	SIMRoutesData string                           `cli:"sim-routes" mapconv:"-" json:"-"`
 	SIMRoutes     []*mobilegateway.SIMRouteSetting `cli:"-"`
 
-	StaticRoutesData string                              `cli:"static-routes" mapconv:"-" json:"-"`
-	StaticRoutes     []*sacloud.MobileGatewayStaticRoute `cli:"-"`
+	StaticRoutesData string                           `cli:"static-routes" mapconv:"-" json:"-"`
+	StaticRoutes     []*iaas.MobileGatewayStaticRoute `cli:"-"`
 
 	PrivateInterface mobilegateway.PrivateInterfaceSetting `cli:",category=network" mapconv:",omitempty" validate:"omitempty"`
 	DNS              mobilegateway.DNSSetting              `cli:",squash" mapconv:",omitempty" validate:"omitempty"`
@@ -94,7 +94,7 @@ func (p *createParameter) Customize(_ cli.Context) error {
 	}
 
 	if p.StaticRoutesData != "" {
-		var staticRoutes []*sacloud.MobileGatewayStaticRoute
+		var staticRoutes []*iaas.MobileGatewayStaticRoute
 		if err := util.MarshalJSONFromPathOrContent(p.StaticRoutesData, &staticRoutes); err != nil {
 			return err
 		}
@@ -125,7 +125,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 				Prefix: "192.0.2.0/24",
 			},
 		},
-		StaticRoutes: []*sacloud.MobileGatewayStaticRoute{
+		StaticRoutes: []*iaas.MobileGatewayStaticRoute{
 			{
 				NextHop: "192.0.2.2",
 				Prefix:  "192.0.2.0/24",

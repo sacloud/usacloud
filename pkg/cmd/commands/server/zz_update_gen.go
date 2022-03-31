@@ -17,8 +17,8 @@
 package server
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud/pointer"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/packages-go/pointer"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
@@ -75,7 +75,8 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 		p.Tags = pointer.NewStringSlice([]string{})
 	}
 	if p.IconID == nil {
-		p.IconID = pointer.NewID(types.ID(0))
+		v := types.ID(0)
+		p.IconID = &v
 	}
 	if p.CPU == nil {
 		p.CPU = pointer.NewInt(0)
@@ -96,10 +97,12 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 		p.InterfaceDriver = pointer.NewString("")
 	}
 	if p.CDROMID == nil {
-		p.CDROMID = pointer.NewID(types.ID(0))
+		v := types.ID(0)
+		p.CDROMID = &v
 	}
 	if p.PrivateHostID == nil {
-		p.PrivateHostID = pointer.NewID(types.ID(0))
+		v := types.ID(0)
+		p.PrivateHostID = &v
 	}
 	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "(*required) ")
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")

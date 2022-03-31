@@ -22,8 +22,8 @@ import (
 	"sync"
 
 	"github.com/fatih/color"
-	"github.com/sacloud/libsacloud/v2/sacloud/accessor"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/accessor"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/root"

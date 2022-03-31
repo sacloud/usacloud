@@ -19,7 +19,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
@@ -174,7 +174,11 @@ func (c *Command) cliFlagInitializePointerStatement(parameterVariableName string
 
 	var statement string
 	if isLibsacloudIDType(fieldType) {
-		statement = "pointer.NewID(types.ID(0))"
+		srcTemplate = `if %s == nil {
+	v := types.ID(0)
+	%s = &v
+}`
+		return fmt.Sprintf(srcTemplate, fieldVar, fieldVar)
 	} else {
 		switch fieldType.Kind() {
 		case reflect.Bool:
@@ -189,7 +193,11 @@ func (c *Command) cliFlagInitializePointerStatement(parameterVariableName string
 			statement = `pointer.NewString("")`
 		case reflect.Slice:
 			if isLibsacloudIDType(fieldType.Elem()) {
-				statement = "pointer.NewIDSlice([]types.ID{})"
+				srcTemplate = `if %s == nil {
+	v := []types.ID{}
+	%s = &v
+}`
+				return fmt.Sprintf(srcTemplate, fieldVar, fieldVar)
 			} else {
 				switch fieldType.Elem().Kind() {
 				case reflect.Int64:

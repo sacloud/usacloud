@@ -17,7 +17,7 @@ package iface
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/iface"
+	"github.com/sacloud/iaas-service-go/iface"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

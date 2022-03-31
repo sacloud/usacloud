@@ -15,7 +15,7 @@
 package util
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/types"
 )
 
 func UniqIDs(elements []types.ID) []types.ID {
@@ -30,7 +30,7 @@ func UniqIDs(elements []types.ID) []types.ID {
 	return result
 }
 
-// StringIDs sacloud.IDスライスを文字列のスライスに変換する
+// StringIDs iaas.IDスライスを文字列のスライスに変換する
 func StringIDs(ids []types.ID) []string {
 	var strIDs []string
 

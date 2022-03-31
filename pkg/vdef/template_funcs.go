@@ -23,9 +23,9 @@ import (
 	"time"
 
 	"github.com/mitchellh/go-homedir"
-	"github.com/sacloud/libsacloud/v2/pkg/size"
-	"github.com/sacloud/libsacloud/v2/sacloud"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/packages-go/size"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 
@@ -101,7 +101,7 @@ var TemplateFuncMap = template.FuncMap{
 		if value == nil {
 			return "unknown"
 		}
-		v, ok := value.(*sacloud.Switch)
+		v, ok := value.(*iaas.Switch)
 		if !ok {
 			return "unknown"
 		}
@@ -162,7 +162,7 @@ func userFriendlyPriceString(value interface{}) string {
 	if value == nil {
 		return ""
 	}
-	v, ok := value.(*sacloud.Price)
+	v, ok := value.(*iaas.Price)
 	if !ok {
 		return ""
 	}

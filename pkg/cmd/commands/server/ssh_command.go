@@ -22,10 +22,9 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/sacloud/libsacloud/v2/helper/wait"
-	"github.com/sacloud/libsacloud/v2/sacloud"
-
-	"github.com/sacloud/libsacloud/v2/helper/query"
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/helper/query"
+	"github.com/sacloud/iaas-api-go/helper/wait"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
@@ -54,13 +53,13 @@ func sshFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		return nil, fmt.Errorf("invalid parameter: %v", parameter)
 	}
 
-	instance := ctx.Resource().(*sacloud.Server)
+	instance := ctx.Resource().(*iaas.Server)
 	if len(instance.Interfaces) == 0 {
 		return nil, fmt.Errorf("server[%q] has no network interfaces", p.ID)
 	}
 
 	if !instance.InstanceStatus.IsUp() && p.WaitUntilReady {
-		lastState, err := wait.UntilServerIsUp(ctx, sacloud.NewServerOp(ctx.Client()), p.Zone, p.ID)
+		lastState, err := wait.UntilServerIsUp(ctx, iaas.NewServerOp(ctx.Client()), p.Zone, p.ID)
 		if err != nil {
 			return nil, err
 		}

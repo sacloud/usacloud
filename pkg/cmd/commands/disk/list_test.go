@@ -17,8 +17,8 @@ package disk
 import (
 	"testing"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/disk"
-	"github.com/sacloud/libsacloud/v2/pkg/mapconv"
+	"github.com/sacloud/iaas-api-go/mapconv"
+	"github.com/sacloud/iaas-service-go/disk"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/stretchr/testify/require"
 )

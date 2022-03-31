@@ -17,7 +17,7 @@ package certificateauthority
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/certificateauthority"
+	"github.com/sacloud/iaas-service-go/certificateauthority"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

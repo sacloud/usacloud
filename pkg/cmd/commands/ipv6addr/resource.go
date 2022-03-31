@@ -17,7 +17,7 @@ package ipv6addr
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/ipv6addr"
+	"github.com/sacloud/iaas-service-go/ipv6addr"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

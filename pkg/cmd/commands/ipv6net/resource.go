@@ -17,7 +17,7 @@ package ipv6net
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/ipv6net"
+	"github.com/sacloud/iaas-service-go/ipv6net"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

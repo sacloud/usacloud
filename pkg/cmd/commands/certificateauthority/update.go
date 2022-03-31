@@ -17,8 +17,8 @@ package certificateauthority
 import (
 	"time"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/certificateauthority"
-	"github.com/sacloud/libsacloud/v2/sacloud/types"
+	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/iaas-service-go/certificateauthority/builder"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -50,11 +50,11 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	ClientsData *string                             `cli:"clients" mapconv:"-" json:"-"`
-	Clients     *[]*certificateauthority.ClientCert `cli:"-"`
+	ClientsData *string                `cli:"clients" mapconv:"-" json:"-"`
+	Clients     *[]*builder.ClientCert `cli:"-"`
 
-	ServersData *string                             `cli:"servers" mapconv:"-" json:"-"`
-	Servers     *[]*certificateauthority.ServerCert `cli:"-"`
+	ServersData *string                `cli:"servers" mapconv:"-" json:"-"`
+	Servers     *[]*builder.ServerCert `cli:"-"`
 }
 
 func newUpdateParameter() *updateParameter {
@@ -67,7 +67,7 @@ func init() {
 
 // Customize パラメータ変換処理
 func (p *updateParameter) Customize(_ cli.Context) error {
-	var clients []*certificateauthority.ClientCert
+	var clients []*builder.ClientCert
 	if p.ClientsData != nil && *p.ClientsData != "" {
 		if err := util.MarshalJSONFromPathOrContent(*p.ClientsData, &clients); err != nil {
 			return err
@@ -75,7 +75,7 @@ func (p *updateParameter) Customize(_ cli.Context) error {
 		p.Clients = &clients
 	}
 
-	var servers []*certificateauthority.ServerCert
+	var servers []*builder.ServerCert
 	if p.ServersData != nil && *p.ServersData != "" {
 		if err := util.MarshalJSONFromPathOrContent(*p.ServersData, &servers); err != nil {
 			return err
@@ -91,7 +91,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		DescUpdateParameter:   examples.DescriptionUpdate,
 		TagsUpdateParameter:   examples.TagsUpdate,
 		IconIDUpdateParameter: examples.IconIDUpdate,
-		Clients: &[]*certificateauthority.ClientCert{
+		Clients: &[]*builder.ClientCert{
 			{
 				Country:                   "JP",
 				Organization:              "usacloud",
@@ -105,7 +105,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 				Hold:                      true,
 			},
 		},
-		Servers: &[]*certificateauthority.ServerCert{
+		Servers: &[]*builder.ServerCert{
 			{
 				Country:                   "JP",
 				Organization:              "usacloud",

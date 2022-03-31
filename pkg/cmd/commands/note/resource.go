@@ -17,7 +17,7 @@ package note
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/note"
+	"github.com/sacloud/iaas-service-go/note"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 

@@ -15,7 +15,7 @@
 package webaccelerator
 
 import (
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
@@ -28,7 +28,7 @@ var Resource = &core.Resource{
 }
 
 func listAllFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-	webAccelOp := sacloud.NewWebAccelOp(ctx.Client())
+	webAccelOp := iaas.NewWebAccelOp(ctx.Client())
 	searched, err := webAccelOp.List(ctx)
 	if err != nil {
 		return nil, err

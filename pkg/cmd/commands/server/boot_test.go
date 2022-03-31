@@ -17,7 +17,7 @@ package server
 import (
 	"testing"
 
-	"github.com/sacloud/libsacloud/v2/sacloud"
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
 	"github.com/sacloud/usacloud/pkg/validate"
 )
@@ -53,7 +53,7 @@ hostname: foobar`,
 		},
 	}
 
-	validate.InitializeValidator(sacloud.SakuraCloudZones)
+	validate.InitializeValidator(iaas.SakuraCloudZones)
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			if err := validateBootParameter(nil, tt.parameter); (err != nil) != tt.wantErr {

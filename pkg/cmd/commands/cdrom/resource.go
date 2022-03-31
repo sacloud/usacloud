@@ -17,7 +17,7 @@ package cdrom
 import (
 	"reflect"
 
-	"github.com/sacloud/libsacloud/v2/helper/service/cdrom"
+	"github.com/sacloud/iaas-service-go/cdrom"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
