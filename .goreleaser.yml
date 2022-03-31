@@ -85,4 +85,4 @@ release:
   extra_files:
     - glob: ./scripts/install.sh
 changelog:
-  skip: true
+  skip: false
