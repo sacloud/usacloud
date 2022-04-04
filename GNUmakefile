@@ -58,6 +58,9 @@ _gen:
 .PHONY: gen-force
 gen-force: clean-all gen
 
+.PHONY: install
+install:
+	go install
 
 .PHONY: build
 build: bin/usacloud
@@ -73,13 +76,18 @@ shasum:
 test: 
 	go test $(TESTARGS) -v ./...
 
+.PHONY: e2e-test
+e2e-test: install
+	@echo "[INFO] When you run e2e-test for the first time, run 'make tools' first."
+	(cd e2e; go test $(TESTARGS) -v -tags=e2e -timeout 240m ./...)
+
 .PHONY: lint
 lint:
 	golangci-lint run ./...
 
 .PHONY: goimports
 goimports:
-	goimports -l -w pkg/ tools/
+	goimports -l -w pkg/ tools/ e2e/
 
 .PHONY: fmt
 fmt:

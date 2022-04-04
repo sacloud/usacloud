@@ -8,7 +8,9 @@ require (
 	github.com/fatih/structs v1.1.0
 	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32
 	github.com/go-playground/validator/v10 v10.10.1
-	github.com/hashicorp/go-version v1.2.1
+	github.com/hashicorp/go-version v1.4.0
+	github.com/hashicorp/hc-install v0.3.1
+	github.com/hashicorp/terraform-exec v0.16.0
 	github.com/hokaccha/go-prettyjson v0.0.0-20210113012101-fb4e108d2519
 	github.com/huandu/xstrings v1.3.0
 	github.com/itchyny/gojq v0.12.6
@@ -43,6 +45,7 @@ require (
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.0 // indirect
+	github.com/hashicorp/terraform-json v0.13.0 // indirect
 	github.com/inconshreveable/go-update v0.0.0-20160112193335-8152e7eb6ccf // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/itchyny/timefmt-go v0.1.3 // indirect
@@ -53,6 +56,7 @@ require (
 	github.com/sacloud/ftps v1.1.0 // indirect
 	github.com/tcnksm/go-gitconfig v0.1.2 // indirect
 	github.com/ulikunitz/xz v0.5.9 // indirect
+	github.com/zclconf/go-cty v1.10.0 // indirect
 	go.uber.org/ratelimit v0.2.0 // indirect
 	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8 // indirect
