@@ -23,3 +23,6 @@ dist/
 
 fake.json
 work/
+
+**/.terraform*
+**/terraform.tfstate*
