@@ -20,6 +20,7 @@ import (
 
 var Resource = &core.Resource{
 	Name:               "self",
+	Usage:              "Print resource ID",
 	DefaultCommandName: "id",
 	Category:           core.ResourceCategoryOther,
 }

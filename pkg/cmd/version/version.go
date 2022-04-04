@@ -26,8 +26,8 @@ import (
 // versionCmd represents the version command
 var versionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "show version info",
-	Long:  `show version info`,
+	Short: "Show version info",
+	Long:  `Show version info`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		_, err := fmt.Fprintln(os.Stdout, version.FullVersion())
 		return err

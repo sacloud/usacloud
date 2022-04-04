@@ -18,23 +18,22 @@
 package minimum
 
 import (
-	"os/exec"
 	"testing"
+
+	"github.com/sacloud/usacloud/e2e"
 
 	"github.com/stretchr/testify/require"
 )
 
 func TestE2E_minimum(t *testing.T) {
-	cmd := exec.Command("usacloud", "-h")
-	output, err := cmd.Output()
+	output, err := e2e.UsacloudRunWithOutput(t, "-h")
 
 	require.NoError(t, err)
 	require.NotEmpty(t, output)
 }
 
 func TestE2E_invalidSubCommand(t *testing.T) {
-	cmd := exec.Command("usacloud", "invalid subcommand")
-	err := cmd.Run()
+	err := e2e.UsacloudRun(t, "invalid subcommand")
 
 	require.Error(t, err)
 }

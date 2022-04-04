@@ -30,7 +30,7 @@ type GenerateContext struct {
 
 func NewGenerateContext() *GenerateContext {
 	// command schema validation
-	for _, r := range cmd.Resources {
+	for _, r := range cmd.Resources() {
 		for _, c := range r.Commands() {
 			if err := c.ValidateSchema(); err != nil {
 				log.Fatal(err)
@@ -38,7 +38,7 @@ func NewGenerateContext() *GenerateContext {
 		}
 	}
 	return &GenerateContext{
-		Resources: NewResources(cmd.Resources),
+		Resources: NewResources(cmd.Resources()),
 	}
 }
 

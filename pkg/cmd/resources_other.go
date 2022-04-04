@@ -23,8 +23,10 @@ import (
 )
 
 func init() {
-	Resources = append(Resources,
-		config.Resource,
+	IaaSResources = append(IaaSResources,
 		self.Resource,
+	)
+	MiscResources = append(MiscResources,
+		config.Resource,
 	)
 }
