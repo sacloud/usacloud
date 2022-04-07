@@ -17,6 +17,7 @@
 package services
 
 import (
+	"github.com/sacloud/iaas-api-go"
 	service "github.com/sacloud/iaas-service-go/disk"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
@@ -26,7 +27,7 @@ import (
 func init() {
 	setDefaultServiceFunc("disk", "connect-to-server",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.ConnectToServerRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -47,7 +48,7 @@ func init() {
 	)
 	setDefaultListAllFunc("disk", "connect-to-server",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -62,7 +63,7 @@ func init() {
 	)
 	setDefaultServiceFunc("disk", "edit",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.EditRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -83,7 +84,7 @@ func init() {
 	)
 	setDefaultListAllFunc("disk", "edit",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -98,7 +99,7 @@ func init() {
 	)
 	setDefaultServiceFunc("disk", "disconnect-from-server",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.DisconnectFromServerRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -119,7 +120,7 @@ func init() {
 	)
 	setDefaultListAllFunc("disk", "disconnect-from-server",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -134,7 +135,7 @@ func init() {
 	)
 	setDefaultServiceFunc("disk", "resize-partition",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.ResizePartitionRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -155,7 +156,7 @@ func init() {
 	)
 	setDefaultListAllFunc("disk", "resize-partition",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -170,7 +171,7 @@ func init() {
 	)
 	setDefaultServiceFunc("disk", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.FindRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -195,7 +196,7 @@ func init() {
 	)
 	setDefaultListAllFunc("disk", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -210,7 +211,7 @@ func init() {
 	)
 	setDefaultServiceFunc("disk", "create",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.CreateRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -231,7 +232,7 @@ func init() {
 	)
 	setDefaultListAllFunc("disk", "create",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -246,7 +247,7 @@ func init() {
 	)
 	setDefaultServiceFunc("disk", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.ReadRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -267,7 +268,7 @@ func init() {
 	)
 	setDefaultListAllFunc("disk", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -282,7 +283,7 @@ func init() {
 	)
 	setDefaultServiceFunc("disk", "update",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.UpdateRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -303,7 +304,7 @@ func init() {
 	)
 	setDefaultListAllFunc("disk", "update",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -318,7 +319,7 @@ func init() {
 	)
 	setDefaultServiceFunc("disk", "delete",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.DeleteRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -339,7 +340,7 @@ func init() {
 	)
 	setDefaultListAllFunc("disk", "delete",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -354,7 +355,7 @@ func init() {
 	)
 	setDefaultServiceFunc("disk", "monitor-disk",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.MonitorDiskRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -379,7 +380,7 @@ func init() {
 	)
 	setDefaultListAllFunc("disk", "monitor-disk",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -394,7 +395,7 @@ func init() {
 	)
 	setDefaultServiceFunc("disk", "wait-until-ready",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.WaitReadyRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -415,7 +416,7 @@ func init() {
 	)
 	setDefaultListAllFunc("disk", "wait-until-ready",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err

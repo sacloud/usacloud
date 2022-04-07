@@ -17,6 +17,7 @@
 package services
 
 import (
+	"github.com/sacloud/iaas-api-go"
 	service "github.com/sacloud/iaas-service-go/bill"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/conv"
@@ -25,7 +26,7 @@ import (
 func init() {
 	setDefaultServiceFunc("bill", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.ListRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -51,7 +52,7 @@ func init() {
 
 	setDefaultServiceFunc("bill", "csv",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.CsvRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {

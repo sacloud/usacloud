@@ -17,6 +17,7 @@
 package services
 
 import (
+	"github.com/sacloud/iaas-api-go"
 	service "github.com/sacloud/iaas-service-go/ipaddress"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/conv"
@@ -25,7 +26,7 @@ import (
 func init() {
 	setDefaultServiceFunc("ipaddress", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.ListRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -51,7 +52,7 @@ func init() {
 
 	setDefaultServiceFunc("ipaddress", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.ReadRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -73,7 +74,7 @@ func init() {
 
 	setDefaultServiceFunc("ipaddress", "update-host-name",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.UpdateHostNameRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {

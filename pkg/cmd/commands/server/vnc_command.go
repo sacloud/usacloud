@@ -53,12 +53,12 @@ func vncFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 
 	instance := ctx.Resource().(*iaas.Server)
 	if !instance.InstanceStatus.IsUp() && p.WaitUntilReady {
-		if _, err := wait.UntilServerIsUp(ctx, iaas.NewServerOp(ctx.Client()), p.Zone, p.ID); err != nil {
+		if _, err := wait.UntilServerIsUp(ctx, iaas.NewServerOp(ctx.Client().(iaas.APICaller)), p.Zone, p.ID); err != nil {
 			return nil, err
 		}
 	}
 
-	vncInfo, err := iaas.NewServerOp(ctx.Client()).GetVNCProxy(ctx, p.Zone, p.ID)
+	vncInfo, err := iaas.NewServerOp(ctx.Client().(iaas.APICaller)).GetVNCProxy(ctx, p.Zone, p.ID)
 	if err != nil {
 		return nil, err
 	}

@@ -15,6 +15,7 @@
 package bill
 
 import (
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-service-go/bill"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
@@ -37,7 +38,7 @@ var csvCommand = &core.Command{
 	},
 	// ListAllが通常と異なるシグニチャのため個別対応する
 	ListAllFunc: func(ctx cli.Context, _ interface{}) ([]interface{}, error) {
-		svc := bill.New(ctx.Client())
+		svc := bill.New(ctx.Client().(iaas.APICaller))
 		res, err := svc.ListWithContext(ctx, &bill.ListRequest{})
 		if err != nil {
 			return nil, err

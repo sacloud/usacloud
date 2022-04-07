@@ -34,7 +34,7 @@ import (
 type Context interface {
 	Option() *config.Config
 	Output() output.Output
-	Client() iaas.APICaller
+	Client() interface{}
 	IO() IO
 	context.Context
 
@@ -165,7 +165,7 @@ func (c *cliContext) initAPIClient() {
 	})
 }
 
-func (c *cliContext) Client() iaas.APICaller {
+func (c *cliContext) Client() interface{} {
 	return c.client
 }
 

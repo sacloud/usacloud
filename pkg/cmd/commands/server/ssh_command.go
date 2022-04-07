@@ -59,7 +59,7 @@ func sshFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	}
 
 	if !instance.InstanceStatus.IsUp() && p.WaitUntilReady {
-		lastState, err := wait.UntilServerIsUp(ctx, iaas.NewServerOp(ctx.Client()), p.Zone, p.ID)
+		lastState, err := wait.UntilServerIsUp(ctx, iaas.NewServerOp(ctx.Client().(iaas.APICaller)), p.Zone, p.ID)
 		if err != nil {
 			return nil, err
 		}
@@ -76,7 +76,7 @@ func sshFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 
 	user := p.User
 	if user == "" {
-		u, err := query.ServerDefaultUserName(ctx, p.Zone, query.NewServerSourceReader(ctx.Client()), p.ID)
+		u, err := query.ServerDefaultUserName(ctx, p.Zone, query.NewServerSourceReader(ctx.Client().(iaas.APICaller)), p.ID)
 		if err != nil {
 			return nil, err
 		}

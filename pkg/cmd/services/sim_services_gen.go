@@ -17,6 +17,7 @@
 package services
 
 import (
+	"github.com/sacloud/iaas-api-go"
 	service "github.com/sacloud/iaas-service-go/sim"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/conv"
@@ -25,7 +26,7 @@ import (
 func init() {
 	setDefaultServiceFunc("sim", "activate",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.ActivateRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -46,7 +47,7 @@ func init() {
 	)
 	setDefaultListAllFunc("sim", "activate",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
 			if err != nil {
 				return nil, err
@@ -61,7 +62,7 @@ func init() {
 	)
 	setDefaultServiceFunc("sim", "deactivate",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.DeactivateRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -82,7 +83,7 @@ func init() {
 	)
 	setDefaultListAllFunc("sim", "deactivate",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
 			if err != nil {
 				return nil, err
@@ -97,7 +98,7 @@ func init() {
 	)
 	setDefaultServiceFunc("sim", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.FindRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -122,7 +123,7 @@ func init() {
 	)
 	setDefaultListAllFunc("sim", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
 			if err != nil {
 				return nil, err
@@ -137,7 +138,7 @@ func init() {
 	)
 	setDefaultServiceFunc("sim", "create",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.CreateRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -158,7 +159,7 @@ func init() {
 	)
 	setDefaultListAllFunc("sim", "create",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
 			if err != nil {
 				return nil, err
@@ -173,7 +174,7 @@ func init() {
 	)
 	setDefaultServiceFunc("sim", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.ReadRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -194,7 +195,7 @@ func init() {
 	)
 	setDefaultListAllFunc("sim", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
 			if err != nil {
 				return nil, err
@@ -209,7 +210,7 @@ func init() {
 	)
 	setDefaultServiceFunc("sim", "update",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.UpdateRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -230,7 +231,7 @@ func init() {
 	)
 	setDefaultListAllFunc("sim", "update",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
 			if err != nil {
 				return nil, err
@@ -245,7 +246,7 @@ func init() {
 	)
 	setDefaultServiceFunc("sim", "delete",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.DeleteRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -266,7 +267,7 @@ func init() {
 	)
 	setDefaultListAllFunc("sim", "delete",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
 			if err != nil {
 				return nil, err
@@ -281,7 +282,7 @@ func init() {
 	)
 	setDefaultServiceFunc("sim", "monitor-sim",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.MonitorSIMRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -306,7 +307,7 @@ func init() {
 	)
 	setDefaultListAllFunc("sim", "monitor-sim",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
 			if err != nil {
 				return nil, err
@@ -321,7 +322,7 @@ func init() {
 	)
 	setDefaultServiceFunc("sim", "logs",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.LogsRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -346,7 +347,7 @@ func init() {
 	)
 	setDefaultListAllFunc("sim", "logs",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
 			if err != nil {
 				return nil, err

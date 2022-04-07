@@ -60,7 +60,7 @@ func readFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	if !ok {
 		return nil, fmt.Errorf("got invalid parameter type: %#v", parameter)
 	}
-	webAccelOp := iaas.NewWebAccelOp(ctx.Client())
+	webAccelOp := iaas.NewWebAccelOp(ctx.Client().(iaas.APICaller))
 	result, err := webAccelOp.Read(ctx, p.ID)
 	if err != nil {
 		return nil, err

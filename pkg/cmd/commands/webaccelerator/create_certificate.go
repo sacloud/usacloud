@@ -74,7 +74,7 @@ func createCertificateFunc(ctx cli.Context, parameter interface{}) ([]interface{
 		return nil, err
 	}
 
-	webAccelOp := iaas.NewWebAccelOp(ctx.Client())
+	webAccelOp := iaas.NewWebAccelOp(ctx.Client().(iaas.APICaller))
 	result, err := webAccelOp.CreateCertificate(ctx, p.ID, &iaas.WebAccelCertRequest{
 		CertificateChain: certs,
 		Key:              key,

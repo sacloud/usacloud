@@ -29,7 +29,7 @@ var Resource = &core.Resource{
 }
 
 func listAllFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-	webAccelOp := iaas.NewWebAccelOp(ctx.Client())
+	webAccelOp := iaas.NewWebAccelOp(ctx.Client().(iaas.APICaller))
 	searched, err := webAccelOp.List(ctx)
 	if err != nil {
 		return nil, err
