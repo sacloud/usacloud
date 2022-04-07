@@ -57,7 +57,7 @@ func deleteCacheAllFunc(ctx cli.Context, parameter interface{}) ([]interface{}, 
 	if !ok {
 		return nil, fmt.Errorf("got invalid parameter type: %#v", parameter)
 	}
-	webAccelOp := iaas.NewWebAccelOp(ctx.Client())
+	webAccelOp := iaas.NewWebAccelOp(ctx.Client().(iaas.APICaller))
 
 	return nil, webAccelOp.DeleteAllCache(ctx, &iaas.WebAccelDeleteAllCacheRequest{Domain: p.Domain})
 }

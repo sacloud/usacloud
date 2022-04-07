@@ -145,7 +145,7 @@ func requestFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 		body = b
 	}
 
-	results, err := ctx.Client().Do(ctx, strings.ToUpper(p.Method), url, body)
+	results, err := ctx.Client().(iaas.APICaller).Do(ctx, strings.ToUpper(p.Method), url, body)
 	if err != nil {
 		return nil, err
 	}

@@ -17,6 +17,7 @@
 package services
 
 import (
+	"github.com/sacloud/iaas-api-go"
 	service "github.com/sacloud/iaas-service-go/coupon"
 	"github.com/sacloud/usacloud/pkg/cli"
 )
@@ -24,7 +25,7 @@ import (
 func init() {
 	setDefaultServiceFunc("coupon", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			res, err := svc.ListWithContext(ctx)
 			if err != nil {

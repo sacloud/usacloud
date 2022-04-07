@@ -208,7 +208,7 @@ func (p *createParameter) Customize(ctx cli.Context) error {
 		p.Disks = append(p.Disks, disks...)
 	}
 	if len(p.DiskIDs) > 0 {
-		diskService := disk.New(ctx.Client())
+		diskService := disk.New(ctx.Client().(iaas.APICaller))
 		for _, diskID := range p.DiskIDs {
 			disk, err := diskService.Read(&disk.ReadRequest{
 				Zone: p.Zone,

@@ -17,6 +17,7 @@
 package services
 
 import (
+	"github.com/sacloud/iaas-api-go"
 	service "github.com/sacloud/iaas-service-go/database"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
@@ -26,7 +27,7 @@ import (
 func init() {
 	setDefaultServiceFunc("database", "boot",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.BootRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -47,7 +48,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "boot",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -62,7 +63,7 @@ func init() {
 	)
 	setDefaultServiceFunc("database", "shutdown",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.ShutdownRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -83,7 +84,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "shutdown",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -98,7 +99,7 @@ func init() {
 	)
 	setDefaultServiceFunc("database", "reset",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.ResetRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -119,7 +120,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "reset",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -134,7 +135,7 @@ func init() {
 	)
 	setDefaultServiceFunc("database", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.FindRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -159,7 +160,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -174,7 +175,7 @@ func init() {
 	)
 	setDefaultServiceFunc("database", "create",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.CreateRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -195,7 +196,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "create",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -210,7 +211,7 @@ func init() {
 	)
 	setDefaultServiceFunc("database", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.ReadRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -231,7 +232,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -246,7 +247,7 @@ func init() {
 	)
 	setDefaultServiceFunc("database", "update",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.UpdateRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -267,7 +268,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "update",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -282,7 +283,7 @@ func init() {
 	)
 	setDefaultServiceFunc("database", "delete",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.DeleteRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -303,7 +304,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "delete",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -318,7 +319,7 @@ func init() {
 	)
 	setDefaultServiceFunc("database", "list-parameters",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.ListParameterRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -343,7 +344,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "list-parameters",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -358,7 +359,7 @@ func init() {
 	)
 	setDefaultServiceFunc("database", "monitor-cpu",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.MonitorCPURequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -383,7 +384,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "monitor-cpu",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -398,7 +399,7 @@ func init() {
 	)
 	setDefaultServiceFunc("database", "monitor-database",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.MonitorDatabaseRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -423,7 +424,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "monitor-database",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -438,7 +439,7 @@ func init() {
 	)
 	setDefaultServiceFunc("database", "monitor-disk",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.MonitorDiskRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -463,7 +464,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "monitor-disk",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -478,7 +479,7 @@ func init() {
 	)
 	setDefaultServiceFunc("database", "monitor-interface",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.MonitorInterfaceRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -503,7 +504,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "monitor-interface",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -518,7 +519,7 @@ func init() {
 	)
 	setDefaultServiceFunc("database", "wait-until-ready",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.WaitBootRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -539,7 +540,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "wait-until-ready",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -554,7 +555,7 @@ func init() {
 	)
 	setDefaultServiceFunc("database", "wait-until-shutdown",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.WaitBootRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -575,7 +576,7 @@ func init() {
 	)
 	setDefaultListAllFunc("database", "wait-until-shutdown",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err

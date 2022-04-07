@@ -58,7 +58,7 @@ func rdpFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	}
 
 	if !instance.InstanceStatus.IsUp() && p.WaitUntilReady {
-		lastState, err := wait.UntilServerIsUp(ctx, iaas.NewServerOp(ctx.Client()), p.Zone, p.ID)
+		lastState, err := wait.UntilServerIsUp(ctx, iaas.NewServerOp(ctx.Client().(iaas.APICaller)), p.Zone, p.ID)
 		if err != nil {
 			return nil, err
 		}

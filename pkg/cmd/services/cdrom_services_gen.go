@@ -17,6 +17,7 @@
 package services
 
 import (
+	"github.com/sacloud/iaas-api-go"
 	service "github.com/sacloud/iaas-service-go/cdrom"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
@@ -26,7 +27,7 @@ import (
 func init() {
 	setDefaultServiceFunc("cdrom", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.FindRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -51,7 +52,7 @@ func init() {
 	)
 	setDefaultListAllFunc("cdrom", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -66,7 +67,7 @@ func init() {
 	)
 	setDefaultServiceFunc("cdrom", "create",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.CreateRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -87,7 +88,7 @@ func init() {
 	)
 	setDefaultListAllFunc("cdrom", "create",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -102,7 +103,7 @@ func init() {
 	)
 	setDefaultServiceFunc("cdrom", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.ReadRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -123,7 +124,7 @@ func init() {
 	)
 	setDefaultListAllFunc("cdrom", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -138,7 +139,7 @@ func init() {
 	)
 	setDefaultServiceFunc("cdrom", "update",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.UpdateRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -159,7 +160,7 @@ func init() {
 	)
 	setDefaultListAllFunc("cdrom", "update",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -174,7 +175,7 @@ func init() {
 	)
 	setDefaultServiceFunc("cdrom", "delete",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.DeleteRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -195,7 +196,7 @@ func init() {
 	)
 	setDefaultListAllFunc("cdrom", "delete",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -210,7 +211,7 @@ func init() {
 	)
 	setDefaultServiceFunc("cdrom", "upload",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.UploadRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -231,7 +232,7 @@ func init() {
 	)
 	setDefaultListAllFunc("cdrom", "upload",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -246,7 +247,7 @@ func init() {
 	)
 	setDefaultServiceFunc("cdrom", "download",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.DownloadRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -267,7 +268,7 @@ func init() {
 	)
 	setDefaultListAllFunc("cdrom", "download",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -282,7 +283,7 @@ func init() {
 	)
 	setDefaultServiceFunc("cdrom", "ftp-open",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.OpenFTPRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -303,7 +304,7 @@ func init() {
 	)
 	setDefaultListAllFunc("cdrom", "ftp-open",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
@@ -318,7 +319,7 @@ func init() {
 	)
 	setDefaultServiceFunc("cdrom", "ftp-close",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 
 			req := &service.CloseFTPRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -339,7 +340,7 @@ func init() {
 	)
 	setDefaultListAllFunc("cdrom", "ftp-close",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client())
+			svc := service.New(ctx.Client().(iaas.APICaller))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
 			if err != nil {
 				return nil, err
