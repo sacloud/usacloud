@@ -14,20 +14,29 @@
 
 package e2e
 
-import "os/exec"
+import (
+	"os"
+	"os/exec"
+	"testing"
+)
 
-func UsacloudRun(args ...string) error {
-	return usacloudCmd(args...).Run()
+func UsacloudRun(t *testing.T, args ...string) error {
+	return usacloudCmd(t, args...).Run()
 }
 
-func UsacloudRunWithOutput(args ...string) ([]byte, error) {
-	return usacloudCmd(args...).Output()
+func UsacloudRunWithOutput(t *testing.T, args ...string) ([]byte, error) {
+	return usacloudCmd(t, args...).Output()
 }
 
-func UsacloudRunWithCombinedOutput(args ...string) ([]byte, error) {
-	return usacloudCmd(args...).CombinedOutput()
+func UsacloudRunWithCombinedOutput(t *testing.T, args ...string) ([]byte, error) {
+	return usacloudCmd(t, args...).CombinedOutput()
 }
 
-func usacloudCmd(args ...string) *exec.Cmd {
-	return exec.Command("usacloud", args...)
+func usacloudCmd(t *testing.T, args ...string) *exec.Cmd {
+	cmd := "usacloud"
+	if overwrite := os.Getenv("USACLOUD_COMMAND"); overwrite != "" {
+		cmd = overwrite
+		t.Logf("using `usacloud` from custom path: %s", cmd)
+	}
+	return exec.Command(cmd, args...)
 }

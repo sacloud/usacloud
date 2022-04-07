@@ -20,6 +20,7 @@ import (
 
 var Resource = &core.Resource{
 	Name:               "config",
+	Usage:              "Management commands for Configuration file/Profile",
 	Aliases:            []string{"profile"},
 	DefaultCommandName: "edit",
 	Category:           core.ResourceCategoryConfig,

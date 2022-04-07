@@ -22,6 +22,7 @@ import (
 
 var Resource = &core.Resource{
 	Name:             "web-accelerator",
+	Usage:            "SubCommands for WebAccelerator",
 	Aliases:          []string{"web-accel", "webaccel"},
 	IsGlobalResource: true,
 	Category:         core.ResourceCategoryWebAccel,

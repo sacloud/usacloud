@@ -31,7 +31,7 @@ func TestE2E_multiZoneAction(t *testing.T) {
 	// **************************************************************
 	// step1: テスト対象の全サーバの電源状態を取得
 	// **************************************************************
-	outputs, err := e2e.UsacloudRunWithOutput(
+	outputs, err := e2e.UsacloudRunWithOutput(t,
 		"server", "list",
 		"--names", "usacloud-e2e-zones-server",
 		"--format", "{{.InstanceStatus}}",
@@ -51,7 +51,7 @@ func TestE2E_multiZoneAction(t *testing.T) {
 	// **************************************************************
 	// step2: 全サーバの電源OFF
 	// **************************************************************
-	_, err = e2e.UsacloudRunWithOutput(
+	_, err = e2e.UsacloudRunWithOutput(t,
 		"server", "shutdown",
 		"-f", "-y",
 		"--zone", "all",
@@ -62,7 +62,7 @@ func TestE2E_multiZoneAction(t *testing.T) {
 	// **************************************************************
 	// step2: テスト対象の全サーバの電源状態を取得
 	// **************************************************************
-	outputs, err = e2e.UsacloudRunWithOutput(
+	outputs, err = e2e.UsacloudRunWithOutput(t,
 		"server", "list",
 		"--names", "usacloud-e2e-zones-server",
 		"--format", "{{.InstanceStatus}}",

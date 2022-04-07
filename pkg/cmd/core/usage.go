@@ -32,7 +32,7 @@ const commandUsageTemplate = ` === %s ===
 const commandUsageWrapperTemplate = `Available Commands:
 %s`
 
-func buildRootCommandUsages(rootCmd *cobra.Command, resources []*Resource, appendManualImplCommands bool) string {
+func buildSubCommandsUsage(rootCmd *cobra.Command, resources []*Resource, appendManualImplCommands bool) string {
 	line := "    %s %s"
 	var usages []string
 	for _, r := range resources {
@@ -62,15 +62,18 @@ func buildRootCommandUsages(rootCmd *cobra.Command, resources []*Resource, appen
 	return strings.TrimRight(strings.Join(usages, "\n"), "\n")
 }
 
-func BuildRootCommandsUsage(cmd *cobra.Command, commands []*CategorizedResources) {
+func SetSubCommandsUsage(cmd *cobra.Command, commands []*CategorizedResources) {
 	cmd.SetUsageTemplate("")
 	var usages []string
 	for _, c := range commands {
-		usages = append(usages, fmt.Sprintf(commandUsageTemplate, c.Category.DisplayName, buildRootCommandUsages(cmd, c.Resources, c.Category == ResourceCategoryOther)))
+		usages = append(usages, fmt.Sprintf(commandUsageTemplate, c.Category.DisplayName, buildSubCommandsUsage(cmd, c.Resources, c.Category == ResourceCategoryOther)))
 	}
 	usage := fmt.Sprintf(commandUsageWrapperTemplate, strings.TrimRight(strings.Join(usages, "\n"), "\n"))
-	cmd.SetUsageTemplate(strings.Replace(cmd.UsageTemplate(), originalCommandsUsage, usage, 1))
-	cmd.SetUsageTemplate(cmd.UsageTemplate() + fmt.Sprintf("\nCopyright %s The Usacloud Authors\n", version.CopyrightYear))
+
+	usageTemplate := strings.Replace(cmd.UsageTemplate(), originalCommandsUsage, usage, 1) +
+		fmt.Sprintf("\nCopyright %s The Usacloud Authors\n", version.CopyrightYear)
+
+	cmd.SetUsageTemplate(usageTemplate)
 }
 
 func buildCommandUsages(rootCmd *cobra.Command, commands []*Command) string {

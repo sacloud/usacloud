@@ -20,6 +20,7 @@ import (
 
 var Resource = &core.Resource{
 	Name:               "rest",
+	Usage:              "Invoke SAKURA cloud API directly",
 	Category:           core.ResourceCategoryOther,
 	IsGlobalResource:   true,
 	DefaultCommandName: "request",
