@@ -29,6 +29,7 @@ type DummyCLIContextValue struct {
 	IO           cli.IO
 	Option       *config.Config
 	Output       output.Output
+	PlatformName string
 	ResourceName string
 	CommandName  string
 	ID           types.ID
@@ -51,6 +52,10 @@ func (c *DummyCLIContext) Option() *config.Config {
 
 func (c *DummyCLIContext) Output() output.Output {
 	return c.DummyValue.Output
+}
+
+func (c *DummyCLIContext) PlatformName() string {
+	return c.DummyValue.PlatformName
 }
 
 func (c *DummyCLIContext) ResourceName() string {
@@ -80,6 +85,7 @@ func (c *DummyCLIContext) WithResource(id types.ID, zone string, resource interf
 			IO:           c.DummyValue.IO,
 			Option:       c.DummyValue.Option,
 			Output:       c.DummyValue.Output,
+			PlatformName: c.DummyValue.PlatformName,
 			ResourceName: c.DummyValue.ResourceName,
 			CommandName:  c.DummyValue.CommandName,
 			Args:         c.DummyValue.Args,
