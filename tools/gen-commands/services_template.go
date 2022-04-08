@@ -31,7 +31,7 @@ import (
 
 {{ if .ServiceType }}
 func init() { {{ range .Commands }}{{ if .ParameterInitializer }}{{ if not .Func }}
-	registry.SetDefaultServiceFunc("{{ .Resource.Platform }}", "{{ .Resource.Name }}", "{{.Name}}", 
+	registry.SetDefaultServiceFunc("{{ .Resource.PlatformName }}", "{{ .Resource.Name }}", "{{.Name}}", 
 		func (ctx cli.Context, parameter interface{}) ([]interface{}, error) { 
 			svc := service.New(ctx.Client().({{ .ServiceFuncClientTypeName }}))
 			{{ if .ServiceFuncReturnValueType.HasRequestValue }}
@@ -64,7 +64,7 @@ func init() { {{ range .Commands }}{{ if .ParameterInitializer }}{{ if not .Func
 			{{ end }}
 		},
 	){{ end }}
-	{{ if .Resource.ServiceMeta.HasFindMethod }}registry.SetDefaultListAllFunc("{{ .Resource.Platform }}", "{{ .Resource.Name }}", "{{.Name}}", 
+	{{ if .Resource.ServiceMeta.HasFindMethod }}registry.SetDefaultListAllFunc("{{ .Resource.PlatformName }}", "{{ .Resource.Name }}", "{{.Name}}", 
 		func (ctx cli.Context, parameter interface{}) ([]interface{}, error) { 
 			svc := service.New(ctx.Client().({{ .ServiceFuncClientTypeName }}))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{ {{ if not .Resource.IsGlobalResource}} Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue(){{ end }} })

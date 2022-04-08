@@ -21,7 +21,6 @@ import (
 	"testing"
 
 	"github.com/sacloud/usacloud/e2e"
-
 	"github.com/stretchr/testify/require"
 )
 

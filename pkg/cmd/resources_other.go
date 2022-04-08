@@ -19,7 +19,7 @@ package cmd
 
 import (
 	"github.com/sacloud/usacloud/pkg/cmd/commands/config"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/self"
+	"github.com/sacloud/usacloud/pkg/cmd/commands/iaas/self"
 )
 
 func init() {

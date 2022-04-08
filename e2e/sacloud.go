@@ -20,11 +20,10 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/sacloud/usacloud/pkg/version"
-
 	client "github.com/sacloud/api-client-go"
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/helper/api"
+	"github.com/sacloud/usacloud/pkg/version"
 )
 
 var SacloudAPICaller = api.NewCallerWithOptions(&api.CallerOptions{

@@ -15,11 +15,15 @@
 package rest
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
 	"strings"
 
 	"github.com/hokaccha/go-prettyjson"
+	client "github.com/sacloud/api-client-go"
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/core"
@@ -132,20 +136,26 @@ func requestFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 		url = fmt.Sprintf("%s/%s/api/cloud/1.1%s", iaas.SakuraCloudAPIRoot, p.Zone, url)
 	}
 
-	var body interface{}
+	var body io.Reader
 	if p.Data != "" {
 		data, err := util.BytesFromPathOrContent(p.Data)
 		if err != nil {
 			return nil, err
 		}
-		b := make(map[string]interface{})
-		if err := json.Unmarshal(data, &b); err != nil {
-			return nil, err
-		}
-		body = b
+		body = bytes.NewReader(data)
 	}
 
-	results, err := ctx.Client().(iaas.APICaller).Do(ctx, strings.ToUpper(p.Method), url, body)
+	req, err := http.NewRequestWithContext(ctx, strings.ToUpper(p.Method), url, body)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := ctx.Client().(client.HttpRequestDoer).Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	results, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}

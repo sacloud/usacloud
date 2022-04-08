@@ -29,7 +29,8 @@ import (
 type apiClient struct {
 	option *config.Config
 
-	iaasClient iaas.APICaller
+	iaasClient   iaas.APICaller
+	commonClient client.HttpRequestDoer
 }
 
 func newAPIClient(o *config.Config) *apiClient {
@@ -42,26 +43,30 @@ func newAPIClient(o *config.Config) *apiClient {
 		log.SetOutput(io.Discard)
 	}
 
+	clientOption := &client.Options{
+		AccessToken:          o.AccessToken,
+		AccessTokenSecret:    o.AccessTokenSecret,
+		AcceptLanguage:       o.AcceptLanguage,
+		HttpClient:           http.DefaultClient,
+		HttpRequestTimeout:   o.HTTPRequestTimeout,
+		HttpRequestRateLimit: o.HTTPRequestRateLimit,
+		RetryMax:             o.RetryMax,
+		RetryWaitMax:         o.RetryWaitMax,
+		RetryWaitMin:         o.RetryWaitMin,
+		UserAgent:            UserAgent,
+		Trace:                o.EnableHTTPTrace(),
+	}
+
 	c.iaasClient = api.NewCallerWithOptions(&api.CallerOptions{
-		Options: &client.Options{
-			AccessToken:          o.AccessToken,
-			AccessTokenSecret:    o.AccessTokenSecret,
-			AcceptLanguage:       o.AcceptLanguage,
-			HttpClient:           http.DefaultClient,
-			HttpRequestTimeout:   o.HTTPRequestTimeout,
-			HttpRequestRateLimit: o.HTTPRequestRateLimit,
-			RetryMax:             o.RetryMax,
-			RetryWaitMax:         o.RetryWaitMax,
-			RetryWaitMin:         o.RetryWaitMin,
-			UserAgent:            UserAgent,
-			Trace:                o.EnableHTTPTrace(),
-		},
+		Options:       clientOption,
 		APIRootURL:    o.APIRootURL,
 		DefaultZone:   o.DefaultZone,
 		TraceAPI:      o.EnableAPITrace(),
 		FakeMode:      o.FakeMode,
 		FakeStorePath: o.FakeStorePath,
 	})
+
+	c.commonClient = client.NewFactory(clientOption).NewHttpRequestDoer()
 	return c
 }
 
@@ -71,8 +76,10 @@ func (c *apiClient) client(platformName string) interface{} {
 		panic("not yet implemented")
 	case "objectstorage":
 		panic("not yet implemented")
-	case "iaas", "": // Note: プラットフォーム未指定の場合はIaaSとみなす
+	case "iaas":
 		return c.iaasClient
+	case "":
+		return c.commonClient
 	}
 
 	panic(fmt.Sprintf("unsupported platform: %s", platformName))
