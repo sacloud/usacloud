@@ -15,6 +15,7 @@
 package tools
 
 import (
+	"fmt"
 	"log"
 	"reflect"
 )
@@ -50,4 +51,16 @@ func (c *Command) ServiceFuncReturnValueType() *ServiceFuncMeta {
 		return &ServiceFuncMeta{HasRequestValue: hasRequest, HasReturnValue: true, IsReturnValueSlice: true}
 	}
 	return &ServiceFuncMeta{HasRequestValue: hasRequest, HasReturnValue: true, IsReturnValueSlice: false}
+}
+
+func (c *Command) ServiceFuncClientTypeName() string {
+	switch c.Resource.Platform() {
+	case "iaas":
+		return "iaas.APICaller"
+	case "phy":
+		return "*phy.Client"
+	case "objectstorage":
+		return "*objectstorage.Client"
+	}
+	panic(fmt.Sprintf("unsupported platform name: %s", c.Resource.Platform()))
 }

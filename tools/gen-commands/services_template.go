@@ -20,6 +20,8 @@ package generated_services
 
 import (
 	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/object-storage-api-go"
+	"github.com/sacloud/phy-api-go"
 	service "{{ .ServiceRepositoryName }}/{{ .PackageDirName }}"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cmd/cflag"
@@ -31,7 +33,7 @@ import (
 func init() { {{ range .Commands }}{{ if .ParameterInitializer }}{{ if not .Func }}
 	registry.SetDefaultServiceFunc("{{ .Resource.Platform }}", "{{ .Resource.Name }}", "{{.Name}}", 
 		func (ctx cli.Context, parameter interface{}) ([]interface{}, error) { 
-			svc := service.New(ctx.Client().(iaas.APICaller))
+			svc := service.New(ctx.Client().({{ .ServiceFuncClientTypeName }}))
 			{{ if .ServiceFuncReturnValueType.HasRequestValue }}
 			req := &service.{{.ServiceRequestTypeName}}{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
@@ -64,7 +66,7 @@ func init() { {{ range .Commands }}{{ if .ParameterInitializer }}{{ if not .Func
 	){{ end }}
 	{{ if .Resource.ServiceMeta.HasFindMethod }}registry.SetDefaultListAllFunc("{{ .Resource.Platform }}", "{{ .Resource.Name }}", "{{.Name}}", 
 		func (ctx cli.Context, parameter interface{}) ([]interface{}, error) { 
-			svc := service.New(ctx.Client().(iaas.APICaller))
+			svc := service.New(ctx.Client().({{ .ServiceFuncClientTypeName }}))
 			res, err := svc.FindWithContext(ctx, &service.FindRequest{ {{ if not .Resource.IsGlobalResource}} Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue(){{ end }} })
 			if err != nil {
 				return nil, err
