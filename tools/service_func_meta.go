@@ -54,7 +54,7 @@ func (c *Command) ServiceFuncReturnValueType() *ServiceFuncMeta {
 }
 
 func (c *Command) ServiceFuncClientTypeName() string {
-	switch c.Resource.Platform() {
+	switch c.Resource.PlatformName {
 	case "iaas":
 		return "iaas.APICaller"
 	case "phy":
@@ -62,5 +62,5 @@ func (c *Command) ServiceFuncClientTypeName() string {
 	case "objectstorage":
 		return "*objectstorage.Client"
 	}
-	panic(fmt.Sprintf("unsupported platform name: %s", c.Resource.Platform()))
+	panic(fmt.Sprintf("unsupported platform name: %s", c.Resource.PlatformName))
 }

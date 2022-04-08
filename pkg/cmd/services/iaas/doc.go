@@ -12,21 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:build !wasm
-// +build !wasm
+package generated_services
 
-package cmd
-
-import (
-	"github.com/sacloud/usacloud/pkg/cmd/commands/config"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/iaas/self"
-)
-
-func init() {
-	IaaSResources = append(IaaSResources,
-		self.Resource,
-	)
-	MiscResources = append(MiscResources,
-		config.Resource,
-	)
-}
+// NOTE: 生成されたコードを削除した場合でもmake出来るようにするためのダミーファイル

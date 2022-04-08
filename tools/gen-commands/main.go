@@ -34,7 +34,7 @@ func main() {
 	for _, resource := range ctx.Resources {
 		for _, command := range resource.Commands {
 			// flag関連ソースの生成
-			filePath := filepath.Join(destination, "commands", resource.PackageDirName(), command.CLICommandGeneratedSourceFile())
+			filePath := filepath.Join(destination, "commands", resource.PlatformName, resource.PackageDirName(), command.CLICommandGeneratedSourceFile())
 			utils.WriteFileWithTemplate(&utils.TemplateConfig{
 				OutputPath: filepath.Join(utils.ProjectRootPath(), filePath),
 				Template:   flagsTemplate,
@@ -42,13 +42,15 @@ func main() {
 			})
 		}
 
-		// リソース単位のファイルを生成
-		// libsacloud service呼び出し関連ソースの生成
-		filePath := filepath.Join(destination, "services", resource.Platform(), resource.ServiceSourceFileName())
-		utils.WriteFileWithTemplate(&utils.TemplateConfig{
-			OutputPath: filepath.Join(utils.ProjectRootPath(), filePath),
-			Template:   serviceCommandTemplate,
-			Parameter:  resource,
-		})
+		if resource.PlatformName != "" {
+			// リソース単位のファイルを生成
+			// libsacloud service呼び出し関連ソースの生成
+			filePath := filepath.Join(destination, "services", resource.PlatformName, resource.ServiceSourceFileName())
+			utils.WriteFileWithTemplate(&utils.TemplateConfig{
+				OutputPath: filepath.Join(utils.ProjectRootPath(), filePath),
+				Template:   serviceCommandTemplate,
+				Parameter:  resource,
+			})
+		}
 	}
 }

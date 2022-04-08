@@ -12,21 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:build !wasm
-// +build !wasm
-
-package cmd
+package bridge
 
 import (
-	"github.com/sacloud/usacloud/pkg/cmd/commands/config"
-	"github.com/sacloud/usacloud/pkg/cmd/commands/iaas/self"
+	"reflect"
+
+	"github.com/sacloud/iaas-service-go/bridge"
+	"github.com/sacloud/usacloud/pkg/cmd/core"
 )
 
-func init() {
-	IaaSResources = append(IaaSResources,
-		self.Resource,
-	)
-	MiscResources = append(MiscResources,
-		config.Resource,
-	)
+var Resource = &core.Resource{
+	PlatformName: "iaas",
+	Name:         "bridge",
+	ServiceType:  reflect.TypeOf(&bridge.Service{}),
+	Category:     core.ResourceCategoryNetworking,
 }
