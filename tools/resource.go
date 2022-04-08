@@ -17,7 +17,7 @@ package tools
 import (
 	"strings"
 
-	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/naming"
 )
 

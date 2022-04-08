@@ -23,7 +23,7 @@ import (
 )
 
 var (
-	destination = "pkg/cmd"
+	destination = "pkg"
 	ctx         = tools.NewGenerateContext()
 )
 

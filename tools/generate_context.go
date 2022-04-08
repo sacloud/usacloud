@@ -20,7 +20,8 @@ import (
 	"log"
 	"path/filepath"
 
-	"github.com/sacloud/usacloud/pkg/cmd"
+	"github.com/sacloud/usacloud/pkg"
+
 	"github.com/sacloud/usacloud/pkg/version"
 )
 
@@ -30,7 +31,7 @@ type GenerateContext struct {
 
 func NewGenerateContext() *GenerateContext {
 	// command schema validation
-	for _, r := range cmd.Resources() {
+	for _, r := range pkg.Resources() {
 		for _, c := range r.Commands() {
 			if err := c.ValidateSchema(); err != nil {
 				log.Fatal(err)
@@ -38,7 +39,7 @@ func NewGenerateContext() *GenerateContext {
 		}
 	}
 	return &GenerateContext{
-		Resources: NewResources(cmd.Resources()),
+		Resources: NewResources(pkg.Resources()),
 	}
 }
 

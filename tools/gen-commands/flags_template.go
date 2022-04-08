@@ -20,7 +20,7 @@ package {{ .PackageDirName }}
 
 import (
 	"github.com/sacloud/iaas-api-go/types"
-	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"

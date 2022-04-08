@@ -24,9 +24,9 @@ import (
 	"github.com/sacloud/phy-api-go"
 	service "{{ .ServiceRepositoryName }}/{{ .PackageDirName }}"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/cmd/cflag"
-	"github.com/sacloud/usacloud/pkg/cmd/conv"
-	"github.com/sacloud/usacloud/pkg/cmd/services/registry"
+	"github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/conv"
+	"github.com/sacloud/usacloud/pkg/services/registry"
 )
 
 {{ if .ServiceType }}
