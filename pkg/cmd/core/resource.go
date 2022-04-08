@@ -32,6 +32,7 @@ type Resource struct {
 	Category           Category
 	Warning            string
 	IsGlobalResource   bool
+	PlatformName       string       // "iaas" or "phy" or "objectstorage", 空の場合はIaaSとして扱われる
 	ServiceType        reflect.Type // リソースに対応するlibsacloud serviceの型情報、コード生成用
 	SkipLoadingProfile bool
 

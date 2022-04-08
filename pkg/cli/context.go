@@ -16,14 +16,8 @@ package cli
 
 import (
 	"context"
-	"io"
-	"log"
-	"net/http"
 	"time"
 
-	client "github.com/sacloud/api-client-go"
-	"github.com/sacloud/iaas-api-go"
-	"github.com/sacloud/iaas-api-go/helper/api"
 	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -40,6 +34,7 @@ type Context interface {
 
 	Args() []string
 
+	PlatformName() string
 	ResourceName() string
 	CommandName() string
 
@@ -58,16 +53,35 @@ type cliContext struct {
 	output    output.Output
 	cliIO     IO
 	args      []string
-	client    iaas.APICaller
+	client    *apiClient
 
+	platformName string
 	resourceName string
 	commandName  string
 	resource     ResourceContext
 }
 
-func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet, args []string, columnDefs []output.ColumnDef, parameter interface{}, skipLoadingProfile bool) (Context, func(), error) {
+var _ Context = (*cliContext)(nil)
+
+// ContextParameter CLIContext作成パラメータ
+type ContextParameter struct {
+	PlatformName       string
+	ResourceName       string
+	CommandName        string
+	GlobalFlags        *pflag.FlagSet
+	Args               []string
+	ColumnDefs         []output.ColumnDef
+	Parameter          interface{}
+	SkipLoadingProfile bool
+}
+
+func NewCLIContext(param *ContextParameter) (Context, func(), error) {
+	if param == nil {
+		panic("param is required")
+	}
+
 	io := newIO()
-	option, err := config.LoadConfigValue(globalFlags, io.Err(), skipLoadingProfile)
+	option, err := config.LoadConfigValue(param.GlobalFlags, io.Err(), param.SkipLoadingProfile)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -79,14 +93,15 @@ func NewCLIContext(resourceName, commandName string, globalFlags *pflag.FlagSet,
 	cliCtx := &cliContext{
 		parentCtx:    ctx,
 		option:       option,
-		output:       getOutputWriter(io, option, columnDefs, parameter),
-		resourceName: resourceName,
-		commandName:  commandName,
+		client:       newAPIClient(option),
+		output:       getOutputWriter(io, option, param.ColumnDefs, param.Parameter),
+		platformName: param.PlatformName,
+		resourceName: param.ResourceName,
+		commandName:  param.CommandName,
 		cliIO:        io,
-		args:         args,
+		args:         param.Args,
 	}
 
-	cliCtx.initAPIClient()
 	return cliCtx, cancel, nil
 }
 
@@ -100,6 +115,10 @@ func (c *cliContext) Option() *config.Config {
 
 func (c *cliContext) Output() output.Output {
 	return c.output
+}
+
+func (c *cliContext) PlatformName() string {
+	return c.platformName
 }
 
 func (c *cliContext) ResourceName() string {
@@ -129,6 +148,7 @@ func (c *cliContext) WithResource(id types.ID, zone string, resource interface{}
 		output:       c.output,
 		cliIO:        c.cliIO,
 		args:         c.args,
+		platformName: c.platformName,
 		resourceName: c.resourceName,
 		commandName:  c.commandName,
 		client:       c.client,
@@ -136,37 +156,8 @@ func (c *cliContext) WithResource(id types.ID, zone string, resource interface{}
 	}
 }
 
-func (c *cliContext) initAPIClient() {
-	o := c.Option()
-	if o.FakeMode {
-		// libsacloud fakeドライバはlogパッケージにシステムログを出すがusacloudからは利用しないため出力を抑制する
-		log.SetOutput(io.Discard)
-	}
-
-	c.client = api.NewCallerWithOptions(&api.CallerOptions{
-		Options: &client.Options{
-			AccessToken:          o.AccessToken,
-			AccessTokenSecret:    o.AccessTokenSecret,
-			AcceptLanguage:       o.AcceptLanguage,
-			HttpClient:           http.DefaultClient,
-			HttpRequestTimeout:   o.HTTPRequestTimeout,
-			HttpRequestRateLimit: o.HTTPRequestRateLimit,
-			RetryMax:             o.RetryMax,
-			RetryWaitMax:         o.RetryWaitMax,
-			RetryWaitMin:         o.RetryWaitMin,
-			UserAgent:            UserAgent,
-			Trace:                o.EnableHTTPTrace(),
-		},
-		APIRootURL:    o.APIRootURL,
-		DefaultZone:   o.DefaultZone,
-		TraceAPI:      o.EnableAPITrace(),
-		FakeMode:      o.FakeMode,
-		FakeStorePath: o.FakeStorePath,
-	})
-}
-
 func (c *cliContext) Client() interface{} {
-	return c.client
+	return c.client.client(c.platformName)
 }
 
 func (c *cliContext) Deadline() (deadline time.Time, ok bool) {

@@ -301,7 +301,16 @@ func (c *Command) collectCompletionValuesFromResource(resource interface{}, pref
 }
 
 func (c *Command) initCommandContext(cmd *cobra.Command, args []string) (cli.Context, func(), bool, error) {
-	ctx, cancel, err := cli.NewCLIContext(c.resource.Name, c.Name, root.Command.PersistentFlags(), args, c.ColumnDefs, c.currentParameter, c.resource.SkipLoadingProfile)
+	ctx, cancel, err := cli.NewCLIContext(&cli.ContextParameter{
+		PlatformName:       c.resource.PlatformName,
+		ResourceName:       c.resource.Name,
+		CommandName:        c.Name,
+		GlobalFlags:        root.Command.PersistentFlags(),
+		Args:               args,
+		ColumnDefs:         c.ColumnDefs,
+		Parameter:          c.currentParameter,
+		SkipLoadingProfile: c.resource.SkipLoadingProfile,
+	})
 	if err != nil {
 		return nil, nil, false, err
 	}
