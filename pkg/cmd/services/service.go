@@ -12,26 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package tools
+package services
 
 import (
-	"fmt"
-
-	"github.com/sacloud/usacloud/pkg/naming"
+	_ "github.com/sacloud/usacloud/pkg/cmd/services/iaas"
+	"github.com/sacloud/usacloud/pkg/cmd/services/registry"
 )
 
-func (r *Resource) ServiceSourceFileName() string {
-	return fmt.Sprintf("%s_services_gen.go", naming.ToSnakeCase(r.Name))
+func DefaultServiceFunc(platformName, resourceName, commandName string) (registry.ServiceFunc, bool) {
+	return registry.DefaultServiceFunc(platformName, resourceName, commandName)
 }
 
-func (r *Resource) ServiceRepositoryName() string {
-	switch r.PlatformName {
-	case "phy":
-		return "github.com/sacloud/phy-service-go"
-	case "objectstorage":
-		return "github.com/sacloud/object-storage-service-go"
-	case "iaas", "":
-		return "github.com/sacloud/iaas-service-go"
-	}
-	panic(fmt.Sprintf("unsupported platform name: %s", r.PlatformName))
+func DefaultListAllFunc(platformName, resourceName, commandName string) (registry.ListAllFunc, bool) {
+	return registry.DefaultListAllFunc(platformName, resourceName, commandName)
 }
