@@ -44,7 +44,7 @@ func main() {
 
 		// リソース単位のファイルを生成
 		// libsacloud service呼び出し関連ソースの生成
-		filePath := filepath.Join(destination, "services", resource.ServiceSourceFileName())
+		filePath := filepath.Join(destination, "services", resource.Platform(), resource.ServiceSourceFileName())
 		utils.WriteFileWithTemplate(&utils.TemplateConfig{
 			OutputPath: filepath.Join(utils.ProjectRootPath(), filePath),
 			Template:   serviceCommandTemplate,

@@ -39,6 +39,13 @@ type Resource struct {
 	categorizedCommands []*CategorizedCommands
 }
 
+func (r *Resource) Platform() string {
+	if r.PlatformName == "" {
+		return "iaas"
+	}
+	return r.PlatformName
+}
+
 func (r *Resource) CLICommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     r.Name,

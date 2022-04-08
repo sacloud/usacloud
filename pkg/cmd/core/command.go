@@ -488,7 +488,7 @@ func (c *Command) selectNameComparingFuncByMode(mode string) func(string, string
 func (c *Command) exec(ctx cli.Context, ids cli.ResourceContexts) (output.Contents, error) {
 	if c.Func == nil {
 		// use default func
-		fn, ok := services.DefaultServiceFunc(c.resourceName(), c.Name)
+		fn, ok := services.DefaultServiceFunc(c.resource.Platform(), c.resourceName(), c.Name)
 		if !ok {
 			return nil, fmt.Errorf("default service func not found: resource:%s command:%s", c.resourceName(), c.Name)
 		}
@@ -640,7 +640,7 @@ type collectedResources struct {
 func (c *Command) collectResources(ctx cli.Context) ([]*collectedResources, error) {
 	listFn := c.ListAllFunc
 	if listFn == nil {
-		fn, ok := services.DefaultListAllFunc(c.resourceName(), c.Name)
+		fn, ok := services.DefaultListAllFunc(c.resource.Platform(), c.resourceName(), c.Name)
 		if !ok {
 			return nil, errors.New("ListAllFunc is not set")
 		}
