@@ -17,7 +17,7 @@ package tools
 import (
 	"sort"
 
-	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/core"
 )
 
 type CategorizedParameterFields struct {

@@ -14,8 +14,10 @@
 
 package main
 
-import "github.com/sacloud/usacloud/pkg/cmd"
+import (
+	"github.com/sacloud/usacloud/pkg"
+)
 
 func main() {
-	cmd.Run()
+	pkg.Run()
 }

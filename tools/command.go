@@ -20,7 +20,7 @@ import (
 	"strings"
 
 	"github.com/sacloud/iaas-api-go/types"
-	"github.com/sacloud/usacloud/pkg/cmd/core"
+	"github.com/sacloud/usacloud/pkg/core"
 )
 
 type Command struct {
