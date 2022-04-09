@@ -15,7 +15,7 @@
 package internet
 
 import (
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/examples"
@@ -34,22 +34,22 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag2.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	cflag2.NameParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.DescParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.TagsParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.IconIDParameter `cli:",squash" mapconv:",squash"`
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
 	NetworkMaskLen int `cli:"netmask,aliases=network-mask-len,options=internet_network_mask_len" validate:"required,internet_network_mask_len"`
 	BandWidthMbps  int `cli:"band-width,aliases=band-width-mbps,options=internet_bandwidth" validate:"required,internet_bandwidth"`
 
-	EnableIPv6             bool `cli:"enable-ipv6"`
-	cflag2.NoWaitParameter `cli:",squash" mapconv:",squash"`
-	NotFoundRetry          int
+	EnableIPv6            bool `cli:"enable-ipv6"`
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
+	NotFoundRetry         int
 }
 
 func newCreateParameter() *createParameter {
@@ -74,7 +74,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		NetworkMaskLen:  28,
 		BandWidthMbps:   100,
 		EnableIPv6:      true,
-		NoWaitParameter: cflag2.NoWaitParameter{
+		NoWaitParameter: cflag.NoWaitParameter{
 			NoWait: false,
 		},
 		NotFoundRetry: 10,

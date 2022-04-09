@@ -16,7 +16,7 @@ package database
 
 import (
 	"github.com/sacloud/usacloud/pkg/ccol"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/output"
 )
@@ -64,10 +64,10 @@ var listParametersCommand = &core.Command{
 }
 
 type listParametersParameter struct {
-	cflag2.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 
 func newListParametersParameter() *listParametersParameter {

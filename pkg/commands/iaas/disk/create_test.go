@@ -23,7 +23,7 @@ import (
 	"github.com/sacloud/iaas-api-go/ostype"
 	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/iaas-service-go/disk"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/conv"
 	"github.com/sacloud/usacloud/pkg/validate"
 	"github.com/stretchr/testify/require"
@@ -32,11 +32,11 @@ import (
 func TestCreate_ConvertToServiceRequest(t *testing.T) {
 	t.Run("full", func(t *testing.T) {
 		in := &createParameter{
-			ZoneParameter:   cflag2.ZoneParameter{Zone: "is1a"},
-			NameParameter:   cflag2.NameParameter{Name: "name"},
-			DescParameter:   cflag2.DescParameter{Description: "desc"},
-			TagsParameter:   cflag2.TagsParameter{Tags: []string{"tag1", "tag2"}},
-			IconIDParameter: cflag2.IconIDParameter{IconID: types.ID(1)},
+			ZoneParameter:   cflag.ZoneParameter{Zone: "is1a"},
+			NameParameter:   cflag.NameParameter{Name: "name"},
+			DescParameter:   cflag.DescParameter{Description: "desc"},
+			TagsParameter:   cflag.TagsParameter{Tags: []string{"tag1", "tag2"}},
+			IconIDParameter: cflag.IconIDParameter{IconID: types.ID(1)},
 			DiskPlan:        "ssd",
 			Connection:      types.DiskConnections.VirtIO.String(),
 			SizeGB:          20,
@@ -79,10 +79,10 @@ func TestCreateParameter_Validate(t *testing.T) {
 		// minimum
 		{
 			in: &createParameter{
-				ZoneParameter: cflag2.ZoneParameter{
+				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
-				NameParameter: cflag2.NameParameter{Name: "foobar"},
+				NameParameter: cflag.NameParameter{Name: "foobar"},
 				DiskPlan:      "ssd",
 				Connection:    "virtio",
 			},
@@ -91,13 +91,13 @@ func TestCreateParameter_Validate(t *testing.T) {
 		// invalid tags length
 		{
 			in: &createParameter{
-				ZoneParameter: cflag2.ZoneParameter{
+				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
-				NameParameter: cflag2.NameParameter{Name: "foobar"},
+				NameParameter: cflag.NameParameter{Name: "foobar"},
 				DiskPlan:      "ssd",
 				Connection:    "virtio",
-				TagsParameter: cflag2.TagsParameter{Tags: []string{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "invalid"}},
+				TagsParameter: cflag.TagsParameter{Tags: []string{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "invalid"}},
 			},
 			err: errors.New(strings.Join([]string{
 				"validation error:",
@@ -107,13 +107,13 @@ func TestCreateParameter_Validate(t *testing.T) {
 		// invalid tags body
 		{
 			in: &createParameter{
-				ZoneParameter: cflag2.ZoneParameter{
+				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
-				NameParameter: cflag2.NameParameter{Name: "foobar"},
+				NameParameter: cflag.NameParameter{Name: "foobar"},
 				DiskPlan:      "ssd",
 				Connection:    "virtio",
-				TagsParameter: cflag2.TagsParameter{Tags: []string{"********10********20********30++x"}},
+				TagsParameter: cflag.TagsParameter{Tags: []string{"********10********20********30++x"}},
 			},
 			err: errors.New(strings.Join([]string{
 				"validation error:",
@@ -123,10 +123,10 @@ func TestCreateParameter_Validate(t *testing.T) {
 		// custom validation
 		{
 			in: &createParameter{
-				ZoneParameter: cflag2.ZoneParameter{
+				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
-				NameParameter:   cflag2.NameParameter{Name: "foobar"},
+				NameParameter:   cflag.NameParameter{Name: "foobar"},
 				DiskPlan:        "ssd",
 				Connection:      "virtio",
 				SourceArchiveID: types.ID(1),
@@ -140,10 +140,10 @@ func TestCreateParameter_Validate(t *testing.T) {
 		// custom validation(with os-type)
 		{
 			in: &createParameter{
-				ZoneParameter: cflag2.ZoneParameter{
+				ZoneParameter: cflag.ZoneParameter{
 					Zone: "is1a",
 				},
-				NameParameter:   cflag2.NameParameter{Name: "foobar"},
+				NameParameter:   cflag.NameParameter{Name: "foobar"},
 				DiskPlan:        "ssd",
 				Connection:      "virtio",
 				OSType:          "ubuntu",

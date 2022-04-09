@@ -15,7 +15,7 @@
 package bill
 
 import (
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -34,8 +34,8 @@ var listCommand = &core.Command{
 }
 
 type listParameter struct {
-	cflag2.CommonParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 
 	Year  int `cli:",desc=(*required when --month is specified)" validate:"required_with=Month"`
 	Month int `cli:",desc=(*required when --year is specified)" validate:"required_with=Year,min=0,max=12"`

@@ -15,7 +15,7 @@
 package internet
 
 import (
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -35,15 +35,15 @@ var listCommand = &core.Command{
 }
 
 type listParameter struct {
-	cflag2.ZoneParameter        `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter      `cli:",squash" mapconv:"-"`
-	cflag2.LimitOffsetParameter `cli:",squash" mapconv:",squash"`
-	cflag2.OutputParameter      `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter        `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter      `cli:",squash" mapconv:"-"`
+	cflag.LimitOffsetParameter `cli:",squash" mapconv:",squash"`
+	cflag.OutputParameter      `cli:",squash" mapconv:"-"`
 
-	cflag2.FilterByNamesParameter `cli:",squash" mapconv:",omitempty,squash"`
-	cflag2.FilterByTagsParameter  `cli:",squash" mapconv:",omitempty,squash"`
-	SwitchIDs                     []string `cli:"switch-ids,category=filter" validate:"omitempty"`
-	SwitchNames                   []string `cli:"switch-names,category=filter" validate:"omitempty"`
+	cflag.FilterByNamesParameter `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.FilterByTagsParameter  `cli:",squash" mapconv:",omitempty,squash"`
+	SwitchIDs                    []string `cli:"switch-ids,category=filter" validate:"omitempty"`
+	SwitchNames                  []string `cli:"switch-names,category=filter" validate:"omitempty"`
 }
 
 func newListParameter() *listParameter {

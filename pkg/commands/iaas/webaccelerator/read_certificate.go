@@ -18,7 +18,7 @@ import (
 	"fmt"
 
 	"github.com/sacloud/iaas-api-go"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 )
@@ -42,9 +42,9 @@ var readCertificateCommand = &core.Command{
 }
 
 type readCertificateParameter struct {
-	cflag2.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter `cli:",squash" mapconv:"-"`
+	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 
 func newReadCertificateParameter() *readCertificateParameter {

@@ -16,7 +16,7 @@ package internet
 
 import (
 	"github.com/sacloud/iaas-api-go/types"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -33,13 +33,13 @@ var deleteSubnetCommand = &core.Command{
 }
 
 type deleteSubnetParameter struct {
-	cflag2.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag2.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 
-	cflag2.FailIfNotFoundParameter `cli:",squash" mapconv:",squash"`
-	SubnetID                       types.ID `validate:"required"`
+	cflag.FailIfNotFoundParameter `cli:",squash" mapconv:",squash"`
+	SubnetID                      types.ID `validate:"required"`
 }
 
 func newDeleteSubnetParameter() *deleteSubnetParameter {

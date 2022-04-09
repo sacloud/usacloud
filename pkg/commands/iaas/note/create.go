@@ -15,7 +15,7 @@
 package note
 
 import (
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/examples"
@@ -34,15 +34,15 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	cflag2.NameParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.TagsParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.IconIDParameter `cli:",squash" mapconv:",squash"`
-	Class                  string `cli:",options=note_class" validate:"required,note_class"`
-	Content                string `cli:",aliases=contents script scripts" validate:"required" mapconv:",filters=path_or_content"`
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
+	Class                 string `cli:",options=note_class" validate:"required,note_class"`
+	Content               string `cli:",aliases=contents script scripts" validate:"required" mapconv:",filters=path_or_content"`
 }
 
 func newCreateParameter() *createParameter {

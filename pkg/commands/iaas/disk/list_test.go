@@ -19,18 +19,18 @@ import (
 
 	"github.com/sacloud/iaas-api-go/mapconv"
 	"github.com/sacloud/iaas-service-go/disk"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/stretchr/testify/require"
 )
 
 func TestList_ConvertToServiceRequest(t *testing.T) {
 	in := &listParameter{
-		ZoneParameter: cflag2.ZoneParameter{
+		ZoneParameter: cflag.ZoneParameter{
 			Zone: "is1b",
 		},
-		FilterByNamesParameter: cflag2.FilterByNamesParameter{Names: []string{"name1", "name2"}},
-		FilterByTagsParameter:  cflag2.FilterByTagsParameter{Tags: []string{"tag1", "tag2"}},
-		LimitOffsetParameter: cflag2.LimitOffsetParameter{
+		FilterByNamesParameter: cflag.FilterByNamesParameter{Names: []string{"name1", "name2"}},
+		FilterByTagsParameter:  cflag.FilterByTagsParameter{Tags: []string{"tag1", "tag2"}},
+		LimitOffsetParameter: cflag.LimitOffsetParameter{
 			Count: 1,
 			From:  2,
 		},

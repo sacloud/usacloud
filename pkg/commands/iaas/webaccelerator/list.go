@@ -15,7 +15,7 @@
 package webaccelerator
 
 import (
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 )
@@ -38,9 +38,9 @@ var listCommand = &core.Command{
 }
 
 type listParameter struct {
-	cflag2.CommonParameter      `cli:",squash" mapconv:"-"`
-	cflag2.LimitOffsetParameter `cli:",squash" mapconv:",squash"`
-	cflag2.OutputParameter      `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter      `cli:",squash" mapconv:"-"`
+	cflag.LimitOffsetParameter `cli:",squash" mapconv:",squash"`
+	cflag.OutputParameter      `cli:",squash" mapconv:"-"`
 }
 
 func listFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {

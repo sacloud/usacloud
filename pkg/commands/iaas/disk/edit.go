@@ -15,7 +15,7 @@
 package disk
 
 import (
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/common"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -33,14 +33,14 @@ var editCommand = &core.Command{
 }
 
 type editParameter struct {
-	cflag2.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag2.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	EditDisk               common.EditRequest                `cli:",squash,category=edit" mapconv:",squash"`
-	cflag2.NoWaitParameter `cli:",squash" mapconv:",squash"` // trueの場合ディスクの修正完了まで待たずに即時復帰する
+	EditDisk              common.EditRequest                `cli:",squash,category=edit" mapconv:",squash"`
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"` // trueの場合ディスクの修正完了まで待たずに即時復帰する
 }
 
 func newEditParameter() *editParameter {

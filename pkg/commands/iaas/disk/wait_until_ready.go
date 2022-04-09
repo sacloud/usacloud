@@ -15,7 +15,7 @@
 package disk
 
 import (
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -35,9 +35,9 @@ var waitUntilReadyCommand = &core.Command{
 }
 
 type waitUntilReadyParameter struct {
-	cflag2.ZoneParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 }
 
 func newWaitUntilReadyParameter() *waitUntilReadyParameter {

@@ -20,7 +20,7 @@ import (
 
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/types"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/examples"
@@ -43,15 +43,15 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag2.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	cflag2.NameParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.DescParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.TagsParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.IconIDParameter `cli:",squash" mapconv:",squash"`
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
 	PlanID string `cli:"plan,options=loadbalancer_plan,category=plan,order=10" mapconv:",filters=loadbalancer_plan_to_value" validate:"required,loadbalancer_plan"`
 
@@ -65,7 +65,7 @@ type createParameter struct {
 	VirtualIPAddressesData string                              `cli:"virtual-ip-addresses,aliases=vips,category=network,order=70" mapconv:"-" json:"-"`
 	VirtualIPAddresses     iaas.LoadBalancerVirtualIPAddresses `cli:"-"`
 
-	cflag2.NoWaitParameter `cli:",squash" mapconv:",squash"`
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 func validateCreateParameter(ctx cli.Context, parameter interface{}) error {
@@ -149,7 +149,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 				},
 			},
 		},
-		NoWaitParameter: cflag2.NoWaitParameter{
+		NoWaitParameter: cflag.NoWaitParameter{
 			NoWait: false,
 		},
 	}
