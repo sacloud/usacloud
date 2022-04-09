@@ -67,6 +67,8 @@ import (
 	"github.com/sacloud/usacloud/pkg/commands/iaas/vpcrouter"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/webaccelerator"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/zone"
+	"github.com/sacloud/usacloud/pkg/commands/phy"
+	phyService "github.com/sacloud/usacloud/pkg/commands/phy/service"
 	"github.com/sacloud/usacloud/pkg/commands/rest"
 	"github.com/sacloud/usacloud/pkg/commands/root"
 	"github.com/sacloud/usacloud/pkg/commands/version"
@@ -125,6 +127,10 @@ var (
 		// libsacloud service以外のマニュアル実装分
 	}
 
+	PhyResources = core.Resources{
+		phyService.Resource,
+	}
+
 	MiscResources = core.Resources{
 		rest.Resource,
 		webaccelerator.Resource,
@@ -139,12 +145,14 @@ var (
 func Resources() core.Resources {
 	rs := core.Resources{}
 	rs = append(rs, IaaSResources...)
+	rs = append(rs, PhyResources...)
 	rs = append(rs, MiscResources...)
 	return rs
 }
 
 func initCommands() {
 	initIaasCommands()
+	initPhyCommands()
 	initMiscCommands()
 	initRootCommands()
 }
@@ -193,6 +201,17 @@ func addHiddenSubCommandToRoot(cmd *cobra.Command) {
 
 	c.Hidden = true
 	root.Command.AddCommand(&c)
+}
+
+func initPhyCommands() {
+	for _, r := range PhyResources {
+		cmd := r.CLICommand()
+		if len(cmd.Commands()) > 0 {
+			phy.Command.AddCommand(cmd)
+		}
+	}
+	core.SetSubCommandsUsage(phy.Command, PhyResources.CategorizedResources(phy.ResourceCategories))
+	root.Command.AddCommand(phy.Command)
 }
 
 func initMiscCommands() {

@@ -65,7 +65,7 @@ install:
 .PHONY: build
 build: bin/usacloud
 
-bin/usacloud: $(GO_FILES)
+bin/usacloud: $(GO_FILES) go.mod go.sum
 	GOOS=$${OS:-"`go env GOOS`"} GOARCH=$${ARCH:-"`go env GOARCH`"} CGO_ENABLED=0 go build -ldflags=$(BUILD_LDFLAGS) -o bin/usacloud main.go
 
 .PHONY: shasum

@@ -481,7 +481,8 @@ func (c *Command) exec(ctx cli.Context, ids cli.ResourceContexts) (output.Conten
 		// use default func
 		fn, ok := services.DefaultServiceFunc(c.resource.PlatformName, c.resourceName(), c.Name)
 		if !ok {
-			return nil, fmt.Errorf("default service func not found: resource:%s command:%s", c.resourceName(), c.Name)
+			return nil, fmt.Errorf("default service func not found: platform:%s resource:%s command:%s",
+				c.resource.PlatformName, c.resourceName(), c.Name)
 		}
 		c.Func = fn
 	}
