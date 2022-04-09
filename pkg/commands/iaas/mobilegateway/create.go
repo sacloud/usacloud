@@ -17,7 +17,7 @@ package mobilegateway
 import (
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-service-go/mobilegateway"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/examples"
@@ -37,15 +37,15 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag2.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	cflag2.NameParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.DescParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.TagsParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.IconIDParameter `cli:",squash" mapconv:",squash"`
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
 	InternetConnectionEnabled       bool
 	InterDeviceCommunicationEnabled bool
@@ -63,8 +63,8 @@ type createParameter struct {
 	DNS              mobilegateway.DNSSetting              `cli:",squash" mapconv:",omitempty" validate:"omitempty"`
 	TrafficConfig    mobilegateway.TrafficConfig           `mapconv:",omitempty"`
 
-	cflag2.NoWaitParameter `cli:",squash" mapconv:",squash"`
-	BootAfterCreate        bool
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
+	BootAfterCreate       bool
 }
 
 func newCreateParameter() *createParameter {
@@ -148,7 +148,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 			SlackNotifyWebhooksURL: examples.SlackNotifyWebhooksURL,
 			AutoTrafficShaping:     true,
 		},
-		NoWaitParameter: cflag2.NoWaitParameter{
+		NoWaitParameter: cflag.NoWaitParameter{
 			NoWait: false,
 		},
 		BootAfterCreate: true,

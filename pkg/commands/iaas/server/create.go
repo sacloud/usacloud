@@ -21,7 +21,7 @@ import (
 	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/iaas-service-go/disk"
 	"github.com/sacloud/iaas-service-go/server"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/common"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -46,15 +46,15 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag2.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	cflag2.NameParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.DescParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.TagsParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.IconIDParameter `cli:",squash" mapconv:",squash"`
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
 	CPU        int    `cli:"cpu,aliases=core,category=plan,order=10" validate:"required"`
 	Memory     int    `cli:"memory,category=plan,order=20" mapconv:"MemoryGB" validate:"required"`
@@ -77,7 +77,7 @@ type createParameter struct {
 	DisksData string                `cli:"disks,category=disk,order=30" mapconv:"-" json:"-"`
 	Disks     []*diskApplyParameter `cli:"-" mapconv:",omitempty,recursive"`
 
-	cflag2.NoWaitParameter `cli:",squash" mapconv:",squash"`
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 type serverNetworkInterface struct {
@@ -89,17 +89,17 @@ type serverNetworkInterface struct {
 type diskApplyParameter struct {
 	ID types.ID `json:",omitempty"`
 
-	Name                   string `cli:",category=common" json:",omitempty"` // NOTE: requiredではないためcflag.NameParameterを利用していない
-	cflag2.DescParameter   `cli:",squash" mapconv:",squash" json:",omitempty"`
-	cflag2.TagsParameter   `cli:",squash" mapconv:",squash" json:",omitempty"`
-	cflag2.IconIDParameter `cli:",squash" mapconv:",squash" json:",omitempty"`
-	DiskPlan               string     `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"omitempty,disk_plan" json:",omitempty"`
-	Connection             string     `cli:",options=disk_connection" validate:"omitempty,disk_connection" json:",omitempty"`
-	SourceDiskID           types.ID   `json:",omitempty"`
-	SourceArchiveID        types.ID   `json:",omitempty"`
-	SizeGB                 int        `cli:"size,aliases=size-gb" json:",omitempty"`
-	DistantFrom            []types.ID `json:",omitempty"`
-	OSType                 string     `cli:",options=os_type,display_options=os_type_simple" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type" json:",omitempty"`
+	Name                  string `cli:",category=common" json:",omitempty"` // NOTE: requiredではないためcflag.NameParameterを利用していない
+	cflag.DescParameter   `cli:",squash" mapconv:",squash" json:",omitempty"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash" json:",omitempty"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash" json:",omitempty"`
+	DiskPlan              string     `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"omitempty,disk_plan" json:",omitempty"`
+	Connection            string     `cli:",options=disk_connection" validate:"omitempty,disk_connection" json:",omitempty"`
+	SourceDiskID          types.ID   `json:",omitempty"`
+	SourceArchiveID       types.ID   `json:",omitempty"`
+	SizeGB                int        `cli:"size,aliases=size-gb" json:",omitempty"`
+	DistantFrom           []types.ID `json:",omitempty"`
+	OSType                string     `cli:",options=os_type,display_options=os_type_simple" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type" json:",omitempty"`
 
 	EditDisk common.EditRequest `cli:"edit,category=edit" mapconv:"EditParameter,omitempty" json:",omitempty"`
 	NoWait   bool
@@ -220,9 +220,9 @@ func (p *createParameter) Customize(ctx cli.Context) error {
 			p.Disks = append(p.Disks, &diskApplyParameter{
 				ID:              diskID,
 				Name:            disk.Name,
-				DescParameter:   cflag2.DescParameter{Description: disk.Description},
-				TagsParameter:   cflag2.TagsParameter{Tags: disk.Tags},
-				IconIDParameter: cflag2.IconIDParameter{IconID: disk.IconID},
+				DescParameter:   cflag.DescParameter{Description: disk.Description},
+				TagsParameter:   cflag.TagsParameter{Tags: disk.Tags},
+				IconIDParameter: cflag.IconIDParameter{IconID: disk.IconID},
 				Connection:      disk.Connection.String(),
 				NoWait:          p.NoWait,
 			})
@@ -273,7 +273,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		},
 		Disks: []*diskApplyParameter{
 			{
-				DescParameter: cflag2.DescParameter{
+				DescParameter: cflag.DescParameter{
 					Description: "新規ディスクを作成する例",
 				},
 				TagsParameter:   examples.Tags,
@@ -313,12 +313,12 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 			},
 			{
 				ID: examples.ID,
-				DescParameter: cflag2.DescParameter{
+				DescParameter: cflag.DescParameter{
 					Description: "既存のディスクを接続する例",
 				},
 			},
 		},
-		NoWaitParameter: cflag2.NoWaitParameter{
+		NoWaitParameter: cflag.NoWaitParameter{
 			NoWait: false,
 		},
 	}

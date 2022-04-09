@@ -19,34 +19,34 @@ import (
 
 	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/packages-go/pointer"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/vdef"
 )
 
 var (
 	ID   = types.ID(123456789012)
-	Name = cflag2.NameParameter{
+	Name = cflag.NameParameter{
 		Name: "example",
 	}
-	Description = cflag2.DescParameter{
+	Description = cflag.DescParameter{
 		Description: "example",
 	}
-	Tags = cflag2.TagsParameter{
+	Tags = cflag.TagsParameter{
 		Tags: types.Tags{"tag1=example1", "tag2=example2"},
 	}
-	IconID = cflag2.IconIDParameter{
+	IconID = cflag.IconIDParameter{
 		IconID: ID,
 	}
-	NameUpdate = cflag2.NameUpdateParameter{
+	NameUpdate = cflag.NameUpdateParameter{
 		Name: pointer.NewString("example"),
 	}
-	DescriptionUpdate = cflag2.DescUpdateParameter{
+	DescriptionUpdate = cflag.DescUpdateParameter{
 		Description: pointer.NewString("example"),
 	}
-	TagsUpdate = cflag2.TagsUpdateParameter{
+	TagsUpdate = cflag.TagsUpdateParameter{
 		Tags: &Tags.Tags,
 	}
-	IconIDUpdate = cflag2.IconIDUpdateParameter{
+	IconIDUpdate = cflag.IconIDUpdateParameter{
 		IconID: &ID,
 	}
 	IPAddress        = "192.0.2.11"
@@ -62,8 +62,8 @@ var (
 ...`
 )
 
-func Zones(zones []string) cflag2.ZoneParameter {
-	return cflag2.ZoneParameter{
+func Zones(zones []string) cflag.ZoneParameter {
+	return cflag.ZoneParameter{
 		Zone: ZonesString(zones),
 	}
 }

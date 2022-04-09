@@ -15,7 +15,7 @@
 package server
 
 import (
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -34,10 +34,10 @@ var sendNMICommand = &core.Command{
 }
 
 type sendNMIParameter struct {
-	cflag2.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag2.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 }
 
 func newSendNMIParameter() *sendNMIParameter {

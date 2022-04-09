@@ -15,7 +15,7 @@
 package sshkey
 
 import (
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/output"
 )
@@ -33,13 +33,13 @@ var generateCommand = &core.Command{
 }
 
 type generateParameter struct {
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	cflag2.NameParameter `cli:",squash" mapconv:",squash"`
-	cflag2.DescParameter `cli:",squash" mapconv:",squash"`
-	PassPhrase           string
+	cflag.NameParameter `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter `cli:",squash" mapconv:",squash"`
+	PassPhrase          string
 }
 
 func newGenerateParameter() *generateParameter {

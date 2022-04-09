@@ -18,7 +18,7 @@ import (
 	"net/http"
 
 	"github.com/sacloud/packages-go/pointer"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/examples"
@@ -38,14 +38,14 @@ var updateCommand = &core.Command{
 }
 
 type updateParameter struct {
-	cflag2.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	cflag2.DescUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
-	cflag2.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
-	cflag2.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.DescUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
 	DelayLoop        *int `validate:"omitempty,min=60,max=3600"`
 	MaxCheckAttempts *int `validate:"omitempty,min=1,max=10"`

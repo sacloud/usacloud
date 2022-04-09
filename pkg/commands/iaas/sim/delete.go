@@ -15,7 +15,7 @@
 package sim
 
 import (
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 )
@@ -33,14 +33,14 @@ var deleteCommand = &core.Command{
 }
 
 type deleteParameter struct {
-	cflag2.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	cflag2.FailIfNotFoundParameter `cli:",squash" mapconv:",squash"`
-	cflag2.WaitForReleaseParameter `cli:",squash" mapconv:",squash"`
-	Zones                          []string `cli:"-"` // Note: Customizeの中でctxから受け取る
+	cflag.FailIfNotFoundParameter `cli:",squash" mapconv:",squash"`
+	cflag.WaitForReleaseParameter `cli:",squash" mapconv:",squash"`
+	Zones                         []string `cli:"-"` // Note: Customizeの中でctxから受け取る
 }
 
 func newDeleteParameter() *deleteParameter {

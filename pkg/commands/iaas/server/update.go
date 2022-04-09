@@ -19,7 +19,7 @@ import (
 	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/iaas-service-go/server"
 	"github.com/sacloud/packages-go/pointer"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/common"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -41,16 +41,16 @@ var updateCommand = &core.Command{
 }
 
 type updateParameter struct {
-	cflag2.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag2.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	cflag2.NameUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
-	cflag2.DescUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
-	cflag2.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
-	cflag2.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.NameUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.DescUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
 	CPU        *int    `cli:"cpu,aliases=core,category=plan,order=10"`
 	Memory     *int    `cli:"memory,category=plan,order=20" mapconv:"MemoryGB"`
@@ -69,8 +69,8 @@ type updateParameter struct {
 	DisksData string                 `cli:"disks" mapconv:"-" json:"-"`
 	Disks     *[]*diskApplyParameter `cli:"-" mapconv:",omitempty,recursive"`
 
-	cflag2.NoWaitParameter `cli:",squash" mapconv:",squash"`
-	ForceShutdown          bool // DeleteのForceと区別するために-fは定義しない
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
+	ForceShutdown         bool // DeleteのForceと区別するために-fは定義しない
 }
 
 func newUpdateParameter() *updateParameter {
@@ -130,7 +130,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		},
 		Disks: &[]*diskApplyParameter{
 			{
-				DescParameter: cflag2.DescParameter{
+				DescParameter: cflag.DescParameter{
 					Description: "新規ディスクを作成する例",
 				},
 				TagsParameter:   examples.Tags,
@@ -170,12 +170,12 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 			},
 			{
 				ID: examples.ID,
-				DescParameter: cflag2.DescParameter{
+				DescParameter: cflag.DescParameter{
 					Description: "既存のディスクを接続する例",
 				},
 			},
 		},
-		NoWaitParameter: cflag2.NoWaitParameter{
+		NoWaitParameter: cflag.NoWaitParameter{
 			NoWait: false,
 		},
 		ForceShutdown: false,

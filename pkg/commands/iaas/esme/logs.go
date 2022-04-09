@@ -16,7 +16,7 @@ package esme
 
 import (
 	"github.com/sacloud/usacloud/pkg/ccol"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/output"
 )
@@ -46,9 +46,9 @@ var logsCommand = &core.Command{
 }
 
 type logsParameter struct {
-	cflag2.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter `cli:",squash" mapconv:"-"`
+	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 
 func newLogsParameter() *logsParameter {

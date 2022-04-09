@@ -17,7 +17,7 @@ package disk
 import (
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/types"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/common"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -39,18 +39,18 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag2.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	cflag2.NameParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.DescParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.TagsParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.IconIDParameter `cli:",squash" mapconv:",squash"`
-	DiskPlan               string `cli:",options=disk_plan,category=plan,order=10" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"required,disk_plan"`
-	SizeGB                 int    `cli:"size,category=plan,order=20"`
-	Connection             string `cli:"connector,aliases=connection,options=disk_connection,category=plan,order=30" validate:"required,disk_connection"`
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
+	DiskPlan              string `cli:",options=disk_plan,category=plan,order=10" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"required,disk_plan"`
+	SizeGB                int    `cli:"size,category=plan,order=20"`
+	Connection            string `cli:"connector,aliases=connection,options=disk_connection,category=plan,order=30" validate:"required,disk_connection"`
 
 	OSType          string   `cli:",options=os_type,display_options=os_type_simple,category=source,order=10" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
 	SourceDiskID    types.ID `cli:",category=source,order=20"`
@@ -59,8 +59,8 @@ type createParameter struct {
 	ServerID    types.ID
 	DistantFrom []types.ID
 
-	EditDisk               common.EditRequest `cli:",category=edit" mapconv:"EditParameter,omitempty"`
-	cflag2.NoWaitParameter `cli:",squash" mapconv:",squash"`
+	EditDisk              common.EditRequest `cli:",category=edit" mapconv:"EditParameter,omitempty"`
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 func validateCreateParameter(ctx cli.Context, parameter interface{}) error {
@@ -138,7 +138,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 				},
 			},
 		},
-		NoWaitParameter: cflag2.NoWaitParameter{
+		NoWaitParameter: cflag.NoWaitParameter{
 			NoWait: false,
 		},
 	}

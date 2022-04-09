@@ -15,7 +15,7 @@
 package serviceclass
 
 import (
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -35,10 +35,10 @@ var listCommand = &core.Command{
 }
 
 type listParameter struct {
-	cflag2.ZoneParameter        `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter      `cli:",squash" mapconv:"-"`
-	cflag2.LimitOffsetParameter `cli:",squash" mapconv:",squash"`
-	cflag2.OutputParameter      `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter        `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter      `cli:",squash" mapconv:"-"`
+	cflag.LimitOffsetParameter `cli:",squash" mapconv:",squash"`
+	cflag.OutputParameter      `cli:",squash" mapconv:"-"`
 }
 
 func newListParameter() *listParameter {

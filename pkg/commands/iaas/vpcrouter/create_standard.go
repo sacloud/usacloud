@@ -18,7 +18,7 @@ import (
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/iaas-service-go/vpcrouter/builder"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/examples"
@@ -38,15 +38,15 @@ var createStandardCommand = &core.Command{
 }
 
 type createStandardParameter struct {
-	cflag2.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	cflag2.NameParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.DescParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.TagsParameter   `cli:",squash" mapconv:",squash"`
-	cflag2.IconIDParameter `cli:",squash" mapconv:",squash"`
+	cflag.NameParameter   `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
 	Version int `validate:"required,oneof=1 2"`
 
@@ -55,8 +55,8 @@ type createStandardParameter struct {
 
 	RouterSetting routerSetting `cli:",squash" mapconv:",omitempty"`
 
-	BootAfterCreate        bool
-	cflag2.NoWaitParameter `cli:",squash" mapconv:",squash"`
+	BootAfterCreate       bool
+	cflag.NoWaitParameter `cli:",squash" mapconv:",squash"`
 }
 
 func newCreateStandardParameter() *createStandardParameter {
@@ -198,7 +198,7 @@ func (p *createStandardParameter) ExampleParameters(ctx cli.Context) interface{}
 			SyslogHost: "192.168.0.1",
 		},
 		BootAfterCreate: true,
-		NoWaitParameter: cflag2.NoWaitParameter{
+		NoWaitParameter: cflag.NoWaitParameter{
 			NoWait: false,
 		},
 	}

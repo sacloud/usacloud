@@ -15,7 +15,7 @@
 package proxylb
 
 import (
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -32,9 +32,9 @@ var renewLetsEncryptCertCommand = &core.Command{
 }
 
 type renewLetsEncryptCertParameter struct {
-	cflag2.IDParameter      `cli:",squash" mapconv:",squash"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 }
 
 func newRenewLetsEncryptCertParameter() *renewLetsEncryptCertParameter {

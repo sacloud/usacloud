@@ -17,7 +17,7 @@ package packetfilter
 import (
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/types"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/examples"
@@ -37,13 +37,13 @@ var createCommand = &core.Command{
 }
 
 type createParameter struct {
-	cflag2.ZoneParameter    `cli:",squash" mapconv:",squash"`
-	cflag2.CommonParameter  `cli:",squash" mapconv:"-"`
-	cflag2.ConfirmParameter `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.ZoneParameter    `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
-	cflag2.NameParameter `cli:",squash" mapconv:",squash"`
-	cflag2.DescParameter `cli:",squash" mapconv:",squash"`
+	cflag.NameParameter `cli:",squash" mapconv:",squash"`
+	cflag.DescParameter `cli:",squash" mapconv:",squash"`
 
 	ExpressionsData string                         `cli:"expressions,aliases=rules" mapconv:"-" json:"-"`
 	Expressions     []*iaas.PacketFilterExpression `cli:"-" mapconv:"Expression"`

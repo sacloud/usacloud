@@ -15,7 +15,7 @@
 package proxylb
 
 import (
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -35,12 +35,12 @@ var listCommand = &core.Command{
 }
 
 type listParameter struct {
-	cflag2.CommonParameter      `cli:",squash" mapconv:"-"`
-	cflag2.OutputParameter      `cli:",squash" mapconv:"-"`
-	cflag2.LimitOffsetParameter `cli:",squash" mapconv:",squash"`
+	cflag.CommonParameter      `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter      `cli:",squash" mapconv:"-"`
+	cflag.LimitOffsetParameter `cli:",squash" mapconv:",squash"`
 
-	cflag2.FilterByNamesParameter `cli:",squash" mapconv:",omitempty,squash"`
-	cflag2.FilterByTagsParameter  `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.FilterByNamesParameter `cli:",squash" mapconv:",omitempty,squash"`
+	cflag.FilterByTagsParameter  `cli:",squash" mapconv:",omitempty,squash"`
 }
 
 func newListParameter() *listParameter {

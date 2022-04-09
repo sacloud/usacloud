@@ -24,7 +24,7 @@ import (
 	"github.com/fatih/color"
 	"github.com/sacloud/iaas-api-go/accessor"
 	"github.com/sacloud/iaas-api-go/types"
-	cflag2 "github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/commands/root"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -259,8 +259,8 @@ func (c *Command) completeParameterValue(cmd *cobra.Command, ctx cli.Context, pa
 	}
 
 	if !c.resource.IsGlobalResource {
-		if zone := cflag2.ZoneFlagValue(parameter); zone == "" {
-			cflag2.SetZoneFlagValue(parameter, ctx.Option().Zone)
+		if zone := cflag.ZoneFlagValue(parameter); zone == "" {
+			cflag.SetZoneFlagValue(parameter, ctx.Option().Zone)
 		}
 	}
 }
@@ -350,7 +350,7 @@ func (c *Command) printCommandWarning(ctx cli.Context) {
 }
 
 func (c *Command) handleCommonParameters(ctx cli.Context, cmd *cobra.Command) (bool, error) {
-	if cp, ok := c.currentParameter.(cflag2.CommonParameterValueHolder); ok {
+	if cp, ok := c.currentParameter.(cflag.CommonParameterValueHolder); ok {
 		// パラメータスケルトンの生成
 		if cp.GenerateSkeletonFlagValue() {
 			return false, generateSkeleton(ctx, c.currentParameter)
@@ -364,7 +364,7 @@ func (c *Command) handleCommonParameters(ctx cli.Context, cmd *cobra.Command) (b
 }
 
 func (c *Command) handleExampleParameters(ctx cli.Context) (bool, error) {
-	if cp, ok := c.currentParameter.(cflag2.ExampleParameterValueHolder); ok {
+	if cp, ok := c.currentParameter.(cflag.ExampleParameterValueHolder); ok {
 		if cp.ExampleFlagValue() {
 			if eh, ok := c.currentParameter.(ExampleHolder); ok {
 				return false, generateExampleParameters(ctx, eh)
@@ -377,7 +377,7 @@ func (c *Command) handleExampleParameters(ctx cli.Context) (bool, error) {
 }
 
 func (c *Command) confirmContinue(ctx cli.Context, resources cli.ResourceContexts) (bool, error) {
-	if cp, ok := c.currentParameter.(cflag2.ConfirmParameterValueHandler); ok {
+	if cp, ok := c.currentParameter.(cflag.ConfirmParameterValueHandler); ok {
 		if !cp.AssumeYesFlagValue() {
 			if !term.IsTerminal() {
 				return false, errors.New("the confirm dialog cannot be used without the terminal. Please use --assumeyes(-y) option")
@@ -396,7 +396,7 @@ func (c *Command) allZoneResourceContext(ctx cli.Context) cli.ResourceContexts {
 		return cli.ResourceContexts{{Zone: ""}}
 	}
 
-	zone := cflag2.ZoneFlagValue(c.currentParameter)
+	zone := cflag.ZoneFlagValue(c.currentParameter)
 	if zone == "all" {
 		results := cli.ResourceContexts{}
 		for _, z := range ctx.Option().Zones {
@@ -590,8 +590,8 @@ func (c *Command) parameterWithResourceContext(ctx cli.Context) (interface{}, er
 		return nil, err
 	}
 
-	cflag2.SetIDFlagValue(newParameter, ctx.ID())
-	cflag2.SetZoneFlagValue(newParameter, ctx.Zone())
+	cflag.SetIDFlagValue(newParameter, ctx.ID())
+	cflag.SetZoneFlagValue(newParameter, ctx.Zone())
 	return newParameter, nil
 }
 
@@ -600,7 +600,7 @@ func (c *Command) parameterWithZone(zone string) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	cflag2.SetZoneFlagValue(newParameter, zone)
+	cflag.SetZoneFlagValue(newParameter, zone)
 	return newParameter, nil
 }
 
