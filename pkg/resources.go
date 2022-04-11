@@ -157,7 +157,7 @@ func initIaasCommands() {
 			addHiddenSubCommandToRoot(cmd)
 		}
 	}
-	core.SetSubCommandsUsage(iaas.Command, IaaSResources.CategorizedResources())
+	core.SetSubCommandsUsage(iaas.Command, IaaSResources.CategorizedResources(iaas.ResourceCategories))
 	root.Command.AddCommand(iaas.Command)
 }
 

@@ -15,6 +15,7 @@
 package self
 
 import (
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -23,5 +24,5 @@ var Resource = &core.Resource{
 	Name:               "self",
 	Usage:              "Print resource ID",
 	DefaultCommandName: "id",
-	Category:           core.ResourceCategoryOther,
+	Category:           iaas.ResourceCategoryOther,
 }

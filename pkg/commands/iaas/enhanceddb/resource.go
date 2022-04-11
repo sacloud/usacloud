@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/enhanceddb"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,6 +27,6 @@ var Resource = &core.Resource{
 	Name:             "enhanced-db",
 	Aliases:          []string{"enhanced-database", "edb"},
 	ServiceType:      reflect.TypeOf(&enhanceddb.Service{}),
-	Category:         core.ResourceCategoryLab,
+	Category:         iaas.ResourceCategoryLab,
 	IsGlobalResource: true,
 }

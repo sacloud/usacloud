@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/zone"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -27,5 +28,5 @@ var Resource = &core.Resource{
 	Aliases:          []string{"zones"},
 	ServiceType:      reflect.TypeOf(&zone.Service{}),
 	IsGlobalResource: true,
-	Category:         core.ResourceCategoryZone,
+	Category:         iaas.ResourceCategoryZone,
 }

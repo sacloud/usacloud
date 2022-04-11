@@ -12,111 +12,115 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package iaas
+
+import (
+	"github.com/sacloud/usacloud/pkg/category"
+)
 
 var (
-	ResourceCategoryConfig = Category{
+	ResourceCategoryConfig = category.Category{
 		Key:         "config",
 		DisplayName: "Configuration",
 		Order:       10,
 	}
 
-	ResourceCategoryAuth = Category{
+	ResourceCategoryAuth = category.Category{
 		Key:         "auth",
 		DisplayName: "Authentication",
 		Order:       20,
 	}
 
-	ResourceCategoryComputing = Category{
+	ResourceCategoryComputing = category.Category{
 		Key:         "computing",
 		DisplayName: "Computing",
 		Order:       30,
 	}
 
-	ResourceCategoryStorage = Category{
+	ResourceCategoryStorage = category.Category{
 		Key:         "storage",
 		DisplayName: "Storage",
 		Order:       40,
 	}
 
-	ResourceCategoryNetworking = Category{
+	ResourceCategoryNetworking = category.Category{
 		Key:         "networking",
 		DisplayName: "Networking",
 		Order:       50,
 	}
 
-	ResourceCategoryNetworkingSub = Category{
+	ResourceCategoryNetworkingSub = category.Category{
 		Key:         "networking-sub",
 		DisplayName: "Networking(SubResources)",
 		Order:       55,
 	}
 
-	ResourceCategoryAppliance = Category{
+	ResourceCategoryAppliance = category.Category{
 		Key:         "appliance",
 		DisplayName: "Appliance",
 		Order:       60,
 	}
 
-	ResourceCategorySecureMobile = Category{
+	ResourceCategorySecureMobile = category.Category{
 		Key:         "securemobile",
 		DisplayName: "SecureMobile",
 		Order:       70,
 	}
-	ResourceCategoryCommonServiceItem = Category{
+	ResourceCategoryCommonServiceItem = category.Category{
 		Key:         "commonserviceitem",
 		DisplayName: "Common service items",
 		Order:       80,
 	}
 
-	ResourceCategoryCommonItem = Category{
+	ResourceCategoryCommonItem = category.Category{
 		Key:         "commonitem",
 		DisplayName: "Common items",
 		Order:       90,
 	}
 
-	ResourceCategoryBilling = Category{
+	ResourceCategoryBilling = category.Category{
 		Key:         "billing",
 		DisplayName: "Billing",
 		Order:       100,
 	}
 
-	ResourceCategoryLab = Category{
+	ResourceCategoryLab = category.Category{
 		Key:         "lab",
 		DisplayName: "Lab",
 		Order:       110,
 	}
 
-	ResourceCategoryWebAccel = Category{
+	ResourceCategoryWebAccel = category.Category{
 		Key:         "webaccel",
 		DisplayName: "WebAccelerator",
 		Order:       120,
 	}
 
-	ResourceCategoryMisc = Category{
+	ResourceCategoryMisc = category.Category{
 		Key:         "misc",
 		DisplayName: "Other services",
 		Order:       130,
 	}
 
-	ResourceCategoryZone = Category{
+	ResourceCategoryZone = category.Category{
 		Key:         "zone",
 		DisplayName: "Region/Zone information",
 		Order:       140,
 	}
 
-	ResourceCategoryInformation = Category{
+	ResourceCategoryInformation = category.Category{
 		Key:         "information",
 		DisplayName: "Service/Product information",
 		Order:       150,
 	}
 
-	ResourceCategoryOther = Category{
+	ResourceCategoryOther = category.Category{
 		Key:         "other",
 		DisplayName: "Other commands",
 		Order:       160,
 	}
 
-	ResourceCategories = []Category{
+	ResourceCategories = []category.Category{
 		ResourceCategoryConfig,
 		ResourceCategoryAuth,
 		ResourceCategoryComputing,

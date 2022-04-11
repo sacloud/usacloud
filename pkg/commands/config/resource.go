@@ -15,6 +15,7 @@
 package config
 
 import (
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -23,7 +24,7 @@ var Resource = &core.Resource{
 	Usage:              "Management commands for Configuration file/Profile",
 	Aliases:            []string{"profile"},
 	DefaultCommandName: "edit",
-	Category:           core.ResourceCategoryConfig,
+	Category:           iaas.ResourceCategoryConfig,
 	IsGlobalResource:   true,
 	SkipLoadingProfile: true,
 }

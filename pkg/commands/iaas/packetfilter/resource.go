@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/packetfilter"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,5 +27,5 @@ var Resource = &core.Resource{
 	Name:         "packet-filter",
 	Aliases:      []string{"packetfilter"},
 	ServiceType:  reflect.TypeOf(&packetfilter.Service{}),
-	Category:     core.ResourceCategoryNetworking,
+	Category:     iaas.ResourceCategoryNetworking,
 }

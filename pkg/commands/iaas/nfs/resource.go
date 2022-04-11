@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/nfs"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -25,5 +26,5 @@ var Resource = &core.Resource{
 	PlatformName: "iaas",
 	Name:         "nfs",
 	ServiceType:  reflect.TypeOf(&nfs.Service{}),
-	Category:     core.ResourceCategoryAppliance,
+	Category:     iaas.ResourceCategoryAppliance,
 }

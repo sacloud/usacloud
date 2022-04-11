@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/licenseinfo"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -27,5 +28,5 @@ var Resource = &core.Resource{
 	Aliases:          []string{"licenseinfo"},
 	ServiceType:      reflect.TypeOf(&licenseinfo.Service{}),
 	IsGlobalResource: true,
-	Category:         core.ResourceCategoryInformation,
+	Category:         iaas.ResourceCategoryInformation,
 }

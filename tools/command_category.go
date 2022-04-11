@@ -17,11 +17,11 @@ package tools
 import (
 	"sort"
 
-	"github.com/sacloud/usacloud/pkg/core"
+	"github.com/sacloud/usacloud/pkg/category"
 )
 
 type CategorizedParameterFields struct {
-	*core.Category
+	*category.Category
 	Fields []Field
 }
 

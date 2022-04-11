@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/cdrom"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,5 +27,5 @@ var Resource = &core.Resource{
 	Name:         "cdrom",
 	Aliases:      []string{"iso-image"},
 	ServiceType:  reflect.TypeOf(&cdrom.Service{}),
-	Category:     core.ResourceCategoryStorage,
+	Category:     iaas.ResourceCategoryStorage,
 }

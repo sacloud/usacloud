@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/sim"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -25,6 +26,6 @@ var Resource = &core.Resource{
 	PlatformName:     "iaas",
 	Name:             "sim",
 	ServiceType:      reflect.TypeOf(&sim.Service{}),
-	Category:         core.ResourceCategorySecureMobile,
+	Category:         iaas.ResourceCategorySecureMobile,
 	IsGlobalResource: true,
 }

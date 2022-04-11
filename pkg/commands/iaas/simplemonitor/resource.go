@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/simplemonitor"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,6 +27,6 @@ var Resource = &core.Resource{
 	Name:             "simple-monitor",
 	Aliases:          []string{"simplemonitor"},
 	ServiceType:      reflect.TypeOf(&simplemonitor.Service{}),
-	Category:         core.ResourceCategoryCommonServiceItem,
+	Category:         iaas.ResourceCategoryCommonServiceItem,
 	IsGlobalResource: true,
 }

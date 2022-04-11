@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/dns"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -25,6 +26,6 @@ var Resource = &core.Resource{
 	PlatformName:     "iaas",
 	Name:             "dns",
 	ServiceType:      reflect.TypeOf(&dns.Service{}),
-	Category:         core.ResourceCategoryCommonServiceItem,
+	Category:         iaas.ResourceCategoryCommonServiceItem,
 	IsGlobalResource: true,
 }

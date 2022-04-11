@@ -24,6 +24,7 @@ import (
 	"github.com/fatih/color"
 	"github.com/sacloud/iaas-api-go/accessor"
 	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/usacloud/pkg/category"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/commands/root"
@@ -62,7 +63,7 @@ type Command struct {
 	ConfirmMessage string
 
 	// パラメータ関連
-	ParameterCategories  []Category
+	ParameterCategories  []category.Category
 	ParameterInitializer func() interface{}
 	ServiceFuncAltName   string // デフォルトのlibsacloud service呼び出しコード生成用、空の場合はNameをCamelizeしたものが利用される // TODO libsacloud側で対応すべき
 
@@ -604,8 +605,8 @@ func (c *Command) parameterWithZone(zone string) (interface{}, error) {
 	return newParameter, nil
 }
 
-func (c *Command) ParameterCategoryBy(key string) *Category {
-	for _, cat := range ParameterCategories {
+func (c *Command) ParameterCategoryBy(key string) *category.Category {
+	for _, cat := range category.ParameterCategories {
 		if cat.Key == key {
 			return cat
 		}
@@ -613,7 +614,7 @@ func (c *Command) ParameterCategoryBy(key string) *Category {
 
 	if key == "" {
 		key = c.resource.Name
-		return &Category{
+		return &category.Category{
 			Key:         key,
 			DisplayName: fmt.Sprintf("%s-specific options", strings.Title(key)),
 			Order:       100,
@@ -625,7 +626,7 @@ func (c *Command) ParameterCategoryBy(key string) *Category {
 			return &cat
 		}
 	}
-	return &Category{
+	return &category.Category{
 		Key:         key,
 		DisplayName: fmt.Sprintf("%s options", strings.Title(key)),
 		Order:       200,
