@@ -18,6 +18,7 @@ import (
 	"fmt"
 
 	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -78,7 +79,7 @@ func updateCertificateFunc(ctx cli.Context, parameter interface{}) ([]interface{
 	}
 
 	webAccelOp := iaas.NewWebAccelOp(ctx.Client().(iaas.APICaller))
-	result, err := webAccelOp.UpdateCertificate(ctx, p.ID, &iaas.WebAccelCertRequest{
+	result, err := webAccelOp.UpdateCertificate(ctx, types.StringID(p.ID), &iaas.WebAccelCertRequest{
 		CertificateChain: certs,
 		Key:              key,
 	})

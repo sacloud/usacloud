@@ -16,25 +16,23 @@ package cli
 
 import (
 	"fmt"
-
-	"github.com/sacloud/iaas-api-go/types"
 )
 
 // ResourceContext 現在処理中のリソースの情報
 type ResourceContext struct {
-	ID       types.ID
+	ID       string
 	Zone     string
 	Resource interface{} // 対象のリソースそのもの
 }
 
 func (r *ResourceContext) String() string {
-	if r.ID.IsEmpty() {
+	if r.ID == "" {
 		return ""
 	}
 	if r.Zone == "" {
-		return r.ID.String()
+		return r.ID
 	}
-	return fmt.Sprintf("[%s] %s", r.Zone, r.ID.String())
+	return fmt.Sprintf("[%s] %s", r.Zone, r.ID)
 }
 
 type ResourceContexts []ResourceContext
@@ -54,10 +52,10 @@ func (r *ResourceContexts) Append(values ...ResourceContext) {
 	}
 }
 
-func (r *ResourceContexts) IDs() []types.ID {
-	var ids []types.ID
+func (r *ResourceContexts) IDs() []string {
+	var ids []string
 	for _, v := range *r {
-		if !v.ID.IsEmpty() {
+		if v.ID != "" {
 			ids = append(ids, v.ID)
 		}
 	}

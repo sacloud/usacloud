@@ -22,6 +22,7 @@ import (
 
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/helper/wait"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/connect"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -53,12 +54,12 @@ func vncFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 
 	instance := ctx.Resource().(*iaas.Server)
 	if !instance.InstanceStatus.IsUp() && p.WaitUntilReady {
-		if _, err := wait.UntilServerIsUp(ctx, iaas.NewServerOp(ctx.Client().(iaas.APICaller)), p.Zone, p.ID); err != nil {
+		if _, err := wait.UntilServerIsUp(ctx, iaas.NewServerOp(ctx.Client().(iaas.APICaller)), p.Zone, types.StringID(p.ID)); err != nil {
 			return nil, err
 		}
 	}
 
-	vncInfo, err := iaas.NewServerOp(ctx.Client().(iaas.APICaller)).GetVNCProxy(ctx, p.Zone, p.ID)
+	vncInfo, err := iaas.NewServerOp(ctx.Client().(iaas.APICaller)).GetVNCProxy(ctx, p.Zone, types.StringID(p.ID))
 	if err != nil {
 		return nil, err
 	}

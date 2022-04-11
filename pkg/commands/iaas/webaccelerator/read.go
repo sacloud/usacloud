@@ -18,6 +18,7 @@ import (
 	"fmt"
 
 	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -61,7 +62,7 @@ func readFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		return nil, fmt.Errorf("got invalid parameter type: %#v", parameter)
 	}
 	webAccelOp := iaas.NewWebAccelOp(ctx.Client().(iaas.APICaller))
-	result, err := webAccelOp.Read(ctx, p.ID)
+	result, err := webAccelOp.Read(ctx, types.StringID(p.ID))
 	if err != nil {
 		return nil, err
 	}

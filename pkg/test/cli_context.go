@@ -18,7 +18,6 @@ import (
 	"context"
 	"time"
 
-	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -32,7 +31,7 @@ type DummyCLIContextValue struct {
 	PlatformName string
 	ResourceName string
 	CommandName  string
-	ID           types.ID
+	ID           string
 	Zone         string
 	Resource     interface{}
 	Args         []string
@@ -66,7 +65,7 @@ func (c *DummyCLIContext) CommandName() string {
 	return c.DummyValue.CommandName
 }
 
-func (c *DummyCLIContext) ID() types.ID {
+func (c *DummyCLIContext) ID() string {
 	return c.DummyValue.ID
 }
 
@@ -78,7 +77,7 @@ func (c *DummyCLIContext) Resource() interface{} {
 	return c.DummyValue.Resource
 }
 
-func (c *DummyCLIContext) WithResource(id types.ID, zone string, resource interface{}) cli.Context {
+func (c *DummyCLIContext) WithResource(id string, zone string, resource interface{}) cli.Context {
 	return &DummyCLIContext{
 		DummyValue: &DummyCLIContextValue{
 			Context:      c.DummyValue.Context,

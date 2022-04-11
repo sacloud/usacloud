@@ -432,7 +432,7 @@ func (c *Command) expandResourceContextsFromArgs(ctx cli.Context, args []string)
 
 		for _, r := range resources {
 			if id, ok := c.extractMatchedResourceID(ctx, r, args); ok {
-				results.Append(cli.ResourceContext{ID: id, Zone: zone, Resource: r})
+				results.Append(cli.ResourceContext{ID: id.String(), Zone: zone, Resource: r})
 			}
 		}
 	}

@@ -18,12 +18,11 @@ import (
 	"sort"
 
 	"github.com/sacloud/iaas-api-go/accessor"
-	"github.com/sacloud/iaas-api-go/types"
 )
 
 type Content struct {
 	Zone  string
-	ID    types.ID
+	ID    string
 	Value interface{}
 }
 
@@ -66,7 +65,7 @@ func (c *Contents) Sort(zones []string) {
 }
 
 func (c *Contents) forceID(v interface{}) int64 {
-	id, ok := v.(accessor.ID)
+	id, ok := v.(accessor.ID) // TODO IaaS以外にはどう対応すべきか?
 	if !ok {
 		return -1
 	}
