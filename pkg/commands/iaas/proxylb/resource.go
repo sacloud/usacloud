@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/proxylb"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,6 +27,6 @@ var Resource = &core.Resource{
 	Name:             "proxy-lb",
 	Aliases:          []string{"proxylb", "elb", "enhanced-load-balancer"},
 	ServiceType:      reflect.TypeOf(&proxylb.Service{}),
-	Category:         core.ResourceCategoryCommonServiceItem,
+	Category:         iaas.ResourceCategoryCommonServiceItem,
 	IsGlobalResource: true,
 }

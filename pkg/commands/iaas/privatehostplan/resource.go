@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/privatehostplan"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,5 +27,5 @@ var Resource = &core.Resource{
 	Name:         "private-host-plan",
 	Aliases:      []string{"privatehostplan"},
 	ServiceType:  reflect.TypeOf(&privatehostplan.Service{}),
-	Category:     core.ResourceCategoryInformation,
+	Category:     iaas.ResourceCategoryInformation,
 }

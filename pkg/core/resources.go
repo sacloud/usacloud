@@ -14,12 +14,16 @@
 
 package core
 
-import "sort"
+import (
+	"sort"
+
+	"github.com/sacloud/usacloud/pkg/category"
+)
 
 type Resources []*Resource
 
-func (r Resources) CategorizedResources() []*CategorizedResources {
-	categories := ResourceCategories
+// CategorizedResources categoriesと各リソースのカテゴリー名を用いてカテゴリー配下にリソースを紐づけて返す
+func (r Resources) CategorizedResources(categories []category.Category) []*CategorizedResources {
 	sort.Slice(categories, func(i, j int) bool {
 		return categories[i].Order < categories[j].Order
 	})

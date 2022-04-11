@@ -14,12 +14,14 @@
 
 package core
 
+import "github.com/sacloud/usacloud/pkg/category"
+
 type CategorizedResources struct {
-	Category  Category
+	Category  category.Category
 	Resources []*Resource
 }
 
 type CategorizedCommands struct {
-	Category Category
+	Category category.Category
 	Commands []*Command
 }

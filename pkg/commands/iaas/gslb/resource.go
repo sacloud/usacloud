@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/gslb"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -25,6 +26,6 @@ var Resource = &core.Resource{
 	PlatformName:     "iaas",
 	Name:             "gslb",
 	ServiceType:      reflect.TypeOf(&gslb.Service{}),
-	Category:         core.ResourceCategoryCommonServiceItem,
+	Category:         iaas.ResourceCategoryCommonServiceItem,
 	IsGlobalResource: true,
 }

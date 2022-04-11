@@ -17,6 +17,7 @@ package webaccelerator
 import (
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cli"
+	iaas2 "github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,7 +27,7 @@ var Resource = &core.Resource{
 	Usage:            "SubCommands for WebAccelerator",
 	Aliases:          []string{"web-accel", "webaccel"},
 	IsGlobalResource: true,
-	Category:         core.ResourceCategoryWebAccel,
+	Category:         iaas2.ResourceCategoryWebAccel,
 }
 
 func listAllFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {

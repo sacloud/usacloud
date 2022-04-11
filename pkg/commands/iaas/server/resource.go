@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/server"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -25,5 +26,5 @@ var Resource = &core.Resource{
 	PlatformName: "iaas",
 	Name:         "server",
 	ServiceType:  reflect.TypeOf(&server.Service{}),
-	Category:     core.ResourceCategoryComputing,
+	Category:     iaas.ResourceCategoryComputing,
 }

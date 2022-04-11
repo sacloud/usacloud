@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/serverplan"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,5 +27,5 @@ var Resource = &core.Resource{
 	Name:         "server-plan",
 	Aliases:      []string{"serverplan"},
 	ServiceType:  reflect.TypeOf(&serverplan.Service{}),
-	Category:     core.ResourceCategoryInformation,
+	Category:     iaas.ResourceCategoryInformation,
 }

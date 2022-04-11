@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/containerregistry"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -25,6 +26,6 @@ var Resource = &core.Resource{
 	PlatformName:     "iaas",
 	Name:             "container-registry",
 	ServiceType:      reflect.TypeOf(&containerregistry.Service{}),
-	Category:         core.ResourceCategoryLab,
+	Category:         iaas.ResourceCategoryLab,
 	IsGlobalResource: true,
 }

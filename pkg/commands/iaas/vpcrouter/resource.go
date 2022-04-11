@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/vpcrouter"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,5 +27,5 @@ var Resource = &core.Resource{
 	Name:         "vpc-router",
 	Aliases:      []string{"vpcrouter"},
 	ServiceType:  reflect.TypeOf(&vpcrouter.Service{}),
-	Category:     core.ResourceCategoryAppliance,
+	Category:     iaas.ResourceCategoryAppliance,
 }

@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/sshkey"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,6 +27,6 @@ var Resource = &core.Resource{
 	Name:             "ssh-key",
 	Aliases:          []string{"sshkey"},
 	ServiceType:      reflect.TypeOf(&sshkey.Service{}),
-	Category:         core.ResourceCategoryMisc,
+	Category:         iaas.ResourceCategoryMisc,
 	IsGlobalResource: true,
 }

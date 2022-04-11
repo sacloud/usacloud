@@ -15,13 +15,14 @@
 package rest
 
 import (
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
 var Resource = &core.Resource{
 	Name:               "rest",
 	Usage:              "Invoke SAKURA cloud API directly",
-	Category:           core.ResourceCategoryOther,
+	Category:           iaas.ResourceCategoryOther,
 	IsGlobalResource:   true,
 	DefaultCommandName: "request",
 }

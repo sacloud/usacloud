@@ -18,6 +18,7 @@ import (
 	"reflect"
 
 	"github.com/sacloud/iaas-service-go/ipv6net"
+	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -25,5 +26,5 @@ var Resource = &core.Resource{
 	PlatformName: "iaas",
 	Name:         "ipv6net",
 	ServiceType:  reflect.TypeOf(&ipv6net.Service{}),
-	Category:     core.ResourceCategoryNetworkingSub,
+	Category:     iaas.ResourceCategoryNetworkingSub,
 }

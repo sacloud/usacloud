@@ -20,6 +20,7 @@ import (
 	"reflect"
 	"sort"
 
+	"github.com/sacloud/usacloud/pkg/category"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -29,7 +30,7 @@ type Resource struct {
 	Aliases            []string
 	Usage              string
 	DefaultCommandName string
-	Category           Category
+	Category           category.Category
 	Warning            string
 	IsGlobalResource   bool
 	PlatformName       string       // "iaas" or "phy" or "objectstorage", 空の場合はIaaSとして扱われる
@@ -132,8 +133,8 @@ func (r *Resource) AddCommand(command *Command) {
 	}
 }
 
-func (r *Resource) commandCategory(key string) *Category {
-	for _, c := range CommandCategories {
+func (r *Resource) commandCategory(key string) *category.Category {
+	for _, c := range category.CommandCategories { // Note: コマンドのカテゴリーは現状では全プラットフォーム共通としている
 		if c.Key == key {
 			return &c
 		}
