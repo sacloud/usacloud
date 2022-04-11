@@ -15,11 +15,29 @@
 package iaas
 
 import (
-	"github.com/spf13/cobra"
+	"github.com/sacloud/iaas-api-go/accessor"
+	"github.com/sacloud/usacloud/pkg/core"
+	_ "github.com/sacloud/usacloud/pkg/services/iaas"
 )
 
-var Command = &cobra.Command{
-	Use:   "iaas",
-	Short: "SubCommands for IaaS",
-	Long:  "SubCommands for IaaS",
+func init() {
+	core.LabelsExtractors = append(core.LabelsExtractors, labelsExtractorForIaaS)
+}
+
+func labelsExtractorForIaaS(v interface{}) *core.Labels {
+	if v, ok := v.(accessor.ID); ok {
+		labels := &core.Labels{Id: v.GetID().String()}
+
+		// Name(部分一致)
+		if name, ok := v.(accessor.Name); ok {
+			labels.Name = name.GetName()
+		}
+
+		// Tags
+		if tags, ok := v.(accessor.Tags); ok {
+			labels.Tags = tags.GetTags()
+		}
+		return labels
+	}
+	return nil
 }
