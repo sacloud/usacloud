@@ -34,7 +34,7 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 	t.Run("full", func(t *testing.T) {
 		in := &updateParameter{
 			ZoneParameter:         cflag.ZoneParameter{Zone: "is1a"},
-			IDParameter:           cflag.IDParameter{ID: types.ID(1)},
+			IDParameter:           cflag.IDParameter{ID: "1"},
 			NameUpdateParameter:   cflag.NameUpdateParameter{Name: pointer.NewString("name")},
 			DescUpdateParameter:   cflag.DescUpdateParameter{Description: pointer.NewString("desc")},
 			TagsUpdateParameter:   cflag.TagsUpdateParameter{Tags: pointer.NewStringSlice([]string{"tag1", "tag2"})},
@@ -61,7 +61,7 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 	t.Run("nil", func(t *testing.T) {
 		in := &updateParameter{
 			ZoneParameter:       cflag.ZoneParameter{Zone: "is1a"},
-			IDParameter:         cflag.IDParameter{ID: types.ID(1)},
+			IDParameter:         cflag.IDParameter{ID: "1"},
 			NameUpdateParameter: cflag.NameUpdateParameter{Name: pointer.NewString("name")},
 		}
 
@@ -83,7 +83,7 @@ func TestUpdate_ConvertToServiceRequest(t *testing.T) {
 	t.Run("empty", func(t *testing.T) {
 		in := &updateParameter{
 			ZoneParameter:         cflag.ZoneParameter{Zone: "is1a"},
-			IDParameter:           cflag.IDParameter{ID: types.ID(1)},
+			IDParameter:           cflag.IDParameter{ID: "1"},
 			NameUpdateParameter:   cflag.NameUpdateParameter{Name: pointer.NewString("name")},
 			DescUpdateParameter:   cflag.DescUpdateParameter{Description: pointer.NewString("")},
 			TagsUpdateParameter:   cflag.TagsUpdateParameter{Tags: pointer.NewStringSlice([]string{})},
@@ -124,7 +124,7 @@ func TestUpdateParameter_Validate(t *testing.T) {
 		{
 			in: &updateParameter{
 				ZoneParameter:       cflag.ZoneParameter{Zone: "is1a"},
-				IDParameter:         cflag.IDParameter{ID: 1},
+				IDParameter:         cflag.IDParameter{ID: "1"},
 				NameUpdateParameter: cflag.NameUpdateParameter{Name: pointer.NewString("1")},
 				DescUpdateParameter: cflag.DescUpdateParameter{Description: pointer.NewString("")},
 				TagsUpdateParameter: cflag.TagsUpdateParameter{Tags: pointer.NewStringSlice([]string{})},
@@ -136,7 +136,7 @@ func TestUpdateParameter_Validate(t *testing.T) {
 		{
 			in: &updateParameter{
 				ZoneParameter:       cflag.ZoneParameter{Zone: "is1a"},
-				IDParameter:         cflag.IDParameter{ID: 1},
+				IDParameter:         cflag.IDParameter{ID: "1"},
 				NameUpdateParameter: cflag.NameUpdateParameter{Name: pointer.NewString("")},
 			},
 			err: errors.New(strings.Join([]string{

@@ -18,6 +18,7 @@ import (
 	"fmt"
 
 	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -61,7 +62,7 @@ func readCertificateFunc(ctx cli.Context, parameter interface{}) ([]interface{},
 		return nil, fmt.Errorf("got invalid parameter type: %#v", parameter)
 	}
 	webAccelOp := iaas.NewWebAccelOp(ctx.Client().(iaas.APICaller))
-	result, err := webAccelOp.ReadCertificate(ctx, p.ID)
+	result, err := webAccelOp.ReadCertificate(ctx, types.StringID(p.ID))
 	if err != nil {
 		return nil, err
 	}

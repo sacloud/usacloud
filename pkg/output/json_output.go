@@ -81,7 +81,7 @@ func (o *jsonOutput) printWithMetaData(contents Contents) error {
 			}
 		}
 		// ID
-		if !contents[i].ID.IsEmpty() {
+		if contents[i].ID != "" {
 			if _, ok := mapValue["ID"]; !ok {
 				mapValue["ID"] = contents[i].ID
 			}

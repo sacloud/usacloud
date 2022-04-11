@@ -18,7 +18,6 @@ import (
 	"context"
 	"time"
 
-	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/validate"
@@ -41,8 +40,8 @@ type Context interface {
 	// WithResource 特定のリソース向け作業をする際に呼ばれる。
 	// リソースのIDとゾーンを保持した新しいコンテキストを返す
 	// 新しいコンテキストの親コンテキストには現在のコンテキストが設定される
-	WithResource(id types.ID, zone string, resource interface{}) Context
-	ID() types.ID
+	WithResource(id string, zone string, resource interface{}) Context
+	ID() string
 	Zone() string
 	Resource() interface{}
 }
@@ -129,7 +128,7 @@ func (c *cliContext) CommandName() string {
 	return c.commandName
 }
 
-func (c *cliContext) ID() types.ID {
+func (c *cliContext) ID() string {
 	return c.resource.ID
 }
 
@@ -141,7 +140,7 @@ func (c *cliContext) Resource() interface{} {
 	return c.resource.Resource
 }
 
-func (c *cliContext) WithResource(id types.ID, zone string, resource interface{}) Context {
+func (c *cliContext) WithResource(id string, zone string, resource interface{}) Context {
 	return &cliContext{
 		parentCtx:    c,
 		option:       c.option,

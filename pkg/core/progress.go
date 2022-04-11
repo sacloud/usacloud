@@ -66,8 +66,8 @@ func (p *Progress) msgPrefix() string {
 	if p.ctx.Zone() != "" {
 		prefix = fmt.Sprintf("[%s] %s", p.ctx.Zone(), prefix)
 	}
-	if !p.ctx.ID().IsEmpty() {
-		prefix = fmt.Sprintf("%s (ID:%s)", prefix, p.ctx.ID().String())
+	if p.ctx.ID() != "" {
+		prefix = fmt.Sprintf("%s (ID:%s)", prefix, p.ctx.ID())
 	}
 	return prefix
 }

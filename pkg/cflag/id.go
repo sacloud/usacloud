@@ -14,25 +14,23 @@
 
 package cflag
 
-import "github.com/sacloud/iaas-api-go/types"
-
 type IDParameterValueHandler interface {
-	IDFlagValue() types.ID
-	SetIDFlagValue(id types.ID)
+	IDFlagValue() string
+	SetIDFlagValue(id string)
 }
 
-func IDFlagValue(p interface{}) types.ID {
+func IDFlagValue(p interface{}) string {
 	if p == nil {
-		return types.ID(0)
+		return ""
 	}
 	v, ok := p.(IDParameterValueHandler)
 	if !ok {
-		return types.ID(0)
+		return ""
 	}
 	return v.IDFlagValue()
 }
 
-func SetIDFlagValue(p interface{}, id types.ID) {
+func SetIDFlagValue(p interface{}, id string) {
 	if p == nil {
 		return
 	}
@@ -45,13 +43,13 @@ func SetIDFlagValue(p interface{}, id types.ID) {
 
 // IDParameter IDを指定して操作する必要があるリソースが実装すべきIDパラメータの定義
 type IDParameter struct {
-	ID types.ID `cli:"-" json:"-"` // IDは実行時にName or Tagsから検索〜設定されるケースがあるためvalidate:"required"にしない
+	ID string `cli:"-" json:"-"` // IDは実行時にName or Tagsから検索〜設定されるケースがあるためvalidate:"required"にしない
 }
 
-func (p *IDParameter) IDFlagValue() types.ID {
+func (p *IDParameter) IDFlagValue() string {
 	return p.ID
 }
 
-func (p *IDParameter) SetIDFlagValue(id types.ID) {
+func (p *IDParameter) SetIDFlagValue(id string) {
 	p.ID = id
 }

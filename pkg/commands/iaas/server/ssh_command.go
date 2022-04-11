@@ -25,6 +25,7 @@ import (
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/helper/query"
 	"github.com/sacloud/iaas-api-go/helper/wait"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 )
@@ -59,7 +60,7 @@ func sshFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	}
 
 	if !instance.InstanceStatus.IsUp() && p.WaitUntilReady {
-		lastState, err := wait.UntilServerIsUp(ctx, iaas.NewServerOp(ctx.Client().(iaas.APICaller)), p.Zone, p.ID)
+		lastState, err := wait.UntilServerIsUp(ctx, iaas.NewServerOp(ctx.Client().(iaas.APICaller)), p.Zone, types.StringID(p.ID))
 		if err != nil {
 			return nil, err
 		}
@@ -76,7 +77,7 @@ func sshFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 
 	user := p.User
 	if user == "" {
-		u, err := query.ServerDefaultUserName(ctx, p.Zone, query.NewServerSourceReader(ctx.Client().(iaas.APICaller)), p.ID)
+		u, err := query.ServerDefaultUserName(ctx, p.Zone, query.NewServerSourceReader(ctx.Client().(iaas.APICaller)), types.StringID(p.ID))
 		if err != nil {
 			return nil, err
 		}
