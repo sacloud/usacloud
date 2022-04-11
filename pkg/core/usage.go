@@ -18,7 +18,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/version"
 	"github.com/spf13/cobra"
 )
@@ -67,7 +66,7 @@ func SetSubCommandsUsage(cmd *cobra.Command, commands []*CategorizedResources) {
 	cmd.SetUsageTemplate("")
 	var usages []string
 	for _, c := range commands {
-		usages = append(usages, fmt.Sprintf(commandUsageTemplate, c.Category.DisplayName, buildSubCommandsUsage(cmd, c.Resources, c.Category == iaas.ResourceCategoryOther)))
+		usages = append(usages, fmt.Sprintf(commandUsageTemplate, c.Category.DisplayName, buildSubCommandsUsage(cmd, c.Resources, c.Category.Key == "other")))
 	}
 	usage := fmt.Sprintf(commandUsageWrapperTemplate, strings.TrimRight(strings.Join(usages, "\n"), "\n"))
 

@@ -12,14 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package iaas
+package core
 
-import (
-	"github.com/spf13/cobra"
-)
+// Labels Usacloudで扱うリソースを識別するためのラベル情報
+//
+// シェル補完や引数をID or Name or Tagsにマッチさせるために利用される
+type Labels struct {
+	Id   string
+	Name string
+	Tags []string
+}
 
-var Command = &cobra.Command{
-	Use:   "iaas",
-	Short: "SubCommands for IaaS",
-	Long:  "SubCommands for IaaS",
+var LabelsExtractors []func(v interface{}) *Labels
+
+func extractLabels(v interface{}) *Labels {
+	for _, extractor := range LabelsExtractors {
+		if l := extractor(v); l != nil {
+			return l
+		}
+	}
+	return nil
 }

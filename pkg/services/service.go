@@ -15,7 +15,6 @@
 package services
 
 import (
-	_ "github.com/sacloud/usacloud/pkg/services/iaas"
 	"github.com/sacloud/usacloud/pkg/services/registry"
 )
 

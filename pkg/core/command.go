@@ -22,8 +22,6 @@ import (
 	"sync"
 
 	"github.com/fatih/color"
-	"github.com/sacloud/iaas-api-go/accessor"
-	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/category"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
@@ -276,25 +274,21 @@ func (c *Command) confirmMessage() string {
 
 func (c *Command) collectCompletionValuesFromResource(resource interface{}, prefix string) []string {
 	var results []string
-	if v, ok := resource.(accessor.ID); ok {
+	if labels := extractLabels(resource); labels != nil {
 		// ID
-		if prefix == "" || strings.HasPrefix(v.GetID().String(), prefix) {
-			results = append(results, v.GetID().String())
+		if prefix == "" || strings.HasPrefix(labels.Id, prefix) {
+			results = append(results, labels.Id)
 		}
 
-		// Name(部分一致)
-		if name, ok := resource.(accessor.Name); ok {
-			if prefix == "" || strings.HasPrefix(name.GetName(), prefix) {
-				results = append(results, name.GetName())
-			}
+		// Name
+		if prefix == "" || strings.HasPrefix(labels.Name, prefix) {
+			results = append(results, labels.Name)
 		}
 
 		// Tags
-		if tags, ok := resource.(accessor.Tags); ok {
-			for _, tag := range tags.GetTags() {
-				if prefix == "" || strings.HasPrefix(tag, prefix) {
-					results = append(results, tag)
-				}
+		for _, tag := range labels.Tags {
+			if prefix == "" || strings.HasPrefix(tag, prefix) {
+				results = append(results, tag)
 			}
 		}
 	}
@@ -432,7 +426,7 @@ func (c *Command) expandResourceContextsFromArgs(ctx cli.Context, args []string)
 
 		for _, r := range resources {
 			if id, ok := c.extractMatchedResourceID(ctx, r, args); ok {
-				results.Append(cli.ResourceContext{ID: id.String(), Zone: zone, Resource: r})
+				results.Append(cli.ResourceContext{ID: id, Zone: zone, Resource: r})
 			}
 		}
 	}
@@ -446,33 +440,29 @@ func (c *Command) expandResourceContextsFromArgs(ctx cli.Context, args []string)
 	return results, nil
 }
 
-func (c *Command) extractMatchedResourceID(ctx cli.Context, r interface{}, idOrNameOrTag []string) (types.ID, bool) {
+func (c *Command) extractMatchedResourceID(ctx cli.Context, r interface{}, idOrNameOrTag []string) (string, bool) {
 	nameCompareFunc := c.selectNameComparingFuncByMode(ctx.Option().ArgumentMatchModeValue())
-	if v, ok := r.(accessor.ID); ok {
+	if labels := extractLabels(r); labels != nil {
 		for _, cond := range idOrNameOrTag {
 			// ID
-			if v.GetID().String() == cond {
-				return v.GetID(), true
+			if labels.Id == cond {
+				return labels.Id, true
 			}
 
 			// Name(--argument-match-modeにしたがって比較)
-			if name, ok := r.(accessor.Name); ok {
-				if nameCompareFunc(name.GetName(), cond) {
-					return v.GetID(), true
-				}
+			if nameCompareFunc(labels.Name, cond) {
+				return labels.Id, true
 			}
 
 			// Tags
-			if tags, ok := r.(accessor.Tags); ok {
-				for _, tag := range tags.GetTags() {
-					if tag == cond {
-						return v.GetID(), true
-					}
+			for _, tag := range labels.Tags {
+				if tag == cond {
+					return labels.Id, true
 				}
 			}
 		}
 	}
-	return types.ID(0), false
+	return "", false
 }
 
 func (c *Command) selectNameComparingFuncByMode(mode string) func(string, string) bool {
