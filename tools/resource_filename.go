@@ -24,6 +24,10 @@ func (r *Resource) ServiceSourceFileName() string {
 	return fmt.Sprintf("%s_services_gen.go", naming.ToSnakeCase(r.Name))
 }
 
+func (r *Resource) ChildResourceServiceSourceFileName(child *Resource) string {
+	return fmt.Sprintf("%s_%s_services_gen.go", naming.ToSnakeCase(r.Name), naming.ToSnakeCase(child.Name))
+}
+
 func (r *Resource) ServiceRepositoryName() string {
 	switch r.PlatformName {
 	case "phy":

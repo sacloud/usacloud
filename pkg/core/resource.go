@@ -34,8 +34,11 @@ type Resource struct {
 	Warning            string
 	IsGlobalResource   bool
 	PlatformName       string       // "iaas" or "phy" or "objectstorage", 空の場合はIaaSとして扱われる
-	ServiceType        reflect.Type // リソースに対応するlibsacloud serviceの型情報、コード生成用
+	ServiceType        reflect.Type // リソースに対応するserviceの型情報、コード生成用
 	SkipLoadingProfile bool
+
+	resources []*Resource // 子リソース
+	parent    *Resource
 
 	categorizedCommands []*CategorizedCommands
 }
@@ -63,6 +66,11 @@ func (r *Resource) CLICommand() *cobra.Command {
 			parameter := c.ParameterInitializer().(FlagInitializer)
 			parameter.SetupCobraCommandFlags(cmd)
 		}
+	}
+
+	for _, r := range r.Children() {
+		subCmd := r.CLICommand()
+		cmd.AddCommand(subCmd)
 	}
 
 	buildCommandsUsage(cmd, r.CategorizedCommands())
@@ -131,6 +139,31 @@ func (r *Resource) AddCommand(command *Command) {
 			Commands: []*Command{command},
 		})
 	}
+}
+
+func (r *Resource) Parent() *Resource {
+	return r.parent
+}
+
+func (r *Resource) Children() []*Resource {
+	return r.resources
+}
+
+func (r *Resource) AddChild(resource *Resource) {
+	// 親リソースから引き継ぎ
+	resource.IsGlobalResource = r.IsGlobalResource
+	resource.PlatformName = r.PlatformName
+	resource.parent = r
+
+	r.resources = append(r.resources, resource)
+}
+
+func (r *Resource) FullName() string {
+	prefix := ""
+	if r.parent != nil {
+		prefix = r.parent.FullName() + "_"
+	}
+	return prefix + r.Name
 }
 
 func (r *Resource) commandCategory(key string) *category.Category {
