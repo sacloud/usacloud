@@ -36,6 +36,10 @@ func (c *Command) PackageDirName() string {
 	return c.Resource.PackageDirName()
 }
 
+func (c *Command) PackageName() string {
+	return c.Resource.PackageName()
+}
+
 func (c *Command) HasAliases() bool {
 	if c.Command.ParameterInitializer == nil {
 		return false

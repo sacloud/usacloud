@@ -57,6 +57,10 @@ func (r *Resource) PackageDirName() string {
 		prefix = r.Parent().PackageDirName() + "/"
 	}
 
+	return prefix + r.PackageName()
+}
+
+func (r *Resource) PackageName() string {
 	n := naming.ToLower(r.Name)
 	// ハイフンやアンダーバーは除去する
 	n = strings.ReplaceAll(n, "-", "")
@@ -67,5 +71,5 @@ func (r *Resource) PackageDirName() string {
 	case "interface":
 		n = "iface"
 	}
-	return prefix + n
+	return n
 }

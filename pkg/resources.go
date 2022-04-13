@@ -68,6 +68,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/commands/iaas/webaccelerator"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/zone"
 	"github.com/sacloud/usacloud/pkg/commands/phy"
+	phyServer "github.com/sacloud/usacloud/pkg/commands/phy/server"
 	phyService "github.com/sacloud/usacloud/pkg/commands/phy/service"
 	"github.com/sacloud/usacloud/pkg/commands/rest"
 	"github.com/sacloud/usacloud/pkg/commands/root"
@@ -129,6 +130,7 @@ var (
 
 	PhyResources = core.Resources{
 		phyService.Resource,
+		phyServer.Resource,
 	}
 
 	MiscResources = core.Resources{

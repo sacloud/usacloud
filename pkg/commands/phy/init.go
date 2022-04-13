@@ -16,6 +16,7 @@ package phy
 
 import (
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
+	"github.com/sacloud/phy-service-go/server"
 	"github.com/sacloud/usacloud/pkg/core"
 	_ "github.com/sacloud/usacloud/pkg/services/phy"
 )
@@ -27,14 +28,21 @@ func init() {
 func labelsExtractorForPhy(v interface{}) *core.Labels {
 	switch v := v.(type) {
 	case *v1.Service:
-		return &core.Labels{Id: v.ServiceId, Name: v.Nickname, Tags: v1TagsToStrings(v.Tags)}
+		return &core.Labels{Id: v.ServiceId, Name: v.Nickname, Tags: v1TagsToStrings(&v.Tags)}
+	case *v1.Server:
+		return &core.Labels{Id: v.ServerId, Name: v.Service.Nickname, Tags: v1TagsToStrings(v.Service.Tags)}
+	case *server.Server:
+		return &core.Labels{Id: v.ServerId, Name: v.Service.Nickname, Tags: v1TagsToStrings(v.Service.Tags)}
 	}
 	return nil
 }
 
-func v1TagsToStrings(tags []v1.Tag) []string {
+func v1TagsToStrings(tags *[]v1.Tag) []string {
+	if tags == nil {
+		return nil
+	}
 	var res []string
-	for _, t := range tags {
+	for _, t := range *tags {
 		res = append(res, t.Label)
 	}
 	return res
