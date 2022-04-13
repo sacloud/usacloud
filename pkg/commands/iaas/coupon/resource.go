@@ -17,8 +17,9 @@ package coupon
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/coupon"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,7 +27,7 @@ var Resource = &core.Resource{
 	PlatformName:       "iaas",
 	Name:               "coupon",
 	ServiceType:        reflect.TypeOf(&coupon.Service{}),
-	Category:           iaas.ResourceCategoryBilling,
+	Category:           category.ResourceCategoryBilling,
 	IsGlobalResource:   true,
 	DefaultCommandName: "list",
 }

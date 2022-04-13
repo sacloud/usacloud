@@ -17,8 +17,9 @@ package enhanceddb
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/enhanceddb"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -27,6 +28,6 @@ var Resource = &core.Resource{
 	Name:             "enhanced-db",
 	Aliases:          []string{"enhanced-database", "edb"},
 	ServiceType:      reflect.TypeOf(&enhanceddb.Service{}),
-	Category:         iaas.ResourceCategoryLab,
+	Category:         category.ResourceCategoryLab,
 	IsGlobalResource: true,
 }

@@ -17,8 +17,9 @@ package iface
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/iface"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -27,5 +28,5 @@ var Resource = &core.Resource{
 	Name:         "interface",
 	Aliases:      []string{"iface"},
 	ServiceType:  reflect.TypeOf(&iface.Service{}),
-	Category:     iaas.ResourceCategoryNetworkingSub,
+	Category:     category.ResourceCategoryNetworkingSub,
 }

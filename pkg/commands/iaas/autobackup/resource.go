@@ -17,8 +17,9 @@ package autobackup
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/autobackup"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,5 +27,5 @@ var Resource = &core.Resource{
 	PlatformName: "iaas",
 	Name:         "auto-backup",
 	ServiceType:  reflect.TypeOf(&autobackup.Service{}),
-	Category:     iaas.ResourceCategoryStorage,
+	Category:     category.ResourceCategoryStorage,
 }

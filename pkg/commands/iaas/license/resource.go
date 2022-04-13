@@ -17,8 +17,9 @@ package license
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/license"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,6 +27,6 @@ var Resource = &core.Resource{
 	PlatformName:     "iaas",
 	Name:             "license",
 	ServiceType:      reflect.TypeOf(&license.Service{}),
-	Category:         iaas.ResourceCategoryMisc,
+	Category:         category.ResourceCategoryMisc,
 	IsGlobalResource: true,
 }

@@ -17,8 +17,9 @@ package mobilegateway
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/mobilegateway"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -27,5 +28,5 @@ var Resource = &core.Resource{
 	Name:         "mobile-gateway",
 	Aliases:      []string{"mobilegateway", "mgw"},
 	ServiceType:  reflect.TypeOf(&mobilegateway.Service{}),
-	Category:     iaas.ResourceCategorySecureMobile,
+	Category:     category.ResourceCategorySecureMobile,
 }

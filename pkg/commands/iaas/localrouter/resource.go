@@ -17,8 +17,9 @@ package localrouter
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/localrouter"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,6 +27,6 @@ var Resource = &core.Resource{
 	PlatformName:     "iaas",
 	Name:             "local-router",
 	ServiceType:      reflect.TypeOf(&localrouter.Service{}),
-	Category:         iaas.ResourceCategoryNetworking,
+	Category:         category.ResourceCategoryNetworking,
 	IsGlobalResource: true,
 }

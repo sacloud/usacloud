@@ -17,8 +17,9 @@ package icon
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/icon"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,6 +27,6 @@ var Resource = &core.Resource{
 	PlatformName:     "iaas",
 	Name:             "icon",
 	ServiceType:      reflect.TypeOf(&icon.Service{}),
-	Category:         iaas.ResourceCategoryMisc,
+	Category:         category.ResourceCategoryMisc,
 	IsGlobalResource: true,
 }

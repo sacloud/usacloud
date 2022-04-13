@@ -17,8 +17,9 @@ package ipaddress
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/ipaddress"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -27,5 +28,5 @@ var Resource = &core.Resource{
 	Name:         "ipaddress",
 	Aliases:      []string{"ip-address"},
 	ServiceType:  reflect.TypeOf(&ipaddress.Service{}),
-	Category:     iaas.ResourceCategoryNetworkingSub,
+	Category:     category.ResourceCategoryNetworkingSub,
 }

@@ -17,8 +17,9 @@ package diskplan
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/diskplan"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -27,5 +28,5 @@ var Resource = &core.Resource{
 	Name:         "disk-plan",
 	Aliases:      []string{"diskplan"},
 	ServiceType:  reflect.TypeOf(&diskplan.Service{}),
-	Category:     iaas.ResourceCategoryInformation,
+	Category:     category.ResourceCategoryInformation,
 }

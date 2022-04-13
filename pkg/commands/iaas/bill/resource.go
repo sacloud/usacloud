@@ -17,8 +17,9 @@ package bill
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/bill"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,6 +27,6 @@ var Resource = &core.Resource{
 	PlatformName:     "iaas",
 	Name:             "bill",
 	ServiceType:      reflect.TypeOf(&bill.Service{}),
-	Category:         iaas.ResourceCategoryBilling,
+	Category:         category.ResourceCategoryBilling,
 	IsGlobalResource: true,
 }

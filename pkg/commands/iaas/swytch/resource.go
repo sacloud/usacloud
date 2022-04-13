@@ -17,8 +17,9 @@ package swytch
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/swytch"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,5 +27,5 @@ var Resource = &core.Resource{
 	PlatformName: "iaas",
 	Name:         "switch",
 	ServiceType:  reflect.TypeOf(&swytch.Service{}),
-	Category:     iaas.ResourceCategoryNetworking,
+	Category:     category.ResourceCategoryNetworking,
 }

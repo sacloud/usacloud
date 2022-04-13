@@ -17,7 +17,7 @@ package webaccelerator
 import (
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cli"
-	iaas2 "github.com/sacloud/usacloud/pkg/commands/iaas"
+	iaas2 "github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 

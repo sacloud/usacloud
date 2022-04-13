@@ -17,8 +17,9 @@ package bridge
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/bridge"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,5 +27,5 @@ var Resource = &core.Resource{
 	PlatformName: "iaas",
 	Name:         "bridge",
 	ServiceType:  reflect.TypeOf(&bridge.Service{}),
-	Category:     iaas.ResourceCategoryNetworking,
+	Category:     category.ResourceCategoryNetworking,
 }

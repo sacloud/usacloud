@@ -25,102 +25,6 @@ import (
 )
 
 func init() {
-	registry.SetDefaultServiceFunc("iaas", "sim", "activate",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-
-			req := &service.ActivateRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-			if err := req.Validate(); err != nil {
-				return nil, err
-			}
-
-			err := svc.ActivateWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			return nil, nil
-
-		},
-	)
-	registry.SetDefaultListAllFunc("iaas", "sim", "activate",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-			req := &service.FindRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-
-			type requester interface {
-				FindRequest() *service.FindRequest
-			}
-			if v, ok := parameter.(requester); ok {
-				req = v.FindRequest()
-			}
-
-			res, err := svc.FindWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			var results []interface{}
-			for _, v := range res {
-				results = append(results, v)
-			}
-			return results, nil
-		},
-	)
-	registry.SetDefaultServiceFunc("iaas", "sim", "deactivate",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-
-			req := &service.DeactivateRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-			if err := req.Validate(); err != nil {
-				return nil, err
-			}
-
-			err := svc.DeactivateWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			return nil, nil
-
-		},
-	)
-	registry.SetDefaultListAllFunc("iaas", "sim", "deactivate",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-			req := &service.FindRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-
-			type requester interface {
-				FindRequest() *service.FindRequest
-			}
-			if v, ok := parameter.(requester); ok {
-				req = v.FindRequest()
-			}
-
-			res, err := svc.FindWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			var results []interface{}
-			for _, v := range res {
-				results = append(results, v)
-			}
-			return results, nil
-		},
-	)
 	registry.SetDefaultServiceFunc("iaas", "sim", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
@@ -339,6 +243,102 @@ func init() {
 		},
 	)
 	registry.SetDefaultListAllFunc("iaas", "sim", "delete",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+			req := &service.FindRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	registry.SetDefaultServiceFunc("iaas", "sim", "activate",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+
+			req := &service.ActivateRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			err := svc.ActivateWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return nil, nil
+
+		},
+	)
+	registry.SetDefaultListAllFunc("iaas", "sim", "activate",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+			req := &service.FindRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	registry.SetDefaultServiceFunc("iaas", "sim", "deactivate",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+
+			req := &service.DeactivateRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			err := svc.DeactivateWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return nil, nil
+
+		},
+	)
+	registry.SetDefaultListAllFunc("iaas", "sim", "deactivate",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 			req := &service.FindRequest{}

@@ -17,8 +17,9 @@ package authstatus
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/authstatus"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -27,5 +28,5 @@ var Resource = &core.Resource{
 	Name:               "auth-status",
 	ServiceType:        reflect.TypeOf(&authstatus.Service{}),
 	DefaultCommandName: "read",
-	Category:           iaas.ResourceCategoryAuth,
+	Category:           category.ResourceCategoryAuth,
 }

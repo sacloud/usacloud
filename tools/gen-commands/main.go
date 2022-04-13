@@ -55,24 +55,36 @@ func main() {
 		}
 
 		if resource.PlatformName != "" {
-			// リソース単位のファイルを生成
-			// libsacloud service呼び出し関連ソースの生成
-			filePath := filepath.Join(destination, "services", resource.PlatformName, resource.ServiceSourceFileName())
-			utils.WriteFileWithTemplate(&utils.TemplateConfig{
-				OutputPath: filepath.Join(utils.ProjectRootPath(), filePath),
-				Template:   serviceCommandTemplate,
-				Parameter:  resource,
-			})
+			// サービス初期化コードの生成
+			{
+				filePath := filepath.Join(destination, "commands", resource.PlatformName, "services_gen.go")
+				utils.WriteFileWithTemplate(&utils.TemplateConfig{
+					OutputPath: filepath.Join(utils.ProjectRootPath(), filePath),
+					Template:   initServiceTemplate,
+					Parameter:  resource,
+				})
+			}
 
-			for _, child := range resource.Children() {
-				childResource := tools.NewResource(child)
-				// リソース単位のファイルを生成
-				filePath := filepath.Join(destination, "services", resource.PlatformName, resource.ChildResourceServiceSourceFileName(childResource))
+			// service呼び出し関連ソースの生成
+			{
+				// service呼び出し関連ソースの生成
+				filePath := filepath.Join(destination, "services", resource.PlatformName, resource.ServiceSourceFileName())
 				utils.WriteFileWithTemplate(&utils.TemplateConfig{
 					OutputPath: filepath.Join(utils.ProjectRootPath(), filePath),
 					Template:   serviceCommandTemplate,
-					Parameter:  childResource,
+					Parameter:  resource,
 				})
+
+				for _, child := range resource.Children() {
+					childResource := tools.NewResource(child)
+					// リソース単位のファイルを生成
+					filePath := filepath.Join(destination, "services", resource.PlatformName, resource.ChildResourceServiceSourceFileName(childResource))
+					utils.WriteFileWithTemplate(&utils.TemplateConfig{
+						OutputPath: filepath.Join(utils.ProjectRootPath(), filePath),
+						Template:   serviceCommandTemplate,
+						Parameter:  childResource,
+					})
+				}
 			}
 		}
 	}

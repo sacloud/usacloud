@@ -12,21 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package privatehostplan
+package iaas
 
 import (
-	"reflect"
-
-	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
-
-	"github.com/sacloud/iaas-service-go/privatehostplan"
+	"github.com/sacloud/iaas-api-go/accessor"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
-var Resource = &core.Resource{
-	PlatformName: "iaas",
-	Name:         "private-host-plan",
-	Aliases:      []string{"privatehostplan"},
-	ServiceType:  reflect.TypeOf(&privatehostplan.Service{}),
-	Category:     category.ResourceCategoryInformation,
+func init() {
+	core.LabelsExtractors = append(core.LabelsExtractors, extractLabels)
+}
+
+func extractLabels(v interface{}) *core.Labels {
+	if v, ok := v.(accessor.ID); ok {
+		labels := &core.Labels{Id: v.GetID().String()}
+
+		// Name(部分一致)
+		if name, ok := v.(accessor.Name); ok {
+			labels.Name = name.GetName()
+		}
+
+		// Tags
+		if tags, ok := v.(accessor.Tags); ok {
+			labels.Tags = tags.GetTags()
+		}
+		return labels
+	}
+	return nil
 }

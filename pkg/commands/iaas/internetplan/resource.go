@@ -17,8 +17,9 @@ package internetplan
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/internetplan"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -27,5 +28,5 @@ var Resource = &core.Resource{
 	Name:         "internet-plan",
 	Aliases:      []string{"internetplan"},
 	ServiceType:  reflect.TypeOf(&internetplan.Service{}),
-	Category:     iaas.ResourceCategoryInformation,
+	Category:     category.ResourceCategoryInformation,
 }

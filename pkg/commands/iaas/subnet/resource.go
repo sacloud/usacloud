@@ -17,8 +17,9 @@ package subnet
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/subnet"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,5 +27,5 @@ var Resource = &core.Resource{
 	PlatformName: "iaas",
 	Name:         "subnet",
 	ServiceType:  reflect.TypeOf(&subnet.Service{}),
-	Category:     iaas.ResourceCategoryNetworkingSub,
+	Category:     category.ResourceCategoryNetworkingSub,
 }
