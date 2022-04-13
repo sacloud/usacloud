@@ -53,7 +53,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "simple-monitor", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
+			req := &service.FindRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -89,7 +101,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "simple-monitor", "create",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
+			req := &service.FindRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -125,7 +149,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "simple-monitor", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
+			req := &service.FindRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -161,7 +197,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "simple-monitor", "update",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
+			req := &service.FindRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -197,7 +245,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "simple-monitor", "delete",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
+			req := &service.FindRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -233,7 +293,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "simple-monitor", "health",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
+			req := &service.FindRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -273,7 +345,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "simple-monitor", "monitor-response-time",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
+			req := &service.FindRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}

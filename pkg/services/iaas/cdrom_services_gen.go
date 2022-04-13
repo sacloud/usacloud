@@ -54,7 +54,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "cdrom", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -90,7 +102,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "cdrom", "create",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -126,7 +150,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "cdrom", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -162,7 +198,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "cdrom", "update",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -198,7 +246,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "cdrom", "delete",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -234,7 +294,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "cdrom", "upload",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -270,7 +342,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "cdrom", "download",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -306,7 +390,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "cdrom", "ftp-open",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -342,7 +438,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "cdrom", "ftp-close",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}

@@ -50,7 +50,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "boot",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -86,7 +98,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "shutdown",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -122,7 +146,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "reset",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -162,7 +198,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -198,7 +246,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "create",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -234,7 +294,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -270,7 +342,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "update",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -306,7 +390,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "delete",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -346,7 +442,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "list-parameters",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -386,7 +494,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "monitor-cpu",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -426,7 +546,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "monitor-database",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -466,7 +598,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "monitor-disk",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -506,7 +650,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "monitor-interface",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -542,7 +698,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "wait-until-ready",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -578,7 +746,19 @@ func init() {
 	registry.SetDefaultListAllFunc("iaas", "database", "wait-until-shutdown",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()})
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
