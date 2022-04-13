@@ -17,9 +17,8 @@ package archive
 import (
 	"reflect"
 
-	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
-
 	"github.com/sacloud/iaas-service-go/archive"
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 

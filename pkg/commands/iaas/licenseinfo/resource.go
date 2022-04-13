@@ -17,9 +17,8 @@ package licenseinfo
 import (
 	"reflect"
 
-	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
-
 	"github.com/sacloud/iaas-service-go/licenseinfo"
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 

@@ -19,6 +19,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/commands/completion"
 	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/webaccelerator"
+	"github.com/sacloud/usacloud/pkg/commands/phy"
 	"github.com/sacloud/usacloud/pkg/commands/rest"
 	"github.com/sacloud/usacloud/pkg/commands/root"
 	"github.com/sacloud/usacloud/pkg/commands/version"
@@ -41,29 +42,19 @@ var (
 func Resources() core.Resources {
 	rs := core.Resources{}
 	rs = append(rs, iaas.Resources...)
+	rs = append(rs, phy.Resources...)
 	rs = append(rs, MiscResources...)
 	return rs
 }
 
 func initCommands() {
-	initIaasCommands()
-	initMiscCommands()
-	initRootCommands()
-}
-
-func initIaasCommands() {
 	root.Command.AddCommand(iaas.Command)
-}
-
-func initMiscCommands() {
+	root.Command.AddCommand(phy.Command)
 	for _, r := range MiscResources {
 		cmd := r.CLICommand()
 		if len(cmd.Commands()) > 0 {
 			root.Command.AddCommand(cmd)
 		}
 	}
-}
-
-func initRootCommands() {
 	root.Command.AddCommand(RootCommands...)
 }
