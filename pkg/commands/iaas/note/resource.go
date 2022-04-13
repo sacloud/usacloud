@@ -17,8 +17,9 @@ package note
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/note"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -27,6 +28,6 @@ var Resource = &core.Resource{
 	Name:             "note",
 	Aliases:          []string{"startup-script"},
 	ServiceType:      reflect.TypeOf(&note.Service{}),
-	Category:         iaas.ResourceCategoryMisc,
+	Category:         category.ResourceCategoryMisc,
 	IsGlobalResource: true,
 }

@@ -17,8 +17,9 @@ package certificateauthority
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/certificateauthority"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -27,6 +28,6 @@ var Resource = &core.Resource{
 	Name:             "certificate-authority",
 	Aliases:          []string{"managed-pki"},
 	ServiceType:      reflect.TypeOf(&certificateauthority.Service{}),
-	Category:         iaas.ResourceCategoryLab,
+	Category:         category.ResourceCategoryLab,
 	IsGlobalResource: true,
 }

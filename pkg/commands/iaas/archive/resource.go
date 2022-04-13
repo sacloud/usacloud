@@ -17,8 +17,9 @@ package archive
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/archive"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,5 +27,5 @@ var Resource = &core.Resource{
 	PlatformName: "iaas",
 	Name:         "archive",
 	ServiceType:  reflect.TypeOf(&archive.Service{}),
-	Category:     iaas.ResourceCategoryStorage,
+	Category:     category.ResourceCategoryStorage,
 }

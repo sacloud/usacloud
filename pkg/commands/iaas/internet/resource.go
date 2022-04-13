@@ -17,8 +17,9 @@ package internet
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/internet"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -27,5 +28,5 @@ var Resource = &core.Resource{
 	Name:         "internet",
 	Aliases:      []string{"router"},
 	ServiceType:  reflect.TypeOf(&internet.Service{}),
-	Category:     iaas.ResourceCategoryNetworking,
+	Category:     category.ResourceCategoryNetworking,
 }

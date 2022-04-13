@@ -19,14 +19,10 @@ package pkg
 
 import (
 	"github.com/sacloud/usacloud/pkg/commands/config"
-	"github.com/sacloud/usacloud/pkg/commands/iaas/self"
 	update_self "github.com/sacloud/usacloud/pkg/commands/update-self"
 )
 
 func init() {
-	IaaSResources = append(IaaSResources,
-		self.Resource,
-	)
 	MiscResources = append(MiscResources,
 		config.Resource,
 	)

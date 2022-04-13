@@ -17,8 +17,9 @@ package loadbalancer
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/loadbalancer"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -27,5 +28,5 @@ var Resource = &core.Resource{
 	Name:         "load-balancer",
 	Aliases:      []string{"loadbalancer"},
 	ServiceType:  reflect.TypeOf(&loadbalancer.Service{}),
-	Category:     iaas.ResourceCategoryAppliance,
+	Category:     category.ResourceCategoryAppliance,
 }

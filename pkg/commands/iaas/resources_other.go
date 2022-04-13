@@ -12,21 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package privatehostplan
+//go:build !wasm
+// +build !wasm
+
+package iaas
 
 import (
-	"reflect"
-
-	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
-
-	"github.com/sacloud/iaas-service-go/privatehostplan"
-	"github.com/sacloud/usacloud/pkg/core"
+	"github.com/sacloud/usacloud/pkg/commands/iaas/self"
 )
 
-var Resource = &core.Resource{
-	PlatformName: "iaas",
-	Name:         "private-host-plan",
-	Aliases:      []string{"privatehostplan"},
-	ServiceType:  reflect.TypeOf(&privatehostplan.Service{}),
-	Category:     category.ResourceCategoryInformation,
+func init() {
+	Resources = append(Resources,
+		self.Resource,
+	)
 }

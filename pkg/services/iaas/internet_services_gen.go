@@ -26,154 +26,6 @@ import (
 )
 
 func init() {
-	registry.SetDefaultServiceFunc("iaas", "internet", "list-subnet",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-
-			req := &service.ListSubnetRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-			if err := req.Validate(); err != nil {
-				return nil, err
-			}
-
-			res, err := svc.ListSubnetWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			var results []interface{}
-			for _, v := range res {
-				results = append(results, v)
-			}
-			return results, nil
-
-		},
-	)
-	registry.SetDefaultListAllFunc("iaas", "internet", "list-subnet",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-
-			type requester interface {
-				FindRequest() *service.FindRequest
-			}
-			if v, ok := parameter.(requester); ok {
-				req = v.FindRequest()
-			}
-
-			res, err := svc.FindWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			var results []interface{}
-			for _, v := range res {
-				results = append(results, v)
-			}
-			return results, nil
-		},
-	)
-	registry.SetDefaultServiceFunc("iaas", "internet", "add-subnet",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-
-			req := &service.AddSubnetRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-			if err := req.Validate(); err != nil {
-				return nil, err
-			}
-
-			res, err := svc.AddSubnetWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			return []interface{}{res}, nil
-
-		},
-	)
-	registry.SetDefaultListAllFunc("iaas", "internet", "add-subnet",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-
-			type requester interface {
-				FindRequest() *service.FindRequest
-			}
-			if v, ok := parameter.(requester); ok {
-				req = v.FindRequest()
-			}
-
-			res, err := svc.FindWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			var results []interface{}
-			for _, v := range res {
-				results = append(results, v)
-			}
-			return results, nil
-		},
-	)
-	registry.SetDefaultServiceFunc("iaas", "internet", "delete-subnet",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-
-			req := &service.DeleteSubnetRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-			if err := req.Validate(); err != nil {
-				return nil, err
-			}
-
-			err := svc.DeleteSubnetWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			return nil, nil
-
-		},
-	)
-	registry.SetDefaultListAllFunc("iaas", "internet", "delete-subnet",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-
-			type requester interface {
-				FindRequest() *service.FindRequest
-			}
-			if v, ok := parameter.(requester); ok {
-				req = v.FindRequest()
-			}
-
-			res, err := svc.FindWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			var results []interface{}
-			for _, v := range res {
-				results = append(results, v)
-			}
-			return results, nil
-		},
-	)
 	registry.SetDefaultServiceFunc("iaas", "internet", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
@@ -392,6 +244,154 @@ func init() {
 		},
 	)
 	registry.SetDefaultListAllFunc("iaas", "internet", "delete",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	registry.SetDefaultServiceFunc("iaas", "internet", "list-subnet",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+
+			req := &service.ListSubnetRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			res, err := svc.ListSubnetWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+
+		},
+	)
+	registry.SetDefaultListAllFunc("iaas", "internet", "list-subnet",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	registry.SetDefaultServiceFunc("iaas", "internet", "add-subnet",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+
+			req := &service.AddSubnetRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			res, err := svc.AddSubnetWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return []interface{}{res}, nil
+
+		},
+	)
+	registry.SetDefaultListAllFunc("iaas", "internet", "add-subnet",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	registry.SetDefaultServiceFunc("iaas", "internet", "delete-subnet",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+
+			req := &service.DeleteSubnetRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			err := svc.DeleteSubnetWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return nil, nil
+
+		},
+	)
+	registry.SetDefaultListAllFunc("iaas", "internet", "delete-subnet",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}

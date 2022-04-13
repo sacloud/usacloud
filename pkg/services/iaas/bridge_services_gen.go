@@ -26,102 +26,6 @@ import (
 )
 
 func init() {
-	registry.SetDefaultServiceFunc("iaas", "bridge", "connect-switch",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-
-			req := &service.ConnectSwitchRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-			if err := req.Validate(); err != nil {
-				return nil, err
-			}
-
-			err := svc.ConnectSwitchWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			return nil, nil
-
-		},
-	)
-	registry.SetDefaultListAllFunc("iaas", "bridge", "connect-switch",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-
-			type requester interface {
-				FindRequest() *service.FindRequest
-			}
-			if v, ok := parameter.(requester); ok {
-				req = v.FindRequest()
-			}
-
-			res, err := svc.FindWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			var results []interface{}
-			for _, v := range res {
-				results = append(results, v)
-			}
-			return results, nil
-		},
-	)
-	registry.SetDefaultServiceFunc("iaas", "bridge", "disconnect-switch",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-
-			req := &service.DisconnectSwitchRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-			if err := req.Validate(); err != nil {
-				return nil, err
-			}
-
-			err := svc.DisconnectSwitchWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			return nil, nil
-
-		},
-	)
-	registry.SetDefaultListAllFunc("iaas", "bridge", "disconnect-switch",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-
-			type requester interface {
-				FindRequest() *service.FindRequest
-			}
-			if v, ok := parameter.(requester); ok {
-				req = v.FindRequest()
-			}
-
-			res, err := svc.FindWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			var results []interface{}
-			for _, v := range res {
-				results = append(results, v)
-			}
-			return results, nil
-		},
-	)
 	registry.SetDefaultServiceFunc("iaas", "bridge", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
@@ -340,6 +244,102 @@ func init() {
 		},
 	)
 	registry.SetDefaultListAllFunc("iaas", "bridge", "delete",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	registry.SetDefaultServiceFunc("iaas", "bridge", "connect-switch",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+
+			req := &service.ConnectSwitchRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			err := svc.ConnectSwitchWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return nil, nil
+
+		},
+	)
+	registry.SetDefaultListAllFunc("iaas", "bridge", "connect-switch",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	registry.SetDefaultServiceFunc("iaas", "bridge", "disconnect-switch",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+
+			req := &service.DisconnectSwitchRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			err := svc.DisconnectSwitchWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return nil, nil
+
+		},
+	)
+	registry.SetDefaultListAllFunc("iaas", "bridge", "disconnect-switch",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}

@@ -17,8 +17,9 @@ package serviceclass
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/serviceclass"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -27,5 +28,5 @@ var Resource = &core.Resource{
 	Name:         "service-class",
 	Aliases:      []string{"serviceclass", "public-price", "publicprice"},
 	ServiceType:  reflect.TypeOf(&serviceclass.Service{}),
-	Category:     iaas.ResourceCategoryInformation,
+	Category:     category.ResourceCategoryInformation,
 }

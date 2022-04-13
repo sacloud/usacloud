@@ -17,8 +17,9 @@ package ipv6net
 import (
 	"reflect"
 
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+
 	"github.com/sacloud/iaas-service-go/ipv6net"
-	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -26,5 +27,5 @@ var Resource = &core.Resource{
 	PlatformName: "iaas",
 	Name:         "ipv6net",
 	ServiceType:  reflect.TypeOf(&ipv6net.Service{}),
-	Category:     iaas.ResourceCategoryNetworkingSub,
+	Category:     category.ResourceCategoryNetworkingSub,
 }
