@@ -44,17 +44,32 @@ func NewResources(resources []*core.Resource) []*Resource {
 	return results
 }
 
+func (r *Resource) Parent() *Resource {
+	if r.Resource.Parent() != nil {
+		return NewResource(r.Resource.Parent())
+	}
+	return nil
+}
+
 func (r *Resource) PackageDirName() string {
+	prefix := ""
+	if r.Parent() != nil {
+		prefix = r.Parent().PackageDirName() + "/"
+	}
+
+	return prefix + r.PackageName()
+}
+
+func (r *Resource) PackageName() string {
 	n := naming.ToLower(r.Name)
 	// ハイフンやアンダーバーは除去する
 	n = strings.ReplaceAll(n, "-", "")
 	n = strings.ReplaceAll(n, "_", "")
 	switch n {
 	case "switch":
-		return "swytch"
+		n = "swytch"
 	case "interface":
-		return "iface"
-	default:
-		return n
+		n = "iface"
 	}
+	return n
 }
