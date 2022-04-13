@@ -17,9 +17,8 @@ package cdrom
 import (
 	"reflect"
 
-	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
-
 	"github.com/sacloud/iaas-service-go/cdrom"
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
