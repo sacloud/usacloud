@@ -15,6 +15,8 @@
 package phy
 
 import (
+	"fmt"
+
 	v1 "github.com/sacloud/phy-api-go/apis/v1"
 	"github.com/sacloud/phy-service-go/server"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -33,6 +35,8 @@ func labelsExtractorForPhy(v interface{}) *core.Labels {
 		return &core.Labels{Id: v.ServerId, Name: v.Service.Nickname, Tags: v1TagsToStrings(v.Service.Tags)}
 	case *server.Server:
 		return &core.Labels{Id: v.ServerId, Name: v.Service.Nickname, Tags: v1TagsToStrings(v.Service.Tags)}
+	case *v1.InterfacePort:
+		return &core.Labels{Id: fmt.Sprintf("%d", v.PortId), Name: v.Nickname}
 	}
 	return nil
 }

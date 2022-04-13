@@ -67,7 +67,19 @@ func init() { {{ range .Commands }}{{ if .ParameterInitializer }}{{ if not .Func
 	{{ if .Resource.ServiceMeta.HasFindMethod }}registry.SetDefaultListAllFunc("{{ .Resource.PlatformName }}", "{{ .Resource.FullName }}", "{{.Name}}", 
 		func (ctx cli.Context, parameter interface{}) ([]interface{}, error) { 
 			svc := service.New(ctx.Client().({{ .ServiceFuncClientTypeName }}))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{ {{ if not .Resource.IsGlobalResource}} Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue(){{ end }} })
+			req := &service.FindRequest{ {{ if not .Resource.IsGlobalResource}} Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue(){{ end }} }
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}

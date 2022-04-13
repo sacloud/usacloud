@@ -53,7 +53,19 @@ func init() {
 	registry.SetDefaultListAllFunc("phy", "server", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(*phy.Client))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
+			req := &service.FindRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -89,7 +101,19 @@ func init() {
 	registry.SetDefaultListAllFunc("phy", "server", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(*phy.Client))
-			res, err := svc.FindWithContext(ctx, &service.FindRequest{})
+			req := &service.FindRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
