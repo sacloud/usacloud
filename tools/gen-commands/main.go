@@ -51,6 +51,17 @@ func main() {
 				Template:   serviceCommandTemplate,
 				Parameter:  resource,
 			})
+
+			for _, child := range resource.Children() {
+				childResource := tools.NewResource(child)
+				// リソース単位のファイルを生成
+				filePath := filepath.Join(destination, "services", resource.PlatformName, resource.ChildResourceServiceSourceFileName(childResource))
+				utils.WriteFileWithTemplate(&utils.TemplateConfig{
+					OutputPath: filepath.Join(utils.ProjectRootPath(), filePath),
+					Template:   serviceCommandTemplate,
+					Parameter:  childResource,
+				})
+			}
 		}
 	}
 }

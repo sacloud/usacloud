@@ -249,7 +249,7 @@ func (c *Command) resourceName() string {
 	if c.resource == nil {
 		return ""
 	}
-	return c.resource.Name
+	return c.resource.FullName()
 }
 
 func (c *Command) completeParameterValue(cmd *cobra.Command, ctx cli.Context, parameter interface{}) {
