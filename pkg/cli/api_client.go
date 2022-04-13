@@ -23,6 +23,7 @@ import (
 	client "github.com/sacloud/api-client-go"
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/helper/api"
+	"github.com/sacloud/phy-api-go"
 	"github.com/sacloud/usacloud/pkg/config"
 )
 
@@ -30,6 +31,7 @@ type apiClient struct {
 	option *config.Config
 
 	iaasClient   iaas.APICaller
+	phyClient    *phy.Client
 	commonClient client.HttpRequestDoer
 }
 
@@ -66,6 +68,13 @@ func newAPIClient(o *config.Config) *apiClient {
 		FakeStorePath: o.FakeStorePath,
 	})
 
+	c.phyClient = &phy.Client{
+		Options: clientOption,
+
+		// TODO PHY用のRootURLを指定可能にする
+		// APIRootURL: "",
+	}
+
 	c.commonClient = client.NewFactory(clientOption).NewHttpRequestDoer()
 	return c
 }
@@ -73,7 +82,7 @@ func newAPIClient(o *config.Config) *apiClient {
 func (c *apiClient) client(platformName string) interface{} {
 	switch platformName {
 	case "phy":
-		panic("not yet implemented")
+		return c.phyClient
 	case "objectstorage":
 		panic("not yet implemented")
 	case "iaas":
