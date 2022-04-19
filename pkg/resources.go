@@ -17,6 +17,7 @@ package pkg
 
 import (
 	"github.com/sacloud/usacloud/pkg/commands/completion"
+	"github.com/sacloud/usacloud/pkg/commands/dynamic"
 	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/webaccelerator"
 	"github.com/sacloud/usacloud/pkg/commands/rest"
@@ -29,6 +30,7 @@ import (
 var (
 	MiscResources = core.Resources{
 		rest.Resource,
+		dynamic.Resource,
 		webaccelerator.Resource,
 	}
 
