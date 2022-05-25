@@ -38,7 +38,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Format, "format", "", p.Format, "Output format in Go templates (aliases: --fmt)")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "Query for JSON output")
 	fs.StringVarP(&p.QueryDriver, "query-driver", "", p.QueryDriver, "Name of the driver that handles queries to JSON output options: [jmespath/jq]")
-	fs.StringVarP(&p.IPv6Addr, "ipv6addr", "", p.IPv6Addr, "(*required) ")
+	fs.StringVarP(&p.IPv6Addr, "i-pv6-addr", "", p.IPv6Addr, "(*required) ")
 	fs.StringVarP(&p.HostName, "host-name", "", p.HostName, "(*required) ")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -62,7 +62,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs = pflag.NewFlagSet("ipv6addr", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("host-name"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("ipv6addr"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("i-pv6-addr"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Ipv6addr-specific options",
 			Flags: fs,

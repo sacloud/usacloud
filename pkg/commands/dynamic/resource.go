@@ -12,33 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package validate
+package dynamic
 
 import (
-	"strings"
-	"testing"
-
-	"github.com/stretchr/testify/require"
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
+	"github.com/sacloud/usacloud/pkg/core"
 )
 
-func TestValidator_Exec(t *testing.T) {
-	type Foo struct {
-		Required string `validate:"required"`
-		Min2     string `validate:"min=2"`
-		Max5     string `validate:"max=5"`
-	}
-
-	v := &Foo{
-		Required: "",
-		Min2:     "1",
-		Max5:     "123456",
-	}
-
-	err := Exec(v)
-	require.EqualError(t, err, strings.Join([]string{
-		"validation error:",
-		"\t--required: required",
-		"\t--min2: min=2",
-		"\t--max5: max=5",
-	}, "\n"))
+var Resource = &core.Resource{
+	Name:               "dynamic",
+	Usage:              "Invoke SAKURA Cloud API via sacloud/services",
+	Category:           category.ResourceCategoryOther,
+	IsGlobalResource:   true,
+	DefaultCommandName: "request",
 }

@@ -132,7 +132,7 @@ func TestParser_Parse(t *testing.T) {
 					StructField: reflect.TypeOf(nested1{}).Field(0),
 					Tag: Tag{
 						FieldName: "Nested1.Field1",
-						FlagName:  "nested-1-field-1",
+						FlagName:  "nested1-field1",
 						Category:  "parent",
 					},
 				},
@@ -140,7 +140,7 @@ func TestParser_Parse(t *testing.T) {
 					StructField: reflect.TypeOf(nested2{}).Field(0),
 					Tag: Tag{
 						FieldName: "Nested1.Field2.Field1",
-						FlagName:  "nested-1-field-2-field-1",
+						FlagName:  "nested1-field2-field1",
 						Category:  "parent",
 					},
 				},
@@ -153,7 +153,7 @@ func TestParser_Parse(t *testing.T) {
 					StructField: reflect.TypeOf(nested1{}).Field(0),
 					Tag: Tag{
 						FieldName: "Nested1.Field1",
-						FlagName:  "field-1",
+						FlagName:  "field1",
 						Category:  "parent",
 					},
 				},
@@ -161,7 +161,7 @@ func TestParser_Parse(t *testing.T) {
 					StructField: reflect.TypeOf(nested2{}).Field(0),
 					Tag: Tag{
 						FieldName: "Nested1.Field2.Field1",
-						FlagName:  "field-2-field-1",
+						FlagName:  "field2-field1",
 						Category:  "parent",
 					},
 				},
@@ -169,14 +169,14 @@ func TestParser_Parse(t *testing.T) {
 					StructField: reflect.TypeOf(nested1{}).Field(0),
 					Tag: Tag{
 						FieldName: "Nested2.Nested1.Field1",
-						FlagName:  "nested-2-field-1",
+						FlagName:  "nested2-field1",
 					},
 				},
 				{
 					StructField: reflect.TypeOf(nested2{}).Field(0),
 					Tag: Tag{
 						FieldName: "Nested2.Nested1.Field2.Field1",
-						FlagName:  "nested-2-field-2-field-1",
+						FlagName:  "nested2-field2-field1",
 					},
 				},
 			},
