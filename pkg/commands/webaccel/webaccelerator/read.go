@@ -17,57 +17,53 @@ package webaccelerator
 import (
 	"fmt"
 
-	"github.com/sacloud/iaas-api-go"
-	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
+	"github.com/sacloud/webaccel-api-go"
 )
 
-var readCertificateCommand = &core.Command{
-	Name:       "read-certificate",
-	Aliases:    []string{"certificate-read", "cert-read"},
-	Category:   "certificate",
-	Order:      10,
+var readCommand = &core.Command{
+	Name:       "read",
+	Aliases:    []string{"show"},
+	Category:   "basic",
+	Order:      30,
 	NoProgress: true,
 
-	ColumnDefs: certificateColumnDefs,
+	ColumnDefs: defaultColumnDefs,
 
 	SelectorType: core.SelectorTypeRequireSingle,
 
 	ParameterInitializer: func() interface{} {
-		return newReadCertificateParameter()
+		return newReadParameter()
 	},
 	ListAllFunc: listAllFunc,
-	Func:        readCertificateFunc,
+	Func:        readFunc,
 }
 
-type readCertificateParameter struct {
+type readParameter struct {
 	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
 	cflag.CommonParameter `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter `cli:",squash" mapconv:"-"`
 }
 
-func newReadCertificateParameter() *readCertificateParameter {
-	return &readCertificateParameter{}
+func newReadParameter() *readParameter {
+	return &readParameter{}
 }
 
 func init() {
-	Resource.AddCommand(readCertificateCommand)
+	Resource.AddCommand(readCommand)
 }
 
-func readCertificateFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-	p, ok := parameter.(*readCertificateParameter)
+func readFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+	p, ok := parameter.(*readParameter)
 	if !ok {
 		return nil, fmt.Errorf("got invalid parameter type: %#v", parameter)
 	}
-	webAccelOp := iaas.NewWebAccelOp(ctx.Client().(iaas.APICaller))
-	result, err := webAccelOp.ReadCertificate(ctx, types.StringID(p.ID))
+	webAccelOp := webaccel.NewOp(ctx.Client().(*webaccel.Client))
+	result, err := webAccelOp.Read(ctx, p.ID)
 	if err != nil {
 		return nil, err
-	}
-	if result == nil || result.Current == nil {
-		return nil, nil
 	}
 	return []interface{}{result}, nil
 }

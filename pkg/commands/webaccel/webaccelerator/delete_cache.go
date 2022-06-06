@@ -17,11 +17,11 @@ package webaccelerator
 import (
 	"fmt"
 
-	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/output"
+	"github.com/sacloud/webaccel-api-go"
 )
 
 var deleteCacheCommand = &core.Command{
@@ -64,8 +64,8 @@ func deleteCacheFunc(ctx cli.Context, parameter interface{}) ([]interface{}, err
 	if !ok {
 		return nil, fmt.Errorf("got invalid parameter type: %#v", parameter)
 	}
-	webAccelOp := iaas.NewWebAccelOp(ctx.Client().(iaas.APICaller))
-	deleteResults, err := webAccelOp.DeleteCache(ctx, &iaas.WebAccelDeleteCacheRequest{URL: p.URLs})
+	webAccelOp := webaccel.NewOp(ctx.Client().(*webaccel.Client))
+	deleteResults, err := webAccelOp.DeleteCache(ctx, &webaccel.DeleteCacheRequest{URL: p.URLs})
 	if err != nil {
 		return nil, err
 	}
