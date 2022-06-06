@@ -18,6 +18,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/commands/iaas/archive"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/authstatus"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/autobackup"
+	"github.com/sacloud/usacloud/pkg/commands/iaas/autoscale"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/bill"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/bridge"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/cdrom"
@@ -67,6 +68,7 @@ var Resources = core.Resources{
 	archive.Resource,
 	authstatus.Resource,
 	autobackup.Resource,
+	autoscale.Resource,
 	bill.Resource,
 	bridge.Resource,
 	cdrom.Resource,
