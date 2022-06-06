@@ -17,9 +17,8 @@ package containerregistry
 import (
 	"reflect"
 
-	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
-
 	"github.com/sacloud/iaas-service-go/containerregistry"
+	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 

@@ -20,12 +20,11 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/sacloud/webaccel-api-go"
-
 	client "github.com/sacloud/api-client-go"
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/helper/api"
 	"github.com/sacloud/usacloud/pkg/config"
+	"github.com/sacloud/webaccel-api-go"
 )
 
 type apiClient struct {
