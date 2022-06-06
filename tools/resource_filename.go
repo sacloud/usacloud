@@ -34,6 +34,8 @@ func (r *Resource) ServiceRepositoryName() string {
 		return "github.com/sacloud/phy-service-go"
 	case "objectstorage":
 		return "github.com/sacloud/object-storage-service-go"
+	case "webaccel":
+		return "github.com/sacloud/webaccel-service-go"
 	case "iaas", "":
 		return "github.com/sacloud/iaas-service-go"
 	}

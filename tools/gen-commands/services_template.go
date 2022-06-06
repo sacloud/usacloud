@@ -22,6 +22,7 @@ import (
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/object-storage-api-go"
 	"github.com/sacloud/phy-api-go"
+	"github.com/sacloud/webaccel-api-go"
 	service "{{ .ServiceRepositoryName }}/{{ .PackageDirName }}"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/cflag"

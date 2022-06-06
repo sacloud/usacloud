@@ -17,17 +17,16 @@ package webaccelerator
 import (
 	"fmt"
 
-	"github.com/sacloud/iaas-api-go"
-	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/util"
+	"github.com/sacloud/webaccel-api-go"
 )
 
-var createCertificateCommand = &core.Command{
-	Name:     "create-certificate",
-	Aliases:  []string{"certificate-create", "cert-create"},
+var updateCertificateCommand = &core.Command{
+	Name:     "update-certificate",
+	Aliases:  []string{"certificate-update", "cert-update"},
 	Category: "certificate",
 	Order:    20,
 
@@ -36,47 +35,50 @@ var createCertificateCommand = &core.Command{
 	SelectorType: core.SelectorTypeRequireSingle,
 
 	ParameterInitializer: func() interface{} {
-		return newCreateCertificateParameter()
+		return newUpdateCertificateParameter()
 	},
 	ListAllFunc: listAllFunc,
-	Func:        createCertificateFunc,
+	Func:        updateCertificateFunc,
 }
 
-type createCertificateParameter struct {
+type updateCertificateParameter struct {
 	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
 	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
 
 	CertificateChain string `validate:"required"`
-	Key              string `validate:"required"`
+	Key              string
 }
 
-func newCreateCertificateParameter() *createCertificateParameter {
-	return &createCertificateParameter{}
+func newUpdateCertificateParameter() *updateCertificateParameter {
+	return &updateCertificateParameter{}
 }
 
 func init() {
-	Resource.AddCommand(createCertificateCommand)
+	Resource.AddCommand(updateCertificateCommand)
 }
 
-func createCertificateFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-	p, ok := parameter.(*createCertificateParameter)
+func updateCertificateFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+	p, ok := parameter.(*updateCertificateParameter)
 	if !ok {
 		return nil, fmt.Errorf("got invalid parameter type: %#v", parameter)
 	}
 
-	certs, err := util.StringFromPathOrContent(p.CertificateChain)
+	var certs, key string
+	var err error
+
+	certs, err = util.StringFromPathOrContent(p.CertificateChain)
 	if err != nil {
 		return nil, err
 	}
-	key, err := util.StringFromPathOrContent(p.Key)
+	key, err = util.StringFromPathOrContent(p.Key)
 	if err != nil {
 		return nil, err
 	}
 
-	webAccelOp := iaas.NewWebAccelOp(ctx.Client().(iaas.APICaller))
-	result, err := webAccelOp.CreateCertificate(ctx, types.StringID(p.ID), &iaas.WebAccelCertRequest{
+	webAccelOp := webaccel.NewOp(ctx.Client().(*webaccel.Client))
+	result, err := webAccelOp.UpdateCertificate(ctx, p.ID, &webaccel.CreateOrUpdateCertificateRequest{
 		CertificateChain: certs,
 		Key:              key,
 	})
@@ -89,8 +91,8 @@ func createCertificateFunc(ctx cli.Context, parameter interface{}) ([]interface{
 	return []interface{}{result}, nil
 }
 
-func (p *createCertificateParameter) ExampleParameters(ctx cli.Context) interface{} {
-	return &createCertificateParameter{
+func (p *updateCertificateParameter) ExampleParameters(ctx cli.Context) interface{} {
+	return &updateCertificateParameter{
 		CertificateChain: "/path/to/your/certificate/chain | -----BEGIN CERTIFICATE-----\n...",
 		Key:              "/path/to/your/private-key | -----BEGIN RSA PRIVATE KEY-----\n...",
 	}

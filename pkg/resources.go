@@ -18,10 +18,10 @@ package pkg
 import (
 	"github.com/sacloud/usacloud/pkg/commands/completion"
 	"github.com/sacloud/usacloud/pkg/commands/iaas"
-	"github.com/sacloud/usacloud/pkg/commands/iaas/webaccelerator"
 	"github.com/sacloud/usacloud/pkg/commands/rest"
 	"github.com/sacloud/usacloud/pkg/commands/root"
 	"github.com/sacloud/usacloud/pkg/commands/version"
+	"github.com/sacloud/usacloud/pkg/commands/webaccel/webaccelerator"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/spf13/cobra"
 )

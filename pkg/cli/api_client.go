@@ -24,13 +24,15 @@ import (
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/helper/api"
 	"github.com/sacloud/usacloud/pkg/config"
+	"github.com/sacloud/webaccel-api-go"
 )
 
 type apiClient struct {
 	option *config.Config
 
-	iaasClient   iaas.APICaller
-	commonClient client.HttpRequestDoer
+	iaasClient     iaas.APICaller
+	webaccelClient *webaccel.Client
+	commonClient   client.HttpRequestDoer
 }
 
 func newAPIClient(o *config.Config) *apiClient {
@@ -66,6 +68,9 @@ func newAPIClient(o *config.Config) *apiClient {
 		FakeStorePath: o.FakeStorePath,
 	})
 
+	c.webaccelClient = &webaccel.Client{
+		Options: clientOption,
+	}
 	c.commonClient = client.NewFactory(clientOption).NewHttpRequestDoer()
 	return c
 }
@@ -78,6 +83,8 @@ func (c *apiClient) client(platformName string) interface{} {
 		panic("not yet implemented")
 	case "iaas":
 		return c.iaasClient
+	case "webaccel":
+		return c.webaccelClient
 	case "":
 		return c.commonClient
 	}

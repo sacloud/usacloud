@@ -15,14 +15,14 @@
 package webaccelerator
 
 import (
-	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
+	"github.com/sacloud/webaccel-api-go"
 )
 
 var Resource = &core.Resource{
-	PlatformName:     "iaas", // HACK: 実装の都合上、iaas向けのAPIクライアントが必要なためここに配置&iaasを設定している
+	PlatformName:     "webaccel",
 	Name:             "web-accelerator",
 	Usage:            "SubCommands for WebAccelerator",
 	Aliases:          []string{"web-accel", "webaccel"},
@@ -31,13 +31,13 @@ var Resource = &core.Resource{
 }
 
 func listAllFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-	webAccelOp := iaas.NewWebAccelOp(ctx.Client().(iaas.APICaller))
+	webAccelOp := webaccel.NewOp(ctx.Client().(*webaccel.Client))
 	searched, err := webAccelOp.List(ctx)
 	if err != nil {
 		return nil, err
 	}
 	var results []interface{}
-	for _, v := range searched.WebAccels {
+	for _, v := range searched.Sites {
 		results = append(results, v)
 	}
 	return results, nil

@@ -61,6 +61,8 @@ func (c *Command) ServiceFuncClientTypeName() string {
 		return "*phy.Client"
 	case "objectstorage":
 		return "*objectstorage.Client"
+	case "webaccel":
+		return "*webaccel.Client"
 	}
 	panic(fmt.Sprintf("unsupported platform name: %s", c.Resource.PlatformName))
 }

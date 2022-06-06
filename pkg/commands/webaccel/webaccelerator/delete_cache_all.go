@@ -17,54 +17,46 @@ package webaccelerator
 import (
 	"fmt"
 
-	"github.com/sacloud/iaas-api-go"
-	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
+	"github.com/sacloud/webaccel-api-go"
 )
 
-var readCommand = &core.Command{
-	Name:       "read",
-	Aliases:    []string{"show"},
-	Category:   "basic",
-	Order:      30,
-	NoProgress: true,
-
-	ColumnDefs: defaultColumnDefs,
-
-	SelectorType: core.SelectorTypeRequireSingle,
+var deleteCacheAllCommand = &core.Command{
+	Name:     "delete-cache-all",
+	Aliases:  []string{"cache-delete-all"},
+	Category: "cache",
+	Order:    20,
 
 	ParameterInitializer: func() interface{} {
-		return newReadParameter()
+		return newDeleteCacheAllParameter()
 	},
 	ListAllFunc: listAllFunc,
-	Func:        readFunc,
+	Func:        deleteCacheAllFunc,
 }
 
-type readParameter struct {
-	cflag.IDParameter     `cli:",squash" mapconv:",squash"`
-	cflag.CommonParameter `cli:",squash" mapconv:"-"`
-	cflag.OutputParameter `cli:",squash" mapconv:"-"`
+type deleteCacheAllParameter struct {
+	cflag.IDParameter      `cli:",squash" mapconv:",squash"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+
+	Domain string `validate:"required"`
 }
 
-func newReadParameter() *readParameter {
-	return &readParameter{}
+func newDeleteCacheAllParameter() *deleteCacheAllParameter {
+	return &deleteCacheAllParameter{}
 }
 
 func init() {
-	Resource.AddCommand(readCommand)
+	Resource.AddCommand(deleteCacheAllCommand)
 }
 
-func readFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-	p, ok := parameter.(*readParameter)
+func deleteCacheAllFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+	p, ok := parameter.(*deleteCacheAllParameter)
 	if !ok {
 		return nil, fmt.Errorf("got invalid parameter type: %#v", parameter)
 	}
-	webAccelOp := iaas.NewWebAccelOp(ctx.Client().(iaas.APICaller))
-	result, err := webAccelOp.Read(ctx, types.StringID(p.ID))
-	if err != nil {
-		return nil, err
-	}
-	return []interface{}{result}, nil
+	webAccelOp := webaccel.NewOp(ctx.Client().(*webaccel.Client))
+	return nil, webAccelOp.DeleteAllCache(ctx, &webaccel.DeleteAllCacheRequest{Domain: p.Domain})
 }
