@@ -52,7 +52,7 @@ SCRIPT
 install_with_curl() {
   sudo sh <<'SCRIPT'
     curl -LO https://github.com/sacloud/usacloud/releases/latest/download/usacloud_linux-amd64.zip
-    unzip -o usacloud_linux-amd64.zip && rm usacloud_linux-amd64.zip
+    unzip -j usacloud_linux-amd64.zip usacloud && rm usacloud_linux-amd64.zip
     chmod +x usacloud
     mv usacloud /usr/local/bin/
 SCRIPT
