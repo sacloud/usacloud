@@ -58,6 +58,15 @@ $ usacloud completion fish > ~/.config/fish/completions/usacloud.fish
 	DisableFlagsInUseLine: true,
 	ValidArgs:             []string{"bash", "zsh", "fish", "powershell"},
 	Args:                  cobra.ExactValidArgs(1),
+	PreRunE: func(cmd *cobra.Command, args []string) error {
+		// iaasサブコマンド配下のコマンドは互換性維持のためHidden=trueでRoot直下にも配置されている。
+		// これらのコマンドも補完するためにこのタイミングでRoot直下のコマンドのHiddenをfalseにする。
+		// Note: もしRoot直下にHidden=trueなコマンドが欲しくなった場合は修正が必要
+		for _, c := range cmd.Root().Commands() {
+			c.Hidden = false
+		}
+		return nil
+	},
 	Run: func(cmd *cobra.Command, args []string) {
 		var err error
 		switch args[0] {
