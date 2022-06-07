@@ -269,11 +269,11 @@ func init() {
 			return results, nil
 		},
 	)
-	registry.SetDefaultServiceFunc("iaas", "local-router", "monitor-local-router",
+	registry.SetDefaultServiceFunc("iaas", "local-router", "health",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 
-			req := &service.MonitorLocalRouterRequest{}
+			req := &service.HealthRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
 				return nil, err
 			}
@@ -281,20 +281,16 @@ func init() {
 				return nil, err
 			}
 
-			res, err := svc.MonitorLocalRouterWithContext(ctx, req)
+			res, err := svc.HealthWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
 
-			var results []interface{}
-			for _, v := range res {
-				results = append(results, v)
-			}
-			return results, nil
+			return []interface{}{res}, nil
 
 		},
 	)
-	registry.SetDefaultListAllFunc("iaas", "local-router", "monitor-local-router",
+	registry.SetDefaultListAllFunc("iaas", "local-router", "health",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 			req := &service.FindRequest{}
@@ -321,11 +317,11 @@ func init() {
 			return results, nil
 		},
 	)
-	registry.SetDefaultServiceFunc("iaas", "local-router", "health",
+	registry.SetDefaultServiceFunc("iaas", "local-router", "monitor-local-router",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 
-			req := &service.HealthRequest{}
+			req := &service.MonitorLocalRouterRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
 				return nil, err
 			}
@@ -333,16 +329,20 @@ func init() {
 				return nil, err
 			}
 
-			res, err := svc.HealthWithContext(ctx, req)
+			res, err := svc.MonitorLocalRouterWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
 
-			return []interface{}{res}, nil
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
 
 		},
 	)
-	registry.SetDefaultListAllFunc("iaas", "local-router", "health",
+	registry.SetDefaultListAllFunc("iaas", "local-router", "monitor-local-router",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 			req := &service.FindRequest{}
