@@ -21,18 +21,22 @@ install_by_brew() {
   brew install usacloud
 }
 
+install_by_dnf() {
+  echo "===== install usacloud by dnf ====="
+  sudo sh <<'SCRIPT'
+    set -x
+    dnf install -y curl zip
+SCRIPT
+  install_with_curl
+}
+
 install_by_yum() {
   echo "===== install usacloud by yum ====="
   sudo sh <<'SCRIPT'
     set -x
-
     yum install -y curl zip
-    curl -LO https://github.com/sacloud/usacloud/releases/latest/download/usacloud_linux-amd64.zip
-    unzip usacloud_linux-amd64.zip && rm usacloud_linux-amd64.zip
-    chmod +x usacloud
-    mv usacloud /usr/local/bin/
-
 SCRIPT
+  install_with_curl
 }
 
 install_by_apt() {
@@ -41,8 +45,14 @@ install_by_apt() {
     set -x
     apt-get update -qq
     apt-get install -y curl apt-transport-https zip
+SCRIPT
+  install_with_curl
+}
+
+install_with_curl() {
+  sudo sh <<'SCRIPT'
     curl -LO https://github.com/sacloud/usacloud/releases/latest/download/usacloud_linux-amd64.zip
-    unzip usacloud_linux-amd64.zip && rm usacloud_linux-amd64.zip
+    unzip -o usacloud_linux-amd64.zip && rm usacloud_linux-amd64.zip
     chmod +x usacloud
     mv usacloud /usr/local/bin/
 SCRIPT
@@ -63,7 +73,10 @@ if [ "$(uname)" == 'Darwin' ]; then
   fi
 elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
   OS='Linux'
-  if type yum >/dev/null 2>&1; then
+  if type dnf >/dev/null 2>&1; then
+    install_by_dnf
+    exit 0
+  elif type yum > /dev/null 2>&1; then
     install_by_yum
     exit 0
   elif type apt > /dev/null 2>&1; then
@@ -74,7 +87,7 @@ elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
     exit 0
   fi
 
-  echo "To install usacloud, you need 'apt' or 'yum' or 'brew' command"
+  echo "To install usacloud, you need 'apt' or 'yum'/'dnf' or 'brew' command"
   exit 1
 
 else
