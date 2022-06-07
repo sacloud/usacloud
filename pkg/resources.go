@@ -52,7 +52,7 @@ func initCommands() {
 }
 
 func initIaasCommands() {
-	root.Command.AddCommand(iaas.Command)
+	iaas.InitCommand(root.Command)
 }
 
 func initMiscCommands() {

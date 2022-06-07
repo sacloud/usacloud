@@ -26,6 +26,150 @@ import (
 )
 
 func init() {
+	registry.SetDefaultServiceFunc("iaas", "nfs", "boot",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+
+			req := &service.BootRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			err := svc.BootWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return nil, nil
+
+		},
+	)
+	registry.SetDefaultListAllFunc("iaas", "nfs", "boot",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	registry.SetDefaultServiceFunc("iaas", "nfs", "shutdown",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+
+			req := &service.ShutdownRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			err := svc.ShutdownWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return nil, nil
+
+		},
+	)
+	registry.SetDefaultListAllFunc("iaas", "nfs", "shutdown",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
+	registry.SetDefaultServiceFunc("iaas", "nfs", "reset",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+
+			req := &service.ResetRequest{}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+			if err := req.Validate(); err != nil {
+				return nil, err
+			}
+
+			err := svc.ResetWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			return nil, nil
+
+		},
+	)
+	registry.SetDefaultListAllFunc("iaas", "nfs", "reset",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+			if err := conv.ConvertTo(parameter, req); err != nil {
+				return nil, err
+			}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
 	registry.SetDefaultServiceFunc("iaas", "nfs", "list",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
@@ -244,150 +388,6 @@ func init() {
 		},
 	)
 	registry.SetDefaultListAllFunc("iaas", "nfs", "delete",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-
-			type requester interface {
-				FindRequest() *service.FindRequest
-			}
-			if v, ok := parameter.(requester); ok {
-				req = v.FindRequest()
-			}
-
-			res, err := svc.FindWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			var results []interface{}
-			for _, v := range res {
-				results = append(results, v)
-			}
-			return results, nil
-		},
-	)
-	registry.SetDefaultServiceFunc("iaas", "nfs", "boot",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-
-			req := &service.BootRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-			if err := req.Validate(); err != nil {
-				return nil, err
-			}
-
-			err := svc.BootWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			return nil, nil
-
-		},
-	)
-	registry.SetDefaultListAllFunc("iaas", "nfs", "boot",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-
-			type requester interface {
-				FindRequest() *service.FindRequest
-			}
-			if v, ok := parameter.(requester); ok {
-				req = v.FindRequest()
-			}
-
-			res, err := svc.FindWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			var results []interface{}
-			for _, v := range res {
-				results = append(results, v)
-			}
-			return results, nil
-		},
-	)
-	registry.SetDefaultServiceFunc("iaas", "nfs", "shutdown",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-
-			req := &service.ShutdownRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-			if err := req.Validate(); err != nil {
-				return nil, err
-			}
-
-			err := svc.ShutdownWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			return nil, nil
-
-		},
-	)
-	registry.SetDefaultListAllFunc("iaas", "nfs", "shutdown",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-
-			type requester interface {
-				FindRequest() *service.FindRequest
-			}
-			if v, ok := parameter.(requester); ok {
-				req = v.FindRequest()
-			}
-
-			res, err := svc.FindWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			var results []interface{}
-			for _, v := range res {
-				results = append(results, v)
-			}
-			return results, nil
-		},
-	)
-	registry.SetDefaultServiceFunc("iaas", "nfs", "reset",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-
-			req := &service.ResetRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-			if err := req.Validate(); err != nil {
-				return nil, err
-			}
-
-			err := svc.ResetWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			return nil, nil
-
-		},
-	)
-	registry.SetDefaultListAllFunc("iaas", "nfs", "reset",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}

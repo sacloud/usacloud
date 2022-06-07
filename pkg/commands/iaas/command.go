@@ -27,7 +27,7 @@ var Command = &cobra.Command{
 	Long:  "SubCommands for IaaS",
 }
 
-func init() {
+func InitCommand(rootCmd *cobra.Command) {
 	for _, r := range Resources {
 		cmd := r.CLICommand()
 		if len(cmd.Commands()) > 0 {
@@ -36,6 +36,8 @@ func init() {
 		}
 	}
 	core.SetSubCommandsUsage(Command, Resources.CategorizedResources(category.ResourceCategories))
+
+	rootCmd.AddCommand(Command)
 }
 
 // addHiddenSubCommandToRoot 互換性維持のためにroot直下にHidden=trueの状態でコマンドを追加する
