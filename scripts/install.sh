@@ -22,7 +22,7 @@ install_by_brew() {
 }
 
 install_by_dnf() {
-  echo "===== install usacloud by dnf ====="
+  echo "===== install dependencies by dnf ====="
   sudo sh <<'SCRIPT'
     set -x
     dnf install -y curl zip
@@ -31,7 +31,7 @@ SCRIPT
 }
 
 install_by_yum() {
-  echo "===== install usacloud by yum ====="
+  echo "===== install dependencies by yum ====="
   sudo sh <<'SCRIPT'
     set -x
     yum install -y curl zip
@@ -40,7 +40,7 @@ SCRIPT
 }
 
 install_by_apt() {
-  echo "===== install usacloud by apt ====="
+  echo "===== install dependencies by apt ====="
   sudo sh <<'SCRIPT'
     set -x
     apt-get update -qq
@@ -50,6 +50,7 @@ SCRIPT
 }
 
 install_with_curl() {
+  echo "===== install usacloud by curl ====="
   sudo sh <<'SCRIPT'
     curl -LO https://github.com/sacloud/usacloud/releases/latest/download/usacloud_linux-amd64.zip
     unzip -j usacloud_linux-amd64.zip usacloud && rm usacloud_linux-amd64.zip
@@ -85,9 +86,12 @@ elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
   elif type brew > /dev/null 2>&1; then
     install_by_brew
     exit 0
+  elif type curl > /dev/null 2>&1 && type unzip > /dev/null 2>&1 ; then
+    install_with_curl
+    exit 0
   fi
 
-  echo "To install usacloud, you need 'apt' or 'yum'/'dnf' or 'brew' command"
+  echo "To install usacloud, you need 'apt' or 'yum'/'dnf' or 'brew' or 'curl/unzip' command"
   exit 1
 
 else
