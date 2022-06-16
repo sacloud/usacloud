@@ -69,9 +69,6 @@ func init() { {{ range .Commands }}{{ if .ParameterInitializer }}{{ if not .Func
 		func (ctx cli.Context, parameter interface{}) ([]interface{}, error) { 
 			svc := service.New(ctx.Client().({{ .ServiceFuncClientTypeName }}))
 			req := &service.FindRequest{ {{ if not .Resource.IsGlobalResource}} Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue(){{ end }} }
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
 
 			type requester interface {
 				FindRequest() *service.FindRequest

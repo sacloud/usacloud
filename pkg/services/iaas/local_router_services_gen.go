@@ -54,9 +54,6 @@ func init() {
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 			req := &service.FindRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
 
 			type requester interface {
 				FindRequest() *service.FindRequest
@@ -102,9 +99,6 @@ func init() {
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 			req := &service.FindRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
 
 			type requester interface {
 				FindRequest() *service.FindRequest
@@ -150,9 +144,6 @@ func init() {
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 			req := &service.FindRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
 
 			type requester interface {
 				FindRequest() *service.FindRequest
@@ -198,9 +189,6 @@ func init() {
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 			req := &service.FindRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
 
 			type requester interface {
 				FindRequest() *service.FindRequest
@@ -246,9 +234,6 @@ func init() {
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 			req := &service.FindRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
 
 			type requester interface {
 				FindRequest() *service.FindRequest
@@ -294,9 +279,6 @@ func init() {
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 			req := &service.FindRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
 
 			type requester interface {
 				FindRequest() *service.FindRequest
@@ -346,9 +328,6 @@ func init() {
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 			req := &service.FindRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
 
 			type requester interface {
 				FindRequest() *service.FindRequest
