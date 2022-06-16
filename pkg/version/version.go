@@ -21,7 +21,7 @@ import (
 
 var (
 	// Version app version
-	Version = "1.8.0"
+	Version = "1.8.1"
 	// Revision git commit short commithash
 	Revision = "xxxxxx" // set on build time
 
