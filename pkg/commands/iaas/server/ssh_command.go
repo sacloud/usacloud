@@ -1,7 +1,7 @@
 //go:build !wasm
 // +build !wasm
 
-// Copyright 2017-2022 The Usacloud Authors
+// Copyright 2017-2022 The sacloud/usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -98,7 +98,7 @@ func sshFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		args = append(args, ctx.Args()[1:]...)
 	}
 
-	fmt.Fprintf(ctx.IO().Err(), "connecting server...\n\tcommand: ssh %s \n", strings.Join(args, " ")) // nolint
+	fmt.Fprintf(ctx.IO().Err(), "connecting server...\n\tcommand: ssh %s \n", strings.Join(args, " "))
 	cmd := exec.Command("ssh", args...)
 	cmd.Stdout = ctx.IO().Out()
 	cmd.Stderr = ctx.IO().Err()

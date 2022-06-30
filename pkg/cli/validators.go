@@ -1,4 +1,4 @@
-// Copyright 2017-2022 The Usacloud Authors
+// Copyright 2017-2022 The sacloud/usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ func ValidateSetProhibited(fieldName string, object interface{}) []error {
 
 func ValidateOutputOption(o output.Option, defaultOutputType string) []error {
 	outputType := o.OutputTypeFlagValue()
-	//columns := o.GetColumn()
+	// columns := o.GetColumn()
 	format := o.FormatFlagValue()
 	quiet := o.QuietFlagValue()
 	query := o.QueryFlagValue()

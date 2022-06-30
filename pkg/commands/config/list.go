@@ -1,4 +1,4 @@
-// Copyright 2017-2022 The Usacloud Authors
+// Copyright 2017-2022 The sacloud/usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ func listFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	}
 
 	formatter := func(out io.Writer, profileName string, current bool) {
-		fmt.Fprintln(out, profileName) // nolint
+		fmt.Fprintln(out, profileName)
 	}
 	if term.IsTerminal() {
 		formatter = func(out io.Writer, profileName string, current bool) {
@@ -67,7 +67,7 @@ func listFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			if current {
 				format = "* " + format
 			}
-			fmt.Fprintf(out, format, profileName) // nolint
+			fmt.Fprintf(out, format, profileName)
 		}
 	}
 

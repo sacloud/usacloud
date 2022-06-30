@@ -1,6 +1,6 @@
 module github.com/sacloud/usacloud
 
-go 1.17
+go 1.18
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
@@ -20,8 +20,8 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/rhysd/go-github-selfupdate v1.2.3
-	github.com/sacloud/api-client-go v0.1.0
-	github.com/sacloud/go-http v0.1.0
+	github.com/sacloud/api-client-go v0.2.0
+	github.com/sacloud/go-http v0.1.1
 	github.com/sacloud/iaas-api-go v1.1.2
 	github.com/sacloud/iaas-service-go v1.1.3
 	github.com/sacloud/packages-go v0.0.3
@@ -45,7 +45,7 @@ require (
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
-	github.com/hashicorp/go-retryablehttp v0.7.0 // indirect
+	github.com/hashicorp/go-retryablehttp v0.7.1 // indirect
 	github.com/hashicorp/terraform-json v0.13.0 // indirect
 	github.com/inconshreveable/go-update v0.0.0-20160112193335-8152e7eb6ccf // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect

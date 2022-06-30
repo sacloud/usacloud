@@ -1,4 +1,4 @@
-// Copyright 2017-2022 The Usacloud Authors
+// Copyright 2017-2022 The sacloud/usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -76,7 +76,7 @@ func (o *yamlOutput) Print(contents Contents) error {
 	if err != nil {
 		return fmt.Errorf("YAMLOutput:Print: yaml.Marshal is Failed: %s", err)
 	}
-	o.out.Write(b)          // nolint
-	fmt.Fprintln(o.out, "") // nolint
+	o.out.Write(b) // nolint
+	fmt.Fprintln(o.out, "")
 	return nil
 }

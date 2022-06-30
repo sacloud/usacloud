@@ -1,4 +1,4 @@
-// Copyright 2017-2022 The Usacloud Authors
+// Copyright 2017-2022 The sacloud/usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ func addHiddenSubCommandToRoot(cmd *cobra.Command) {
 		//
 		// コマンドの中にはデフォルトコマンドとして自身のサブコマンドを呼ぶ場合(auth-statusなど)があるため、
 		// 末端(childrenがない)コマンドにだけ設定する。(この条件がないと表示が重複する)
-		//if len(children) == 0 {
+		// if len(children) == 0 {
 		//	cmd.PersistentPreRun = func(own *cobra.Command, args []string) {
 		//		// この段階ではctx.IO()が参照できないため標準エラーに出力する
 		//		fmt.Fprintln(os.Stderr, "[WARN] This command is deprecated. Please use the command under the `usacloud iaas` subcommand instead.") // nolint

@@ -1,4 +1,4 @@
-// Copyright 2017-2022 The Usacloud Authors
+// Copyright 2017-2022 The sacloud/usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ func (o *Config) loadFromProfile(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("profile") {
 		v, err := flags.GetString("profile")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
 			return
 		}
 		o.Profile = v
@@ -39,13 +39,13 @@ func (o *Config) loadFromProfile(flags *pflag.FlagSet, errW io.Writer) {
 	if profileName == "" {
 		current, err := profile.CurrentName()
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err) // nolint
+			fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err)
 			return
 		}
 		profileName = current
 	}
 	if err := profile.Load(profileName, o); err != nil {
-		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err) // nolint
+		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err)
 		return
 	}
 }

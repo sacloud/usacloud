@@ -1,4 +1,4 @@
-// Copyright 2017-2022 The Usacloud Authors
+// Copyright 2017-2022 The sacloud/usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import (
 
 // HttpGet 指定のURLにGETでリクエストを行い、ステータスコード200以外の場合はエラーを返す
 func HttpGet(url string) error {
-	res, err := http.Get(url)
+	res, err := http.Get(url) // nolint
 	if err != nil {
 		return err
 	}

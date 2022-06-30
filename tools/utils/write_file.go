@@ -1,4 +1,4 @@
-// Copyright 2017-2022 The Usacloud Authors
+// Copyright 2017-2022 The sacloud/usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ func WriteFileWithTemplate(config *TemplateConfig) bool {
 	}
 
 	// write to file
-	if err := os.WriteFile(config.OutputPath, Sformat(buf.Bytes()), 0644); err != nil {
+	if err := os.WriteFile(config.OutputPath, Sformat(buf.Bytes()), 0600); err != nil {
 		log.Fatalf("writing output: %s", err)
 	}
 	log.Printf("generated: %s\n", config.OutputPath)

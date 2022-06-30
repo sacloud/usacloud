@@ -1,4 +1,4 @@
-// Copyright 2017-2022 The Usacloud Authors
+// Copyright 2017-2022 The sacloud/usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -56,6 +56,6 @@ func pathFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		return nil, err
 	}
 	out := ctx.IO().Out()
-	fmt.Fprintln(out, profilePath) // nolint
+	fmt.Fprintln(out, profilePath)
 	return nil, nil
 }

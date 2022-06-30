@@ -1,4 +1,4 @@
-// Copyright 2017-2022 The Usacloud Authors
+// Copyright 2017-2022 The sacloud/usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -67,8 +67,7 @@ func errorFromValidationErr(parameter interface{}, err validator.FieldError) err
 	}
 
 	// detailがvalidatorのタグ名だけの場合の対応をここで行う。
-	switch detail {
-	case "file":
+	if detail == "file" {
 		detail = fmt.Sprintf("invalid file path: %v", err.Value())
 	}
 
