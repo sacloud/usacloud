@@ -30,6 +30,8 @@ var normalizationWords = map[string]string{
 	"Ipv6":   "IPv6",
 	"iPv4":   "ipv4",
 	"iPv6":   "ipv6",
+	"i_pv4":  "ipv4",
+	"i_pv6":  "ipv6",
 	"i_pv_4": "ipv4",
 	"i_pv_6": "ipv6",
 	"ipv_4":  "ipv4",

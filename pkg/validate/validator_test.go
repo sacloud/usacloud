@@ -38,7 +38,7 @@ func TestValidator_Exec(t *testing.T) {
 	require.EqualError(t, err, strings.Join([]string{
 		"validation error:",
 		"\t--required: required",
-		"\t--min-2: min=2",
-		"\t--max-5: max=5",
+		"\t--min2: min=2",
+		"\t--max5: max=5",
 	}, "\n"))
 }
