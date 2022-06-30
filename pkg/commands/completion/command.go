@@ -80,7 +80,7 @@ $ usacloud completion fish > ~/.config/fish/completions/usacloud.fish
 			err = cmd.Root().GenPowerShellCompletion(os.Stdout)
 		}
 		if err != nil {
-			fmt.Fprintln(os.Stderr, err) // nolint
+			fmt.Fprintln(os.Stderr, err)
 		}
 	},
 }

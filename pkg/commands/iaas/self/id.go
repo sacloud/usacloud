@@ -60,6 +60,6 @@ func idFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	if p.NoNewLine {
 		suffix = ""
 	}
-	fmt.Fprintf(ctx.IO().Out(), "%s%s", id, suffix) // nolint
+	fmt.Fprintf(ctx.IO().Out(), "%s%s", id, suffix)
 	return nil, nil
 }

@@ -59,7 +59,7 @@ func listFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	}
 
 	formatter := func(out io.Writer, profileName string, current bool) {
-		fmt.Fprintln(out, profileName) // nolint
+		fmt.Fprintln(out, profileName)
 	}
 	if term.IsTerminal() {
 		formatter = func(out io.Writer, profileName string, current bool) {
@@ -67,7 +67,7 @@ func listFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			if current {
 				format = "* " + format
 			}
-			fmt.Fprintf(out, format, profileName) // nolint
+			fmt.Fprintf(out, format, profileName)
 		}
 	}
 

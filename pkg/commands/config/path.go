@@ -56,6 +56,6 @@ func pathFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		return nil, err
 	}
 	out := ctx.IO().Out()
-	fmt.Fprintln(out, profilePath) // nolint
+	fmt.Fprintln(out, profilePath)
 	return nil, nil
 }

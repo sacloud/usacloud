@@ -109,42 +109,40 @@ func (c *Command) cliFlagDefinitionStatement(parameterVariableName string, field
 
 	name := field.FlagName
 	shorthands := field.Shorthand
-	//value := p.DefaultValueOnSource()
+	// value := p.DefaultValueOnSource()
 	usage := field.LongDescription()
 
 	statement := ""
 	if isLibsacloudIDType(fieldType) {
 		statement = `VarP(core.NewIDFlag(%s, %s), "%s", "%s", "%s")`
 		return fmt.Sprintf(statement, fieldPointerVar, fieldPointerVar, name, shorthands, usage)
-	} else {
-		switch fieldType.Kind() {
-		case reflect.Bool:
-			statement = `BoolVarP(%s, "%s", "%s", %s, "%s")`
-		case reflect.Int:
-			statement = `IntVarP(%s, "%s", "%s", %s, "%s")`
-		case reflect.Int64:
-			statement = `Int64VarP(%s, "%s", "%s", %s, "%s")`
-		case reflect.Float64:
-			statement = `Float64VarP(%s, "%s", "%s", %s, "%s")`
-		case reflect.String:
-			statement = `StringVarP(%s, "%s", "%s", %s, "%s")`
-		case reflect.Slice:
-			if isLibsacloudIDType(fieldType.Elem()) {
-				statement = `VarP(core.NewIDSliceFlag(%s, %s), "%s", "%s", "%s")`
-				return fmt.Sprintf(statement, fieldPointerVar, fieldPointerVar, name, shorthands, usage)
-			} else {
-				switch fieldType.Elem().Kind() {
-				case reflect.Int64:
-					statement = `Int64SliceVarP(%s, "%s", "%s", %s, "%s")`
-				case reflect.String:
-					statement = `StringSliceVarP(%s, "%s", "%s", %s, "%s")`
-				default:
-					panic(fmt.Sprintf("unsupported type: field: %s, type: []%s", field.FieldName, fieldType.Elem().Kind().String()))
-				}
-			}
-		default:
-			panic(fmt.Sprintf("unsupported type: field: %s, type: %s", field.FieldName, fieldType.Kind().String()))
+	}
+	switch fieldType.Kind() {
+	case reflect.Bool:
+		statement = `BoolVarP(%s, "%s", "%s", %s, "%s")`
+	case reflect.Int:
+		statement = `IntVarP(%s, "%s", "%s", %s, "%s")`
+	case reflect.Int64:
+		statement = `Int64VarP(%s, "%s", "%s", %s, "%s")`
+	case reflect.Float64:
+		statement = `Float64VarP(%s, "%s", "%s", %s, "%s")`
+	case reflect.String:
+		statement = `StringVarP(%s, "%s", "%s", %s, "%s")`
+	case reflect.Slice:
+		if isLibsacloudIDType(fieldType.Elem()) {
+			statement = `VarP(core.NewIDSliceFlag(%s, %s), "%s", "%s", "%s")`
+			return fmt.Sprintf(statement, fieldPointerVar, fieldPointerVar, name, shorthands, usage)
 		}
+		switch fieldType.Elem().Kind() {
+		case reflect.Int64:
+			statement = `Int64SliceVarP(%s, "%s", "%s", %s, "%s")`
+		case reflect.String:
+			statement = `StringSliceVarP(%s, "%s", "%s", %s, "%s")`
+		default:
+			panic(fmt.Sprintf("unsupported type: field: %s, type: []%s", field.FieldName, fieldType.Elem().Kind().String()))
+		}
+	default:
+		panic(fmt.Sprintf("unsupported type: field: %s, type: %s", field.FieldName, fieldType.Kind().String()))
 	}
 
 	return fmt.Sprintf(statement, fieldPointerVar, name, shorthands, fieldVar, usage)
@@ -183,39 +181,39 @@ func (c *Command) cliFlagInitializePointerStatement(parameterVariableName string
 	%s = &v
 }`
 		return fmt.Sprintf(srcTemplate, fieldVar, fieldVar)
-	} else {
-		switch fieldType.Kind() {
-		case reflect.Bool:
-			statement = "pointer.NewBool(false)"
-		case reflect.Int:
-			statement = "pointer.NewInt(0)"
-		case reflect.Int64:
-			statement = "pointer.NewInt64(int64(0))"
-		case reflect.Float64:
-			statement = "pointer.NewFloat64(float64(0))"
-		case reflect.String:
-			statement = `pointer.NewString("")`
-		case reflect.Slice:
-			if isLibsacloudIDType(fieldType.Elem()) {
-				srcTemplate = `if %s == nil {
+	}
+
+	switch fieldType.Kind() {
+	case reflect.Bool:
+		statement = "pointer.NewBool(false)"
+	case reflect.Int:
+		statement = "pointer.NewInt(0)"
+	case reflect.Int64:
+		statement = "pointer.NewInt64(int64(0))"
+	case reflect.Float64:
+		statement = "pointer.NewFloat64(float64(0))"
+	case reflect.String:
+		statement = `pointer.NewString("")`
+	case reflect.Slice:
+		if isLibsacloudIDType(fieldType.Elem()) {
+			srcTemplate = `if %s == nil {
 	v := []types.ID{}
 	%s = &v
 }`
-				return fmt.Sprintf(srcTemplate, fieldVar, fieldVar)
-			} else {
-				switch fieldType.Elem().Kind() {
-				case reflect.Int64:
-					statement = "pointer.NewInt64Slice([]int64{})"
-				case reflect.String:
-					statement = "pointer.NewStringSlice([]string{})"
-				default:
-					panic(fmt.Sprintf("unsupported type: field: %s, type: []%s", field.FieldName, fieldType.Elem().Kind().String()))
-				}
-			}
-		default:
-			panic(fmt.Sprintf("unsupported type: field: %s, type: %s", field.FieldName, fieldType.Kind().String()))
+			return fmt.Sprintf(srcTemplate, fieldVar, fieldVar)
 		}
+		switch fieldType.Elem().Kind() {
+		case reflect.Int64:
+			statement = "pointer.NewInt64Slice([]int64{})"
+		case reflect.String:
+			statement = "pointer.NewStringSlice([]string{})"
+		default:
+			panic(fmt.Sprintf("unsupported type: field: %s, type: []%s", field.FieldName, fieldType.Elem().Kind().String()))
+		}
+	default:
+		panic(fmt.Sprintf("unsupported type: field: %s, type: %s", field.FieldName, fieldType.Kind().String()))
 	}
+
 	return fmt.Sprintf(srcTemplate, fieldVar, fieldVar, statement)
 }
 

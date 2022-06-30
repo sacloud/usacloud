@@ -37,7 +37,7 @@ var Command = &cobra.Command{
 			return
 		}
 		once.Do(func() {
-			noColor, _ := cmd.PersistentFlags().GetBool("no-color") // nolint - ignore error
+			noColor, _ := cmd.PersistentFlags().GetBool("no-color") // ignore error
 			alertNewVersionReleased(noColor)
 		})
 	},
@@ -91,7 +91,7 @@ func alertNewVersionReleased(noColor bool) {
 		}
 		if newVersionReleased {
 			p := &printer.Printer{NoColor: noColor}
-			p.Fprintf(os.Stderr, color.New(color.FgYellow), newVersionAlertTemplate, version.Version, releaseInfo.Release.TagName, releaseInfo.Release.URL) // nolint
+			p.Fprintf(os.Stderr, color.New(color.FgYellow), newVersionAlertTemplate, version.Version, releaseInfo.Release.TagName, releaseInfo.Release.URL)
 		}
 	}
 }
@@ -101,6 +101,6 @@ func handleGatheringReleaseInfoError(err error) {
 		return
 	}
 	if os.Getenv("USACLOUD_TRACE") != "" {
-		fmt.Fprintln(os.Stderr, err) // nolint
+		fmt.Fprintln(os.Stderr, err)
 	}
 }

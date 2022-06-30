@@ -31,7 +31,7 @@ func ValidateSetProhibited(fieldName string, object interface{}) []error {
 
 func ValidateOutputOption(o output.Option, defaultOutputType string) []error {
 	outputType := o.OutputTypeFlagValue()
-	//columns := o.GetColumn()
+	// columns := o.GetColumn()
 	format := o.FormatFlagValue()
 	quiet := o.QuietFlagValue()
 	query := o.QueryFlagValue()

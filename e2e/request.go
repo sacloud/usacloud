@@ -23,7 +23,7 @@ import (
 
 // HttpGet 指定のURLにGETでリクエストを行い、ステータスコード200以外の場合はエラーを返す
 func HttpGet(url string) error {
-	res, err := http.Get(url)
+	res, err := http.Get(url) // nolint
 	if err != nil {
 		return err
 	}

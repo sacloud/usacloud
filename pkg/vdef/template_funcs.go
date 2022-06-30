@@ -145,9 +145,7 @@ var TemplateFuncMap = template.FuncMap{
 		}
 		return string(data)
 	},
-	"trim_space": func(s string) string {
-		return strings.TrimSpace(s)
-	},
+	"trim_space": strings.TrimSpace,
 }
 
 func ellipsis(length int, value interface{}) interface{} {

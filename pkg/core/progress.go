@@ -84,7 +84,7 @@ func (p *Progress) msgComplete() string {
 	return fmt.Sprintf("%s: done\n", p.msgPrefix())
 }
 
-//func (p *Progress) msgFailed(err error) string {
+// func (p *Progress) msgFailed(err error) string {
 //	return fmt.Sprintf("%s: failed: %s\n", p.msgPrefix(), err)
 //}
 

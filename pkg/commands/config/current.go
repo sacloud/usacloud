@@ -47,6 +47,6 @@ func currentFunc(ctx cli.Context, _ interface{}) ([]interface{}, error) {
 		return nil, err
 	}
 	out := ctx.IO().Out()
-	fmt.Fprintln(out, current) // nolint
+	fmt.Fprintln(out, current)
 	return nil, nil
 }

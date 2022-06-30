@@ -166,7 +166,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("token") {
 		v, err := flags.GetString("token")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "token", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "token", err)
 			return
 		}
 		o.AccessToken = v
@@ -174,7 +174,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("secret") {
 		v, err := flags.GetString("secret")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "secret", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "secret", err)
 			return
 		}
 		o.AccessTokenSecret = v
@@ -182,7 +182,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("zones") {
 		v, err := flags.GetStringSlice("zones")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "zones", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "zones", err)
 			return
 		}
 		o.Zones = v
@@ -190,7 +190,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("no-color") {
 		v, err := flags.GetBool("no-color")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "no-color", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "no-color", err)
 			return
 		}
 		o.NoColor = v
@@ -198,7 +198,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("trace") {
 		v, err := flags.GetBool("trace")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "trace", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "trace", err)
 			return
 		}
 		if v {
@@ -208,7 +208,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("fake") {
 		v, err := flags.GetBool("fake")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "fake", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "fake", err)
 			return
 		}
 		o.FakeMode = v
@@ -216,7 +216,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("fake-store") {
 		v, err := flags.GetString("fake-store")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "fake-store", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "fake-store", err)
 			return
 		}
 		o.FakeStorePath = v
@@ -224,7 +224,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("process-timeout-sec") {
 		v, err := flags.GetInt("process-timeout-sec")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "process-timeout-sec", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "process-timeout-sec", err)
 			return
 		}
 		o.ProcessTimeoutSec = v
@@ -232,7 +232,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("argument-match-mode") {
 		v, err := flags.GetString("argument-match-mode")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "argument-match-mode", err) // nolint
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "argument-match-mode", err)
 			return
 		}
 		o.ArgumentMatchMode = v

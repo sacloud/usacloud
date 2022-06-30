@@ -76,7 +76,7 @@ func NewVersionReleased() (*ReleaseInfo, error) {
 		if err != nil {
 			return nil, err
 		}
-		if err := os.WriteFile(cachePath, data, 0700); err != nil {
+		if err := os.WriteFile(cachePath, data, 0600); err != nil {
 			return nil, err
 		}
 		releaseInfo = fetched

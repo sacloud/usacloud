@@ -29,7 +29,7 @@ func FileOrStdin(path string) (file *os.File, deferFunc func(), err error) {
 			return
 		}
 		deferFunc = func() {
-			file.Close() // nolint
+			file.Close()
 		}
 	}
 	return

@@ -98,7 +98,7 @@ func sshFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		args = append(args, ctx.Args()[1:]...)
 	}
 
-	fmt.Fprintf(ctx.IO().Err(), "connecting server...\n\tcommand: ssh %s \n", strings.Join(args, " ")) // nolint
+	fmt.Fprintf(ctx.IO().Err(), "connecting server...\n\tcommand: ssh %s \n", strings.Join(args, " "))
 	cmd := exec.Command("ssh", args...)
 	cmd.Stdout = ctx.IO().Out()
 	cmd.Stderr = ctx.IO().Err()

@@ -134,7 +134,7 @@ func (c *Command) CLICommand() *cobra.Command {
 			ctx, cancel, needContinue, err := c.initCommandContext(cmd, args)
 			if err != nil {
 				// この段階ではctx.IO()が参照できないため標準エラーに出力する
-				fmt.Fprintln(os.Stderr, err) // nolint
+				fmt.Fprintln(os.Stderr, err)
 				return
 			}
 			defer cancel()
@@ -160,9 +160,9 @@ func (c *Command) CLICommand() *cobra.Command {
 			}
 			if err != nil {
 				out := ctx.IO().Err()
-				fmt.Fprintln(out, "") // nolint // エラーの前後は常に改行させる
+				fmt.Fprintln(out, "")
 				(&printer.Printer{NoColor: ctx.Option().NoColor}).Fprint(out, color.New(color.FgHiRed), err)
-				fmt.Fprintln(out, "") // nolint // エラーの前後は常に改行させる
+				fmt.Fprintln(out, "")
 				os.Exit(1)
 			}
 		},

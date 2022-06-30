@@ -26,9 +26,9 @@ func (c *Command) printWarning(writer io.Writer, noColor bool, warn string) {
 		return
 	}
 	if noColor {
-		fmt.Fprintf(writer, "[WARN] %s\n", warn) // nolint
+		fmt.Fprintf(writer, "[WARN] %s\n", warn)
 	} else {
 		out := color.New(color.FgYellow)
-		out.Fprintf(writer, "[WARN] %s\n", warn) // nolint
+		out.Fprintf(writer, "[WARN] %s\n", warn)
 	}
 }

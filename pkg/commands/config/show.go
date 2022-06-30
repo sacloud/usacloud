@@ -64,6 +64,6 @@ func showFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	}
 
 	out := ctx.IO().Out()
-	fmt.Fprintln(out, string(data)) // nolint
+	fmt.Fprintln(out, string(data))
 	return nil, nil
 }

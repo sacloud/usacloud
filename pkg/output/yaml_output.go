@@ -76,7 +76,7 @@ func (o *yamlOutput) Print(contents Contents) error {
 	if err != nil {
 		return fmt.Errorf("YAMLOutput:Print: yaml.Marshal is Failed: %s", err)
 	}
-	o.out.Write(b)          // nolint
-	fmt.Fprintln(o.out, "") // nolint
+	o.out.Write(b) // nolint
+	fmt.Fprintln(o.out, "")
 	return nil
 }
