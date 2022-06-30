@@ -8,8 +8,8 @@ require (
 	github.com/fatih/structs v1.1.0
 	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32
 	github.com/go-playground/validator/v10 v10.10.1
-	github.com/hashicorp/go-version v1.4.0
-	github.com/hashicorp/hc-install v0.3.2
+	github.com/hashicorp/go-version v1.5.0
+	github.com/hashicorp/hc-install v0.4.0
 	github.com/hashicorp/terraform-exec v0.16.1
 	github.com/hokaccha/go-prettyjson v0.0.0-20210113012101-fb4e108d2519
 	github.com/huandu/xstrings v1.3.0
