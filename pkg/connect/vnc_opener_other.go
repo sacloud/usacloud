@@ -1,4 +1,4 @@
-// Copyright 2017-2022 The Usacloud Authors
+// Copyright 2017-2022 The sacloud/usacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ func StartDefaultVNCClient(vncProxyInfo *iaas.VNCProxyInfo) error {
 		vncProxyInfo.Password,
 	)
 
-	if err := os.WriteFile(uri, []byte(body), 0700); err != nil {
+	if err := os.WriteFile(uri, []byte(body), 0600); err != nil {
 		return err
 	}
 	defer os.Remove(uri)
