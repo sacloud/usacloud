@@ -12,7 +12,7 @@ require (
 	github.com/hashicorp/hc-install v0.4.0
 	github.com/hashicorp/terraform-exec v0.17.1
 	github.com/hokaccha/go-prettyjson v0.0.0-20210113012101-fb4e108d2519
-	github.com/huandu/xstrings v1.3.0
+	github.com/huandu/xstrings v1.3.2
 	github.com/itchyny/gojq v0.12.8
 	github.com/jmespath/go-jmespath v0.4.0
 	github.com/mattn/go-colorable v0.1.12
