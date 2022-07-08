@@ -22,7 +22,7 @@ require (
 	github.com/rhysd/go-github-selfupdate v1.2.3
 	github.com/sacloud/api-client-go v0.2.0
 	github.com/sacloud/go-http v0.1.1
-	github.com/sacloud/iaas-api-go v1.1.2
+	github.com/sacloud/iaas-api-go v1.2.1
 	github.com/sacloud/iaas-service-go v1.1.3
 	github.com/sacloud/packages-go v0.0.3
 	github.com/sacloud/webaccel-api-go v1.1.2
@@ -36,7 +36,7 @@ require (
 require (
 	github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/fsnotify/fsnotify v1.5.1 // indirect
+	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -52,7 +52,7 @@ require (
 	github.com/itchyny/timefmt-go v0.1.3 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mattn/go-runewidth v0.0.13 // indirect
-	github.com/mitchellh/mapstructure v1.4.3 // indirect
+	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/sacloud/ftps v1.1.0 // indirect
