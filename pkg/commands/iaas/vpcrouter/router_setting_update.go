@@ -53,8 +53,8 @@ type routerSettingUpdate struct {
 	RemoteAccessUsersData string                             `cli:"users" mapconv:"-"`
 	RemoteAccessUsers     *[]*iaas.VPCRouterRemoteAccessUser `cli:"-" mapconv:",omitempty"`
 
-	SiteToSiteIPsecVPNData string                               `cli:"site-to-site-vpn" mapconv:"-"`
-	SiteToSiteIPsecVPN     *[]*iaas.VPCRouterSiteToSiteIPsecVPN `cli:"-" mapconv:",omitempty"`
+	SiteToSiteIPsecVPNData string                            `cli:"site-to-site-vpn" mapconv:"-"`
+	SiteToSiteIPsecVPN     *iaas.VPCRouterSiteToSiteIPsecVPN `cli:"-" mapconv:",omitempty"`
 
 	StaticRouteData string                        `cli:"static-route" mapconv:"-"`
 	StaticRoute     *[]*iaas.VPCRouterStaticRoute `cli:"-" mapconv:",omitempty"`
@@ -161,14 +161,11 @@ func (r *routerSettingUpdate) Customize(_ cli.Context) error {
 	}
 
 	if r.SiteToSiteIPsecVPNData != "" {
-		var s2s []*iaas.VPCRouterSiteToSiteIPsecVPN
+		var s2s iaas.VPCRouterSiteToSiteIPsecVPN
 		if err := util.MarshalJSONFromPathOrContent(r.SiteToSiteIPsecVPNData, &s2s); err != nil {
 			return err
 		}
-		if r.SiteToSiteIPsecVPN == nil {
-			r.SiteToSiteIPsecVPN = &[]*iaas.VPCRouterSiteToSiteIPsecVPN{}
-		}
-		*r.SiteToSiteIPsecVPN = append(*r.SiteToSiteIPsecVPN, s2s...)
+		*r.SiteToSiteIPsecVPN = s2s
 	}
 
 	if r.StaticRouteData != "" {

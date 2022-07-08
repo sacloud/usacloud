@@ -202,13 +202,15 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 					Password: "password",
 				},
 			},
-			SiteToSiteIPsecVPN: []*iaas.VPCRouterSiteToSiteIPsecVPN{
-				{
-					Peer:            "192.0.2.1",
-					PreSharedSecret: "presharedsecret",
-					RemoteID:        "192.0.2.1",
-					Routes:          []string{"10.0.0.0/8"},
-					LocalPrefix:     []string{"192.168.0.0/24"},
+			SiteToSiteIPsecVPN: &iaas.VPCRouterSiteToSiteIPsecVPN{
+				Config: []*iaas.VPCRouterSiteToSiteIPsecVPNConfig{
+					{
+						Peer:            "192.0.2.1",
+						PreSharedSecret: "presharedsecret",
+						RemoteID:        "192.0.2.1",
+						Routes:          []string{"10.0.0.0/8"},
+						LocalPrefix:     []string{"192.168.0.0/24"},
+					},
 				},
 			},
 			StaticRoute: []*iaas.VPCRouterStaticRoute{
