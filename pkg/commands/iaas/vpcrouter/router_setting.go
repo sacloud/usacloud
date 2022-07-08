@@ -54,8 +54,8 @@ type routerSetting struct {
 	WireGuardData string                   `cli:"wireguard" mapconv:"-" json:"-"`
 	WireGuard     *iaas.VPCRouterWireGuard `cli:"-" json:",omitempty"`
 
-	SiteToSiteIPsecVPNData string                              `cli:"site-to-site-vpn" mapconv:"-" json:"-"`
-	SiteToSiteIPsecVPN     []*iaas.VPCRouterSiteToSiteIPsecVPN `cli:"-" json:",omitempty"`
+	SiteToSiteIPsecVPNData string                            `cli:"site-to-site-vpn" mapconv:"-" json:"-"`
+	SiteToSiteIPsecVPN     *iaas.VPCRouterSiteToSiteIPsecVPN `cli:"-" json:",omitempty"`
 
 	StaticRouteData string                       `cli:"static-route" mapconv:"-" json:"-"`
 	StaticRoute     []*iaas.VPCRouterStaticRoute `cli:"-" json:",omitempty"`
@@ -142,11 +142,11 @@ func (r *routerSetting) Customize(_ cli.Context) error {
 	}
 
 	if r.SiteToSiteIPsecVPNData != "" {
-		var s2s []*iaas.VPCRouterSiteToSiteIPsecVPN
+		var s2s *iaas.VPCRouterSiteToSiteIPsecVPN
 		if err := util.MarshalJSONFromPathOrContent(r.SiteToSiteIPsecVPNData, &s2s); err != nil {
 			return err
 		}
-		r.SiteToSiteIPsecVPN = append(r.SiteToSiteIPsecVPN, s2s...)
+		r.SiteToSiteIPsecVPN = s2s
 	}
 
 	if r.StaticRouteData != "" {
