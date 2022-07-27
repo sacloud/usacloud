@@ -5,7 +5,7 @@
 [`usacloud`](https://github.com/sacloud/usacloud)は[さくらのクラウド](http://cloud.sakura.ad.jp/index.html)用の公認CLIクライアントです。  
 
 ![Test Status](https://github.com/sacloud/usacloud/workflows/Tests/badge.svg)
-[![Slack](https://img.shields.io/badge/Slack-Sacloud%20Workspace-brightgreen)](https://join.slack.com/t/sacloud/shared_invite/zt-ohsdpv2t-_Bi1_F0jDAAmWjoMQCmAxg)
+[![Discord](https://img.shields.io/badge/Discord-SAKURA%20Users-blue)](https://discord.gg/yUEDN8hbMf)
 [![License](https://img.shields.io/github/license/sacloud/usacloud)](LICENSE.txt)
 [![Version](https://img.shields.io/github/v/tag/sacloud/usacloud)](https://github.com/sacloud/usacloud/releases/latest)
 ![Downloads](https://img.shields.io/github/downloads/sacloud/usacloud/total)
