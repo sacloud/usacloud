@@ -21,12 +21,12 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sacloud/usacloud/e2e"
+	usacloudE2E "github.com/sacloud/usacloud/e2e"
 	"github.com/stretchr/testify/require"
 )
 
 func TestE2E_complete_old_iaas_command(t *testing.T) {
-	output, err := e2e.UsacloudRunWithOutput(t, "completion", "bash")
+	output, err := usacloudE2E.UsacloudRunWithOutput(t, "completion", "bash")
 
 	require.NoError(t, err)
 	require.NotEmpty(t, output)
