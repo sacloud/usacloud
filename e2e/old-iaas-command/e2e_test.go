@@ -20,7 +20,8 @@ package old_iaas_command
 import (
 	"testing"
 
-	"github.com/sacloud/usacloud/e2e"
+	"github.com/sacloud/packages-go/e2e"
+	usacloudE2E "github.com/sacloud/usacloud/e2e"
 	"github.com/stretchr/testify/require"
 )
 
@@ -28,14 +29,14 @@ func TestE2E_oldIaaSCommand(t *testing.T) {
 	// **************************************************************
 	// step1: iaasサブコマンドを実行できるか?
 	// **************************************************************
-	err := e2e.UsacloudRun(t,
+	err := usacloudE2E.UsacloudRun(t,
 		"server", "iaas", "list", "-h")
 	require.NoError(t, err, "unexpected error: %s", err)
 
 	// **************************************************************
 	// step2: root直下のサブコマンド(Hidden=trueなコマンド)を実行できるか?
 	// **************************************************************
-	err = e2e.UsacloudRun(t,
+	err = usacloudE2E.UsacloudRun(t,
 		"server", "list", "-h")
 	require.NoError(t, err, "unexpected error: %s", err)
 }
@@ -46,7 +47,7 @@ func TestE2E_oldIaaSCommandOutputs(t *testing.T) {
 	// **************************************************************
 	// step1: iaasサブコマンドでサーバの情報を取得
 	// **************************************************************
-	outputs1, err := e2e.UsacloudRunWithOutput(t,
+	outputs1, err := usacloudE2E.UsacloudRunWithOutput(t,
 		"iaas", "server", "list",
 		"--names", "usacloud-e2e-old-iaas-command",
 		"--format", "{{.Name}}",
@@ -57,7 +58,7 @@ func TestE2E_oldIaaSCommandOutputs(t *testing.T) {
 	// **************************************************************
 	// step2: root直下のサブコマンド(Hidden=trueなコマンド)でサーバの情報を取得
 	// **************************************************************
-	outputs2, err := e2e.UsacloudRunWithOutput(t,
+	outputs2, err := usacloudE2E.UsacloudRunWithOutput(t,
 		"server", "list",
 		"--names", "usacloud-e2e-old-iaas-command",
 		"--format", "{{.Name}}",

@@ -21,7 +21,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sacloud/usacloud/e2e"
+	"github.com/sacloud/packages-go/e2e"
+	usacloudE2E "github.com/sacloud/usacloud/e2e"
 	"github.com/stretchr/testify/require"
 )
 
@@ -31,7 +32,7 @@ func TestE2E_multiZoneAction(t *testing.T) {
 	// **************************************************************
 	// step1: テスト対象の全サーバの電源状態を取得
 	// **************************************************************
-	outputs, err := e2e.UsacloudRunWithOutput(t,
+	outputs, err := usacloudE2E.UsacloudRunWithOutput(t,
 		"server", "list",
 		"--names", "usacloud-e2e-zones-server",
 		"--format", "{{.InstanceStatus}}",
@@ -51,7 +52,7 @@ func TestE2E_multiZoneAction(t *testing.T) {
 	// **************************************************************
 	// step2: 全サーバの電源OFF
 	// **************************************************************
-	_, err = e2e.UsacloudRunWithOutput(t,
+	_, err = usacloudE2E.UsacloudRunWithOutput(t,
 		"server", "shutdown",
 		"-f", "-y",
 		"--zone", "all",
@@ -62,7 +63,7 @@ func TestE2E_multiZoneAction(t *testing.T) {
 	// **************************************************************
 	// step2: テスト対象の全サーバの電源状態を取得
 	// **************************************************************
-	outputs, err = e2e.UsacloudRunWithOutput(t,
+	outputs, err = usacloudE2E.UsacloudRunWithOutput(t,
 		"server", "list",
 		"--names", "usacloud-e2e-zones-server",
 		"--format", "{{.InstanceStatus}}",

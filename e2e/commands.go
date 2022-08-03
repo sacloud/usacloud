@@ -16,27 +16,28 @@ package e2e
 
 import (
 	"os"
-	"os/exec"
 	"testing"
+
+	"github.com/sacloud/packages-go/e2e"
 )
 
 func UsacloudRun(t *testing.T, args ...string) error {
-	return usacloudCmd(t, args...).Run()
+	return e2e.RunCommand(t, usacloudCmdName(t), args...)
 }
 
 func UsacloudRunWithOutput(t *testing.T, args ...string) ([]byte, error) {
-	return usacloudCmd(t, args...).Output()
+	return e2e.RunCommandWithOutput(t, usacloudCmdName(t), args...)
 }
 
 func UsacloudRunWithCombinedOutput(t *testing.T, args ...string) ([]byte, error) {
-	return usacloudCmd(t, args...).CombinedOutput()
+	return e2e.RunCommandWithCombinedOutput(t, usacloudCmdName(t), args...)
 }
 
-func usacloudCmd(t *testing.T, args ...string) *exec.Cmd {
+func usacloudCmdName(t *testing.T) string {
 	cmd := "usacloud"
 	if overwrite := os.Getenv("USACLOUD_COMMAND"); overwrite != "" {
 		cmd = overwrite
 		t.Logf("using `usacloud` from custom path: %s", cmd)
 	}
-	return exec.Command(cmd, args...)
+	return cmd
 }
