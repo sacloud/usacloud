@@ -269,13 +269,13 @@ var definitions = map[string][]*definition{
 	},
 	"weekdays": {
 		{key: "all", value: "all"},
-		{key: types.BackupSpanWeekdays.Sunday.String(), value: types.BackupSpanWeekdays.Sunday},
-		{key: types.BackupSpanWeekdays.Monday.String(), value: types.BackupSpanWeekdays.Monday},
-		{key: types.BackupSpanWeekdays.Tuesday.String(), value: types.BackupSpanWeekdays.Tuesday},
-		{key: types.BackupSpanWeekdays.Wednesday.String(), value: types.BackupSpanWeekdays.Wednesday},
-		{key: types.BackupSpanWeekdays.Thursday.String(), value: types.BackupSpanWeekdays.Thursday},
-		{key: types.BackupSpanWeekdays.Friday.String(), value: types.BackupSpanWeekdays.Friday},
-		{key: types.BackupSpanWeekdays.Saturday.String(), value: types.BackupSpanWeekdays.Saturday},
+		{key: types.DaysOfTheWeek.Sunday.String(), value: types.DaysOfTheWeek.Sunday},
+		{key: types.DaysOfTheWeek.Monday.String(), value: types.DaysOfTheWeek.Monday},
+		{key: types.DaysOfTheWeek.Tuesday.String(), value: types.DaysOfTheWeek.Tuesday},
+		{key: types.DaysOfTheWeek.Wednesday.String(), value: types.DaysOfTheWeek.Wednesday},
+		{key: types.DaysOfTheWeek.Thursday.String(), value: types.DaysOfTheWeek.Thursday},
+		{key: types.DaysOfTheWeek.Friday.String(), value: types.DaysOfTheWeek.Friday},
+		{key: types.DaysOfTheWeek.Saturday.String(), value: types.DaysOfTheWeek.Saturday},
 	},
 }
 

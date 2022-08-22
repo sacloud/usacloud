@@ -154,21 +154,21 @@ func weekdaysFilter(v interface{}) (interface{}, error) {
 		return nil, fmt.Errorf("invalid weekdays value: %v", v)
 	}
 
-	var results []types.EBackupSpanWeekday
+	var results []types.EDayOfTheWeek
 	for _, d := range *days {
 		// 途中に"all"が見つかった場合は全曜日とする
 		if d == "all" {
-			return []types.EBackupSpanWeekday{
-				types.BackupSpanWeekdays.Sunday,
-				types.BackupSpanWeekdays.Monday,
-				types.BackupSpanWeekdays.Tuesday,
-				types.BackupSpanWeekdays.Wednesday,
-				types.BackupSpanWeekdays.Thursday,
-				types.BackupSpanWeekdays.Friday,
-				types.BackupSpanWeekdays.Saturday,
+			return []types.EDayOfTheWeek{
+				types.DaysOfTheWeek.Sunday,
+				types.DaysOfTheWeek.Monday,
+				types.DaysOfTheWeek.Tuesday,
+				types.DaysOfTheWeek.Wednesday,
+				types.DaysOfTheWeek.Thursday,
+				types.DaysOfTheWeek.Friday,
+				types.DaysOfTheWeek.Saturday,
 			}, nil
 		}
-		results = append(results, types.EBackupSpanWeekday(d))
+		results = append(results, types.EDayOfTheWeek(d))
 	}
 	return results, nil
 }

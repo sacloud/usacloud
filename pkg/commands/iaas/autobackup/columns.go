@@ -27,7 +27,7 @@ var defaultColumnDefs = []output.ColumnDef{
 	{Name: "DiskID"},
 	{Name: "MaximumNumberOfArchives"},
 	{
-		Name:     "Weekdays",
+		Name:     "DayOfTheWeek",
 		Template: "{{ weekdays .BackupSpanWeekdays }}",
 	},
 	ccol.Description,

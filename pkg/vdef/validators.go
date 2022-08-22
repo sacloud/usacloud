@@ -27,7 +27,7 @@ var validatorAliases = map[string]string{
 	"tags":         "unique,max=10,dive,max=32",
 	"profile_name": fmt.Sprintf("excludesrune=%s", string(os.PathListSeparator)),
 	"output_type":  "oneof=table json yaml",
-	"weekdays":     fmt.Sprintf("unique,dive,oneof=%s", joinWithSpace(append([]string{"all"}, types.BackupWeekdayStrings...))),
+	"weekdays":     fmt.Sprintf("unique,dive,oneof=%s", joinWithSpace(append([]string{"all"}, types.DaysOfTheWeekStrings...))),
 	// "zone": ... // NOTE: 実行時に登録される
 }
 

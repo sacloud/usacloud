@@ -83,7 +83,7 @@ var TemplateFuncMap = template.FuncMap{
 		if value == nil {
 			return nil
 		}
-		weekdays, ok := value.([]types.EBackupSpanWeekday)
+		weekdays, ok := value.([]types.EDayOfTheWeek)
 		if !ok {
 			return nil
 		}
