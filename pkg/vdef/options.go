@@ -22,11 +22,8 @@ var FlagOptionsMap = map[string][]string{
 		"almalinux",
 		"rockylinux",
 		"miraclelinux",
-		"centos8stream",
 		"ubuntu",
 		"debian",
-		"rancheros",
-		"k3os",
 		"...",
 	},
 }

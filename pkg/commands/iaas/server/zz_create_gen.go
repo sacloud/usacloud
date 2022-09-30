@@ -67,7 +67,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.VarP(core.NewIDFlag(&p.Disk.SourceArchiveID, &p.Disk.SourceArchiveID), "disk-source-archive-id", "", "")
 	fs.IntVarP(&p.Disk.SizeGB, "disk-size", "", p.Disk.SizeGB, "(aliases: --size-gb)")
 	fs.VarP(core.NewIDSliceFlag(&p.Disk.DistantFrom, &p.Disk.DistantFrom), "disk-distant-from", "", "")
-	fs.StringVarP(&p.Disk.OSType, "disk-os-type", "", p.Disk.OSType, "options: [almalinux/rockylinux/miraclelinux/centos8stream/ubuntu/debian/rancheros/k3os/...]")
+	fs.StringVarP(&p.Disk.OSType, "disk-os-type", "", p.Disk.OSType, "options: [almalinux/rockylinux/miraclelinux/ubuntu/debian/...]")
 	fs.StringVarP(&p.Disk.EditDisk.HostName, "disk-edit-host-name", "", p.Disk.EditDisk.HostName, "")
 	fs.StringVarP(&p.Disk.EditDisk.Password, "disk-edit-password", "", p.Disk.EditDisk.Password, "")
 	fs.StringVarP(&p.Disk.EditDisk.IPAddress, "disk-edit-ip-address", "", p.Disk.EditDisk.IPAddress, "")
@@ -280,7 +280,7 @@ func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("network-interface-upstream", util.FlagCompletionFunc("shared", "disconnected"))
 	cmd.RegisterFlagCompletionFunc("disk-disk-plan", util.FlagCompletionFunc("ssd", "hdd"))
 	cmd.RegisterFlagCompletionFunc("disk-connection", util.FlagCompletionFunc("virtio", "ide"))
-	cmd.RegisterFlagCompletionFunc("disk-os-type", util.FlagCompletionFunc("centos", "centos8stream", "centos7", "almalinux", "rockylinux", "miracle", "miraclelinux", "ubuntu", "ubuntu2204", "ubuntu2004", "ubuntu1804", "debian", "debian10", "debian11", "rancheros", "k3os", "kusanagi"))
+	cmd.RegisterFlagCompletionFunc("disk-os-type", util.FlagCompletionFunc("centos", "centos7", "almalinux", "almalinux9", "almalinux8", "rockylinux", "rockylinux9", "rockylinux8", "miracle", "miraclelinux", "miracle8", "miraclelinux8", "ubuntu", "ubuntu2204", "ubuntu2004", "ubuntu1804", "debian", "debian10", "debian11", "kusanagi"))
 
 }
 
