@@ -43,7 +43,7 @@ func (p *listParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.Names, "names", "", p.Names, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.StringVarP(&p.Scope, "scope", "", p.Scope, "options: [user/shared]")
-	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [almalinux/rockylinux/miraclelinux/centos8stream/ubuntu/debian/rancheros/k3os/...]")
+	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [almalinux/rockylinux/miraclelinux/ubuntu/debian/...]")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -142,7 +142,7 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 
 func (p *listParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("scope", util.FlagCompletionFunc("user", "shared"))
-	cmd.RegisterFlagCompletionFunc("os-type", util.FlagCompletionFunc("centos", "centos8stream", "centos7", "almalinux", "rockylinux", "miracle", "miraclelinux", "ubuntu", "ubuntu2204", "ubuntu2004", "ubuntu1804", "debian", "debian10", "debian11", "rancheros", "k3os", "kusanagi"))
+	cmd.RegisterFlagCompletionFunc("os-type", util.FlagCompletionFunc("centos", "centos7", "almalinux", "almalinux9", "almalinux8", "rockylinux", "rockylinux9", "rockylinux8", "miracle", "miraclelinux", "miracle8", "miraclelinux8", "ubuntu", "ubuntu2204", "ubuntu2004", "ubuntu1804", "debian", "debian10", "debian11", "kusanagi"))
 
 }
 
