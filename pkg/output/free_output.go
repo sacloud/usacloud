@@ -89,7 +89,7 @@ func (o *freeOutput) Print(contents Contents) error {
 			return err
 		}
 
-		o.Out.Write(buf.Bytes()) // nolint
+		o.Out.Write(buf.Bytes()) //nolint
 		fmt.Fprintln(o.Out, "")
 	}
 
