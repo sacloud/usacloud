@@ -26,7 +26,7 @@ type simple struct {
 }
 
 type unexported struct {
-	unexported string // nolint
+	unexported string //nolint
 }
 
 type noTag struct {
