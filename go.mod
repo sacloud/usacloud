@@ -18,7 +18,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/rhysd/go-github-selfupdate v1.2.3
-	github.com/sacloud/api-client-go v0.2.1
+	github.com/sacloud/api-client-go v0.2.2
 	github.com/sacloud/go-http v0.1.2
 	github.com/sacloud/iaas-api-go v1.4.0
 	github.com/sacloud/iaas-service-go v1.3.1

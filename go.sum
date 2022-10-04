@@ -254,8 +254,8 @@ github.com/rogpeppe/go-internal v1.6.1/go.mod h1:xXDCJY+GAPziupqXw64V24skbSoqbTE
 github.com/rogpeppe/go-internal v1.8.0 h1:FCbCCtXNOY3UtUuHUYaghJg4y7Fd14rXifAYUAtL9R8=
 github.com/rogpeppe/go-internal v1.8.0/go.mod h1:WmiCO8CzOY8rg0OYDC4/i/2WRWAB6poM+XZ2dLUbcbE=
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
-github.com/sacloud/api-client-go v0.2.1 h1:jl02ZG6cM+mcH4eDYg0cxCFFuTOVTOjUCLYL4UbP09U=
-github.com/sacloud/api-client-go v0.2.1/go.mod h1:8fmYy5OpT3W8ltV5ZxF8evultNwKpduGN4YKmU9Af7w=
+github.com/sacloud/api-client-go v0.2.2 h1:Z/yYuCE/24ROXCuxazd5/r9vC/T7SbjNGqB1A+Nu7Ts=
+github.com/sacloud/api-client-go v0.2.2/go.mod h1:N3OlGtRmsPuy46oVJaVm5hYd8Z9Jm+U49J37QnKptaA=
 github.com/sacloud/ftps v1.1.0 h1:cYv+b6qhrIT8msfx64XXRJzbv5S+Dqwb/rXa5Y641XA=
 github.com/sacloud/ftps v1.1.0/go.mod h1:h4awhOi3PEyhKLj1FpXjoVV5yVkmRUU+d5L95EwX2JU=
 github.com/sacloud/go-http v0.1.2 h1:a84HkeDHxDD1vIA6HiOT72a3fwwJueZBwuGP6zVtEJU=
