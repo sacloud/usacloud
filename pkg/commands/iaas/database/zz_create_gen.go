@@ -44,6 +44,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
 	fs.StringVarP(&p.DatabaseType, "database-type", "", p.DatabaseType, "(*required) options: [postgresql/postgres/mariadb]")
+	fs.StringVarP(&p.DatabaseVersion, "database-version", "", p.DatabaseVersion, "")
 	fs.StringVarP(&p.PlanID, "plan", "", p.PlanID, "(*required) options: [10g/30g/90g/240g/500g/1t]")
 	fs.VarP(core.NewIDFlag(&p.SwitchID, &p.SwitchID), "switch-id", "", "(*required) ")
 	fs.StringSliceVarP(&p.IPAddresses, "ip-address", "", p.IPAddresses, "(*required) (aliases: --ipaddress)")
@@ -105,6 +106,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs = pflag.NewFlagSet("plan", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("database-type"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("database-version"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("plan"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Plan options",
