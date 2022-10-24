@@ -51,8 +51,9 @@ type createParameter struct {
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	DatabaseType string `cli:",options=database_type,category=plan,order=10" mapconv:",filters=database_type_to_value" validate:"required,database_type"`
-	PlanID       string `cli:"plan,options=database_plan,category=plan,order=20" mapconv:",filters=database_plan_to_value" validate:"required,database_plan"`
+	DatabaseType    string `cli:",options=database_type,category=plan,order=10" mapconv:",filters=database_type_to_value" validate:"required,database_type"`
+	DatabaseVersion string `cli:",category=plan,order=11"`
+	PlanID          string `cli:"plan,options=database_plan,category=plan,order=20" mapconv:",filters=database_plan_to_value" validate:"required,database_plan"`
 
 	SwitchID       types.ID `cli:",category=network,order=10" validate:"required"`
 	IPAddresses    []string `cli:"ip-address,aliases=ipaddress,category=network,order=20" validate:"required,min=1,max=1,dive,ipv4"`
