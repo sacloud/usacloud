@@ -51,6 +51,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/commands/iaas/privatehostplan"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/proxylb"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/region"
+	"github.com/sacloud/usacloud/pkg/commands/iaas/self"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/server"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/serverplan"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/serviceclass"
@@ -101,6 +102,7 @@ var Resources = core.Resources{
 	privatehostplan.Resource,
 	proxylb.Resource,
 	region.Resource,
+	self.Resource,
 	server.Resource,
 	serverplan.Resource,
 	serviceclass.Resource,
