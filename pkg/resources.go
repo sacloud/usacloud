@@ -17,9 +17,11 @@ package pkg
 
 import (
 	"github.com/sacloud/usacloud/pkg/commands/completion"
+	"github.com/sacloud/usacloud/pkg/commands/config"
 	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/commands/rest"
 	"github.com/sacloud/usacloud/pkg/commands/root"
+	updateSelf "github.com/sacloud/usacloud/pkg/commands/update-self"
 	"github.com/sacloud/usacloud/pkg/commands/version"
 	"github.com/sacloud/usacloud/pkg/commands/webaccel/webaccelerator"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -28,6 +30,7 @@ import (
 
 var (
 	MiscResources = core.Resources{
+		config.Resource,
 		rest.Resource,
 		webaccelerator.Resource,
 	}
@@ -35,6 +38,7 @@ var (
 	RootCommands = []*cobra.Command{
 		completion.Command,
 		version.Command,
+		updateSelf.Command,
 	}
 )
 
