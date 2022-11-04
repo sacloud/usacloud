@@ -21,6 +21,7 @@ import (
 
 var defaultColumnDefs = []output.ColumnDef{
 	ccol.ID,
+	{Name: "Class"},
 	ccol.Scope,
 	ccol.Name,
 	ccol.Tags,
