@@ -142,7 +142,7 @@ func (p *listParameter) buildFlagsUsage(cmd *cobra.Command) {
 
 func (p *listParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("scope", util.FlagCompletionFunc("user", "shared"))
-	cmd.RegisterFlagCompletionFunc("os-type", util.FlagCompletionFunc("centos", "centos7", "almalinux", "almalinux9", "almalinux8", "rockylinux", "rockylinux9", "rockylinux8", "miracle", "miraclelinux", "miracle8", "miraclelinux8", "ubuntu", "ubuntu2204", "ubuntu2004", "ubuntu1804", "debian", "debian10", "debian11", "kusanagi"))
+	cmd.RegisterFlagCompletionFunc("os-type", util.FlagCompletionFunc("centos", "centos7", "almalinux", "almalinux9", "almalinux8", "rockylinux", "rockylinux9", "rockylinux8", "miracle", "miraclelinux", "miracle8", "miraclelinux8", "miracle9", "miraclelinux9", "ubuntu", "ubuntu2204", "ubuntu2004", "ubuntu1804", "debian", "debian10", "debian11", "kusanagi"))
 
 }
 
