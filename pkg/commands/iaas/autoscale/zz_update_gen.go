@@ -20,6 +20,7 @@ import (
 	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/packages-go/pointer"
 	"github.com/sacloud/usacloud/pkg/core"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -43,6 +44,9 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("config") {
 		p.Config = nil
 	}
+	if !fs.Changed("trigger-type") {
+		p.TriggerType = nil
+	}
 	if !fs.Changed("cpu-threshold-scaling-server-prefix") {
 		p.CPUThresholdScaling.ServerPrefix = nil
 	}
@@ -51,6 +55,15 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	}
 	if !fs.Changed("cpu-threshold-scaling-down") {
 		p.CPUThresholdScaling.Down = nil
+	}
+	if !fs.Changed("router-threshold-scaling-router-prefix") {
+		p.RouterThresholdScaling.RouterPrefix = nil
+	}
+	if !fs.Changed("router-threshold-scaling-direction") {
+		p.RouterThresholdScaling.Direction = nil
+	}
+	if !fs.Changed("router-threshold-scaling-mbps") {
+		p.RouterThresholdScaling.Mbps = nil
 	}
 }
 
@@ -74,6 +87,9 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.Config == nil {
 		p.Config = pointer.NewString("")
 	}
+	if p.TriggerType == nil {
+		p.TriggerType = pointer.NewString("")
+	}
 	if p.CPUThresholdScaling.ServerPrefix == nil {
 		p.CPUThresholdScaling.ServerPrefix = pointer.NewString("")
 	}
@@ -82,6 +98,15 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	}
 	if p.CPUThresholdScaling.Down == nil {
 		p.CPUThresholdScaling.Down = pointer.NewInt(0)
+	}
+	if p.RouterThresholdScaling.RouterPrefix == nil {
+		p.RouterThresholdScaling.RouterPrefix = pointer.NewString("")
+	}
+	if p.RouterThresholdScaling.Direction == nil {
+		p.RouterThresholdScaling.Direction = pointer.NewString("")
+	}
+	if p.RouterThresholdScaling.Mbps == nil {
+		p.RouterThresholdScaling.Mbps = pointer.NewInt(0)
 	}
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
@@ -98,9 +123,13 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
 	fs.StringSliceVarP(p.Zones, "zones", "", nil, "(*required) ")
 	fs.StringVarP(p.Config, "config", "", "", "(*required) ")
-	fs.StringVarP(p.CPUThresholdScaling.ServerPrefix, "cpu-threshold-scaling-server-prefix", "", "", "(*required) ")
-	fs.IntVarP(p.CPUThresholdScaling.Up, "cpu-threshold-scaling-up", "", 0, "(*required) ")
-	fs.IntVarP(p.CPUThresholdScaling.Down, "cpu-threshold-scaling-down", "", 0, "(*required) ")
+	fs.StringVarP(p.TriggerType, "trigger-type", "", "", "options: [cpu/router]")
+	fs.StringVarP(p.CPUThresholdScaling.ServerPrefix, "cpu-threshold-scaling-server-prefix", "", "", "")
+	fs.IntVarP(p.CPUThresholdScaling.Up, "cpu-threshold-scaling-up", "", 0, "")
+	fs.IntVarP(p.CPUThresholdScaling.Down, "cpu-threshold-scaling-down", "", 0, "")
+	fs.StringVarP(p.RouterThresholdScaling.RouterPrefix, "router-threshold-scaling-router-prefix", "", "", "")
+	fs.StringVarP(p.RouterThresholdScaling.Direction, "router-threshold-scaling-direction", "", "", "")
+	fs.IntVarP(p.RouterThresholdScaling.Mbps, "router-threshold-scaling-mbps", "", 0, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -139,6 +168,10 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("cpu-threshold-scaling-down"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("cpu-threshold-scaling-server-prefix"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("cpu-threshold-scaling-up"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("router-threshold-scaling-direction"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("router-threshold-scaling-mbps"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("router-threshold-scaling-router-prefix"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("trigger-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("zones"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Auto-Scale-specific options",
@@ -186,6 +219,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *updateParameter) setCompletionFunc(cmd *cobra.Command) {
+	cmd.RegisterFlagCompletionFunc("trigger-type", util.FlagCompletionFunc("cpu", "router"))
 
 }
 

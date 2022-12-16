@@ -23,7 +23,5 @@ var defaultColumnDefs = []output.ColumnDef{
 	ccol.ID,
 	ccol.Name,
 	ccol.Tags,
-	{Name: "Server Prefix", Template: `{{.CPUThresholdScaling.ServerPrefix}}`},
-	{Name: "CPUThreshold Up", Template: `{{.CPUThresholdScaling.Up}}`},
-	{Name: "CPUThreshold Down", Template: `{{.CPUThresholdScaling.Down}}`},
+	{Name: "Trigger Type", Template: `{{.TriggerType}}`},
 }

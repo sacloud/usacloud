@@ -15,7 +15,6 @@
 package autoscale
 
 import (
-	autoscaleService "github.com/sacloud/iaas-service-go/autoscale"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -49,7 +48,21 @@ type updateParameter struct {
 	Zones  *[]string `validate:"omitempty,required"`
 	Config *string   `validate:"omitempty,required" mapconv:",omitempty,filters=path_or_content"`
 
-	CPUThresholdScaling autoscaleService.UpdateCPUThresholdScaling `validate:"dive"`
+	TriggerType            *string                      `cli:"trigger-type,options=cpu router" validate:"omitempty,oneof=cpu router" mapconv:",omitempty"`
+	CPUThresholdScaling    UpdateCPUThresholdScaling    `validate:"omitempty,dive"`
+	RouterThresholdScaling UpdateRouterThresholdScaling `validate:"omitempty,dive"`
+}
+
+type UpdateCPUThresholdScaling struct {
+	ServerPrefix *string
+	Up           *int
+	Down         *int
+}
+
+type UpdateRouterThresholdScaling struct {
+	RouterPrefix *string
+	Direction    *string `validate:"omitempty,oneof=in out"`
+	Mbps         *int
 }
 
 func newUpdateParameter() *updateParameter {

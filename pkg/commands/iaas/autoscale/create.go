@@ -15,7 +15,6 @@
 package autoscale
 
 import (
-	autoscaleService "github.com/sacloud/iaas-service-go/autoscale"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -48,7 +47,21 @@ type createParameter struct {
 	Config   string   `validate:"required" mapconv:",filters=path_or_content"`
 	APIKeyID string   `cli:"api-key-id" validate:"required"`
 
-	CPUThresholdScaling autoscaleService.CreateCPUThresholdScaling `validate:"required,dive"`
+	TriggerType            string                       `cli:"trigger-type,options=cpu router" validate:"omitempty,oneof=cpu router"`
+	CPUThresholdScaling    CreateCPUThresholdScaling    `mapconv:",omitempty" validate:"omitempty,dive"`
+	RouterThresholdScaling CreateRouterThresholdScaling `mapconv:",omitempty" validate:"omitempty,dive"`
+}
+
+type CreateCPUThresholdScaling struct {
+	ServerPrefix string
+	Up           int
+	Down         int
+}
+
+type CreateRouterThresholdScaling struct {
+	RouterPrefix string
+	Direction    string `cli:",options=in out" validate:"omitempty,oneof=in out"`
+	Mbps         int
 }
 
 func newCreateParameter() *createParameter {
@@ -68,7 +81,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		Zones:           []string{"is1a"},
 		Config:          "...",
 		APIKeyID:        "...",
-		CPUThresholdScaling: autoscaleService.CreateCPUThresholdScaling{
+		CPUThresholdScaling: CreateCPUThresholdScaling{
 			ServerPrefix: "server-prefix",
 			Up:           80,
 			Down:         20,
