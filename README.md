@@ -134,6 +134,6 @@ Available Commands:
 
 ## License
 
- `usacloud` Copyright (C) 2017-2022 The Usacloud Authors.
+ `usacloud` Copyright (C) 2017-2023 The Usacloud Authors.
 
   This project is published under [Apache 2.0 License](LICENSE.txt).
