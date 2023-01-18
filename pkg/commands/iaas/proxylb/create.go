@@ -227,6 +227,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 			{
 				Action:      types.ProxyLBRuleActions.Forward,
 				Host:        "www2.example.com",
+				SourceIPs:   "192.2.0.1,192.2.0.2",
 				Path:        "/foo1",
 				ServerGroup: "group1",
 			},
