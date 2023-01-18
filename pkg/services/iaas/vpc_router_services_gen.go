@@ -668,4 +668,28 @@ func init() {
 			return results, nil
 		},
 	)
+	registry.SetDefaultListAllFunc("iaas", "vpc-router", "ping",
+		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+			svc := service.New(ctx.Client().(iaas.APICaller))
+			req := &service.FindRequest{Zone: (parameter.(cflag.ZoneParameterValueHandler)).ZoneFlagValue()}
+
+			type requester interface {
+				FindRequest() *service.FindRequest
+			}
+			if v, ok := parameter.(requester); ok {
+				req = v.FindRequest()
+			}
+
+			res, err := svc.FindWithContext(ctx, req)
+			if err != nil {
+				return nil, err
+			}
+
+			var results []interface{}
+			for _, v := range res {
+				results = append(results, v)
+			}
+			return results, nil
+		},
+	)
 }
