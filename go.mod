@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
-	github.com/fatih/color v1.13.0
+	github.com/fatih/color v1.14.0
 	github.com/fatih/structs v1.1.0
 	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32
 	github.com/go-playground/validator/v10 v10.11.1
@@ -62,7 +62,7 @@ require (
 	go.uber.org/ratelimit v0.2.0 // indirect
 	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8 // indirect
-	golang.org/x/sys v0.2.0 // indirect
+	golang.org/x/sys v0.3.0 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
