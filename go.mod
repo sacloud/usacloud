@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
-	github.com/fatih/color v1.14.0
+	github.com/fatih/color v1.14.1
 	github.com/fatih/structs v1.1.0
 	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32
 	github.com/go-playground/validator/v10 v10.11.1
