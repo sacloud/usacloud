@@ -18,8 +18,8 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/rhysd/go-github-selfupdate v1.2.3
-	github.com/sacloud/api-client-go v0.2.4
-	github.com/sacloud/go-http v0.1.3
+	github.com/sacloud/api-client-go v0.2.6
+	github.com/sacloud/go-http v0.1.4
 	github.com/sacloud/iaas-api-go v1.8.1
 	github.com/sacloud/iaas-service-go v1.6.0
 	github.com/sacloud/packages-go v0.0.7
@@ -43,7 +43,7 @@ require (
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
-	github.com/hashicorp/go-retryablehttp v0.7.1 // indirect
+	github.com/hashicorp/go-retryablehttp v0.7.2 // indirect
 	github.com/hashicorp/hc-install v0.4.0 // indirect
 	github.com/hashicorp/terraform-exec v0.17.3 // indirect
 	github.com/hashicorp/terraform-json v0.14.0 // indirect
