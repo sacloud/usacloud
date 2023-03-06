@@ -254,8 +254,8 @@ github.com/sacloud/go-http v0.1.4 h1:Fdt2NsiwzHh+fDqJe2HTGqV6tWdSS4M2bSwevGccMp8
 github.com/sacloud/go-http v0.1.4/go.mod h1:0pw+tgXhTdwq/hPVizyaTgpN1G/WUZHTWRdbMuU+o/Q=
 github.com/sacloud/iaas-api-go v1.8.3 h1:dh0bg0zrqckjzSIwANSWNOBm8j3JMrqT0to5OGZql8g=
 github.com/sacloud/iaas-api-go v1.8.3/go.mod h1:rnqlUxQ2DNkENM4P6TAGtg/L9sYYBC+Qm3mYUUYX/9w=
-github.com/sacloud/iaas-service-go v1.6.0 h1:UF+5N5skVvQU5N/2V+2qQI2pF6/LMuADc2lvErJv0Es=
-github.com/sacloud/iaas-service-go v1.6.0/go.mod h1:KxcO97XiIohgfPMI+rSgo5igSWfmfupBwt6tiQrqQUk=
+github.com/sacloud/iaas-service-go v1.6.1 h1:iKh8AMHLcoSv/2RMNEdtBBmSMZlkrVQpKkMduZWhuUY=
+github.com/sacloud/iaas-service-go v1.6.1/go.mod h1:sIIMH6AInXu0daLw42W/OPfoxzNayAzELY1B209V274=
 github.com/sacloud/packages-go v0.0.7 h1:Py6nksUuyoRBaHtPfpA9sTIxSKnQfce/xm7XkiCLZmQ=
 github.com/sacloud/packages-go v0.0.7/go.mod h1:NlADopH0g9pLGDHJLi1geDgQpZBN9w4Rl1ucvmiDwAI=
 github.com/sacloud/webaccel-api-go v1.1.4 h1:/9q4p31kEGCz6E02Csmik5fNCPB3OewGwGtwZmaGW+8=
