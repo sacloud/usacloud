@@ -55,14 +55,15 @@ type updateParameter struct {
 
 	Plan *string `cli:",options=proxylb_plan" mapconv:",omitempty,filters=proxylb_plan_to_value" validate:"omitempty,proxylb_plan"`
 
-	HealthCheck   updateParameterHealthCheck   `mapconv:",omitempty"`
-	SorryServer   updateParameterSorryServer   `mapconv:",omitempty"`
-	LetsEncrypt   updateParameterLetsEncrypt   `mapconv:",omitempty"`
-	StickySession updateParameterStickySession `mapconv:",omitempty"`
-	Gzip          updateParameterGzip          `mapconv:",omitempty"`
-	ProxyProtocol updateParameterProxyProtocol `mapconv:",omitempty"`
-	Syslog        updateParameterSyslog        `mapconv:",omitempty"`
-	Timeout       updateParameterTimeout       `cli:",squash"`
+	HealthCheck          updateParameterHealthCheck          `mapconv:",omitempty"`
+	SorryServer          updateParameterSorryServer          `mapconv:",omitempty"`
+	LetsEncrypt          updateParameterLetsEncrypt          `mapconv:",omitempty"`
+	StickySession        updateParameterStickySession        `mapconv:",omitempty"`
+	Gzip                 updateParameterGzip                 `mapconv:",omitempty"`
+	BackendHttpKeepAlive updateParameterBackendHttpKeepAlive `mapconv:",omitempty"`
+	ProxyProtocol        updateParameterProxyProtocol        `mapconv:",omitempty"`
+	Syslog               updateParameterSyslog               `mapconv:",omitempty"`
+	Timeout              updateParameterTimeout              `cli:",squash"`
 
 	BindPortsData *string                  `cli:"bind-ports" mapconv:"-"`
 	BindPorts     *[]*iaas.ProxyLBBindPort `cli:"-"`
@@ -104,6 +105,10 @@ type updateParameterStickySession struct {
 
 type updateParameterGzip struct {
 	Enabled *bool
+}
+
+type updateParameterBackendHttpKeepAlive struct {
+	Mode *string `validate:"omitempty,oneof=safe aggressive"`
 }
 
 type updateParameterProxyProtocol struct {
@@ -185,6 +190,9 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		},
 		Gzip: updateParameterGzip{
 			Enabled: pointer.NewBool(true),
+		},
+		BackendHttpKeepAlive: updateParameterBackendHttpKeepAlive{
+			Mode: pointer.NewString("safe | aggressive"),
 		},
 		ProxyProtocol: updateParameterProxyProtocol{
 			Enabled: pointer.NewBool(true),

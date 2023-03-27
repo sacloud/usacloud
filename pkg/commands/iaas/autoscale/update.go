@@ -15,10 +15,12 @@
 package autoscale
 
 import (
+	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/examples"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 var updateCommand = &core.Command{
@@ -48,9 +50,13 @@ type updateParameter struct {
 	Zones  *[]string `validate:"omitempty,required"`
 	Config *string   `validate:"omitempty,required" mapconv:",omitempty,filters=path_or_content"`
 
-	TriggerType            *string                      `cli:"trigger-type,options=cpu router" validate:"omitempty,oneof=cpu router" mapconv:",omitempty"`
+	Disabled               bool
+	TriggerType            *string                      `cli:"trigger-type,options=cpu router schedule" validate:"omitempty,oneof=cpu router schedule" mapconv:",omitempty"`
 	CPUThresholdScaling    UpdateCPUThresholdScaling    `validate:"omitempty,dive"`
 	RouterThresholdScaling UpdateRouterThresholdScaling `validate:"omitempty,dive"`
+
+	ScheduleScalingData *string                           `cli:"schedule-scaling" mapconv:"-" json:"-"`
+	ScheduleScaling     *[]*iaas.AutoScaleScheduleScaling `cli:"-"`
 }
 
 type UpdateCPUThresholdScaling struct {
@@ -71,6 +77,18 @@ func newUpdateParameter() *updateParameter {
 
 func init() {
 	Resource.AddCommand(updateCommand)
+}
+
+// Customize パラメータ変換処理
+func (p *updateParameter) Customize(_ cli.Context) error {
+	var scheduleScaling []*iaas.AutoScaleScheduleScaling
+	if p.ScheduleScalingData != nil && *p.ScheduleScalingData != "" {
+		if err := util.MarshalJSONFromPathOrContent(*p.ScheduleScalingData, &scheduleScaling); err != nil {
+			return err
+		}
+		p.ScheduleScaling = &scheduleScaling
+	}
+	return nil
 }
 
 func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {

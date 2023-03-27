@@ -65,6 +65,9 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("router-threshold-scaling-mbps") {
 		p.RouterThresholdScaling.Mbps = nil
 	}
+	if !fs.Changed("schedule-scaling") {
+		p.ScheduleScalingData = nil
+	}
 }
 
 func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
@@ -108,6 +111,9 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.RouterThresholdScaling.Mbps == nil {
 		p.RouterThresholdScaling.Mbps = pointer.NewInt(0)
 	}
+	if p.ScheduleScalingData == nil {
+		p.ScheduleScalingData = pointer.NewString("")
+	}
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
@@ -123,13 +129,15 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
 	fs.StringSliceVarP(p.Zones, "zones", "", nil, "(*required) ")
 	fs.StringVarP(p.Config, "config", "", "", "(*required) ")
-	fs.StringVarP(p.TriggerType, "trigger-type", "", "", "options: [cpu/router]")
+	fs.BoolVarP(&p.Disabled, "disabled", "", p.Disabled, "")
+	fs.StringVarP(p.TriggerType, "trigger-type", "", "", "options: [cpu/router/schedule]")
 	fs.StringVarP(p.CPUThresholdScaling.ServerPrefix, "cpu-threshold-scaling-server-prefix", "", "", "")
 	fs.IntVarP(p.CPUThresholdScaling.Up, "cpu-threshold-scaling-up", "", 0, "")
 	fs.IntVarP(p.CPUThresholdScaling.Down, "cpu-threshold-scaling-down", "", 0, "")
 	fs.StringVarP(p.RouterThresholdScaling.RouterPrefix, "router-threshold-scaling-router-prefix", "", "", "")
 	fs.StringVarP(p.RouterThresholdScaling.Direction, "router-threshold-scaling-direction", "", "", "")
 	fs.IntVarP(p.RouterThresholdScaling.Mbps, "router-threshold-scaling-mbps", "", 0, "")
+	fs.StringVarP(p.ScheduleScalingData, "schedule-scaling", "", "", "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -168,9 +176,11 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("cpu-threshold-scaling-down"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("cpu-threshold-scaling-server-prefix"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("cpu-threshold-scaling-up"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("router-threshold-scaling-direction"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("router-threshold-scaling-mbps"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("router-threshold-scaling-router-prefix"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("schedule-scaling"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("trigger-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("zones"))
 		sets = append(sets, &core.FlagSet{
@@ -219,7 +229,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *updateParameter) setCompletionFunc(cmd *cobra.Command) {
-	cmd.RegisterFlagCompletionFunc("trigger-type", util.FlagCompletionFunc("cpu", "router"))
+	cmd.RegisterFlagCompletionFunc("trigger-type", util.FlagCompletionFunc("cpu", "router", "schedule"))
 
 }
 
