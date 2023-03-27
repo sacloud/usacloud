@@ -15,10 +15,13 @@
 package autoscale
 
 import (
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/examples"
+	"github.com/sacloud/usacloud/pkg/util"
 )
 
 var createCommand = &core.Command{
@@ -47,9 +50,14 @@ type createParameter struct {
 	Config   string   `validate:"required" mapconv:",filters=path_or_content"`
 	APIKeyID string   `cli:"api-key-id" validate:"required"`
 
-	TriggerType            string                       `cli:"trigger-type,options=cpu router" validate:"omitempty,oneof=cpu router"`
+	Disabled    bool
+	TriggerType string `cli:"trigger-type,options=cpu router schedule" validate:"omitempty,oneof=cpu router schedule"`
+
 	CPUThresholdScaling    CreateCPUThresholdScaling    `mapconv:",omitempty" validate:"omitempty,dive"`
 	RouterThresholdScaling CreateRouterThresholdScaling `mapconv:",omitempty" validate:"omitempty,dive"`
+
+	ScheduleScalingData string                           `cli:"schedule-scaling" mapconv:"-" json:"-"`
+	ScheduleScaling     []*iaas.AutoScaleScheduleScaling `cli:"-"`
 }
 
 type CreateCPUThresholdScaling struct {
@@ -72,6 +80,18 @@ func init() {
 	Resource.AddCommand(createCommand)
 }
 
+// Customize パラメータ変換処理
+func (p *createParameter) Customize(_ cli.Context) error {
+	var scheduleScaling []*iaas.AutoScaleScheduleScaling
+	if p.ScheduleScalingData != "" {
+		if err := util.MarshalJSONFromPathOrContent(p.ScheduleScalingData, &scheduleScaling); err != nil {
+			return err
+		}
+	}
+	p.ScheduleScaling = append(p.ScheduleScaling, scheduleScaling...)
+	return nil
+}
+
 func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 	return &createParameter{
 		NameParameter:   examples.Name,
@@ -81,10 +101,33 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		Zones:           []string{"is1a"},
 		Config:          "...",
 		APIKeyID:        "...",
+		TriggerType:     "cpu | router | schedule",
+		Disabled:        true,
 		CPUThresholdScaling: CreateCPUThresholdScaling{
 			ServerPrefix: "server-prefix",
 			Up:           80,
 			Down:         20,
+		},
+		RouterThresholdScaling: CreateRouterThresholdScaling{
+			RouterPrefix: "router-prefix",
+			Direction:    "in | out",
+			Mbps:         100,
+		},
+		ScheduleScaling: []*iaas.AutoScaleScheduleScaling{
+			{
+				Action: "up",
+				Hour:   10,
+				Minute: 15,
+				DayOfWeek: []types.EDayOfTheWeek{
+					types.DaysOfTheWeek.Monday,
+					types.DaysOfTheWeek.Tuesday,
+					types.DaysOfTheWeek.Wednesday,
+					types.DaysOfTheWeek.Thursday,
+					types.DaysOfTheWeek.Friday,
+					types.DaysOfTheWeek.Saturday,
+					types.DaysOfTheWeek.Sunday,
+				},
+			},
 		},
 	}
 }

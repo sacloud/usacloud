@@ -56,6 +56,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.StickySession.Method, "sticky-session-method", "", p.StickySession.Method, "")
 	fs.BoolVarP(&p.StickySession.Enabled, "sticky-session-enabled", "", p.StickySession.Enabled, "")
 	fs.BoolVarP(&p.Gzip.Enabled, "gzip-enabled", "", p.Gzip.Enabled, "")
+	fs.StringVarP(&p.BackendHttpKeepAlive.Mode, "backend-http-keep-alive-mode", "", p.BackendHttpKeepAlive.Mode, "")
 	fs.BoolVarP(&p.ProxyProtocol.Enabled, "proxy-protocol-enabled", "", p.ProxyProtocol.Enabled, "")
 	fs.StringVarP(&p.Syslog.Server, "syslog-server", "", p.Syslog.Server, "")
 	fs.IntVarP(&p.Syslog.Port, "syslog-port", "", p.Syslog.Port, "")
@@ -101,6 +102,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("proxy-lb", pflag.ContinueOnError)
 		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("backend-http-keep-alive-mode"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("bind-ports"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("gzip-enabled"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("health-check-delay-loop"))

@@ -50,17 +50,18 @@ type createParameter struct {
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	Plan           string `cli:",options=proxylb_plan" mapconv:",filters=proxylb_plan_to_value" validate:"required,proxylb_plan"`
-	HealthCheck    createParameterHealthCheck
-	SorryServer    createParameterSorryServer `mapconv:",omitempty"`
-	LetsEncrypt    createParameterLetsEncrypt
-	StickySession  createParameterStickySession `mapconv:",omitempty"`
-	Gzip           createParameterGzip          `mapconv:",omitempty"`
-	ProxyProtocol  createParameterProxyProtocol `mapconv:",omitempty"`
-	Syslog         createParameterSyslog        `mapconv:",omitempty"`
-	Timeout        createParameterTimeout       `cli:",squash"`
-	UseVIPFailover bool                         `cli:"vip-fail-over"`
-	Region         string                       `cli:",options=proxylb_region" validate:"required,proxylb_region"`
+	Plan                 string `cli:",options=proxylb_plan" mapconv:",filters=proxylb_plan_to_value" validate:"required,proxylb_plan"`
+	HealthCheck          createParameterHealthCheck
+	SorryServer          createParameterSorryServer `mapconv:",omitempty"`
+	LetsEncrypt          createParameterLetsEncrypt
+	StickySession        createParameterStickySession        `mapconv:",omitempty"`
+	Gzip                 createParameterGzip                 `mapconv:",omitempty"`
+	BackendHttpKeepAlive createParameterBackendHttpKeepAlive `mapconv:",omitempty"`
+	ProxyProtocol        createParameterProxyProtocol        `mapconv:",omitempty"`
+	Syslog               createParameterSyslog               `mapconv:",omitempty"`
+	Timeout              createParameterTimeout              `cli:",squash"`
+	UseVIPFailover       bool                                `cli:"vip-fail-over"`
+	Region               string                              `cli:",options=proxylb_region" validate:"required,proxylb_region"`
 
 	BindPortsData string                  `cli:"bind-ports" mapconv:"-" json:"-"`
 	BindPorts     []*iaas.ProxyLBBindPort `cli:"-"`
@@ -103,6 +104,10 @@ type createParameterStickySession struct {
 
 type createParameterGzip struct {
 	Enabled bool
+}
+
+type createParameterBackendHttpKeepAlive struct {
+	Mode string `validate:"omitempty,oneof=safe aggressive"`
 }
 
 type createParameterProxyProtocol struct {
@@ -187,6 +192,9 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		},
 		Gzip: createParameterGzip{
 			Enabled: true,
+		},
+		BackendHttpKeepAlive: createParameterBackendHttpKeepAlive{
+			Mode: "safe | aggressive",
 		},
 		ProxyProtocol: createParameterProxyProtocol{
 			Enabled: true,

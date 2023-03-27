@@ -68,7 +68,7 @@ func pingFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	}
 
 	for _, result := range results.Result {
-		fmt.Fprintln(ctx.IO().Out(), result) 
+		fmt.Fprintln(ctx.IO().Out(), result)
 	}
 	return nil, nil
 }
