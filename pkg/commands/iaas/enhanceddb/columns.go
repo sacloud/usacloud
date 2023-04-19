@@ -22,11 +22,11 @@ import (
 var defaultColumnDefs = []output.ColumnDef{
 	ccol.Zone,
 	ccol.ID,
-	ccol.Name,
-	ccol.Tags,
-	{Name: "Region"},
-	{Name: "HostName"},
-	{Name: "Port"},
-	{Name: "DatabaseName"},
-	ccol.Description,
+	{Name: "Name", Template: "{{ if .EnhancedDB }}{{ .EnhancedDB.Name }}{{ else }}{{ .Name }}{{ end }}"},
+	{Name: "Tags", Template: "{{ if .EnhancedDB }}{{ .EnhancedDB.Tags}}{{ else }}{{ .Tags }}{{ end }}"},
+	{Name: "Region", Template: "{{ if .EnhancedDB }}{{ .EnhancedDB.Region }}{{ else }}{{ .Region }}{{ end }}"},
+	{Name: "HostName", Template: "{{ if .EnhancedDB }}{{ .EnhancedDB.HostName }}{{ else }}{{ .HostName }}{{ end }}"},
+	{Name: "Port", Template: "{{ if .EnhancedDB }}{{ .EnhancedDB.Port }}{{ else }}{{ .Port }}{{ end }}"},
+	{Name: "DatabaseName", Template: "{{ if .EnhancedDB }}{{ .EnhancedDB.DatabaseName }}{{ else }}{{ .DatabaseName }}{{ end }}"},
+	{Name: "Description", Template: "{{ if .EnhancedDB }}{{ .EnhancedDB.Description | ellipsis 20 | to_single_line}}{{ else }}{{ .Description | ellipsis 20 | to_single_line}}{{ end }}"},
 }
