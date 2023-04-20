@@ -21,7 +21,7 @@ require (
 	github.com/sacloud/api-client-go v0.2.7
 	github.com/sacloud/go-http v0.1.5
 	github.com/sacloud/iaas-api-go v1.10.0
-	github.com/sacloud/iaas-service-go v1.8.0
+	github.com/sacloud/iaas-service-go v1.8.2
 	github.com/sacloud/packages-go v0.0.8
 	github.com/sacloud/webaccel-api-go v1.1.5
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
@@ -56,7 +56,7 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
-	github.com/sacloud/ftps v1.1.0 // indirect
+	github.com/sacloud/ftps v1.2.0 // indirect
 	github.com/tcnksm/go-gitconfig v0.1.2 // indirect
 	github.com/ulikunitz/xz v0.5.9 // indirect
 	github.com/zclconf/go-cty v1.13.0 // indirect
