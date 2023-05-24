@@ -18,6 +18,7 @@ package enhanceddb
 
 import (
 	"github.com/sacloud/usacloud/pkg/core"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -42,7 +43,10 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
 	fs.StringVarP(&p.DatabaseName, "database-name", "", p.DatabaseName, "(*required) ")
+	fs.StringVarP(&p.DatabaseType, "database-type", "", p.DatabaseType, "(*required) options: [tidb/mariadb]")
+	fs.StringVarP(&p.Region, "region", "", p.Region, "(*required) options: [is1/tk1]")
 	fs.StringVarP(&p.Password, "password", "", p.Password, "(*required) ")
+	fs.StringSliceVarP(&p.AllowedNetworks, "allowed-networks", "", p.AllowedNetworks, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -77,8 +81,11 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("enhanced-db", pflag.ContinueOnError)
 		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("allowed-networks"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("database-name"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("database-type"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("password"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("region"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Enhanced-Db-specific options",
 			Flags: fs,
@@ -125,6 +132,8 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
+	cmd.RegisterFlagCompletionFunc("database-type", util.FlagCompletionFunc("tidb", "mariadb"))
+	cmd.RegisterFlagCompletionFunc("region", util.FlagCompletionFunc("is1", "tk1"))
 
 }
 

@@ -100,6 +100,14 @@ var definitions = map[string][]*definition{
 		{key: types.DNSRecordTypes.CAA.String(), value: types.DNSRecordTypes.CAA},
 		{key: types.DNSRecordTypes.PTR.String(), value: types.DNSRecordTypes.PTR},
 	},
+	"enhanced_db_type": {
+		{key: types.EnhancedDBTypesTiDB.String(), value: types.EnhancedDBTypesTiDB},
+		{key: types.EnhancedDBTypesMariaDB.String(), value: types.EnhancedDBTypesMariaDB},
+	},
+	"enhanced_db_region": {
+		{key: types.EnhancedDBRegionsIs1.String(), value: types.EnhancedDBRegionsIs1},
+		{key: types.EnhancedDBRegionsTk1.String(), value: types.EnhancedDBRegionsTk1},
+	},
 	"gslb_protocol": {
 		{key: types.GSLBHealthCheckProtocols.HTTP.String(), value: types.GSLBHealthCheckProtocols.HTTP},
 		{key: types.GSLBHealthCheckProtocols.HTTPS.String(), value: types.GSLBHealthCheckProtocols.HTTPS},

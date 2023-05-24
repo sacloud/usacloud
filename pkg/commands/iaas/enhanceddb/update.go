@@ -46,7 +46,8 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	Password *string
+	Password        *string
+	AllowedNetworks *[]string `validate:"omitempty,dive,required"`
 }
 
 func newUpdateParameter() *updateParameter {
@@ -64,5 +65,6 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		TagsUpdateParameter:   examples.TagsUpdate,
 		IconIDUpdateParameter: examples.IconIDUpdate,
 		Password:              pointer.NewString("your-password"),
+		AllowedNetworks:       pointer.NewStringSlice([]string{"192.0.2.1/32"}),
 	}
 }

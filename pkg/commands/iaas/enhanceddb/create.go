@@ -43,8 +43,11 @@ type createParameter struct {
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	DatabaseName string `validate:"required"`
-	Password     string `validate:"required"`
+	DatabaseName    string   `validate:"required"`
+	DatabaseType    string   `cli:",options=enhanced_db_type" validate:"required,enhanced_db_type"`
+	Region          string   `cli:",options=enhanced_db_region" validate:"required,enhanced_db_region"`
+	Password        string   `validate:"required"`
+	AllowedNetworks []string `validate:"omitempty,dive,gt=0"`
 }
 
 func newCreateParameter() *createParameter {
