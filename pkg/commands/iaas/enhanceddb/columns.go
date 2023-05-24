@@ -15,13 +15,11 @@
 package enhanceddb
 
 import (
-	"github.com/sacloud/usacloud/pkg/ccol"
 	"github.com/sacloud/usacloud/pkg/output"
 )
 
 var defaultColumnDefs = []output.ColumnDef{
-	ccol.Zone,
-	ccol.ID,
+	{Name: "ID", Template: "{{ if .EnhancedDB }}{{ .EnhancedDB.ID }}{{ else }}{{ .ID }}{{ end }}"},
 	{Name: "Name", Template: "{{ if .EnhancedDB }}{{ .EnhancedDB.Name }}{{ else }}{{ .Name }}{{ end }}"},
 	{Name: "Tags", Template: "{{ if .EnhancedDB }}{{ .EnhancedDB.Tags}}{{ else }}{{ .Tags }}{{ end }}"},
 	{Name: "Region", Template: "{{ if .EnhancedDB }}{{ .EnhancedDB.Region }}{{ else }}{{ .Region }}{{ end }}"},

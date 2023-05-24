@@ -40,6 +40,9 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("password") {
 		p.Password = nil
 	}
+	if !fs.Changed("allowed-networks") {
+		p.AllowedNetworks = nil
+	}
 }
 
 func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
@@ -59,6 +62,9 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.Password == nil {
 		p.Password = pointer.NewString("")
 	}
+	if p.AllowedNetworks == nil {
+		p.AllowedNetworks = pointer.NewStringSlice([]string{})
+	}
 	fs.StringVarP(&p.Parameters, "parameters", "", p.Parameters, "Input parameters in JSON format")
 	fs.BoolVarP(&p.GenerateSkeleton, "generate-skeleton", "", p.GenerateSkeleton, "Output skeleton of parameters with JSON format (aliases: --skeleton)")
 	fs.BoolVarP(&p.Example, "example", "", p.Example, "Output example parameters with JSON format")
@@ -73,6 +79,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringSliceVarP(p.Tags, "tags", "", nil, "")
 	fs.VarP(core.NewIDFlag(p.IconID, p.IconID), "icon-id", "", "")
 	fs.StringVarP(p.Password, "password", "", "", "")
+	fs.StringSliceVarP(p.AllowedNetworks, "allowed-networks", "", nil, "(*required) ")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -107,6 +114,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("enhanced-db", pflag.ContinueOnError)
 		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("allowed-networks"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("password"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Enhanced-Db-specific options",
