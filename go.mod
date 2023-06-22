@@ -11,7 +11,7 @@ require (
 	github.com/hashicorp/go-version v1.6.0
 	github.com/hokaccha/go-prettyjson v0.0.0-20210113012101-fb4e108d2519
 	github.com/huandu/xstrings v1.4.0
-	github.com/itchyny/gojq v0.12.12
+	github.com/itchyny/gojq v0.12.13
 	github.com/jmespath/go-jmespath v0.4.0
 	github.com/mattn/go-colorable v0.1.13
 	github.com/mattn/go-isatty v0.0.19
