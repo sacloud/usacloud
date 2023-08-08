@@ -59,8 +59,9 @@ type createParameter struct {
 	CPU        int    `cli:"cpu,aliases=core,category=plan,order=10" validate:"required"`
 	Memory     int    `cli:"memory,category=plan,order=20" mapconv:"MemoryGB" validate:"required"`
 	GPU        int    `cli:"gpu,category=plan,order=30"`
-	Commitment string `cli:",options=server_plan_commitment,category=plan,order=30" mapconv:",filters=server_plan_commitment_to_value" validate:"required,server_plan_commitment"`
-	Generation string `cli:",options=server_plan_generation,category=plan,order=40" mapconv:",filters=server_plan_generation_to_value" validate:"required,server_plan_generation"`
+	CPUModel   string `cli:"cpu-model,category=plan,order=40"`
+	Commitment string `cli:",options=server_plan_commitment,category=plan,order=50" mapconv:",filters=server_plan_commitment_to_value" validate:"required,server_plan_commitment"`
+	Generation string `cli:",options=server_plan_generation,category=plan,order=60" mapconv:",filters=server_plan_generation_to_value" validate:"required,server_plan_generation"`
 
 	InterfaceDriver string `cli:",options=interface_driver" mapconv:",filters=interface_driver_to_value" validate:"required,interface_driver"`
 
@@ -258,6 +259,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		IconIDParameter: examples.IconID,
 		CPU:             1,
 		Memory:          2,
+		CPUModel:        examples.OptionsString("server_plan_cpu_model"),
 		Commitment:      examples.OptionsString("server_plan_commitment"),
 		Generation:      examples.OptionsString("server_plan_generation"),
 		InterfaceDriver: examples.OptionsString("interface_driver"),

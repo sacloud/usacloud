@@ -55,8 +55,9 @@ type updateParameter struct {
 	CPU        *int    `cli:"cpu,aliases=core,category=plan,order=10"`
 	Memory     *int    `cli:"memory,category=plan,order=20" mapconv:"MemoryGB"`
 	GPU        *int    `cli:"gpu,category=plan,order=30"`
-	Commitment *string `cli:",options=server_plan_commitment,category=plan,order=30" mapconv:",omitempty,filters=server_plan_commitment_to_value" validate:"omitempty,server_plan_commitment"`
-	Generation *string `cli:",options=server_plan_generation,category=plan,order=40" mapconv:",omitempty,filters=server_plan_generation_to_value" validate:"omitempty,server_plan_generation"`
+	CPUModel   *string `cli:"cpu-model,category=plan,order=40"`
+	Commitment *string `cli:",options=server_plan_commitment,category=plan,order=50" mapconv:",omitempty,filters=server_plan_commitment_to_value" validate:"omitempty,server_plan_commitment"`
+	Generation *string `cli:",options=server_plan_generation,category=plan,order=60" mapconv:",omitempty,filters=server_plan_generation_to_value" validate:"omitempty,server_plan_generation"`
 
 	InterfaceDriver *string `cli:",options=interface_dirver" mapconv:",omitempty,filters=interface_driver_to_value" validate:"omitempty,interface_driver"`
 
@@ -116,6 +117,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		IconIDUpdateParameter: examples.IconIDUpdate,
 		CPU:                   pointer.NewInt(1),
 		Memory:                pointer.NewInt(2),
+		CPUModel:              pointer.NewString(examples.OptionsString("server_plan_cpu_model")),
 		Commitment:            pointer.NewString(examples.OptionsString("server_plan_commitment")),
 		Generation:            pointer.NewString(examples.OptionsString("server_plan_generation")),
 		InterfaceDriver:       pointer.NewString(examples.OptionsString("interface_driver")),

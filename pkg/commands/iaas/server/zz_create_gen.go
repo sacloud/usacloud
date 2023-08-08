@@ -46,6 +46,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.IntVarP(&p.CPU, "cpu", "", p.CPU, "(*required) (aliases: --core)")
 	fs.IntVarP(&p.Memory, "memory", "", p.Memory, "(*required) ")
 	fs.IntVarP(&p.GPU, "gpu", "", p.GPU, "")
+	fs.StringVarP(&p.CPUModel, "cpu-model", "", p.CPUModel, "")
 	fs.StringVarP(&p.Commitment, "commitment", "", p.Commitment, "(*required) options: [standard/dedicatedcpu]")
 	fs.StringVarP(&p.Generation, "generation", "", p.Generation, "(*required) options: [default/g100/g200]")
 	fs.StringVarP(&p.InterfaceDriver, "interface-driver", "", p.InterfaceDriver, "(*required) options: [virtio/e1000]")
@@ -136,8 +137,9 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("cpu"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("memory"))
-		fs.AddFlag(cmd.LocalFlags().Lookup("commitment"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("gpu"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("cpu-model"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("commitment"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generation"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Plan options",
