@@ -26,6 +26,7 @@ var defaultColumnDefs = []output.ColumnDef{
 	{Name: "CPU"},
 	{Name: "Memory(GB)", Template: "{{ .MemoryMB | mib_to_gib }}"},
 	{Name: "GPU"},
+	{Name: "CPUModel"},
 	{Name: "Commitment"},
 	{Name: "Generation"},
 	{Name: "Availability"},
