@@ -39,7 +39,7 @@ func (p *updateHostNameParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Query, "query", "", p.Query, "Query for JSON output")
 	fs.StringVarP(&p.QueryDriver, "query-driver", "", p.QueryDriver, "Name of the driver that handles queries to JSON output options: [jmespath/jq]")
 	fs.StringVarP(&p.IPAddress, "ip-address", "", p.IPAddress, "(*required) ")
-	fs.StringVarP(&p.HostName, "host-name", "", p.HostName, "(*required) ")
+	fs.StringVarP(&p.HostName, "host-name", "", p.HostName, "")
 	fs.IntVarP(&p.RetryMax, "retry-max", "", p.RetryMax, "")
 	fs.IntVarP(&p.RetryInterval, "retry-interval", "", p.RetryInterval, "")
 	fs.SetNormalizeFunc(p.normalizeFlagName)

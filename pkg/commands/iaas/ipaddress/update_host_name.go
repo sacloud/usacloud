@@ -25,7 +25,7 @@ var updateHostNameCommand = &core.Command{
 	Name:         "update-host-name",
 	Category:     "other",
 	Order:        10,
-	SelectorType: core.SelectorTypeRequireMulti,
+	SelectorType: core.SelectorTypeNone,
 
 	ColumnDefs: defaultColumnDefs,
 
@@ -41,7 +41,7 @@ type updateHostNameParameter struct {
 	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
 
 	IPAddress     string `validate:"required,ipv4"`
-	HostName      string `validate:"required,fqdn"`
+	HostName      string `validate:"omitempty,fqdn"`
 	RetryMax      int
 	RetryInterval int
 }

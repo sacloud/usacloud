@@ -21,7 +21,7 @@ require (
 	github.com/sacloud/api-client-go v0.2.8
 	github.com/sacloud/go-http v0.1.6
 	github.com/sacloud/iaas-api-go v1.11.2-0.20230808040020-104bc72d03c1
-	github.com/sacloud/iaas-service-go v1.9.2-0.20230808054001-efad52d748d4
+	github.com/sacloud/iaas-service-go v1.9.2-0.20230818023506-330d2e92b643
 	github.com/sacloud/packages-go v0.0.9
 	github.com/sacloud/webaccel-api-go v1.1.5
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
