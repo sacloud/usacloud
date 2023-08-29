@@ -63,7 +63,7 @@ type updateParameter struct {
 	BackendHttpKeepAlive updateParameterBackendHttpKeepAlive `mapconv:",omitempty"`
 	ProxyProtocol        updateParameterProxyProtocol        `mapconv:",omitempty"`
 	Syslog               updateParameterSyslog               `mapconv:",omitempty"`
-	Timeout              updateParameterTimeout              `cli:",squash"`
+	Timeout              updateParameterTimeout              `mapconv:",omitempty" cli:",squash"`
 
 	BindPortsData *string                  `cli:"bind-ports" mapconv:"-"`
 	BindPorts     *[]*iaas.ProxyLBBindPort `cli:"-"`
@@ -121,7 +121,7 @@ type updateParameterSyslog struct {
 }
 
 type updateParameterTimeout struct {
-	InactiveSec *int `validate:"omitempty,min=10,max=600"`
+	InactiveSec *int `mapconv:",omitempty" validate:"omitempty,min=10,max=600"`
 }
 
 func init() {
