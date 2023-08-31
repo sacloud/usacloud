@@ -47,7 +47,7 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	Weekdays         *[]string `cli:",options=weekdays" mapconv:"BackupSpanWeekdays,omitempty,filters=weekdays" validate:"omitempty,weekdays"`
+	Weekdays         *[]string `cli:",options=weekdays" mapconv:"BackupSpanWeekdays,omitempty,filters=dereference weekdays" validate:"omitempty,weekdays"`
 	MaxNumOfArchives *int      `cli:"max-backup-num" mapconv:"MaximumNumberOfArchives" validate:"omitempty,min=1,max=10"`
 }
 

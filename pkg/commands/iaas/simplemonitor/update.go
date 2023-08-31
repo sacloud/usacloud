@@ -62,7 +62,7 @@ type updateParameter struct {
 }
 
 type updateParameterHealthCheck struct {
-	Protocol          *string `cli:",options=simple_monitor_protocol" mapconv:",omitempty,filters=simple_monitor_protocol_to_value" validate:"omitempty,simple_monitor_protocol" json:",omitempty"`
+	Protocol          *string `cli:",options=simple_monitor_protocol" mapconv:",omitempty,filters=dereference simple_monitor_protocol_to_value" validate:"omitempty,simple_monitor_protocol" json:",omitempty"`
 	Port              *int    `json:",omitempty"`
 	Path              *string `json:",omitempty"`
 	Status            *int    `json:",omitempty"`
@@ -78,7 +78,7 @@ type updateParameterHealthCheck struct {
 	OID               *string `json:",omitempty"`
 	RemainingDays     *int    `json:",omitempty"`
 	HTTP2             *bool   `cli:"http2" json:",omitempty"`
-	FTPS              *string `cli:",options=simple_monitor_ftps" mapconv:",omitempty,filters=simple_monitor_ftps_to_value" validate:"omitempty,simple_monitor_ftps" json:",omitempty"`
+	FTPS              *string `cli:",options=simple_monitor_ftps" mapconv:",omitempty,filters=dereference simple_monitor_ftps_to_value" validate:"omitempty,simple_monitor_ftps" json:",omitempty"`
 	VerifySNI         *bool   `cli:"verify-sni" json:",omitempty"`
 }
 
