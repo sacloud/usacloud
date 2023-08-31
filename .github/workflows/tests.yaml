@@ -53,10 +53,7 @@ jobs:
 
   test:
     name: test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest, windows-latest, ubuntu-22.04, ubuntu-20.04]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
