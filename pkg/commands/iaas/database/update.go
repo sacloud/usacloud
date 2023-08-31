@@ -59,7 +59,7 @@ type updateParameter struct {
 	ReplicaUserPassword   *string   `cli:",category=replication,order=20,desc=(*required when --enable-replication is specified)" validate:"omitempty,required_with=EnableReplication"`
 	EnableWebUI           *bool     `cli:",category=WebUI"`
 	EnableBackup          *bool     `cli:",category=backup,order=10"`
-	BackupWeekdays        *[]string `cli:",options=weekdays,category=backup,order=20" mapconv:",omitempty,filters=weekdays" validate:"omitempty,max=7,weekdays"`
+	BackupWeekdays        *[]string `cli:",options=weekdays,category=backup,order=20" mapconv:",omitempty,filters=dereference weekdays" validate:"omitempty,max=7,weekdays"`
 	BackupStartTimeHour   *int      `cli:",category=backup,order=30" mapconv:",omitempty" validate:"omitempty,min=0,max=23"`
 	BackupStartTimeMinute *int      `cli:",category=backup,order=40" mapconv:",omitempty" validate:"omitempty,oneof=0 15 30 45"`
 

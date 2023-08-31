@@ -48,7 +48,7 @@ type updateParameter struct {
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
 	Zones  *[]string `validate:"omitempty,required"`
-	Config *string   `validate:"omitempty,required" mapconv:",omitempty,filters=path_or_content"`
+	Config *string   `validate:"omitempty,required" mapconv:",omitempty,filters=dereference path_or_content"`
 
 	Disabled               bool
 	TriggerType            *string                      `cli:"trigger-type,options=cpu router schedule" validate:"omitempty,oneof=cpu router schedule" mapconv:",omitempty"`

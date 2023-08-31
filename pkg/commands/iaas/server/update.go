@@ -56,10 +56,10 @@ type updateParameter struct {
 	Memory     *int    `cli:"memory,category=plan,order=20" mapconv:"MemoryGB"`
 	GPU        *int    `cli:"gpu,category=plan,order=30"`
 	CPUModel   *string `cli:"cpu-model,category=plan,order=40"`
-	Commitment *string `cli:",options=server_plan_commitment,category=plan,order=50" mapconv:",omitempty,filters=server_plan_commitment_to_value" validate:"omitempty,server_plan_commitment"`
-	Generation *string `cli:",options=server_plan_generation,category=plan,order=60" mapconv:",omitempty,filters=server_plan_generation_to_value" validate:"omitempty,server_plan_generation"`
+	Commitment *string `cli:",options=server_plan_commitment,category=plan,order=50" mapconv:",omitempty,filters=dereference server_plan_commitment_to_value" validate:"omitempty,server_plan_commitment"`
+	Generation *string `cli:",options=server_plan_generation,category=plan,order=60" mapconv:",omitempty,filters=dereference server_plan_generation_to_value" validate:"omitempty,server_plan_generation"`
 
-	InterfaceDriver *string `cli:",options=interface_dirver" mapconv:",omitempty,filters=interface_driver_to_value" validate:"omitempty,interface_driver"`
+	InterfaceDriver *string `cli:",options=interface_driver" mapconv:",omitempty,filters=dereference interface_driver_to_value" validate:"omitempty,interface_driver"`
 
 	CDROMID       *types.ID `cli:"cdrom-id,aliases=iso-image-id"`
 	PrivateHostID *types.ID

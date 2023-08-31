@@ -130,7 +130,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(p.CPUModel, "cpu-model", "", "", "")
 	fs.StringVarP(p.Commitment, "commitment", "", "", "options: [standard/dedicatedcpu]")
 	fs.StringVarP(p.Generation, "generation", "", "", "options: [default/g100/g200]")
-	fs.StringVarP(p.InterfaceDriver, "interface-driver", "", "", "options: [interface_dirver]")
+	fs.StringVarP(p.InterfaceDriver, "interface-driver", "", "", "options: [virtio/e1000]")
 	fs.VarP(core.NewIDFlag(p.CDROMID, p.CDROMID), "cdrom-id", "", "(aliases: --iso-image-id)")
 	fs.VarP(core.NewIDFlag(p.PrivateHostID, p.PrivateHostID), "private-host-id", "", "")
 	fs.StringVarP(&p.NetworkInterfaceData, "network-interfaces", "", p.NetworkInterfaceData, "")
@@ -264,7 +264,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 func (p *updateParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("commitment", util.FlagCompletionFunc("standard", "dedicatedcpu"))
 	cmd.RegisterFlagCompletionFunc("generation", util.FlagCompletionFunc("default", "g100", "g200"))
-	cmd.RegisterFlagCompletionFunc("interface-driver", util.FlagCompletionFunc("interface_dirver"))
+	cmd.RegisterFlagCompletionFunc("interface-driver", util.FlagCompletionFunc("virtio", "e1000"))
 
 }
 

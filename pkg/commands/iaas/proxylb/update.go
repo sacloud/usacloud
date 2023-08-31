@@ -53,7 +53,7 @@ type updateParameter struct {
 	cflag.TagsUpdateParameter   `cli:",squash" mapconv:",omitempty,squash"`
 	cflag.IconIDUpdateParameter `cli:",squash" mapconv:",omitempty,squash"`
 
-	Plan *string `cli:",options=proxylb_plan" mapconv:",omitempty,filters=proxylb_plan_to_value" validate:"omitempty,proxylb_plan"`
+	Plan *string `cli:",options=proxylb_plan" mapconv:",omitempty,filters=dereference proxylb_plan_to_value" validate:"omitempty,proxylb_plan"`
 
 	HealthCheck          updateParameterHealthCheck          `mapconv:",omitempty"`
 	SorryServer          updateParameterSorryServer          `mapconv:",omitempty"`
