@@ -240,8 +240,8 @@ github.com/sacloud/api-client-go v0.2.10 h1:+rv3jDohD+pkdYwOTBiB+jZsM0xK3AxadXRz
 github.com/sacloud/api-client-go v0.2.10/go.mod h1:Jj3CTy2+O4bcMedVDXlbHuqqche85HEPuVXoQFhLaRc=
 github.com/sacloud/ftps v1.2.0 h1:7UlSWd7cnm1J+sANz7IiBV9ffVcS+4g6ZV5UHVVbvaw=
 github.com/sacloud/ftps v1.2.0/go.mod h1:h4awhOi3PEyhKLj1FpXjoVV5yVkmRUU+d5L95EwX2JU=
-github.com/sacloud/go-http v0.1.7 h1:oBnoTLTlu4afkRJHIQSV6NJMUfIR1S3rB/SQaGzL/3Q=
-github.com/sacloud/go-http v0.1.7/go.mod h1:WV31q5qAUt6Rs7dfqQfGyRprXhf91jS+41FofYHmxUI=
+github.com/sacloud/go-http v0.1.8 h1:ynreWA/vnM8G2ksbMlmefBHsXURKPz49qlPRqQ9IQdw=
+github.com/sacloud/go-http v0.1.8/go.mod h1:7TL7TN1fnPKHsMifIqURDkGujnKViCgEz5Ei/LQdFK8=
 github.com/sacloud/iaas-api-go v1.11.2 h1:2jQLPwGRK/sS9bjvjWFWk2AFToU2Zq2o+6JP5Uvhqu8=
 github.com/sacloud/iaas-api-go v1.11.2/go.mod h1:gjiuIY5c/7lj2LmFnVgyHcPMT17PysXpNPBrmVMV8dM=
 github.com/sacloud/iaas-service-go v1.9.2 h1:IAWsIJ1F5txAS38lN4x/iBvQl1NCIo5owFs+hFqFUmc=
