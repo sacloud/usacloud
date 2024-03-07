@@ -35,7 +35,7 @@ func (r Resources) CategorizedResources(categories []category.Category) []*Categ
 			Resources: []*Resource{},
 		}
 		for _, resource := range r {
-			if c.Equals(&resource.Category) { //nolint
+			if c.Equals(&resource.Category) {
 				result.Resources = append(result.Resources, resource)
 			}
 		}
