@@ -123,7 +123,7 @@ func (r *routerSettingUpdate) Customize(_ cli.Context) error {
 		if err := util.MarshalJSONFromPathOrContent(r.DNSForwardingData, &df); err != nil {
 			return err
 		}
-		*r.DNSForwarding = df
+		r.DNSForwarding = &df
 	}
 
 	if r.PPTPServerData != "" {
@@ -131,7 +131,7 @@ func (r *routerSettingUpdate) Customize(_ cli.Context) error {
 		if err := util.MarshalJSONFromPathOrContent(r.PPTPServerData, &pptp); err != nil {
 			return err
 		}
-		*r.PPTPServer = pptp
+		r.PPTPServer = &pptp
 	}
 
 	if r.L2TPIPsecServerData != "" {
@@ -139,14 +139,14 @@ func (r *routerSettingUpdate) Customize(_ cli.Context) error {
 		if err := util.MarshalJSONFromPathOrContent(r.L2TPIPsecServerData, &l2tp); err != nil {
 			return err
 		}
-		*r.L2TPIPsecServer = l2tp
+		r.L2TPIPsecServer = &l2tp
 	}
 	if r.WireGuardData != "" {
 		var wireGuard iaas.VPCRouterWireGuard
 		if err := util.MarshalJSONFromPathOrContent(r.WireGuardData, &wireGuard); err != nil {
 			return err
 		}
-		*r.WireGuard = wireGuard
+		r.WireGuard = &wireGuard
 	}
 
 	if r.RemoteAccessUsersData != "" {
@@ -165,7 +165,7 @@ func (r *routerSettingUpdate) Customize(_ cli.Context) error {
 		if err := util.MarshalJSONFromPathOrContent(r.SiteToSiteIPsecVPNData, &s2s); err != nil {
 			return err
 		}
-		*r.SiteToSiteIPsecVPN = s2s
+		r.SiteToSiteIPsecVPN = &s2s
 	}
 
 	if r.StaticRouteData != "" {
