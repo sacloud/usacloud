@@ -110,7 +110,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		DiskPlan:            examples.OptionsString("disk_plan"),
 		SizeGB:              20,
 		Connection:          examples.OptionsString("disk_connection"),
-		EncryptionAlgorithm: examples.OptionsString("encryption_algorithm"),
+		EncryptionAlgorithm: examples.OptionsString("disk_encryption_algorithm"),
 		OSType:              examples.OptionsString("os_type"),
 		SourceDiskID:        examples.ID,
 		SourceArchiveID:     examples.ID,
