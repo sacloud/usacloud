@@ -51,6 +51,7 @@ type createParameter struct {
 	DiskPlan              string `cli:",options=disk_plan,category=plan,order=10" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"required,disk_plan"`
 	SizeGB                int    `cli:"size,category=plan,order=20"`
 	Connection            string `cli:"connector,aliases=connection,options=disk_connection,category=plan,order=30" validate:"required,disk_connection"`
+	EncryptionAlgorithm   string `cli:"encryption-algorithm,options=disk_encryption_algorithm,category=plan,order=40" validate:"omitempty,disk_encryption_algorithm"`
 
 	OSType          string   `cli:",options=os_type,display_options=os_type_simple,category=source,order=10" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
 	SourceDiskID    types.ID `cli:",category=source,order=20"`
@@ -101,19 +102,20 @@ func (p *createParameter) Customize(ctx cli.Context) error {
 
 func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 	return &createParameter{
-		ZoneParameter:   examples.Zones(ctx.Option().Zones),
-		NameParameter:   examples.Name,
-		DescParameter:   examples.Description,
-		TagsParameter:   examples.Tags,
-		IconIDParameter: examples.IconID,
-		DiskPlan:        examples.OptionsString("disk_plan"),
-		SizeGB:          20,
-		Connection:      examples.OptionsString("disk_connection"),
-		OSType:          examples.OptionsString("os_type"),
-		SourceDiskID:    examples.ID,
-		SourceArchiveID: examples.ID,
-		ServerID:        examples.ID,
-		DistantFrom:     []types.ID{examples.ID},
+		ZoneParameter:       examples.Zones(ctx.Option().Zones),
+		NameParameter:       examples.Name,
+		DescParameter:       examples.Description,
+		TagsParameter:       examples.Tags,
+		IconIDParameter:     examples.IconID,
+		DiskPlan:            examples.OptionsString("disk_plan"),
+		SizeGB:              20,
+		Connection:          examples.OptionsString("disk_connection"),
+		EncryptionAlgorithm: examples.OptionsString("disk_encryption_algorithm"),
+		OSType:              examples.OptionsString("os_type"),
+		SourceDiskID:        examples.ID,
+		SourceArchiveID:     examples.ID,
+		ServerID:            examples.ID,
+		DistantFrom:         []types.ID{examples.ID},
 		EditDisk: common.EditRequest{
 			HostName:            "hostname",
 			Password:            "password",

@@ -64,6 +64,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.VarP(core.NewIDFlag(&p.Disk.IconID, &p.Disk.IconID), "disk-icon-id", "", "")
 	fs.StringVarP(&p.Disk.DiskPlan, "disk-disk-plan", "", p.Disk.DiskPlan, "options: [ssd/hdd]")
 	fs.StringVarP(&p.Disk.Connection, "disk-connection", "", p.Disk.Connection, "options: [virtio/ide]")
+	fs.StringVarP(&p.Disk.EncryptionAlgorithm, "disk-encryption-algorithm", "", p.Disk.EncryptionAlgorithm, "options: [none/aes256_xts]")
 	fs.VarP(core.NewIDFlag(&p.Disk.SourceDiskID, &p.Disk.SourceDiskID), "disk-source-disk-id", "", "")
 	fs.VarP(core.NewIDFlag(&p.Disk.SourceArchiveID, &p.Disk.SourceArchiveID), "disk-source-archive-id", "", "")
 	fs.IntVarP(&p.Disk.SizeGB, "disk-size", "", p.Disk.SizeGB, "(aliases: --size-gb)")
@@ -139,6 +140,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("memory"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("gpu"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("cpu-model"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("disk-encryption-algorithm"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("commitment"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generation"))
 		sets = append(sets, &core.FlagSet{
@@ -282,6 +284,7 @@ func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("network-interface-upstream", util.FlagCompletionFunc("shared", "disconnected"))
 	cmd.RegisterFlagCompletionFunc("disk-disk-plan", util.FlagCompletionFunc("ssd", "hdd"))
 	cmd.RegisterFlagCompletionFunc("disk-connection", util.FlagCompletionFunc("virtio", "ide"))
+	cmd.RegisterFlagCompletionFunc("disk-encryption-algorithm", util.FlagCompletionFunc("none", "aes256_xts"))
 	cmd.RegisterFlagCompletionFunc("disk-os-type", util.FlagCompletionFunc("centos", "centos7", "almalinux", "almalinux9", "almalinux8", "rockylinux", "rockylinux9", "rockylinux8", "miracle", "miraclelinux", "miracle8", "miraclelinux8", "miracle9", "miraclelinux9", "ubuntu", "ubuntu2204", "ubuntu2004", "ubuntu1804", "debian", "debian10", "debian11", "kusanagi"))
 
 }

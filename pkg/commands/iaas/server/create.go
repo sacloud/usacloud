@@ -94,13 +94,15 @@ type diskApplyParameter struct {
 	cflag.DescParameter   `cli:",squash" mapconv:",squash" json:",omitempty"`
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash" json:",omitempty"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash" json:",omitempty"`
-	DiskPlan              string     `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"omitempty,disk_plan" json:",omitempty"`
-	Connection            string     `cli:",options=disk_connection" validate:"omitempty,disk_connection" json:",omitempty"`
-	SourceDiskID          types.ID   `json:",omitempty"`
-	SourceArchiveID       types.ID   `json:",omitempty"`
-	SizeGB                int        `cli:"size,aliases=size-gb" json:",omitempty"`
-	DistantFrom           []types.ID `json:",omitempty"`
-	OSType                string     `cli:",options=os_type,display_options=os_type_simple" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type" json:",omitempty"`
+	DiskPlan              string `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"omitempty,disk_plan" json:",omitempty"`
+	Connection            string `cli:",options=disk_connection" validate:"omitempty,disk_connection" json:",omitempty"`
+	EncryptionAlgorithm   string `cli:",options=disk_encryption_algorithm,category=plan,order=40" validate:"omitempty,disk_encryption_algorithm" json:",omitempty"`
+
+	SourceDiskID    types.ID   `json:",omitempty"`
+	SourceArchiveID types.ID   `json:",omitempty"`
+	SizeGB          int        `cli:"size,aliases=size-gb" json:",omitempty"`
+	DistantFrom     []types.ID `json:",omitempty"`
+	OSType          string     `cli:",options=os_type,display_options=os_type_simple" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type" json:",omitempty"`
 
 	EditDisk common.EditRequest `cli:"edit,category=edit" mapconv:"EditParameter,omitempty" json:",omitempty"`
 	NoWait   bool
@@ -278,15 +280,16 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 				DescParameter: cflag.DescParameter{
 					Description: "新規ディスクを作成する例",
 				},
-				TagsParameter:   examples.Tags,
-				IconIDParameter: examples.IconID,
-				DiskPlan:        examples.OptionsString("disk_plan"),
-				Connection:      examples.OptionsString("disk_connection"),
-				SourceDiskID:    examples.ID,
-				SourceArchiveID: examples.ID,
-				SizeGB:          20,
-				DistantFrom:     []types.ID{examples.ID},
-				OSType:          examples.OptionsString("os_type"),
+				TagsParameter:       examples.Tags,
+				IconIDParameter:     examples.IconID,
+				DiskPlan:            examples.OptionsString("disk_plan"),
+				Connection:          examples.OptionsString("disk_connection"),
+				EncryptionAlgorithm: examples.OptionsString("disk_encryption_algorithm"),
+				SourceDiskID:        examples.ID,
+				SourceArchiveID:     examples.ID,
+				SizeGB:              20,
+				DistantFrom:         []types.ID{examples.ID},
+				OSType:              examples.OptionsString("os_type"),
 				EditDisk: common.EditRequest{
 					HostName:            "hostname",
 					Password:            "password",

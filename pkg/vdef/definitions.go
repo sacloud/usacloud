@@ -88,6 +88,10 @@ var definitions = map[string][]*definition{
 		{key: types.DiskConnections.VirtIO.String(), value: types.DiskConnections.VirtIO.String()},
 		{key: types.DiskConnections.IDE.String(), value: types.DiskConnections.IDE.String()},
 	},
+	"disk_encryption_algorithm": {
+		{key: types.DiskEncryptionAlgorithms.None.String(), value: types.DiskEncryptionAlgorithms.None.String()},
+		{key: types.DiskEncryptionAlgorithms.AES256XTS.String(), value: types.DiskEncryptionAlgorithms.AES256XTS.String()},
+	},
 	"dns_record_type": {
 		{key: types.DNSRecordTypes.A.String(), value: types.DNSRecordTypes.A},
 		{key: types.DNSRecordTypes.AAAA.String(), value: types.DNSRecordTypes.AAAA},

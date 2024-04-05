@@ -46,6 +46,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.DiskPlan, "disk-plan", "", p.DiskPlan, "(*required) options: [ssd/hdd]")
 	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "")
 	fs.StringVarP(&p.Connection, "connector", "", p.Connection, "(*required) options: [virtio/ide] (aliases: --connection)")
+	fs.StringVarP(&p.EncryptionAlgorithm, "encryption-algorithm", "", p.EncryptionAlgorithm, "options: [none/aes256_xts]")
 	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [almalinux/rockylinux/miraclelinux/ubuntu/debian/...]")
 	fs.VarP(core.NewIDFlag(&p.SourceDiskID, &p.SourceDiskID), "source-disk-id", "", "")
 	fs.VarP(core.NewIDFlag(&p.SourceArchiveID, &p.SourceArchiveID), "source-archive-id", "", "")
@@ -109,6 +110,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("disk-plan"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("size"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("connector"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("encryption-algorithm"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Plan options",
 			Flags: fs,
@@ -223,6 +225,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("disk-plan", util.FlagCompletionFunc("ssd", "hdd"))
 	cmd.RegisterFlagCompletionFunc("connector", util.FlagCompletionFunc("virtio", "ide"))
+	cmd.RegisterFlagCompletionFunc("encryption-algorithm", util.FlagCompletionFunc("none", "aes256_xts"))
 	cmd.RegisterFlagCompletionFunc("os-type", util.FlagCompletionFunc("centos", "centos7", "almalinux", "almalinux9", "almalinux8", "rockylinux", "rockylinux9", "rockylinux8", "miracle", "miraclelinux", "miracle8", "miraclelinux8", "miracle9", "miraclelinux9", "ubuntu", "ubuntu2204", "ubuntu2004", "ubuntu1804", "debian", "debian10", "debian11", "kusanagi"))
 
 }
