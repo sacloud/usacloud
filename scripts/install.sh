@@ -50,13 +50,31 @@ SCRIPT
 }
 
 install_with_curl() {
+  detect_arch
   echo "===== install usacloud by curl ====="
-  sudo sh <<'SCRIPT'
-    curl -LO https://github.com/sacloud/usacloud/releases/latest/download/usacloud_linux-amd64.zip
-    unzip -j usacloud_linux-amd64.zip usacloud && rm usacloud_linux-amd64.zip
+  sudo sh <<SCRIPT
+    curl -LO https://github.com/sacloud/usacloud/releases/latest/download/usacloud_linux-${ARCH}.zip
+    unzip -j usacloud_linux-${ARCH}.zip usacloud && rm usacloud_linux-${ARCH}.zip
     chmod +x usacloud
     mv usacloud /usr/local/bin/
 SCRIPT
+}
+
+detect_arch() {
+  ARCH=$(uname -m)
+  case "$ARCH" in
+    "i386" | "i686")
+      ARCH="386" ;;
+    "amd64"| "x86_64")
+      ARCH="amd64" ;;
+    "arm" | "aarch32")
+      ARCH="arm" ;;
+    "arm64" | "aarch64")
+      ARCH="arm64" ;;
+    *)
+      echo "Your platform ($(uname -a)) is not supported."
+      exit 1 ;;
+  esac
 }
 
 ### main
