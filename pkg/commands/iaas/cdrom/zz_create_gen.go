@@ -18,6 +18,7 @@ package cdrom
 
 import (
 	"github.com/sacloud/usacloud/pkg/core"
+	"github.com/sacloud/usacloud/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -42,7 +43,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "(*required when --source-file is specified)")
+	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "(*required when --source-file is specified) options: [5/10/20]")
 	fs.StringVarP(&p.SourceFile, "source-file", "", p.SourceFile, "(*required) ")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
@@ -136,6 +137,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
+	cmd.RegisterFlagCompletionFunc("size", util.FlagCompletionFunc("5", "10", "20"))
 
 }
 
