@@ -50,6 +50,7 @@ var definitions = map[string][]*definition{
 	"cdrom_sizes": {
 		{key: 5, value: 5},
 		{key: 10, value: 10},
+		{key: 20, value: 20},
 	},
 	"certificate_authority_issuance_method": {
 		{key: types.CertificateAuthorityIssuanceMethods.URL.String(), value: types.CertificateAuthorityIssuanceMethods.URL},
