@@ -23,6 +23,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/commands/root"
 	updateSelf "github.com/sacloud/usacloud/pkg/commands/update-self"
 	"github.com/sacloud/usacloud/pkg/commands/version"
+	_ "github.com/sacloud/usacloud/pkg/commands/webaccel" // webaccel向けのcore.LabelsExtractorsの設定用
 	"github.com/sacloud/usacloud/pkg/commands/webaccel/webaccelerator"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/spf13/cobra"
