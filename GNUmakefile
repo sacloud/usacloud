@@ -1,5 +1,5 @@
 #
-# Copyright 2017-2023 The sacloud/usacloud Authors
+# Copyright 2017-2025 The sacloud/usacloud Authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 #
 #====================
 AUTHOR         ?= The sacloud/usacloud Authors
-COPYRIGHT_YEAR ?= 2017-2023
+COPYRIGHT_YEAR ?= 2017-2025
 
 BIN            ?= usacloud
 BUILD_LDFLAGS   ?= "-s -w -X github.com/sacloud/usacloud/pkg/version.Revision=`git rev-parse --short HEAD`"
