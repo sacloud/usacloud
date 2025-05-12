@@ -51,7 +51,7 @@ func Confirm(in util.In, msg string) bool {
 	fmt.Printf("\n%s(y/n) [n]: ", msg)
 
 	var input string
-	fmt.Fscanln(in, &input)
+	fmt.Fscanln(in, &input) //nolint:errcheck
 	return input == "y" || input == "yes"
 }
 
