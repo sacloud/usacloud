@@ -9,7 +9,6 @@ linters:
   disable-all: true
   enable:
     - errcheck
-    - exportloopref
     - gocritic
     - gofmt
     - goimports
@@ -31,6 +30,7 @@ linters:
   #  - depguard
   #  - dogsled
   #  - dupl
+  #  - exportloopref
   #  - funlen
   #  - gochecknoinits
   #  - gochecknoglobals
