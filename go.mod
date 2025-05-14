@@ -21,7 +21,7 @@ require (
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/rhysd/go-github-selfupdate v1.2.3
 	github.com/sacloud/api-client-go v0.2.10
-	github.com/sacloud/go-http v0.1.8
+	github.com/sacloud/go-http v0.1.9
 	github.com/sacloud/iaas-api-go v1.12.0
 	github.com/sacloud/iaas-service-go v1.10.0
 	github.com/sacloud/packages-go v0.0.11
@@ -65,7 +65,7 @@ require (
 	github.com/tcnksm/go-gitconfig v0.1.2 // indirect
 	github.com/ulikunitz/xz v0.5.9 // indirect
 	github.com/zclconf/go-cty v1.14.4 // indirect
-	go.uber.org/ratelimit v0.3.0 // indirect
+	go.uber.org/ratelimit v0.3.1 // indirect
 	golang.org/x/mod v0.17.0 // indirect
 	golang.org/x/net v0.38.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8 // indirect
