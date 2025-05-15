@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM golang:1.21 AS builder
+FROM golang:1.24 AS builder
 MAINTAINER Usacloud Authors <sacloud.users@gmail.com>
 
 RUN  apt-get update && apt-get -y install \
@@ -30,7 +30,7 @@ ENV CGO_ENABLED 0
 RUN make tools build
 # ======
 
-FROM alpine:3.15
+FROM alpine:3.18
 MAINTAINER Usacloud Authors <sacloud.users@gmail.com>
 
 RUN apk add --no-cache --update ca-certificates
