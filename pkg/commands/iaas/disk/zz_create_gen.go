@@ -226,7 +226,7 @@ func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
 	cmd.RegisterFlagCompletionFunc("disk-plan", util.FlagCompletionFunc("ssd", "hdd"))
 	cmd.RegisterFlagCompletionFunc("connector", util.FlagCompletionFunc("virtio", "ide"))
 	cmd.RegisterFlagCompletionFunc("encryption-algorithm", util.FlagCompletionFunc("none", "aes256_xts"))
-	cmd.RegisterFlagCompletionFunc("os-type", util.FlagCompletionFunc("centos", "centos7", "almalinux", "almalinux9", "almalinux8", "rockylinux", "rockylinux9", "rockylinux8", "miracle", "miraclelinux", "miracle8", "miraclelinux8", "miracle9", "miraclelinux9", "ubuntu", "ubuntu2204", "ubuntu2004", "ubuntu1804", "debian", "debian10", "debian11", "kusanagi"))
+	cmd.RegisterFlagCompletionFunc("os-type", util.FlagCompletionFunc("almalinux", "almalinux9", "almalinux8", "rockylinux", "rockylinux9", "rockylinux8", "miracle", "miraclelinux", "miracle8", "miraclelinux8", "miracle9", "miraclelinux9", "ubuntu", "ubuntu2404", "ubuntu2204", "debian", "debian11", "debian12", "kusanagi"))
 
 }
 
