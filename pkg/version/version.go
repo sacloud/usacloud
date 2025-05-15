@@ -21,12 +21,12 @@ import (
 
 var (
 	// Version app version
-	Version = "1.14.1"
+	Version = "1.15.0"
 	// Revision git commit short commithash
 	Revision = "xxxxxx" // set on build time
 
 	// CopyrightYear .
-	CopyrightYear = "2017-2023"
+	CopyrightYear = "2017-2025"
 )
 
 // FullVersion return usacloud full version text
