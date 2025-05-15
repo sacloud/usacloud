@@ -93,7 +93,7 @@ func ToKebabCase(name string) string {
 }
 
 func ToCamelCase(name string) string {
-	return Normalize(xstrings.ToCamelCase(xstrings.ToSnakeCase(name)))
+	return Normalize(xstrings.ToPascalCase(xstrings.ToSnakeCase(name)))
 }
 
 func ToCamelCaseWithFirstLower(name string) string {
