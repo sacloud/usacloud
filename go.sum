@@ -246,8 +246,8 @@ github.com/sacloud/iaas-service-go v1.10.0 h1:OP0z0LLNLaNTmN1CtGpjQowD4SP1zn77z1
 github.com/sacloud/iaas-service-go v1.10.0/go.mod h1:tfWGYP+JnELP4ASOhcjaSDYr31TKrlPbqQ3wplCj190=
 github.com/sacloud/packages-go v0.0.11 h1:hrRWLmfPM9w7GBs6xb5/ue6pEMl8t1UuDKyR/KfteHo=
 github.com/sacloud/packages-go v0.0.11/go.mod h1:XNF5MCTWcHo9NiqWnYctVbASSSZR3ZOmmQORIzcurJ8=
-github.com/sacloud/webaccel-api-go v1.2.0 h1:eoiMNmz9bbeL3Ht1WPLKe2DbG7vH7Lb3a/jCmSjcKPs=
-github.com/sacloud/webaccel-api-go v1.2.0/go.mod h1:ZgTg5TldLf90RU9y3TnI0/luxERkJofk9+iLaupKB2E=
+github.com/sacloud/webaccel-api-go v1.3.0 h1:qu8QycooO64dkHdWPRdUn3eUf9BWpLASoh9uUo7oWZs=
+github.com/sacloud/webaccel-api-go v1.3.0/go.mod h1:5R914VqVeXIR320MwZYlSouFXgm/mvtY3YQ3SYSPWcU=
 github.com/sergi/go-diff v1.3.2-0.20230802210424-5b0b94c5c0d3 h1:n661drycOFuPLCN3Uc8sB6B/s6Z4t2xvBgU1htSHuq8=
 github.com/sergi/go-diff v1.3.2-0.20230802210424-5b0b94c5c0d3/go.mod h1:A0bzQcvG0E7Rwjx0REVgAGH58e96+X0MeOfepqsbeW4=
 github.com/skeema/knownhosts v1.2.2 h1:Iug2P4fLmDw9f41PB6thxUkNUkJzB5i+1/exaj40L3A=

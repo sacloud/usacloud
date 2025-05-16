@@ -25,7 +25,7 @@ require (
 	github.com/sacloud/iaas-api-go v1.15.0
 	github.com/sacloud/iaas-service-go v1.10.0
 	github.com/sacloud/packages-go v0.0.11
-	github.com/sacloud/webaccel-api-go v1.2.0
+	github.com/sacloud/webaccel-api-go v1.3.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/pflag v1.0.6
