@@ -30,7 +30,7 @@ require (
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/pflag v1.0.6
 	github.com/stretchr/testify v1.10.0
-	golang.org/x/crypto v0.38.0
+	golang.org/x/crypto v0.39.0
 )
 
 require (
@@ -66,11 +66,11 @@ require (
 	github.com/ulikunitz/xz v0.5.9 // indirect
 	github.com/zclconf/go-cty v1.14.4 // indirect
 	go.uber.org/ratelimit v0.3.1 // indirect
-	golang.org/x/mod v0.17.0 // indirect
+	golang.org/x/mod v0.25.0 // indirect
 	golang.org/x/net v0.38.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8 // indirect
 	golang.org/x/sys v0.33.0 // indirect
-	golang.org/x/text v0.25.0 // indirect
+	golang.org/x/text v0.26.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
