@@ -119,51 +119,6 @@ func init() {
 			return results, nil
 		},
 	)
-	registry.SetDefaultServiceFunc("iaas", "ssh-key", "generate",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-
-			req := &service.GenerateRequest{}
-			if err := conv.ConvertTo(parameter, req); err != nil {
-				return nil, err
-			}
-			if err := req.Validate(); err != nil {
-				return nil, err
-			}
-
-			res, err := svc.GenerateWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			return []interface{}{res}, nil
-
-		},
-	)
-	registry.SetDefaultListAllFunc("iaas", "ssh-key", "generate",
-		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-			svc := service.New(ctx.Client().(iaas.APICaller))
-			req := &service.FindRequest{}
-
-			type requester interface {
-				FindRequest() *service.FindRequest
-			}
-			if v, ok := parameter.(requester); ok {
-				req = v.FindRequest()
-			}
-
-			res, err := svc.FindWithContext(ctx, req)
-			if err != nil {
-				return nil, err
-			}
-
-			var results []interface{}
-			for _, v := range res {
-				results = append(results, v)
-			}
-			return results, nil
-		},
-	)
 	registry.SetDefaultServiceFunc("iaas", "ssh-key", "read",
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
