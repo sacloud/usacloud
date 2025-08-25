@@ -158,8 +158,8 @@ github.com/hashicorp/go-hclog v1.6.3 h1:Qr2kF+eVWjTiYmU7Y31tYlP1h0q/X3Nl3tPGdaB1
 github.com/hashicorp/go-hclog v1.6.3/go.mod h1:W4Qnvbt70Wk/zYJryRzDRU/4r0kIg0PVHBcfoyhpF5M=
 github.com/hashicorp/go-multierror v1.1.1 h1:H5DkEtf6CXdFp0N0Em5UCwQpXMWke8IA0+lD48awMYo=
 github.com/hashicorp/go-multierror v1.1.1/go.mod h1:iw975J/qwKPdAO1clOe2L8331t/9/fmwbPZ6JB6eMoM=
-github.com/hashicorp/go-retryablehttp v0.7.7 h1:C8hUCYzor8PIfXHa4UrZkU4VvK8o9ISHxT2Q8+VepXU=
-github.com/hashicorp/go-retryablehttp v0.7.7/go.mod h1:pkQpWZeYWskR+D1tR2O5OcBFOxfA7DoAO6xtkuQnHTk=
+github.com/hashicorp/go-retryablehttp v0.7.8 h1:ylXZWnqa7Lhqpk0L1P1LzDtGcCR0rPVUrx/c8Unxc48=
+github.com/hashicorp/go-retryablehttp v0.7.8/go.mod h1:rjiScheydd+CxvumBsIrFKlx3iS0jrZ7LvzFGFmuKbw=
 github.com/hashicorp/go-version v1.7.0 h1:5tqGy27NaOTB8yJKUZELlFAS/LTKJkrmONwQKeRZfjY=
 github.com/hashicorp/go-version v1.7.0/go.mod h1:fltr4n8CU8Ke44wwGCBoEymUuxUHl09ZGVZPK5anwXA=
 github.com/hashicorp/golang-lru v0.5.0/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
@@ -234,8 +234,8 @@ github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFR
 github.com/rogpeppe/go-internal v1.8.0 h1:FCbCCtXNOY3UtUuHUYaghJg4y7Fd14rXifAYUAtL9R8=
 github.com/rogpeppe/go-internal v1.8.0/go.mod h1:WmiCO8CzOY8rg0OYDC4/i/2WRWAB6poM+XZ2dLUbcbE=
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
-github.com/sacloud/api-client-go v0.3.0 h1:NLA2BpZ5welAXBPxgmXSCjgn/k0ShDB0x5kmUHl7TJ4=
-github.com/sacloud/api-client-go v0.3.0/go.mod h1:v8ke3pxVQ9TCWEbMkfbLX8NMeGiPpE+uDwlgcUWfMgM=
+github.com/sacloud/api-client-go v0.3.3 h1:ZpSAyGpITA8UFO3Hq4qMHZLGuNI1FgxAxo4sqBnCKDs=
+github.com/sacloud/api-client-go v0.3.3/go.mod h1:0p3ukcWYXRCc2AUWTl1aA+3sXLvurvvDqhRaLZRLBwo=
 github.com/sacloud/ftps v1.2.0 h1:7UlSWd7cnm1J+sANz7IiBV9ffVcS+4g6ZV5UHVVbvaw=
 github.com/sacloud/ftps v1.2.0/go.mod h1:h4awhOi3PEyhKLj1FpXjoVV5yVkmRUU+d5L95EwX2JU=
 github.com/sacloud/go-http v0.1.9 h1:Xa5PY8/pb7XWhwG9nAeXSrYXPbtfBWqawgzxD5co3VE=
