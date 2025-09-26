@@ -27,7 +27,7 @@ func FlattenErrors(errors []error) error {
 	for _, str := range errors {
 		list = append(list, str.Error())
 	}
-	return fmt.Errorf(strings.Join(list, "\n"))
+	return fmt.Errorf("%s", strings.Join(list, "\n"))
 }
 
 func FlattenErrorsWithPrefix(errors []error, pref string) error {
@@ -35,5 +35,5 @@ func FlattenErrorsWithPrefix(errors []error, pref string) error {
 	for _, str := range errors {
 		list = append(list, fmt.Sprintf("[%s] : %s", pref, str.Error()))
 	}
-	return fmt.Errorf(strings.Join(list, "\n"))
+	return fmt.Errorf("%s", strings.Join(list, "\n"))
 }

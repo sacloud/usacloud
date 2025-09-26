@@ -30,7 +30,7 @@ func FlattenErrors(errors []error) error {
 	for _, str := range errors {
 		list = append(list, str.Error())
 	}
-	return fmt.Errorf(strings.Join(list, "\n"))
+	return fmt.Errorf("%s", strings.Join(list, "\n"))
 }
 
 func WrapError(ctx Context, err error) error {
