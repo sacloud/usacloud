@@ -14,7 +14,6 @@ builds:
       - windows
       - linux
       - darwin
-      - js
     goarch:
       - amd64
       - '386'
@@ -29,6 +28,8 @@ builds:
         goarch: arm
       - goos: openbsd
         goarch: arm64
+      - goos: windows
+        goarch: arm
     binary: '{{ .ProjectName }}'
 archives:
   - format: zip
