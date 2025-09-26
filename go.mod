@@ -63,7 +63,7 @@ require (
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/sacloud/ftps v1.2.0 // indirect
 	github.com/tcnksm/go-gitconfig v0.1.2 // indirect
-	github.com/ulikunitz/xz v0.5.9 // indirect
+	github.com/ulikunitz/xz v0.5.14 // indirect
 	github.com/zclconf/go-cty v1.14.4 // indirect
 	go.uber.org/ratelimit v0.3.1 // indirect
 	golang.org/x/mod v0.25.0 // indirect
