@@ -59,8 +59,8 @@ func (c *RDPOpener) StartDefaultClient() error {
 	if err != nil {
 		return err
 	}
-	defer f.Close()
-	defer os.Remove(f.Name())
+	defer f.Close()           //nolint:errcheck
+	defer os.Remove(f.Name()) //nolint:errcheck
 
 	uri = fmt.Sprintf("%s.rdp", f.Name())
 	rdpContent := c.RDPFileContent()
@@ -68,7 +68,7 @@ func (c *RDPOpener) StartDefaultClient() error {
 	if err := os.WriteFile(uri, []byte(rdpContent), 0600); err != nil {
 		return err
 	}
-	defer os.Remove(uri)
+	defer os.Remove(uri) //nolint:errcheck
 
 	err = open.Start(uri)
 	// 念のため数秒待ってからreturnする

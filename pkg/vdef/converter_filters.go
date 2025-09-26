@@ -90,7 +90,7 @@ func pathToReader(v interface{}) (interface{}, error) {
 		return nil, nil
 	}
 
-	file, err := os.Open(s)
+	file, err := os.Open(s) //nolint:gosec
 	if err != nil {
 		return nil, err
 	}
@@ -115,7 +115,7 @@ func pathToWriter(v interface{}) (interface{}, error) {
 		return nil, nil
 	}
 
-	file, err := os.Create(s)
+	file, err := os.Create(s) //nolint:gosec
 	if err != nil {
 		return nil, err
 	}

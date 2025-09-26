@@ -30,7 +30,7 @@ func (p *Printer) Fprint(w io.Writer, c *color.Color, a ...interface{}) {
 	if p.NoColor {
 		fmt.Fprint(w, a...)
 	} else {
-		c.Fprint(w, a...)
+		c.Fprint(w, a...) //nolint:errcheck,gosec
 	}
 }
 
@@ -39,6 +39,6 @@ func (p *Printer) Fprintf(w io.Writer, c *color.Color, format string, a ...inter
 	if p.NoColor {
 		fmt.Fprintf(w, format, a...)
 	} else {
-		c.Fprintf(w, format, a...)
+		c.Fprintf(w, format, a...) //nolint:errcheck,gosec
 	}
 }

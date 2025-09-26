@@ -35,7 +35,7 @@ func NewVersionReleased() (*ReleaseInfo, error) {
 	var releaseInfo *ReleaseInfo
 	cachePath := filepath.Join(configDir, ".release_info_cache")
 	if _, err := os.Stat(cachePath); err == nil {
-		data, err := os.ReadFile(cachePath)
+		data, err := os.ReadFile(cachePath) //nolint:gosec
 		if err != nil {
 			return nil, err
 		}

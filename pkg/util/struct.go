@@ -49,7 +49,7 @@ func BytesFromPathOrContent(pathOrContent string) ([]byte, error) {
 		return nil, errors.New("got invalid pathOrContent")
 	}
 
-	data, err := os.ReadFile(poc)
+	data, err := os.ReadFile(poc) //nolint:gosec
 	if err != nil {
 		return []byte(poc), nil // ファイルを読んでみてエラーだった場合はJSONなどのコンテンツと判定する
 	}

@@ -29,6 +29,6 @@ func (c *Command) printWarning(writer io.Writer, noColor bool, warn string) {
 		fmt.Fprintf(writer, "[WARN] %s\n", warn)
 	} else {
 		out := color.New(color.FgYellow)
-		out.Fprintf(writer, "[WARN] %s\n", warn)
+		out.Fprintf(writer, "[WARN] %s\n", warn) //nolint:errcheck,gosec
 	}
 }

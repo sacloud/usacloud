@@ -26,7 +26,7 @@ func setup() (*os.File, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	return tempFile, func() { os.Remove(tempFile.Name()) }, nil
+	return tempFile, func() { os.Remove(tempFile.Name()) }, nil //nolint:errcheck,gosec
 }
 
 func TestBytesFromPathOrContent(t *testing.T) {
