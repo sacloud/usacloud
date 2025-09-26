@@ -1,5 +1,8 @@
 # Changelog
 
+## [v1.16.1](https://github.com/sacloud/usacloud/compare/v1.16.0...v1.16.1) - 2025-09-26
+- fixes broken build by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1178
+
 ## [v1.16.0](https://github.com/sacloud/usacloud/compare/v1.15.0...v1.16.0) - 2025-09-26
 - リポジトリ独自のIssueテンプレートを廃止 by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1154
 - SSH公開鍵生成機能の取り下げ by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1161
