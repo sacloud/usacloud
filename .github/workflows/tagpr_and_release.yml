@@ -1,0 +1,85 @@
+# .github/workflows/tagpr.yml
+name: tagpr
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  tagpr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      packages: write
+      actions: write
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+
+    - uses: Songmu/tagpr@v1
+      id: tagpr
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version-file: 'go.mod'
+      if: ${{ steps.tagpr.outputs.tag != ''}}
+
+    - name: Import GPG key
+      id: import_gpg
+      uses: crazy-max/ghaction-import-gpg@v6
+      with:
+        gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+        passphrase: ${{ secrets.GPG_PASSPHRASE }}
+        git_user_signingkey: true
+        git_commit_gpgsign: true
+      if: ${{ steps.tagpr.outputs.tag != ''}}
+
+    - name: Run GoReleaser
+      uses:  goreleaser/goreleaser-action@v6
+      with:
+        version: '~> v2'
+        args: release  --clean
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
+        NFPM_DEFAULT_PASSPHRASE: ${{ secrets.PASSPHRASE }}
+        HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
+      if: ${{ steps.tagpr.outputs.tag != ''}}
+
+    - name: Docker meta
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ghcr.io/sacloud/usacloud
+      if: ${{ steps.tagpr.outputs.tag != ''}}
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+      if: ${{ steps.tagpr.outputs.tag != ''}}
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      if: ${{ steps.tagpr.outputs.tag != ''}}
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.CR_PAT }}
+      if: ${{ steps.tagpr.outputs.tag != ''}}
+
+    - name: Build and push to GitHub Container Registry
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        platforms: linux/amd64,linux/arm64
+        tags: ${{ steps.meta.outputs.tags }},ghcr.io/sacloud/usacloud:latest
+        push: true
+      if: ${{ steps.tagpr.outputs.tag != ''}}
+
