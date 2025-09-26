@@ -24,12 +24,12 @@ func FileOrStdin(path string) (file *os.File, deferFunc func(), err error) {
 		file = os.Stdin
 		deferFunc = func() {}
 	} else {
-		file, err = os.Open(path)
+		file, err = os.Open(path) //nolint:gosec
 		if err != nil {
 			return
 		}
 		deferFunc = func() {
-			file.Close()
+			file.Close() //nolint:errcheck,gosec
 		}
 	}
 	return

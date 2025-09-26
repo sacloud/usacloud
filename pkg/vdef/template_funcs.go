@@ -139,7 +139,7 @@ var TemplateFuncMap = template.FuncMap{
 			return ""
 		}
 
-		data, err := os.ReadFile(poc)
+		data, err := os.ReadFile(poc) //nolint:gosec
 		if err != nil {
 			return ""
 		}

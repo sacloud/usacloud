@@ -36,8 +36,8 @@ func StartDefaultVNCClient(vncProxyInfo *iaas.VNCProxyInfo) error {
 		if err != nil {
 			return err
 		}
-		defer f.Close()
-		defer os.Remove(f.Name())
+		defer f.Close()           //nolint:errcheck
+		defer os.Remove(f.Name()) //nolint:errcheck
 		uri = fmt.Sprintf("%s.vnc", f.Name())
 		if _, err := os.Stat(uri); err == nil {
 			uri = ""
@@ -56,7 +56,7 @@ func StartDefaultVNCClient(vncProxyInfo *iaas.VNCProxyInfo) error {
 	if err := os.WriteFile(uri, []byte(body), 0600); err != nil {
 		return err
 	}
-	defer os.Remove(uri)
+	defer os.Remove(uri) //nolint:errcheck
 
 	err := open.Start(uri)
 	time.Sleep(time.Second)

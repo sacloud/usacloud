@@ -147,7 +147,7 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 			// read input
 			var input string
 			fmt.Fprintf(out, "\t%s: ", "Enter token")
-			fmt.Fscanln(in, &input) //nolint:errcheck
+			fmt.Fscanln(in, &input) //nolint:errcheck,gosec
 			currentConfig.AccessToken = input
 		}
 	} else {
@@ -172,7 +172,7 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 			// read input
 			var input string
 			fmt.Fprintf(out, "\t%s: ", "Enter secret")
-			fmt.Fscanln(in, &input) //nolint:errcheck
+			fmt.Fscanln(in, &input) //nolint:errcheck,gosec
 			currentConfig.AccessTokenSecret = input
 		}
 	} else {
@@ -202,7 +202,7 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 			var input string
 			for {
 				fmt.Fprintf(out, "\t%s[%s]: ", "Enter Zone", strings.Join(zones, "/"))
-				fmt.Fscanln(in, &input) //nolint:errcheck
+				fmt.Fscanln(in, &input) //nolint:errcheck,gosec
 				if input == "" || containsString(zones, input) {
 					break
 				}
@@ -234,7 +234,7 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 			var input string
 			for {
 				fmt.Fprintf(out, "\t%s[%s]: ", "Enter Default Output Type", strings.Join(outputTypes, "/"))
-				fmt.Fscanln(in, &input) //nolint:errcheck
+				fmt.Fscanln(in, &input) //nolint:errcheck,gosec
 				if input == "" || containsString(outputTypes, input) {
 					break
 				}

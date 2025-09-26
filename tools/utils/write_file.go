@@ -42,7 +42,7 @@ func WriteFileWithTemplate(config *TemplateConfig) bool {
 
 	// create dir
 	if _, err := os.Stat(filepath.Dir(config.OutputPath)); err != nil && os.IsNotExist(err) {
-		if err := os.MkdirAll(filepath.Dir(config.OutputPath), 0755); err != nil {
+		if err := os.MkdirAll(filepath.Dir(config.OutputPath), 0750); err != nil {
 			log.Fatal(err)
 		}
 	}
