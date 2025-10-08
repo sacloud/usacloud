@@ -1,5 +1,12 @@
 # Changelog
 
+## [v1.16.2](https://github.com/sacloud/usacloud/compare/v1.16.1...v1.16.2) - 2025-10-08
+- go: bump github.com/sacloud/iaas-api-go from 1.17.2 to 1.17.3 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1183
+- go: bump github.com/go-playground/validator/v10 from 10.27.0 to 10.28.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1182
+- go: bump github.com/spf13/cobra from 1.9.1 to 1.10.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1181
+- iaas-service-go v1.14.2 by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1185
+- go: bump github.com/spf13/pflag from 1.0.6 to 1.0.10 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1180
+
 ## [v1.16.1](https://github.com/sacloud/usacloud/compare/v1.16.0...v1.16.1) - 2025-09-26
 - fixes broken build by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1178
 
