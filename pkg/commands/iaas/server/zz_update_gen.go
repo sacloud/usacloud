@@ -47,6 +47,9 @@ func (p *updateParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 	if !fs.Changed("gpu") {
 		p.GPU = nil
 	}
+	if !fs.Changed("gpu-model") {
+		p.GPUModel = nil
+	}
 	if !fs.Changed("cpu-model") {
 		p.CPUModel = nil
 	}
@@ -90,6 +93,9 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	if p.GPU == nil {
 		p.GPU = pointer.NewInt(0)
 	}
+	if p.GPUModel == nil {
+		p.GPUModel = pointer.NewString("")
+	}
 	if p.CPUModel == nil {
 		p.CPUModel = pointer.NewString("")
 	}
@@ -127,6 +133,7 @@ func (p *updateParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.IntVarP(p.CPU, "cpu", "", 0, "(aliases: --core)")
 	fs.IntVarP(p.Memory, "memory", "", 0, "")
 	fs.IntVarP(p.GPU, "gpu", "", 0, "")
+	fs.StringVarP(p.GPUModel, "gpu-model", "", "", "")
 	fs.StringVarP(p.CPUModel, "cpu-model", "", "", "")
 	fs.StringVarP(p.Commitment, "commitment", "", "", "options: [standard/dedicatedcpu]")
 	fs.StringVarP(p.Generation, "generation", "", "", "options: [default/g100/g200]")
@@ -178,6 +185,7 @@ func (p *updateParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs.AddFlag(cmd.LocalFlags().Lookup("cpu"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("memory"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("gpu"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("gpu-model"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("cpu-model"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("commitment"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("generation"))
