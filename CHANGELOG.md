@@ -1,5 +1,8 @@
 # Changelog
 
+## [v1.18.0](https://github.com/sacloud/usacloud/compare/v1.17.0...v1.18.0) - 2025-10-14
+- feat: ディスク暗号化機能 KMSキー/BYOK 対応 by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1194
+
 ## [v1.17.0](https://github.com/sacloud/usacloud/compare/v1.16.2...v1.17.0) - 2025-10-14
 - Push Docker image with both latest and release tag by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1186
 - feat: koukaryoku VRT - added GPUModel field by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1193
