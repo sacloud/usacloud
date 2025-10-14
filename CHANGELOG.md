@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.17.0](https://github.com/sacloud/usacloud/compare/v1.16.2...v1.17.0) - 2025-10-14
+- Push Docker image with both latest and release tag by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1186
+- feat: koukaryoku VRT - added GPUModel field by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1193
+
 ## [v1.16.2](https://github.com/sacloud/usacloud/compare/v1.16.1...v1.16.2) - 2025-10-08
 - go: bump github.com/sacloud/iaas-api-go from 1.17.2 to 1.17.3 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1183
 - go: bump github.com/go-playground/validator/v10 from 10.27.0 to 10.28.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1182
