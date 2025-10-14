@@ -47,6 +47,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.IntVarP(&p.SizeGB, "size", "", p.SizeGB, "")
 	fs.StringVarP(&p.Connection, "connector", "", p.Connection, "(*required) options: [virtio/ide] (aliases: --connection)")
 	fs.StringVarP(&p.EncryptionAlgorithm, "encryption-algorithm", "", p.EncryptionAlgorithm, "options: [none/aes256_xts]")
+	fs.VarP(core.NewIDFlag(&p.KMSKeyID, &p.KMSKeyID), "kms-key-id", "", "")
 	fs.StringVarP(&p.OSType, "os-type", "", p.OSType, "options: [almalinux/rockylinux/miraclelinux/ubuntu/debian/...]")
 	fs.VarP(core.NewIDFlag(&p.SourceDiskID, &p.SourceDiskID), "source-disk-id", "", "")
 	fs.VarP(core.NewIDFlag(&p.SourceArchiveID, &p.SourceArchiveID), "source-archive-id", "", "")
@@ -121,6 +122,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 		fs = pflag.NewFlagSet("disk", pflag.ContinueOnError)
 		fs.SortFlags = false
 		fs.AddFlag(cmd.LocalFlags().Lookup("distant-from"))
+		fs.AddFlag(cmd.LocalFlags().Lookup("kms-key-id"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("server-id"))
 		sets = append(sets, &core.FlagSet{
 			Title: "Disk-specific options",

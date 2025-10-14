@@ -52,6 +52,7 @@ type createParameter struct {
 	SizeGB                int    `cli:"size,category=plan,order=20"`
 	Connection            string `cli:"connector,aliases=connection,options=disk_connection,category=plan,order=30" validate:"required,disk_connection"`
 	EncryptionAlgorithm   string `cli:"encryption-algorithm,options=disk_encryption_algorithm,category=plan,order=40" validate:"omitempty,disk_encryption_algorithm"`
+	KMSKeyID              types.ID
 
 	OSType          string   `cli:",options=os_type,display_options=os_type_simple,category=source,order=10" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
 	SourceDiskID    types.ID `cli:",category=source,order=20"`
@@ -111,6 +112,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		SizeGB:              20,
 		Connection:          examples.OptionsString("disk_connection"),
 		EncryptionAlgorithm: examples.OptionsString("disk_encryption_algorithm"),
+		KMSKeyID:            examples.ID,
 		OSType:              examples.OptionsString("os_type"),
 		SourceDiskID:        examples.ID,
 		SourceArchiveID:     examples.ID,
