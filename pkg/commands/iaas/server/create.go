@@ -95,9 +95,10 @@ type diskApplyParameter struct {
 	cflag.DescParameter   `cli:",squash" mapconv:",squash" json:",omitempty"`
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash" json:",omitempty"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash" json:",omitempty"`
-	DiskPlan              string `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"omitempty,disk_plan" json:",omitempty"`
-	Connection            string `cli:",options=disk_connection" validate:"omitempty,disk_connection" json:",omitempty"`
-	EncryptionAlgorithm   string `cli:",options=disk_encryption_algorithm,category=plan,order=40" validate:"omitempty,disk_encryption_algorithm" json:",omitempty"`
+	DiskPlan              string   `cli:",options=disk_plan" mapconv:"DiskPlanID,filters=disk_plan_to_value" validate:"omitempty,disk_plan" json:",omitempty"`
+	Connection            string   `cli:",options=disk_connection" validate:"omitempty,disk_connection" json:",omitempty"`
+	EncryptionAlgorithm   string   `cli:",options=disk_encryption_algorithm,category=plan,order=40" validate:"omitempty,disk_encryption_algorithm" json:",omitempty"`
+	KMSKeyID              types.ID `json:",omitempty"`
 
 	SourceDiskID    types.ID   `json:",omitempty"`
 	SourceArchiveID types.ID   `json:",omitempty"`
@@ -288,6 +289,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 				DiskPlan:            examples.OptionsString("disk_plan"),
 				Connection:          examples.OptionsString("disk_connection"),
 				EncryptionAlgorithm: examples.OptionsString("disk_encryption_algorithm"),
+				KMSKeyID:            examples.ID,
 				SourceDiskID:        examples.ID,
 				SourceArchiveID:     examples.ID,
 				SizeGB:              20,
