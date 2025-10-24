@@ -1,5 +1,8 @@
 # Changelog
 
+## [v1.19.0](https://github.com/sacloud/usacloud/compare/v1.18.0...v1.19.0) - 2025-10-24
+- iaas-service-go v1.17.0 - update ostype by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1197
+
 ## [v1.18.0](https://github.com/sacloud/usacloud/compare/v1.17.0...v1.18.0) - 2025-10-14
 - feat: ディスク暗号化機能 KMSキー/BYOK 対応 by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1194
 
