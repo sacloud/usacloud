@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -66,9 +67,7 @@ var DefaultQueryDriver = query.DriverJMESPath
 // LoadConfigValue 指定のフラグセットからフラグを読み取り*Flagsを組み立てて返す
 func LoadConfigValue(flags *pflag.FlagSet, errW io.Writer, skipLoadingProfile bool) (*Config, error) {
 	o := &Config{
-		ConfigValue: profile.ConfigValue{
-			Zones: append(iaas.SakuraCloudZones, "all"),
-		},
+		ConfigValue: profile.ConfigValue{},
 	}
 	if skipLoadingProfile {
 		return o, nil
@@ -100,6 +99,9 @@ func (o *Config) fillDefaults() {
 	if len(o.Zones) == 0 {
 		o.Zones = iaas.SakuraCloudZones
 	}
+	if !slices.Contains(o.Zones, "all") {
+		o.Zones = append(o.Zones, "all")
+	}
 }
 
 func (o *Config) loadFromEnv() {
@@ -113,7 +115,7 @@ func (o *Config) loadFromEnv() {
 		o.Zone = stringFromEnv("SAKURACLOUD_ZONE", "")
 	}
 	if len(o.Zones) == 0 {
-		o.Zones = stringSliceFromEnv("SAKURACLOUD_ZONES", append(iaas.SakuraCloudZones, "all"))
+		o.Zones = stringSliceFromEnv("SAKURACLOUD_ZONES", []string{})
 	}
 	if o.AcceptLanguage == "" {
 		o.AcceptLanguage = stringFromEnv("SAKURACLOUD_ACCEPT_LANGUAGE", "")
