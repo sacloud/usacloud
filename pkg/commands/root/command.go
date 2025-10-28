@@ -17,9 +17,11 @@ package root
 import (
 	"fmt"
 	"os"
+	"slices"
 	"sync"
 
 	"github.com/fatih/color"
+	saht "github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/printer"
 	"github.com/sacloud/usacloud/pkg/version"
@@ -55,7 +57,12 @@ var Command = &cobra.Command{
 	},
 }
 
+var TheClient saht.Client
+
 func init() {
+	TheClient.SetEnviron(slices.Clone(os.Environ()))
+	TheClient.FlagSet().Parse(slices.Clone(os.Args[1:]))
+
 	Command.Flags().SortFlags = false
 	Command.PersistentFlags().SortFlags = false
 
