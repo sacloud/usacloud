@@ -1,5 +1,8 @@
 # Changelog
 
+## [v1.19.1](https://github.com/sacloud/usacloud/compare/v1.19.0...v1.19.1) - 2025-10-27
+- fix(config): ensure SAKURACLOUD_ZONES env var is respected by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1199
+
 ## [v1.19.0](https://github.com/sacloud/usacloud/compare/v1.18.0...v1.19.0) - 2025-10-24
 - iaas-service-go v1.17.0 - update ostype by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1197
 
