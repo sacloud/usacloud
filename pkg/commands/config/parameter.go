@@ -17,7 +17,6 @@ package config
 import (
 	"fmt"
 
-	"github.com/sacloud/api-client-go/profile"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/validate"
 )
@@ -47,18 +46,23 @@ func validateProfileParameter(ctx cli.Context, parameter interface{}) error {
 	if len(ctx.Args()) > 0 && p.GetName() == "" {
 		p.SetName(ctx.Args()[0])
 	}
+	client := ctx.Saclient()
+	op, err := client.ProfileOp()
+	if err != nil {
+		return err
+	}
 	if p.GetName() == "" {
-		current, err := profile.CurrentName()
+		current, err := client.Profile()
 		if err != nil {
 			return err
 		}
-		p.SetName(current)
+		p.SetName(current.Name)
 	}
 	if err := validate.Exec(p); err != nil {
 		return err
 	}
 
-	profiles, err := profile.List()
+	profiles, err := op.List()
 	if err != nil {
 		return err
 	}

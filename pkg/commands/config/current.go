@@ -17,7 +17,6 @@ package config
 import (
 	"fmt"
 
-	"github.com/sacloud/api-client-go/profile"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 )
@@ -42,7 +41,11 @@ func init() {
 type currentParameter struct{}
 
 func currentFunc(ctx cli.Context, _ interface{}) ([]interface{}, error) {
-	current, err := profile.CurrentName()
+	op, err := ctx.Saclient().ProfileOp()
+	if err != nil {
+		return nil, err
+	}
+	current, err := op.GetCurrentName()
 	if err != nil {
 		return nil, err
 	}

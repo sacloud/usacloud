@@ -18,9 +18,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/sacloud/api-client-go/profile"
 	"github.com/sacloud/usacloud/pkg/cli"
-	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -53,12 +51,16 @@ func showFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		return nil, fmt.Errorf("invalid parameter: %v", parameter)
 	}
 
-	var profileValue config.Config
-	if err := profile.Load(p.Name, &profileValue); err != nil {
+	op, err := ctx.Saclient().ProfileOp()
+	if err != nil {
+		return nil, err
+	}
+	profile, err := op.Read(p.Name)
+	if err != nil {
 		return nil, err
 	}
 
-	data, err := json.MarshalIndent(profileValue, "", "    ")
+	data, err := json.MarshalIndent(profile.Attributes, "", "    ")
 	if err != nil {
 		return nil, err
 	}

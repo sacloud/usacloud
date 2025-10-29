@@ -15,6 +15,7 @@
 package config
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -26,6 +27,7 @@ import (
 	"github.com/sacloud/api-client-go/profile"
 	sacloudhttp "github.com/sacloud/go-http"
 	"github.com/sacloud/iaas-api-go"
+	saclient "github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/query"
 	"github.com/sacloud/usacloud/pkg/validate"
 	"github.com/spf13/pflag"
@@ -238,6 +240,33 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 			return
 		}
 		o.ArgumentMatchMode = v
+	}
+}
+
+func (o *Config) LoadFromAttributes(p *saclient.Profile) error {
+	if buf, err := json.Marshal(p.Attributes); err != nil {
+		return err
+	} else if err := json.Unmarshal(buf, o); err != nil {
+		return err
+	} else {
+		o.Profile = p.Name
+		o.fillDefaults()
+		return nil
+	}
+}
+
+func (o *Config) IntoAttributes() (*saclient.Profile, error) {
+	ret := saclient.Profile{
+		Name:       o.Profile,
+		Attributes: make(map[string]any),
+	}
+
+	if buf, err := json.Marshal(o); err != nil {
+		return nil, err
+	} else if err := json.Unmarshal(buf, &ret.Attributes); err != nil {
+		return nil, err
+	} else {
+		return &ret, nil
 	}
 }
 

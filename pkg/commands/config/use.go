@@ -17,7 +17,6 @@ package config
 import (
 	"fmt"
 
-	"github.com/sacloud/api-client-go/profile"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 )
@@ -50,5 +49,9 @@ func useFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	if !ok {
 		return nil, fmt.Errorf("invalid parameter: %v", parameter)
 	}
-	return nil, profile.SetCurrentName(p.Name)
+	op, err := ctx.Saclient().ProfileOp()
+	if err != nil {
+		return nil, err
+	}
+	return nil, op.SetCurrentName(p.Name)
 }

@@ -22,6 +22,7 @@ import (
 	"github.com/fatih/color"
 	"github.com/sacloud/api-client-go/profile"
 	"github.com/sacloud/iaas-api-go"
+	saht "github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -91,12 +92,28 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 		return nil, fmt.Errorf("invalid parameter: %v", parameter)
 	}
 
+	reader := func(op saht.ProfileAPI, name string) (*saht.Profile, error) { return op.Read(name) }
+	writer := func(op saht.ProfileAPI, p *saht.Profile) (*saht.Profile, error) { return op.Update(p) }
+	return __editProfile(ctx, p, reader, writer)
+}
+
+func __editProfile(
+	ctx cli.Context,
+	p *EditParameter,
+	reader func(saht.ProfileAPI, string) (*saht.Profile, error),
+	writer func(saht.ProfileAPI, *saht.Profile) (*saht.Profile, error),
+) ([]interface{}, error) {
+	op, err := ctx.Saclient().ProfileOp()
+	if err != nil {
+		return nil, err
+	}
+
 	if len(ctx.Args()) > 0 && p.Name == "" {
 		p.Name = ctx.Args()[0]
 	}
 
 	if p.Name == "" {
-		current, err := profile.CurrentName()
+		current, err := op.GetCurrentName()
 		if err != nil {
 			return nil, err
 		}
@@ -113,12 +130,11 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 		DefaultOutputType: p.DefaultOutputType,
 	}
 
-	currentConfig, err := getProfileConfigValue(p.Name)
-	if err != nil {
+	var currentConfig *config.Config = new(config.Config)
+	if loaded, err := reader(op, p.Name); err != nil {
 		return nil, err
-	}
-	if currentConfig == nil {
-		currentConfig = &config.Config{}
+	} else if err := currentConfig.LoadFromAttributes(loaded); err != nil {
+		return nil, err
 	}
 
 	out := ctx.IO().Out()
@@ -246,17 +262,19 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 		currentConfig.DefaultOutputType = newConfigValue.DefaultOutputType
 	}
 
-	if err := profile.Save(p.Name, currentConfig); err != nil {
-		return nil, err
-	}
-
-	wrote, err := profile.ConfigFilePath(p.Name)
+	updated, err := currentConfig.IntoAttributes()
 	if err != nil {
 		return nil, err
 	}
+
+	persisted, err := writer(op, updated)
+	if err != nil {
+		return nil, err
+	}
+	wrote := persisted.Pathname()
 	msgWriter.Fprintf(out, color.New(color.FgHiGreen), "\nWritten your settings to %s\n", wrote)
 
-	current, err := profile.CurrentName()
+	current, err := op.GetCurrentName()
 	if err != nil {
 		return nil, err
 	}
@@ -268,7 +286,7 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 				return nil, nil
 			}
 		}
-		return nil, profile.SetCurrentName(p.Name)
+		return nil, op.SetCurrentName(p.Name)
 	}
 	return nil, nil
 }
