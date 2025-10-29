@@ -67,7 +67,7 @@ type EditParameter struct {
 	Name              string `validate:"omitempty,profile_name"`
 	AccessToken       string `cli:"access-token,aliases=token"`
 	AccessTokenSecret string `cli:"access-token-secret,aliases=secret"`
-	Zone              string `validate:"omitempty,zone"`
+	Zone              string
 	DefaultOutputType string `validate:"omitempty,output_type"`
 	NoColor           bool
 	Use               bool
