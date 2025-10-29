@@ -1,5 +1,8 @@
 # Changelog
 
+## [v1.19.2](https://github.com/sacloud/usacloud/compare/v1.19.1...v1.19.2) - 2025-10-29
+- config: remove zone validation from config commands by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1201
+
 ## [v1.19.1](https://github.com/sacloud/usacloud/compare/v1.19.0...v1.19.1) - 2025-10-27
 - fix(config): ensure SAKURACLOUD_ZONES env var is respected by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1199
 
