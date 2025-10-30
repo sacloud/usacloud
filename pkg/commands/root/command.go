@@ -15,6 +15,7 @@
 package root
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"slices"
@@ -41,6 +42,9 @@ var Command = &cobra.Command{
 		once.Do(func() {
 			noColor, _ := cmd.PersistentFlags().GetBool("no-color") // ignore error
 			alertNewVersionReleased(noColor)
+
+			TheClient.SetEnviron(slices.Clone(os.Environ()))
+			TheClient.FlagSet(flag.ContinueOnError).Parse(slices.Clone(os.Args[1:]))
 		})
 	},
 
@@ -60,9 +64,6 @@ var Command = &cobra.Command{
 var TheClient saht.Client
 
 func init() {
-	TheClient.SetEnviron(slices.Clone(os.Environ()))
-	TheClient.FlagSet().Parse(slices.Clone(os.Args[1:]))
-
 	Command.Flags().SortFlags = false
 	Command.PersistentFlags().SortFlags = false
 
