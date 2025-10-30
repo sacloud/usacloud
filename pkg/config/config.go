@@ -61,6 +61,20 @@ type Config struct {
 	//   - `jmespath`(デフォルト): JMESPath
 	//   - `jq` : gojq
 	DefaultQueryDriver string
+
+	// Fields related to service principal keys:
+
+	// TokenEndpoint specifes IAM token request endpoint (URL)
+	TokenEndpoint string `json:",omitempty"`
+
+	// ServicePrincipalID is a resource ID of the service principal itself
+	ServicePrincipalID string `json:",omitempty"`
+
+	// ServicePrincipalKeyID is a Key's ID; note that a servie principal can have multiple keys.
+	ServicePrincipalKeyID string `json:",omitempty"`
+
+	// PrivateKeyPEMPath is a path to a local file which stores private key of ServicePrincipalKeyID.
+	PrivateKeyPEMPath string `json:",omitempty"`
 }
 
 var DefaultProcessTimeoutSec = 60 * 60 * 2 // 2時間

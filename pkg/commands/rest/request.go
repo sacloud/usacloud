@@ -23,8 +23,8 @@ import (
 	"strings"
 
 	"github.com/hokaccha/go-prettyjson"
-	client "github.com/sacloud/api-client-go"
 	"github.com/sacloud/iaas-api-go"
+	saht "github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/query"
@@ -53,6 +53,8 @@ type requestParameter struct {
 	Data        string `cli:",short=d" validate:"omitempty,file|json"`
 	Query       string `cli:",category=output,desc=Query for JSON output" validate:"omitempty" json:"-"`
 	QueryDriver string `cli:",category=output,desc=Name of the driver that handles queries to JSON output options: [jmespath/jq]" json:"-" validate:"omitempty,oneof=jmespath jq"`
+
+	AuthPreference string `cli:",desc=Authorization preference: [basic/bearer]" json:"-" validate:"omitempty,oneof=basic bearer"`
 }
 
 func newRequestParameter() *requestParameter {
@@ -150,7 +152,11 @@ func requestFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 		return nil, err
 	}
 
-	resp, err := ctx.Client().(client.HttpRequestDoer).Do(req)
+	client, err := p.client(ctx)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -189,4 +195,17 @@ func requestFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 		return nil, printFn(temp)
 	}
 	return nil, nil
+}
+
+func (p *requestParameter) client(ctx cli.Context) (saht.ClientAPI, error) {
+	var template *saht.Client = ctx.Saclient().(*saht.Client)
+
+	switch p.AuthPreference {
+	case "basic":
+		return template.DupWith(saht.WithFavouringBasicAuthentication())
+	case "bearer":
+		return template.DupWith(saht.WithFavouringBearerAuthentication())
+	default:
+		return template, nil
+	}
 }

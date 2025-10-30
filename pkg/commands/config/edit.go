@@ -17,6 +17,7 @@ package config
 import (
 	"errors"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/fatih/color"
@@ -193,6 +194,128 @@ func __editProfile(
 		}
 	} else {
 		currentConfig.AccessTokenSecret = newConfigValue.AccessTokenSecret
+	}
+
+	if newConfigValue.ServicePrincipalID == "" {
+		msg := "\nSetting SakuraCloud API Service Principal ID (optional)=> "
+		fmt.Fprintf(out, "%s", msg)
+
+		doChange := true
+		if currentConfig.ServicePrincipalID != "" {
+			fmt.Fprintf(out, "(Current = ")
+			msgWriter.Fprintf(out, color.New(color.FgCyan), "%q", currentConfig.ServicePrincipalID)
+			fmt.Fprintf(out, ")")
+			doChange = cli.ConfirmContinue(in, "change service principal ID setting")
+		} else {
+			fmt.Fprintf(out, "\n")
+		}
+
+		if doChange {
+			// read input
+			var input string
+			fmt.Fprintf(out, "\t%s: ", "Enter service principal ID")
+			fmt.Fscanln(in, &input) //nolint:errcheck,gosec
+			currentConfig.ServicePrincipalID = input
+		}
+	} else {
+		currentConfig.ServicePrincipalID = newConfigValue.ServicePrincipalID
+	}
+
+	if newConfigValue.ServicePrincipalKeyID == "" {
+		msg := "\nSetting SakuraCloud API Service Principal Key ID (optional)=> "
+		fmt.Fprintf(out, "%s", msg)
+
+		doChange := true
+		if currentConfig.ServicePrincipalKeyID != "" {
+			fmt.Fprintf(out, "(Current = ")
+			msgWriter.Fprintf(out, color.New(color.FgCyan), "%q", currentConfig.ServicePrincipalKeyID)
+			fmt.Fprintf(out, ")")
+			doChange = cli.ConfirmContinue(in, "change service principal key ID setting")
+		} else {
+			fmt.Fprintf(out, "\n")
+		}
+
+		if doChange {
+			// read input
+			var input string
+			fmt.Fprintf(out, "\t%s: ", "Enter service principal key ID")
+			fmt.Fscanln(in, &input) //nolint:errcheck,gosec
+			currentConfig.ServicePrincipalKeyID = input
+		}
+	} else {
+		currentConfig.ServicePrincipalKeyID = newConfigValue.ServicePrincipalKeyID
+	}
+
+	if newConfigValue.PrivateKeyPEMPath == "" {
+		msg := "\nSetting SakuraCloud API Private Key PEM Path (optional)=> "
+		fmt.Fprintf(out, "%s", msg)
+
+		doChange := true
+		if currentConfig.PrivateKeyPEMPath != "" {
+			fmt.Fprintf(out, "(Current = ")
+			msgWriter.Fprintf(out, color.New(color.FgCyan), "%q", currentConfig.PrivateKeyPEMPath)
+			fmt.Fprintf(out, ")")
+			doChange = cli.ConfirmContinue(in, "change private key PEM path setting")
+		} else {
+			fmt.Fprintf(out, "\n")
+		}
+
+		var input string
+		if doChange {
+			// read input
+			fmt.Fprintf(out, "\t%s: ", "Enter private key PEM path")
+			fmt.Fscanln(in, &input) //nolint:errcheck,gosec
+		}
+
+		if input == "" {
+			currentConfig.PrivateKeyPEMPath = input
+		} else {
+			stat, err := os.Stat(input)
+			if err != nil {
+				doChange = cli.ConfirmContinue(in, "set nonexistent path")
+			} else {
+				if doChange {
+					if !stat.Mode().IsRegular() {
+						doChange = cli.ConfirmContinue(in, "set a non-regular file")
+					}
+				}
+				if doChange {
+					if stat.Mode().Perm()&0o077 != 0 {
+						doChange = cli.ConfirmContinue(in, "set a file readable by others")
+					}
+				}
+			}
+			if doChange {
+				currentConfig.PrivateKeyPEMPath = input
+			}
+		}
+	} else {
+		currentConfig.PrivateKeyPEMPath = newConfigValue.PrivateKeyPEMPath
+	}
+
+	if newConfigValue.TokenEndpoint == "" {
+		msg := "\nSetting SakuraCloud API Token Endpoint (optional)=> "
+		fmt.Fprintf(out, "%s", msg)
+
+		doChange := true
+		if currentConfig.TokenEndpoint != "" {
+			fmt.Fprintf(out, "(Current = ")
+			msgWriter.Fprintf(out, color.New(color.FgCyan), "%q", currentConfig.TokenEndpoint)
+			fmt.Fprintf(out, ")")
+			doChange = cli.ConfirmContinue(in, "change token endpoint setting")
+		} else {
+			fmt.Fprintf(out, "\n")
+		}
+
+		if doChange {
+			// read input
+			var input string
+			fmt.Fprintf(out, "\t%s: ", "Enter token endpoint")
+			fmt.Fscanln(in, &input) //nolint:errcheck,gosec
+			currentConfig.TokenEndpoint = input
+		}
+	} else {
+		currentConfig.TokenEndpoint = newConfigValue.TokenEndpoint
 	}
 
 	if newConfigValue.Zone == "" {
