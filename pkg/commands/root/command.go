@@ -22,7 +22,6 @@ import (
 	"sync"
 
 	"github.com/fatih/color"
-	saht "github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/printer"
 	"github.com/sacloud/usacloud/pkg/version"
@@ -42,9 +41,6 @@ var Command = &cobra.Command{
 		once.Do(func() {
 			noColor, _ := cmd.PersistentFlags().GetBool("no-color") // ignore error
 			alertNewVersionReleased(noColor)
-
-			TheClient.SetEnviron(slices.Clone(os.Environ()))
-			TheClient.FlagSet(flag.ContinueOnError).Parse(slices.Clone(os.Args[1:]))
 		})
 	},
 
@@ -61,13 +57,16 @@ var Command = &cobra.Command{
 	},
 }
 
-var TheClient saht.Client
-
 func init() {
 	Command.Flags().SortFlags = false
 	Command.PersistentFlags().SortFlags = false
 
+	config.TheClient.SetEnviron(slices.Clone(os.Environ()))
 	config.InitConfig(Command.PersistentFlags())
+
+	// This AddGoFlagSet() silently ignores duplicated flags;
+	// They need extra touches.  Done in config.LoadConfigValue().
+	Command.PersistentFlags().AddGoFlagSet(config.TheClient.FlagSet(flag.ContinueOnError))
 }
 
 const newVersionAlertTemplate = `

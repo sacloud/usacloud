@@ -19,7 +19,6 @@ import (
 	"time"
 
 	saht "github.com/sacloud/saclient-go"
-	"github.com/sacloud/usacloud/pkg/commands/root"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/validate"
@@ -93,7 +92,7 @@ func NewCLIContext(param *ContextParameter) (Context, func(), error) {
 	// initialize validator with contextual values
 	validate.InitializeValidator(option.Zones)
 
-	sa, err := root.TheClient.DupWith(saht.WithUserAgent(UserAgent))
+	sa, err := config.TheClient.DupWith(saht.WithUserAgent(UserAgent))
 	if err != nil { // unlikely
 		cancel()
 		return nil, nil, err

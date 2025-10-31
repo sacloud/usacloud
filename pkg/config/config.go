@@ -15,7 +15,9 @@
 package config
 
 import (
+	"encoding/csv"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"os"
@@ -77,6 +79,7 @@ type Config struct {
 	PrivateKeyPEMPath string `json:",omitempty"`
 }
 
+var TheClient saclient.Client
 var DefaultProcessTimeoutSec = 60 * 60 * 2 // 2時間
 var DefaultQueryDriver = query.DriverJMESPath
 
@@ -181,6 +184,8 @@ func (o *Config) loadFromEnv() {
 }
 
 func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
+	var argv []string
+
 	if flags.Changed("token") {
 		v, err := flags.GetString("token")
 		if err != nil {
@@ -188,6 +193,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 			return
 		}
 		o.AccessToken = v
+		argv = append(argv, "--token", v)
 	}
 	if flags.Changed("secret") {
 		v, err := flags.GetString("secret")
@@ -196,6 +202,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 			return
 		}
 		o.AccessTokenSecret = v
+		argv = append(argv, "--secret", v)
 	}
 	if flags.Changed("zones") {
 		v, err := flags.GetStringSlice("zones")
@@ -204,6 +211,12 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 			return
 		}
 		o.Zones = v
+		var buf strings.Builder
+		if err = csv.NewWriter(&buf).Write(v); err != nil {
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "zones", err)
+			return
+		}
+		argv = append(argv, "--zones", buf.String())
 	}
 	if flags.Changed("no-color") {
 		v, err := flags.GetBool("no-color")
@@ -221,6 +234,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 		}
 		if v {
 			o.TraceMode = "all"
+			argv = append(argv, "--trace")
 		}
 	}
 	if flags.Changed("fake") {
@@ -254,6 +268,44 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 			return
 		}
 		o.ArgumentMatchMode = v
+	}
+
+	if flags.Changed("profile") {
+		v, err := flags.GetString("profile")
+		if err != nil {
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			return
+		}
+		argv = append(argv, "--profile", v)
+	}
+	if flags.Changed("private-key-path") {
+		v, err := flags.GetString("private-key-path")
+		if err != nil {
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			return
+		}
+		argv = append(argv, "--private-key-path", v)
+	}
+	if flags.Changed("service-principal-id") {
+		v, err := flags.GetString("service-principal-id")
+		if err != nil {
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			return
+		}
+		argv = append(argv, "--service-principal-id", v)
+	}
+	if flags.Changed("service-principal-key-id") {
+		v, err := flags.GetString("service-principal-key-id")
+		if err != nil {
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			return
+		}
+		argv = append(argv, "--service-principal-key-id", v)
+	}
+
+	if err := TheClient.FlagSet(flag.ContinueOnError).Parse(argv); err != nil {
+		fmt.Fprintf(errW, "[WARN] argv reconstrcution failed: %s", err)
+		return
 	}
 }
 
