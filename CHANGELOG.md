@@ -1,5 +1,8 @@
 # Changelog
 
+## [v1.19.3](https://github.com/sacloud/usacloud/compare/v1.19.2...v1.19.3) - 2025-11-06
+- go: bump github.com/sacloud/iaas-service-go from 1.17.0 to 1.18.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1203
+
 ## [v1.19.2](https://github.com/sacloud/usacloud/compare/v1.19.1...v1.19.2) - 2025-10-29
 - config: remove zone validation from config commands by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1201
 
