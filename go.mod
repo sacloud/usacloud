@@ -22,8 +22,8 @@ require (
 	github.com/rhysd/go-github-selfupdate v1.2.3
 	github.com/sacloud/api-client-go v0.3.3
 	github.com/sacloud/go-http v0.1.9
-	github.com/sacloud/iaas-api-go v1.20.0
-	github.com/sacloud/iaas-service-go v1.17.0
+	github.com/sacloud/iaas-api-go v1.21.1
+	github.com/sacloud/iaas-service-go v1.18.1
 	github.com/sacloud/packages-go v0.0.11
 	github.com/sacloud/webaccel-api-go v1.3.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
