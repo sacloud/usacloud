@@ -18,7 +18,7 @@ import (
 	"context"
 	"time"
 
-	saht "github.com/sacloud/saclient-go"
+	"github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -120,8 +120,8 @@ func (c *DummyCLIContext) Args() []string {
 	return c.DummyValue.Args
 }
 
-var sa saht.Client
+var sa saclient.Client
 
-func (c *DummyCLIContext) Saclient() saht.ClientAPI {
+func (c *DummyCLIContext) Saclient() saclient.ClientAPI {
 	return &sa
 }

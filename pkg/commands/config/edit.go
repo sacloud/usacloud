@@ -23,7 +23,7 @@ import (
 	"github.com/fatih/color"
 	"github.com/sacloud/api-client-go/profile"
 	"github.com/sacloud/iaas-api-go"
-	saht "github.com/sacloud/saclient-go"
+	"github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -93,16 +93,16 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 		return nil, fmt.Errorf("invalid parameter: %v", parameter)
 	}
 
-	reader := func(op saht.ProfileAPI, name string) (*saht.Profile, error) { return op.Read(name) }
-	writer := func(op saht.ProfileAPI, p *saht.Profile) (*saht.Profile, error) { return op.Update(p) }
+	reader := func(op saclient.ProfileAPI, name string) (*saclient.Profile, error) { return op.Read(name) }
+	writer := func(op saclient.ProfileAPI, p *saclient.Profile) (*saclient.Profile, error) { return op.Update(p) }
 	return __editProfile(ctx, p, reader, writer)
 }
 
 func __editProfile(
 	ctx cli.Context,
 	p *EditParameter,
-	reader func(saht.ProfileAPI, string) (*saht.Profile, error),
-	writer func(saht.ProfileAPI, *saht.Profile) (*saht.Profile, error),
+	reader func(saclient.ProfileAPI, string) (*saclient.Profile, error),
+	writer func(saclient.ProfileAPI, *saclient.Profile) (*saclient.Profile, error),
 ) ([]interface{}, error) {
 	op, err := ctx.Saclient().ProfileOp()
 	if err != nil {

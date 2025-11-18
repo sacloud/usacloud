@@ -18,7 +18,7 @@ import (
 	"context"
 	"time"
 
-	saht "github.com/sacloud/saclient-go"
+	"github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/validate"
@@ -33,7 +33,7 @@ type Context interface {
 	context.Context
 
 	Args() []string
-	Saclient() saht.ClientAPI
+	Saclient() saclient.ClientAPI
 
 	PlatformName() string
 	ResourceName() string
@@ -54,7 +54,7 @@ type cliContext struct {
 	output    output.Output
 	cliIO     IO
 	args      []string
-	saclient  saht.ClientAPI
+	saclient  saclient.ClientAPI
 	client    *apiClient
 
 	platformName string
@@ -92,7 +92,7 @@ func NewCLIContext(param *ContextParameter) (Context, func(), error) {
 	// initialize validator with contextual values
 	validate.InitializeValidator(option.Zones)
 
-	sa, err := config.TheClient.DupWith(saht.WithUserAgent(UserAgent))
+	sa, err := config.TheClient.DupWith(saclient.WithUserAgent(UserAgent))
 	if err != nil { // unlikely
 		cancel()
 		return nil, nil, err
@@ -190,7 +190,7 @@ func (c *cliContext) Args() []string {
 	return c.args
 }
 
-func (c *cliContext) Saclient() saht.ClientAPI {
+func (c *cliContext) Saclient() saclient.ClientAPI {
 	return c.saclient
 }
 

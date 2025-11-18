@@ -24,7 +24,7 @@ import (
 
 	"github.com/hokaccha/go-prettyjson"
 	"github.com/sacloud/iaas-api-go"
-	saht "github.com/sacloud/saclient-go"
+	"github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/query"
@@ -197,14 +197,14 @@ func requestFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 	return nil, nil
 }
 
-func (p *requestParameter) client(ctx cli.Context) (saht.ClientAPI, error) {
-	var template *saht.Client = ctx.Saclient().(*saht.Client)
+func (p *requestParameter) client(ctx cli.Context) (saclient.ClientAPI, error) {
+	var template *saclient.Client = ctx.Saclient().(*saclient.Client)
 
 	switch p.AuthPreference {
 	case "basic":
-		return template.DupWith(saht.WithFavouringBasicAuthentication())
+		return template.DupWith(saclient.WithFavouringBasicAuthentication())
 	case "bearer":
-		return template.DupWith(saht.WithFavouringBearerAuthentication())
+		return template.DupWith(saclient.WithFavouringBearerAuthentication())
 	default:
 		return template, nil
 	}

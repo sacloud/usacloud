@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"io/fs"
 
-	saht "github.com/sacloud/saclient-go"
+	"github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 )
@@ -77,8 +77,10 @@ func createProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error
 	if !ok {
 		return nil, fmt.Errorf("invalid parameter: %v", parameter)
 	}
-	reader := func(_ saht.ProfileAPI, name string) (*saht.Profile, error) { return &saht.Profile{Name: name}, nil }
-	writer := func(op saht.ProfileAPI, p *saht.Profile) (*saht.Profile, error) {
+	reader := func(_ saclient.ProfileAPI, name string) (*saclient.Profile, error) {
+		return &saclient.Profile{Name: name}, nil
+	}
+	writer := func(op saclient.ProfileAPI, p *saclient.Profile) (*saclient.Profile, error) {
 		if err := op.Create(p); err != nil {
 			return nil, err
 		} else if created, err := op.Read(p.Name); err != nil {

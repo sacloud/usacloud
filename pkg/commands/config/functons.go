@@ -18,12 +18,12 @@ import (
 	"os"
 	"strings"
 
-	saht "github.com/sacloud/saclient-go"
+	"github.com/sacloud/saclient-go"
 	"github.com/spf13/cobra"
 )
 
 func profileCompletion(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-	op := saht.NewProfileOp(os.Environ()) // no context, create a new op
+	op := saclient.NewProfileOp(os.Environ()) // no context, create a new op
 
 	names, err := op.List()
 	if err != nil {
