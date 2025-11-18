@@ -17,6 +17,7 @@ package root
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"slices"
 	"sync"
@@ -61,7 +62,9 @@ func init() {
 	Command.Flags().SortFlags = false
 	Command.PersistentFlags().SortFlags = false
 
-	config.TheClient.SetEnviron(slices.Clone(os.Environ()))
+	if err := config.TheClient.SetEnviron(slices.Clone(os.Environ())); err != nil {
+		log.Printf("Failed to load environment variables: %s", err)
+	}
 	config.InitConfig(Command.PersistentFlags())
 
 	// This AddGoFlagSet() silently ignores duplicated flags;
