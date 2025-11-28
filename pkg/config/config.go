@@ -381,14 +381,6 @@ func intFromEnv(key string, defaultValue int) int {
 func (o *Config) Validate(skipCred bool) error {
 	var errs []error
 
-	if !skipCred {
-		if o.AccessToken == "" {
-			errs = append(errs, validate.NewFlagError("--token", "required"))
-		}
-		if o.AccessTokenSecret == "" {
-			errs = append(errs, validate.NewFlagError("--secret", "required"))
-		}
-	}
 	switch o.DefaultOutputType {
 	case "", "table", "json", "yaml":
 		// noop
