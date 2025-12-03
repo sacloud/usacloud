@@ -133,9 +133,9 @@ func __editProfile(
 
 	var currentConfig *config.Config = new(config.Config)
 	if loaded, err := reader(op, p.Name); err != nil {
-		return nil, err
+		fmt.Fprintf(ctx.IO().Err(), "[WARN] reading profile %q failed: %s\n", p.Name, err)
 	} else if err := currentConfig.LoadFromAttributes(loaded); err != nil {
-		return nil, err
+		fmt.Fprintf(ctx.IO().Err(), "[WARN] loading profile %q failed: %s\n", p.Name, err)
 	}
 
 	out := ctx.IO().Out()

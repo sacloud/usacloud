@@ -57,11 +57,10 @@ func listFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	profile, err := client.Profile()
-	if err != nil {
-		return nil, err
+	var current string
+	if _, name := client.ProfileName(); name != nil {
+		current = *name
 	}
-	current := profile.Name
 
 	formatter := func(out io.Writer, profileName string, current bool) {
 		fmt.Fprintln(out, profileName)
