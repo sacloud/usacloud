@@ -89,5 +89,5 @@ func createProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error
 			return created, nil
 		}
 	}
-	return __editProfile(ctx, &p.EditParameter, reader, writer)
+	return doEditProfile(ctx, &p.EditParameter, reader, writer)
 }

@@ -95,10 +95,10 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 
 	reader := func(op saclient.ProfileAPI, name string) (*saclient.Profile, error) { return op.Read(name) }
 	writer := func(op saclient.ProfileAPI, p *saclient.Profile) (*saclient.Profile, error) { return op.Update(p) }
-	return __editProfile(ctx, p, reader, writer)
+	return doEditProfile(ctx, p, reader, writer)
 }
 
-func __editProfile(
+func doEditProfile(
 	ctx cli.Context,
 	p *EditParameter,
 	reader func(saclient.ProfileAPI, string) (*saclient.Profile, error),
