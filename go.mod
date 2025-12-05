@@ -1,6 +1,6 @@
 module github.com/sacloud/usacloud
 
-go 1.25.3
+go 1.25.5
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
@@ -22,8 +22,8 @@ require (
 	github.com/sacloud/go-http v0.1.9
 	github.com/sacloud/iaas-api-go v1.21.1
 	github.com/sacloud/iaas-service-go v1.18.1
-	github.com/sacloud/packages-go v0.0.11
-	github.com/sacloud/saclient-go v0.2.0
+	github.com/sacloud/packages-go v0.0.12
+	github.com/sacloud/saclient-go v0.2.1
 	github.com/sacloud/webaccel-api-go v1.3.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/cobra v1.10.1
