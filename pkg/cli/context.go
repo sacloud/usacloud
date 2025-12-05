@@ -18,6 +18,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/validate"
@@ -32,6 +33,7 @@ type Context interface {
 	context.Context
 
 	Args() []string
+	Saclient() saclient.ClientAPI
 
 	PlatformName() string
 	ResourceName() string
@@ -52,6 +54,7 @@ type cliContext struct {
 	output    output.Output
 	cliIO     IO
 	args      []string
+	saclient  saclient.ClientAPI
 	client    *apiClient
 
 	platformName string
@@ -89,6 +92,12 @@ func NewCLIContext(param *ContextParameter) (Context, func(), error) {
 	// initialize validator with contextual values
 	validate.InitializeValidator(option.Zones)
 
+	sa, err := config.TheClient.DupWith(saclient.WithUserAgent(UserAgent))
+	if err != nil { // unlikely
+		cancel()
+		return nil, nil, err
+	}
+
 	cliCtx := &cliContext{
 		parentCtx:    ctx,
 		option:       option,
@@ -99,6 +108,7 @@ func NewCLIContext(param *ContextParameter) (Context, func(), error) {
 		commandName:  param.CommandName,
 		cliIO:        io,
 		args:         param.Args,
+		saclient:     sa,
 	}
 
 	return cliCtx, cancel, nil
@@ -147,6 +157,7 @@ func (c *cliContext) WithResource(id string, zone string, resource interface{}) 
 		output:       c.output,
 		cliIO:        c.cliIO,
 		args:         c.args,
+		saclient:     c.saclient.Dup(), // depopulate
 		platformName: c.platformName,
 		resourceName: c.resourceName,
 		commandName:  c.commandName,
@@ -177,6 +188,10 @@ func (c *cliContext) Value(key interface{}) interface{} {
 
 func (c *cliContext) Args() []string {
 	return c.args
+}
+
+func (c *cliContext) Saclient() saclient.ClientAPI {
+	return c.saclient
 }
 
 func getOutputWriter(io IO, globalOption *config.Config, columnDefs []output.ColumnDef, rawOptions interface{}) output.Output {

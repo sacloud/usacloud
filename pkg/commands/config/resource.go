@@ -26,5 +26,5 @@ var Resource = &core.Resource{
 	DefaultCommandName: "edit",
 	Category:           category.ResourceCategoryConfig,
 	IsGlobalResource:   true,
-	SkipLoadingProfile: true,
+	SkipLoadingProfile: false,
 }

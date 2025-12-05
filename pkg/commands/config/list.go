@@ -18,7 +18,6 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/sacloud/api-client-go/profile"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/term"
@@ -49,13 +48,18 @@ func init() {
 }
 
 func listFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
-	names, err := profile.List()
+	client := ctx.Saclient()
+	op, err := client.ProfileOp()
 	if err != nil {
 		return nil, err
 	}
-	current, err := profile.CurrentName()
+	names, err := op.List()
 	if err != nil {
 		return nil, err
+	}
+	var current string
+	if _, name := client.ProfileName(); name != nil {
+		current = *name
 	}
 
 	formatter := func(out io.Writer, profileName string, current bool) {

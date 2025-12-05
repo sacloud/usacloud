@@ -15,6 +15,9 @@
 package config
 
 import (
+	"encoding/csv"
+	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"os"
@@ -26,6 +29,7 @@ import (
 	"github.com/sacloud/api-client-go/profile"
 	sacloudhttp "github.com/sacloud/go-http"
 	"github.com/sacloud/iaas-api-go"
+	saclient "github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/query"
 	"github.com/sacloud/usacloud/pkg/validate"
 	"github.com/spf13/pflag"
@@ -59,8 +63,23 @@ type Config struct {
 	//   - `jmespath`(デフォルト): JMESPath
 	//   - `jq` : gojq
 	DefaultQueryDriver string
+
+	// Fields related to service principal keys:
+
+	// TokenEndpoint specifes IAM token request endpoint (URL)
+	TokenEndpoint string `json:",omitempty"`
+
+	// ServicePrincipalID is a resource ID of the service principal itself
+	ServicePrincipalID string `json:",omitempty"`
+
+	// ServicePrincipalKeyID is a Key's ID; note that a servie principal can have multiple keys.
+	ServicePrincipalKeyID string `json:",omitempty"`
+
+	// PrivateKeyPEMPath is a path to a local file which stores private key of ServicePrincipalKeyID.
+	PrivateKeyPEMPath string `json:",omitempty"`
 }
 
+var TheClient saclient.Client
 var DefaultProcessTimeoutSec = 60 * 60 * 2 // 2時間
 var DefaultQueryDriver = query.DriverJMESPath
 
@@ -165,6 +184,8 @@ func (o *Config) loadFromEnv() {
 }
 
 func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
+	var argv []string
+
 	if flags.Changed("token") {
 		v, err := flags.GetString("token")
 		if err != nil {
@@ -172,6 +193,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 			return
 		}
 		o.AccessToken = v
+		argv = append(argv, "--token", v)
 	}
 	if flags.Changed("secret") {
 		v, err := flags.GetString("secret")
@@ -180,6 +202,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 			return
 		}
 		o.AccessTokenSecret = v
+		argv = append(argv, "--secret", v)
 	}
 	if flags.Changed("zones") {
 		v, err := flags.GetStringSlice("zones")
@@ -188,6 +211,12 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 			return
 		}
 		o.Zones = v
+		var buf strings.Builder
+		if err = csv.NewWriter(&buf).Write(v); err != nil {
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "zones", err)
+			return
+		}
+		argv = append(argv, "--zones", buf.String())
 	}
 	if flags.Changed("no-color") {
 		v, err := flags.GetBool("no-color")
@@ -205,6 +234,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 		}
 		if v {
 			o.TraceMode = "all"
+			argv = append(argv, "--trace")
 		}
 	}
 	if flags.Changed("fake") {
@@ -238,6 +268,71 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 			return
 		}
 		o.ArgumentMatchMode = v
+	}
+
+	if flags.Changed("profile") {
+		v, err := flags.GetString("profile")
+		if err != nil {
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			return
+		}
+		argv = append(argv, "--profile", v)
+	}
+	if flags.Changed("private-key-path") {
+		v, err := flags.GetString("private-key-path")
+		if err != nil {
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			return
+		}
+		argv = append(argv, "--private-key-path", v)
+	}
+	if flags.Changed("service-principal-id") {
+		v, err := flags.GetString("service-principal-id")
+		if err != nil {
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			return
+		}
+		argv = append(argv, "--service-principal-id", v)
+	}
+	if flags.Changed("service-principal-key-id") {
+		v, err := flags.GetString("service-principal-key-id")
+		if err != nil {
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			return
+		}
+		argv = append(argv, "--service-principal-key-id", v)
+	}
+
+	if err := TheClient.FlagSet(flag.ContinueOnError).Parse(argv); err != nil {
+		fmt.Fprintf(errW, "[WARN] argv reconstrcution failed: %s", err)
+		return
+	}
+}
+
+func (o *Config) LoadFromAttributes(p *saclient.Profile) error {
+	if buf, err := json.Marshal(p.Attributes); err != nil {
+		return err
+	} else if err := json.Unmarshal(buf, o); err != nil {
+		return err
+	} else {
+		o.Profile = p.Name
+		o.fillDefaults()
+		return nil
+	}
+}
+
+func (o *Config) IntoAttributes() (*saclient.Profile, error) {
+	ret := saclient.Profile{
+		Name:       o.Profile,
+		Attributes: make(map[string]any),
+	}
+
+	if buf, err := json.Marshal(o); err != nil {
+		return nil, err
+	} else if err := json.Unmarshal(buf, &ret.Attributes); err != nil {
+		return nil, err
+	} else {
+		return &ret, nil
 	}
 }
 
@@ -286,14 +381,6 @@ func intFromEnv(key string, defaultValue int) int {
 func (o *Config) Validate(skipCred bool) error {
 	var errs []error
 
-	if !skipCred {
-		if o.AccessToken == "" {
-			errs = append(errs, validate.NewFlagError("--token", "required"))
-		}
-		if o.AccessTokenSecret == "" {
-			errs = append(errs, validate.NewFlagError("--secret", "required"))
-		}
-	}
 	switch o.DefaultOutputType {
 	case "", "table", "json", "yaml":
 		// noop

@@ -15,8 +15,11 @@
 package root
 
 import (
+	"flag"
 	"fmt"
+	"log"
 	"os"
+	"slices"
 	"sync"
 
 	"github.com/fatih/color"
@@ -59,7 +62,14 @@ func init() {
 	Command.Flags().SortFlags = false
 	Command.PersistentFlags().SortFlags = false
 
+	if err := config.TheClient.SetEnviron(slices.Clone(os.Environ())); err != nil {
+		log.Printf("Failed to load environment variables: %s", err)
+	}
 	config.InitConfig(Command.PersistentFlags())
+
+	// This AddGoFlagSet() silently ignores duplicated flags;
+	// They need extra touches.  Done in config.LoadConfigValue().
+	Command.PersistentFlags().AddGoFlagSet(config.TheClient.FlagSet(flag.ContinueOnError))
 }
 
 const newVersionAlertTemplate = `

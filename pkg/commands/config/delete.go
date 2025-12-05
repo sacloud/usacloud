@@ -17,7 +17,6 @@ package config
 import (
 	"fmt"
 
-	"github.com/sacloud/api-client-go/profile"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -52,6 +51,10 @@ func deleteFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	if !ok {
 		return nil, fmt.Errorf("invalid parameter: %v", parameter)
 	}
+	op, err := ctx.Saclient().ProfileOp()
+	if err != nil {
+		return nil, err
+	}
 
-	return nil, profile.Remove(p.Name)
+	return nil, op.Delete(p.Name)
 }

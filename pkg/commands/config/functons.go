@@ -15,38 +15,17 @@
 package config
 
 import (
+	"os"
 	"strings"
 
-	"github.com/sacloud/api-client-go/profile"
-	"github.com/sacloud/usacloud/pkg/config"
+	"github.com/sacloud/saclient-go"
 	"github.com/spf13/cobra"
 )
 
-func getProfileConfigValue(name string) (*config.Config, error) {
-	names, err := profile.List()
-	if err != nil {
-		return nil, err
-	}
-
-	exists := false
-	for _, n := range names {
-		if name == n {
-			exists = true
-		}
-	}
-	if !exists {
-		return nil, nil
-	}
-
-	var config config.Config
-	if err := profile.Load(name, &config); err != nil {
-		return nil, err
-	}
-	return &config, nil
-}
-
 func profileCompletion(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-	names, err := profile.List()
+	op := saclient.NewProfileOp(os.Environ()) // no context, create a new op
+
+	names, err := op.List()
 	if err != nil {
 		return nil, cobra.ShellCompDirectiveError
 	}

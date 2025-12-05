@@ -34,6 +34,7 @@ func (p *requestParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Data, "data", "d", p.Data, "")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "Query for JSON output")
 	fs.StringVarP(&p.QueryDriver, "query-driver", "", p.QueryDriver, "Name of the driver that handles queries to JSON output options: [jmespath/jq]")
+	fs.StringVarP(&p.AuthPreference, "auth-preference", "", p.AuthPreference, "Authorization preference: [basic/bearer]")
 	fs.SetNormalizeFunc(p.normalizeFlagName)
 }
 
@@ -47,6 +48,7 @@ func (p *requestParameter) buildFlagsUsage(cmd *cobra.Command) {
 		var fs *pflag.FlagSet
 		fs = pflag.NewFlagSet("rest", pflag.ContinueOnError)
 		fs.SortFlags = false
+		fs.AddFlag(cmd.LocalFlags().Lookup("auth-preference"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("data"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("method"))
 		fs.AddFlag(cmd.LocalFlags().Lookup("zone"))

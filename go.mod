@@ -1,8 +1,6 @@
 module github.com/sacloud/usacloud
 
-go 1.24.0
-
-toolchain go1.24.1
+go 1.25.5
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
@@ -24,7 +22,8 @@ require (
 	github.com/sacloud/go-http v0.1.9
 	github.com/sacloud/iaas-api-go v1.21.1
 	github.com/sacloud/iaas-service-go v1.18.1
-	github.com/sacloud/packages-go v0.0.11
+	github.com/sacloud/packages-go v0.0.12
+	github.com/sacloud/saclient-go v0.2.1
 	github.com/sacloud/webaccel-api-go v1.3.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/cobra v1.10.1
@@ -38,11 +37,13 @@ require (
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
 	github.com/benbjohnson/clock v1.3.0 // indirect
 	github.com/cloudflare/circl v1.6.1 // indirect
-	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.10 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
+	github.com/gofrs/flock v0.13.0 // indirect
+	github.com/golang-jwt/jwt/v5 v5.3.0 // indirect
 	github.com/google/go-github/v30 v30.1.0 // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
@@ -58,7 +59,7 @@ require (
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
-	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/sacloud/ftps v1.2.0 // indirect
 	github.com/tcnksm/go-gitconfig v0.1.2 // indirect

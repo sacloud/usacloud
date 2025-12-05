@@ -15,8 +15,11 @@
 package config
 
 import (
+	"errors"
 	"fmt"
+	"io/fs"
 
+	"github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 )
@@ -44,14 +47,16 @@ var createCommand = &core.Command{
 			return fmt.Errorf("--name or name argument required")
 		}
 
-		config, err := getProfileConfigValue(p.Name)
-		if err != nil {
+		var pe *fs.PathError
+		if op, err := ctx.Saclient().ProfileOp(); err != nil {
+			return err
+		} else if _, err := op.Read(p.Name); err == nil {
+			return fmt.Errorf("profile %q already exists", p.Name)
+		} else if errors.As(err, &pe) {
+			return nil // not found, ok to proceed
+		} else {
 			return err
 		}
-		if config != nil {
-			return fmt.Errorf("profile %q already exists", p.Name)
-		}
-		return nil
 	},
 }
 
@@ -72,5 +77,17 @@ func createProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error
 	if !ok {
 		return nil, fmt.Errorf("invalid parameter: %v", parameter)
 	}
-	return editProfile(ctx, &p.EditParameter)
+	reader := func(_ saclient.ProfileAPI, name string) (*saclient.Profile, error) {
+		return &saclient.Profile{Name: name}, nil
+	}
+	writer := func(op saclient.ProfileAPI, p *saclient.Profile) (*saclient.Profile, error) {
+		if err := op.Create(p); err != nil {
+			return nil, err
+		} else if created, err := op.Read(p.Name); err != nil {
+			return nil, err
+		} else {
+			return created, nil
+		}
+	}
+	return doEditProfile(ctx, &p.EditParameter, reader, writer)
 }
