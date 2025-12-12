@@ -1,5 +1,14 @@
 # Changelog
 
+## [v1.20.0](https://github.com/sacloud/usacloud/compare/v1.19.3...v1.20.0) - 2025-12-12
+- [config] use `sacloud/saclient-go` by @shyouhei in https://github.com/sacloud/usacloud/pull/1210
+- ci: bump actions/checkout from 5 to 6 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1212
+- go: bump github.com/sacloud/iaas-api-go from 1.21.1 to 1.22.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1209
+- go: bump github.com/sacloud/iaas-service-go from 1.18.1 to 1.19.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1208
+- go: bump golang.org/x/crypto from 0.43.0 to 0.45.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1211
+- go: bump github.com/itchyny/gojq from 0.12.17 to 0.12.18 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1215
+- Enable usacloud config to run in non-TTY environments by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1219
+
 ## [v1.19.3](https://github.com/sacloud/usacloud/compare/v1.19.2...v1.19.3) - 2025-11-06
 - go: bump github.com/sacloud/iaas-service-go from 1.17.0 to 1.18.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1203
 
