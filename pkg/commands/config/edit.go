@@ -15,7 +15,6 @@
 package config
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"strings"
@@ -56,10 +55,6 @@ var editCommand = &core.Command{
 			return err
 		}
 
-		if !term.IsTerminal() && !p.hasValue() {
-			return errors.New("stdin or stdout is not a terminal. please specify values via flags")
-		}
-
 		return nil
 	},
 	CustomCompletionFunc: profileCompletion,
@@ -73,10 +68,6 @@ type EditParameter struct {
 	DefaultOutputType string `validate:"omitempty,output_type"`
 	NoColor           bool
 	Use               bool
-}
-
-func (p *EditParameter) hasValue() bool {
-	return p.AccessToken != "" || p.AccessTokenSecret != "" || p.Zone != "" || p.DefaultOutputType != ""
 }
 
 func newEditParameter() *EditParameter {
@@ -146,7 +137,7 @@ func doEditProfile(
 	//       ここではnewConfigValueまたは入力値からcurrentConfigへ上書きする形で実装する
 
 	// access token
-	if newConfigValue.AccessToken == "" {
+	if term.IsTerminal() && newConfigValue.AccessToken == "" {
 		msg := "\nSetting SakuraCloud API Token => "
 		fmt.Fprintf(out, "%s", msg)
 
@@ -171,7 +162,7 @@ func doEditProfile(
 		currentConfig.AccessToken = newConfigValue.AccessToken
 	}
 
-	if newConfigValue.AccessTokenSecret == "" {
+	if term.IsTerminal() && newConfigValue.AccessTokenSecret == "" {
 		msg := "\nSetting SakuraCloud API Secret=> "
 		fmt.Fprintf(out, "%s", msg)
 
@@ -196,7 +187,7 @@ func doEditProfile(
 		currentConfig.AccessTokenSecret = newConfigValue.AccessTokenSecret
 	}
 
-	if newConfigValue.ServicePrincipalID == "" {
+	if term.IsTerminal() && newConfigValue.ServicePrincipalID == "" {
 		msg := "\nSetting SakuraCloud API Service Principal ID (optional)=> "
 		fmt.Fprintf(out, "%s", msg)
 
@@ -221,7 +212,7 @@ func doEditProfile(
 		currentConfig.ServicePrincipalID = newConfigValue.ServicePrincipalID
 	}
 
-	if newConfigValue.ServicePrincipalKeyID == "" {
+	if term.IsTerminal() && newConfigValue.ServicePrincipalKeyID == "" {
 		msg := "\nSetting SakuraCloud API Service Principal Key ID (optional)=> "
 		fmt.Fprintf(out, "%s", msg)
 
@@ -246,7 +237,7 @@ func doEditProfile(
 		currentConfig.ServicePrincipalKeyID = newConfigValue.ServicePrincipalKeyID
 	}
 
-	if newConfigValue.PrivateKeyPEMPath == "" {
+	if term.IsTerminal() && newConfigValue.PrivateKeyPEMPath == "" {
 		msg := "\nSetting SakuraCloud API Private Key PEM Path (optional)=> "
 		fmt.Fprintf(out, "%s", msg)
 
@@ -293,7 +284,7 @@ func doEditProfile(
 		currentConfig.PrivateKeyPEMPath = newConfigValue.PrivateKeyPEMPath
 	}
 
-	if newConfigValue.TokenEndpoint == "" {
+	if term.IsTerminal() && newConfigValue.TokenEndpoint == "" {
 		msg := "\nSetting SakuraCloud API Token Endpoint (optional)=> "
 		fmt.Fprintf(out, "%s", msg)
 
@@ -318,7 +309,7 @@ func doEditProfile(
 		currentConfig.TokenEndpoint = newConfigValue.TokenEndpoint
 	}
 
-	if newConfigValue.Zone == "" {
+	if term.IsTerminal() && newConfigValue.Zone == "" {
 		msg := "\nSetting SakuraCloud Zone=> "
 		fmt.Fprintf(out, "%s", msg)
 
@@ -353,7 +344,7 @@ func doEditProfile(
 		currentConfig.Zone = newConfigValue.Zone
 	}
 
-	if newConfigValue.DefaultOutputType == "" {
+	if term.IsTerminal() && newConfigValue.DefaultOutputType == "" {
 		msg := "\nSetting Default Output Type=> "
 		fmt.Fprintf(out, "%s", msg)
 
@@ -399,13 +390,14 @@ func doEditProfile(
 
 	current, err := op.GetCurrentName()
 	if err != nil {
-		return nil, err
+		// カレントが読めなければデフォルト値にフォールバック
+		current = ""
 	}
 
 	// 編集したプロファイルが現在使われていない場合は切り替え
 	if current != p.Name {
 		if !p.Use {
-			if !cli.Confirm(in, fmt.Sprintf("Would you like to switch to profile %q?", p.Name)) {
+			if !term.IsTerminal() || !cli.Confirm(in, fmt.Sprintf("Would you like to switch to profile %q?", p.Name)) {
 				return nil, nil
 			}
 		}
