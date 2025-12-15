@@ -17,19 +17,19 @@ package e2e
 import (
 	"fmt"
 	"net/http"
-	"os"
 	"runtime"
 
 	client "github.com/sacloud/api-client-go"
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/helper/api"
+	"github.com/sacloud/packages-go/envvar"
 	"github.com/sacloud/usacloud/pkg/version"
 )
 
 var SacloudAPICaller = api.NewCallerWithOptions(&api.CallerOptions{
 	Options: &client.Options{
-		AccessToken:       os.Getenv("SAKURACLOUD_ACCESS_TOKEN"),
-		AccessTokenSecret: os.Getenv("SAKURACLOUD_ACCESS_TOKEN_SECRET"),
+		AccessToken:       envvar.StringFromEnvMulti([]string{"SAKURA_ACCESS_TOKEN", "SAKURACLOUD_ACCESS_TOKEN"}, ""),
+		AccessTokenSecret: envvar.StringFromEnvMulti([]string{"SAKURA_ACCESS_TOKEN_SECRET", "SAKURACLOUD_ACCESS_TOKEN_SECRET"}, ""),
 		UserAgent: fmt.Sprintf(
 			"sacloud/usacloud@v%s:e2e-test (%s/%s; +https://github.com/sacloud/usacloud) %s",
 			version.Version,
@@ -41,7 +41,7 @@ var SacloudAPICaller = api.NewCallerWithOptions(&api.CallerOptions{
 		HttpRequestTimeout:   300,
 		HttpRequestRateLimit: 10,
 		RetryMax:             10,
-		Trace:                os.Getenv("SAKURACLOUD_TRACE") != "",
+		Trace:                envvar.StringFromEnvMulti([]string{"SAKURA_TRACE", "SAKURACLOUD_TRACE"}, "") != "",
 	},
-	TraceAPI: os.Getenv("SAKURACLOUD_TRACE") != "",
+	TraceAPI: envvar.StringFromEnvMulti([]string{"SAKURA_TRACE", "SAKURACLOUD_TRACE"}, "") != "",
 })

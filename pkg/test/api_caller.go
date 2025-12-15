@@ -22,6 +22,7 @@ import (
 	client "github.com/sacloud/api-client-go"
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/iaas-api-go/helper/api"
+	"github.com/sacloud/packages-go/envvar"
 	"github.com/sacloud/usacloud/pkg/version"
 )
 
@@ -32,16 +33,16 @@ func APICaller() iaas.APICaller {
 	apiCallerInitOnce.Do(func() {
 		apiCaller = api.NewCallerWithOptions(&api.CallerOptions{
 			Options: &client.Options{
-				AccessToken:          os.Getenv("SAKURACLOUD_ACCESS_TOKEN"),
-				AccessTokenSecret:    os.Getenv("SAKURACLOUD_ACCESS_TOKEN_SECRET"),
+				AccessToken:          envvar.StringFromEnvMulti([]string{"SAKURA_ACCESS_TOKEN", "SAKURACLOUD_ACCESS_TOKEN"}, ""),
+				AccessTokenSecret:    envvar.StringFromEnvMulti([]string{"SAKURA_ACCESS_TOKEN_SECRET", "SAKURACLOUD_ACCESS_TOKEN_SECRET"}, ""),
 				HttpRequestRateLimit: 5,
 				RetryMax:             10,
 				RetryWaitMax:         30,
 				RetryWaitMin:         1,
-				Trace:                os.Getenv("SAKURACLOUD_TRACE") != "",
+				Trace:                envvar.StringFromEnvMulti([]string{"SAKURA_TRACE", "SAKURACLOUD_TRACE"}, "") != "",
 				UserAgent:            fmt.Sprintf("Usacloud(Test)/v%s (+https://github.com/sacloud/usacloud) %s", version.Version, iaas.DefaultUserAgent),
 			},
-			TraceAPI: os.Getenv("SAKURACLOUD_TRACE") != "",
+			TraceAPI: envvar.StringFromEnvMulti([]string{"SAKURA_TRACE", "SAKURACLOUD_TRACE"}, "") != "",
 			FakeMode: os.Getenv("FAKE_MODE") != "" || os.Getenv("TESTACC") != "",
 		})
 	})

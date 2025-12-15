@@ -20,15 +20,14 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"os"
 	"slices"
-	"strconv"
 	"strings"
 	"time"
 
 	"github.com/sacloud/api-client-go/profile"
 	sacloudhttp "github.com/sacloud/go-http"
 	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/packages-go/envvar"
 	saclient "github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/query"
 	"github.com/sacloud/usacloud/pkg/validate"
@@ -105,7 +104,7 @@ func (o *Config) IsEmpty() bool {
 func (o *Config) loadConfig(flags *pflag.FlagSet, errW io.Writer) {
 	// プロファイルだけ先に環境変数を読んでおく
 	if o.Profile == "" {
-		o.Profile = stringFromEnvMulti([]string{"SAKURACLOUD_PROFILE", "USACLOUD_PROFILE"}, "")
+		o.Profile = envvar.StringFromEnvMulti([]string{"SAKURA_PROFILE", "SAKURACLOUD_PROFILE", "USACLOUD_PROFILE"}, "")
 	}
 
 	o.loadFromProfile(flags, errW)
@@ -125,61 +124,61 @@ func (o *Config) fillDefaults() {
 
 func (o *Config) loadFromEnv() {
 	if o.AccessToken == "" {
-		o.AccessToken = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN", "")
+		o.AccessToken = envvar.StringFromEnvMulti([]string{"SAKURA_ACCESS_TOKEN", "SAKURACLOUD_ACCESS_TOKEN"}, "")
 	}
 	if o.AccessTokenSecret == "" {
-		o.AccessTokenSecret = stringFromEnv("SAKURACLOUD_ACCESS_TOKEN_SECRET", "")
+		o.AccessTokenSecret = envvar.StringFromEnvMulti([]string{"SAKURA_ACCESS_TOKEN_SECRET", "SAKURACLOUD_ACCESS_TOKEN_SECRET"}, "")
 	}
 	if o.Zone == "" {
-		o.Zone = stringFromEnv("SAKURACLOUD_ZONE", "")
+		o.Zone = envvar.StringFromEnvMulti([]string{"SAKURA_ZONE", "SAKURACLOUD_ZONE"}, "")
 	}
 	if len(o.Zones) == 0 {
-		o.Zones = stringSliceFromEnv("SAKURACLOUD_ZONES", []string{})
+		o.Zones = envvar.StringSliceFromEnvMulti([]string{"SAKURA_ZONES", "SAKURACLOUD_ZONES"}, []string{})
 	}
 	if o.AcceptLanguage == "" {
-		o.AcceptLanguage = stringFromEnv("SAKURACLOUD_ACCEPT_LANGUAGE", "")
+		o.AcceptLanguage = envvar.StringFromEnvMulti([]string{"SAKURA_ACCEPT_LANGUAGE", "SAKURACLOUD_ACCEPT_LANGUAGE"}, "")
 	}
 	if o.RetryMax <= 0 {
-		o.RetryMax = intFromEnv("SAKURACLOUD_RETRY_MAX", sacloudhttp.DefaultRetryMax)
+		o.RetryMax = envvar.IntFromEnvMulti([]string{"SAKURA_RETRY_MAX", "SAKURACLOUD_RETRY_MAX"}, sacloudhttp.DefaultRetryMax)
 	}
 	if o.RetryWaitMax <= 0 {
-		o.RetryWaitMax = intFromEnv("SAKURACLOUD_RETRY_WAIT_MAX", int(sacloudhttp.DefaultRetryWaitMax.Seconds()))
+		o.RetryWaitMax = envvar.IntFromEnvMulti([]string{"SAKURA_RETRY_WAIT_MAX", "SAKURACLOUD_RETRY_WAIT_MAX"}, int(sacloudhttp.DefaultRetryWaitMax.Seconds()))
 	}
 	if o.RetryWaitMin <= 0 {
-		o.RetryWaitMin = intFromEnv("SAKURACLOUD_RETRY_WAIT_MIN", int(sacloudhttp.DefaultRetryWaitMin.Seconds()))
+		o.RetryWaitMin = envvar.IntFromEnvMulti([]string{"SAKURA_RETRY_WAIT_MIN", "SAKURACLOUD_RETRY_WAIT_MIN"}, int(sacloudhttp.DefaultRetryWaitMin.Seconds()))
 	}
 	if o.HTTPRequestTimeout <= 0 {
-		o.HTTPRequestTimeout = intFromEnv("SAKURACLOUD_API_REQUEST_TIMEOUT", 300)
+		o.HTTPRequestTimeout = envvar.IntFromEnvMulti([]string{"SAKURA_API_REQUEST_TIMEOUT", "SAKURACLOUD_API_REQUEST_TIMEOUT"}, 300)
 	}
 	if o.HTTPRequestRateLimit <= 0 {
-		o.HTTPRequestRateLimit = intFromEnv("SAKURACLOUD_API_REQUEST_RATE_LIMIT", 5) // デフォルト5ゾーン分(is1a/is1b/tk1a/tk1b/tk1v)
+		o.HTTPRequestRateLimit = envvar.IntFromEnvMulti([]string{"SAKURA_API_REQUEST_RATE_LIMIT", "SAKURACLOUD_API_REQUEST_RATE_LIMIT"}, 5) // デフォルト5ゾーン分(is1a/is1b/tk1a/tk1b/tk1v)
 	}
 	if o.APIRootURL == "" {
-		o.APIRootURL = stringFromEnv("SAKURACLOUD_API_ROOT_URL", iaas.SakuraCloudAPIRoot)
+		o.APIRootURL = envvar.StringFromEnvMulti([]string{"SAKURA_API_ROOT_URL", "SAKURACLOUD_API_ROOT_URL"}, iaas.SakuraCloudAPIRoot)
 	}
 	if o.DefaultZone == "" {
-		o.DefaultZone = stringFromEnv("SAKURACLOUD_DEFAULT_ZONE", iaas.APIDefaultZone)
+		o.DefaultZone = envvar.StringFromEnvMulti([]string{"SAKURA_DEFAULT_ZONE", "SAKURACLOUD_DEFAULT_ZONE"}, iaas.APIDefaultZone)
 	}
 	if o.TraceMode == "" {
-		o.TraceMode = stringFromEnv("SAKURACLOUD_TRACE", "")
+		o.TraceMode = envvar.StringFromEnvMulti([]string{"SAKURA_TRACE", "SAKURACLOUD_TRACE"}, "")
 	}
 	if !o.FakeMode {
-		o.FakeMode = os.Getenv("SAKURACLOUD_FAKE_MODE") != ""
+		o.FakeMode = envvar.StringFromEnvMulti([]string{"SAKURA_FAKE_MODE", "SAKURACLOUD_FAKE_MODE"}, "") != ""
 	}
 	if o.FakeStorePath == "" {
-		o.FakeStorePath = stringFromEnv("SAKURACLOUD_FAKE_STORE_PATH", "")
+		o.FakeStorePath = envvar.StringFromEnvMulti([]string{"SAKURA_FAKE_STORE_PATH", "SAKURACLOUD_FAKE_STORE_PATH"}, "")
 	}
 	if o.ProcessTimeoutSec <= 0 {
-		o.ProcessTimeoutSec = intFromEnv("SAKURACLOUD_PROCESS_TIMEOUT_SEC", DefaultProcessTimeoutSec)
+		o.ProcessTimeoutSec = envvar.IntFromEnvMulti([]string{"SAKURA_PROCESS_TIMEOUT_SEC", "SAKURACLOUD_PROCESS_TIMEOUT_SEC"}, DefaultProcessTimeoutSec)
 	}
 	if o.ArgumentMatchMode == "" {
-		o.ArgumentMatchMode = stringFromEnv("SAKURACLOUD_ARGUMENT_MATCH_MODE", "partial")
+		o.ArgumentMatchMode = envvar.StringFromEnvMulti([]string{"SAKURA_ARGUMENT_MATCH_MODE", "SAKURACLOUD_ARGUMENT_MATCH_MODE"}, "partial")
 	}
 	if o.DefaultOutputType == "" {
-		o.DefaultOutputType = stringFromEnv("SAKURACLOUD_DEFAULT_OUTPUT_TYPE", "")
+		o.DefaultOutputType = envvar.StringFromEnvMulti([]string{"SAKURA_DEFAULT_OUTPUT_TYPE", "SAKURACLOUD_DEFAULT_OUTPUT_TYPE"}, "")
 	}
 	if o.DefaultQueryDriver == "" {
-		o.DefaultQueryDriver = stringFromEnv("SAKURACLOUD_DEFAULT_QUERY_DRIVER", "")
+		o.DefaultQueryDriver = envvar.StringFromEnvMulti([]string{"SAKURA_DEFAULT_QUERY_DRIVER", "SAKURACLOUD_DEFAULT_QUERY_DRIVER"}, "")
 	}
 }
 
@@ -334,48 +333,6 @@ func (o *Config) IntoAttributes() (*saclient.Profile, error) {
 	} else {
 		return &ret, nil
 	}
-}
-
-func stringFromEnv(key, defaultValue string) string {
-	v := os.Getenv(key)
-	if v == "" {
-		return defaultValue
-	}
-	return v
-}
-
-func stringFromEnvMulti(keys []string, defaultValue string) string {
-	for _, key := range keys {
-		v := os.Getenv(key)
-		if v != "" {
-			return v
-		}
-	}
-	return defaultValue
-}
-
-func stringSliceFromEnv(key string, defaultValue []string) []string {
-	v := os.Getenv(key)
-	if v == "" {
-		return defaultValue
-	}
-	values := strings.Split(v, ",")
-	for i := range values {
-		values[i] = strings.Trim(values[i], " ")
-	}
-	return values
-}
-
-func intFromEnv(key string, defaultValue int) int {
-	v := os.Getenv(key)
-	if v == "" {
-		return defaultValue
-	}
-	i, err := strconv.ParseInt(v, 10, 64)
-	if err != nil {
-		return defaultValue
-	}
-	return int(i)
 }
 
 func (o *Config) Validate(skipCred bool) error {
