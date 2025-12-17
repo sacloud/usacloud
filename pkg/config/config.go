@@ -25,7 +25,6 @@ import (
 	"time"
 
 	"github.com/sacloud/api-client-go/profile"
-	sacloudhttp "github.com/sacloud/go-http"
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/packages-go/envvar"
 	saclient "github.com/sacloud/saclient-go"
@@ -123,62 +122,62 @@ func (o *Config) fillDefaults() {
 }
 
 func (o *Config) loadFromEnv() {
-	if o.AccessToken == "" {
-		o.AccessToken = envvar.StringFromEnvMulti([]string{"SAKURA_ACCESS_TOKEN", "SAKURACLOUD_ACCESS_TOKEN"}, "")
+	if v := envvar.StringFromEnvMulti([]string{"SAKURA_ACCESS_TOKEN", "SAKURACLOUD_ACCESS_TOKEN"}, ""); v != "" {
+		o.AccessToken = v
 	}
-	if o.AccessTokenSecret == "" {
-		o.AccessTokenSecret = envvar.StringFromEnvMulti([]string{"SAKURA_ACCESS_TOKEN_SECRET", "SAKURACLOUD_ACCESS_TOKEN_SECRET"}, "")
+	if v := envvar.StringFromEnvMulti([]string{"SAKURA_ACCESS_TOKEN_SECRET", "SAKURACLOUD_ACCESS_TOKEN_SECRET"}, ""); v != "" {
+		o.AccessTokenSecret = v
 	}
-	if o.Zone == "" {
-		o.Zone = envvar.StringFromEnvMulti([]string{"SAKURA_ZONE", "SAKURACLOUD_ZONE"}, "")
+	if v := envvar.StringFromEnvMulti([]string{"SAKURA_ZONE", "SAKURACLOUD_ZONE"}, ""); v != "" {
+		o.Zone = v
 	}
-	if len(o.Zones) == 0 {
-		o.Zones = envvar.StringSliceFromEnvMulti([]string{"SAKURA_ZONES", "SAKURACLOUD_ZONES"}, []string{})
+	if v := envvar.StringSliceFromEnvMulti([]string{"SAKURA_ZONES", "SAKURACLOUD_ZONES"}, nil); len(v) > 0 {
+		o.Zones = v
 	}
-	if o.AcceptLanguage == "" {
-		o.AcceptLanguage = envvar.StringFromEnvMulti([]string{"SAKURA_ACCEPT_LANGUAGE", "SAKURACLOUD_ACCEPT_LANGUAGE"}, "")
+	if v := envvar.StringFromEnvMulti([]string{"SAKURA_ACCEPT_LANGUAGE", "SAKURACLOUD_ACCEPT_LANGUAGE"}, ""); v != "" {
+		o.AcceptLanguage = v
 	}
-	if o.RetryMax <= 0 {
-		o.RetryMax = envvar.IntFromEnvMulti([]string{"SAKURA_RETRY_MAX", "SAKURACLOUD_RETRY_MAX"}, sacloudhttp.DefaultRetryMax)
+	if v := envvar.IntFromEnvMulti([]string{"SAKURA_RETRY_MAX", "SAKURACLOUD_RETRY_MAX"}, 0); v > 0 {
+		o.RetryMax = v
 	}
-	if o.RetryWaitMax <= 0 {
-		o.RetryWaitMax = envvar.IntFromEnvMulti([]string{"SAKURA_RETRY_WAIT_MAX", "SAKURACLOUD_RETRY_WAIT_MAX"}, int(sacloudhttp.DefaultRetryWaitMax.Seconds()))
+	if v := envvar.IntFromEnvMulti([]string{"SAKURA_RETRY_WAIT_MAX", "SAKURACLOUD_RETRY_WAIT_MAX"}, 0); v > 0 {
+		o.RetryWaitMax = v
 	}
-	if o.RetryWaitMin <= 0 {
-		o.RetryWaitMin = envvar.IntFromEnvMulti([]string{"SAKURA_RETRY_WAIT_MIN", "SAKURACLOUD_RETRY_WAIT_MIN"}, int(sacloudhttp.DefaultRetryWaitMin.Seconds()))
+	if v := envvar.IntFromEnvMulti([]string{"SAKURA_RETRY_WAIT_MIN", "SAKURACLOUD_RETRY_WAIT_MIN"}, 0); v > 0 {
+		o.RetryWaitMin = v
 	}
-	if o.HTTPRequestTimeout <= 0 {
-		o.HTTPRequestTimeout = envvar.IntFromEnvMulti([]string{"SAKURA_API_REQUEST_TIMEOUT", "SAKURACLOUD_API_REQUEST_TIMEOUT"}, 300)
+	if v := envvar.IntFromEnvMulti([]string{"SAKURA_API_REQUEST_TIMEOUT", "SAKURACLOUD_API_REQUEST_TIMEOUT"}, 0); v > 0 {
+		o.HTTPRequestTimeout = v
 	}
-	if o.HTTPRequestRateLimit <= 0 {
-		o.HTTPRequestRateLimit = envvar.IntFromEnvMulti([]string{"SAKURA_API_REQUEST_RATE_LIMIT", "SAKURACLOUD_API_REQUEST_RATE_LIMIT"}, 5) // デフォルト5ゾーン分(is1a/is1b/tk1a/tk1b/tk1v)
+	if v := envvar.IntFromEnvMulti([]string{"SAKURA_API_REQUEST_RATE_LIMIT", "SAKURACLOUD_API_REQUEST_RATE_LIMIT"}, 0); v > 0 {
+		o.HTTPRequestRateLimit = v
 	}
-	if o.APIRootURL == "" {
-		o.APIRootURL = envvar.StringFromEnvMulti([]string{"SAKURA_API_ROOT_URL", "SAKURACLOUD_API_ROOT_URL"}, iaas.SakuraCloudAPIRoot)
+	if v := envvar.StringFromEnvMulti([]string{"SAKURA_API_ROOT_URL", "SAKURACLOUD_API_ROOT_URL"}, ""); v != "" {
+		o.APIRootURL = v
 	}
-	if o.DefaultZone == "" {
-		o.DefaultZone = envvar.StringFromEnvMulti([]string{"SAKURA_DEFAULT_ZONE", "SAKURACLOUD_DEFAULT_ZONE"}, iaas.APIDefaultZone)
+	if v := envvar.StringFromEnvMulti([]string{"SAKURA_DEFAULT_ZONE", "SAKURACLOUD_DEFAULT_ZONE"}, ""); v != "" {
+		o.DefaultZone = v
 	}
-	if o.TraceMode == "" {
-		o.TraceMode = envvar.StringFromEnvMulti([]string{"SAKURA_TRACE", "SAKURACLOUD_TRACE"}, "")
+	if v := envvar.StringFromEnvMulti([]string{"SAKURA_TRACE", "SAKURACLOUD_TRACE"}, ""); v != "" {
+		o.TraceMode = v
 	}
-	if !o.FakeMode {
-		o.FakeMode = envvar.StringFromEnvMulti([]string{"SAKURA_FAKE_MODE", "SAKURACLOUD_FAKE_MODE"}, "") != ""
+	if v := envvar.StringFromEnvMulti([]string{"SAKURA_FAKE_MODE", "SAKURACLOUD_FAKE_MODE"}, ""); v != "" {
+		o.FakeMode = true
 	}
-	if o.FakeStorePath == "" {
-		o.FakeStorePath = envvar.StringFromEnvMulti([]string{"SAKURA_FAKE_STORE_PATH", "SAKURACLOUD_FAKE_STORE_PATH"}, "")
+	if v := envvar.StringFromEnvMulti([]string{"SAKURA_FAKE_STORE_PATH", "SAKURACLOUD_FAKE_STORE_PATH"}, ""); v != "" {
+		o.FakeStorePath = v
 	}
-	if o.ProcessTimeoutSec <= 0 {
-		o.ProcessTimeoutSec = envvar.IntFromEnvMulti([]string{"SAKURA_PROCESS_TIMEOUT_SEC", "SAKURACLOUD_PROCESS_TIMEOUT_SEC"}, DefaultProcessTimeoutSec)
+	if v := envvar.IntFromEnvMulti([]string{"SAKURA_PROCESS_TIMEOUT_SEC", "SAKURACLOUD_PROCESS_TIMEOUT_SEC"}, 0); v > 0 {
+		o.ProcessTimeoutSec = v
 	}
-	if o.ArgumentMatchMode == "" {
-		o.ArgumentMatchMode = envvar.StringFromEnvMulti([]string{"SAKURA_ARGUMENT_MATCH_MODE", "SAKURACLOUD_ARGUMENT_MATCH_MODE"}, "partial")
+	if v := envvar.StringFromEnvMulti([]string{"SAKURA_ARGUMENT_MATCH_MODE", "SAKURACLOUD_ARGUMENT_MATCH_MODE"}, ""); v != "" {
+		o.ArgumentMatchMode = v
 	}
-	if o.DefaultOutputType == "" {
-		o.DefaultOutputType = envvar.StringFromEnvMulti([]string{"SAKURA_DEFAULT_OUTPUT_TYPE", "SAKURACLOUD_DEFAULT_OUTPUT_TYPE"}, "")
+	if v := envvar.StringFromEnvMulti([]string{"SAKURA_DEFAULT_OUTPUT_TYPE", "SAKURACLOUD_DEFAULT_OUTPUT_TYPE"}, ""); v != "" {
+		o.DefaultOutputType = v
 	}
-	if o.DefaultQueryDriver == "" {
-		o.DefaultQueryDriver = envvar.StringFromEnvMulti([]string{"SAKURA_DEFAULT_QUERY_DRIVER", "SAKURACLOUD_DEFAULT_QUERY_DRIVER"}, "")
+	if v := envvar.StringFromEnvMulti([]string{"SAKURA_DEFAULT_QUERY_DRIVER", "SAKURACLOUD_DEFAULT_QUERY_DRIVER"}, ""); v != "" {
+		o.DefaultQueryDriver = v
 	}
 }
 
