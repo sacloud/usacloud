@@ -20,7 +20,6 @@ import (
 	"testing"
 
 	"github.com/sacloud/api-client-go/profile"
-	sacloudhttp "github.com/sacloud/go-http"
 	"github.com/sacloud/iaas-api-go"
 )
 
@@ -143,9 +142,6 @@ func assertConfigEqual(t *testing.T, got, want Config) {
 
 // 1つのテスト関数＋テーブルで「SAKURAのみ / SAKURACLOUDのみ / 両方 / なし」を網羅
 func TestConfig_loadFromEnv(t *testing.T) {
-	defaultRetryWaitMax := int(sacloudhttp.DefaultRetryWaitMax.Seconds())
-	defaultRetryWaitMin := int(sacloudhttp.DefaultRetryWaitMin.Seconds())
-
 	tests := []struct {
 		name string
 		env  map[string]string
@@ -318,29 +314,7 @@ func TestConfig_loadFromEnv(t *testing.T) {
 		{
 			name: "no env (defaults)",
 			env:  map[string]string{},
-			want: Config{
-				ConfigValue: profile.ConfigValue{
-					AccessToken:          "",
-					AccessTokenSecret:    "",
-					Zone:                 "",
-					Zones:                []string{},
-					AcceptLanguage:       "",
-					RetryMax:             sacloudhttp.DefaultRetryMax,
-					RetryWaitMax:         defaultRetryWaitMax,
-					RetryWaitMin:         defaultRetryWaitMin,
-					HTTPRequestTimeout:   300,
-					HTTPRequestRateLimit: 5,
-					APIRootURL:           iaas.SakuraCloudAPIRoot,
-					DefaultZone:          iaas.APIDefaultZone,
-					TraceMode:            "",
-					FakeMode:             false,
-					FakeStorePath:        "",
-				},
-				ProcessTimeoutSec:  DefaultProcessTimeoutSec,
-				ArgumentMatchMode:  "partial",
-				DefaultOutputType:  "",
-				DefaultQueryDriver: "",
-			},
+			want: Config{},
 		},
 	}
 
@@ -354,6 +328,28 @@ func TestConfig_loadFromEnv(t *testing.T) {
 
 			assertConfigEqual(t, cfg, tt.want)
 		})
+	}
+}
+
+func TestConfig_loadFromEnvOverwrite(t *testing.T) {
+	cfg := Config{
+		ConfigValue: profile.ConfigValue{
+			AccessToken:       "token from config",
+			AccessTokenSecret: "secret from config",
+		},
+	}
+
+	clearTestEnv()
+	setEnv(map[string]string{
+		"SAKURACLOUD_ACCESS_TOKEN": "token from env",
+	})
+	cfg.loadFromEnv()
+
+	if cfg.AccessToken != "token from env" {
+		t.Fatalf("got unexpected value: expected: %s, actual: %s", "token from env", cfg.AccessToken)
+	}
+	if cfg.AccessTokenSecret != "secret from config" {
+		t.Fatalf("got unexpected value: expected: %s, actual: %s", "secret from config", cfg.AccessTokenSecret)
 	}
 }
 
