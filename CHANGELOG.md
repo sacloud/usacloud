@@ -1,5 +1,24 @@
 # Changelog
 
+## [v1.20.0](https://github.com/sacloud/usacloud/compare/v1.19.3...v1.20.0) - 2025-12-18
+- [config] use `sacloud/saclient-go` by @shyouhei in https://github.com/sacloud/usacloud/pull/1210
+- ci: bump actions/checkout from 5 to 6 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1212
+- go: bump github.com/sacloud/iaas-api-go from 1.21.1 to 1.22.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1209
+- go: bump github.com/sacloud/iaas-service-go from 1.18.1 to 1.19.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1208
+- go: bump golang.org/x/crypto from 0.43.0 to 0.45.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1211
+- go: bump github.com/itchyny/gojq from 0.12.17 to 0.12.18 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1215
+- Enable usacloud config to run in non-TTY environments by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1219
+- feat: SAKURA_* env vars by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1222
+- Revert "feat: SAKURA_* env vars" by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1223
+- feat: SAKURA_* env vars by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1224
+- Fix config loading: prefer environment variables even when fields are already set by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1225
+- go: bump github.com/spf13/cobra from 1.10.1 to 1.10.2 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1218
+- go: bump github.com/hashicorp/go-version from 1.7.0 to 1.8.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1217
+- go: bump github.com/sacloud/iaas-service-go from 1.19.0 to 1.20.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1220
+- go: bump github.com/sacloud/saclient-go from 0.2.2 to 0.2.4 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1226
+- go: bump github.com/sacloud/api-client-go from 0.3.3 to 0.3.4 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1227
+- go: bump github.com/go-playground/validator/v10 from 10.28.0 to 10.29.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1228
+
 ## [v1.19.3](https://github.com/sacloud/usacloud/compare/v1.19.2...v1.19.3) - 2025-11-06
 - go: bump github.com/sacloud/iaas-service-go from 1.17.0 to 1.18.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1203
 
