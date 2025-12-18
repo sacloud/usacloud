@@ -19,11 +19,10 @@ require (
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/rhysd/go-github-selfupdate v1.2.3
 	github.com/sacloud/api-client-go v0.3.3
-	github.com/sacloud/go-http v0.1.9
 	github.com/sacloud/iaas-api-go v1.23.1
 	github.com/sacloud/iaas-service-go v1.20.1
 	github.com/sacloud/packages-go v0.0.12
-	github.com/sacloud/saclient-go v0.2.2
+	github.com/sacloud/saclient-go v0.2.4
 	github.com/sacloud/webaccel-api-go v1.3.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/cobra v1.10.2
@@ -63,6 +62,7 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/sacloud/ftps v1.2.0 // indirect
+	github.com/sacloud/go-http v0.1.9 // indirect
 	github.com/tcnksm/go-gitconfig v0.1.2 // indirect
 	github.com/ulikunitz/xz v0.5.15 // indirect
 	github.com/zclconf/go-cty v1.14.4 // indirect
