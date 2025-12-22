@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.20.1](https://github.com/sacloud/usacloud/compare/v1.20.0...v1.20.1) - 2025-12-22
+- Use golang:1.25 as the base image by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1229
+- go: bump github.com/go-playground/validator/v10 from 10.29.0 to 10.30.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1231
+
 ## [v1.20.0](https://github.com/sacloud/usacloud/compare/v1.19.3...v1.20.0) - 2025-12-18
 - [config] use `sacloud/saclient-go` by @shyouhei in https://github.com/sacloud/usacloud/pull/1210
 - ci: bump actions/checkout from 5 to 6 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1212
