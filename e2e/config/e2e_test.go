@@ -47,3 +47,17 @@ func TestE2E_CreateConfigWithoutTTY(t *testing.T) {
 	require.Equal(t, "table", profile.Attributes["DefaultOutputType"])
 	require.Equal(t, "is1b", profile.Attributes["Zone"])
 }
+
+func TestE2E_ConfigWithoutSubcommand(t *testing.T) {
+	// setup
+	t.Setenv("HOME", t.TempDir())
+
+	err := usacloudE2E.UsacloudRun(t, "config")
+	require.NoError(t, err)
+
+	profileOp := saclient.NewProfileOp(os.Environ())
+	list, err := profileOp.List()
+	profile, err := profileOp.Read("default")
+	require.NoError(t, err)
+	require.NotNil(t, profile)
+}
