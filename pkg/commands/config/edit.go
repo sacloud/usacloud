@@ -15,7 +15,9 @@
 package config
 
 import (
+	"errors"
 	"fmt"
+	"io/fs"
 	"os"
 	"strings"
 
@@ -84,8 +86,34 @@ func editProfile(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 		return nil, fmt.Errorf("invalid parameter: %v", parameter)
 	}
 
-	reader := func(op saclient.ProfileAPI, name string) (*saclient.Profile, error) { return op.Read(name) }
-	writer := func(op saclient.ProfileAPI, p *saclient.Profile) (*saclient.Profile, error) { return op.Update(p) }
+	reader := func(op saclient.ProfileAPI, name string) (*saclient.Profile, error) {
+		read, err := op.Read(name)
+
+		if errors.Is(err, fs.ErrNotExist) {
+			// 引数の `name` は存在しないことがある(初回起動時等)
+			// 新規作成に寄せておく
+			read = &saclient.Profile{Name: name}
+			err = nil
+		}
+
+		return read, err
+	}
+	writer := func(op saclient.ProfileAPI, p *saclient.Profile) (*saclient.Profile, error) {
+		updated, err := op.Update(p)
+
+		if errors.Is(err, fs.ErrNotExist) {
+			// 引数の `p` は存在しないことがある(初回起動時等)
+			// エラーだと先に進めず困ってしまう
+			// 作成してみる
+			if err = op.Create(p); err != nil {
+				// それも失敗したら通知する
+				return nil, err
+			}
+			return op.Read(p.Name)
+		}
+
+		return updated, err
+	}
 	return doEditProfile(ctx, p, reader, writer)
 }
 
@@ -106,7 +134,11 @@ func doEditProfile(
 
 	if p.Name == "" {
 		current, err := op.GetCurrentName()
-		if err != nil {
+		if errors.Is(err, fs.ErrNotExist) {
+			// currentも存在せず、`--name`も未指定のパターン
+			// `default`を採用する
+			current = "default"
+		} else if err != nil {
 			return nil, err
 		}
 		p.Name = current
