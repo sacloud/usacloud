@@ -56,7 +56,7 @@ func TestE2E_ConfigWithoutSubcommand(t *testing.T) {
 	require.NoError(t, err)
 
 	profileOp := saclient.NewProfileOp(os.Environ())
-	list, err := profileOp.List()
+	_, err = profileOp.List()
 	profile, err := profileOp.Read("default")
 	require.NoError(t, err)
 	require.NotNil(t, profile)
