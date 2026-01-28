@@ -16,7 +16,6 @@ package e2e
 
 import (
 	"fmt"
-	"net/http"
 	"runtime"
 
 	client "github.com/sacloud/api-client-go"
@@ -37,7 +36,6 @@ var SacloudAPICaller = api.NewCallerWithOptions(&api.CallerOptions{
 			runtime.GOARCH,
 			iaas.DefaultUserAgent,
 		),
-		HttpClient:           &http.Client{},
 		HttpRequestTimeout:   300,
 		HttpRequestRateLimit: 10,
 		RetryMax:             10,
