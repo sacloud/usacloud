@@ -18,7 +18,6 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"net/http"
 
 	client "github.com/sacloud/api-client-go"
 	"github.com/sacloud/iaas-api-go"
@@ -49,7 +48,6 @@ func newAPIClient(o *config.Config) *apiClient {
 		AccessToken:          o.AccessToken,
 		AccessTokenSecret:    o.AccessTokenSecret,
 		AcceptLanguage:       o.AcceptLanguage,
-		HttpClient:           http.DefaultClient,
 		HttpRequestTimeout:   o.HTTPRequestTimeout,
 		HttpRequestRateLimit: o.HTTPRequestRateLimit,
 		RetryMax:             o.RetryMax,
