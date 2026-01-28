@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.21.0](https://github.com/sacloud/usacloud/compare/v1.20.1...v1.21.0) - 2026-01-28
+- considerations for when the command invocated at the first time by @shyouhei in https://github.com/sacloud/usacloud/pull/1236
+- go: bump github.com/sacloud/webaccel-api-go from 1.3.0 to 1.4.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1234
+- delete unused file by @shyouhei in https://github.com/sacloud/usacloud/pull/1238
+- fix unused variable by @shyouhei in https://github.com/sacloud/usacloud/pull/1239
+- go: bump github.com/sacloud/saclient-go from 0.2.6 to 0.2.7 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1235
+- go: bump github.com/sacloud/iaas-service-go from 1.20.1 to 1.21.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1233
+- Fix nil client when httpClient is provided on initialization by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1244
+- go: bump golang.org/x/crypto from 0.46.0 to 0.47.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1243
+- go: bump github.com/go-playground/validator/v10 from 10.30.0 to 10.30.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1242
+- go: bump github.com/sacloud/api-client-go from 0.3.4 to 0.3.5 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1241
+
 ## [v1.20.1](https://github.com/sacloud/usacloud/compare/v1.20.0...v1.20.1) - 2025-12-22
 - Use golang:1.25 as the base image by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1229
 - go: bump github.com/go-playground/validator/v10 from 10.29.0 to 10.30.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1231
