@@ -28,4 +28,5 @@ var Resource = &core.Resource{
 	ServiceType:        reflect.TypeOf(&authstatus.Service{}),
 	DefaultCommandName: "read",
 	Category:           category.ResourceCategoryAuth,
+	Warning:            "auth-status is deprecated. Please use 'usacloud rest https://secure.sakura.ad.jp/cloud/api/iam/1.0/auth/context' instead.",
 }
