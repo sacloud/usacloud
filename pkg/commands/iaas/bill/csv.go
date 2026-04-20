@@ -19,6 +19,7 @@ import (
 	"github.com/sacloud/iaas-service-go/bill"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/conv"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -36,20 +37,8 @@ var csvCommand = &core.Command{
 	ParameterInitializer: func() interface{} {
 		return newCSVParameter()
 	},
-	// ListAllが通常と異なるシグニチャのため個別対応する
-	ListAllFunc: func(ctx cli.Context, _ interface{}) ([]interface{}, error) {
-		svc := bill.New(ctx.Client().(iaas.APICaller))
-		res, err := svc.ListWithContext(ctx, &bill.ListRequest{})
-		if err != nil {
-			return nil, err
-		}
 
-		var results []interface{}
-		for _, v := range res {
-			results = append(results, v)
-		}
-		return results, nil
-	},
+	Func: csvFunc,
 }
 
 type csvParameter struct {
@@ -64,4 +53,25 @@ func newCSVParameter() *csvParameter {
 
 func init() {
 	Resource.AddCommand(csvCommand)
+}
+
+func csvFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+	p := parameter.(*csvParameter)
+
+	svc := bill.New(ctx.Client().(iaas.APICaller), ctx.Saclient())
+
+	req := &bill.CsvRequest{}
+	if err := conv.ConvertTo(p, req); err != nil {
+		return nil, err
+	}
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+
+	res, err := svc.CsvWithContext(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+
+	return []interface{}{res}, nil
 }
