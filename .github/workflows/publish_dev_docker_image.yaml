@@ -27,7 +27,7 @@ jobs:
           password: ${{ secrets.CR_PAT }}
       -
         name: Build and push to GitHub Container Registry
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           platforms: linux/amd64,linux/arm64
