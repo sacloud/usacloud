@@ -174,8 +174,8 @@ github.com/sacloud/iam-api-go v0.3.0 h1:t7dav2jRnn2DhSg5u9tpyoltFpastnTR/jNZ3OsW
 github.com/sacloud/iam-api-go v0.3.0/go.mod h1:uKYamf4LfU7gDkWS7MN2xFaiHr4g0DcAOGyr2fNSuL8=
 github.com/sacloud/packages-go v0.0.12 h1:MKeZNN3FQn1heqUSRBrbZw89YusZA1n4kammjMFZYvQ=
 github.com/sacloud/packages-go v0.0.12/go.mod h1:XNF5MCTWcHo9NiqWnYctVbASSSZR3ZOmmQORIzcurJ8=
-github.com/sacloud/saclient-go v0.3.6 h1:SIsFWgxqUtB4zRxMAXMoCHNHZWx7F0WwB80jDt9nlA4=
-github.com/sacloud/saclient-go v0.3.6/go.mod h1:h8ATHi9AnQhOxYNm8mbVWyM9/2569PPESIGwAc2SNg4=
+github.com/sacloud/saclient-go v0.3.7 h1:LAkOHStYxIKoypiaarhNOwm/JPuubgoKuOSXZWEerbc=
+github.com/sacloud/saclient-go v0.3.7/go.mod h1:h8ATHi9AnQhOxYNm8mbVWyM9/2569PPESIGwAc2SNg4=
 github.com/sacloud/webaccel-api-go v1.4.1 h1:WTSPax8L+diPSPmCJJTNKrOn+4qovzDjw/23T5DPmQ4=
 github.com/sacloud/webaccel-api-go v1.4.1/go.mod h1:S4g0hCvYHqcZuOXZMGG4ttDV9HiOAIbf5UXyrOnhymA=
 github.com/segmentio/asm v1.2.1 h1:DTNbBqs57ioxAD4PrArqftgypG4/qNpXoJx8TVXxPR0=
