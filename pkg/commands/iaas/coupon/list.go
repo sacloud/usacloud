@@ -15,7 +15,10 @@
 package coupon
 
 import (
+	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/iaas-service-go/coupon"
 	"github.com/sacloud/usacloud/pkg/cflag"
+	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -31,6 +34,23 @@ var listCommand = &core.Command{
 	ParameterInitializer: func() interface{} {
 		return newListParameter()
 	},
+
+	Func: listFunc,
+}
+
+func listFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+	svc := coupon.New(ctx.Client().(iaas.APICaller), ctx.Saclient())
+
+	res, err := svc.ListWithContext(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var results []interface{}
+	for _, v := range res {
+		results = append(results, v)
+	}
+	return results, nil
 }
 
 type listParameter struct {

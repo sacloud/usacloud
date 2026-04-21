@@ -93,7 +93,7 @@ func updateCertificateFunc(ctx cli.Context, parameter interface{}) ([]interface{
 
 func (p *updateCertificateParameter) ExampleParameters(ctx cli.Context) interface{} {
 	return &updateCertificateParameter{
-		CertificateChain: "/path/to/your/certificate/chain | -----BEGIN CERTIFICATE-----\n...",
-		Key:              "/path/to/your/private-key | -----BEGIN RSA PRIVATE KEY-----\n...",
+		CertificateChain: "/path/to/your/certificate/chain | <PEM certificate chain>",
+		Key:              "/path/to/your/private-key | <PEM private key>",
 	}
 }

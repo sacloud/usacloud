@@ -340,7 +340,7 @@ func TestConfig_loadFromEnvOverwrite(t *testing.T) {
 	}
 
 	clearTestEnv()
-	setEnv(map[string]string{
+	setEnv(map[string]string{ //nolint:gosec
 		"SAKURACLOUD_ACCESS_TOKEN": "token from env",
 	})
 	cfg.loadFromEnv()
