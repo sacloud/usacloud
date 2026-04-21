@@ -38,6 +38,21 @@ var csvCommand = &core.Command{
 		return newCSVParameter()
 	},
 
+	// ListAllが通常と異なるシグニチャのため個別対応する
+	ListAllFunc: func(ctx cli.Context, _ interface{}) ([]interface{}, error) {
+		svc := bill.New(ctx.Client().(iaas.APICaller), ctx.Saclient())
+		res, err := svc.ListWithContext(ctx, &bill.ListRequest{})
+		if err != nil {
+			return nil, err
+		}
+
+		var results []interface{}
+		for _, v := range res {
+			results = append(results, v)
+		}
+		return results, nil
+	},
+
 	Func: csvFunc,
 }
 
