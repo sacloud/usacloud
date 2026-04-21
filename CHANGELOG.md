@@ -1,5 +1,19 @@
 # Changelog
 
+## [v1.22.0](https://github.com/sacloud/usacloud/compare/v1.21.0...v1.22.0) - 2026-04-21
+- docs: remove usacloud logo by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1260
+- ci: bump docker/setup-buildx-action from 3 to 4 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1259
+- ci: bump docker/login-action from 3 to 4 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1258
+- ci: bump docker/setup-qemu-action from 3 to 4 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1257
+- ci: bump crazy-max/ghaction-import-gpg from 6 to 7 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1256
+- go: bump github.com/cloudflare/circl from 1.6.1 to 1.6.3 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1254
+- ci: bump goreleaser/goreleaser-action from 6 to 7 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1253
+- feat: add auth context support for bill and coupon commands by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1262
+- ci: bump docker/build-push-action from 6 to 7 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1264
+- ci: bump docker/metadata-action from 5 to 6 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1263
+- go: bump github.com/sacloud/saclient-go from 0.2.7 to 0.3.7 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1249
+- sacloud/packages-go v0.0.13 by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1265
+
 ## [v1.21.0](https://github.com/sacloud/usacloud/compare/v1.20.1...v1.21.0) - 2026-01-28
 - considerations for when the command invocated at the first time by @shyouhei in https://github.com/sacloud/usacloud/pull/1236
 - go: bump github.com/sacloud/webaccel-api-go from 1.3.0 to 1.4.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1234
