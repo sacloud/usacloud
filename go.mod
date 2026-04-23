@@ -19,7 +19,7 @@ require (
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/rhysd/go-github-selfupdate v1.2.3
 	github.com/sacloud/api-client-go v0.3.5
-	github.com/sacloud/iaas-api-go v1.26.0
+	github.com/sacloud/iaas-api-go v1.27.0
 	github.com/sacloud/iaas-service-go v1.23.0
 	github.com/sacloud/packages-go v0.0.13
 	github.com/sacloud/saclient-go v0.3.7
