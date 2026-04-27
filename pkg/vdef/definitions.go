@@ -59,7 +59,6 @@ var definitions = map[string][]*definition{
 		{key: types.CertificateAuthorityIssuanceMethods.PublicKey.String(), value: types.CertificateAuthorityIssuanceMethods.PublicKey},
 	},
 	"container_registry_access_level": {
-		{key: types.ContainerRegistryAccessLevels.ReadWrite.String(), value: types.ContainerRegistryAccessLevels.ReadWrite},
 		{key: types.ContainerRegistryAccessLevels.ReadOnly.String(), value: types.ContainerRegistryAccessLevels.ReadOnly},
 		{key: types.ContainerRegistryAccessLevels.None.String(), value: types.ContainerRegistryAccessLevels.None},
 	},

@@ -42,7 +42,7 @@ func (p *createParameter) buildFlags(fs *pflag.FlagSet) {
 	fs.StringVarP(&p.Description, "description", "", p.Description, "")
 	fs.StringSliceVarP(&p.Tags, "tags", "", p.Tags, "")
 	fs.VarP(core.NewIDFlag(&p.IconID, &p.IconID), "icon-id", "", "")
-	fs.StringVarP(&p.AccessLevel, "access-level", "", p.AccessLevel, "(*required) options: [readwrite/readonly/none]")
+	fs.StringVarP(&p.AccessLevel, "access-level", "", p.AccessLevel, "(*required) options: [readonly/none]")
 	fs.StringVarP(&p.SubDomainLabel, "subdomain-label", "", p.SubDomainLabel, "(*required) ")
 	fs.StringVarP(&p.VirtualDomain, "virtual-domain", "", p.VirtualDomain, "")
 	fs.StringVarP(&p.UsersData, "users", "", p.UsersData, "")
@@ -130,7 +130,7 @@ func (p *createParameter) buildFlagsUsage(cmd *cobra.Command) {
 }
 
 func (p *createParameter) setCompletionFunc(cmd *cobra.Command) {
-	cmd.RegisterFlagCompletionFunc("access-level", util.FlagCompletionFunc("readwrite", "readonly", "none"))
+	cmd.RegisterFlagCompletionFunc("access-level", util.FlagCompletionFunc("readonly", "none"))
 
 }
 
