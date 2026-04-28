@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.22.1](https://github.com/sacloud/usacloud/compare/v1.22.0...v1.22.1) - 2026-04-28
+- chore: update iaas-service-go to v1.24.0 by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1271
+- go: bump github.com/itchyny/gojq from 0.12.18 to 0.12.19 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1268
+- go: bump github.com/sacloud/webaccel-api-go from 1.4.1 to 1.5.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1267
+- go: bump github.com/mattn/go-isatty from 0.0.20 to 0.0.22 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1266
+
 ## [v1.22.0](https://github.com/sacloud/usacloud/compare/v1.21.0...v1.22.0) - 2026-04-21
 - docs: remove usacloud logo by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1260
 - ci: bump docker/setup-buildx-action from 3 to 4 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1259
