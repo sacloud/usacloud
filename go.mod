@@ -24,7 +24,7 @@ require (
 	github.com/sacloud/packages-go v0.1.0
 	github.com/sacloud/packages-go/e2e v0.0.0-20260423012125-3b04540c85d0
 	github.com/sacloud/saclient-go v0.3.7
-	github.com/sacloud/webaccel-api-go v1.4.1
+	github.com/sacloud/webaccel-api-go v1.5.0
 	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/pflag v1.0.10
