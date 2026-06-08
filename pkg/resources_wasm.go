@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:generate go run github.com/sacloud/usacloud/tools/gen-commands/
-//go:build !js
+//go:build js
 
 package pkg
 
 import (
+	"sync"
+
 	"github.com/sacloud/usacloud/pkg/commands/completion"
 	"github.com/sacloud/usacloud/pkg/commands/config"
 	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/commands/rest"
 	"github.com/sacloud/usacloud/pkg/commands/root"
-	updateSelf "github.com/sacloud/usacloud/pkg/commands/update-self"
 	"github.com/sacloud/usacloud/pkg/commands/version"
 	_ "github.com/sacloud/usacloud/pkg/commands/webaccel" // webaccel向けのcore.LabelsExtractorsの設定用
 	"github.com/sacloud/usacloud/pkg/commands/webaccel/webaccelerator"
@@ -38,10 +38,10 @@ var (
 		webaccelerator.Resource,
 	}
 
+	// update-self はWASM環境では提供しない
 	RootCommands = []*cobra.Command{
 		completion.Command,
 		version.Command,
-		updateSelf.Command,
 	}
 )
 
@@ -52,10 +52,14 @@ func Resources() core.Resources {
 	return rs
 }
 
+var initOnce sync.Once
+
 func initCommands() {
-	initIaasCommands()
-	initMiscCommands()
-	initRootCommands()
+	initOnce.Do(func() {
+		initIaasCommands()
+		initMiscCommands()
+		initRootCommands()
+	})
 }
 
 func initIaasCommands() {

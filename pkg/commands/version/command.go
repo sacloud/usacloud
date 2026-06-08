@@ -16,7 +16,6 @@ package version
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/sacloud/usacloud/pkg/version"
 	"github.com/spf13/cobra"
@@ -27,7 +26,7 @@ var Command = &cobra.Command{
 	Short: "Show version info",
 	Long:  `Show version info`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		_, err := fmt.Fprintln(os.Stdout, version.FullVersion())
+		_, err := fmt.Fprintln(cmd.OutOrStdout(), version.FullVersion())
 		return err
 	},
 }

@@ -12,14 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//go:build !js
+//go:build js
 
-package main
+package cli
 
 import (
-	"github.com/sacloud/usacloud/pkg"
+	"io"
+	"os"
 )
 
-func main() {
-	pkg.Run()
+// wasmOut/wasmErr は RunWasm から SetWasmIO() で設定される。
+// コマンドごとに書き換えられるため、並列実行は想定しない。
+var wasmOut io.Writer = os.Stdout
+var wasmErr io.Writer = os.Stderr
+
+// SetWasmIO はWASMコマンド実行前に出力先を設定する。
+func SetWasmIO(out, err io.Writer) {
+	wasmOut = out
+	wasmErr = err
+}
+
+func newIO() IO {
+	return &cliIO{
+		in:       os.Stdin,
+		out:      wasmOut,
+		progress: io.Discard, // WASMではプログレス表示なし
+		err:      wasmErr,
+	}
 }
