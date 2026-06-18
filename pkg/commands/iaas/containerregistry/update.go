@@ -90,6 +90,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		DescUpdateParameter:   examples.DescriptionUpdate,
 		TagsUpdateParameter:   examples.TagsUpdate,
 		IconIDUpdateParameter: examples.IconIDUpdate,
+		AccessLevel:           pointer.NewString("none"),
 		SubDomainLabel:        pointer.NewString("your-sub-domain"),
 		VirtualDomain:         pointer.NewString("your-domain.example.com"),
 		Users: &[]*builder.User{

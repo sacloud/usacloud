@@ -89,6 +89,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		DescParameter:   examples.Description,
 		TagsParameter:   examples.Tags,
 		IconIDParameter: examples.IconID,
+		AccessLevel:     "none",
 		SubDomainLabel:  "your-sub-domain",
 		VirtualDomain:   "your-domain.example.com",
 		Users: []*builder.User{
