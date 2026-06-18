@@ -15,6 +15,8 @@
 package containerregistry
 
 import (
+	"fmt"
+
 	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/iaas-service-go/containerregistry/builder"
 	"github.com/sacloud/usacloud/pkg/cflag"
@@ -46,7 +48,7 @@ type createParameter struct {
 	cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
 	cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
 
-	AccessLevel    string `cli:",options=container_registry_access_level" mapconv:",filters=container_registry_access_level_to_value" validate:"required,container_registry_access_level"`
+	AccessLevel    string `cli:",options=container_registry_access_level" mapconv:",filters=container_registry_access_level_to_value" validate:"omitempty,container_registry_access_level"`
 	SubDomainLabel string `cli:"subdomain-label" validate:"required"`
 	VirtualDomain  string `validate:"omitempty,fqdn"`
 
@@ -63,12 +65,18 @@ func init() {
 }
 
 // Customize パラメータ変換処理
-func (p *createParameter) Customize(_ cli.Context) error {
+func (p *createParameter) Customize(ctx cli.Context) error {
 	var users []*builder.User
 	if p.UsersData != "" {
 		if err := util.MarshalJSONFromPathOrContent(p.UsersData, &users); err != nil {
 			return err
 		}
+	}
+
+	if p.AccessLevel != "" {
+		fmt.Fprintln(ctx.IO().Err(), "[WARN] The --access-level flag is deprecated. Future versions will not support public access settings, and this flag will be removed.")
+	} else {
+		p.AccessLevel = types.ContainerRegistryAccessLevels.None.String()
 	}
 
 	p.Users = append(p.Users, users...)
@@ -81,7 +89,7 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		DescParameter:   examples.Description,
 		TagsParameter:   examples.Tags,
 		IconIDParameter: examples.IconID,
-		AccessLevel:     examples.OptionsString("container_registry_access_level"),
+		AccessLevel:     "none",
 		SubDomainLabel:  "your-sub-domain",
 		VirtualDomain:   "your-domain.example.com",
 		Users: []*builder.User{

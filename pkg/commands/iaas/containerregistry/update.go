@@ -15,6 +15,8 @@
 package containerregistry
 
 import (
+	"fmt"
+
 	"github.com/sacloud/iaas-api-go/types"
 	"github.com/sacloud/iaas-service-go/containerregistry/builder"
 	"github.com/sacloud/packages-go/pointer"
@@ -66,13 +68,17 @@ func init() {
 }
 
 // Customize パラメータ変換処理
-func (p *updateParameter) Customize(_ cli.Context) error {
+func (p *updateParameter) Customize(ctx cli.Context) error {
 	var users []*builder.User
 	if p.UsersData != nil && *p.UsersData != "" {
 		if err := util.MarshalJSONFromPathOrContent(*p.UsersData, &users); err != nil {
 			return err
 		}
 		p.Users = &users
+	}
+
+	if p.AccessLevel != nil {
+		fmt.Fprintln(ctx.IO().Err(), "[WARN] The --access-level flag is deprecated. Future versions will not support public access settings, and this flag will be removed.")
 	}
 
 	return nil
@@ -84,7 +90,7 @@ func (p *updateParameter) ExampleParameters(ctx cli.Context) interface{} {
 		DescUpdateParameter:   examples.DescriptionUpdate,
 		TagsUpdateParameter:   examples.TagsUpdate,
 		IconIDUpdateParameter: examples.IconIDUpdate,
-		AccessLevel:           pointer.NewString(examples.OptionsString("container_registry_access_level")),
+		AccessLevel:           pointer.NewString("none"),
 		SubDomainLabel:        pointer.NewString("your-sub-domain"),
 		VirtualDomain:         pointer.NewString("your-domain.example.com"),
 		Users: &[]*builder.User{
