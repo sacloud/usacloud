@@ -74,7 +74,7 @@ func (p *createParameter) Customize(ctx cli.Context) error {
 	}
 
 	if p.AccessLevel != "" {
-		fmt.Fprintln(ctx.IO().Err(), "[WARN] The --access-level field is deprecated. Future versions will not support public access settings, and this field will be removed.")
+		fmt.Fprintln(ctx.IO().Err(), "[WARN] The --access-level flag is deprecated. Future versions will not support public access settings, and this flag will be removed.")
 	} else {
 		p.AccessLevel = types.ContainerRegistryAccessLevels.None.String()
 	}
@@ -89,7 +89,6 @@ func (p *createParameter) ExampleParameters(ctx cli.Context) interface{} {
 		DescParameter:   examples.Description,
 		TagsParameter:   examples.Tags,
 		IconIDParameter: examples.IconID,
-		AccessLevel:     examples.OptionsString("container_registry_access_level"),
 		SubDomainLabel:  "your-sub-domain",
 		VirtualDomain:   "your-domain.example.com",
 		Users: []*builder.User{
