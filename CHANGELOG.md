@@ -1,5 +1,10 @@
 # Changelog
 
+## [v1.22.3](https://github.com/sacloud/usacloud/compare/v1.22.2...v1.22.3) - 2026-06-19
+
+- Revert "fix: populate saclient after DupWith in NewCLIContext" by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1287
+- revert: downgrade saclient-go to v0.3.7 with dependent iaas packages by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1290
+
 ## [v1.22.2](https://github.com/sacloud/usacloud/compare/v1.22.1...v1.22.2) - 2026-06-19
 
 - deprecate: mark container registry access-level as deprecated by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1278
