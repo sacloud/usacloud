@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.22.2](https://github.com/sacloud/usacloud/compare/v1.22.1...v1.22.2) - 2026-06-19
+
+- deprecate: mark container registry access-level as deprecated by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1278
+- go: bump golang.org/x/crypto from 0.50.0 to 0.52.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1276
+- go: bump github.com/sacloud/iaas-service-go from 1.24.0 to 1.25.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1273
+- go: bump github.com/sacloud/saclient-go from 0.3.7 to 0.4.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1277
+- go: Bump golang.org/x/crypto from 0.52.0 to 0.53.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1284
+- go: Bump github.com/sacloud/iaas-api-go from 1.29.0 to 1.29.2 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1283
+- go: Bump github.com/go-playground/validator/v10 from 10.30.2 to 10.30.3 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1282
+- go: Bump github.com/sacloud/iaas-service-go from 1.25.0 to 1.25.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1281
+- fix: populate saclient after DupWith in NewCLIContext by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1285
+
 ## [v1.22.1](https://github.com/sacloud/usacloud/compare/v1.22.0...v1.22.1) - 2026-04-28
 - chore: update iaas-service-go to v1.24.0 by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1271
 - go: bump github.com/itchyny/gojq from 0.12.18 to 0.12.19 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1268
