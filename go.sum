@@ -31,8 +31,8 @@ github.com/fatih/color v1.19.0/go.mod h1:zNk67I0ZUT1bEGsSGyCZYZNrHuTkJJB+r6Q9VuM
 github.com/fatih/structs v1.1.0 h1:Q7juDM0QtcnhCpeyLGQKyg4TOIghuNXrkL32pHAUMxo=
 github.com/fatih/structs v1.1.0/go.mod h1:9NiDSp5zOcgEDl+j00MP/WkGVPOlPRLejGD8Ga6PJ7M=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
-github.com/fsnotify/fsnotify v1.9.0 h1:2Ml+OJNzbYCTzsxtv8vKSFD9PbJjmhYF14k/jKC7S9k=
-github.com/fsnotify/fsnotify v1.9.0/go.mod h1:8jBTzvmWwFyi3Pb8djgCCO5IBqzKJ/Jwo8TRcHyHii0=
+github.com/fsnotify/fsnotify v1.10.1 h1:b0/UzAf9yR5rhf3RPm9gf3ehBPpf0oZKIjtpKrx59Ho=
+github.com/fsnotify/fsnotify v1.10.1/go.mod h1:TLheqan6HD6GBK6PrDWyDPBaEV8LspOxvPSjC+bVfgo=
 github.com/gabriel-vasile/mimetype v1.4.13 h1:46nXokslUBsAJE/wMsp5gtO500a4F3Nkz9Ufpk2AcUM=
 github.com/gabriel-vasile/mimetype v1.4.13/go.mod h1:d+9Oxyo1wTzWdyVUPMmXFvp4F9tea18J8ufA774AB3s=
 github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32 h1:Mn26/9ZMNWSw9C9ERFA1PUxfmGpolnw2v0bKOREu5ew=
@@ -166,8 +166,8 @@ github.com/sacloud/api-client-go v0.3.5 h1:0ALibvbC+6MBhN7t61k+RhguhiEQ8+NejqBjq
 github.com/sacloud/api-client-go v0.3.5/go.mod h1:akdcCOl6wszywa0YQ5X8cMnNgWTm+7N4EneODTdiH48=
 github.com/sacloud/go-http v0.1.9 h1:Xa5PY8/pb7XWhwG9nAeXSrYXPbtfBWqawgzxD5co3VE=
 github.com/sacloud/go-http v0.1.9/go.mod h1:DpDG+MSyxYaBwPJ7l3aKLMzwYdTVtC5Bo63HActcgoE=
-github.com/sacloud/iaas-api-go v1.29.0 h1:ZsgeArFg2PSYfvxiKfJoMkpU7QerSUiclfue9YVtk6c=
-github.com/sacloud/iaas-api-go v1.29.0/go.mod h1:VsW1NC1FPmwRjQRb3npmaOsI2hMtG813HjlomzaLr0U=
+github.com/sacloud/iaas-api-go v1.29.2 h1:Q4et7ozhhG69+gR15Tgbu3s/WXcDvtwj4RW+YQqdcA4=
+github.com/sacloud/iaas-api-go v1.29.2/go.mod h1:oi3/OJxsBvqYf+BHPiEpigDVqrAklSIhsxVlPki5aPg=
 github.com/sacloud/iaas-service-go v1.25.0 h1:Oi0V8mD5TIoFdz4RiUc1TaXPi5nqpCnnFhKEmPC/KIo=
 github.com/sacloud/iaas-service-go v1.25.0/go.mod h1:mkASM7bqapHla/AJqL0m3HuGZpSgxpTpLa6HBqoLHos=
 github.com/sacloud/iam-api-go v0.3.0 h1:t7dav2jRnn2DhSg5u9tpyoltFpastnTR/jNZ3OsW6fU=

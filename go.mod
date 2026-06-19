@@ -19,7 +19,7 @@ require (
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/rhysd/go-github-selfupdate v1.2.3
 	github.com/sacloud/api-client-go v0.3.5
-	github.com/sacloud/iaas-api-go v1.29.0
+	github.com/sacloud/iaas-api-go v1.29.2
 	github.com/sacloud/iaas-service-go v1.25.0
 	github.com/sacloud/packages-go v0.1.0
 	github.com/sacloud/packages-go/e2e v0.0.0-20260423012125-3b04540c85d0
@@ -41,7 +41,7 @@ require (
 	github.com/cloudflare/circl v1.6.3 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/dlclark/regexp2 v1.11.5 // indirect
-	github.com/fsnotify/fsnotify v1.9.0 // indirect
+	github.com/fsnotify/fsnotify v1.10.1 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.13 // indirect
 	github.com/go-faster/errors v0.7.1 // indirect
 	github.com/go-faster/jx v1.2.0 // indirect
