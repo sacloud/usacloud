@@ -36,9 +36,7 @@ func TestE2E_CreateConfigWithoutTTY(t *testing.T) {
 	err := usacloudE2E.UsacloudRun(t, "config", "create", profileName, "--token", "aaa", "--secret", "bbb", "--default-output-type", "table", "--zone", "is1b", "--use")
 	require.NoError(t, err)
 
-	profileOp, err := saclient.NewProfileOp(os.Environ())
-	require.NoError(t, err)
-
+	profileOp := saclient.NewProfileOp(os.Environ())
 	profile, err := profileOp.Read(profileName)
 	if err != nil {
 		t.Fatal(err)
@@ -57,10 +55,8 @@ func TestE2E_ConfigWithoutSubcommand(t *testing.T) {
 	err := usacloudE2E.UsacloudRun(t, "config")
 	require.NoError(t, err)
 
-	profileOp, err := saclient.NewProfileOp(os.Environ())
-	require.NoError(t, err)
+	profileOp := saclient.NewProfileOp(os.Environ())
 	_, err = profileOp.List()
-	require.NoError(t, err)
 	profile, err := profileOp.Read("default")
 	require.NoError(t, err)
 	require.NotNil(t, profile)
