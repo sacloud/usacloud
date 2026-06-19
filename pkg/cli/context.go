@@ -97,6 +97,13 @@ func NewCLIContext(param *ContextParameter) (Context, func(), error) {
 		cancel()
 		return nil, nil, err
 	}
+	// Note: saclient-go v0.4.0+ requires explicit Populate() before using
+	// ProfileOp() and other methods. Ideally this should be handled inside
+	// saclient-go, but for now we call it here to keep the client usable.
+	if err := sa.Populate(); err != nil {
+		cancel()
+		return nil, nil, err
+	}
 
 	cliCtx := &cliContext{
 		parentCtx:    ctx,
