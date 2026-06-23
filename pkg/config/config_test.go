@@ -15,12 +15,16 @@
 package config
 
 import (
+	"bytes"
 	"os"
+	"path/filepath"
 	"reflect"
 	"testing"
 
 	"github.com/sacloud/api-client-go/profile"
 	"github.com/sacloud/iaas-api-go"
+	"github.com/spf13/pflag"
+	"github.com/stretchr/testify/require"
 )
 
 func TestFillDefaults_ZonesEmpty(t *testing.T) {
@@ -385,5 +389,172 @@ func clearTestEnv() {
 func setEnv(m map[string]string) {
 	for k, v := range m {
 		_ = os.Setenv(k, v)
+	}
+}
+
+func defaultZonesWithAll() []string {
+	zones := append([]string{}, iaas.SakuraCloudZones...)
+	return append(zones, "all")
+}
+
+func TestLoadConfigValue(t *testing.T) {
+	defaultZones := defaultZonesWithAll()
+
+	tests := []struct {
+		name     string
+		env      map[string]string
+		args     []string
+		setup    func(t *testing.T, dir string)
+		want     Config
+		wantWarn string
+	}{
+		{
+			name: "no profiles",
+			env:  map[string]string{},
+			want: Config{
+				ConfigValue: profile.ConfigValue{
+					Zones: defaultZones,
+				},
+				Profile: "default",
+			},
+		},
+		{
+			name: "default profile exists",
+			env:  map[string]string{},
+			setup: func(t *testing.T, dir string) {
+				require.NoError(t, profile.Save("default", &profile.ConfigValue{
+					AccessToken: "default-token",
+				}))
+			},
+			want: Config{
+				ConfigValue: profile.ConfigValue{
+					AccessToken: "default-token",
+					Zones:       defaultZones,
+				},
+				Profile: "default",
+			},
+		},
+		{
+			name: "--profile flag",
+			env:  map[string]string{},
+			args: []string{"--profile", "foo"},
+			setup: func(t *testing.T, dir string) {
+				require.NoError(t, profile.Save("foo", &profile.ConfigValue{
+					AccessToken: "foo-token",
+				}))
+			},
+			want: Config{
+				ConfigValue: profile.ConfigValue{
+					AccessToken: "foo-token",
+					Zones:       defaultZones,
+				},
+				Profile: "foo",
+			},
+		},
+		{
+			name: "SAKURA_PROFILE env",
+			env:  map[string]string{"SAKURA_PROFILE": "foo"},
+			setup: func(t *testing.T, dir string) {
+				require.NoError(t, profile.Save("foo", &profile.ConfigValue{
+					AccessToken: "foo-token",
+				}))
+			},
+			want: Config{
+				ConfigValue: profile.ConfigValue{
+					AccessToken: "foo-token",
+					Zones:       defaultZones,
+				},
+				Profile: "foo",
+			},
+		},
+		{
+			name: "current points to existing profile",
+			env:  map[string]string{},
+			setup: func(t *testing.T, dir string) {
+				require.NoError(t, profile.Save("foo", &profile.ConfigValue{
+					AccessToken: "foo-token",
+				}))
+				require.NoError(t, profile.SetCurrentName("foo"))
+			},
+			want: Config{
+				ConfigValue: profile.ConfigValue{
+					AccessToken: "foo-token",
+					Zones:       defaultZones,
+				},
+				Profile: "foo",
+			},
+		},
+		{
+			name: "current points to deleted profile",
+			env:  map[string]string{},
+			setup: func(t *testing.T, dir string) {
+				require.NoError(t, profile.Save("foo", &profile.ConfigValue{
+					AccessToken: "foo-token",
+				}))
+				require.NoError(t, profile.SetCurrentName("foo"))
+				// emulate deletion: remove foo profile files but leave current file
+				path, err := profile.ConfigFilePath("foo")
+				require.NoError(t, err)
+				require.NoError(t, os.Remove(path))
+				require.NoError(t, os.Remove(filepath.Dir(path)))
+			},
+			want: Config{
+				ConfigValue: profile.ConfigValue{
+					Zones: defaultZones,
+				},
+				Profile: "foo",
+			},
+			wantWarn: `[WARN] loading profile "foo" is failed:`,
+		},
+		{
+			name: "flag wins over env",
+			env:  map[string]string{"SAKURA_PROFILE": "bar"},
+			args: []string{"--profile", "foo"},
+			setup: func(t *testing.T, dir string) {
+				require.NoError(t, profile.Save("foo", &profile.ConfigValue{
+					AccessToken: "foo-token",
+				}))
+				require.NoError(t, profile.Save("bar", &profile.ConfigValue{
+					AccessToken: "bar-token",
+				}))
+			},
+			want: Config{
+				ConfigValue: profile.ConfigValue{
+					AccessToken: "foo-token",
+					Zones:       defaultZones,
+				},
+				Profile: "foo",
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			clearTestEnv()
+			setEnv(tt.env)
+
+			profileDir := t.TempDir()
+			t.Setenv("SAKURACLOUD_PROFILE_DIR", profileDir)
+
+			if tt.setup != nil {
+				tt.setup(t, profileDir)
+			}
+
+			flags := pflag.NewFlagSet("test", pflag.ContinueOnError)
+			InitConfig(flags)
+			if len(tt.args) > 0 {
+				require.NoError(t, flags.Parse(tt.args))
+			}
+
+			var errW bytes.Buffer
+			cfg, err := LoadConfigValue(flags, &errW, false)
+			require.NoError(t, err)
+
+			assertConfigEqual(t, *cfg, tt.want)
+			require.Equal(t, tt.want.Profile, cfg.Profile)
+			if tt.wantWarn != "" {
+				require.Contains(t, errW.String(), tt.wantWarn)
+			}
+		})
 	}
 }

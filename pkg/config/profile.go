@@ -45,4 +45,5 @@ func (o *Config) loadFromProfile(flags *pflag.FlagSet, errW io.Writer) {
 		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err)
 		return
 	}
+	o.Profile = profileName
 }
