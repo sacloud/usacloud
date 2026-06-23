@@ -46,10 +46,10 @@ func newTestIO(t *testing.T) *testIO {
 	return &testIO{in: f}
 }
 
-func (io *testIO) In() *os.File       { return io.in }
-func (io *testIO) Out() io.Writer     { return &io.out }
+func (io *testIO) In() *os.File        { return io.in }
+func (io *testIO) Out() io.Writer      { return &io.out }
 func (io *testIO) Progress() io.Writer { return &io.progress }
-func (io *testIO) Err() io.Writer     { return &io.err }
+func (io *testIO) Err() io.Writer      { return &io.err }
 
 type testContext struct {
 	option   *config.Config
@@ -69,24 +69,24 @@ func newTestContext(t *testing.T, client saclient.ClientAPI, args ...string) *te
 	}
 }
 
-func (c *testContext) Option() *config.Config      { return c.option }
-func (c *testContext) Output() output.Output       { return output.NewDiscardOutput() }
-func (c *testContext) Client() interface{}         { return nil }
-func (c *testContext) IO() cli.IO                  { return c.io }
-func (c *testContext) Args() []string              { return c.args }
+func (c *testContext) Option() *config.Config       { return c.option }
+func (c *testContext) Output() output.Output        { return output.NewDiscardOutput() }
+func (c *testContext) Client() interface{}          { return nil }
+func (c *testContext) IO() cli.IO                   { return c.io }
+func (c *testContext) Args() []string               { return c.args }
 func (c *testContext) Saclient() saclient.ClientAPI { return c.client }
-func (c *testContext) PlatformName() string        { return "test" }
-func (c *testContext) ResourceName() string        { return "config" }
-func (c *testContext) CommandName() string         { return "test" }
+func (c *testContext) PlatformName() string         { return "test" }
+func (c *testContext) ResourceName() string         { return "config" }
+func (c *testContext) CommandName() string          { return "test" }
 func (c *testContext) WithResource(id, zone string, resource interface{}) cli.Context {
 	return c
 }
-func (c *testContext) ID() string                { return c.resource.ID }
-func (c *testContext) Zone() string              { return c.resource.Zone }
-func (c *testContext) Resource() interface{}     { return c.resource.Resource }
-func (c *testContext) Deadline() (time.Time, bool) { return time.Time{}, false }
-func (c *testContext) Done() <-chan struct{}     { return nil }
-func (c *testContext) Err() error                { return nil }
+func (c *testContext) ID() string                        { return c.resource.ID }
+func (c *testContext) Zone() string                      { return c.resource.Zone }
+func (c *testContext) Resource() interface{}             { return c.resource.Resource }
+func (c *testContext) Deadline() (time.Time, bool)       { return time.Time{}, false }
+func (c *testContext) Done() <-chan struct{}             { return nil }
+func (c *testContext) Err() error                        { return nil }
 func (c *testContext) Value(key interface{}) interface{} { return nil }
 
 func TestMain(m *testing.M) {
@@ -99,6 +99,7 @@ func setupTestClient(t *testing.T) (string, saclient.ClientAPI) {
 	dir := t.TempDir()
 	var client saclient.Client
 	require.NoError(t, client.SetEnviron([]string{"SAKURACLOUD_PROFILE_DIR=" + dir}))
+	require.NoError(t, client.Populate())
 	op, err := client.ProfileOp()
 	require.NoError(t, err)
 	require.NoError(t, op.Create(&saclient.Profile{Name: "default"}))
@@ -201,8 +202,8 @@ func TestDeleteProfile(t *testing.T) {
 
 		ctx := newTestContext(t, client)
 		p := &deleteParameter{
-			ProfileParameter:       ProfileParameter{Name: "bar"},
-			ConfirmParameter:       cflag.ConfirmParameter{AssumeYes: true},
+			ProfileParameter: ProfileParameter{Name: "bar"},
+			ConfirmParameter: cflag.ConfirmParameter{AssumeYes: true},
 		}
 
 		require.NoError(t, deleteCommand.ValidateFunc(ctx, p))
@@ -226,8 +227,8 @@ func TestDeleteProfile(t *testing.T) {
 
 		ctx := newTestContext(t, client)
 		p := &deleteParameter{
-			ProfileParameter:       ProfileParameter{Name: "foo"},
-			ConfirmParameter:       cflag.ConfirmParameter{AssumeYes: true},
+			ProfileParameter: ProfileParameter{Name: "foo"},
+			ConfirmParameter: cflag.ConfirmParameter{AssumeYes: true},
 		}
 
 		_, err = deleteFunc(ctx, p)
@@ -246,8 +247,8 @@ func TestDeleteProfile(t *testing.T) {
 
 		ctx := newTestContext(t, client)
 		p := &deleteParameter{
-			ProfileParameter:       ProfileParameter{Name: "missing"},
-			ConfirmParameter:       cflag.ConfirmParameter{AssumeYes: true},
+			ProfileParameter: ProfileParameter{Name: "missing"},
+			ConfirmParameter: cflag.ConfirmParameter{AssumeYes: true},
 		}
 		err := deleteCommand.ValidateFunc(ctx, p)
 		require.Error(t, err)
