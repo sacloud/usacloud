@@ -18,6 +18,7 @@ import (
 	"bytes"
 	"io"
 	"os"
+	"path/filepath"
 	"testing"
 	"time"
 
@@ -105,6 +106,18 @@ func setupTestClient(t *testing.T) (string, saclient.ClientAPI) {
 	require.NoError(t, op.Create(&saclient.Profile{Name: "default"}))
 	require.NoError(t, op.SetCurrentName("default"))
 	return dir, &client
+}
+
+func setupTestClientWithBrokenCurrent(t *testing.T) (string, saclient.ClientAPI) {
+	dir, client := setupTestClient(t)
+	op, err := client.ProfileOp()
+	require.NoError(t, err)
+	createTestProfile(t, op, "foo", "token", "secret")
+
+	// currentを存在しないプロファイル名で上書き
+	currentPath := filepath.Join(dir, "current")
+	require.NoError(t, os.WriteFile(currentPath, []byte("broken"), 0o600))
+	return dir, client
 }
 
 func createTestProfile(t *testing.T, op saclient.ProfileAPI, name, token, secret string) {
@@ -416,5 +429,43 @@ func TestEditProfile(t *testing.T) {
 		current, err := op.GetCurrentName()
 		require.NoError(t, err)
 		require.Equal(t, "baz", current)
+	})
+}
+
+func TestConfigCommandsWithBrokenCurrent(t *testing.T) {
+	t.Run("current shows raw current value", func(t *testing.T) {
+		_, client := setupTestClientWithBrokenCurrent(t)
+		ctx := newTestContext(t, client)
+		_, err := currentFunc(ctx, nil)
+		require.NoError(t, err)
+
+		out := ctx.io.(*testIO).out.String()
+		require.Equal(t, "broken\n", out)
+	})
+
+	t.Run("list shows existing profiles", func(t *testing.T) {
+		_, client := setupTestClientWithBrokenCurrent(t)
+		ctx := newTestContext(t, client)
+		_, err := listFunc(ctx, nil)
+		require.NoError(t, err)
+
+		out := ctx.io.(*testIO).out.String()
+		require.Contains(t, out, "default")
+		require.Contains(t, out, "foo")
+	})
+
+	t.Run("use fixes current profile", func(t *testing.T) {
+		_, client := setupTestClientWithBrokenCurrent(t)
+		ctx := newTestContext(t, client)
+		p := &useParameter{ProfileParameter: ProfileParameter{Name: "foo"}}
+		require.NoError(t, useCommand.ValidateFunc(ctx, p))
+		_, err := useFunc(ctx, p)
+		require.NoError(t, err)
+
+		op, err := client.ProfileOp()
+		require.NoError(t, err)
+		current, err := op.GetCurrentName()
+		require.NoError(t, err)
+		require.Equal(t, "foo", current)
 	})
 }
