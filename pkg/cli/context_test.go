@@ -15,10 +15,14 @@
 package cli
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 
+	"github.com/sacloud/saclient-go"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
+	"github.com/spf13/pflag"
 	"github.com/stretchr/testify/require"
 )
 
@@ -201,4 +205,41 @@ func Test_getOutputWriter(t *testing.T) {
 			require.EqualValues(t, tt.want, got, tt.name)
 		})
 	}
+}
+
+func TestNewCLIContext_SkipLoadingProfile_WithBrokenCurrent(t *testing.T) {
+	dir := t.TempDir()
+	t.Setenv("SAKURACLOUD_PROFILE_DIR", dir)
+
+	op, err := saclient.NewProfileOp([]string{"SAKURACLOUD_PROFILE_DIR=" + dir})
+	require.NoError(t, err)
+	require.NoError(t, op.Create(&saclient.Profile{
+		Name:       "foo",
+		Attributes: map[string]any{"AccessToken": "token"},
+	}))
+	require.NoError(t, op.SetCurrentName("foo"))
+
+	// currentを存在しないプロファイル名で上書き
+	require.NoError(t, os.WriteFile(filepath.Join(dir, "current"), []byte("broken"), 0o600))
+
+	flags := pflag.NewFlagSet("test", pflag.ContinueOnError)
+	config.InitConfig(flags)
+	require.NoError(t, flags.Parse([]string{"--no-color"}))
+
+	ctx, cancel, err := NewCLIContext(&ContextParameter{
+		ResourceName:       "config",
+		CommandName:        "current",
+		GlobalFlags:        flags,
+		SkipLoadingProfile: true,
+	})
+	require.NoError(t, err)
+	defer cancel()
+
+	require.True(t, ctx.Option().NoColor)
+
+	profileOp, err := ctx.Saclient().ProfileOp()
+	require.NoError(t, err)
+	current, err := profileOp.GetCurrentName()
+	require.NoError(t, err)
+	require.Equal(t, "broken", current)
 }

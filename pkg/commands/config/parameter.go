@@ -46,17 +46,16 @@ func validateProfileParameter(ctx cli.Context, parameter interface{}) error {
 	if len(ctx.Args()) > 0 && p.GetName() == "" {
 		p.SetName(ctx.Args()[0])
 	}
-	client := ctx.Saclient()
-	op, err := client.ProfileOp()
+	op, err := ctx.Saclient().ProfileOp()
 	if err != nil {
 		return err
 	}
 	if p.GetName() == "" {
-		current, err := client.Profile()
+		current, err := op.GetCurrentName()
 		if err != nil {
 			return err
 		}
-		p.SetName(current.Name)
+		p.SetName(current)
 	}
 	if err := validate.Exec(p); err != nil {
 		return err

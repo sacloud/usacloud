@@ -16,6 +16,7 @@ package cli
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/sacloud/saclient-go"
@@ -98,8 +99,11 @@ func NewCLIContext(param *ContextParameter) (Context, func(), error) {
 		return nil, nil, err
 	}
 	if err := sa.Populate(); err != nil {
-		cancel()
-		return nil, nil, err
+		if !param.SkipLoadingProfile {
+			cancel()
+			return nil, nil, err
+		}
+		fmt.Fprintf(io.Err(), "[WARN] API client population failed; ignored for %s/%s because profile loading is skipped: %s\n", param.ResourceName, param.CommandName, err)
 	}
 
 	cliCtx := &cliContext{

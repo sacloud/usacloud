@@ -86,11 +86,7 @@ func LoadConfigValue(flags *pflag.FlagSet, errW io.Writer, skipLoadingProfile bo
 	o := &Config{
 		ConfigValue: profile.ConfigValue{},
 	}
-	if skipLoadingProfile {
-		return o, nil
-	}
-
-	o.loadConfig(flags, errW)
+	o.loadConfig(flags, errW, skipLoadingProfile)
 	return o, o.Validate(false)
 }
 
@@ -100,16 +96,28 @@ func (o *Config) IsEmpty() bool {
 		o.Zone == "" && o.DefaultOutputType == ""
 }
 
-func (o *Config) loadConfig(flags *pflag.FlagSet, errW io.Writer) {
-	// プロファイルだけ先に環境変数を読んでおく
-	if o.Profile == "" {
-		o.Profile = envvar.StringFromEnvMulti([]string{"SAKURA_PROFILE", "SAKURACLOUD_PROFILE", "USACLOUD_PROFILE"}, "")
+func (o *Config) loadConfig(flags *pflag.FlagSet, errW io.Writer, skipProfile bool) {
+	o.loadProfileName(flags, errW)
+	if !skipProfile {
+		o.loadFromProfile(flags, errW)
 	}
-
-	o.loadFromProfile(flags, errW)
 	o.loadFromEnv()
 	o.loadFromFlags(flags, errW)
 	o.fillDefaults()
+}
+
+func (o *Config) loadProfileName(flags *pflag.FlagSet, errW io.Writer) {
+	if flags.Changed("profile") {
+		v, err := flags.GetString("profile")
+		if err != nil {
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			return
+		}
+		o.Profile = v
+	}
+	if o.Profile == "" {
+		o.Profile = envvar.StringFromEnvMulti([]string{"SAKURA_PROFILE", "SAKURACLOUD_PROFILE", "USACLOUD_PROFILE"}, "")
+	}
 }
 
 func (o *Config) fillDefaults() {

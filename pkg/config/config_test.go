@@ -558,3 +558,87 @@ func TestLoadConfigValue(t *testing.T) {
 		})
 	}
 }
+
+func TestLoadConfigValue_SkipLoadingProfile(t *testing.T) {
+	defaultZones := defaultZonesWithAll()
+
+	tests := []struct {
+		name     string
+		env      map[string]string
+		args     []string
+		setup    func(t *testing.T, dir string)
+		want     Config
+		wantWarn string
+	}{
+		{
+			name: "skips profile file but still loads env and flags",
+			env:  map[string]string{"SAKURA_PROCESS_TIMEOUT_SEC": "123"},
+			args: []string{"--no-color", "--profile", "foo"},
+			setup: func(t *testing.T, dir string) {
+				require.NoError(t, profile.Save("foo", &profile.ConfigValue{
+					AccessToken: "foo-token",
+				}))
+				require.NoError(t, profile.SetCurrentName("default"))
+			},
+			want: Config{
+				ConfigValue: profile.ConfigValue{
+					Zones: defaultZones,
+				},
+				ProcessTimeoutSec: 123,
+				Profile:           "foo",
+				NoColor:           true,
+			},
+		},
+		{
+			name: "broken current file does not cause error",
+			args: []string{"--profile", "foo"},
+			setup: func(t *testing.T, dir string) {
+				require.NoError(t, profile.Save("foo", &profile.ConfigValue{
+					AccessToken: "foo-token",
+				}))
+				require.NoError(t, profile.SetCurrentName("foo"))
+				// emulate broken current: remove foo profile but leave current file
+				path, err := profile.ConfigFilePath("foo")
+				require.NoError(t, err)
+				require.NoError(t, os.Remove(path))
+				require.NoError(t, os.Remove(filepath.Dir(path)))
+			},
+			want: Config{
+				ConfigValue: profile.ConfigValue{
+					Zones: defaultZones,
+				},
+				Profile: "foo",
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			clearTestEnv()
+			setEnv(tt.env)
+
+			profileDir := t.TempDir()
+			t.Setenv("SAKURACLOUD_PROFILE_DIR", profileDir)
+
+			if tt.setup != nil {
+				tt.setup(t, profileDir)
+			}
+
+			flags := pflag.NewFlagSet("test", pflag.ContinueOnError)
+			InitConfig(flags)
+			if len(tt.args) > 0 {
+				require.NoError(t, flags.Parse(tt.args))
+			}
+
+			var errW bytes.Buffer
+			cfg, err := LoadConfigValue(flags, &errW, true)
+			require.NoError(t, err)
+
+			assertConfigEqual(t, *cfg, tt.want)
+			require.Equal(t, tt.want.Profile, cfg.Profile)
+			if tt.wantWarn != "" {
+				require.Contains(t, errW.String(), tt.wantWarn)
+			}
+		})
+	}
+}
