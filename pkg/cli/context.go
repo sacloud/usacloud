@@ -103,7 +103,7 @@ func NewCLIContext(param *ContextParameter) (Context, func(), error) {
 			cancel()
 			return nil, nil, err
 		}
-		fmt.Fprintf(io.Err(), "[WARN] API client population failed; ignored for config commands: %s\n", err)
+		fmt.Fprintf(io.Err(), "[WARN] API client population failed; ignored for %s/%s because profile loading is skipped: %s\n", param.ResourceName, param.CommandName, err)
 	}
 
 	cliCtx := &cliContext{
