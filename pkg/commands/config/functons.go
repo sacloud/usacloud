@@ -23,7 +23,10 @@ import (
 )
 
 func profileCompletion(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
-	op := saclient.NewProfileOp(os.Environ()) // no context, create a new op
+	op, err := saclient.NewProfileOp(os.Environ()) // no context, create a new op
+	if err != nil {
+		return nil, cobra.ShellCompDirectiveError
+	}
 
 	names, err := op.List()
 	if err != nil {

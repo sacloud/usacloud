@@ -97,6 +97,10 @@ func NewCLIContext(param *ContextParameter) (Context, func(), error) {
 		cancel()
 		return nil, nil, err
 	}
+	if err := sa.Populate(); err != nil {
+		cancel()
+		return nil, nil, err
+	}
 
 	cliCtx := &cliContext{
 		parentCtx:    ctx,
