@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.22.4](https://github.com/sacloud/usacloud/compare/v1.22.3...v1.22.4) - 2026-06-24
+
+- fix(profile): reset current to default when deleting current profile by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1295
+- chore: update saclient-go to v0.4.0 by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1296
+- fix(config): skip profile loading and tolerate client populate errors by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1298
+- ci: Bump actions/checkout from 6 to 7 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1280
+- go: Bump github.com/sacloud/iaas-service-go from 1.25.0 to 1.25.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1291
+- go: Bump github.com/mattn/go-colorable from 0.1.14 to 0.1.15 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1293
+- go: Bump github.com/sacloud/iaas-api-go from 1.29.1 to 1.29.2 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1294
+
 ## [v1.22.3](https://github.com/sacloud/usacloud/compare/v1.22.2...v1.22.3) - 2026-06-19
 
 - Revert "fix: populate saclient after DupWith in NewCLIContext" by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1287
