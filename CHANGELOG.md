@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.22.5](https://github.com/sacloud/usacloud/compare/v1.22.4...v1.22.5) - 2026-07-01
+
+- test: make config command tests portable on Windows by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1299
+
 ## [v1.22.4](https://github.com/sacloud/usacloud/compare/v1.22.3...v1.22.4) - 2026-06-24
 
 - fix(profile): reset current to default when deleting current profile by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1295
