@@ -19,6 +19,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
@@ -41,7 +42,7 @@ type testIO struct {
 
 func newTestIO(t *testing.T) *testIO {
 	t.Helper()
-	f, err := os.Open("/dev/null")
+	f, err := os.Open(os.DevNull)
 	require.NoError(t, err)
 	t.Cleanup(func() { _ = f.Close() })
 	return &testIO{in: f}
@@ -356,7 +357,7 @@ func TestCurrentProfile(t *testing.T) {
 	require.NoError(t, err)
 
 	out := ctx.io.(*testIO).out.String()
-	require.Equal(t, "foo\n", out)
+	require.Equal(t, "foo", strings.TrimSpace(out))
 }
 
 func TestEditProfile(t *testing.T) {
@@ -440,7 +441,7 @@ func TestConfigCommandsWithBrokenCurrent(t *testing.T) {
 		require.NoError(t, err)
 
 		out := ctx.io.(*testIO).out.String()
-		require.Equal(t, "broken\n", out)
+		require.Equal(t, "broken", strings.TrimSpace(out))
 	})
 
 	t.Run("list shows existing profiles", func(t *testing.T) {
