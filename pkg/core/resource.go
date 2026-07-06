@@ -25,16 +25,33 @@ import (
 	"github.com/spf13/pflag"
 )
 
+// Resource usacloud CLI における 1 つのリソースを表す。
+//
+// リソース名の namespace として機能し、その配下に Command をカテゴリ別に集約する。
+// 子リソースを持つことができ、親の PlatformName や IsGlobalResource を継承する。
+// ServiceType には対応する service（iaas-service-go / webaccel-api-go 等）の型を設定し、コード生成の根拠とする。
 type Resource struct {
-	Name               string
-	Aliases            []string
-	Usage              string
+	// Name リソース名。ケバブケース（例: simple-monitor）で指定する。
+	Name string
+	// Aliases リソースのエイリアス。
+	Aliases []string
+	// Usage ヘルプに表示される短い説明文。
+	Usage string
+	// DefaultCommandName リソース名だけが指定された際に自動実行するコマンド名。
+	// 空の場合はヘルプを表示する。
 	DefaultCommandName string
-	Category           category.Category
-	Warning            string
-	IsGlobalResource   bool
-	PlatformName       string       // "iaas" or "phy" or "objectstorage", 空の場合はIaaSとして扱われる
-	ServiceType        reflect.Type // リソースに対応するserviceの型情報、コード生成用
+	// Category リソースが属するカテゴリ。ヘルプ表示のグループ分けに使用される。
+	Category category.Category
+	// Warning コマンド実行前に表示する警告メッセージ。
+	Warning string
+	// IsGlobalResource true の場合、ゾーンを持たないリソースとして扱う。
+	IsGlobalResource bool
+	// PlatformName 対象プラットフォーム名。現状は "iaas" または "webaccel" が使用される。
+	// "phy" / "objectstorage" は将来の拡張用に予約されているが、現時点では未実装。
+	PlatformName string
+	// ServiceType リソースに対応する service（iaas-service-go / webaccel-api-go 等）の型情報。コード生成用。
+	ServiceType reflect.Type
+	// SkipLoadingProfile true の場合、プロファイルの読み込みをスキップする。
 	SkipLoadingProfile bool
 
 	resources []*Resource // 子リソース

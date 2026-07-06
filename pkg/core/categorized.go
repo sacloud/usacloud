@@ -16,11 +16,17 @@ package core
 
 import "github.com/sacloud/usacloud/pkg/category"
 
+// CategorizedResources カテゴリと、そのカテゴリに属するリソースの一覧。
+//
+// ヘルプ表示時にリソースをカテゴリ別にグループ化するために使用される。
 type CategorizedResources struct {
 	Category  category.Category
 	Resources []*Resource
 }
 
+// CategorizedCommands カテゴリと、そのカテゴリに属するコマンドの一覧。
+//
+// ヘルプ表示時にコマンドをカテゴリ別にグループ化するために使用される。
 type CategorizedCommands struct {
 	Category category.Category
 	Commands []*Command

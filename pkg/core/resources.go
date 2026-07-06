@@ -20,9 +20,12 @@ import (
 	"github.com/sacloud/usacloud/pkg/category"
 )
 
+// Resources Resource のスライス。
+//
+// プラットフォーム単位で全リソースを登録する際に使用される。
 type Resources []*Resource
 
-// CategorizedResources categoriesと各リソースのカテゴリー名を用いてカテゴリー配下にリソースを紐づけて返す
+// CategorizedResources categories と各リソースのカテゴリ名を用いて、カテゴリ配下にリソースを紐づけて返す。
 func (r Resources) CategorizedResources(categories []category.Category) []*CategorizedResources {
 	sort.Slice(categories, func(i, j int) bool {
 		return categories[i].Order < categories[j].Order

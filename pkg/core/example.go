@@ -21,6 +21,9 @@ import (
 	"github.com/sacloud/usacloud/pkg/cli"
 )
 
+// ExampleHolder --example フラグ実行時に出力するパラメータ例を提供するインターフェース。
+//
+// コマンドのパラメータ struct がこのインターフェースを実装していない場合は、スケルトンが出力される。
 type ExampleHolder interface {
 	ExampleParameters(ctx cli.Context) interface{}
 }

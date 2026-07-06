@@ -1,135 +1,259 @@
-# usacloud v1でのコマンド実装方法について
+# usacloud v1 でのコマンド実装方法
+
+本ドキュメントでは、usacloud に新しいリソース・コマンドを追加する手順を説明します。
+
+`pkg/core` フレームワークの概要やコマンド実行ライフサイクルについては、以下も併せて参照してください。
+
+- [core-architecture.md](./core-architecture.md)
+- [core-command-lifecycle.md](./core-command-lifecycle.md)
+- [core-resource-model.md](./core-resource-model.md)
+- [code-generation-boundary.md](./code-generation-boundary.md)
 
 ## 全体の流れ
 
-- `pkg/cmd/commands`配下にリソース名のパッケージを作成(なるべくlibsacloud serviceのパッケージ名と合わせる)
-- 作成したパッケージ内にリソース定義(`resource.go`)を作成
-- 作成したパッケージ内にコマンド定義(例:`list.go`)を作成
-- `pkg/cmd/resources.go`に作成したリソース定義を追加する
-- コード生成する - `make` or `make gen`
+1. `pkg/commands/<platform>/<リソース名>`配下にパッケージを作成する。
+2. パッケージ内にリソース定義`resource.go`を作成する。
+3. パッケージ内にコマンド定義（例: `list.go`, `create.go`）を作成する。
+4. 必要に応じてカラム定義`columns.go`やラベル抽出`labels.go`を作成する。
+5. `pkg/commands/<platform>/resources.go`に作成したリソース定義を追加する。
+6. `make`または`make gen`を実行する。
 
 ## 各手順について
 
-### `pkg/cmd/commands`配下にリソース名のパッケージを作成
+### 1. `pkg/commands/<platform>/<リソース名>` 配下にパッケージを作成
 
-追加したいリソースが`archive`の場合、`pkg/cmd/commands/archive`ディレクトリを作成する。
+追加したいリソースが `simple-monitor` で、プラットフォームが `iaas` の場合、`pkg/commands/iaas/simplemonitor` ディレクトリを作成します。
 
-Note: 名前はlibsacloud serviceのものに合わせる。
+#### 命名規則
 
-#### 基本的な命名規則
+- リソース名を小文字にしたものである。
+- 単語の区切りはなし。ハイフンやアンダーバーを用いない。
+- 以下2つはGoの予約語とぶつからないように特殊なルールを適用する。
+  - NIC（インターフェース）リソース → `iface`である。
+  - スイッチリソース → `swytch`である。
 
-- リソース名を小文字にしたもの
-- 単語の区切りはなし。ハイフンやアンダーバーを用いない
-- 以下2つはGoの予約語とぶつからないように特殊なルールを適用
-  - NIC(インターフェース)リソース - `iface`
-  - スイッチ リソース - `swytch`
+### 2. リソース定義 `resource.go` を作成
 
-### 作成したパッケージ内にリソース定義(`resource.go`)を作成
-
-以下のように実装。詳細は`core.Resource`や既存リソースの実装を参照。
+以下のように実装します。詳細は `core.Resource` や既存リソースの実装を参照してください。
 
 ```go
-var Resource = &core.Resource{
-	Name:        "archive",
-	ServiceType: reflect.TypeOf(&archive.Service{}),
-	Category:    core.ResourceCategoryStorage,
-	CommandCategories: []core.Category{
-		{
-			Key:         "basic",
-			DisplayName: "Basic Commands",
-			Order:       10,
-		},
-		{
-			Key:         "operation",
-			DisplayName: "Archive Operation Commands",
-			Order:       20,
-		},
-		{
-			Key:         "other",
-			DisplayName: "Other Commands",
-			Order:       1000,
-		},
-	},
-}
+package simplemonitor
 
-var defaultColumnDefs = []output.ColumnDef{
-	{Name: "Zone"},
-	{Name: "ID"},
-	{Name: "Name"},
-	{Name: "Scope", Template: "{{ scope_to_key .Scope }}"},
+import (
+    "reflect"
+
+    "github.com/sacloud/iaas-service-go/simplemonitor"
+    "github.com/sacloud/usacloud/pkg/commands/iaas/category"
+    "github.com/sacloud/usacloud/pkg/core"
+)
+
+var Resource = &core.Resource{
+    PlatformName:     "iaas",
+    Name:             "simple-monitor",
+    Aliases:          []string{"simplemonitor"},
+    ServiceType:      reflect.TypeOf(&simplemonitor.Service{}),
+    Category:         category.ResourceCategoryCommonServiceItem,
+    IsGlobalResource: true,
 }
 ```
 
-### 作成したパッケージ内にコマンド定義(例:`list.go`)を作成
+#### 主要フィールドの選び方
 
-作成の際はv0の`pkg/define`内の定義とlibsacloud serviceのリクエストの定義を参照しながら必要なパラメータをstruct+フィールドタグで定義していく
+| フィールド | 設定指針 |
+| --- | --- |
+| `PlatformName` | 対象プラットフォーム。現状は `"iaas"` または `"webaccel"` が使用される。`"phy"` / `"objectstorage"` は将来拡張用に予約されている。 |
+| `Name` | ケバブケースのリソース名。コマンドパスにそのまま使用されます。 |
+| `Aliases` | リソースの別名。後方互換性維持などに使用します。 |
+| `ServiceType` | 対応する service（`iaas-service-go` / `webaccel-api-go` 等）の型。コード生成でメソッドを検索する際に使用します。 |
+| `Category` | リソースカテゴリ。ヘルプ表示のグループ分けに使用します。 |
+| `IsGlobalResource` | ゾーンを持たないリソースの場合は true。 |
+| `DefaultCommandName` | リソース名だけで実行したいデフォルトコマンドがあれば設定（例: `"list"`）。 |
+
+### 3. コマンド定義を作成
+
+各コマンドは `pkg/commands/<platform>/<リソース名>/<コマンド名>.go` に定義します。
+
+#### 一覧系コマンドの例
 
 ```go
 var listCommand = &core.Command{
-	Name:               "list",
-	Aliases:            []string{"ls", "find", "select"},
-	Category:           "basic",
-	Order:              10,
-	ServiceFuncAltName: "Find",
-	NoProgress:         true,
+    Name:               "list",
+    Aliases:            []string{"ls", "find", "select"},
+    Category:           "basic",
+    Order:              10,
+    ServiceFuncAltName: "Find",
+    NoProgress:         true,
 
-	ColumnDefs: defaultColumnDefs,
+    ColumnDefs: defaultColumnDefs,
 
-	ParameterInitializer: func() interface{} {
-		return newListParameter()
-	},
+    ParameterInitializer: func() interface{} {
+        return newListParameter()
+    },
 }
 
 type listParameter struct {
-	cflag.ZoneParameter `cli:",squash" mapconv:",squash"`
+    cflag.CommonParameter      `cli:",squash" mapconv:"-"`
+    cflag.OutputParameter      `cli:",squash" mapconv:"-"`
+    cflag.LimitOffsetParameter `cli:",squash" mapconv:",squash"`
 
-	Names               []string `cli:",category=filter" validate:"omitempty"`
-	Tags                []string `cli:",category=filter" validate:"omitempty"`
-	OSType              string   `cli:",category=filter,options=os_type" mapconv:",omitempty,filters=os_type_to_value" validate:"omitempty,os_type"`
-	Scope               string   `cli:",category=filter,options=scope" mapconv:",omitempty,filters=scope_to_value" validate:"omitempty,scope"`
-	cflag.FindParameter `cli:",squash" mapconv:",squash"`
-
-	cflag.OutputParameter `cli:",squash" mapconv:"-"`
+    cflag.FilterByNamesParameter `cli:",squash" mapconv:",omitempty,squash"`
+    cflag.FilterByTagsParameter  `cli:",squash" mapconv:",omitempty,squash"`
 }
 
 func newListParameter() *listParameter {
-	return &listParameter{
-		// TODO デフォルト値はここで設定する
-	}
+    return &listParameter{}
 }
 
 func init() {
-	Resource.AddCommand(listCommand)
+    Resource.AddCommand(listCommand)
 }
 ```
 
-この際にタグでのバリデーションやフィルタが必要であれば`pkg/vdev/definitions.go`に値定義(この例だと`scope`)を定義する。
+#### 作成系コマンドの例
 
 ```go
-// definitions usacloudで使う名称(key)/値(value)のペア
-var definitions = map[string][]*definition{
-	/* ... */
-	"scope": {
-		{key: types.Scopes.User.String(), value: types.Scopes.User},
-		{key: types.Scopes.Shared.String(), value: types.Scopes.Shared},
-	},
+var createCommand = &core.Command{
+    Name:     "create",
+    Category: "basic",
+    Order:    20,
+
+    ColumnDefs: defaultColumnDefs,
+
+    ParameterInitializer: func() interface{} {
+        return newCreateParameter()
+    },
+}
+
+type createParameter struct {
+    cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+    cflag.ConfirmParameter `cli:",squash" mapconv:"-"`
+    cflag.OutputParameter  `cli:",squash" mapconv:"-"`
+
+    Target                string `validate:"required"`
+    cflag.DescParameter   `cli:",squash" mapconv:",squash"`
+    cflag.TagsParameter   `cli:",squash" mapconv:",squash"`
+    cflag.IconIDParameter `cli:",squash" mapconv:",squash"`
+}
+
+func newCreateParameter() *createParameter {
+    return &createParameter{}
+}
+
+func init() {
+    Resource.AddCommand(createCommand)
 }
 ```
 
-`ConflictsWith`などのタグでのバリデーションでカバーできないものはここでカスタムバリデーションを実装する。
-例: `archive`や`disk`の`create`サブコマンド、`download`コマンドなど
+### 4. カラム定義の追加
 
-### `pkg/cmd/resources.go`に作成したリソース定義を追加する
+#### カラム定義 `columns.go`
 
-`pkg/cmd`の`Resources`に作成したリソースを追記する。
+テーブル出力時の列を定義します。
+
+```go
+var defaultColumnDefs = []output.ColumnDef{
+    {Name: "Zone"},
+    {Name: "ID"},
+    {Name: "Name"},
+    {Name: "Scope", Template: "{{ scope_to_key .Scope }}"},
+}
+```
+
+#### ラベル抽出（プラットフォーム単位の汎用実装）
+
+ID/Name/Tags による引数解決やシェル補完は、`pkg/commands/<platform>/labels.go` でプラットフォーム単位に汎用実装されています。例えば `iaas` リソースでは `accessor.ID` / `accessor.Name` / `accessor.Tags` インターフェースを使った extractor が、既に `pkg/commands/iaas/labels.go` に登録されています。新しい `iaas` リソースを追加しても、リソースごとに専用の `labels.go` を作成する必要はありません。
+
+### 5. リソースをプラットフォームのリソース一覧に追加
+
+`pkg/commands/<platform>/resources.go` にリソースを追加します。
 
 ```go
 var Resources = core.Resources{
-	archive.Resource, // 追記
-	/* ... */
+    // ...
+    simplemonitor.Resource,
+    // ...
 }
 ```
 
-### コード生成する - `make` or `make gen`
+### 6. コード生成
 
-Note: 生成したコードが原因でビルドできなくなったり`make`が失敗する場合は`make clean-all`で生成したコードを一旦全削除するとうまくいくことがある。
+```sh
+make
+# または
+make gen
+```
+
+コード生成により以下が生成されます。
+
+- `pkg/commands/<platform>/<リソース名>/zz_*_gen.go` ... 各コマンドのフラグ定義である。
+- `pkg/services/<platform>/<リソース名>_services_gen.go` ... サービス関数のレジストリ登録である。
+- `pkg/commands/<platform>/services_gen.go` ... サービス関数パッケージのimportである。
+
+生成後、ビルド/テストを実行して問題がないか確認します。
+
+```sh
+make build
+make test
+```
+
+生成したコードが原因でビルドできなくなったり `make` が失敗する場合は、`make clean-all` で生成コードを一旦全削除してから再生成すると解消することがあります。
+
+## カスタマイズが必要なケース
+
+### カスタムバリデーション
+
+タグベースのバリデーションではカバーできない複雑な検証が必要な場合、`Command.ValidateFunc` を設定します。
+
+```go
+var createCommand = &core.Command{
+    Name:         "create",
+    ValidateFunc: validateCreateParameter,
+    // ...
+}
+
+func validateCreateParameter(ctx cli.Context, parameter interface{}) error {
+    p := parameter.(*createParameter)
+    if p.Target == "" {
+        return errors.New("target is required")
+    }
+    return validate.Exec(p)
+}
+```
+
+### カスタム実行処理
+
+自動生成されるサービス呼び出しでは実現できない処理が必要な場合、`Command.Func` を設定します。
+
+```go
+var customCommand = &core.Command{
+    Name: "custom",
+    Func: func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+        // カスタム処理
+        return []interface{}{result}, nil
+    },
+    // ...
+}
+```
+
+`Func` を設定すると、対応するサービス関数は生成されません。
+
+### カスタムシェル補完
+
+`Command.CustomCompletionFunc` を設定すると、標準の ID/Name/Tags 補完の代わりに独自の補完を提供できます。
+
+## 値定義の追加
+
+タグで `options=xxx` を指定する場合、`pkg/vdef/definitions.go` に対応する定義を追加する必要があります。
+
+```go
+var definitions = map[string][]*definition{
+    "scope": {
+        {key: types.Scopes.User.String(), value: types.Scopes.User},
+        {key: types.Scopes.Shared.String(), value: types.Scopes.Shared},
+    },
+}
+```
+
+## まとめ
+
+新しいコマンドを追加する主な作業は「リソース定義」「コマンド定義」「リソース登録」の 3 つです。フラグ定義やサービス呼び出しの大部分はコード生成に任せることができます。特殊な処理が必要な場合のみ、`ValidateFunc`/`Func`/`CustomCompletionFunc` などの拡張ポイントを活用してください。

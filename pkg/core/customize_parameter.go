@@ -16,6 +16,9 @@ package core
 
 import "github.com/sacloud/usacloud/pkg/cli"
 
+// ParameterCustomizer コマンドパラメータを実行コンテキストに応じて調整するためのインターフェース。
+//
+// タグベースのバリデーションやフラグ設定だけでは表現できない、コマンド固有の前処理が必要な場合に実装する。
 type ParameterCustomizer interface {
 	Customize(ctx cli.Context) error
 }
