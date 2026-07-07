@@ -14,15 +14,19 @@
 
 package core
 
-// Labels Usacloudで扱うリソースを識別するためのラベル情報
+// Labels usacloud で扱うリソースを識別するためのラベル情報。
 //
-// シェル補完や引数をID or Name or Tagsにマッチさせるために利用される
+// シェル補完や引数を ID or Name or Tags にマッチさせるために利用される。
 type Labels struct {
 	Id   string
 	Name string
 	Tags []string
 }
 
+// LabelsExtractors サービスから返された値から Labels を抽出する関数のリスト。
+//
+// 各プラットフォームパッケージ（例: pkg/commands/iaas, pkg/commands/webaccel）は
+// init() でプラットフォーム単位の汎用 extractor を登録する。
 var LabelsExtractors []func(v interface{}) *Labels
 
 func extractLabels(v interface{}) *Labels {

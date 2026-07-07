@@ -27,6 +27,7 @@ import (
 
 var mutex = sync.Mutex{}
 
+// Progress 長時間実行されるコマンドの進捗表示を行う構造体。
 type Progress struct {
 	ctx cli.Context
 

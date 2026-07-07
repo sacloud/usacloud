@@ -35,52 +35,86 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// SelectorType コマンドが引数として受け取るリソース選択子の種別
+//
+// ID/Name/Tags を使ったリソースの絞り込み方法を制御する
 type SelectorType int
 
 const (
-	SelectorTypeNone          = iota // セレクタなし(List系/自前実装系など)
-	SelectorTypeRequireSingle        // ID or Name or Tagsを受け取る(複数ヒットNG)
-	SelectorTypeRequireMulti         // ID or Name or Tagsを受け取る(複数ヒットOK)
+	// SelectorTypeNone セレクタなし。
+	// list や create のように、引数から操作対象リソースを特定しないコマンドで使用する。
+	SelectorTypeNone = iota
+	// SelectorTypeRequireSingle ID or Name or Tags を受け取り、単一のリソースに絞り込む。
+	// 複数ヒットした場合はエラーとなる。read や update、delete などで使用する。
+	SelectorTypeRequireSingle
+	// SelectorTypeRequireMulti ID or Name or Tags を受け取り、複数のリソースを操作対象とする。
+	// boot や shutdown のように複数リソースを一括操作するコマンドで使用する。
+	SelectorTypeRequireMulti
 )
 
+// ValidateFunc コマンドパラメータのカスタムバリデーション関数
+//
+// 設定されていない場合は pkg/validate.Exec がデフォルトで使用される
 type ValidateFunc func(ctx cli.Context, parameter interface{}) error
 
-// Command コマンド定義、実行時のコンテキスト(設定保持)にもなる
+// Command 1 つのサブコマンドを表す定義。
+//
+// コマンド定義と同時に、実行時のコンテキスト（カレントパラメータの保持）としても機能する。
+// ParameterInitializer は必須。Func が未設定の場合は pkg/services/registry から
+// 自動生成されたサービス関数が解決される。
 type Command struct {
-	Name      string   // コマンド名、ケバブケース(ハイフン区切り)で指定すること
-	Aliases   []string // エイリアス
-	Usage     string
-	ArgsUsage string // Argumentsの説明、省略した場合はSelectorTypeの値に応じた内容が設定される
+	// Name コマンド名。ケバブケース（ハイフン区切り）で指定すること。
+	Name string
+	// Aliases コマンドのエイリアス。ls/find/select など。
+	Aliases []string
+	// Usage ヘルプに表示される短い説明文。
+	Usage string
+	// ArgsUsage Arguments の説明。省略した場合は SelectorType の値に応じた内容が自動設定される。
+	ArgsUsage string
 
-	Category string // カテゴリーのキー
-	Order    int    // コマンドが属するリソース内での並び順
+	// Category コマンドが属するカテゴリのキー。
+	// basic/operation/power/monitor/other など、pkg/category/commands.go で定義される値を使用する。
+	Category string
+	// Order 同カテゴリ内での並び順。小さいほど先に表示される。
+	Order int
 
 	// コマンド動作関連
-	SelectorType   SelectorType
-	NoProgress     bool // コマンド実行時のプログレス表示の有無
+	// SelectorType 引数として受け取るリソース選択子の種別。
+	SelectorType SelectorType
+	// NoProgress true の場合、コマンド実行中のプログレス表示を行わない。
+	NoProgress bool
+	// ConfirmMessage 確認ダイアログで表示するメッセージ。未設定時は Name が使用される。
 	ConfirmMessage string
 
 	// パラメータ関連
-	ParameterCategories  []category.Category
+	// ParameterCategories コマンド固有のパラメータカテゴリ。
+	ParameterCategories []category.Category
+	// ParameterInitializer コマンドパラメータを初期化する関数。必須。
 	ParameterInitializer func() interface{}
-	ServiceFuncAltName   string // デフォルトのlibsacloud service呼び出しコード生成用、空の場合はNameをCamelizeしたものが利用される // TODO libsacloud側で対応すべき
+	// ServiceFuncAltName 自動生成されるサービス関数呼び出しで、コマンド名以外のメソッド名を使う場合に指定する。
+	// 空の場合は Name を Camelize したものが利用される。
+	ServiceFuncAltName string
 
-	// テーブル形式での出力対象列。省略した場合はIDとNameが出力される
+	// ColumnDefs テーブル形式での出力対象列。省略した場合は ID と Name が出力される。
 	ColumnDefs []output.ColumnDef
 
-	// TODO そのうちDeprecatedWarningとかも対応する
+	// ExperimentWarning 実験的機能として実行前に表示する警告メッセージ。
 	ExperimentWarning string
 
-	// 操作対象リソースの一覧取得用。通常はResourceに紐づけられたfuncを利用する
+	// ListAllFunc 操作対象リソースの一覧取得用関数。
+	// 通常は Resource に紐づけられた自動生成関数を利用する。特殊な一覧取得が必要な場合に設定する。
 	ListAllFunc func(ctx cli.Context, parameter interface{}) ([]interface{}, error)
 
-	// 特殊な引数補完をしたい場合に設定する
+	// CustomCompletionFunc 特殊な引数補完を行いたい場合に設定する関数。
+	// 未設定の場合は ListAllFunc から取得したリソースの ID/Name/Tags で補完される。
 	CustomCompletionFunc func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective)
 
-	// カスタムバリデーション用。空の場合usacloud/pkg/validate.Execが実行される
+	// ValidateFunc カスタムバリデーション用。
+	// 空の場合は usacloud/pkg/validate.Exec が実行される。
 	ValidateFunc ValidateFunc
 
-	// コマンドの実処理。設定してない場合はデフォルトのlibsacloud service呼び出しが行われる
+	// Func コマンドの実処理。
+	// 設定してない場合はデフォルトの service（iaas-service-go / webaccel-api-go 等）呼び出しが行われる。
 	Func func(ctx cli.Context, parameter interface{}) ([]interface{}, error)
 
 	resource         *Resource

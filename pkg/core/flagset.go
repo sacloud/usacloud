@@ -19,15 +19,22 @@ import (
 	"github.com/spf13/pflag"
 )
 
+// FlagSet Cobra/Pflag のフラグをグループ化し、ヘルプ表示をカテゴリ別に整えるための構造体。
 type FlagSet struct {
 	Title string
 	Flags *pflag.FlagSet
 }
 
+// FlagInitializer コマンドパラメータが Cobra コマンドにフラグを登録するためのインターフェース。
+//
+// 各コマンドのパラメータ struct はコード生成によりこのインターフェースを実装する。
 type FlagInitializer interface {
 	SetupCobraCommandFlags(cmd *cobra.Command)
 }
 
+// FlagValueCleaner 未指定のポインタ型フラグを nil に戻すためのインターフェース。
+//
+// ゼロ値と未指定を区別する必要があるポインタフィールドで使用される。
 type FlagValueCleaner interface {
 	CleanupEmptyValue(flags *pflag.FlagSet)
 }
