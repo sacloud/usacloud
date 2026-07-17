@@ -32,7 +32,9 @@ builds:
         goarch: arm
     binary: '{{ .ProjectName }}'
 archives:
-  - format: zip
+  - formats:
+      - 'zip'
+      # - 'tar.gz' ...
     name_template: '{{ .ProjectName }}_{{ .Os }}-{{ .Arch }}'
 checksum:
   name_template: '{{ .ProjectName }}_SHA256SUMS'
