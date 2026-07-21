@@ -39,6 +39,9 @@ var Command = &cobra.Command{
 		if cmd.Name() == "update-self" { // update-selfだけ例外扱い。Note: 例外扱いするコマンドが増えるようであれば実装を修正する
 			return
 		}
+		if _, ok := os.LookupEnv("USACLOUD_CHECK_RELEASE"); !ok {
+			return
+		}
 		once.Do(func() {
 			noColor, _ := cmd.PersistentFlags().GetBool("no-color") // ignore error
 			alertNewVersionReleased(noColor)
