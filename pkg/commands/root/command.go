@@ -23,6 +23,7 @@ import (
 	"sync"
 
 	"github.com/fatih/color"
+	"github.com/mattn/go-isatty"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/printer"
 	"github.com/sacloud/usacloud/pkg/version"
@@ -39,7 +40,10 @@ var Command = &cobra.Command{
 		if cmd.Name() == "update-self" { // update-selfだけ例外扱い。Note: 例外扱いするコマンドが増えるようであれば実装を修正する
 			return
 		}
-		if _, ok := os.LookupEnv("USACLOUD_CHECK_RELEASE"); !ok {
+		if _, ok := os.LookupEnv("USACLOUD_NO_VERSION_CHECK"); ok {
+			return
+		}
+		if !attached_to_tty(cmd) {
 			return
 		}
 		once.Do(func() {
@@ -116,4 +120,24 @@ func handleGatheringReleaseInfoError(err error) {
 	if os.Getenv("USACLOUD_TRACE") != "" {
 		fmt.Fprintln(os.Stderr, err)
 	}
+}
+
+func attached_to_tty(cmd *cobra.Command) bool {
+	fp, ok := cmd.OutOrStderr().(*os.File)
+
+	if !ok {
+		return false
+	}
+
+	fd := fp.Fd()
+
+	if isatty.IsTerminal(fd) {
+		return true
+	}
+
+	if isatty.IsCygwinTerminal(fd) {
+		return true
+	}
+
+	return false
 }
