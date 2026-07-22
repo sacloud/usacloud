@@ -39,7 +39,7 @@ jobs:
         git_commit_gpgsign: true
       if: ${{ steps.tagpr.outputs.tag != ''}}
 
-    - uses: actions/create-github-app-token@v1
+    - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
       id: bot-token
       with:
         app-id: ${{ secrets.SACLOUD_BOT_CLIENT_ID }}
