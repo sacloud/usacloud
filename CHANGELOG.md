@@ -1,5 +1,14 @@
 # Changelog
 
+## [v1.22.5](https://github.com/sacloud/usacloud/compare/v1.22.4...v1.22.5) - 2026-07-23
+
+- test: make config command tests portable on Windows by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1299
+- ghcr.io now accepts GITHUB_TOKEN by @shyouhei in https://github.com/sacloud/usacloud/pull/1303
+- [CI] pinact by @shyouhei in https://github.com/sacloud/usacloud/pull/1304
+- [CI] migrate to homebrew_casks by @shyouhei in https://github.com/sacloud/usacloud/pull/1307
+- Make it possible to suppress new release alert by @shyouhei in https://github.com/sacloud/usacloud/pull/1310
+- [CI] SACLOUD_BOT_PRIVATE_KEY by @shyouhei in https://github.com/sacloud/usacloud/pull/1311
+
 ## [v1.22.4](https://github.com/sacloud/usacloud/compare/v1.22.3...v1.22.4) - 2026-06-24
 
 - fix(profile): reset current to default when deleting current profile by @yamamoto-febc in https://github.com/sacloud/usacloud/pull/1295
