@@ -25,6 +25,7 @@ import (
 	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/printer"
+	"github.com/sacloud/usacloud/pkg/term"
 	"github.com/sacloud/usacloud/pkg/version"
 	"github.com/spf13/cobra"
 )
@@ -37,6 +38,12 @@ var Command = &cobra.Command{
 
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		if cmd.Name() == "update-self" { // update-selfだけ例外扱い。Note: 例外扱いするコマンドが増えるようであれば実装を修正する
+			return
+		}
+		if _, ok := os.LookupEnv("USACLOUD_NO_VERSION_CHECK"); ok {
+			return
+		}
+		if !term.IsTerminal() {
 			return
 		}
 		once.Do(func() {
