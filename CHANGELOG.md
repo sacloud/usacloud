@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.22.7](https://github.com/sacloud/usacloud/compare/v1.22.6...v1.22.7) - 2026-07-24
+
+- [CI] use app token for release workflow by @shyouhei in https://github.com/sacloud/usacloud/pull/1316
+
 ## [v1.22.6](https://github.com/sacloud/usacloud/compare/v1.22.5...v1.22.6) - 2026-07-23
 
 - (empty commit to trigger CI) by @shyouhei in https://github.com/sacloud/usacloud/pull/1312
