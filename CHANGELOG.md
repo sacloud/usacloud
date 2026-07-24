@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.22.8](https://github.com/sacloud/usacloud/compare/v1.22.7...v1.22.8) - 2026-07-24
+
+- [CI] explicit grant to sacloud bot for homebrew-usacloud by @shyouhei in https://github.com/sacloud/usacloud/pull/1318
+
 ## [v1.22.7](https://github.com/sacloud/usacloud/compare/v1.22.6...v1.22.7) - 2026-07-24
 
 - [CI] use app token for release workflow by @shyouhei in https://github.com/sacloud/usacloud/pull/1316
