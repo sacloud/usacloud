@@ -53,7 +53,7 @@ jobs:
         version: '~> v2.10'
         args: release  --clean
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ steps.bot-token.outputs.token }}
         GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
         NFPM_DEFAULT_PASSPHRASE: ${{ secrets.PASSPHRASE }}
         HOMEBREW_TAP_GITHUB_TOKEN: ${{ steps.bot-token.outputs.token }}
