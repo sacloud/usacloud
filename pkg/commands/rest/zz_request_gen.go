@@ -29,9 +29,9 @@ func (p *requestParameter) CleanupEmptyValue(fs *pflag.FlagSet) {
 
 func (p *requestParameter) buildFlags(fs *pflag.FlagSet) {
 
-	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "")
-	fs.StringVarP(&p.Method, "method", "X", p.Method, "(*required) options: [get/post/patch/put/delete/GET/POST/PATCH/PUT/DELETE]")
-	fs.StringVarP(&p.Data, "data", "d", p.Data, "")
+	fs.StringVarP(&p.Zone, "zone", "", p.Zone, "Zone for a relative URL (defaults to the active profile zone)")
+	fs.StringVarP(&p.Method, "method", "X", p.Method, "HTTP method options: [get/post/patch/put/delete/GET/POST/PATCH/PUT/DELETE]")
+	fs.StringVarP(&p.Data, "data", "d", p.Data, "JSON request body or path to a JSON file")
 	fs.StringVarP(&p.Query, "query", "", p.Query, "Query for JSON output")
 	fs.StringVarP(&p.QueryDriver, "query-driver", "", p.QueryDriver, "Name of the driver that handles queries to JSON output options: [jmespath/jq]")
 	fs.StringVarP(&p.AuthPreference, "auth-preference", "", p.AuthPreference, "Authorization preference: [basic/bearer]")

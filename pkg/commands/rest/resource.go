@@ -20,8 +20,25 @@ import (
 )
 
 var Resource = &core.Resource{
-	Name:               "rest",
-	Usage:              "Invoke SAKURA cloud API directly",
+	Name: "rest",
+	Usage: `Send an authenticated request directly to the SAKURA Cloud API.
+
+Specify either a full HTTPS URL or an API path such as /server. For a path,
+usacloud builds the API URL from --zone (or the zone in the active profile).
+
+Examples:
+  # List servers in the configured zone
+  usacloud rest /server
+
+  # Request an absolute URL (the --zone option is not used)
+  usacloud rest https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/server
+
+  # Send JSON in a request body
+  usacloud rest -X POST -d '{"Server":{"Name":"example"}}' /server
+
+  # Query a response with JMESPath
+  usacloud rest --query 'Servers[].Name' /server`,
+	ArgsUsage:          "URL",
 	Category:           category.ResourceCategoryOther,
 	IsGlobalResource:   true,
 	DefaultCommandName: "request",
