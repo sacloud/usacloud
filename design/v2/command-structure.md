@@ -215,7 +215,7 @@ pkg/commands/
 3. フェーズ 3: 新サービスの追加
    - 新サービスは `pkg/commands/<service>/` 配下に追加。
    - コマンド体系は `skr <service> <resource> <action>` に統一。
-   - AGENTS.md を整備し、AI が自動的に生成できるようにする
+   - AGENTS.md を整備し、AI が自動的に生成できるようにする。
 
 ## 実装上の注意
 
