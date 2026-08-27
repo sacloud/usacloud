@@ -109,9 +109,7 @@ func validateRequest(ctx cli.Context, parameter interface{}) error {
 	}
 
 	if len(ctx.Args()) != 1 {
-		return validate.NewValidationError(
-			validate.NewFlagError("arguments", fmt.Sprintf("accepts only 1 arg, received %d", len(ctx.Args()))),
-		)
+		return missingURLError(len(ctx.Args()))
 	}
 
 	url := ctx.Args()[0]
@@ -123,6 +121,15 @@ func validateRequest(ctx cli.Context, parameter interface{}) error {
 		}
 	}
 	return nil
+}
+
+func missingURLError(argumentCount int) error {
+	return validate.NewValidationError(
+		validate.NewFlagError("URL", fmt.Sprintf(
+			"required (received %d arguments). Specify an API path such as /server or an absolute URL such as https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/server. Run 'usacloud rest --help' for more examples",
+			argumentCount,
+		)),
+	)
 }
 
 func requestFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {

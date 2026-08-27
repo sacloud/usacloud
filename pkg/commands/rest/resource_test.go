@@ -49,3 +49,18 @@ func TestHelpIncludesRESTRequestUsage(t *testing.T) {
 		}
 	}
 }
+
+func TestMissingURLMessageIncludesUsage(t *testing.T) {
+	err := missingURLError(0)
+
+	for _, want := range []string{
+		"URL: required (received 0 arguments)",
+		"/server",
+		"https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/server",
+		"usacloud rest --help",
+	} {
+		if !strings.Contains(err.Error(), want) {
+			t.Errorf("missing URL error does not include %q: %s", want, err)
+		}
+	}
+}
