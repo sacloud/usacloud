@@ -13,6 +13,10 @@
 
 ## 改善方針
 
+コマンドが出力する help text は英語で統一する。対象にはコマンドの概要、引数、
+フラグ、エラーメッセージ、使用例を含める。設計文書自体は日本語でもよいが、
+コード例に示す help 出力と Cobra の `Use`、`Short`、`Long`、`Example` は英語にする。
+
 ### 1. 引数の説明を具体化
 
 現在:
@@ -33,14 +37,14 @@ Usage:
 ```
 Flags:
   --zone string
-  --output string
+  --output-type string
 ```
 
 改善後:
 ```
 Flags:
-  --zone string    対象ゾーン (例: is1a, is1b, tk1a, all)
-  --output string  出力形式 (json, yaml, table)
+  --zone string         Target zone (e.g. is1a, is1b, tk1a, all)
+  --output-type string  Output format (table, json, yaml)
 ```
 
 ### 3. 使用例を追加
@@ -51,10 +55,10 @@ Cobra の `Example` フィールドを充実させる。
 var shutdownCommand = &core.Command{
     Name: "shutdown",
     Example: strings.TrimSpace(`
-# 名前に "example-" を含むサーバを停止
-skr server shutdown "example-" --zone=is1a
+# Shut down a server by its exact name
+skr server shutdown example-server --argument-match-mode=exact --zone=is1a
 
-# ID を指定して停止
+# Shut down a server by ID
 skr server shutdown 123456789012 --zone=is1a
 `),
 }
@@ -66,39 +70,13 @@ skr server shutdown 123456789012 --zone=is1a
 
 ```
 Flags:
-  --output string  出力形式 (json, yaml, table; default: table)
+  --output-type string  Output format (table, json, yaml; default: table)
 ```
 
 `options=...` タグで定義済みの値を help テキストに自動挿入できると理想。
 
-### 5. 入門ガイドの追加
-
-```
-skr help getting-started
-skr help examples
-```
-
-のような統一的なガイドを提供する。
-
 ## 実装方法
 
-### 段階的アプローチ
-
-1. よく使われるコマンド（`server list`, `server shutdown`, `disk create` 等）から改善を始める。
-2. コード生成部（`tools/clitag` 等）を修正し、struct tag から help テキストの補足を生成しやすくする。
-3. OpenAPI / SDK からの半自動生成と連携し、説明文や例を補完する。
-
-### 自動生成との連携
-
-sacloud-sdk-go のコメントや OpenAPI の `description` を元に、help テキストの下書きを生成する。
-生成後は人間がレビュー・調整してコミットする。
-
-## 成功指標
-
-- `skr <resource> <action> --help` を見ただけで、引数とフラグに入れる値が想像できる。
-- AI エージェントが help を読んで、初見のコマンドでも正しく実行できる。
-
-## 関連ファイル
-
-- `design/v2/openapi-sdk-generation.md`
-- `design/how_to_add_new_command.md`
+* これら基準を満たすような help message を生成するように規定した AGENTS.md を用意する
+* 原則として sdk から生成されたものについては、上記の情報が生成できる程度に openapi 定義が充実していることが前提となる
+    * 足りない場合にはまず openapi 定義を更新する

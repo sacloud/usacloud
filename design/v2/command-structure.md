@@ -2,7 +2,7 @@
 
 ## 現状
 
-現在の CLI（コマンド名は `skr` に一本化予定）は、サービス単位のトップレベルコマンドを持つ構成になっている。
+現在の CLI は、サービス単位のトップレベルコマンドを持つ構成になっている。
 
 ```
 skr [global options] <command> <sub-command> [options] [arguments] [flags]
@@ -23,59 +23,52 @@ skr server list
 
 両者は同じ動作をする。つまり、`iaas` はサービスを明示するためのオプショナルなサブコマンドであり、IaaS リソースはルート直下にも登録されている。
 
-ただし、トップレベルの help（`skr --help`）には `iaas` や `web-accelerator` のみが表示され、`server` などの個別リソースは表示されない。これが初学者や AI にとっての障害になっている。
-
-## 問題
-
-- `iaas` プレフィックスが冗長。短いコマンド名にした後も余計な階層は避けたい。
-- IaaS はさくらのクラウドの中核サービスであり、デフォルトサービスとして扱うのが自然。
-- 他サービス（Web Accelerator 等）との対称性がとれていない。
+> [!NOTE]
+> ただし、トップレベルの help（`usacloud --help`）には `iaas` や `web-accelerator` のみが表示され、`server` などの個別リソースは表示されない。
+> これは初学者や AI にとってのわかりにくさを産んでいる可能性がある。
 
 ## 目指すコマンド体系
 
 ### 基本方針
 
-- **IaaS リソースは `skr <resource> <action>` を第一級の推奨形とする**
-- **`skr iaas <resource> <action>` も引き続き動作させる**
-- **IaaS 以外のサービスはサービスプレフィックスを持つ**: `skr <service> <resource> <action>`
+- IaaS リソースは `usacloud <resource> <action>` を第一級の推奨形とする
+- `usacloud iaas <resource> <action>` も引き続き動作させる
+- IaaS 以外のサービスはサービスプレフィックスを持つ: `skr <service> <resource> <action>`
 
 ### 例
 
 ```bash
 # IaaS（プレフィックスなし）
-skr server list
-skr disk create
-skr switch read
+usacloud server list
+usacloud disk create
+usacloud switch read
 
-# Web Accelerator
-skr web-accelerator site list
+# IaaS(プレフィックスありでもこれまで同様に利用可能)
+usacloud iaas server list
+usacloud iaas disk create
+usacloud iaas switch read
 
-# 将来追加されるサービス
-skr object-storage bucket list
-skr iam user list
-skr apigw service list
-skr apprun application list
-skr apprun-dedicated cluster list
-skr simple-notification group list
-skr simplemq queue list
-skr workflows workflow list
+# Web Accelerator(実装済み)
+usacloud web-accelerator site list
+
+# 将来追加されるサービスも同様に利用可能としていく
+usacloud object-storage bucket list
+usacloud iam user list
+usacloud apigw service list
+usacloud apprun application list
+usacloud apprun-dedicated cluster list
+usacloud simple-notification group list
+usacloud simplemq queue list
+usacloud workflows workflow list
 ```
-
-## なぜ `skr <resource> <action>` を推奨形とするか
-
-- `skr` はもともと IaaS 中心の CLI として設計されている。
-- 既存ユーザーにとって `skr server list` は馴染み深く、`iaas` プレフィックスは冗長に感じられる。
-- IaaS 以外のサービスは相対的に少なく、プレフィックスを持つ形でも負担は小さい。
-- コマンド名を短く保ちたい。
-- トップレベルの help に IaaS リソースを直接表示することで、発見しやすくなる。
 
 ## サービスの分類
 
-sacloud-sdk-go/api 配下のサービスを大まかに分類すると以下のようになる。
+対応候補となるサービスを大まかに分類すると以下のようになる。
 
-### 既存対応
+### 既存対応済みリソース
 
-- `iaas`: IaaS リソース（skr の主要リソース）
+- `iaas`: IaaS リソース
 - `webaccel`: Web Accelerator
 
 ### 今後の追加候補（例）
@@ -87,21 +80,26 @@ sacloud-sdk-go/api 配下のサービスを大まかに分類すると以下の�
 - `simple-notification`: シンプル通知
 - `simplemq`: SimpleMQ
 - `workflows`: Workflows
-- その他（addon, apprun-dedicated, cloudhsm, dedicated-storage, eventbus, kms, monitoring-suite, nosql, secretmanager, security-control, service-endpoint-gateway 等）
+- その他
+  - addon, apprun-dedicated, cloudhsm, dedicated-storage
+  - eventbus, kms, monitoring-suite, nosql
+  - secretmanager, security-control, service-endpoint-gateway 等
 
 ## コマンド体系のパターン
 
-sacloud-sdk-go の実際の構造を反映して、以下のようなパターンを想定する。
+各サービスの API クライアントの実際の構造を反映して、以下のようなパターンを想定する。
 
-### 1. 基本的なパターン
+### 基本的なパターン
 
 ```
 skr <service> <resource> <action> [args...] [flags]
 ```
 
-### 2. サービス名とリソース名の関係
+### サービス名とリソース名の関係
 
-#### パターン A: サービス内に複数のリソースがある
+#### サービス内に複数のリソースがあるケース
+
+通常はこのようなケースとなる。このようなケースでは素直に API 設計をコマンド体系に落としていけば良い。
 
 object-storage の例:
 
@@ -121,9 +119,12 @@ skr iam project read
 skr iam service-principal list
 ```
 
-#### パターン B: サービス名と代表リソース名が重複・類似する
+#### サービス名と代表リソース名が重複・類似するケース
 
-workflows の例（案）:
+workflows の場合、`workflow` がトップレベルリソースになるので短くかけるようにすることも考えてもいいかもしれない。
+ただ、特定のコマンドだけショートカットがあるのも混乱をうむ可能性がある。
+
+workflows の例:
 
 ```bash
 # 案 1: サービス名を単数形にする
@@ -142,9 +143,10 @@ skr workflows execution list
 skr workflows subscription read
 ```
 
-ここでは案を提示し、各サービス導入時に検討する。
+初期実装は一貫性を優先して案 3 とする。案 1、案 2 の短縮形が必要な場合は、
+正式なコマンドを置き換えず、衝突を確認した上でエイリアスとして追加する。
 
-### 3. 子リソースの扱い
+### 子リソースの扱い
 
 workflows の `Execution` は `Workflow` の子リソース。Read には `workflowID` と `executionID` の両方が必要。
 
@@ -156,7 +158,10 @@ skr workflows execution read <workflow-id> <execution-id>
 skr workflows workflow execution read <workflow-id> <execution-id>
 ```
 
-原則として、子リソースの操作が独立していれば案 1 でよい。親子関係が強く、かつ入れ子が深い場合は案 2 を検討する。
+原則として、子リソースの操作が独立していれば案 1 のほうが素直な実装といえる。
+
+初期生成では案 1 を採用する。親 ID、子 ID の順序を Usage とテストで固定し、
+同じ名前の子リソースがサービス内で衝突する場合のみ案 2 を採用する。
 
 ### 4. アクション名のマッピング
 
@@ -177,14 +182,15 @@ SDK のメソッド名から skr のサブコマンド名を決定する。
 
 ### 原則
 
-- 推奨形は `skr <resource> <action>`（IaaS）、`skr <service> <resource> <action>`（IaaS 以外）。
-- `skr iaas <resource> <action>` も引き続き動作させる。
-- サービス名は sacloud-sdk-go のディレクトリ名を基本とし、必要に応じてハイフン区切りにする（例: `object-storage`）。
+- 推奨形は `usacloud <resource> <action>`（IaaS）、`usacloud <service> <resource> <action>`（IaaS 以外）。
+- `usacloud iaas <resource> <action>` も引き続き動作させる。
+- サービス名は API クライアントのサービス名を基本とし、必要に応じてハイフン区切りにする（例: `object-storage`）。
 - リソース名は SDK の API ファイル名・パッケージ名を基本とし、snake_case は kebab-case に変換する。
 
 ## 内部パッケージ構成
 
-CLI 上のコマンド体系と内部パッケージ構成は必ずしも一致させる必要はないが、整理のためサービス単位に分離する。
+CLI 上のコマンド体系と内部パッケージ構成を一致させる必要はない。
+内部パッケージは整理のためサービス単位に分離する。
 
 ```
 pkg/commands/
@@ -202,25 +208,24 @@ pkg/commands/
 
 ## 移行計画
 
-1. **フェーズ 1: トップレベル help の改善**
-   - トップレベルの help（`skr --help`）に IaaS リソースを直接表示するか、IaaS カテゴリとして一覧表示する。
-   - `skr server list` を第一級の推奨形として位置づける。
+1. フェーズ 1: トップレベル help の改善
+   - トップレベルの help（`usacloud --help`）に IaaS リソースを直接表示するか、IaaS カテゴリとして一覧表示する。
+   - `usacloud server list` を第一級の推奨形として位置づける。
 
-2. **フェーズ 2: ドキュメント・Skill ファイルの更新**
-   - help テキスト、Skill ファイル、ドキュメントの例を `skr server list` 主体にする。
-   - `skr iaas server list` も動作することを明記。
-
-3. **フェーズ 3: 新サービスの追加**
+3. フェーズ 3: 新サービスの追加
    - 新サービスは `pkg/commands/<service>/` 配下に追加。
    - コマンド体系は `skr <service> <resource> <action>` に統一。
+   - AGENTS.md を整備し、AI が自動的に生成できるようにする
 
 ## 実装上の注意
 
 - IaaS リソースはルート直下にも登録し、トップレベル help から発見しやすくする。
+- ルート直下の IaaS リソースは Hidden を解除し、`iaas` 配下の同じコマンドも維持する。ただし help のカスタムテンプレートで IaaS カテゴリにまとめ、同じコマンドを二重表示しない。
 - それ以外のサービスはサービス名のサブコマンド下に登録する。
 - カテゴリ表示（Computing, Storage, Networking 等）は IaaS のカテゴリとして維持する。
 - 新サービスは独立したカテゴリとして help に表示する。
 - `iaas` サブコマンドは非推奨とせず、引き続き利用できるようにする。
+- `config`、`rest`、`completion`、`version`、`update-self`、`install-skill`、`iaas` はルート予約語とする。IaaS リソースやサービス名との衝突を起動時またはテストで検出する。
 
 ## 関連ファイル
 
