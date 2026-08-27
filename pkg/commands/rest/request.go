@@ -160,7 +160,9 @@ func requestFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) 
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close() //nolint:errcheck
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 	results, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err

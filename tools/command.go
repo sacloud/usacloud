@@ -90,7 +90,7 @@ func (c *Command) cliFlagDefinitionStatement(parameterVariableName string, field
 	fieldVar := fmt.Sprintf("%s.%s", parameterVariableName, field.FieldName)
 	fieldPointerVar := fieldVar
 	fieldType := dereferencePtrType(field.Type)
-	if field.Type.Kind() == reflect.Ptr {
+	if field.Type.Kind() == reflect.Pointer {
 		switch fieldType.Kind() {
 		case reflect.Bool:
 			fieldVar = "false"
@@ -166,7 +166,7 @@ func (c *Command) CLIFlagInitializePointerStatement(parameterVariableName, flagS
 func (c *Command) cliFlagInitializePointerStatement(parameterVariableName string, field Field) string {
 	fieldVar := fmt.Sprintf("%s.%s", parameterVariableName, field.FieldName)
 	fieldType := dereferencePtrType(field.Type)
-	if field.Type.Kind() != reflect.Ptr {
+	if field.Type.Kind() != reflect.Pointer {
 		return ""
 	}
 
@@ -234,7 +234,7 @@ func (c *Command) CLIFlagCleanupEmptyStatement(parameterVariableName, flagSetVar
 
 func (c *Command) cliFlagCleanupEmptyStatement(parameterVariableName, flagSetVariableName string, field Field) string {
 	fieldVar := fmt.Sprintf("%s.%s", parameterVariableName, field.FieldName)
-	if field.Type.Kind() != reflect.Ptr {
+	if field.Type.Kind() != reflect.Pointer {
 		return ""
 	}
 
@@ -250,7 +250,7 @@ func isLibsacloudIDType(t reflect.Type) bool {
 }
 
 func dereferencePtrType(t reflect.Type) reflect.Type {
-	if t.Kind() != reflect.Ptr {
+	if t.Kind() != reflect.Pointer {
 		return t
 	}
 	return dereferencePtrType(t.Elem())
