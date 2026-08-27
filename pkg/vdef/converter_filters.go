@@ -179,7 +179,7 @@ func dereferenceFilter(v interface{}) (interface{}, error) {
 	}
 
 	vt := reflect.ValueOf(v)
-	if vt.Kind() != reflect.Ptr {
+	if vt.Kind() != reflect.Pointer {
 		return v, nil
 	}
 	return vt.Elem().Interface(), nil

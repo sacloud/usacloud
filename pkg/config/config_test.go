@@ -345,7 +345,7 @@ func TestConfig_loadFromEnvOverwrite(t *testing.T) {
 
 	clearTestEnv()
 	setEnv(map[string]string{
-		"SAKURACLOUD_ACCESS_TOKEN": "token from env",
+		"SAKURACLOUD_ACCESS_TOKEN": "token from env", // #nosec G101 -- non-secret test fixture
 	})
 	cfg.loadFromEnv()
 
