@@ -30,12 +30,13 @@ Usacloud（CLI 名は `skr`）の次の段階として、AI を第一級の利�
 | # | 計画 | ファイル | 概要 |
 |---|---|---|---|
 | 1 | [AGENTS.md 整備](agents.md) | `agents.md` | AI エージェントがプロジェクトを理解し、help text や Skill を生成しやすくするためのガイドライン整備。 |
-| 2 | [コマンド体系の再整理](command-structure.md) | `command-structure.md` | IaaS を `skr <resource> <action>` の推奨形とし、`skr iaas ...` も維持。IaaS 以外は `skr <service> <resource> <action>` 体系で追加する。 |
+| 2 | [コマンド体系の再整理](command-structure.md) | `command-structure.md` | 今後のコマンド体系を整理する。 |
 | 3 | [Help text 改善](help-text-improvement.md) | `help-text-improvement.md` | 引数・フラグに入れる値が明確になるよう、例や選択肢を help に追加。 |
 | 4 | [OpenAPI / SDK からの半自動生成](openapi-sdk-generation.md) | `openapi-sdk-generation.md` | 各サービスの API クライアントと OpenAPI 仕様からコマンド定義・help text・Skill ファイルを半自動生成する仕組み。 |
 | 5 | [`install-skill` コマンド](install-skill.md) | `install-skill.md` | `skr install-skill` で `.claude/skills/skr/SKILL.md` を生成。 |
 | 6 | [`skr` コマンド名への改名](skr-rename.md) | `skr-rename.md` | CLI 名を `skr` に一本化し、コマンド体系の互換性を維持する。 |
 
+- 計画の各ステップは少なからず重複する内容をはらんでいる。
 - Note: install-skill はある程度 help text が改善されてからでないと、メリットが薄い。
 - Note: Help text の改善は iaas がメインとなるが、iaas の API ドキュメンテーション改善が先。
 
