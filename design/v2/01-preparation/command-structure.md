@@ -229,6 +229,6 @@ pkg/commands/
 
 ## 関連ファイル
 
-- `design/v2/openapi-sdk-generation.md`
-- `design/v2/skr-rename.md`
+- `design/v2/01-preparation/openapi-sdk-generation.md`
+- `design/v2/02-major-version-upgrade/skr-rename.md`
 - `design/how_to_add_new_command.md`

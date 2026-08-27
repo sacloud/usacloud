@@ -75,6 +75,14 @@ Flags:
 
 `options=...` タグで定義済みの値を help テキストに自動挿入できると理想。
 
+### 5. update の操作を明示
+
+update コマンドでは、フラグが値の設定、削除、list への追加・削除、全体置換の
+どれを行うか明記する。未指定フィールドは変更しないこと、ネストした object の
+どの範囲が更新されるかも help に表示する。
+
+詳細は [更新モデル](../02-major-version-upgrade/update-model.md) を参照。
+
 ## 実装方法
 
 * これら基準を満たすような help message を生成するように規定した AGENTS.md を用意する

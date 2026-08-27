@@ -8,6 +8,7 @@
 - help テキスト
 - Skill ファイル
 - 出力カラム定義
+- update plan と API ごとの更新 adapter
 
 これにより、新サービス追加時の工数を削減し、help text や Skill ファイルの網羅性・正確性を向上させる。
 
@@ -59,6 +60,16 @@ IaaS 以外のリソースについては Experimental 扱いで main line に�
 - OpenAPI のパス階層と API クライアントの引数を照合して候補を抽出する。
 - ID 引数があることだけでは子リソースと確定しない。曖昧な場合は生成設定に親リソースを明示し、人間のレビューなしに階層を決定しない。
 - 子リソースは原則フラットに扱い、親 ID と子 ID の引数順を生成設定とテストで固定する。
+
+### 更新メタデータ
+
+update コマンドは、SDK の UpdateRequest をそのままフラグへ展開せず、
+[更新モデル](../02-major-version-upgrade/update-model.md) に従う update plan を生成する。OpenAPI と SDK から
+各フィールドの path、型、更新可能性を抽出し、clear の可否、list 要素の identity、
+PATCH/PUT の別、read-modify-write の可否を生成設定で補完する。
+
+更新方法を安全に確定できないフィールドには、推測で clear/add/remove を生成しない。
+生成物には、未指定値を保持する contract test と help の操作説明も含める。
 
 ## 品質保証
 
