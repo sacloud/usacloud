@@ -2,12 +2,12 @@
 
 ## 現状の問題
 
-`skr <resource> <action> --help` を見ても、以下のような情報が不足している箇所が多い。
+`usacloud <resource> <action> --help` を見ても、以下のような情報が不足している箇所が多い。
 
 - 引数にどのような値を入れたらよいか分からない。
 - フラグに入れる値の形式や選択肢が不明確。
 - コマンドの使用例がない、または少ない。
-- skr 固有の慣習（ゾーン指定方法など）が説明されていない。
+- usacloud 固有の慣習（ゾーン指定方法など）が説明されていない。
 
 これは人間だけでなく、AI コーディングエージェントにとっても大きな障害になる。
 
@@ -22,13 +22,13 @@
 現在:
 ```
 Usage:
-  skr server shutdown [flags]
+  usacloud server shutdown [flags]
 ```
 
 改善後:
 ```
 Usage:
-  skr server shutdown <name or id or tag> [flags]
+  usacloud server shutdown <name or id or tag> [flags]
 ```
 
 ### 2. フラグの説明に具体例を追加
@@ -56,10 +56,10 @@ var shutdownCommand = &core.Command{
     Name: "shutdown",
     Example: strings.TrimSpace(`
 # Shut down a server by its exact name
-skr server shutdown example-server --argument-match-mode=exact --zone=is1a
+usacloud server shutdown example-server --argument-match-mode=exact --zone=is1a
 
 # Shut down a server by ID
-skr server shutdown 123456789012 --zone=is1a
+usacloud server shutdown 123456789012 --zone=is1a
 `),
 }
 ```

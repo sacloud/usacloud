@@ -5,7 +5,7 @@
 現在の CLI は、サービス単位のトップレベルコマンドを持つ構成になっている。
 
 ```
-skr [global options] <command> <sub-command> [options] [arguments] [flags]
+usacloud [global options] <command> <sub-command> [options] [arguments] [flags]
 ```
 
 トップレベルの Available Commands には以下が含まれる。
@@ -17,8 +17,8 @@ skr [global options] <command> <sub-command> [options] [arguments] [flags]
 IaaS リソースには、以下の 2 通りの方法でアクセスできる。
 
 ```bash
-skr iaas server list
-skr server list
+usacloud iaas server list
+usacloud server list
 ```
 
 両者は同じ動作をする。つまり、`iaas` はサービスを明示するためのオプショナルなサブコマンドであり、IaaS リソースはルート直下にも登録されている。
@@ -33,7 +33,41 @@ skr server list
 
 - IaaS リソースは `usacloud <resource> <action>` を第一級の推奨形とする
 - `usacloud iaas <resource> <action>` も引き続き動作させる
-- IaaS 以外のサービスはサービスプレフィックスを持つ: `skr <service> <resource> <action>`
+- 全サービスに、API client の操作を網羅する低レベルコマンドを提供する
+- AppRun や Object Storage など、複雑な複合操作が必要なサービスに限り
+  高レベルコマンドを追加する
+
+## 高レベルコマンドと低レベルコマンド
+
+AWS CLI の `s3` と `s3api` の関係と同様に、コマンドを二層に分ける。
+
+| 層 | 名前空間 | 目的 | 提供範囲 |
+|---|---|---|---|
+| 高レベル | `usacloud <service> ...` | service layer の複合操作を簡潔かつ安全に実行する | 必要なサービスのみ |
+| 低レベル | `usacloud <service>-api <resource> <action>` | API client の各操作を直接利用する | 全サービス |
+
+低レベルコマンドは API client の構造へ忠実であることと網羅性を優先し、AI による
+生成を基本とする。高レベルコマンドは API の単純な別名ではなく、複数 API の
+呼び出し、read-modify-write、待機、入力補完などをまとめる場合にのみ提供する。
+
+高レベルコマンドが不要なサービスには `usacloud <service>` 名前空間を作らず、
+`usacloud <service>-api` のみを提供する。すべてのサービスへ形式的に高レベルコマンドを
+作ることは目標にしない。
+
+高レベルな処理は `iaas-service-go` と同様の service layer として
+`sacloud-sdk-go` に実装する。CLI 側は service の request/response をフラグと出力へ
+接続する薄いラッパーにする。service layer と CLI wrapper の実装には AI を利用
+できるが、API client からの機械的な生成対象にはしない。ユースケース、操作単位、
+安全性、冪等性を設計し、人間がレビューする。
+
+通常の利用者と AI エージェントには高レベルコマンドを優先して案内する。高レベルで
+提供されない API 操作、API 固有機能、トラブルシューティングには低レベルコマンドを
+使用する。高レベルコマンドが存在しても、対応する低レベル操作は省略しない。
+
+既存 IaaS コマンドの `usacloud server ...` や `usacloud disk ...` は、`iaas-service-go` を
+利用する service-layer wrapper として互換性のため維持する。一方、全サービス共通の
+低レベル層として `usacloud iaas-api <resource> <action>` も提供する。既存 IaaS
+コマンドの存在を理由に `iaas-api` の生成を省略しない。
 
 ### 例
 
@@ -48,18 +82,19 @@ usacloud iaas server list
 usacloud iaas disk create
 usacloud iaas switch read
 
-# Web Accelerator(実装済み)
-usacloud web-accelerator site list
+# 低レベルコマンド: 全サービスで提供する
+usacloud iaas-api server list
+usacloud web-accelerator-api site list
+usacloud object-storage-api bucket list
+usacloud iam-api user list
+usacloud apprun-api application list
+usacloud simplemq-api queue list
 
-# 将来追加されるサービスも同様に利用可能としていく
-usacloud object-storage bucket list
-usacloud iam user list
-usacloud apigw service list
-usacloud apprun application list
-usacloud apprun-dedicated cluster list
-usacloud simple-notification group list
-usacloud simplemq queue list
-usacloud workflows workflow list
+# 高レベルコマンド: 複合操作が必要なサービスに限り提供する
+usacloud object-storage sync ./public s3://example-bucket/
+usacloud object-storage cp ./artifact.zip s3://example-bucket/releases/
+usacloud apprun deploy --name example --source .
+usacloud apprun logs example --follow
 ```
 
 ## サービスの分類
@@ -87,64 +122,40 @@ usacloud workflows workflow list
 
 ## コマンド体系のパターン
 
-各サービスの API クライアントの実際の構造を反映して、以下のようなパターンを想定する。
-
-### 基本的なパターン
+### 低レベルコマンド
 
 ```
-skr <service> <resource> <action> [args...] [flags]
+usacloud <service>-api <resource> <action> [args...] [flags]
 ```
 
-### サービス名とリソース名の関係
-
-#### サービス内に複数のリソースがあるケース
-
-通常はこのようなケースとなる。このようなケースでは素直に API 設計をコマンド体系に落としていけば良い。
-
-object-storage の例:
+API client の service、resource、method を原則として一対一に対応させる。
 
 ```bash
-skr object-storage account read
-skr object-storage bucket list
-skr object-storage permission create
-skr object-storage site list
+usacloud object-storage-api account read
+usacloud object-storage-api bucket list
+usacloud object-storage-api permission create
+usacloud iam-api user list
+usacloud iam-api service-principal list
 ```
 
-iam の例:
+サービス名と代表リソース名が重複しても省略しない。例えば Workflows は次の形を
+正式な低レベルコマンドとする。
 
 ```bash
-skr iam user list
-skr iam group create
-skr iam project read
-skr iam service-principal list
+usacloud workflows-api workflow list
+usacloud workflows-api execution list
+usacloud workflows-api subscription read
 ```
 
-#### サービス名と代表リソース名が重複・類似するケース
+### 高レベルコマンド
 
-workflows の場合、`workflow` がトップレベルリソースになるので短くかけるようにすることも考えてもいいかもしれない。
-ただ、特定のコマンドだけショートカットがあるのも混乱をうむ可能性がある。
-
-workflows の例:
-
-```bash
-# 案 1: サービス名を単数形にする
-skr workflow list
-skr workflow execution list
-skr workflow subscription read
-
-# 案 2: サービス名を複数形のまま、代表リソース名を省略する
-skr workflows list
-skr workflows execution list
-skr workflows subscription read
-
-# 案 3: 一貫性を重視して省略しない
-skr workflows workflow list
-skr workflows execution list
-skr workflows subscription read
+```
+usacloud <service> <operation> [args...] [flags]
 ```
 
-初期実装は一貫性を優先して案 3 とする。案 1、案 2 の短縮形が必要な場合は、
-正式なコマンドを置き換えず、衝突を確認した上でエイリアスとして追加する。
+operation は API client のメソッド名から導出せず、利用者が達成したい操作から命名する。
+実処理は `sacloud-sdk-go` の service layer が担い、CLI は service request の構築と
+結果表示だけを担当する。
 
 ### 子リソースの扱い
 
@@ -152,10 +163,10 @@ workflows の `Execution` は `Workflow` の子リソース。Read には `workf
 
 ```bash
 # 案 1: フラット（引数で親子を表現）
-skr workflows execution read <workflow-id> <execution-id>
+usacloud workflows-api execution read <workflow-id> <execution-id>
 
 # 案 2: 親子階層を表現
-skr workflows workflow execution read <workflow-id> <execution-id>
+usacloud workflows-api workflow execution read <workflow-id> <execution-id>
 ```
 
 原則として、子リソースの操作が独立していれば案 1 のほうが素直な実装といえる。
@@ -163,11 +174,11 @@ skr workflows workflow execution read <workflow-id> <execution-id>
 初期生成では案 1 を採用する。親 ID、子 ID の順序を Usage とテストで固定し、
 同じ名前の子リソースがサービス内で衝突する場合のみ案 2 を採用する。
 
-### 4. アクション名のマッピング
+### アクション名のマッピング
 
-SDK のメソッド名から skr のサブコマンド名を決定する。
+API client のメソッド名から低レベルコマンドのアクション名を決定する。
 
-| SDK メソッド | skr アクション |
+| API client メソッド | usacloud アクション |
 |---|---|
 | Create | create |
 | List | list |
@@ -182,10 +193,12 @@ SDK のメソッド名から skr のサブコマンド名を決定する。
 
 ### 原則
 
-- 推奨形は `usacloud <resource> <action>`（IaaS）、`usacloud <service> <resource> <action>`（IaaS 以外）。
+- 推奨形は `usacloud <resource> <action>`（既存 IaaS）とする。
 - `usacloud iaas <resource> <action>` も引き続き動作させる。
-- サービス名は API クライアントのサービス名を基本とし、必要に応じてハイフン区切りにする（例: `object-storage`）。
-- リソース名は SDK の API ファイル名・パッケージ名を基本とし、snake_case は kebab-case に変換する。
+- 新しい低レベル名前空間は API client のサービス名に `-api` を付け、
+  必要に応じてハイフン区切りにする（例: `object-storage-api`）。
+- 高レベル名前空間は `-api` を付けない（例: `object-storage`）。
+- リソース名は API client の API ファイル名・パッケージ名を基本とし、snake_case は kebab-case に変換する。
 
 ## 内部パッケージ構成
 
@@ -201,9 +214,14 @@ pkg/commands/
 │   ├── server/
 │   ├── disk/
 │   └── ...
-├── webaccel/           # Web Accelerator サービス
-│   └── webaccelerator/
-└── ...                 # 将来のサービス
+├── generated/          # API client から生成する低レベルコマンド
+│   ├── objectstorage/
+│   ├── apprun/
+│   └── ...
+└── operations/         # service layer の高レベルコマンドラッパー
+    ├── objectstorage/
+    ├── apprun/
+    └── ...
 ```
 
 ## 移行計画
@@ -213,19 +231,21 @@ pkg/commands/
    - `usacloud server list` を第一級の推奨形として位置づける。
 
 3. フェーズ 3: 新サービスの追加
-   - 新サービスは `pkg/commands/<service>/` 配下に追加。
-   - コマンド体系は `skr <service> <resource> <action>` に統一。
-   - AGENTS.md を整備し、AI が自動的に生成できるようにする。
+   - 全サービスの低レベルコマンドを `usacloud <service>-api <resource> <action>` として生成する。
+   - 複合操作が必要なサービスでは、`sacloud-sdk-go` に service layer を実装する。
+   - service layer の薄い CLI wrapper を `usacloud <service> <operation>` として追加する。
+   - AGENTS.md を整備し、AI が低レベルコマンドを反復可能に生成できるようにする。
 
 ## 実装上の注意
 
 - IaaS リソースはルート直下にも登録し、トップレベル help から発見しやすくする。
 - ルート直下の IaaS リソースは Hidden を解除し、`iaas` 配下の同じコマンドも維持する。ただし help のカスタムテンプレートで IaaS カテゴリにまとめ、同じコマンドを二重表示しない。
-- それ以外のサービスはサービス名のサブコマンド下に登録する。
+- それ以外のサービスは、低レベルコマンドを `<service>-api` に登録する。
+- 高レベルコマンドがあるサービスだけ、`<service>` に operation を登録する。
 - カテゴリ表示（Computing, Storage, Networking 等）は IaaS のカテゴリとして維持する。
 - 新サービスは独立したカテゴリとして help に表示する。
 - `iaas` サブコマンドは非推奨とせず、引き続き利用できるようにする。
-- `config`、`rest`、`completion`、`version`、`update-self`、`install-skill`、`iaas` はルート予約語とする。IaaS リソースやサービス名との衝突を起動時またはテストで検出する。
+- `config`、`rest`、`completion`、`version`、`update-self`、`install-skill`、`iaas` はルート予約語とする。`<service>` と `<service>-api` を含む名前の衝突を起動時またはテストで検出する。
 
 ## 関連ファイル
 

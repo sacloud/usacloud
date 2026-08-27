@@ -5,6 +5,10 @@
 `skr <resource> update` の挙動を API ごとの差異から切り離し、利用者から見て一貫した
 部分更新として提供する。
 
+このモデルは `sacloud-sdk-go` の service layer と、その薄いラッパーである高レベル
+コマンドに適用する。`skr <service>-api ... update` は対象外であり、API client の
+UpdateRequest と PUT/PATCH セマンティクスをそのまま公開する。
+
 更新コマンドは、次の原則を満たさなければならない。
 
 - 指定していないフィールドは変更しない。

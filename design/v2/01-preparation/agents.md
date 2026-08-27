@@ -2,7 +2,8 @@
 
 ## 目的
 
-AI コーディングエージェント（Claude Code, GitHub Copilot, OpenCode 等）が `skr`（旧称 usacloud）プロジェクトを短時間で理解し、適切に変更・生成できる状態にする。
+AI コーディングエージェント（Claude Code, GitHub Copilot, OpenCode 等）が
+`usacloud` プロジェクトを短時間で理解し、適切に変更・生成できる状態にする。
 
 特に以下を目指す。
 
@@ -54,3 +55,8 @@ make lint     # lint 実行
 ### コマンド体系と命名規則
 
 このあたりは `./command-structure.md` にあわせて進める。
+
+- 全サービスの低レベルコマンドを `<service>-api` 以下へ API client から生成する。
+- `<service>` 以下の高レベルコマンドは、複合操作が必要なサービスだけに実装する。
+- 高レベルな処理は `sacloud-sdk-go` の service layer に置き、CLI は薄いラッパーにする。
+- 高レベルコマンドを API client の method の単純な別名として追加しない。

@@ -15,6 +15,10 @@ Usacloud（CLI 名は `skr`）の次の段階として、AI を第一級の利�
 - AI コーディングエージェントが `usacloud` を使いこなせる状態にする。
     - AI が使いやすければ、人間にとっても理解しやすい状態になる。
 - IaaS リソースで `usacloud <resource> <action>` を第一級の推奨形としつつ、IaaS 以外のサービス（Web Accelerator, Object Storage, IAM, API Gateway 等）への対応を拡張しやすいコマンド体系にする。
+- 全サービスについて API client の操作を網羅する低レベルコマンドを AI で生成する。
+- AppRun や Object Storage のように複雑な複合操作が必要なサービスに限り、
+  `sacloud-sdk-go` に service layer を実装し、その薄いラッパーとして利用目的に
+  沿った高レベルコマンドを追加する。
 - 既存の help テキストを改善し、`usacloud` の引数やフラグへ指定する値を明確にする。
 - Terraform などの宣言的管理に馴染まない一時的な運用操作を、安全で意図の明確な
   action command として提供する。
@@ -52,10 +56,10 @@ design/v2/
 | 計画 | ファイル | 概要 |
 |---|---|---|
 | [AGENTS.md 整備](01-preparation/agents.md) | `01-preparation/agents.md` | AI エージェントがプロジェクトを理解し、help text や Skill を生成しやすくするためのガイドライン整備。 |
-| [コマンド体系の再整理](01-preparation/command-structure.md) | `01-preparation/command-structure.md` | 今後のコマンド体系を整理する。 |
+| [コマンド体系の再整理](01-preparation/command-structure.md) | `01-preparation/command-structure.md` | 高レベルコマンドと、全サービスを網羅する低レベルコマンドの体系を整理する。 |
 | [Help text 改善](01-preparation/help-text-improvement.md) | `01-preparation/help-text-improvement.md` | 引数・フラグに入れる値が明確になるよう、例や選択肢を help に追加。 |
-| [OpenAPI / SDK からの半自動生成](01-preparation/openapi-sdk-generation.md) | `01-preparation/openapi-sdk-generation.md` | 各サービスの API クライアントと OpenAPI 仕様からコマンド定義・help text・Skill ファイルを半自動生成する仕組み。 |
-| [`install-skill` コマンド](01-preparation/install-skill.md) | `01-preparation/install-skill.md` | `skr install-skill` で `.claude/skills/skr/SKILL.md` を生成。 |
+| [OpenAPI / SDK からの半自動生成](01-preparation/openapi-sdk-generation.md) | `01-preparation/openapi-sdk-generation.md` | API client からの低レベルコマンド生成と、service layer を利用する高レベルコマンド開発の仕組み。 |
+| [`install-skill` コマンド](01-preparation/install-skill.md) | `01-preparation/install-skill.md` | `usacloud install-skill` で `.claude/skills/usacloud/SKILL.md` を生成。 |
 
 `install-skill` は help text の改善後に実施する。IaaS の help text 改善は、IaaS API
 ドキュメントの改善を前提とする。計画間に重複はあるが、Phase 1 内では準備が整った
