@@ -63,6 +63,9 @@ export SAKURACLOUD_ACCESS_TOKEN_SECRET=...
 
 ## Phase 2: 現行 API で実装できる改善
 
+> [!NOTE]
+> 逆にややこしいかもしれないのでこのステップは踏まなくていいかも。
+
 サーバー側を変更せず、API キーの設定を案内する `auth login` を追加する。
 
 ```bash
