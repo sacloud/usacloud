@@ -44,6 +44,9 @@ Go `1.25.8`（`go.mod` で指定）を使用します。
 - コマンドの `Category` と `Order` は共有カテゴリーと整合させる。`Resource.AddCommand` は未知のカテゴリーを拒否し、これらの値を使ってヘルプ出力を並べ替える。
 - 新しい IaaS リソースは `pkg/commands/iaas/resources.go` に、IaaS 以外の新しいトップレベルリソースは `pkg/resources.go` に追加する。ジェネレーターがアダプターを作成できるよう、`ServiceType` には対応するサービスライブラリの型を設定する。
 - `sacloud-sdk-go/api/<service>` を直接ラップする `*-api` コマンドを追加するときは、`.agents/skills/generate-usacloud-api-command/` の skill を使用する。
+- `<service>-api` コマンドは `.agents/skills/generate-usacloud-api-command/SKILL.md` に従い、各コマンドを `sacloud-sdk-go/api/<service>` の公開 API メソッドと 1:1 で対応させる。
+    - 1 コマンドから別の API メソッドを暗黙に追加実行したり、複数メソッドを組み合わせたワークフローにしたりしてはならない。
+    - 複数メソッドを組み合わせたワークフローが必要な場合は `<service>` という名前の高レベルサブコマンドを別途実装する。
 - サービスメソッドがコマンドと一致する場合は、生成されるデフォルトのサービス呼び出しを優先する。名前が一致しない場合は `ServiceFuncAltName` を指定し、サービスアダプターで表現できない動作に限って独自の `Func` を使用する。
 - リソースを変更するコマンドには `cflag.ConfirmParameter` を埋め込む。これにより、非対話的な呼び出しでは `--assumeyes`／`-y` が必須になる。list コマンドでは慣例として `NoProgress: true` を設定し、`ColumnDefs` を明示的に定義する。
 

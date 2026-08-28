@@ -22,6 +22,7 @@ import (
 	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/commands/rest"
 	"github.com/sacloud/usacloud/pkg/commands/root"
+	"github.com/sacloud/usacloud/pkg/commands/simplemqapi"
 	updateSelf "github.com/sacloud/usacloud/pkg/commands/update-self"
 	"github.com/sacloud/usacloud/pkg/commands/version"
 	_ "github.com/sacloud/usacloud/pkg/commands/webaccel" // webaccel向けのcore.LabelsExtractorsの設定用
@@ -35,6 +36,7 @@ var (
 		config.Resource,
 		eventbusapi.Resource,
 		rest.Resource,
+		simplemqapi.Resource,
 		webaccelerator.Resource,
 	}
 
