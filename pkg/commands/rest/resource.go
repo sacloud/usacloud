@@ -20,8 +20,9 @@ import (
 )
 
 var Resource = &core.Resource{
-	Name: "rest",
-	Usage: `Send an authenticated request directly to the SAKURA Cloud API.
+	Name:  "rest",
+	Usage: "Send an authenticated request directly to the SAKURA Cloud API",
+	LongUsage: `Send an authenticated request directly to the SAKURA Cloud API.
 
 Specify either a full HTTPS URL or an API path such as /server. For a path,
 usacloud builds the API URL from --zone (or the zone in the active profile).

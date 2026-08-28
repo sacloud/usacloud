@@ -25,7 +25,13 @@ func TestHelpIncludesRESTRequestUsage(t *testing.T) {
 	if got, want := cmd.Use, "rest URL"; got != want {
 		t.Errorf("resource usage = %q, want %q", got, want)
 	}
-	if got, want := cmd.Long, Resource.Usage; got != want {
+	if got, want := cmd.Short, Resource.Usage; got != want {
+		t.Errorf("resource summary = %q, want %q", got, want)
+	}
+	if strings.Contains(cmd.Short, "\n") {
+		t.Errorf("resource summary must fit on one line: %q", cmd.Short)
+	}
+	if got, want := cmd.Long, Resource.LongUsage; got != want {
 		t.Errorf("resource help = %q, want %q", got, want)
 	}
 	if want := "usacloud rest https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/server"; !strings.Contains(cmd.Long, want) {
