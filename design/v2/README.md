@@ -41,6 +41,7 @@ design/v2/
 ├── 01-preparation/             # メジャーバージョン更新前に順次実施可能
 │   ├── agents.md
 │   ├── command-structure.md
+│   ├── auth-login.md
 │   ├── help-text-improvement.md
 │   ├── openapi-sdk-generation.md
 │   └── install-skill.md
@@ -57,6 +58,7 @@ design/v2/
 |---|---|---|
 | [AGENTS.md 整備](01-preparation/agents.md) | `01-preparation/agents.md` | AI エージェントがプロジェクトを理解し、help text や Skill を生成しやすくするためのガイドライン整備。 |
 | [コマンド体系の再整理](01-preparation/command-structure.md) | `01-preparation/command-structure.md` | 高レベルコマンドと、全サービスを網羅する低レベルコマンドの体系を整理する。 |
+| [`auth login` コマンド](01-preparation/auth-login.md) | `01-preparation/auth-login.md` | 現状、現行 API での改善、Device Authorization API 導入後の 3 段階で認証を設計する。 |
 | [Help text 改善](01-preparation/help-text-improvement.md) | `01-preparation/help-text-improvement.md` | 引数・フラグに入れる値が明確になるよう、例や選択肢を help に追加。 |
 | [OpenAPI / SDK からの半自動生成](01-preparation/openapi-sdk-generation.md) | `01-preparation/openapi-sdk-generation.md` | API client からの低レベルコマンド生成と、service layer を利用する高レベルコマンド開発の仕組み。 |
 | [`install-skill` コマンド](01-preparation/install-skill.md) | `01-preparation/install-skill.md` | `usacloud install-skill` で `.claude/skills/usacloud/SKILL.md` を生成。 |
