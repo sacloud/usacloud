@@ -48,6 +48,7 @@ Go `1.25.8`（`go.mod` で指定）を使用します。
 
 ## リポジトリの規約
 
+- すべてのコミットで DCO への同意が必須である。`git commit --signoff` を使用し、コミットメッセージに `Signed-off-by` トレーラーを追加する。
 - 新しい Go ファイルでは、Apache ライセンスヘッダーとリポジトリの著作権年のパターンを維持する。`make gen` は `set-license`、`gofmt`、`gosimports` を実行する。
 - `golangci-lint` は意図的に生成ファイルを除外し、`--fix` を付けて実行される。コミット前に、適用されたフォーマット変更を確認する。
 - ユニットテストには標準の `testing` パッケージと `testify/require` を使用する。End-to-End テストは `e2e` ビルドタグ付きで `e2e/` 配下に分離されている。
