@@ -1,0 +1,133 @@
+================================================================================
+<service>-api チュートリアル
+================================================================================
+
+`usacloud <service>-api` を使うと、CLI から <サービス名> のリソースを作成・確認・削除できます。
+本チュートリアルでは、``manual.sakura.ad.jp`` に記載されている内容に基づき、
+**どういうときにこのサービスが便利か** を簡潔に説明し、実際にリソースを作成して動作確認します。
+
+.. warning::
+
+   このチュートリアルでは **本番環境にリソースを作成・削除** します。
+   作業を始める前に、以下のコマンドで現在の profile を確認し、
+   対象プロファイルが意図したものであることを確認してください。
+
+   .. code-block:: shell
+
+      usacloud config current
+
+   意図しないプロファイルやプロジェクトで作業しないよう、必ず確認を行ってください。
+
+このサービスはいつ使うか
+================================================================================
+
+<このサービスが解決する問題と、利用者が選ぶ代表的な場面を 1〜2 段落で記述します。>
+.. <根拠は manual.sakura.ad.jp または対象バージョンの SDK 内ドキュメントに基づきます。>
+
+前提条件
+================================================================================
+
+- usacloud がインストールされていること
+- 対象プロファイルが設定済みであること
+- 本チュートリアルで作成するリソースの料金と影響を理解していること
+
+このチュートリアルで作成するもの
+================================================================================
+
+本チュートリアルでは以下のリソースを作成します。
+作成順序は依存関係を考慮したものです。
+
+1. ``<first-resource>`` : <簡潔な説明>
+2. ``<second-resource>`` : <簡潔な説明>
+
+Step 1. 実行環境の確認
+================================================================================
+
+まず、現在の profile と ``<service>-api`` コマンドのヘルプを確認します。
+
+.. code-block:: shell
+
+   usacloud config current
+   usacloud <service>-api --help
+
+プロファイルが意図したものであることを確認したら、
+各 subcommand の ``create --help`` を参照し、必要なパラメータを把握します。
+
+.. code-block:: shell
+
+   usacloud <service>-api <first-resource> create --help
+
+Step 2. リソースの作成
+================================================================================
+
+<first-resource> を作成します。
+
+.. code-block:: shell
+
+   usacloud <service>-api <first-resource> create \
+     --name <example-name> \
+     <other-required-flags>
+
+必要に応じて JSON ファイルからパラメータを指定する例も示します。
+
+.. code-block:: shell
+
+   cat > <first-resource>.json <<'EOF'
+   {
+     "<field>": "<value>"
+   }
+   EOF
+
+   usacloud <service>-api <first-resource> create --parameters <first-resource>.json
+
+作成後、``list`` または ``read`` で結果を確認します。
+
+.. code-block:: shell
+
+   usacloud <service>-api <first-resource> list
+   usacloud <service>-api <first-resource> read <resource-id-or-name>
+
+Step 3. 動作確認
+================================================================================
+
+<サービスに応じた動作確認手順を記述します。>
+<例: イベントの発生、ログの確認、他リソースとの連携確認など。>
+
+.. code-block:: shell
+
+   usacloud <service>-api <second-resource> create \
+     --name <example-name> \
+     --<first-resource>-id <resource-id> \
+     <other-required-flags>
+
+   usacloud <service>-api <second-resource> list
+
+Step 4. クリーンアップ
+================================================================================
+
+チュートリアルで作成したリソースを削除します。
+削除順は作成順の逆で行い、依存関係を考慮してください。
+
+.. code-block:: shell
+
+   usacloud <service>-api <second-resource> delete <second-resource-id-or-name> -y
+   usacloud <service>-api <first-resource> delete <first-resource-id-or-name> -y
+
+.. important::
+
+   リソースが残ったままだと課金が継続する場合があります。
+   必ず ``list`` で残りがないことを確認してください。
+
+   .. code-block:: shell
+
+      usacloud <service>-api <first-resource> list
+      usacloud <service>-api <second-resource> list
+
+まとめ
+================================================================================
+
+本チュートリアルでは ``<service>-api`` を使って <サービスの代表的な用途> を体験しました。
+各コマンドの詳細なパラメータについては ``--help`` を、サービスの詳細については以下の公式マニュアルを参照してください。
+
+- `サービス名 - さくらのクラウド マニュアル <https://manual.sakura.ad.jp/cloud/<service-path>.html>`_
+- ``usacloud <service>-api <resource> create --help``
