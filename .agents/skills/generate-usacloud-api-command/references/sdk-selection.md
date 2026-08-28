@@ -7,14 +7,15 @@
 transport、認証、pager、`apis/v*` の生成型を直接 CLI に露出しません。
 
 inventory は `go list -json` で解決した package の実ファイルを読み、`go/parser` /
-`go/ast` と `go/types` で interface と署名を取得します。そのため SDK 更新後にも
+`go/ast` および `go/types` で interface と署名を取得します。そのため SDK 更新後にも
 import path と型表記を手で転記しません。
 
 `--interface` を省略すると、すべての `*API` interface を inventory します。ただし
-`List` や `Create` という同名 method を 1 配列へ混在させません。schema v2 は
-`interfaces[]` の各要素に `interface`、その名前から `API` を除いて kebab-case にした
-合意済みの単数 CLI resource 名（`ProcessConfigurationAPI` は
-`process-configuration`）、`methods[]` を保持します。略語や SDK 名と CLI 名が異なる
+`List` や `Create` という同名 method を 1 配列へ混在させません。
+schema v2 の `interfaces[]` は、各要素に `interface` と単数 CLI resource 名、
+`methods[]` を保持します。単数 CLI resource 名には、interface 名から `API` を除いて
+kebab-case にした合意済みの名前を使います。たとえば `ProcessConfigurationAPI` には
+`process-configuration` を使います。略語や SDK 名と CLI 名が異なる
 場合は、inventory 後に `resource` を合意済みの CLI 名へ修正します。resource は package
 directory 名ではなく、`core.Resource{Name: ...}` と coverage の照合キーの一部です。
 

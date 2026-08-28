@@ -51,7 +51,7 @@ resource を正しい集合へ登録します。
 <resource> -h` と command help で category/order/alias を確認します。
 
 coverage validator には service root（例: `./pkg/commands/eventbusapi`）を渡します。
-子 directory を再帰走査し、各 package の `core.Resource{Name: ...}` を取得して
+子 directory を再帰走査し、各 package の `core.Resource{Name: ...}` を取得します。
 `ProcessConfigurationAPI/process-configuration + delete` のように
-interface/resource/command の三つ組で照合するため、別 resource の同名 `delete` で
-欠落を満たすことはありません。
+interface/resource/command の 3 つ組で照合します。そのため、別 resource の同名
+`delete` で欠落を満たすことはありません。

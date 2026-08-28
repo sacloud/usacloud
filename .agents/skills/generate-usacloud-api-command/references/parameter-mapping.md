@@ -19,10 +19,11 @@ parameter は `cli:",squash"` と `mapconv:"-"` を付け、SDK に渡しませ�
 JSON は `encoding/json` で decode し、unknown field の扱いは SDK 契約に合わせて
 明示します。秘密値をエラー、出力、fixture に含めません。
 
-complex JSON flag は型を知っている実装者だけが使える状態にしてはいけません。flag の
-短い説明から command help を参照させ、`core.Command.LongUsage` に JSON object の
-必須 field、任意 field、enum 値、時刻・単位などの形式を記載し、`Example` にそのまま
-実行できる inline JSON と JSON file の例を載せます。親 request envelope や自動導出する
+complex JSON flag は型を知っている実装者だけが使える状態にしてはいけません。
+flag の短い説明から command help を参照させます。`core.Command.LongUsage` には
+JSON object の必須 field、任意 field、enum 値、時刻・単位などの形式を記載します。
+`Example` には、そのまま実行できる inline JSON と JSON file の例を載せます。
+親 request envelope や自動導出する
 discriminator は例へ含めません。resource 一覧に表示される `Usage` は一行に保ちます。
 
 ## discriminator と nullable

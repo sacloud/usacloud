@@ -30,8 +30,10 @@ description: sacloud-sdk-go/api の `*-api` コマンドに対する reStructure
 作業開始時に `mktemp -d` などで専用の一時ディレクトリを作成し、成果物と根拠表をそこへ保存します。
 完了時は生成したファイルの絶対パスをユーザーへ伝えます。
 
-根拠表は `generate-usacloud-api-command` の `references/help-and-service-model.md` と同じ形式を用い、
-各説明が `manual.sakura.ad.jp` または対象バージョンの `sacloud-sdk-go` 内ドキュメントのどの原文に対応するかを記録します。
+根拠表は `generate-usacloud-api-command` の
+`references/help-and-service-model.md` と同じ形式を用います。
+各説明について、`manual.sakura.ad.jp` または対象バージョンの
+`sacloud-sdk-go` 内ドキュメントにある対応元の原文を記録します。
 
 ## 情報源の制約
 
@@ -63,8 +65,7 @@ description: sacloud-sdk-go/api の `*-api` コマンドに対する reStructure
 9. `assets/tutorial.rst.tmpl` を出発点に reStructuredText を手書きする。テンプレートは自動生成物として扱わない。
 10. `references/rst-writing-guideline.md` に従い、コマンド例、警告ブロック、前提条件、関連リンクを整理する。
 11. リンク切れがないかを確認する。
-12. 生成した `.rst` をプレビュー（`make` や Sphinx などプロジェクトのドキュメントビルドがある場合はそれを使用）し、
-   ユーザーがコピー＆ペーストで再現できることを検証する。
+12. 生成した `.rst` をプレビューする。プロジェクトに `make` や Sphinx などのドキュメントビルドがある場合はそれを使い、コピー＆ペーストで再現できることを検証する。
 
 ## 本番環境での作業前の確認事項
 
@@ -76,7 +77,7 @@ description: sacloud-sdk-go/api の `*-api` コマンドに対する reStructure
   予定するリソース作成・削除の内容を伝え、**明示的な承認** を得る。
 - 承認が得られるまでは、対象サービスと依存サービスのリソースを作成・変更・削除しない。
 
-profile 確認と承認はチュートリアルの冒頭にも記載し、読者が同じ確認を行うよう促します。
+profile の確認と承認はチュートリアルの冒頭にも記載し、読者にも同じ手順を促します。
 
 また、本番検証で使用した実際の値（profile 名、リソース ID、トークン、シークレットなど）は、
 チュートリアルに掲載してはいけません。`references/rst-writing-guideline.md` に従い、
