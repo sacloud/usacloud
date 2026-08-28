@@ -1,5 +1,10 @@
 # usacloud v1でのコマンド実装方法について
 
+> [!NOTE]
+> `sacloud-sdk-go/api/<service>` を直接ラップする `*-api` コマンドには、
+> `.agents/skills/generate-usacloud-api-command/` の skill を使用する。
+> 以下は主に従来の service package を使うコマンド向けの手順である。
+
 ## 全体の流れ
 
 - `pkg/cmd/commands`配下にリソース名のパッケージを作成(なるべくlibsacloud serviceのパッケージ名と合わせる)

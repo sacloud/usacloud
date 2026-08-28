@@ -50,6 +50,8 @@ type Command struct {
 	Name      string   // コマンド名、ケバブケース(ハイフン区切り)で指定すること
 	Aliases   []string // エイリアス
 	Usage     string
+	LongUsage string
+	Example   string
 	ArgsUsage string // Argumentsの説明、省略した場合はSelectorTypeの値に応じた内容が設定される
 
 	Category string // カテゴリーのキー
@@ -122,11 +124,16 @@ func (c *Command) argsUsage() string {
 
 func (c *Command) CLICommand() *cobra.Command {
 	c.currentParameter = c.ParameterInitializer()
+	longUsage := c.Usage
+	if c.LongUsage != "" {
+		longUsage = c.LongUsage
+	}
 	cmd := &cobra.Command{
 		Use:          c.Name + c.argsUsage(),
 		Aliases:      c.Aliases,
 		Short:        c.Usage,
-		Long:         c.Usage,
+		Long:         longUsage,
+		Example:      c.Example,
 		SilenceUsage: true,
 		Run: func(cmd *cobra.Command, args []string) {
 			// コンテキスト構築

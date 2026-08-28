@@ -20,6 +20,7 @@ import (
 	"time"
 
 	"github.com/sacloud/saclient-go"
+	sdksaclient "github.com/sacloud/sacloud-sdk-go/common/saclient"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/validate"
@@ -35,6 +36,7 @@ type Context interface {
 
 	Args() []string
 	Saclient() saclient.ClientAPI
+	SDKClient() (sdksaclient.ClientAPI, error)
 
 	PlatformName() string
 	ResourceName() string
@@ -56,6 +58,7 @@ type cliContext struct {
 	cliIO     IO
 	args      []string
 	saclient  saclient.ClientAPI
+	sdkClient *sdkClientHolder
 	client    *apiClient
 
 	platformName string
@@ -117,6 +120,7 @@ func NewCLIContext(param *ContextParameter) (Context, func(), error) {
 		cliIO:        io,
 		args:         param.Args,
 		saclient:     sa,
+		sdkClient:    newSDKClientHolder(option, sa),
 	}
 
 	return cliCtx, cancel, nil
@@ -166,6 +170,7 @@ func (c *cliContext) WithResource(id string, zone string, resource interface{}) 
 		cliIO:        c.cliIO,
 		args:         c.args,
 		saclient:     c.saclient.Dup(), // depopulate
+		sdkClient:    c.sdkClient,
 		platformName: c.platformName,
 		resourceName: c.resourceName,
 		commandName:  c.commandName,
@@ -200,6 +205,10 @@ func (c *cliContext) Args() []string {
 
 func (c *cliContext) Saclient() saclient.ClientAPI {
 	return c.saclient
+}
+
+func (c *cliContext) SDKClient() (sdksaclient.ClientAPI, error) {
+	return c.sdkClient.Client()
 }
 
 func getOutputWriter(io IO, globalOption *config.Config, columnDefs []output.ColumnDef, rawOptions interface{}) output.Output {

@@ -36,6 +36,13 @@ func NewGenerateContext() *GenerateContext {
 				log.Fatal(err)
 			}
 		}
+		for _, child := range r.Children() {
+			for _, c := range child.Commands() {
+				if err := c.ValidateSchema(); err != nil {
+					log.Fatal(err)
+				}
+			}
+		}
 	}
 	return &GenerateContext{
 		Resources: NewResources(pkg.Resources()),

@@ -1,0 +1,23 @@
+{
+  "interfaces": [
+    {
+      "interface": "WidgetAPI",
+      "resource": "widget",
+      "methods": [
+        {"name": "List", "command": "list"},
+        {"name": "Delete", "command": "delete"}
+      ]
+    },
+    {
+      "interface": "GadgetAPI",
+      "resource": "gadget",
+      "methods": [
+        {"name": "List", "command": "list"},
+        {"name": "Delete", "command": "delete"}
+      ],
+      "excluded": [
+        {"method": "Delete", "reason": "fixture は未実装検出を unit test で確認するため"}
+      ]
+    }
+  ]
+}

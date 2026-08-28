@@ -20,6 +20,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"runtime"
 	"text/template"
 )
 
@@ -70,5 +71,9 @@ func Gopath() string {
 
 // ProjectRootPath プロジェクトルートパス
 func ProjectRootPath() string {
-	return filepath.Join(Gopath(), "src/github.com/sacloud/usacloud")
+	_, file, _, ok := runtime.Caller(0)
+	if !ok {
+		log.Fatal("unable to determine project root")
+	}
+	return filepath.Clean(filepath.Join(filepath.Dir(file), "..", ".."))
 }

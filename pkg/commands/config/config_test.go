@@ -25,6 +25,7 @@ import (
 
 	"github.com/sacloud/iaas-api-go"
 	"github.com/sacloud/saclient-go"
+	sdksaclient "github.com/sacloud/sacloud-sdk-go/common/saclient"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"
@@ -77,9 +78,12 @@ func (c *testContext) Client() interface{}          { return nil }
 func (c *testContext) IO() cli.IO                   { return c.io }
 func (c *testContext) Args() []string               { return c.args }
 func (c *testContext) Saclient() saclient.ClientAPI { return c.client }
-func (c *testContext) PlatformName() string         { return "test" }
-func (c *testContext) ResourceName() string         { return "config" }
-func (c *testContext) CommandName() string          { return "test" }
+func (c *testContext) SDKClient() (sdksaclient.ClientAPI, error) {
+	return nil, nil
+}
+func (c *testContext) PlatformName() string { return "test" }
+func (c *testContext) ResourceName() string { return "config" }
+func (c *testContext) CommandName() string  { return "test" }
 func (c *testContext) WithResource(id, zone string, resource interface{}) cli.Context {
 	return c
 }

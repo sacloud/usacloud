@@ -18,6 +18,7 @@ package pkg
 import (
 	"github.com/sacloud/usacloud/pkg/commands/completion"
 	"github.com/sacloud/usacloud/pkg/commands/config"
+	"github.com/sacloud/usacloud/pkg/commands/eventbusapi"
 	"github.com/sacloud/usacloud/pkg/commands/iaas"
 	"github.com/sacloud/usacloud/pkg/commands/rest"
 	"github.com/sacloud/usacloud/pkg/commands/root"
@@ -32,6 +33,7 @@ import (
 var (
 	MiscResources = core.Resources{
 		config.Resource,
+		eventbusapi.Resource,
 		rest.Resource,
 		webaccelerator.Resource,
 	}
