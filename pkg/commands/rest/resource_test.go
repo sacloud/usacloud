@@ -60,7 +60,7 @@ func TestMissingURLMessageIncludesUsage(t *testing.T) {
 	err := missingURLError(0)
 
 	for _, want := range []string{
-		"URL: required (received 0 arguments)",
+		"URL: exactly one is required (received 0 arguments)",
 		"/server",
 		"https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/server",
 		"usacloud rest --help",
@@ -68,5 +68,9 @@ func TestMissingURLMessageIncludesUsage(t *testing.T) {
 		if !strings.Contains(err.Error(), want) {
 			t.Errorf("missing URL error does not include %q: %s", want, err)
 		}
+	}
+
+	if got := missingURLError(2).Error(); !strings.Contains(got, "URL: exactly one is required (received 2 arguments)") {
+		t.Errorf("multiple URL error does not describe the required count: %s", got)
 	}
 }

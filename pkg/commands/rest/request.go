@@ -126,7 +126,7 @@ func validateRequest(ctx cli.Context, parameter interface{}) error {
 func missingURLError(argumentCount int) error {
 	return validate.NewValidationError(
 		validate.NewFlagError("URL", fmt.Sprintf(
-			"required (received %d arguments). Specify an API path such as /server or an absolute URL such as https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/server. Run 'usacloud rest --help' for more examples",
+			"exactly one is required (received %d arguments). Specify an API path such as /server or an absolute URL such as https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/server. Run 'usacloud rest --help' for more examples",
 			argumentCount,
 		)),
 	)
