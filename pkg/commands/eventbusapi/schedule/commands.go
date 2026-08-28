@@ -42,7 +42,7 @@ Required fields:
 
 Specify either Crontab, or RecurringStep with RecurringUnit. RecurringUnit accepts min, hour, or day.`
 
-const scheduleSettingsExamples = `  usacloud eventbus-api schedule create --name daily --settings '{"ProcessConfigurationID":"pc-id","StartsAt":1700000000000,"RecurringStep":1,"RecurringUnit":"day"} -y
+const scheduleSettingsExamples = `  usacloud eventbus-api schedule create --name daily --settings '{"ProcessConfigurationID":"pc-id","StartsAt":1700000000000,"RecurringStep":1,"RecurringUnit":"day"}' -y
   usacloud eventbus-api schedule create --name periodic --settings '{"ProcessConfigurationID":"pc-id","StartsAt":1700000000000,"Crontab":"*/15 * * * *"}' -y
   usacloud eventbus-api schedule create --name daily --settings ./schedule-settings.json -y`
 
