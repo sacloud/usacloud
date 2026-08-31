@@ -230,10 +230,12 @@ EventBus のジョブ実行はベストエフォートであり、開始時刻�
 
    eventbus schedule fired
 
-受信したメッセージを削除します。また、次の trigger の確認中に schedule が再実行されない
-よう、ここで schedule も削除します。
+次の trigger の確認中に schedule が再実行されないよう、schedule を先に削除してから
+受信済みのメッセージを削除します。
 
 .. code-block:: shell
+
+   usacloud eventbus-api schedule delete "${SCHEDULE_ID}" -y
 
    SCHEDULE_MESSAGE_ID=$(jq -r '.[0].ID' "${SCHEDULE_RESULT}")
    usacloud simplemq-api message delete \
@@ -242,7 +244,11 @@ EventBus のジョブ実行はベストエフォートであり、開始時刻�
      --message-id "${SCHEDULE_MESSAGE_ID}" \
      -y
 
-   usacloud eventbus-api schedule delete "${SCHEDULE_ID}" -y
+.. note::
+
+   schedule を削除しても、削除前に開始したジョブのメッセージが遅れて届く可能性があります。
+   次の手順では payload を確認し、遅れて届いた schedule のメッセージを削除しながら
+   trigger のメッセージを待ちます。
 
 Step 4. スイッチ作成イベントでメッセージが届くことを確認
 ================================================================================
@@ -279,24 +285,39 @@ trigger の反映を60秒待ってから、対象ゾーンにスイッチを作�
      -y --quiet)
 
 SimpleMQ のメッセージ数を5秒ごとに確認し、trigger のメッセージが届くまで最大5分待ちます。
+受信した payload が schedule のものだった場合は、停止前に開始したジョブのメッセージとして
+削除し、待機を続けます。
 
 .. code-block:: shell
 
+   TRIGGER_MESSAGE_ID=
    for i in $(seq 1 60); do
      MESSAGE_COUNT=$(usacloud simplemq-api queue count-messages \
        "${QUEUE_NAME}" --format '{{.MessageCount}}')
      if test "${MESSAGE_COUNT}" -gt 0; then
-       break
+       usacloud simplemq-api message receive \
+         --queue-name "${QUEUE_NAME}" \
+         --api-key-file "${API_KEY_FILE}" \
+         -y -o json >"${TRIGGER_RESULT}"
+
+       RECEIVED_CONTENT=$(jq -r '.[0].Content' "${TRIGGER_RESULT}")
+       RECEIVED_MESSAGE_ID=$(jq -r '.[0].ID' "${TRIGGER_RESULT}")
+       if test "${RECEIVED_CONTENT}" = "${TRIGGER_CONTENT}"; then
+         TRIGGER_MESSAGE_ID="${RECEIVED_MESSAGE_ID}"
+         break
+       fi
+
+       test "${RECEIVED_CONTENT}" = "${SCHEDULE_CONTENT}"
+       usacloud simplemq-api message delete \
+         --queue-name "${QUEUE_NAME}" \
+         --api-key-file "${API_KEY_FILE}" \
+         --message-id "${RECEIVED_MESSAGE_ID}" \
+         -y
      fi
      sleep 5
    done
 
-   test "${MESSAGE_COUNT}" -gt 0
-   usacloud simplemq-api message receive \
-     --queue-name "${QUEUE_NAME}" \
-     --api-key-file "${API_KEY_FILE}" \
-     -y -o json >"${TRIGGER_RESULT}"
-
+   test -n "${TRIGGER_MESSAGE_ID}"
    test "$(jq -r '.[0].Content' "${TRIGGER_RESULT}")" = "${TRIGGER_CONTENT}"
    jq -r '.[0].Content' "${TRIGGER_RESULT}" | base64 --decode
    echo
@@ -312,7 +333,6 @@ SimpleMQ のメッセージ数を5秒ごとに確認し、trigger のメッセ�
 
 .. code-block:: shell
 
-   TRIGGER_MESSAGE_ID=$(jq -r '.[0].ID' "${TRIGGER_RESULT}")
    usacloud simplemq-api message delete \
      --queue-name "${QUEUE_NAME}" \
      --api-key-file "${API_KEY_FILE}" \
