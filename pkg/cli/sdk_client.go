@@ -49,6 +49,7 @@ func (h *sdkClientHolder) Client() (sdksaclient.ClientAPI, error) {
 
 func (h *sdkClientHolder) newClient() (sdksaclient.ClientAPI, error) {
 	env := append([]string(nil), os.Environ()...)
+	env = setEnvValue(env, "SAKURA_PROFILE", h.option.Profile)
 	env = setEnvValue(env, "SAKURA_ACCESS_TOKEN", h.option.AccessToken)
 	env = setEnvValue(env, "SAKURA_ACCESS_TOKEN_SECRET", h.option.AccessTokenSecret)
 	env = setEnvValue(env, "SAKURA_PRIVATE_KEY_PATH", h.option.PrivateKeyPEMPath)

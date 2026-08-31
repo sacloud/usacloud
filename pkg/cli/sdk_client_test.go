@@ -73,6 +73,55 @@ func TestSDKClientHolder(t *testing.T) {
 	require.Equal(t, int64(17), settings["APIRequestRateLimit"])
 }
 
+func TestSDKClientHolderUsesResolvedProfileCredentials(t *testing.T) {
+	profileDir := t.TempDir()
+	op, err := sdksaclient.NewProfileOp([]string{"SAKURA_PROFILE_DIR=" + profileDir})
+	require.NoError(t, err)
+	require.NoError(t, op.Create(&sdksaclient.Profile{
+		Name: "staging",
+		Attributes: map[string]any{
+			"AccessToken":       "staging-token",
+			"AccessTokenSecret": "staging-secret",
+		},
+	}))
+	require.NoError(t, op.Create(&sdksaclient.Profile{
+		Name: "production",
+		Attributes: map[string]any{
+			"ServicePrincipalID":    "production-service-principal",
+			"ServicePrincipalKeyID": "production-key",
+			"PrivateKeyPEMPath":     "/production/private-key.pem",
+		},
+	}))
+	require.NoError(t, op.SetCurrentName("production"))
+
+	t.Setenv("SAKURA_PROFILE_DIR", profileDir)
+	t.Setenv("SAKURA_PROFILE", "production")
+
+	var legacyClient legacysaclient.Client
+	require.NoError(t, legacyClient.SetEnviron([]string{
+		"SAKURA_PROFILE_DIR=" + profileDir,
+		"SAKURA_PROFILE=staging",
+		"SAKURA_ACCESS_TOKEN=staging-token",
+		"SAKURA_ACCESS_TOKEN_SECRET=staging-secret",
+	}))
+	require.NoError(t, legacyClient.Populate())
+
+	holder := newSDKClientHolder(&config.Config{Profile: "staging"}, &legacyClient)
+	holder.option.AccessToken = "staging-token"
+	holder.option.AccessTokenSecret = "staging-secret"
+
+	client, err := holder.Client()
+	require.NoError(t, err)
+
+	settings := client.(*sdksaclient.Client).JSON()
+	require.Equal(t, "staging-token", settings["AccessToken"])
+	require.Equal(t, "staging-secret", settings["AccessTokenSecret"])
+	require.Equal(t, "staging", settings["ProfileName"])
+	require.NotContains(t, settings, "ServicePrincipalID")
+	require.NotContains(t, settings, "ServicePrincipalKeyID")
+	require.NotContains(t, settings, "PrivateKeyPEMPath")
+}
+
 func TestSetEnvValueReplacesExistingValue(t *testing.T) {
 	actual := setEnvValue([]string{"A=old", "B=value", "A=older"}, "A", "new")
 	require.Equal(t, []string{"B=value", "A=new"}, actual)
