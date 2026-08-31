@@ -14,7 +14,7 @@ nullable clear を正しい SDK request にしたことを検査します。
 6. response が固定 `ColumnDefs` と期待する行数で出力される。
 7. create/read/list response を `output.NewIDOutput` に渡した `--quiet` 相当の出力が、
    1 resource につき scalar ID だけの 1 行になる。ID が union の場合は全 variant
-   （例: `int` と `string`）を test case にし、内部 struct/map 表現が漏れないことを
+   を test case にする。例えば `int` と `string` を検査し、内部 struct/map 表現が漏れないことを
    固定する。
 
 mock の期待値は request 全体、または対象の意味ある field を比較し、呼び出された
