@@ -34,6 +34,7 @@ type Resource struct {
 	DefaultCommandName string
 	Category           category.Category
 	Warning            string
+	Experimental       bool
 	IsGlobalResource   bool
 	PlatformName       string       // "iaas" or "phy" or "objectstorage", 空の場合はIaaSとして扱われる
 	ServiceType        reflect.Type // リソースに対応するserviceの型情報、コード生成用
@@ -46,14 +47,21 @@ type Resource struct {
 }
 
 func (r *Resource) CLICommand() *cobra.Command {
+	shortUsage := r.Usage
 	longUsage := r.Usage
 	if r.LongUsage != "" {
 		longUsage = r.LongUsage
 	}
+	if r.Experimental {
+		shortUsage = "[Experimental] " + shortUsage
+	}
+	if warning := r.experimentWarning(); warning != "" {
+		longUsage = warning + "\n\n" + longUsage
+	}
 	cmd := &cobra.Command{
 		Use:     r.Name,
 		Aliases: r.Aliases,
-		Short:   r.Usage,
+		Short:   shortUsage,
 		Long:    longUsage,
 		Example: r.Example,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -171,6 +179,19 @@ func (r *Resource) FullName() string {
 		prefix = r.parent.FullName() + "_"
 	}
 	return prefix + r.Name
+}
+
+func (r *Resource) experimentWarning() string {
+	for resource := r; resource != nil; resource = resource.parent {
+		if resource.Experimental {
+			return fmt.Sprintf(
+				"Experimental: The %s command is provided as experimental support. Its\n"+
+					"command-line interface, behavior, and output may change without notice.",
+				resource.Name,
+			)
+		}
+	}
+	return ""
 }
 
 func (r *Resource) commandCategory(key string) *category.Category {

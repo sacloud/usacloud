@@ -48,9 +48,20 @@ func TestResource(t *testing.T) {
 func TestResourceHelpExplainsEventBusModel(t *testing.T) {
 	command := Resource.CLICommand()
 
+	require.Contains(t, command.Short, "[Experimental]")
+	require.Contains(t, command.Long, "experimental support")
+	require.Contains(t, command.Long, "may change without notice")
 	require.Contains(t, command.Long, "Create a process configuration before")
 	require.Contains(t, command.Long, "global")
 	require.Contains(t, command.Long, "best effort")
+
+	schedule, _, err := command.Find([]string{"schedule"})
+	require.NoError(t, err)
+	require.Contains(t, schedule.Long, "experimental support")
+
+	create, _, err := command.Find([]string{"schedule", "create"})
+	require.NoError(t, err)
+	require.Contains(t, create.Long, "may change without notice")
 
 	expectedUsage := map[string]string{
 		"process-configuration": "Define the job that EventBus runs",

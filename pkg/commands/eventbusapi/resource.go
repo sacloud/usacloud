@@ -37,6 +37,7 @@ Documentation: https://manual.sakura.ad.jp/cloud/appliance/eventbus/about.html`,
 	Example: `  usacloud eventbus-api process-configuration create --help
   usacloud eventbus-api schedule create --help
   usacloud eventbus-api trigger create --help`,
+	Experimental:     true,
 	IsGlobalResource: true,
 	Category:         category.ResourceCategoryAPI,
 }

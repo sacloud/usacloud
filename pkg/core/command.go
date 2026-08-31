@@ -128,6 +128,9 @@ func (c *Command) CLICommand() *cobra.Command {
 	if c.LongUsage != "" {
 		longUsage = c.LongUsage
 	}
+	if warning := c.resource.experimentWarning(); warning != "" {
+		longUsage = warning + "\n\n" + longUsage
+	}
 	cmd := &cobra.Command{
 		Use:          c.Name + c.argsUsage(),
 		Aliases:      c.Aliases,
@@ -344,6 +347,10 @@ func (c *Command) validateParameter(ctx cli.Context, parameter interface{}) erro
 func (c *Command) printCommandWarning(ctx cli.Context) {
 	if c.resource.Warning != "" {
 		c.printWarning(ctx.IO().Err(), ctx.Option().NoColor, c.resource.Warning)
+	}
+
+	if warning := c.resource.experimentWarning(); warning != "" {
+		c.printWarning(ctx.IO().Err(), ctx.Option().NoColor, warning)
 	}
 
 	if c.ExperimentWarning != "" {

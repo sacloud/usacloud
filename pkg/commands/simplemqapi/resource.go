@@ -33,6 +33,7 @@ read from a file or standard input. Queues are global and shared by all SAKURA C
 Documentation: https://manual.sakura.ad.jp/cloud/appliance/simplemq/about.html`,
 	Example: `  usacloud simplemq-api queue create --help
   usacloud simplemq-api message send --help`,
+	Experimental:     true,
 	IsGlobalResource: true,
 	Category:         category.ResourceCategoryAPI,
 }
