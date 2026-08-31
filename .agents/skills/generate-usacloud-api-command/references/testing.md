@@ -12,6 +12,10 @@ nullable clear を正しい SDK request にしたことを検査します。
 4. single/multi selector が期待した resource 数で command を呼ぶ。
 5. mutation が `--assumeyes` なしの非対話時に拒否される。
 6. response が固定 `ColumnDefs` と期待する行数で出力される。
+7. create/read/list response を `output.NewIDOutput` に渡した `--quiet` 相当の出力が、
+   1 resource につき scalar ID だけの 1 行になる。ID が union の場合は全 variant
+   （例: `int` と `string`）を test case にし、内部 struct/map 表現が漏れないことを
+   固定する。
 
 mock の期待値は request 全体、または対象の意味ある field を比較し、呼び出された
 operation と context を検査します。SDK generated client を直接 HTTP mock するより、
@@ -19,6 +23,11 @@ operation と context を検査します。SDK generated client を直接 HTTP m
 API wrapper に legacy `ctx.Saclient()` を渡さず、既存 iaas bill/coupon の legacy client を
 移行・置換しません。SDK interface が mock 不能なら、その interface を consumer 側で
 狭めず SDK 側の mock 支援を追加します。
+
+`--quiet` のテストでは command の `Func` が返した代表的な SDK response を
+`output.Contents` に包み、`output.NewIDOutput` へ渡して stdout を比較します。単に
+ID helper や `ColumnDefs` template を直接テストするだけでは、実際の quiet 出力経路を
+通らず今回の種類の不具合を検出できないため不十分です。
 
 inventory/coverage script の unit test は hidden directory を `./...` が探索しないため、
 明示的に実行します。

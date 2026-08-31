@@ -15,6 +15,7 @@
 package queue
 
 import (
+	"bytes"
 	"context"
 	"testing"
 
@@ -59,7 +60,10 @@ func (f *queueAPIFake) Read(_ context.Context, id string) (*sdkqueue.CommonServi
 
 func (f *queueAPIFake) Create(_ context.Context, request sdkqueue.CreateQueueRequest) (*sdkqueue.CommonServiceItem, error) {
 	f.createRequest = request
-	return &sdkqueue.CommonServiceItem{Status: sdkqueue.Status{QueueName: string(request.CommonServiceItem.Name)}}, nil
+	return &sdkqueue.CommonServiceItem{
+		ID:     sdkqueue.NewIntCommonServiceItemID(113802049593),
+		Status: sdkqueue.Status{QueueName: string(request.CommonServiceItem.Name)},
+	}, nil
 }
 
 func (f *queueAPIFake) Config(_ context.Context, id string, request sdkqueue.ConfigQueueRequest) (*sdkqueue.CommonServiceItem, error) {
@@ -101,7 +105,10 @@ func useQueueAPIFake(t *testing.T, op simplemq.QueueAPI) {
 
 func TestQueueCommandsInvokeSDKInterface(t *testing.T) {
 	fake := &queueAPIFake{
-		items:               []sdkqueue.CommonServiceItem{{Status: sdkqueue.Status{QueueName: "listed-queue"}}},
+		items: []sdkqueue.CommonServiceItem{{
+			ID:     sdkqueue.NewStringCommonServiceItemID("listed-id"),
+			Status: sdkqueue.Status{QueueName: "listed-queue"},
+		}},
 		countMessagesResult: 7,
 		rotateAPIKeyResult:  "dummy-value",
 	}
@@ -111,6 +118,7 @@ func TestQueueCommandsInvokeSDKInterface(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, results, 1)
 	require.IsType(t, &sdkqueue.CommonServiceItem{}, results[0])
+	requireQuietOutput(t, results, "listed-id\n")
 
 	results, err = createCommand.Func(nil, &createParameter{
 		Name:        "created-queue",
@@ -123,6 +131,7 @@ func TestQueueCommandsInvokeSDKInterface(t *testing.T) {
 	require.Equal(t, "description", fake.createRequest.CommonServiceItem.Description.Value)
 	require.Equal(t, []string{"tag-a"}, fake.createRequest.CommonServiceItem.Tags)
 	require.False(t, fake.createRequest.CommonServiceItem.Icon.Set)
+	requireQuietOutput(t, results, "113802049593\n")
 
 	_, err = readCommand.Func(nil, &readParameter{IDParameter: cflag.IDParameter{ID: "read-id"}})
 	require.NoError(t, err)
@@ -214,4 +223,16 @@ func columnNames(columns []output.ColumnDef) []string {
 		names = append(names, column.Name)
 	}
 	return names
+}
+
+func requireQuietOutput(t *testing.T, results []interface{}, expected string) {
+	t.Helper()
+
+	contents := make(output.Contents, 0, len(results))
+	for _, result := range results {
+		contents = append(contents, &output.Content{Value: result})
+	}
+	var out bytes.Buffer
+	require.NoError(t, output.NewIDOutput(&out, nil).Print(contents))
+	require.Equal(t, expected, out.String())
 }

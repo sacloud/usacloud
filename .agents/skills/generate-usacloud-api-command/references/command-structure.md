@@ -41,6 +41,13 @@ list は `NoProgress: true` とし、resource の `defaultColumnDefs` または 
 JSON の偶然のフィールド順に依存せず、識別子（ID/Name）、親・zone、状態などを固定順
 で選びます。詳細 response の全フィールドを table の列にしません。
 
+`cflag.OutputParameter` を持つ command は `--quiet` で ID だけを出力します。SDK response
+の `ID` が scalar ではなく、discriminator 付きの `int|string` union などの場合も、
+`map[Int:... Type:int]` のような内部表現を露出させず、選択された variant の値だけを
+出力できることを確認します。ID は shell 変数や後続 command の selector にそのまま
+渡せる文字列でなければなりません。table の `ColumnDefs` が正しくても `--quiet` は
+別経路なので、table テストだけで代用しません。
+
 resource を正しい集合へ登録します。
 
 * IaaS: `pkg/commands/iaas/resources.go`

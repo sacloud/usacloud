@@ -101,10 +101,11 @@ func TestProcessConfigurationCommandsInvokeSDKInterface(t *testing.T) {
 		NameParameter: cflag.NameParameter{Name: "new"},
 		Settings:      `{"Destination":"simplemq","Parameters":"{}"}`,
 	}
-	_, err = createCommand.Func(nil, create)
+	results, err = createCommand.Func(nil, create)
 	require.NoError(t, err)
 	require.Equal(t, v1.ProviderClassEventbusprocessconfiguration, fake.createRequest.CommonServiceItem.Provider.Class)
 	require.True(t, fake.createRequest.CommonServiceItem.Settings.IsProcessConfigurationSettings())
+	requireQuietOutput(t, results, "created\n")
 
 	_, err = readCommand.Func(nil, &readParameter{IDParameter: cflag.IDParameter{ID: "read-id"}})
 	require.NoError(t, err)
@@ -187,6 +188,18 @@ func TestProcessConfigurationUpdateRejectsDescriptionAndClear(t *testing.T) {
 
 func stringPtr(value string) *string {
 	return &value
+}
+
+func requireQuietOutput(t *testing.T, results []interface{}, expected string) {
+	t.Helper()
+
+	contents := make(output.Contents, 0, len(results))
+	for _, result := range results {
+		contents = append(contents, &output.Content{Value: result})
+	}
+	var out bytes.Buffer
+	require.NoError(t, output.NewIDOutput(&out, nil).Print(contents))
+	require.Equal(t, expected, out.String())
 }
 
 func standardInput(t *testing.T, content string) *os.File {

@@ -54,6 +54,8 @@ directory まで再帰的に検証します。未公開メソッドは対応す�
    サービスモデルを文章化する。
 2. `references/sdk-selection.md` に従って API interface を選び、inventory を生成する。
 3. メソッドを read/list/mutation/action に分類し、CLI の語彙と selector を決める。
+   response の ID 型も確認し、通常の table/JSON/YAML 出力に加えて `--quiet` が内部 struct
+   や union の表現ではなく、再利用可能な scalar ID を出力できることを設計に含める。
 4. `assets/command.go.tmpl` を出発点に、resource、parameter、各 command を明示的に
    実装する。resource help は `assets/resource.go.tmpl` を出発点にする。テンプレートを
    自動生成物として扱わない。
@@ -65,7 +67,8 @@ directory まで再帰的に検証します。未公開メソッドは対応す�
    他 resource との関係、先に必要なもの、代表的な利用場面を記載する。
 8. resource を該当する resources 集合に登録し、`make gen` を実行する（生成対象が
    ある場合）。登録後に help の順序、aliases、説明の理解可能性を確認する。
-9. `references/testing.md` の sakumock テストを追加し、manifest coverage を検証する。
+9. `references/testing.md` の sakumock テストと出力テストを追加する。SDK response を
+   `output.NewIDOutput` に渡す `--quiet` 相当のテストを含め、manifest coverage を検証する。
 
 ## 変更停止条件
 
@@ -77,6 +80,8 @@ directory まで再帰的に検証します。未公開メソッドは対応す�
 - 公式資料を調査してもサービスの用途、resource 間の関係、作成順を利用者向けに説明
   できない。
 - SDK request の必須 discriminator、union variant、または null/omit の意味が不明。
+- SDK response の resource ID を selector と `--quiet` 用の安定した scalar ID に変換
+  できない。特に union ID の discriminator と各 variant の意味が不明。
 - selector の一意性、ゾーン、親リソースの関係を確定できない。
 - `ctx.SDKClient()` が対象 SDK の `NewClient` と互換でなく、認証・base URL・retry を
   command 側で複製する必要がある。
