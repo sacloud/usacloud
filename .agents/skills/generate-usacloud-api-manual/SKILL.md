@@ -24,11 +24,13 @@ description: sacloud-sdk-go/api の `*-api` コマンドに対する reStructure
 
 生成する成果物は以下です。
 
-- 一時ディレクトリ内の `<service>-api.rst`（コミット対象外）
-- 一時的な根拠表（同じ一時ディレクトリへ保存、コミット対象外）
+- `.agents/skills/generate-usacloud-api-manual/assets/tutorial-example-<service>-api.rst`
+- 一時ディレクトリ内の根拠表（コミット対象外）
 
-作業開始時に `mktemp -d` などで専用の一時ディレクトリを作成し、成果物と根拠表をそこへ保存します。
-完了時は生成したファイルの絶対パスをユーザーへ伝えます。
+当面、生成したチュートリアルは、このスキルの実例として `assets/` 配下へ保存します。
+既存ファイルがある場合は、その内容を確認してから更新してください。作業開始時に
+`mktemp -d` などで根拠表用の一時ディレクトリを作成し、根拠表だけをそこへ保存します。
+完了時は生成したチュートリアルの絶対パスをユーザーへ伝えます。
 
 根拠表は `generate-usacloud-api-command` の
 `references/help-and-service-model.md` と同じ形式を用います。
@@ -62,7 +64,8 @@ description: sacloud-sdk-go/api の `*-api` コマンドに対する reStructure
    `list` / `read` による設定確認だけで終えず、イベント、メッセージ、ログ、状態変化など、
    サービスが期待どおり動作したことを示す結果を確認する。
 8. 作成したリソースを削除し、クリーンアップ手順も記録する。
-9. `assets/tutorial.rst.tmpl` を出発点に reStructuredText を手書きする。テンプレートは自動生成物として扱わない。
+9. `assets/tutorial.rst.tmpl` を出発点に reStructuredText を手書きし、
+   `assets/tutorial-example-<service>-api.rst` へ保存する。テンプレートは自動生成物として扱わない。
 10. `references/rst-writing-guideline.md` に従い、コマンド例、警告ブロック、前提条件、関連リンクを整理する。
 11. リンク切れがないかを確認する。
 12. 生成した `.rst` をプレビューする。プロジェクトに `make` や Sphinx などのドキュメントビルドがある場合はそれを使い、コピー＆ペーストで再現できることを検証する。
