@@ -67,7 +67,9 @@ description: sacloud-sdk-go/api の `*-api` コマンドに対する reStructure
 9. `assets/tutorial.rst.tmpl` を出発点に reStructuredText を手書きし、
    `assets/tutorial-example-<service>-api.rst` へ保存する。テンプレートは自動生成物として扱わない。
 10. `references/rst-writing-guideline.md` に従い、コマンド例、警告ブロック、前提条件、関連リンクを整理する。
-11. リンク切れがないかを確認する。
+11. `python3 ./.agents/skills/generate-usacloud-api-manual/scripts/check_tutorial_links.py`
+    を実行し、全 example の外部リンクにリンク切れがないかを確認する。HTTP 4xx/5xx
+    または通信失敗が報告された場合は、一次資料の移動先を確認して修正する。
 12. 生成した `.rst` をプレビューする。プロジェクトに `make` や Sphinx などのドキュメントビルドがある場合はそれを使い、コピー＆ペーストで再現できることを検証する。
 
 ## 本番環境での作業前の確認事項

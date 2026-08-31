@@ -92,6 +92,12 @@ Sphinx などのドキュメントビルドで正しくレンダリングされ�
 - **一次資料へのリンク**: ページ末尾に公式マニュアルの URL を必ず記載する。
 - **``.rst`` 内のコマンド名は `./` を付けない**: チュートリアル本文では ``usacloud eventbus-api ...`` と書く。
 
+外部リンクを追加・変更した場合は、全 example を対象にリンク検査を実行します。
+
+```sh
+python3 ./.agents/skills/generate-usacloud-api-manual/scripts/check_tutorial_links.py
+```
+
 ## 機密情報と実環境依存値の扱い
 
 チュートリアルに掲載する例は、本番検証で実際に使った値をそのまま含めてはいけません。
