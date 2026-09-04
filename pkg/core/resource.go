@@ -94,13 +94,6 @@ func (r *Resource) CLICommand() *cobra.Command {
 	return cmd
 }
 
-func (r *Resource) longUsage() string {
-	if r.LongUsage != "" {
-		return r.LongUsage
-	}
-	return r.Usage
-}
-
 func (r *Resource) argsUsage() string {
 	if r.ArgsUsage == "" {
 		return ""
