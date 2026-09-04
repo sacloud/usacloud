@@ -31,6 +31,7 @@ type Resource struct {
 	Usage              string
 	LongUsage          string
 	Example            string
+	ArgsUsage          string
 	DefaultCommandName string
 	Category           category.Category
 	Warning            string
@@ -59,7 +60,7 @@ func (r *Resource) CLICommand() *cobra.Command {
 		longUsage = warning + "\n\n" + longUsage
 	}
 	cmd := &cobra.Command{
-		Use:     r.Name,
+		Use:     r.Name + r.argsUsage(),
 		Aliases: r.Aliases,
 		Short:   shortUsage,
 		Long:    longUsage,
@@ -91,6 +92,23 @@ func (r *Resource) CLICommand() *cobra.Command {
 	buildCommandsUsage(cmd, r.CategorizedCommands())
 	cmd.InheritedFlags().SortFlags = false
 	return cmd
+}
+
+func (r *Resource) longUsage() string {
+	if r.LongUsage != "" {
+		return r.LongUsage
+	}
+	return r.Usage
+}
+
+func (r *Resource) argsUsage() string {
+	if r.ArgsUsage == "" {
+		return ""
+	}
+	if r.ArgsUsage[0] == ' ' {
+		return r.ArgsUsage
+	}
+	return " " + r.ArgsUsage
 }
 
 func (r *Resource) runDefaultCmd(cmd *cobra.Command, currentArgs []string) error {
