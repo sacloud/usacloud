@@ -34,6 +34,8 @@ import (
 
 var requestCommand = &core.Command{
 	Name:       "request",
+	Usage:      "Send an authenticated request directly to the SAKURA Cloud API",
+	ArgsUsage:  "URL",
 	Category:   "basic",
 	Order:      20,
 	NoProgress: true,
@@ -48,9 +50,9 @@ var requestCommand = &core.Command{
 }
 
 type requestParameter struct {
-	Zone        string `validate:"omitempty,zone"` // 通常のzoneと扱いが異なるためcflag.ZoneParameterを利用しない
-	Method      string `cli:",short=X,options=rest_method" validate:"required,rest_method"`
-	Data        string `cli:",short=d" validate:"omitempty,file|json"`
+	Zone        string `cli:",desc=Zone for a relative URL (defaults to the active profile zone)" validate:"omitempty,zone"` // 通常のzoneと扱いが異なるためcflag.ZoneParameterを利用しない
+	Method      string `cli:",short=X,options=rest_method,desc=HTTP method" validate:"required,rest_method"`
+	Data        string `cli:",short=d,desc=JSON request body or path to a JSON file" validate:"omitempty,file|json"`
 	Query       string `cli:",category=output,desc=Query for JSON output" validate:"omitempty" json:"-"`
 	QueryDriver string `cli:",category=output,desc=Name of the driver that handles queries to JSON output options: [jmespath/jq]" json:"-" validate:"omitempty,oneof=jmespath jq"`
 
@@ -107,9 +109,7 @@ func validateRequest(ctx cli.Context, parameter interface{}) error {
 	}
 
 	if len(ctx.Args()) != 1 {
-		return validate.NewValidationError(
-			validate.NewFlagError("arguments", fmt.Sprintf("accepts only 1 arg, received %d", len(ctx.Args()))),
-		)
+		return missingURLError(len(ctx.Args()))
 	}
 
 	url := ctx.Args()[0]
@@ -121,6 +121,15 @@ func validateRequest(ctx cli.Context, parameter interface{}) error {
 		}
 	}
 	return nil
+}
+
+func missingURLError(argumentCount int) error {
+	return validate.NewValidationError(
+		validate.NewFlagError("URL", fmt.Sprintf(
+			"exactly one is required (received %d arguments). Specify an API path such as /server or an absolute URL such as https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/server. Run 'usacloud rest --help' for more examples",
+			argumentCount,
+		)),
+	)
 }
 
 func requestFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
