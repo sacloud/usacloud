@@ -109,7 +109,7 @@ func (o *Config) loadProfileName(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("profile") {
 		v, err := flags.GetString("profile")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "profile", err)
 			return
 		}
 		o.Profile = v
@@ -194,7 +194,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("token") {
 		v, err := flags.GetString("token")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "token", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "token", err)
 			return
 		}
 		o.AccessToken = v
@@ -203,7 +203,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("secret") {
 		v, err := flags.GetString("secret")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "secret", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "secret", err)
 			return
 		}
 		o.AccessTokenSecret = v
@@ -212,13 +212,13 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("zones") {
 		v, err := flags.GetStringSlice("zones")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "zones", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "zones", err)
 			return
 		}
 		o.Zones = v
 		var buf strings.Builder
 		if err = csv.NewWriter(&buf).Write(v); err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "zones", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "zones", err)
 			return
 		}
 		argv = append(argv, "--zones", buf.String())
@@ -226,7 +226,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("no-color") {
 		v, err := flags.GetBool("no-color")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "no-color", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "no-color", err)
 			return
 		}
 		o.NoColor = v
@@ -234,7 +234,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("trace") {
 		v, err := flags.GetBool("trace")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "trace", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "trace", err)
 			return
 		}
 		if v {
@@ -245,7 +245,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("fake") {
 		v, err := flags.GetBool("fake")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "fake", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "fake", err)
 			return
 		}
 		o.FakeMode = v
@@ -253,7 +253,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("fake-store") {
 		v, err := flags.GetString("fake-store")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "fake-store", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "fake-store", err)
 			return
 		}
 		o.FakeStorePath = v
@@ -261,7 +261,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("process-timeout-sec") {
 		v, err := flags.GetInt("process-timeout-sec")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "process-timeout-sec", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "process-timeout-sec", err)
 			return
 		}
 		o.ProcessTimeoutSec = v
@@ -269,7 +269,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("argument-match-mode") {
 		v, err := flags.GetString("argument-match-mode")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "argument-match-mode", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "argument-match-mode", err)
 			return
 		}
 		o.ArgumentMatchMode = v
@@ -278,7 +278,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("profile") {
 		v, err := flags.GetString("profile")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "profile", err)
 			return
 		}
 		argv = append(argv, "--profile", v)
@@ -286,7 +286,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("private-key-path") {
 		v, err := flags.GetString("private-key-path")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "profile", err)
 			return
 		}
 		argv = append(argv, "--private-key-path", v)
@@ -294,7 +294,7 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("service-principal-id") {
 		v, err := flags.GetString("service-principal-id")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "profile", err)
 			return
 		}
 		argv = append(argv, "--service-principal-id", v)
@@ -302,14 +302,14 @@ func (o *Config) loadFromFlags(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("service-principal-key-id") {
 		v, err := flags.GetString("service-principal-key-id")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "profile", err)
 			return
 		}
 		argv = append(argv, "--service-principal-key-id", v)
 	}
 
 	if err := TheClient.FlagSet(flag.ContinueOnError).Parse(argv); err != nil {
-		fmt.Fprintf(errW, "[WARN] argv reconstrcution failed: %s", err)
+		fmt.Fprintf(errW, "[WARN] argv reconstrcution failed: %s\n", err)
 		return
 	}
 }
