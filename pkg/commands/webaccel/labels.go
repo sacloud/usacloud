@@ -15,8 +15,8 @@
 package webaccel
 
 import (
+	"github.com/sacloud/sacloud-sdk-go/api/webaccel"
 	"github.com/sacloud/usacloud/pkg/core"
-	"github.com/sacloud/webaccel-api-go"
 )
 
 func init() {

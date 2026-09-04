@@ -15,7 +15,7 @@
 package enhanceddb
 
 import (
-	"github.com/sacloud/packages-go/pointer"
+	"github.com/sacloud/sacloud-sdk-go/common/packages/pointer"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"

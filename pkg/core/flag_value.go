@@ -17,7 +17,7 @@ package core
 import (
 	"strings"
 
-	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/types"
 )
 
 type IDFlag types.ID

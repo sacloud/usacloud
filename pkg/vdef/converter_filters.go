@@ -21,10 +21,10 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/sacloud/iaas-api-go/mapconv"
-	"github.com/sacloud/iaas-api-go/types"
-	"github.com/sacloud/packages-go/pointer"
-	"github.com/sacloud/packages-go/size"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/mapconv"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/types"
+	"github.com/sacloud/sacloud-sdk-go/common/packages/pointer"
+	"github.com/sacloud/sacloud-sdk-go/common/packages/size"
 	"github.com/sacloud/usacloud/pkg/util"
 )
 

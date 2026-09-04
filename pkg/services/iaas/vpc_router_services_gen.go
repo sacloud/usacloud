@@ -17,8 +17,8 @@
 package generated_services
 
 import (
-	"github.com/sacloud/iaas-api-go"
-	service "github.com/sacloud/iaas-service-go/vpcrouter"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas"
+	service "github.com/sacloud/sacloud-sdk-go/service/iaas/vpcrouter"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/conv"

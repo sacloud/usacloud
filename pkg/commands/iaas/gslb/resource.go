@@ -17,7 +17,7 @@ package gslb
 import (
 	"reflect"
 
-	"github.com/sacloud/iaas-service-go/gslb"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/gslb"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )

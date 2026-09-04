@@ -21,7 +21,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sacloud/packages-go/e2e"
+	"github.com/sacloud/sacloud-sdk-go/common/packages/e2e"
 	usacloudE2E "github.com/sacloud/usacloud/e2e"
 	"github.com/stretchr/testify/require"
 )

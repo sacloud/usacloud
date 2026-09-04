@@ -18,7 +18,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas"
 )
 
 func Test_routerSettingUpdate_Customize(t *testing.T) {

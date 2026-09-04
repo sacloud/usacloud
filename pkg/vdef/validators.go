@@ -19,7 +19,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/types"
 )
 
 var validatorAliases = map[string]string{

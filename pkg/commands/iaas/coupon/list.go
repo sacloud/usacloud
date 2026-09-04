@@ -15,8 +15,8 @@
 package coupon
 
 import (
-	"github.com/sacloud/iaas-api-go"
-	"github.com/sacloud/iaas-service-go/coupon"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/coupon"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"

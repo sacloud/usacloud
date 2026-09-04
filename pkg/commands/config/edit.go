@@ -22,9 +22,8 @@ import (
 	"strings"
 
 	"github.com/fatih/color"
-	"github.com/sacloud/api-client-go/profile"
-	"github.com/sacloud/iaas-api-go"
-	"github.com/sacloud/saclient-go"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas"
+	"github.com/sacloud/sacloud-sdk-go/common/saclient"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/core"
@@ -145,7 +144,7 @@ func doEditProfile(
 	}
 
 	newConfigValue := &config.Config{
-		ConfigValue: profile.ConfigValue{
+		ConfigValue: config.ConfigValue{
 			AccessToken:       p.AccessToken,
 			AccessTokenSecret: p.AccessTokenSecret,
 			Zone:              p.Zone,
