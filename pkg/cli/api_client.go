@@ -19,11 +19,11 @@ import (
 	"io"
 	"log"
 
-	client "github.com/sacloud/api-client-go"
-	"github.com/sacloud/iaas-api-go"
-	"github.com/sacloud/iaas-api-go/helper/api"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/helper/api"
+	"github.com/sacloud/sacloud-sdk-go/api/webaccel"
+	"github.com/sacloud/sacloud-sdk-go/common/saclient"
 	"github.com/sacloud/usacloud/pkg/config"
-	"github.com/sacloud/webaccel-api-go"
 )
 
 type apiClient struct {
@@ -31,7 +31,7 @@ type apiClient struct {
 
 	iaasClient     iaas.APICaller
 	webaccelClient *webaccel.Client
-	commonClient   client.HttpRequestDoer
+	commonClient   saclient.HttpRequestDoer
 }
 
 func newAPIClient(o *config.Config) *apiClient {
@@ -44,7 +44,7 @@ func newAPIClient(o *config.Config) *apiClient {
 		log.SetOutput(io.Discard)
 	}
 
-	clientOption := &client.Options{
+	clientOption := &api.ClientOptions{
 		AccessToken:          o.AccessToken,
 		AccessTokenSecret:    o.AccessTokenSecret,
 		AcceptLanguage:       o.AcceptLanguage,
@@ -69,7 +69,7 @@ func newAPIClient(o *config.Config) *apiClient {
 	c.webaccelClient = &webaccel.Client{
 		Options: clientOption,
 	}
-	c.commonClient = client.NewFactory(clientOption).NewHttpRequestDoer()
+	c.commonClient = saclient.NewFactory(clientOption)
 	return c
 }
 

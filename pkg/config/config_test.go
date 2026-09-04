@@ -16,13 +16,14 @@ package config
 
 import (
 	"bytes"
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"reflect"
 	"testing"
 
-	"github.com/sacloud/api-client-go/profile"
-	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas"
+	"github.com/sacloud/sacloud-sdk-go/common/saclient"
 	"github.com/spf13/pflag"
 	"github.com/stretchr/testify/require"
 )
@@ -39,7 +40,7 @@ func TestFillDefaults_ZonesEmpty(t *testing.T) {
 
 func TestFillDefaults_ZonesWithAll(t *testing.T) {
 	c := &Config{
-		ConfigValue: profile.ConfigValue{
+		ConfigValue: ConfigValue{
 			Zones: []string{"is1a", "all"},
 		},
 	}
@@ -52,7 +53,7 @@ func TestFillDefaults_ZonesWithAll(t *testing.T) {
 
 func TestFillDefaults_ZonesWithoutAll(t *testing.T) {
 	c := &Config{
-		ConfigValue: profile.ConfigValue{
+		ConfigValue: ConfigValue{
 			Zones: []string{"is1a", "tk1a"},
 		},
 	}
@@ -175,7 +176,7 @@ func TestConfig_loadFromEnv(t *testing.T) {
 				"SAKURA_DEFAULT_QUERY_DRIVER":   "jmespath",
 			},
 			want: Config{
-				ConfigValue: profile.ConfigValue{
+				ConfigValue: ConfigValue{
 					AccessToken:          "token-sakura",
 					AccessTokenSecret:    "secret-sakura",
 					Zone:                 "is1a",
@@ -222,7 +223,7 @@ func TestConfig_loadFromEnv(t *testing.T) {
 				"SAKURACLOUD_DEFAULT_QUERY_DRIVER":   "jq",
 			},
 			want: Config{
-				ConfigValue: profile.ConfigValue{
+				ConfigValue: ConfigValue{
 					AccessToken:          "token-cloud",
 					AccessTokenSecret:    "secret-cloud",
 					Zone:                 "is1b",
@@ -292,7 +293,7 @@ func TestConfig_loadFromEnv(t *testing.T) {
 				return m
 			}(),
 			want: Config{
-				ConfigValue: profile.ConfigValue{
+				ConfigValue: ConfigValue{
 					AccessToken:          "token-sakura",
 					AccessTokenSecret:    "secret-sakura",
 					Zone:                 "is1a",
@@ -337,7 +338,7 @@ func TestConfig_loadFromEnv(t *testing.T) {
 
 func TestConfig_loadFromEnvOverwrite(t *testing.T) {
 	cfg := Config{
-		ConfigValue: profile.ConfigValue{
+		ConfigValue: ConfigValue{
 			AccessToken:       "token from config",
 			AccessTokenSecret: "secret from config",
 		},
@@ -412,7 +413,7 @@ func TestLoadConfigValue(t *testing.T) {
 			name: "no profiles",
 			env:  map[string]string{},
 			want: Config{
-				ConfigValue: profile.ConfigValue{
+				ConfigValue: ConfigValue{
 					Zones: defaultZones,
 				},
 				Profile: "default",
@@ -422,12 +423,12 @@ func TestLoadConfigValue(t *testing.T) {
 			name: "default profile exists",
 			env:  map[string]string{},
 			setup: func(t *testing.T, dir string) {
-				require.NoError(t, profile.Save("default", &profile.ConfigValue{
+				require.NoError(t, saveTestProfile(t, "default", &ConfigValue{
 					AccessToken: "default-token",
 				}))
 			},
 			want: Config{
-				ConfigValue: profile.ConfigValue{
+				ConfigValue: ConfigValue{
 					AccessToken: "default-token",
 					Zones:       defaultZones,
 				},
@@ -439,12 +440,12 @@ func TestLoadConfigValue(t *testing.T) {
 			env:  map[string]string{},
 			args: []string{"--profile", "foo"},
 			setup: func(t *testing.T, dir string) {
-				require.NoError(t, profile.Save("foo", &profile.ConfigValue{
+				require.NoError(t, saveTestProfile(t, "foo", &ConfigValue{
 					AccessToken: "foo-token",
 				}))
 			},
 			want: Config{
-				ConfigValue: profile.ConfigValue{
+				ConfigValue: ConfigValue{
 					AccessToken: "foo-token",
 					Zones:       defaultZones,
 				},
@@ -455,12 +456,12 @@ func TestLoadConfigValue(t *testing.T) {
 			name: "SAKURA_PROFILE env",
 			env:  map[string]string{"SAKURA_PROFILE": "foo"},
 			setup: func(t *testing.T, dir string) {
-				require.NoError(t, profile.Save("foo", &profile.ConfigValue{
+				require.NoError(t, saveTestProfile(t, "foo", &ConfigValue{
 					AccessToken: "foo-token",
 				}))
 			},
 			want: Config{
-				ConfigValue: profile.ConfigValue{
+				ConfigValue: ConfigValue{
 					AccessToken: "foo-token",
 					Zones:       defaultZones,
 				},
@@ -471,13 +472,13 @@ func TestLoadConfigValue(t *testing.T) {
 			name: "current points to existing profile",
 			env:  map[string]string{},
 			setup: func(t *testing.T, dir string) {
-				require.NoError(t, profile.Save("foo", &profile.ConfigValue{
+				require.NoError(t, saveTestProfile(t, "foo", &ConfigValue{
 					AccessToken: "foo-token",
 				}))
-				require.NoError(t, profile.SetCurrentName("foo"))
+				require.NoError(t, setTestCurrentProfile(t, "foo"))
 			},
 			want: Config{
-				ConfigValue: profile.ConfigValue{
+				ConfigValue: ConfigValue{
 					AccessToken: "foo-token",
 					Zones:       defaultZones,
 				},
@@ -488,18 +489,18 @@ func TestLoadConfigValue(t *testing.T) {
 			name: "current points to deleted profile",
 			env:  map[string]string{},
 			setup: func(t *testing.T, dir string) {
-				require.NoError(t, profile.Save("foo", &profile.ConfigValue{
+				require.NoError(t, saveTestProfile(t, "foo", &ConfigValue{
 					AccessToken: "foo-token",
 				}))
-				require.NoError(t, profile.SetCurrentName("foo"))
+				require.NoError(t, setTestCurrentProfile(t, "foo"))
 				// emulate deletion: remove foo profile files but leave current file
-				path, err := profile.ConfigFilePath("foo")
+				path, err := testProfileConfigFilePath("foo")
 				require.NoError(t, err)
 				require.NoError(t, os.Remove(path))
 				require.NoError(t, os.Remove(filepath.Dir(path)))
 			},
 			want: Config{
-				ConfigValue: profile.ConfigValue{
+				ConfigValue: ConfigValue{
 					Zones: defaultZones,
 				},
 				Profile: "foo",
@@ -511,15 +512,15 @@ func TestLoadConfigValue(t *testing.T) {
 			env:  map[string]string{"SAKURA_PROFILE": "bar"},
 			args: []string{"--profile", "foo"},
 			setup: func(t *testing.T, dir string) {
-				require.NoError(t, profile.Save("foo", &profile.ConfigValue{
+				require.NoError(t, saveTestProfile(t, "foo", &ConfigValue{
 					AccessToken: "foo-token",
 				}))
-				require.NoError(t, profile.Save("bar", &profile.ConfigValue{
+				require.NoError(t, saveTestProfile(t, "bar", &ConfigValue{
 					AccessToken: "bar-token",
 				}))
 			},
 			want: Config{
-				ConfigValue: profile.ConfigValue{
+				ConfigValue: ConfigValue{
 					AccessToken: "foo-token",
 					Zones:       defaultZones,
 				},
@@ -575,13 +576,13 @@ func TestLoadConfigValue_SkipLoadingProfile(t *testing.T) {
 			env:  map[string]string{"SAKURA_PROCESS_TIMEOUT_SEC": "123"},
 			args: []string{"--no-color", "--profile", "foo"},
 			setup: func(t *testing.T, dir string) {
-				require.NoError(t, profile.Save("foo", &profile.ConfigValue{
+				require.NoError(t, saveTestProfile(t, "foo", &ConfigValue{
 					AccessToken: "foo-token",
 				}))
-				require.NoError(t, profile.SetCurrentName("default"))
+				require.NoError(t, setTestCurrentProfile(t, "default"))
 			},
 			want: Config{
-				ConfigValue: profile.ConfigValue{
+				ConfigValue: ConfigValue{
 					Zones: defaultZones,
 				},
 				ProcessTimeoutSec: 123,
@@ -593,18 +594,18 @@ func TestLoadConfigValue_SkipLoadingProfile(t *testing.T) {
 			name: "broken current file does not cause error",
 			args: []string{"--profile", "foo"},
 			setup: func(t *testing.T, dir string) {
-				require.NoError(t, profile.Save("foo", &profile.ConfigValue{
+				require.NoError(t, saveTestProfile(t, "foo", &ConfigValue{
 					AccessToken: "foo-token",
 				}))
-				require.NoError(t, profile.SetCurrentName("foo"))
+				require.NoError(t, setTestCurrentProfile(t, "foo"))
 				// emulate broken current: remove foo profile but leave current file
-				path, err := profile.ConfigFilePath("foo")
+				path, err := testProfileConfigFilePath("foo")
 				require.NoError(t, err)
 				require.NoError(t, os.Remove(path))
 				require.NoError(t, os.Remove(filepath.Dir(path)))
 			},
 			want: Config{
-				ConfigValue: profile.ConfigValue{
+				ConfigValue: ConfigValue{
 					Zones: defaultZones,
 				},
 				Profile: "foo",
@@ -641,4 +642,55 @@ func TestLoadConfigValue_SkipLoadingProfile(t *testing.T) {
 			}
 		})
 	}
+}
+
+// --- テスト用プロファイル操作ヘルパー ---
+//
+// 以前は api-client-go の profile パッケージを利用していたが、
+// sacloud-sdk-go では当該パッケージが internal となったためテスト側で用意している。
+
+func testProfileDir() (string, error) {
+	op, err := saclient.NewProfileOp(os.Environ())
+	if err != nil {
+		return "", err
+	}
+	return op.Dir(), nil
+}
+
+func testProfileConfigFilePath(name string) (string, error) {
+	dir, err := testProfileDir()
+	if err != nil {
+		return "", err
+	}
+	return filepath.Join(dir, name, "config.json"), nil
+}
+
+func saveTestProfile(t *testing.T, name string, v *ConfigValue) error {
+	t.Helper()
+
+	path, err := testProfileConfigFilePath(name)
+	if err != nil {
+		return err
+	}
+	if err := os.MkdirAll(filepath.Dir(path), 0o700); err != nil {
+		return err
+	}
+	data, err := json.MarshalIndent(v, "", "  ")
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(path, data, 0o600)
+}
+
+func setTestCurrentProfile(t *testing.T, name string) error {
+	t.Helper()
+
+	dir, err := testProfileDir()
+	if err != nil {
+		return err
+	}
+	if err := os.MkdirAll(dir, 0o700); err != nil {
+		return err
+	}
+	return os.WriteFile(filepath.Join(dir, "current"), []byte(name), 0o600)
 }

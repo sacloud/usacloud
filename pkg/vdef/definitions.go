@@ -18,9 +18,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/sacloud/iaas-api-go/mapconv"
-	"github.com/sacloud/iaas-api-go/ostype"
-	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/mapconv"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/ostype"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/types"
 )
 
 type definition struct {

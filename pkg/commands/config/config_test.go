@@ -23,8 +23,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/sacloud/iaas-api-go"
-	"github.com/sacloud/saclient-go"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas"
+	"github.com/sacloud/sacloud-sdk-go/common/saclient"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"

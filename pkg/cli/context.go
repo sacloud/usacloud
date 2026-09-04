@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/sacloud/saclient-go"
+	"github.com/sacloud/sacloud-sdk-go/common/saclient"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
 	"github.com/sacloud/usacloud/pkg/validate"

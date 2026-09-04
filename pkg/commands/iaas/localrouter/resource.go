@@ -17,7 +17,7 @@ package localrouter
 import (
 	"reflect"
 
-	"github.com/sacloud/iaas-service-go/localrouter"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/localrouter"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )

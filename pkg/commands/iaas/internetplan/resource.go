@@ -17,7 +17,7 @@ package internetplan
 import (
 	"reflect"
 
-	"github.com/sacloud/iaas-service-go/internetplan"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/internetplan"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )

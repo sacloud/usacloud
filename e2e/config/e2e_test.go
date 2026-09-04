@@ -21,7 +21,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/sacloud/saclient-go"
+	"github.com/sacloud/sacloud-sdk-go/common/saclient"
 	usacloudE2E "github.com/sacloud/usacloud/e2e"
 	"github.com/stretchr/testify/require"
 )

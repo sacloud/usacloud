@@ -15,10 +15,10 @@
 package webaccelerator
 
 import (
+	"github.com/sacloud/sacloud-sdk-go/api/webaccel"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
-	"github.com/sacloud/webaccel-api-go"
 )
 
 var Resource = &core.Resource{

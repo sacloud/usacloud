@@ -17,7 +17,7 @@ package region
 import (
 	"reflect"
 
-	"github.com/sacloud/iaas-service-go/region"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/region"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )

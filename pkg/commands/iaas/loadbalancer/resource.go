@@ -17,7 +17,7 @@ package loadbalancer
 import (
 	"reflect"
 
-	"github.com/sacloud/iaas-service-go/loadbalancer"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/loadbalancer"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )

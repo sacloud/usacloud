@@ -22,7 +22,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/sacloud/iaas-api-go"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas"
 	"github.com/skratchdot/open-golang/open"
 )
 

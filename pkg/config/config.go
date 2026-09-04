@@ -24,10 +24,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sacloud/api-client-go/profile"
-	"github.com/sacloud/iaas-api-go"
-	"github.com/sacloud/packages-go/envvar"
-	saclient "github.com/sacloud/saclient-go"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas"
+	"github.com/sacloud/sacloud-sdk-go/common/packages/envvar"
+	"github.com/sacloud/sacloud-sdk-go/common/saclient"
 	"github.com/sacloud/usacloud/pkg/query"
 	"github.com/sacloud/usacloud/pkg/validate"
 	"github.com/spf13/pflag"
@@ -35,7 +34,7 @@ import (
 
 // Config CLI全コマンドが利用するフラグ
 type Config struct {
-	profile.ConfigValue
+	ConfigValue
 
 	// Profile プロファイル名
 	Profile string `json:"-"`
@@ -84,7 +83,7 @@ var DefaultQueryDriver = query.DriverJMESPath
 // LoadConfigValue 指定のフラグセットからフラグを読み取り*Flagsを組み立てて返す
 func LoadConfigValue(flags *pflag.FlagSet, errW io.Writer, skipLoadingProfile bool) (*Config, error) {
 	o := &Config{
-		ConfigValue: profile.ConfigValue{},
+		ConfigValue: ConfigValue{},
 	}
 	o.loadConfig(flags, errW, skipLoadingProfile)
 	return o, o.Validate(false)
