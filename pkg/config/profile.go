@@ -28,7 +28,7 @@ func (o *Config) loadFromProfile(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("profile") {
 		v, err := flags.GetString("profile")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "profile", err)
 			return
 		}
 		o.Profile = v
@@ -36,7 +36,7 @@ func (o *Config) loadFromProfile(flags *pflag.FlagSet, errW io.Writer) {
 
 	op, err := saclient.NewProfileOp(os.Environ())
 	if err != nil {
-		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", o.Profile, err)
+		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s\n", o.Profile, err)
 		return
 	}
 
@@ -53,17 +53,17 @@ func (o *Config) loadFromProfile(flags *pflag.FlagSet, errW io.Writer) {
 	loaded, err := op.Read(profileName)
 	if err != nil {
 		if profileName != DefaultProfileName {
-			fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err)
+			fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s\n", profileName, err)
 		}
 		o.Profile = profileName
 		return
 	}
 	// プロファイルの内容(JSON)をConfigへ反映する
 	if buf, err := json.Marshal(loaded.Attributes); err != nil {
-		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err)
+		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s\n", profileName, err)
 		return
 	} else if err := json.Unmarshal(buf, o); err != nil {
-		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err)
+		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s\n", profileName, err)
 		return
 	}
 	o.Profile = profileName
