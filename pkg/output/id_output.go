@@ -64,7 +64,7 @@ func (o *idOutput) Print(contents Contents) error {
 				break
 			} else {
 				if id, ok := mapValue[key]; ok {
-					value = id
+					value = normalizeIDValue(id)
 					break
 				}
 			}
@@ -74,4 +74,23 @@ func (o *idOutput) Print(contents Contents) error {
 	}
 
 	return nil
+}
+
+func normalizeIDValue(value interface{}) interface{} {
+	union, ok := value.(map[string]interface{})
+	if !ok {
+		return value
+	}
+
+	switch fmt.Sprint(union["Type"]) {
+	case "string":
+		if id, ok := union["String"]; ok {
+			return id
+		}
+	case "int":
+		if id, ok := union["Int"]; ok {
+			return id
+		}
+	}
+	return value
 }

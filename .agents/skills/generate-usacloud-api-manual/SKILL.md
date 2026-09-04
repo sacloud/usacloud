@@ -1,0 +1,128 @@
+---
+name: generate-usacloud-api-manual
+description: sacloud-sdk-go/api の `*-api` コマンドに対する reStructuredText チュートリアルを生成する。`manual.sakura.ad.jp` を情報源とし、本番環境でリソースを作成して動作確認する手順を含む。
+---
+
+# usacloud API コマンド チュートリアル生成
+
+`generate-usacloud-api-command` スキルで実装された `*-api` リソースに対し、
+`manual.sakura.ad.jp` を一次情報源として reStructuredText（`.rst`）形式のチュートリアルを生成する手順です。
+
+生成物は利用者が「このサービスはいつ便利か」「実際にどう作ればよいか」を最短で理解できることを目標とし、
+本番環境でリソースを作成して動作確認する例を含みます。
+
+これは `*-api` コマンドの構文だけを説明する資料ではなく、対象サービス自体のチュートリアルでもあります。
+`create` / `read` / `list` が成功することだけを動作確認とせず、サービスが実際に期待した処理を行ったことを
+利用者が観測できる、再現可能な end-to-end シナリオを少なくとも 1 つ含めます。
+実動作の確認に別サービスが必要な場合は、そのサービスも end-to-end シナリオの依存関係として扱います。
+依存サービスが利用できない状態で、架空の設定値や CRUD の確認だけを代替の動作確認にしてはいけません。
+
+## 成果物と開始条件
+
+対象の `*-api` コマンドが実装済みで、`usacloud <service>-api --help` が表示できる状態である必要があります。
+実装が済んでいない場合は、先に `generate-usacloud-api-command` スキルを使用してください。
+
+生成する成果物は以下です。
+
+- `.agents/skills/generate-usacloud-api-manual/assets/tutorial-example-<service>-api.rst`
+- 一時ディレクトリ内の根拠表（コミット対象外）
+
+当面、生成したチュートリアルは、このスキルの実例として `assets/` 配下へ保存します。
+既存ファイルがある場合は、その内容を確認してから更新してください。作業開始時に
+`mktemp -d` などで根拠表用の一時ディレクトリを作成し、根拠表だけをそこへ保存します。
+完了時は生成したチュートリアルの絶対パスをユーザーへ伝えます。
+
+根拠表は `generate-usacloud-api-command` の
+`references/help-and-service-model.md` と同じ形式を用います。
+各説明について、`manual.sakura.ad.jp` または対象バージョンの
+`sacloud-sdk-go` 内ドキュメントにある対応元の原文を記録します。
+
+## 情報源の制約
+
+サービスの用途、resource の意味・関係、利用例、制約について信頼してよい情報源は、
+`https://manual.sakura.ad.jp/cloud/` からたどる対象サービスの公式マニュアルと、
+対象バージョンの `sacloud-sdk-go` 内ドキュメントだけです。
+過去の記憶、想像、一般的な製品知識、検索結果の要約、第三者資料から説明を作ってはいけません。
+検索は許可された一次資料を見つけるためだけに使い、チュートリアルの各事実は根拠表で一次資料の原文に対応させます。
+根拠がなければ説明を補完せず、生成を停止します。
+
+## 生成フロー
+
+1. `https://manual.sakura.ad.jp/cloud/` から対象サービスの公式マニュアルをたどり、
+   サービスの目的、resource の概念、作成順、制約を先に読む。
+2. 対象バージョンの `sacloud-sdk-go` 内ドキュメントを併せて調査し、
+   根拠表と利用者向けサービスモデルを整理する。
+3. end-to-end シナリオに必要な依存サービス、既存リソース、認証情報、結果の確認方法を列挙する。
+   各依存を usacloud で作成できるか、事前に用意する必要があるかも確認する。
+4. サービスが解決する問題と、利用者が選ぶ典型的な場面を 1〜2 段落でまとめる。
+5. `usacloud config current` などで **現在の profile** を確認し、ユーザーに対象プロファイル、
+   利用する依存サービス、既存リソース、作成・削除するリソースを示して明示的に承認してもらう。
+6. 必要な依存サービスと認証情報が利用可能であることを確認する。
+   シークレットの値を会話やチュートリアルへ記載させず、ローカルファイル、標準入力、
+   または公式にサポートされた環境変数などを介して安全に渡す。
+7. 本番環境で実際にリソースを作成し、サービスの代表的な処理を実行する。
+   `list` / `read` による設定確認だけで終えず、イベント、メッセージ、ログ、状態変化など、
+   サービスが期待どおり動作したことを示す結果を確認する。
+8. 作成したリソースを削除し、クリーンアップ手順も記録する。
+9. `assets/tutorial.rst.tmpl` を出発点に reStructuredText を手書きし、
+   `assets/tutorial-example-<service>-api.rst` へ保存する。テンプレートは自動生成物として扱わない。
+10. `references/rst-writing-guideline.md` に従い、コマンド例、警告ブロック、前提条件、関連リンクを整理する。
+11. `python3 ./.agents/skills/generate-usacloud-api-manual/scripts/check_tutorial_links.py`
+    を実行し、全 example の外部リンクにリンク切れがないかを確認する。HTTP 4xx/5xx
+    または通信失敗が報告された場合は、一次資料の移動先を確認して修正する。
+12. 生成した `.rst` をプレビューする。プロジェクトに `make` や Sphinx などのドキュメントビルドがある場合はそれを使い、コピー＆ペーストで再現できることを検証する。
+
+## 本番環境での作業前の確認事項
+
+このスキルでは動作確認のため **実際に課金対象となるリソースを作成・削除** します。
+以下を必ず実行してください。
+
+- `usacloud config current` または環境変数 `USACLOUD_PROFILE` で、実行対象の profile を確認する。
+- ユーザーに対象 profile 名、利用する依存サービスと既存リソース、
+  予定するリソース作成・削除の内容を伝え、**明示的な承認** を得る。
+- 承認が得られるまでは、対象サービスと依存サービスのリソースを作成・変更・削除しない。
+
+profile の確認と承認はチュートリアルの冒頭にも記載し、読者にも同じ手順を促します。
+
+また、本番検証で使用した実際の値（profile 名、リソース ID、トークン、シークレットなど）は、
+チュートリアルに掲載してはいけません。`references/rst-writing-guideline.md` に従い、
+これらを `<your-profile>` や `<process-configuration-id>`、シェル変数 `${PC_ID}` などに置換します。
+
+コマンド例には、公式資料で有効性を確認できる設定値を使用します。
+resource ID、時刻、名前、クレデンシャルなど読者の環境で置換すべき値にはプレースホルダーを使用できますが、
+架空の event source、event type、enum 値など、そのままではサービスが動作しない値を実行例に含めてはいけません。
+
+## チュートリアルの構成
+
+`.rst` ファイルは以下のセクションを含めます。
+
+- **タイトルと概要**: サービス名と「どういうときに便利か」を簡潔に示す。
+- **前提条件**: usacloud のインストール、対象 profile の確認、依存サービスと既存リソース、
+  必要な認証情報とその安全な指定方法。
+- **作成するリソース**: このチュートリアルで作成・確認する resource とその順序。
+- **Step 1. 実行環境の確認**: `usacloud config current` と `usacloud <service>-api --help` の例。
+- **Step 2. resource の作成**: `create` コマンドの実例。JSON 入力が必要な場合はファイル例も示す。
+- **Step 3. 動作確認**: サービスの代表的な処理を実行し、イベント、メッセージ、ログ、状態変化などの観測可能な結果を確認する。設定確認に `read` や `list` を使う場合は `-o table`（`--output-type table`）を指定し、見やすい表形式の出力例を掲載する。
+- **Step 4. クリーンアップ**: 作成した resource を削除するコマンドと、削除順の注意。
+- **まとめ**: サービスの用途と次のステップ（詳細マニュアルへのリンクなど）。
+
+## 変更停止条件
+
+次のいずれかならチュートリアル生成を止め、対象コマンドの実装または資料を先に確認します。
+
+- 対象の `*-api` コマンドが未実装、または `--help` で想定した subcommand が確認できない。
+- 許可された情報源に、サービスの用途、resource の意味、またはチュートリアルに記載しようとする事実の根拠がない。
+- 公式資料を調査してもサービスの用途、resource 間の関係、作成順を利用者向けに説明できない。
+- サービスの実動作を確認できる、安全で再現可能な end-to-end シナリオを構成できない。
+- end-to-end シナリオに必要な依存サービス、既存リソース、認証情報、または結果の確認手段を用意できない。
+- 本番環境でリソースを作成する承認が得られない。
+- 作成したリソースを安全に削除する手順が確立できない。
+
+## 参照
+
+- [生成対象コマンドの実装手順](../generate-usacloud-api-command/SKILL.md)
+- [サービスモデルと help の設計](../generate-usacloud-api-command/references/help-and-service-model.md)
+- [CLI parameter と request の写像](../generate-usacloud-api-command/references/parameter-mapping.md)
+- [resource/command の構成、登録、停止条件](../generate-usacloud-api-command/references/command-structure.md)
+- [reStructuredText チュートリアルテンプレート](assets/tutorial.rst.tmpl)
+- [reStructuredText 作成ガイドライン](references/rst-writing-guideline.md)

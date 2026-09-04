@@ -1,0 +1,23 @@
+// 許可された資料で根拠を確認したサービスモデルを help に反映するテンプレート。
+// 生成器へ入力せず、根拠のない placeholder は実装前に削除する。
+var Resource = &core.Resource{
+	Name:  "<service>-api",
+	Usage: "<one-line description of when to use the service>",
+	LongUsage: `<what problem the service solves and representative use cases>
+
+<creation order, references between resources, and important constraints>
+
+Documentation: <official manual URL>`,
+	Example: `  usacloud <service>-api <first-resource> create --help
+  usacloud <service>-api <next-resource> create --help`,
+}
+
+var ChildResource = &core.Resource{
+	Name:  "<resource>",
+	Usage: "<one-line description of what this resource defines>",
+	LongUsage: `<resource concept and its effect>
+
+<prerequisite resources, references, representative use cases, and constraints>`,
+	Example: `  usacloud <service>-api <resource> create --help
+  usacloud <service>-api <resource> list`,
+}

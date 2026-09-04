@@ -1,0 +1,49 @@
+// 手書き command のテンプレート。生成器へ入力しない。
+var operationCommand = &core.Command{
+	Name:         "<command-name>",
+	Usage:        "<one-line summary>",
+	LongUsage:    "<summary and accepted JSON fields for complex input>",
+	Example:      `<copy-pasteable inline JSON and file examples>`,
+	Category:     "<category>",
+	Order:        <order>,
+	SelectorType: core.SelectorTypeRequireSingle, // selector が必要な場合だけ
+	ColumnDefs:   defaultColumnDefs,
+	ParameterInitializer: func() interface{} {
+		return newOperationParameter()
+	},
+	Func: operationFunc, // SDK 直結 command では必須
+}
+
+type operationParameter struct {
+	cflag.CommonParameter  `cli:",squash" mapconv:"-"`
+	cflag.OutputParameter  `cli:",squash" mapconv:"-"`
+	cflag.ConfirmParameter `cli:",squash" mapconv:"-"` // mutation のみ
+
+	Name      string `cli:"name" validate:"required"`
+	ConfigJSON string `cli:"config" validate:"omitempty,json"` // nested/union の場合
+	ClearName bool   `cli:"clear-name"`                        // nullable clear の場合
+}
+
+func operationFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
+	p, ok := parameter.(*operationParameter)
+	if !ok {
+		return nil, fmt.Errorf("got invalid parameter type: %#v", parameter)
+	}
+
+	sdkClient, err := ctx.SDKClient()
+	if err != nil {
+		return nil, fmt.Errorf("create SDK client: %w", err)
+	}
+	client, err := sdkservice.NewClient(sdkClient)
+	if err != nil {
+		return nil, fmt.Errorf("create service client: %w", err)
+	}
+	op := sdkservice.NewXOp(client)
+
+	// typed fields と ConfigJSON を request に変換し、discriminator と clear を導出する。
+	result, err := op.<Method>(ctx, request)
+	if err != nil {
+		return nil, err
+	}
+	return []interface{}{result}, nil
+}

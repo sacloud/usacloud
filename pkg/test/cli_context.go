@@ -16,9 +16,11 @@ package test
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/sacloud/saclient-go"
+	sdksaclient "github.com/sacloud/sacloud-sdk-go/common/saclient"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/output"
@@ -124,4 +126,8 @@ var sa saclient.Client
 
 func (c *DummyCLIContext) Saclient() saclient.ClientAPI {
 	return &sa
+}
+
+func (c *DummyCLIContext) SDKClient() (sdksaclient.ClientAPI, error) {
+	return nil, errors.New("SDKClient is not implemented by DummyCLIContext")
 }

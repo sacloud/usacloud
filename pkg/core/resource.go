@@ -30,10 +30,12 @@ type Resource struct {
 	Aliases            []string
 	Usage              string
 	LongUsage          string
+	Example            string
 	ArgsUsage          string
 	DefaultCommandName string
 	Category           category.Category
 	Warning            string
+	Experimental       bool
 	IsGlobalResource   bool
 	PlatformName       string       // "iaas" or "phy" or "objectstorage", 空の場合はIaaSとして扱われる
 	ServiceType        reflect.Type // リソースに対応するserviceの型情報、コード生成用
@@ -46,11 +48,23 @@ type Resource struct {
 }
 
 func (r *Resource) CLICommand() *cobra.Command {
+	shortUsage := r.Usage
+	longUsage := r.Usage
+	if r.LongUsage != "" {
+		longUsage = r.LongUsage
+	}
+	if r.Experimental {
+		shortUsage = "[Experimental] " + shortUsage
+	}
+	if warning := r.experimentWarning(); warning != "" {
+		longUsage = warning + "\n\n" + longUsage
+	}
 	cmd := &cobra.Command{
 		Use:     r.Name + r.argsUsage(),
 		Aliases: r.Aliases,
-		Short:   r.Usage,
-		Long:    r.longUsage(),
+		Short:   shortUsage,
+		Long:    longUsage,
+		Example: r.Example,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			if r.DefaultCommandName == "" {
 				cmd.HelpFunc()(cmd, args)
@@ -78,13 +92,6 @@ func (r *Resource) CLICommand() *cobra.Command {
 	buildCommandsUsage(cmd, r.CategorizedCommands())
 	cmd.InheritedFlags().SortFlags = false
 	return cmd
-}
-
-func (r *Resource) longUsage() string {
-	if r.LongUsage != "" {
-		return r.LongUsage
-	}
-	return r.Usage
 }
 
 func (r *Resource) argsUsage() string {
@@ -183,6 +190,19 @@ func (r *Resource) FullName() string {
 		prefix = r.parent.FullName() + "_"
 	}
 	return prefix + r.Name
+}
+
+func (r *Resource) experimentWarning() string {
+	for resource := r; resource != nil; resource = resource.parent {
+		if resource.Experimental {
+			return fmt.Sprintf(
+				"Experimental: The %s command is provided as experimental support. Its\n"+
+					"command-line interface, behavior, and output may change without notice.",
+				resource.Name,
+			)
+		}
+	}
+	return ""
 }
 
 func (r *Resource) commandCategory(key string) *category.Category {

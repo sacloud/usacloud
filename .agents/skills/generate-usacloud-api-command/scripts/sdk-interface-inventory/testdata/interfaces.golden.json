@@ -1,0 +1,118 @@
+{
+  "schema_version": 2,
+  "package": "fixture",
+  "interfaces": [
+    {
+      "interface": "GadgetAPI",
+      "resource": "gadget",
+      "methods": [
+        {
+          "name": "Create",
+          "params": [
+            "context.Context",
+            "string"
+          ],
+          "results": [
+            "*sdkfixture.Gadget",
+            "error"
+          ],
+          "operation": "create",
+          "command": "create"
+        },
+        {
+          "name": "Delete",
+          "params": [
+            "context.Context",
+            "string"
+          ],
+          "results": [
+            "error"
+          ],
+          "operation": "delete",
+          "command": "delete"
+        },
+        {
+          "name": "List",
+          "params": [
+            "context.Context"
+          ],
+          "results": [
+            "[]sdkfixture.Gadget",
+            "error"
+          ],
+          "operation": "list",
+          "command": "list"
+        },
+        {
+          "name": "Read",
+          "params": [
+            "context.Context",
+            "string"
+          ],
+          "results": [
+            "*sdkfixture.Gadget",
+            "error"
+          ],
+          "operation": "read",
+          "command": "read"
+        }
+      ]
+    },
+    {
+      "interface": "WidgetAPI",
+      "resource": "widget",
+      "methods": [
+        {
+          "name": "Create",
+          "params": [
+            "context.Context",
+            "string"
+          ],
+          "results": [
+            "*sdkfixture.Widget",
+            "error"
+          ],
+          "operation": "create",
+          "command": "create"
+        },
+        {
+          "name": "Delete",
+          "params": [
+            "context.Context",
+            "string"
+          ],
+          "results": [
+            "error"
+          ],
+          "operation": "delete",
+          "command": "delete"
+        },
+        {
+          "name": "List",
+          "params": [
+            "context.Context"
+          ],
+          "results": [
+            "[]sdkfixture.Widget",
+            "error"
+          ],
+          "operation": "list",
+          "command": "list"
+        },
+        {
+          "name": "Read",
+          "params": [
+            "context.Context",
+            "string"
+          ],
+          "results": [
+            "*sdkfixture.Widget",
+            "error"
+          ],
+          "operation": "read",
+          "command": "read"
+        }
+      ]
+    }
+  ]
+}

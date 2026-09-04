@@ -1,0 +1,32 @@
+{
+  "schema_version": 2,
+  "package": "github.com/sacloud/sacloud-sdk-go/api/<service>",
+  "interfaces": [
+    {
+      "interface": "<ServiceAPI>",
+      "resource": "<singular-kebab-cli-resource>",
+      "methods": [
+        {
+          "name": "Read",
+          "params": ["context.Context", "string"],
+          "results": ["*Resource", "error"],
+          "operation": "read",
+          "command": "read"
+        },
+        {
+          "name": "InternalHelper",
+          "params": ["context.Context"],
+          "results": ["error"],
+          "operation": "action",
+          "command": "internal-helper"
+        }
+      ],
+      "excluded": [
+        {
+          "method": "InternalHelper",
+          "reason": "CLI resource operation ではないため公開しない"
+        }
+      ]
+    }
+  ]
+}

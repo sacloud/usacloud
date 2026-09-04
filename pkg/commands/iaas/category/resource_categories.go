@@ -96,6 +96,12 @@ var (
 		Order:       120,
 	}
 
+	ResourceCategoryAPI = category.Category{
+		Key:         "api",
+		DisplayName: "API Commands",
+		Order:       125,
+	}
+
 	ResourceCategoryMisc = category.Category{
 		Key:         "misc",
 		DisplayName: "Other services",
@@ -134,6 +140,7 @@ var (
 		ResourceCategoryBilling,
 		ResourceCategoryLab,
 		ResourceCategoryWebAccel,
+		ResourceCategoryAPI,
 		ResourceCategoryMisc,
 		ResourceCategoryZone,
 		ResourceCategoryInformation,
