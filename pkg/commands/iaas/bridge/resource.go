@@ -17,7 +17,7 @@ package bridge
 import (
 	"reflect"
 
-	"github.com/sacloud/iaas-service-go/bridge"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/bridge"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )

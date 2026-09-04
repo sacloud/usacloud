@@ -15,10 +15,12 @@
 package config
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
+	"os"
 
-	"github.com/sacloud/api-client-go/profile"
+	"github.com/sacloud/sacloud-sdk-go/common/saclient"
 	"github.com/spf13/pflag"
 )
 
@@ -26,23 +28,42 @@ func (o *Config) loadFromProfile(flags *pflag.FlagSet, errW io.Writer) {
 	if flags.Changed("profile") {
 		v, err := flags.GetString("profile")
 		if err != nil {
-			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s", "profile", err)
+			fmt.Fprintf(errW, "[WARN] reading value of %q flag is failed: %s\n", "profile", err)
 			return
 		}
 		o.Profile = v
 	}
 
+	op, err := saclient.NewProfileOp(os.Environ())
+	if err != nil {
+		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s\n", o.Profile, err)
+		return
+	}
+
 	profileName := o.Profile
 	if profileName == "" {
-		current, err := profile.CurrentName()
-		if err != nil {
-			fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err)
-			return
+		current, err := op.GetCurrentName()
+		if err != nil || current == "" {
+			// currentファイルが未作成の場合はデフォルトプロファイルとして扱う
+			current = DefaultProfileName
 		}
 		profileName = current
 	}
-	if err := profile.Load(profileName, o); err != nil {
-		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err)
+
+	loaded, err := op.Read(profileName)
+	if err != nil {
+		if profileName != DefaultProfileName {
+			fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s\n", profileName, err)
+		}
+		o.Profile = profileName
+		return
+	}
+	// プロファイルの内容(JSON)をConfigへ反映する
+	if buf, err := json.Marshal(loaded.Attributes); err != nil {
+		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s\n", profileName, err)
+		return
+	} else if err := json.Unmarshal(buf, o); err != nil {
+		fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s\n", profileName, err)
 		return
 	}
 	o.Profile = profileName

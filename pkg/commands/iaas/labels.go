@@ -15,7 +15,7 @@
 package iaas
 
 import (
-	"github.com/sacloud/iaas-api-go/accessor"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/accessor"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 

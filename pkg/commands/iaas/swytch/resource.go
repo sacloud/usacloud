@@ -17,7 +17,7 @@ package swytch
 import (
 	"reflect"
 
-	"github.com/sacloud/iaas-service-go/swytch"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/swytch"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )

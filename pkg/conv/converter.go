@@ -15,7 +15,7 @@
 package conv
 
 import (
-	"github.com/sacloud/iaas-api-go/mapconv"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/mapconv"
 	"github.com/sacloud/usacloud/pkg/vdef"
 )
 

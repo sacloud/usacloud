@@ -37,7 +37,7 @@ func (r *Resource) ServiceRepositoryName() string {
 	case "webaccel":
 		return "github.com/sacloud/webaccel-service-go"
 	case "iaas", "":
-		return "github.com/sacloud/iaas-service-go"
+		return "github.com/sacloud/sacloud-sdk-go/service/iaas"
 	}
 	panic(fmt.Sprintf("unsupported platform name: %s", r.PlatformName))
 }

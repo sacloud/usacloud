@@ -15,9 +15,9 @@
 package mobilegateway
 
 import (
-	"github.com/sacloud/iaas-api-go"
-	"github.com/sacloud/iaas-service-go/mobilegateway"
-	"github.com/sacloud/packages-go/pointer"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas"
+	"github.com/sacloud/sacloud-sdk-go/common/packages/pointer"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/mobilegateway"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"

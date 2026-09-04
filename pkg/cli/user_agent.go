@@ -18,12 +18,12 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/sacloud/iaas-service-go"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas"
 	"github.com/sacloud/usacloud/pkg/version"
 )
 
 var UserAgent = fmt.Sprintf(
-	"Usacloud/v%s (%s/%s; +https://github.com/sacloud/usacloud) sacloud/iaas-service-go/v%s",
+	"Usacloud/v%s (%s/%s; +https://github.com/sacloud/usacloud) sacloud/sacloud-sdk-go/service/iaas/v%s",
 	version.Version,
 	runtime.GOOS,
 	runtime.GOARCH,

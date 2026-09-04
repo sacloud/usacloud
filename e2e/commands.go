@@ -18,7 +18,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/sacloud/packages-go/e2e"
+	"github.com/sacloud/sacloud-sdk-go/common/packages/e2e"
 )
 
 func UsacloudRun(t *testing.T, args ...string) error {

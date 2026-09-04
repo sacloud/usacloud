@@ -17,7 +17,7 @@ package subnet
 import (
 	"reflect"
 
-	"github.com/sacloud/iaas-service-go/subnet"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/subnet"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )
