@@ -1,6 +1,6 @@
 module github.com/sacloud/usacloud
 
-go 1.25.8
+go 1.26.8
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
