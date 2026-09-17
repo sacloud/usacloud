@@ -676,7 +676,7 @@ func saveTestProfile(t *testing.T, name string, v *ConfigValue) error {
 	if err := os.MkdirAll(filepath.Dir(path), 0o700); err != nil {
 		return err
 	}
-	data, err := json.MarshalIndent(v, "", "  ")
+	data, err := json.MarshalIndent(v, "", "  ") // #nosec G117
 	if err != nil {
 		return err
 	}
