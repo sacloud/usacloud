@@ -43,9 +43,9 @@ func (o *Config) loadFromProfile(flags *pflag.FlagSet, errW io.Writer) {
 	profileName := o.Profile
 	if profileName == "" {
 		current, err := op.GetCurrentName()
-		if err != nil || current == "" {
-			// currentファイルが未作成の場合はデフォルトプロファイルとして扱う
-			current = DefaultProfileName
+		if err != nil {
+			fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err)
+			return
 		}
 		profileName = current
 	}
