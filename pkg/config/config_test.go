@@ -416,11 +416,12 @@ func TestLoadConfigValue(t *testing.T) {
 				ConfigValue: ConfigValue{
 					Zones: defaultZones,
 				},
-				Profile: "default",
+				Profile: "",
 			},
+			wantWarn: `[WARN] loading profile "" is failed:`,
 		},
 		{
-			name: "default profile exists",
+			name: "default profile exists without current",
 			env:  map[string]string{},
 			setup: func(t *testing.T, dir string) {
 				require.NoError(t, saveTestProfile(t, "default", &ConfigValue{
@@ -429,11 +430,11 @@ func TestLoadConfigValue(t *testing.T) {
 			},
 			want: Config{
 				ConfigValue: ConfigValue{
-					AccessToken: "default-token",
-					Zones:       defaultZones,
+					Zones: defaultZones,
 				},
-				Profile: "default",
+				Profile: "",
 			},
+			wantWarn: `[WARN] loading profile "" is failed:`,
 		},
 		{
 			name: "--profile flag",
