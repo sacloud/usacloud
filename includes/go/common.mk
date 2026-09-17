@@ -42,7 +42,7 @@ dev-tools:
 	$(GO) install github.com/client9/misspell/cmd/misspell@latest
 	$(GO) install github.com/google/go-licenses@v1.0.0
 	$(GO) install github.com/rhysd/actionlint/cmd/actionlint@latest
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $$(go env GOPATH)/bin $(GOLANG_CI_LINT_VERSION)
+	curl -sSfL https://golangci-lint.run/install.sh | sh -s -- -b $$(go env GOPATH)/bin $(GOLANG_CI_LINT_VERSION)
 
 .PHONY: goimports
 goimports: fmt
