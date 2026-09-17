@@ -17,8 +17,8 @@
 package privatehost
 
 import (
-	"github.com/sacloud/iaas-api-go/types"
-	"github.com/sacloud/packages-go/pointer"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/types"
+	"github.com/sacloud/sacloud-sdk-go/common/packages/pointer"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"

@@ -17,8 +17,8 @@ package examples
 import (
 	"strings"
 
-	"github.com/sacloud/iaas-api-go/types"
-	"github.com/sacloud/packages-go/pointer"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/types"
+	"github.com/sacloud/sacloud-sdk-go/common/packages/pointer"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/vdef"
 )

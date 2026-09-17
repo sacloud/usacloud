@@ -21,14 +21,15 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/sacloud/api-client-go/profile"
+	"github.com/sacloud/sacloud-sdk-go/common/saclient"
 )
 
 func NewVersionReleased() (*ReleaseInfo, error) {
-	configDir, err := profile.ConfigDir()
+	op, err := saclient.NewProfileOp(os.Environ())
 	if err != nil {
 		return nil, err
 	}
+	configDir := op.Dir()
 	if err := os.MkdirAll(configDir, 0700); err != nil {
 		return nil, err
 	}

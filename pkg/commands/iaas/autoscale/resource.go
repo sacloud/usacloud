@@ -17,7 +17,7 @@ package autoscale
 import (
 	"reflect"
 
-	"github.com/sacloud/iaas-service-go/autoscale"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/autoscale"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )

@@ -17,7 +17,7 @@ package esme
 import (
 	"reflect"
 
-	"github.com/sacloud/iaas-service-go/esme"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/esme"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )

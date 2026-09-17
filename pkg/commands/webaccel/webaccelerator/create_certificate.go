@@ -17,11 +17,11 @@ package webaccelerator
 import (
 	"fmt"
 
+	"github.com/sacloud/sacloud-sdk-go/api/webaccel"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/util"
-	"github.com/sacloud/webaccel-api-go"
 )
 
 var createCertificateCommand = &core.Command{

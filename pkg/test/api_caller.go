@@ -19,10 +19,9 @@ import (
 	"os"
 	"sync"
 
-	client "github.com/sacloud/api-client-go"
-	"github.com/sacloud/iaas-api-go"
-	"github.com/sacloud/iaas-api-go/helper/api"
-	"github.com/sacloud/packages-go/envvar"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/helper/api"
+	"github.com/sacloud/sacloud-sdk-go/common/packages/envvar"
 	"github.com/sacloud/usacloud/pkg/version"
 )
 
@@ -32,7 +31,7 @@ var apiCallerInitOnce sync.Once
 func APICaller() iaas.APICaller {
 	apiCallerInitOnce.Do(func() {
 		apiCaller = api.NewCallerWithOptions(&api.CallerOptions{
-			Options: &client.Options{
+			Options: &api.ClientOptions{
 				AccessToken:          envvar.StringFromEnvMulti([]string{"SAKURA_ACCESS_TOKEN", "SAKURACLOUD_ACCESS_TOKEN"}, ""),
 				AccessTokenSecret:    envvar.StringFromEnvMulti([]string{"SAKURA_ACCESS_TOKEN_SECRET", "SAKURACLOUD_ACCESS_TOKEN_SECRET"}, ""),
 				HttpRequestRateLimit: 5,

@@ -15,7 +15,7 @@
 package util
 
 import (
-	"github.com/sacloud/iaas-api-go/types"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/types"
 )
 
 func UniqIDs(elements []types.ID) []types.ID {

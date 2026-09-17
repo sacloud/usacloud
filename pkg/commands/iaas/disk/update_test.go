@@ -19,9 +19,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sacloud/iaas-api-go/types"
-	"github.com/sacloud/iaas-service-go/disk"
-	"github.com/sacloud/packages-go/pointer"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/types"
+	"github.com/sacloud/sacloud-sdk-go/common/packages/pointer"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/disk"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/conv"
 	"github.com/sacloud/usacloud/pkg/validate"

@@ -18,7 +18,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/sacloud/saclient-go"
+	"github.com/sacloud/sacloud-sdk-go/common/saclient"
 	"github.com/spf13/cobra"
 )
 

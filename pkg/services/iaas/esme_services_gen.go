@@ -17,8 +17,8 @@
 package generated_services
 
 import (
-	"github.com/sacloud/iaas-api-go"
-	service "github.com/sacloud/iaas-service-go/esme"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas"
+	service "github.com/sacloud/sacloud-sdk-go/service/iaas/esme"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/conv"
 	"github.com/sacloud/usacloud/pkg/services/registry"

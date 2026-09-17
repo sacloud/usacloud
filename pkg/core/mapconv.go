@@ -14,7 +14,7 @@
 
 package core
 
-import "github.com/sacloud/iaas-api-go/mapconv"
+import "github.com/sacloud/sacloud-sdk-go/api/iaas/mapconv"
 
 var mapconvDecoder = mapconv.Decoder{Config: &mapconv.DecoderConfig{TagName: "temp"}}
 

@@ -17,8 +17,8 @@ package containerregistry
 import (
 	"fmt"
 
-	"github.com/sacloud/iaas-api-go/types"
-	"github.com/sacloud/iaas-service-go/containerregistry/builder"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/types"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/containerregistry/builder"
 	"github.com/sacloud/usacloud/pkg/cflag"
 	"github.com/sacloud/usacloud/pkg/cli"
 	"github.com/sacloud/usacloud/pkg/core"

@@ -17,7 +17,7 @@ package output
 import (
 	"sort"
 
-	"github.com/sacloud/iaas-api-go/accessor"
+	"github.com/sacloud/sacloud-sdk-go/api/iaas/accessor"
 )
 
 type Content struct {

@@ -17,7 +17,7 @@ package nfs
 import (
 	"reflect"
 
-	"github.com/sacloud/iaas-service-go/nfs"
+	"github.com/sacloud/sacloud-sdk-go/service/iaas/nfs"
 	"github.com/sacloud/usacloud/pkg/commands/iaas/category"
 	"github.com/sacloud/usacloud/pkg/core"
 )
