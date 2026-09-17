@@ -19,7 +19,7 @@ COPYRIGHT_YEAR          ?= 2023
 COPYRIGHT_FILES         ?= $$(find . -name "*.go" -print | grep -v "/vendor/")
 GO                      ?= go
 DEFAULT_GOALS           ?= fmt set-license go-licenses-check goimports lint test
-GOLANG_CI_LINT_VERSION  ?= v2.5.0
+GOLANG_CI_LINT_VERSION  ?= v2.13.2
 TEXTLINT_ACTION_VERSION ?= v0.1.0
 
 .DEFAULT_GOAL = default
