@@ -53,5 +53,5 @@ func useFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	return nil, op.SetCurrentName(p.Name)
+	return nil, useProfile(op, p.Name)
 }

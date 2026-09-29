@@ -132,12 +132,8 @@ func doEditProfile(
 	}
 
 	if p.Name == "" {
-		current, err := op.GetCurrentName()
-		if errors.Is(err, fs.ErrNotExist) {
-			// currentも存在せず、`--name`も未指定のパターン
-			// `default`を採用する
-			current = "default"
-		} else if err != nil {
+		current, err := currentOrDefault(op)
+		if err != nil {
 			return nil, err
 		}
 		p.Name = current
@@ -419,7 +415,7 @@ func doEditProfile(
 	wrote := persisted.Pathname()
 	msgWriter.Fprintf(out, color.New(color.FgHiGreen), "\nWritten your settings to %s\n", wrote)
 
-	current, err := op.GetCurrentName()
+	current, err := currentOrDefault(op)
 	if err != nil {
 		// カレントが読めなければデフォルト値にフォールバック
 		current = ""
@@ -432,7 +428,7 @@ func doEditProfile(
 				return nil, nil
 			}
 		}
-		return nil, op.SetCurrentName(p.Name)
+		return nil, useProfile(op, p.Name)
 	}
 	return nil, nil
 }
