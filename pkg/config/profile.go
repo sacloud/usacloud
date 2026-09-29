@@ -16,8 +16,10 @@ package config
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
+	"io/fs"
 	"os"
 
 	"github.com/sacloud/sacloud-sdk-go/common/saclient"
@@ -43,11 +45,20 @@ func (o *Config) loadFromProfile(flags *pflag.FlagSet, errW io.Writer) {
 	profileName := o.Profile
 	if profileName == "" {
 		current, err := op.GetCurrentName()
-		if err != nil {
+		switch {
+		case errors.Is(err, fs.ErrNotExist):
+			// プロファイルディレクトリまたは current ファイルが存在しない場合は
+			// default プロファイルを使用する
+			profileName = DefaultProfileName
+		case err != nil:
 			fmt.Fprintf(errW, "[WARN] loading profile %q is failed: %s", profileName, err)
 			return
+		case current == "":
+			// current ファイルが空または空白のみの場合も default を使用する
+			profileName = DefaultProfileName
+		default:
+			profileName = current
 		}
-		profileName = current
 	}
 
 	loaded, err := op.Read(profileName)

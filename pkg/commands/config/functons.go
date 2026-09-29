@@ -28,7 +28,7 @@ func profileCompletion(cmd *cobra.Command, args []string, toComplete string) ([]
 		return nil, cobra.ShellCompDirectiveError
 	}
 
-	names, err := op.List()
+	names, err := listWithDefault(op)
 	if err != nil {
 		return nil, cobra.ShellCompDirectiveError
 	}

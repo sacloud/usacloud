@@ -18,6 +18,7 @@ import (
 	"fmt"
 
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -52,6 +53,11 @@ func useFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	op, err := ctx.Saclient().ProfileOp()
 	if err != nil {
 		return nil, err
+	}
+	if p.Name == config.DefaultProfileName {
+		if err := ensureDefault(op); err != nil {
+			return nil, err
+		}
 	}
 	return nil, op.SetCurrentName(p.Name)
 }

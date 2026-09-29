@@ -53,7 +53,7 @@ func listFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	names, err := op.List()
+	names, err := listWithDefault(op)
 	if err != nil {
 		return nil, err
 	}

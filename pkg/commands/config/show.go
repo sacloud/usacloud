@@ -16,9 +16,13 @@ package config
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io/fs"
 
+	"github.com/sacloud/sacloud-sdk-go/common/saclient"
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -57,7 +61,11 @@ func showFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	}
 	profile, err := op.Read(p.Name)
 	if err != nil {
-		return nil, err
+		if p.Name == config.DefaultProfileName && errors.Is(err, fs.ErrNotExist) {
+			profile = &saclient.Profile{Name: p.Name, Attributes: map[string]any{}}
+		} else {
+			return nil, err
+		}
 	}
 
 	data, err := json.MarshalIndent(profile.Attributes, "", "    ")
