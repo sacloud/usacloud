@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.22.9](https://github.com/sacloud/usacloud/compare/v1.22.8...v1.22.9) - 2026-09-30
+
+### 🚀 Changes
+- Fix compatibility with latest golangci-lint by @tokuhirom in https://github.com/sacloud/usacloud/pull/1328
+- Improve REST command help by @tokuhirom in https://github.com/sacloud/usacloud/pull/1327
+- docs: add repository agent instructions by @tokuhirom in https://github.com/sacloud/usacloud/pull/1326
+- release.yml に categories 指定を追加 by @tokuhirom in https://github.com/sacloud/usacloud/pull/1332
+- bump to go 1.27.1, golangci-lint v2.13.2 by @tokuhirom in https://github.com/sacloud/usacloud/pull/1335
+### 📦 Dependency Updates
+- ci: Bump docker/login-action from 4.4.0 to 4.6.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1322
+- go: Bump golang.org/x/crypto from 0.53.0 to 0.54.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1302
+
 ## [v1.22.8](https://github.com/sacloud/usacloud/compare/v1.22.7...v1.22.8) - 2026-07-24
 
 - [CI] explicit grant to sacloud bot for homebrew-usacloud by @shyouhei in https://github.com/sacloud/usacloud/pull/1318
