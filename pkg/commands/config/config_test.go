@@ -17,6 +17,7 @@ package config
 import (
 	"bytes"
 	"io"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
@@ -106,6 +107,15 @@ func setupTestClient(t *testing.T) (string, saclient.ClientAPI) {
 	require.NoError(t, err)
 	require.NoError(t, op.Create(&saclient.Profile{Name: "default"}))
 	require.NoError(t, op.SetCurrentName("default"))
+	return dir, &client
+}
+
+func setupTestClientWithoutDefault(t *testing.T) (string, saclient.ClientAPI) {
+	t.Helper()
+	dir := t.TempDir()
+	var client saclient.Client
+	require.NoError(t, client.SetEnviron([]string{"SAKURACLOUD_PROFILE_DIR=" + dir}))
+	require.NoError(t, client.Populate())
 	return dir, &client
 }
 
@@ -468,5 +478,174 @@ func TestConfigCommandsWithBrokenCurrent(t *testing.T) {
 		current, err := op.GetCurrentName()
 		require.NoError(t, err)
 		require.Equal(t, "foo", current)
+	})
+}
+
+// v1.20.0 より前と同様に、default プロファイルは設定ファイルが無くても存在するものとして扱う
+func TestProfileCompatibilityWithoutDefault(t *testing.T) {
+	requireNoCurrentFile := func(t *testing.T, dir string) {
+		t.Helper()
+		_, err := os.Stat(filepath.Join(dir, "current"))
+		require.ErrorIs(t, err, fs.ErrNotExist)
+	}
+	requireNoDefaultFile := func(t *testing.T, dir string) {
+		t.Helper()
+		_, err := os.Stat(filepath.Join(dir, "default", "config.json"))
+		require.ErrorIs(t, err, fs.ErrNotExist)
+	}
+
+	t.Run("current falls back to default when current file is missing", func(t *testing.T) {
+		_, client := setupTestClientWithoutDefault(t)
+		ctx := newTestContext(t, client)
+		_, err := currentFunc(ctx, nil)
+		require.NoError(t, err)
+		require.Equal(t, "default\n", ctx.io.(*testIO).out.String())
+	})
+
+	t.Run("current falls back to default when current file is empty", func(t *testing.T) {
+		dir, client := setupTestClientWithoutDefault(t)
+		require.NoError(t, os.WriteFile(filepath.Join(dir, "current"), []byte(" \n"), 0o600))
+
+		ctx := newTestContext(t, client)
+		_, err := currentFunc(ctx, nil)
+		require.NoError(t, err)
+		require.Equal(t, "default\n", ctx.io.(*testIO).out.String())
+	})
+
+	t.Run("list always includes default first", func(t *testing.T) {
+		_, client := setupTestClientWithoutDefault(t)
+		op, err := client.ProfileOp()
+		require.NoError(t, err)
+		createTestProfile(t, op, "aaa", "token", "secret")
+		createTestProfile(t, op, "zzz", "token", "secret")
+
+		ctx := newTestContext(t, client)
+		_, err = listFunc(ctx, nil)
+		require.NoError(t, err)
+		require.Equal(t, "default\naaa\nzzz\n", ctx.io.(*testIO).out.String())
+
+		// default の設定ファイルがあっても先頭
+		createTestProfile(t, op, "default", "token", "secret")
+		ctx = newTestContext(t, client)
+		_, err = listFunc(ctx, nil)
+		require.NoError(t, err)
+		require.Equal(t, "default\naaa\nzzz\n", ctx.io.(*testIO).out.String())
+	})
+
+	t.Run("show default without file returns empty attributes", func(t *testing.T) {
+		_, client := setupTestClientWithoutDefault(t)
+		ctx := newTestContext(t, client)
+		p := &showParameter{ProfileParameter: ProfileParameter{Name: "default"}}
+		require.NoError(t, showCommand.ValidateFunc(ctx, p))
+		_, err := showFunc(ctx, p)
+		require.NoError(t, err)
+		require.Equal(t, "{}\n", ctx.io.(*testIO).out.String())
+	})
+
+	t.Run("path default without file returns path", func(t *testing.T) {
+		dir, client := setupTestClientWithoutDefault(t)
+		ctx := newTestContext(t, client)
+		p := &pathParameter{ProfileParameter: ProfileParameter{Name: "default"}}
+		require.NoError(t, pathCommand.ValidateFunc(ctx, p))
+		_, err := pathFunc(ctx, p)
+		require.NoError(t, err)
+		require.Equal(t, filepath.Join(dir, "default", "config.json")+"\n", ctx.io.(*testIO).out.String())
+	})
+
+	t.Run("use default without file removes current and does not create default", func(t *testing.T) {
+		dir, client := setupTestClientWithoutDefault(t)
+		op, err := client.ProfileOp()
+		require.NoError(t, err)
+		createTestProfile(t, op, "foo", "token", "secret")
+		require.NoError(t, op.SetCurrentName("foo"))
+
+		ctx := newTestContext(t, client)
+		p := &useParameter{ProfileParameter: ProfileParameter{Name: "default"}}
+		require.NoError(t, useCommand.ValidateFunc(ctx, p))
+		_, err = useFunc(ctx, p)
+		require.NoError(t, err)
+
+		requireNoCurrentFile(t, dir)
+		requireNoDefaultFile(t, dir)
+		current, err := currentOrDefault(op)
+		require.NoError(t, err)
+		require.Equal(t, "default", current)
+	})
+
+	t.Run("use default with file writes current", func(t *testing.T) {
+		_, client := setupTestClientWithoutDefault(t)
+		op, err := client.ProfileOp()
+		require.NoError(t, err)
+		createTestProfile(t, op, "default", "token", "secret")
+		createTestProfile(t, op, "foo", "token", "secret")
+		require.NoError(t, op.SetCurrentName("foo"))
+
+		ctx := newTestContext(t, client)
+		p := &useParameter{ProfileParameter: ProfileParameter{Name: "default"}}
+		require.NoError(t, useCommand.ValidateFunc(ctx, p))
+		_, err = useFunc(ctx, p)
+		require.NoError(t, err)
+
+		current, err := op.GetCurrentName()
+		require.NoError(t, err)
+		require.Equal(t, "default", current)
+	})
+
+	t.Run("delete current profile resets to default without creating default", func(t *testing.T) {
+		dir, client := setupTestClientWithoutDefault(t)
+		op, err := client.ProfileOp()
+		require.NoError(t, err)
+		createTestProfile(t, op, "foo", "token", "secret")
+		require.NoError(t, op.SetCurrentName("foo"))
+
+		ctx := newTestContext(t, client)
+		p := &deleteParameter{
+			ProfileParameter: ProfileParameter{Name: "foo"},
+			ConfirmParameter: cflag.ConfirmParameter{AssumeYes: true},
+		}
+		require.NoError(t, deleteCommand.ValidateFunc(ctx, p))
+		_, err = deleteFunc(ctx, p)
+		require.NoError(t, err)
+
+		requireNoCurrentFile(t, dir)
+		requireNoDefaultFile(t, dir)
+	})
+
+	t.Run("delete current default profile removes it", func(t *testing.T) {
+		dir, client := setupTestClientWithoutDefault(t)
+		op, err := client.ProfileOp()
+		require.NoError(t, err)
+		createTestProfile(t, op, "default", "token", "secret")
+		require.NoError(t, op.SetCurrentName("default"))
+
+		ctx := newTestContext(t, client)
+		p := &deleteParameter{
+			ProfileParameter: ProfileParameter{Name: "default"},
+			ConfirmParameter: cflag.ConfirmParameter{AssumeYes: true},
+		}
+		require.NoError(t, deleteCommand.ValidateFunc(ctx, p))
+		_, err = deleteFunc(ctx, p)
+		require.NoError(t, err)
+
+		requireNoCurrentFile(t, dir)
+		requireNoDefaultFile(t, dir)
+	})
+
+	t.Run("edit without current creates default profile", func(t *testing.T) {
+		_, client := setupTestClientWithoutDefault(t)
+		ctx := newTestContext(t, client)
+		p := &EditParameter{
+			AccessToken:       "token",
+			AccessTokenSecret: "secret",
+			Zone:              "is1b",
+		}
+		_, err := editProfile(ctx, p)
+		require.NoError(t, err)
+
+		op, err := client.ProfileOp()
+		require.NoError(t, err)
+		profile, err := op.Read("default")
+		require.NoError(t, err)
+		require.Equal(t, "token", profile.Attributes["AccessToken"])
 	})
 }

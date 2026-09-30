@@ -51,7 +51,7 @@ func validateProfileParameter(ctx cli.Context, parameter interface{}) error {
 		return err
 	}
 	if p.GetName() == "" {
-		current, err := op.GetCurrentName()
+		current, err := currentOrDefault(op)
 		if err != nil {
 			return err
 		}
@@ -61,7 +61,7 @@ func validateProfileParameter(ctx cli.Context, parameter interface{}) error {
 		return err
 	}
 
-	profiles, err := op.List()
+	profiles, err := listWithDefault(op)
 	if err != nil {
 		return err
 	}
