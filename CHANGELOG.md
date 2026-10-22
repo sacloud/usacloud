@@ -1,5 +1,25 @@
 # Changelog
 
+## [v1.22.9](https://github.com/sacloud/usacloud/compare/v1.22.8...v1.22.9) - 2026-10-22
+
+### 🚀 Changes
+- Fix compatibility with latest golangci-lint by @tokuhirom in https://github.com/sacloud/usacloud/pull/1328
+- Improve REST command help by @tokuhirom in https://github.com/sacloud/usacloud/pull/1327
+- docs: add repository agent instructions by @tokuhirom in https://github.com/sacloud/usacloud/pull/1326
+- release.yml に categories 指定を追加 by @tokuhirom in https://github.com/sacloud/usacloud/pull/1332
+- bump to go 1.27.1, golangci-lint v2.13.2 by @tokuhirom in https://github.com/sacloud/usacloud/pull/1335
+- Bump Go version to 1.27.3 by @tokuhirom in https://github.com/sacloud/usacloud/pull/1342
+### 📦 Dependency Updates
+- ci: Bump docker/login-action from 4.4.0 to 4.6.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1322
+- go: Bump golang.org/x/crypto from 0.53.0 to 0.54.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1302
+- ci: Bump docker/build-push-action from 7.3.0 to 7.4.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1337
+- ci: Bump Songmu/tagpr from 1.20.1 to 1.21.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1338
+- go: Bump github.com/stretchr/testify from 1.11.1 to 1.12.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1339
+- ci: Bump actions/setup-go from 6.5.0 to 7.0.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1308
+- ci: Bump actions/checkout from 7.0.0 to 7.0.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1309
+- ci: Bump docker/setup-buildx-action from 4.2.0 to 4.4.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1340
+- go: Bump github.com/mattn/go-isatty from 0.0.22 to 0.0.24 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1315
+
 ## [v1.22.8](https://github.com/sacloud/usacloud/compare/v1.22.7...v1.22.8) - 2026-07-24
 
 - [CI] explicit grant to sacloud bot for homebrew-usacloud by @shyouhei in https://github.com/sacloud/usacloud/pull/1318
