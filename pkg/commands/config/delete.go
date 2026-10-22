@@ -56,7 +56,7 @@ func deleteFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		return nil, err
 	}
 
-	current, err := op.GetCurrentName()
+	current, err := currentOrDefault(op)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func deleteFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		return nil, err
 	}
 	if current == p.Name {
-		if err := op.SetCurrentName("default"); err != nil {
+		if err := useDefault(op); err != nil {
 			return nil, err
 		}
 	}

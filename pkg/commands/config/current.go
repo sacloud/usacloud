@@ -45,7 +45,7 @@ func currentFunc(ctx cli.Context, _ interface{}) ([]interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	current, err := op.GetCurrentName()
+	current, err := currentOrDefault(op)
 	if err != nil {
 		return nil, err
 	}

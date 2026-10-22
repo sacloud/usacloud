@@ -19,6 +19,7 @@ import (
 	"io"
 
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/core"
 	"github.com/sacloud/usacloud/pkg/term"
 )
@@ -53,12 +54,12 @@ func listFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	names, err := op.List()
+	names, err := listWithDefault(op)
 	if err != nil {
 		return nil, err
 	}
-	var current string
-	if _, name := client.ProfileName(); name != nil {
+	current := config.DefaultProfileName
+	if _, name := client.ProfileName(); name != nil && *name != "" {
 		current = *name
 	}
 

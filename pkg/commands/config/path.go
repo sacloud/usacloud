@@ -15,9 +15,13 @@
 package config
 
 import (
+	"errors"
 	"fmt"
+	"io/fs"
+	"path/filepath"
 
 	"github.com/sacloud/usacloud/pkg/cli"
+	"github.com/sacloud/usacloud/pkg/config"
 	"github.com/sacloud/usacloud/pkg/core"
 )
 
@@ -55,10 +59,17 @@ func pathFunc(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 		return nil, err
 	}
 	profile, err := op.Read(p.Name)
+	var profilePath string
 	if err != nil {
-		return nil, err
+		if p.Name == config.DefaultProfileName && errors.Is(err, fs.ErrNotExist) {
+			// default プロファイルが存在しない場合でも、そのパスを返す
+			profilePath = filepath.Join(op.Dir(), p.Name, "config.json")
+		} else {
+			return nil, err
+		}
+	} else {
+		profilePath = profile.Pathname()
 	}
-	profilePath := profile.Pathname()
 	out := ctx.IO().Out()
 	fmt.Fprintln(out, profilePath)
 	return nil, nil
