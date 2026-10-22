@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.22.10](https://github.com/sacloud/usacloud/compare/v1.22.9...v1.22.10) - 2026-10-22
+
+### 📦 Dependency Updates
+- go: Bump github.com/sacloud/packages-go from 0.1.0 to 0.1.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1323
+- go: Bump github.com/sacloud/iaas-service-go from 1.25.1 to 1.25.2 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1324
+
 ## [v1.22.9](https://github.com/sacloud/usacloud/compare/v1.22.8...v1.22.9) - 2026-10-22
 
 ### 🚀 Changes
