@@ -26,7 +26,7 @@ var waitUntilShutdownCommand = &core.Command{
 	Order:        20,
 	SelectorType: core.SelectorTypeRequireMulti,
 
-	ServiceFuncAltName: "WaitBoot",
+	ServiceFuncAltName: "WaitShutdown",
 
 	ParameterInitializer: func() interface{} {
 		return newWaitUntilShutdownParameter()

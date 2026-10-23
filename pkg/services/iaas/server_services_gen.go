@@ -605,7 +605,7 @@ func init() {
 		func(ctx cli.Context, parameter interface{}) ([]interface{}, error) {
 			svc := service.New(ctx.Client().(iaas.APICaller))
 
-			req := &service.WaitBootRequest{}
+			req := &service.WaitShutdownRequest{}
 			if err := conv.ConvertTo(parameter, req); err != nil {
 				return nil, err
 			}
@@ -613,7 +613,7 @@ func init() {
 				return nil, err
 			}
 
-			err := svc.WaitBootWithContext(ctx, req)
+			err := svc.WaitShutdownWithContext(ctx, req)
 			if err != nil {
 				return nil, err
 			}
