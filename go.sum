@@ -176,8 +176,8 @@ github.com/sacloud/packages-go v0.1.1 h1:hVVk6Dfo9UJFX7wkmhr7iS0r+hHg3c8dHDGCX1z
 github.com/sacloud/packages-go v0.1.1/go.mod h1:8Q8w/DqzhN3f7iCEEugdtArsoWu3CDy3MDk23tU8cT4=
 github.com/sacloud/packages-go/e2e v0.0.0-20260423012125-3b04540c85d0 h1:Rvih7Rvk+YzOOA40AKer/qGSdIRG/9rdmbe15jm7dbo=
 github.com/sacloud/packages-go/e2e v0.0.0-20260423012125-3b04540c85d0/go.mod h1:j1e31tY4XNhx8e5LA0RRPaEUQf0Ai7Sa9BS2haVVXzQ=
-github.com/sacloud/saclient-go v0.4.0 h1:d4CqjKDU0muPVukZ2qGB9Me6ANEcMg73z5tIqXIyGWA=
-github.com/sacloud/saclient-go v0.4.0/go.mod h1:5CqxypkPgUW6qZxBGRdKX3I+mVx/OWbbFrrRm6LBNeE=
+github.com/sacloud/saclient-go v0.4.1 h1:VwGUwb8w7dyiCP57fkViGTTuelsMde7v3tKe2Wg1sF0=
+github.com/sacloud/saclient-go v0.4.1/go.mod h1:T2tdgcwXvB6z4TXDyM1rm4Kv/LsFMEaGOBPsdqyC1XE=
 github.com/sacloud/webaccel-api-go v1.5.1 h1:2MoRel2upO68BTwMMCQ0dOEsP+vaKc0zGRKMU4ymXeE=
 github.com/sacloud/webaccel-api-go v1.5.1/go.mod h1:EWtVm9FQTgjVvNBm65XeW9bmDdpv4BhGXFco/SYckcQ=
 github.com/segmentio/asm v1.2.1 h1:DTNbBqs57ioxAD4PrArqftgypG4/qNpXoJx8TVXxPR0=
