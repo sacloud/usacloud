@@ -51,7 +51,7 @@ var requestCommand = &core.Command{
 
 type requestParameter struct {
 	Zone        string `cli:",desc=Zone for a relative URL (defaults to the active profile zone)" validate:"omitempty,zone"` // 通常のzoneと扱いが異なるためcflag.ZoneParameterを利用しない
-	Method      string `cli:",short=X,options=rest_method,desc=HTTP method" validate:"required,rest_method"`
+	Method      string `cli:",short=X,options=rest_method,desc=HTTP method" validate:"rest_method"`
 	Data        string `cli:",short=d,desc=JSON request body or path to a JSON file" validate:"omitempty,file|json"`
 	Query       string `cli:",category=output,desc=Query for JSON output" validate:"omitempty" json:"-"`
 	QueryDriver string `cli:",category=output,desc=Name of the driver that handles queries to JSON output options: [jmespath/jq]" json:"-" validate:"omitempty,oneof=jmespath jq"`

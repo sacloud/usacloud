@@ -17,7 +17,41 @@ package rest
 import (
 	"strings"
 	"testing"
+
+	"github.com/sacloud/usacloud/pkg/validate"
+	"github.com/spf13/pflag"
+	"github.com/stretchr/testify/require"
 )
+
+func TestRequestMethodValidation(t *testing.T) {
+	validate.InitializeValidator(nil)
+
+	for _, tt := range []struct {
+		name    string
+		args    []string
+		wantErr bool
+	}{
+		{name: "default"},
+		{name: "lowercase", args: []string{"--method", "post"}},
+		{name: "uppercase", args: []string{"--method", "POST"}},
+		{name: "empty", args: []string{"--method", ""}, wantErr: true},
+		{name: "unsupported", args: []string{"--method", "INVALID"}, wantErr: true},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			p := newRequestParameter()
+			fs := pflag.NewFlagSet("request", pflag.ContinueOnError)
+			p.buildFlags(fs)
+			require.NoError(t, fs.Parse(tt.args))
+
+			err := validate.Exec(p)
+			if tt.wantErr {
+				require.ErrorContains(t, err, "--method:")
+			} else {
+				require.NoError(t, err)
+			}
+		})
+	}
+}
 
 func TestHelpIncludesRESTRequestUsage(t *testing.T) {
 	cmd := Resource.CLICommand()
