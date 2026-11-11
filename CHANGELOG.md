@@ -1,5 +1,30 @@
 # Changelog
 
+## [v1.22.10](https://github.com/sacloud/usacloud/compare/v1.22.9...v1.22.10) - 2026-11-11
+
+### 🚀 Changes
+- Fix REST method help consistency on regeneration by @tokuhirom in https://github.com/sacloud/usacloud/pull/1358
+- wait-until-shutdownの挙動を修正 by @kamijin-fanta in https://github.com/sacloud/usacloud/pull/1352
+### 📦 Dependency Updates
+- go: Bump github.com/sacloud/packages-go from 0.1.0 to 0.1.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1323
+- go: Bump github.com/sacloud/iaas-service-go from 1.25.1 to 1.25.2 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1324
+- go: bump github.com/sacloud/webaccel-api-go from 1.5.0 to 1.5.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1351
+- go: bump github.com/sacloud/api-client-go from 0.3.5 to 0.3.6 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1347
+- go: bump github.com/sacloud/saclient-go from 0.4.0 to 0.4.1 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1356
+- go: bump github.com/sacloud/iaas-api-go from 1.29.2 to 1.29.3 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1350
+- ci: bump actions/create-github-app-token from 3.2.0 to 3.3.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1344
+- ci: bump docker/setup-qemu-action from 4.2.0 to 4.4.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1345
+- ci: bump goreleaser/goreleaser-action from 7.2.3 to 7.3.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1346
+- go: bump golang.org/x/crypto from 0.54.0 to 0.58.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1349
+- ci: bump Songmu/tagpr from 1.21.0 to 1.21.4 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1353
+- ci: bump docker/login-action from 4.6.0 to 4.7.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1354
+- ci: bump Songmu/tagpr from 1.21.4 to 1.22.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1360
+- ci: bump docker/login-action from 4.7.0 to 4.8.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1359
+- go: bump github.com/go-playground/validator/v10 from 10.30.3 to 10.30.6 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1357
+- go: bump github.com/itchyny/gojq from 0.12.19 to 0.12.20 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1361
+- go: bump github.com/huandu/xstrings from 1.5.0 to 1.6.3 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1355
+- go: bump github.com/spf13/pflag from 1.0.10 to 1.1.0 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1362
+
 ## [v1.22.9](https://github.com/sacloud/usacloud/compare/v1.22.8...v1.22.9) - 2026-10-22
 
 ### 🚀 Changes
