@@ -1,5 +1,12 @@
 # Changelog
 
+## [v1.22.11](https://github.com/sacloud/usacloud/compare/v1.22.10...v1.22.11) - 2026-11-12
+
+### 🚀 Changes
+- fix: generate Homebrew casks with structured install steps by @csenet in https://github.com/sacloud/usacloud/pull/1363
+### 📦 Dependency Updates
+- go: bump github.com/mattn/go-colorable from 0.1.15 to 0.1.16 by @dependabot[bot] in https://github.com/sacloud/usacloud/pull/1364
+
 ## [v1.22.10](https://github.com/sacloud/usacloud/compare/v1.22.9...v1.22.10) - 2026-11-11
 
 ### 🚀 Changes
