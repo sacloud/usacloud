@@ -1,5 +1,10 @@
 # Changelog
 
+## [v1.22.12](https://github.com/sacloud/usacloud/compare/v1.22.11...v1.22.12) - 2026-11-12
+
+### 🚀 Changes
+- ci: resolve GoReleaser to the latest 2.x release by @tokuhirom in https://github.com/sacloud/usacloud/pull/1366
+
 ## [v1.22.11](https://github.com/sacloud/usacloud/compare/v1.22.10...v1.22.11) - 2026-11-12
 
 ### 🚀 Changes
